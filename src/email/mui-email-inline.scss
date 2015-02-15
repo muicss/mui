@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+// From MUI
+@import
+"mui/colors",
+"mui/mixins";
+
+// Core variables and mixins
+@import "mui-email/variables";
+
+// Core css
+@import
+"mui-email/normalize",
+"mui-email/scaffolding",
+"mui-email/layout",
+"mui-email/semantic-markup",
+"mui-email/typography",
+"mui-email/buttons",
+"mui-email/panel",
+"mui-email/dividers",
+"mui-email/helpers";

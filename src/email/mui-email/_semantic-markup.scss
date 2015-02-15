@@ -1,0 +1,34 @@
+strong {
+  font-weight: 700;
+}
+
+// headers
+h1 {
+  @extend .mui-text-display1;
+}
+
+h2 {
+  @extend .mui-text-headline;
+}
+
+h3 {
+  @extend .mui-text-title;
+}
+
+h4 {
+  @extend .mui-text-subhead;
+}
+
+h5 {
+  @extend .mui-text-body2;
+}
+
+h1, h2, h3 {
+  margin-top: $base-line-height-computed;
+  margin-bottom: ($base-line-height-computed / 2);
+}
+
+h4, h5, h6 {
+  margin-top: ($base-line-height-computed / 2);
+  margin-bottom: ($base-line-height-computed / 2);
+}

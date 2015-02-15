@@ -1,0 +1,57 @@
+@mixin button-variant($color, $background) {
+  color: $color;
+  background-color: $background;
+
+  &:hover,
+  &:focus,
+  &:active,
+  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
+    color: $color;
+    background-color: lighten($background, 5%);
+  }
+
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: $color;
+      background-color: $background;
+    }
+  }
+}
+
+@mixin button-flat-variant($color, $hover-bg) {
+  &.#{$prfx}btn-flat {
+    color: $color;
+    background-color: transparent;
+
+    &:hover,
+    &:focus,
+    &:active,
+    .#{$prfx}open > &.#{$prfx}dropdown-toggle {
+      color: $color;
+      background-color: $hover-bg;
+    }
+
+    &[disabled],
+    fieldset[disabled] & {
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        color: $color;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// Button sizes
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+  padding: ($padding-vertical + 1px) ($padding-horizontal + 1px);
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+}

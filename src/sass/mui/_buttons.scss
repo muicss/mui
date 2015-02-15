@@ -1,0 +1,194 @@
+// =======================
+// Module variables
+// =======================
+$btn-box-shadow-raised: 0 1px 4px 0 rgba(mui-color('black'), 0.37);
+
+$btn-box-shadow-hover:  0 4px 7px 0 rgba(mui-color('black'), 0.3),
+                        0 2px 3px 0 rgba(mui-color('black'), 0.1);
+
+$btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
+
+
+// =======================
+// Main button class
+// =======================
+.#{$prfx}btn {
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android
+  border: none;
+  white-space: nowrap;
+  user-select: none;
+  transition: .2s ease-out;
+
+  @include mui-text("button");
+
+  height: $btn-height;
+  line-height: $btn-height;
+  padding: 0 $btn-padding-horizontal;
+  border-radius: $btn-border-radius;
+  margin-top: $btn-margin-vertical;
+  margin-bottom: $btn-margin-vertical;
+
+  // for ripples
+  position: relative; 
+  display: inline-block;
+  overflow: hidden;
+  
+  // spacing between buttons
+  & +.#{$prfx}btn {
+    margin-left: $btn-spacing-horizontal;
+  }
+  
+  &:hover,
+  &:focus,
+  &:active,
+  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
+    box-shadow: $btn-box-shadow-hover;
+    color: $btn-default-font-color;
+  }
+
+  &:active &:focus {
+    @include tab-focus;
+  }
+  
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+  
+  &:active,
+  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
+    outline: 0;
+    background-image: none;
+    box-shadow: $btn-box-shadow-active;
+  }
+  
+  &[disabled],
+  &.#{$prfx}disabled,
+  fieldset[disabled] & {
+    cursor: $cursor-disabled;
+    pointer-events: none;
+    opacity: 0.60;
+    box-shadow: none;
+  }
+
+  // icons
+  i {
+    font-size: 1.3rem;
+    line-height: inherit;
+  }
+}
+
+
+// Button sizes
+.#{$prfx}btn-lg {
+  height: $btn-height-lg;
+  line-height: $btn-height-lg;
+}
+
+
+// Flat buttons
+.#{$prfx}btn-flat {
+  background-color: $btn-flat-background-color;
+
+  &:hover,
+  &:focus,
+  &:active,
+  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
+    box-shadow: none;
+    background-color: $btn-flat-background-color-hover;
+  }
+}
+
+
+// Raised buttons
+.#{$prfx}btn-raised {
+  box-shadow: $btn-box-shadow-raised;
+  transition: .2s ease-out;
+
+  &:not(:disabled) {
+    &:hover,
+    &:focus {
+      box-shadow: $btn-box-shadow-hover;
+    }
+    
+    &:active {
+      box-shadow: $btn-box-shadow-raised;
+    }
+  }
+}
+
+
+// Button colors
+.#{$prfx}btn-default {
+  @include button-variant($btn-default-font-color,
+                          $btn-default-background-color);
+
+  @include button-flat-variant($btn-default-font-color,
+                               $btn-flat-background-color-hover);
+}
+
+
+.#{$prfx}btn-primary {
+  @include button-variant($btn-primary-font-color,
+                          $btn-primary-background-color);
+
+  @include button-flat-variant($btn-primary-background-color,
+                               $btn-flat-background-color-hover);
+}
+
+
+.#{$prfx}btn-danger {
+  @include button-variant($btn-danger-font-color,
+                          $btn-danger-background-color);
+
+  @include button-flat-variant($btn-danger-background-color,
+                               $btn-flat-background-color-hover);
+}
+
+
+// Floating button
+.#{$prfx}btn-floating {
+  position: relative;
+  z-index: 1;
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  padding: 0;
+  border-radius: 50%;
+  color: $btn-floating-font-color;
+  background-color: $btn-floating-background-color;
+  @extend .#{$prfx}btn-raised;
+
+  &:not(:disabled) {
+    &:hover,
+    &:focus,
+    &:active {
+      color: $btn-floating-font-color;
+      background-color: lighten($btn-floating-background-color, 5%);
+    }
+  }
+  
+  i {
+    width: inherit;
+    display: inline-block;
+    text-align: center;
+    color: $btn-floating-font-color;
+    font-size: 1.6rem;
+    line-height: 55px;
+  }
+}
+
+
+.#{$prfx}btn-floating-mini {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  
+  i {
+    line-height: 40px;
+  }
+}

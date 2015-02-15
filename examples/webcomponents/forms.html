@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        font-family: Helvetica, Arial;
+      }
+    </style>
+    <script src="../assets/mui/webcomponents/mui-webcomponents.js"></script>
+  </head>
+  <body>
+    <h1>Forms</h1>
+    <h2>Form with placeholders</h2>
+    <form>
+      <mui-form-control type="text"
+                        placeholder="Placeholder 1">
+      </mui-form-control>
+      <mui-form-control type="text"
+                        placeholder="Placeholder 2">
+      </mui-form-control>
+      <mui-btn depth="raised">Submit</mui-btn>
+    </form>
+    <h2>Form with fixed labels</h2>
+    <form>
+      <mui-form-control type="text"
+                        label="Input 1">
+      </mui-form-control>
+      <mui-form-control type="text"
+                        label="Input 2">
+      </mui-form-control>
+      <mui-form-control type="textarea"
+                        label="Textarea">
+      </mui-form-control>
+      <mui-btn depth="raised">Submit</mui-btn>
+    </form>
+    <h2>Form with floating labels</h2>
+    <form>
+      <mui-form-control type="text"
+                        label="Email address"
+                        floating>
+      </mui-form-control>
+      <mui-form-control type="text"
+                        value="Value on load"
+                        label="Label"
+                        floating>
+      </mui-form-control>
+      <mui-form-control type="textarea"
+                        value="Value on load"
+                        label="Textarea"
+                        floating>
+      </mui-form-control>
+      <mui-btn depth="raised">Submit</mui-btn>
+    </form>
+  </body>
+</html>

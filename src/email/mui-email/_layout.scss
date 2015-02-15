@@ -1,0 +1,32 @@
+.#{$prfx}body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+
+  color: $base-font-color;
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  letter-spacing: $base-letter-spacing;
+  
+  @if $body-background-color {
+    background-color: $body-background-color;
+  }
+}
+
+.#{$prfx}container {
+  max-width: $container-max-width;
+  display: block;
+  margin: 0 auto;
+  clear: both;
+  text-align: left;
+  padding-left: $container-padding-horizontal;
+  padding-right: $container-padding-horizontal;
+}
+
+.#{$prfx}container-fixed {
+  @extend .#{$prfx}container;
+  width: $container-max-width;
+}

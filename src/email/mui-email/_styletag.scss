@@ -1,0 +1,45 @@
+// ========================
+// Outlook
+// ========================
+
+// add view in browser option
+#outlook a {
+  padding: 0;
+}
+
+
+// ========================
+// Hotmail
+// ========================
+
+.ReadMsgBody{
+  width: 100%;
+}
+
+.ExternalClass {
+  width: 100%; // display emails at full width
+
+  &,
+  & p,
+  & span,
+  & font,
+  & td,
+  & div {
+    line-height: 100%; // display normal line spacing
+  }
+}
+
+
+// =========================
+// Miscellaneous
+// =========================
+
+.#{$prfx}container-fixed {
+  width: $container-max-width;
+  display: block;
+  margin: 0 auto;
+  clear: both;
+  text-align: left;
+  padding-left: $container-padding-horizontal;
+  padding-right: $container-padding-horizontal;
+}

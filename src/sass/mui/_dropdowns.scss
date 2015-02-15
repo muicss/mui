@@ -1,0 +1,107 @@
+// Dropdown wrapper
+.#{$prfx}dropdown {
+  position: relative;
+}
+
+// Prevent focus on dropdown toggle when closing dropdowns
+.#{$prfx}dropdown-toggle:focus {
+  outline: 0;
+}
+
+// The dropdown menu (ul)
+.#{$prfx}dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0; // override default ul
+  list-style: none;
+  font-size: $base-font-size;
+  text-align: left;
+  background-color: $dropdown-background-color;
+  border-radius: $dropdown-border-radius;
+  @extend .#{$prfx}z1;
+  background-clip: padding-box;
+
+  // Links within the dropdown menu
+  > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: $base-line-height;
+    color: $dropdown-link-font-color;
+    white-space: nowrap; // prevent links from randomly breaking onto new lines
+  }
+}
+
+// Hover/Focus state
+.#{$prfx}dropdown-menu > li > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: $dropdown-link-font-color-hover;
+    background-color: $dropdown-link-background-color-hover;
+  }
+}
+
+// Active state
+.#{$prfx}dropdown-menu > .#{$prfx}active > a {
+  &,
+  &:hover,
+  &:focus {
+    color: $dropdown-link-font-color-active;
+    text-decoration: none;
+    outline: 0;
+    background-color: $dropdown-link-background-color-active;
+  }
+}
+
+// Disabled state
+.#{$prfx}dropdown-menu > .#{$prfx}disabled > a {
+  &,
+  &:hover,
+  &:focus {
+    color: $dropdown-link-font-color-disabled;
+  }
+
+  // Nuke hover/focus effects
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background-color: transparent;
+    background-image: none; // Remove CSS gradient
+    cursor: $cursor-disabled;
+  }
+}
+
+// Open state for the dropdown
+.#{$prfx}open {
+  // Show the menu
+  > .#{$prfx}dropdown-menu {
+    display: block;
+  }
+
+  // Remove the outline when :focus is triggered
+  > a {
+    outline: 0;
+  }
+}
+
+// Backdrop to catch body clicks on mobile etc
+.#{$prfx}dropdown-backdrop {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+// Right aligned dropdowns
+.#{$prfx}pull-right > .#{$prfx}dropdown-menu {
+  right: 0;
+  left: auto;
+}

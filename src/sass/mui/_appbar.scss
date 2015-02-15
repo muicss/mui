@@ -1,0 +1,45 @@
+.#{$prfx}appbar-height {
+  height: $appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $screen-xs) {
+    height: $appbar-height-xs-landscape;
+  }
+  
+  @media (min-width: $screen-xs) {
+    height: $appbar-height;
+  }
+}
+
+.#{$prfx}appbar-min-height {
+  min-height: $appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $screen-xs) {
+    min-height: $appbar-height-xs-landscape;
+  }
+
+  @media (min-width: $screen-xs) {
+    min-height: $appbar-height;
+  }
+}
+
+.#{$prfx}appbar-line-height {
+  line-height: $appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $screen-xs) {
+    line-height: $appbar-height-xs-landscape;
+  }
+
+  @media (min-width: $screen-xs) {
+    line-height: $appbar-height;
+  }
+}
+
+.#{$prfx}appbar {
+  @extend .#{$prfx}appbar-min-height;
+
+  background-color: $appbar-background-color;
+  color: $appbar-font-color;
+}

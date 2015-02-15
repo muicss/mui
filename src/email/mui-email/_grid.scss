@@ -1,0 +1,28 @@
+table {
+  &.#{$prfx}body {
+    height: 100%;
+    width: 100%;
+    @extend body;
+  }
+  
+  &.#{$prfx}container {
+    width: $container-width;
+    margin: 0 auto;
+    text-align: inherit;
+
+    table.#{$prfx}row {
+      display: block;
+    }
+  }
+
+  &.#{$prfx}row {
+    padding: 0px;
+    width: 100%;
+    position: relative;
+  }
+}
+
+td.#{$prfx}wrapper {
+  padding: $wrapper-padding-top $column-gutter 0px 0px;
+  position: relative;
+}

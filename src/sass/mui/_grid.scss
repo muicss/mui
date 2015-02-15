@@ -1,0 +1,30 @@
+// Row
+.#{$prfx}row {
+  @include make-row;
+}
+
+
+// Columns
+@include make-grid-columns;
+
+
+// Extra small grid
+@include make-grid(xs);
+
+
+// Small grid
+@media (min-width: $screen-sm-min) {
+  @include make-grid(sm);
+}
+
+
+// Medium grid
+@media (min-width: $screen-md-min) {
+  @include make-grid(md);
+}
+
+
+// Large grid
+@media (min-width: $screen-lg-min) {
+  @include make-grid(lg);
+}

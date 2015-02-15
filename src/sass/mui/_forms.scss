@@ -1,0 +1,316 @@
+// ==========================
+// Normalize non-controls
+// ==========================
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: $base-line-height-computed / 2;
+  font-size: $legend-font-size;
+  color: $legend-font-color;
+  line-height: inherit;
+  border: 0;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+// ===========================
+// Normalize form controls
+// ===========================
+input[type="search"] {
+  box-sizing: border-box;
+}
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  line-height: normal;
+}
+
+// Set the height of file controls to match text inputs
+input[type="file"] {
+  display: block;
+}
+
+// Make range inputs behave like textual form controls
+input[type="range"] {
+  display: block;
+  width: 100%;
+}
+
+// Make multiple select elements height not fixed
+select[multiple],
+select[size] {
+  height: auto;
+}
+
+// Focus for file, radio, and checkbox
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  @include tab-focus;
+}
+
+
+// =======================
+// Form controls
+// =======================
+// Common form controls
+//
+// Shared size and type resets for form controls. Apply `.form-control` to any
+// of the following form controls:
+//
+// select
+// textarea
+// input[type="text"]
+// input[type="password"]
+// input[type="datetime"]
+// input[type="datetime-local"]
+// input[type="date"]
+// input[type="month"]
+// input[type="time"]
+// input[type="week"]
+// input[type="number"]
+// input[type="email"]
+// input[type="url"]
+// input[type="search"]
+// input[type="tel"]
+// input[type="color"]
+
+.#{$prfx}form-control {
+  display: block;
+  background-color: $input-background-color;
+  color: $input-font-color;
+  border: none;
+  border-bottom: 1px solid $input-border-color;
+  outline: none;
+  height: $input-height;
+  width: 100%;
+  font-size: $input-font-size;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0px;
+
+  // bugfix for firefox-android
+  background-image: none; 
+
+  &::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1; // normalize firefox
+  }
+
+  &:focus {
+    border-color: $input-border-color-focus;
+    border-width: 2px;
+  }
+
+  // disabled
+  &[disabled],
+  &[readonly],
+  fieldset[disabled] & {
+    cursor: $cursor-disabled;
+    background-color: $input-background-color-disabled;
+    opacity: 1; // iOS fix for unreadable disabled content
+  }
+}
+
+// Reset height for `textarea`s
+textarea.#{$prfx}form-control {
+  height: auto;
+}
+
+// Compensate for height change on focus
+input.#{$prfx}form-control:focus {
+  height: $input-height + 1px;
+  margin-bottom: -1px;
+}
+
+// Search inputs in iOS
+input[type="search"] {
+  -webkit-appearance: none;
+}
+
+
+// =====================
+// Form groups
+// =====================
+.#{$prfx}form-group {
+  position: relative;
+  margin-bottom: $form-group-margin-bottom;
+  padding-top: $label-font-size + $label-margin-bottom;
+
+  // position label at top
+  > label {
+    position: absolute;
+    color: $label-font-color;
+    top: 0px;
+    font-size: $label-font-size;
+    font-weight: 400;
+
+    &.#{$prfx}form-floating-label {
+      top: 5px + $label-font-size + $label-margin-bottom;
+      font-size: $input-font-size;
+      pointer-events: none;
+      color: $input-placeholder-color;
+
+      animation-duration: 0.001s;
+      animation-name: muiNodeInserted;
+    }
+  }
+
+  > textarea {
+    padding-top: 5px;
+    min-height: $textarea-height;
+  }
+
+  // active floating icon
+  > label.#{$prfx}form-floating-label-active {
+    color: $label-font-color;
+  }
+  
+  > label.#{$prfx}form-floating-label-active,
+  > .#{$prfx}form-control:focus + label.#{$prfx}form-floating-label {
+    font-size: $label-font-size;
+    top: 0px;
+  }
+
+  // input focus
+  > .#{$prfx}form-control:focus + label {
+    color: $input-border-color-focus;
+  }
+}
+
+
+// ===========================
+// Checkboxes and radios
+// ===========================
+// Indent the labels to position radios/checkboxes as hanging controls.
+
+.#{$prfx}radio,
+.#{$prfx}checkbox {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  label {
+    min-height: $base-line-height-computed;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+  }
+}
+
+.#{$prfx}radio input[type="radio"],
+.#{prfx}radio-inline input[type="radio"],
+.#{$prfx}checkbox input[type="checkbox"],
+.#{$prfx}checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-left: -20px;
+  margin-top: 4px;
+}
+
+.#{$prfx}radio + .#{$prfx}radio,
+.#{$prfx}checkbox + .#{$prfx}checkbox {
+  margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
+}
+
+// Radios and checkboxes on same line
+.#{$prfx}radio-inline,
+.#{$prfx}checkbox-inline {
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  vertical-align: middle;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.#{$prfx}radio-inline + .#{$prfx}radio-inline,
+.#{$prfx}checkbox-inline + .#{$prfx}checkbox-inline {
+  margin-top: 0;
+  margin-left: 10px; // space out consecutive inline controls
+}
+
+// Apply same disabled cursor tweak as for inputs
+input[type="radio"],
+input[type="checkbox"] {
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: $cursor-disabled;
+  }
+}
+
+// These classes are used directly on <label>s
+.#{$prfx}radio-inline,
+.#{$prfx}checkbox-inline {
+  fieldset[disabled] & {
+    cursor: $cursor-disabled;
+  }
+}
+
+// These classes are used on elements with <label> descendants
+.#{$prfx}radio,
+.#{$prfx}checkbox {
+  fieldset[disabled] & {
+    label {
+      cursor: $cursor-disabled;
+    }
+  }
+}
+
+
+// =====================
+// Form-inline
+// =====================
+.#{$prfx}form-inline {
+
+  // Kick in the inline
+  @media (min-width: $screen-sm-min) {
+    // Inline-block all the things for "inline"
+    .#{$prfx}form-group {
+      display: inline-block;
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+
+    .#{$prfx}form-control {
+      display: inline-block;
+      width: auto;
+      vertical-align: middle;
+    }
+    
+    // Remove default margin on radios/checkboxes that were used for stacking
+    .#{$prfx}radio,
+    .#{$prfx}checkbox {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 0;
+      vertical-align: middle;
+
+      label {
+        padding-left: 0;
+      }
+    }
+    
+    .#{$prfx}radio input[type="radio"],
+    .#{$prfx}checkbox input[type="checkbox"] {
+      position: relative;
+      margin-left: 0;
+    }
+  }
+}

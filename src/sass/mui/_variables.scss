@@ -1,0 +1,193 @@
+$prfx: 'mui-';
+
+// ==========================
+// Colors
+// ==========================
+
+$primary-color:            mui-color('blue', '500') !default;
+$primary-color-dark:       mui-color('blue', '700') !default;
+$primary-color-light:      mui-color('blue', '100') !default;
+
+$accent-color:             mui-color('pink', 'A200') !default;
+$accent-color-dark:        mui-color('pink', 'A100') !default;
+$accent-color-light:       mui-color('pink', 'A400') !default;
+
+$danger-color:             mui-color('red', '500') !default;
+
+// =========================
+// Media queries breakpoints
+// =========================
+
+$screen-xs:     480px !default;
+$screen-sm-min: 768px !default;
+$screen-md-min: 992px !default;
+$screen-lg-min: 1200px !default;
+
+// =========================
+// Grid system
+// =========================
+
+$grid-columns:               12 !default;
+$grid-gutter-width:          30px !default;
+$grid-float-breakpoint:      $screen-sm-min !default;
+
+// =========================
+// Container sizes
+// =========================
+
+$container-sm:               $screen-sm-min !default;
+$container-md:               (940px + $grid-gutter-width) !default;
+$container-lg:               (1140px + $grid-gutter-width) !default;
+
+// ==========================
+// Scaffolding
+// ==========================
+
+$body-background-color:      mui-color('white') !default;
+
+$link-font-color:            $primary-color !default;
+$link-text-decoration:       none !default;
+$link-font-color-hover:      $primary-color-dark !default;
+$link-text-decoration-hover: underline !default;
+
+$hr-color:                   mui-color('black-alpha-12') !default;
+$abbr-border-color:          $primary-color !default;
+$cursor-disabled:            not-allowed !default;
+$border-radius-default:      2px !default;
+
+// ==========================
+// Typography
+// ==========================
+
+$base-font-color:     mui-color('black-alpha-87') !default;
+$base-font-family:    "Helvetica Neue", Helvetica, Arial, Verdana, "Trebuchet MS" !default;
+$base-font-size:      14px !default;
+$base-font-weight:    400 !default;
+$base-line-height:    1.429 !default;
+$base-letter-spacing: 0.001em !default;
+
+// =========================
+// Buttons
+// =========================
+
+$btn-height:                      36px !default;
+$btn-height-lg:                   $btn-height * 1.5 !default;
+
+$btn-border-radius:               $border-radius-default !default;
+$btn-padding-horizontal:          26px !default;
+
+$btn-margin-vertical:             6px !default;
+$btn-spacing-horizontal:          8px !default;
+
+$btn-default-background-color:    mui-color('white') !default;
+$btn-default-font-color:          $base-font-color !default;
+$btn-default-ripple-color:        darken(mui-color('white'), 35%) !default;
+
+$btn-primary-background-color:    $primary-color !default;
+$btn-primary-font-color:          mui-color('white') !default;
+$btn-primary-ripple-color:        mui-color('white') !default;
+
+$btn-danger-background-color:     $danger-color !default;
+$btn-danger-font-color:           mui-color('white') !default;
+$btn-danger-ripple-color:         mui-color('white') !default;
+
+$btn-flat-background-color:       transparent !default;
+$btn-flat-background-color-hover: darken(mui-color('white'), 5%) !default;
+$btn-flat-ripple-color:           darken(mui-color('white'), 35%) !default;
+
+$btn-floating-background-color:   $accent-color !default;
+$btn-floating-font-color:         mui-color('white') !default;
+$btn-floating-ripple-color:       mui-color('white') !default;
+
+// =========================
+// Forms
+// =========================
+
+$input-background-color:          transparent !default;
+$input-background-color-disabled: transparent !default;
+$input-font-color:                $base-font-color !default;
+$input-font-size:                 16px !default;
+$input-height:                    32px !default;
+
+$input-placeholder-color:         mui-color('black-alpha-26') !default;
+
+$input-border-color:              $input-placeholder-color !default;
+$input-border-color-focus:        $primary-color !default;
+
+$textarea-height:                 64px !default;
+
+$label-font-size:                 12px !default;
+$label-font-color:                mui-color('black-alpha-54') !default;
+$label-margin-bottom:             3px !default;
+
+$legend-font-size:               $base-font-size * 1.5 !default;
+$legend-font-color:              $base-font-color !default;
+
+$form-group-margin-bottom:       20px !default;
+
+// =========================
+// Panels
+// =========================
+
+$panel-bg:                   mui-color('white') !default;
+$panel-padding:              15px !default;
+$panel-border-radius:        0 !default;
+
+// =========================
+// Dividers
+// =========================
+
+$divider-color:              mui-color('black-alpha-12') !default;
+
+// =========================
+// Dropdowns
+// =========================
+
+$dropdown-background-color:             mui-color('white') !default;
+$dropdown-border-color:                 $divider-color !default;
+$dropdown-border-radius:                $border-radius-default !default;
+
+$dropdown-link-font-color:              $base-font-color !default;
+$dropdown-link-font-color-hover:        darken($dropdown-link-font-color, 5%) !default;
+$dropdown-link-font-color-active:       $accent-color !default;
+$dropdown-link-font-color-disabled:     mui-color('grey', '200') !default;
+
+$dropdown-link-background-color-hover:  mui-color('grey', '200') !default;
+$dropdown-link-background-color-active: mui-color('white') !default;
+
+// =========================
+// Appbar
+// =========================
+
+$appbar-height:              64px !default;
+$appbar-height-xs-portrait:  56px !default;
+$appbar-height-xs-landscape: 48px !default;
+
+$appbar-background-color:    $primary-color !default;
+$appbar-font-color:          mui-color('white') !default;
+
+// =========================
+// Tables
+// =========================
+
+$table-cell-padding:        10px !default;
+$table-border-color:        $divider-color !default;
+
+// =========================
+// Caret
+// =========================
+
+$caret-width:                    4px !default;
+
+// =========================
+// Overlay
+// =========================
+$overlay-background-color:   rgba(mui-color('black'), 0.20) !default;
+
+// =========================
+// Internal Variables
+// =========================
+$base-line-height-computed: floor(($base-font-size * $base-line-height));
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-sm-max: ($screen-md-min - 1);
+$screen-md-max: ($screen-lg-min - 1);

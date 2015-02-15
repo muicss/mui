@@ -1,0 +1,226 @@
+// ================================
+// Module variables
+// ================================
+$btn-font-size: 14px;
+$btn-font-weight: 400;
+$btn-letter-spacing: 0.05em;
+
+$btn-border-width: 1px;
+
+$btn-padding-vertical-computed: ($btn-height - $btn-font-size) / 2 - $btn-border-width;
+$btn-padding-horizontal-computed: $btn-padding-horizontal - $btn-border-width;
+$btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn-border-width;
+
+
+// ===============================
+// button-text-styles()
+// ===============================
+@mixin button-text-styles() {
+  font-weight: $btn-font-weight;
+  font-size: $btn-font-size;
+  color: $base-font-color;
+  line-height: $btn-font-size;
+  letter-spacing: $btn-letter-spacing;
+  text-transform: uppercase;
+}
+
+
+// ===============================
+// button-flat-color()
+// ===============================
+@mixin button-flat-color($color, $background) {
+  @if $background == #FFF {
+    $flatColor: $btn-default-font-color
+  } @else {
+    $flatColor: $background;
+  }
+
+  color: $flatColor;
+}
+
+
+// ==============================
+// button-borders()
+// ==============================
+@mixin button-borders($background, $style: "normal") {
+  @if $style == 'raised' {
+    @if $background == #FFF {
+      $color1: darken($background, 5%);
+      $color2: darken($background, 10%);
+      $color3: darken($background, 27%);
+    } @else {
+      $color1: lighten($background, 10%);
+      $color2: $background;
+      $color3: darken($background, 15%);
+    }
+
+    border-top: $btn-border-width solid $color1;
+    border-left: $btn-border-width solid $color2;
+    border-right: $btn-border-width solid $color2;
+    border-bottom: 2px solid $color3;
+  } @else {
+    $borderColor: $background;
+    
+    border-top: $btn-border-width solid $borderColor;
+    border-left: $btn-border-width solid $borderColor;
+    border-right: $btn-border-width solid $borderColor;
+    border-bottom: $btn-border-width solid $borderColor;
+  }
+}
+
+
+// ===============================
+// button-anchor-variant()
+// ===============================
+@mixin button-anchor-variant($color, $background) {
+  color: $color;
+  background-color: $background;
+  @include button-borders($background);
+  
+  // raised
+  &.#{$prfx}btn-raised {
+    @include button-borders($background, "raised");
+  }
+
+  // flat
+  &.#{$prfx}btn-flat {
+    background-color: $btn-flat-background-color;
+    @include button-flat-color($color, $background);
+    @include button-borders($btn-flat-background-color);
+  }
+}
+
+
+// ==============================
+// button-table-variant()
+// ==============================
+@mixin button-table-variant($color, $background) {
+  > tr > td,
+  > tbody > tr > td {
+    background-color: $background;
+    
+    > a {
+      color: $color;
+      @include button-borders($background);
+    }
+  }
+
+  // raised
+  &.#{$prfx}btn-raised {
+    > tr > td,
+    > tbody > tr > td {
+      > a {
+        @include button-borders($background, "raised");
+      }
+    }
+  }
+
+  // flat
+  &.#{$prfx}btn-flat {
+    > tr > td,
+    > tbody > tr > td {
+      background-color: $btn-flat-background-color;
+
+      > a {
+        @include button-flat-color($color, $background);
+        @include button-borders($btn-flat-background-color);
+      }
+    }
+  }
+}
+
+
+// ==============================
+// Style defs
+// ==============================
+
+// shared btn styles
+.#{$prfx}btn {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+
+// <a> btn styles
+a.#{$prfx}btn {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  
+  @include button-text-styles();
+
+  border-radius: $btn-border-radius;
+  padding: $btn-padding-vertical-computed $btn-padding-horizontal-computed;
+  background-color: transparent;
+  @include button-borders(transparent);
+
+  &.#{$prfx}btn-default {
+    @include button-anchor-variant($btn-default-font-color,
+                                   $btn-default-background-color);
+  }
+
+  &.#{$prfx}btn-primary {
+    @include button-anchor-variant($btn-primary-font-color,
+                                   $btn-primary-background-color);
+  }
+
+  &.#{$prfx}btn-danger {
+    @include button-anchor-variant($btn-danger-font-color,
+                                   $btn-danger-background-color);
+  }
+
+  &.#{$prfx}btn-accent {
+    @include button-anchor-variant($btn-accent-font-color,
+                                   $btn-accent-background-color);
+  }
+}
+
+
+// <table> btn styles
+table.#{$prfx}btn {
+  > tr > td,
+  > tbody > tr > td {
+    border-radius: $btn-border-radius;
+    
+    > a {
+      display: inline-block;
+      text-decoration: none;
+      text-align: center;
+      
+      @include button-text-styles();
+      
+      border-radius: $btn-border-radius;
+      padding: $btn-padding-vertical-computed $btn-padding-horizontal-computed;
+      background-color: transparent;
+      @include button-borders(transparent);
+    }
+  }
+
+  &.#{$prfx}btn-default {
+    @include button-table-variant($btn-default-font-color,
+                                  $btn-default-background-color);
+  }
+
+  &.#{$prfx}btn-primary {
+    @include button-table-variant($btn-primary-font-color,
+                                  $btn-primary-background-color);
+  }
+
+  &.#{$prfx}btn-danger {
+    @include button-table-variant($btn-danger-font-color,
+                                  $btn-danger-background-color);
+  }
+
+  &.#{$prfx}btn-accent {
+    @include button-table-variant($btn-accent-font-color,
+                                  $btn-accent-background-color);
+  }
+}
+
+
+// large buttons
+a.#{$prfx}btn-lg,
+table.#{$prfx}btn-lg > tr > td > a,
+table.#{$prfx}btn-lg > tbody > tr > td > a {
+  padding: $btn-padding-vertical-lg-computed $btn-padding-horizontal-computed;
+}

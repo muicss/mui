@@ -1,0 +1,28 @@
+body {
+  color: $base-font-color;
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  letter-spacing: $base-letter-spacing;
+  
+  @if $body-background-color {
+    background-color: $body-background-color;
+  }
+}
+
+a {
+  color: $link-font-color;
+  text-decoration: $link-text-decoration;
+}
+
+p {
+  margin: 0 0 ($base-line-height-computed / 2);
+}
+
+hr {
+  color: $hr-color;
+  background-color: $hr-color;
+  height: 1px;
+  border: none;
+}

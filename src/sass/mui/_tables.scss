@@ -1,0 +1,43 @@
+// Global styles
+th {
+  text-align: left;
+}
+
+// Table style
+.#{$prfx}table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: $base-line-height-computed;
+
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: $table-cell-padding;
+        line-height: $base-line-height;
+        vertical-align: top;
+      }
+    }
+  }
+  
+  // Bottom align for column headings
+  > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid $table-border-color;
+    font-weight: 700;
+  }
+
+  // multiple tbody instances
+  > tbody + tbody {
+    border-top: 2px solid $table-border-color;
+  }  
+
+  // Bordered style
+  &.#{$prfx}table-bordered > tbody > tr > td {
+    border-bottom: 1px solid $table-border-color;
+  }
+}
+

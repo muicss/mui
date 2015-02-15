@@ -1,0 +1,145 @@
+// **************************
+// Typography
+// **************************
+@mixin mui-text($name) {
+  $styles: map-get($mui-text-styles, $name);
+
+  font-weight: map-get($styles, "font-weight");
+  font-size: map-get($styles, "font-size");
+  line-height: map-get($styles, "line-height");
+  letter-spacing: map-get($styles, "letter-spacing");
+
+  @if $base-font-color == mui-color('white') {
+    color: rgba(mui-color('white'), map-get($styles, "alpha-white"));
+  } @else {
+    color: rgba($base-font-color, map-get($styles, "alpha-black"));
+  }
+  
+  @if $name == "button" {
+    text-transform: uppercase;
+  }
+
+  &.#{$prfx}text-black {
+    color: rgba(mui-color('black'), map-get($styles, "alpha-black"));
+  }
+
+  &.#{$prfx}text-white {
+    color: rgba(mui-color('white'), map-get($styles, "alpha-white"));
+  }
+
+  &.#{$prfx}text-accent {
+    color: rgba($accent-color, map-get($styles, "alpha-accent"));
+  }
+}
+
+
+$mui-text-styles: (
+  "display4": (
+    "font-weight": 300,
+    "font-size": 112px,
+    "alpha-black": 0.54,
+    "alpha-white": 0.70,
+    "alpha-accent": 0.54,
+    "line-height": 112px,
+    "letter-spacing": -0.01em
+  ),
+  "display3": (
+    "font-weight": 400,
+    "font-size": 56px,
+    "alpha-black": 0.54,
+    "alpha-white": 0.70,
+    "alpha-accent": 0.54,
+    "line-height": 56px,
+    "letter-spacing": -0.005em
+  ),
+  "display2": (
+    "font-weight": 400,
+    "font-size": 45px,
+    "alpha-black": 0.54,
+    "alpha-white": 0.70,
+    "alpha-accent": 0.54,
+    "line-height": 48px,
+    "letter-spacing": 0em
+  ),
+  "display1": (
+    "font-weight": 400,
+    "font-size": 34px,
+    "alpha-black": 0.54,
+    "alpha-white": 0.70,
+    "alpha-accent": 0.54,
+    "line-height": 40px,
+    "letter-spacing": 0em
+  ),
+  "headline": (
+    "font-weight": 400,
+    "font-size": 24px,
+    "alpha-black": 0.87,
+    "alpha-white": 1.00,
+    "alpha-accent": 0.87,
+    "line-height": 32px,
+    "letter-spacing": 0em
+  ),
+  "title": (
+    "font-weight": 400,
+    "font-size": 20px,
+    "alpha-black": 0.87,
+    "alpha-white": 1.00,
+    "alpha-accent": 0.87,
+    "line-height": 28px,
+    "letter-spacing": 0.005em
+  ),
+  "subhead": (
+    "font-weight": 400,
+    "font-size": 16px,
+    "alpha-black": 0.87,
+    "alpha-white": 1.00,
+    "alpha-accent": 0.87,
+    "line-height": 24px,
+    "letter-spacing": 0.001em
+  ),
+  "body2": (
+    "font-weight": 500,
+    "font-size": 14px,
+    "alpha-black": 0.87,
+    "alpha-white": 1.00,
+    "alpha-accent": 0.87,
+    "line-height": 24px,
+    "letter-spacing": 0.001em
+  ),
+  "body1": (
+    "font-weight": 400,
+    "font-size": 14px,
+    "alpha-black": 0.87,
+    "alpha-white": 1.00,
+    "alpha-accent": 0.87,
+    "line-height": 20px,
+    "letter-spacing": 0.001em
+  ),
+  "caption": (
+    "font-weight": 400,
+    "font-size": 12px,
+    "alpha-black": 0.54,
+    "alpha-white": 0.70,
+    "alpha-accent": 0.54,
+    "line-height": 16px,
+    "letter-spacing": 0.002em
+  ),
+  "menu": (
+    "font-weight": 500,
+    "font-size": 13px,
+    "alpha-black": 0.87,
+    "alpha-white": 1.00,
+    "alpha-accent": 0.87,
+    "line-height": 17px,
+    "letter-spacing": 0.001em
+  ),
+  "button": (
+    "font-weight": 400,
+    "font-size": 14px,
+    "alpha-black": 0.87,
+    "alpha-white": 1.00,
+    "alpha-accent": 0.87,
+    "line-height": 18px,
+    "letter-spacing": 0.05em
+  )
+);

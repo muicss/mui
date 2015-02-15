@@ -1,0 +1,60 @@
+// =========================
+// Reset
+// =========================
+body {
+  width: 100% !important;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  border: 0 none;
+  height: auto;
+  line-height: 100%;
+  outline: none;
+  text-decoration: none;
+}
+
+a img {
+  border: 0 none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 0;
+  text-align: left;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+  border-collapse: collapse !important;
+}
+
+
+// =============================
+// Client-specific styles
+// =============================
+table, td {
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+}
+
+body,
+table,
+td,
+p,
+a,
+li,
+blockquote{
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+img{
+  -ms-interpolation-mode: bicubic;
+}

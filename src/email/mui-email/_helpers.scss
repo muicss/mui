@@ -1,0 +1,15 @@
+// =======================
+// Alignment helpers
+// =======================
+.#{$prfx}text-left           { text-align: left; }
+.#{$prfx}text-right          { text-align: right; }
+.#{$prfx}text-center         { text-align: center; }
+.#{$prfx}text-justify        { text-align: justify; }
+
+
+// =======================
+// Image helper
+// =======================
+.#{$prfx}image-fix {
+  display: block;
+}

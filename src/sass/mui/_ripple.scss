@@ -1,0 +1,47 @@
+// ===========================
+// Ripple styles
+// ===========================
+.#{$prfx}ripple-effect{
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  
+  animation: #{$prfx}ripple-animation 2s;
+}
+
+
+@keyframes #{$prfx}ripple-animation {
+    from {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    to {
+      transform: scale(100);
+      opacity: 0;
+    }
+}
+
+
+// =======================
+// Button-specific styles
+// =======================
+.#{$prfx}btn-default > .#{$prfx}ripple-effect {
+  background-color: $btn-default-ripple-color;
+}
+
+.#{$prfx}btn-primary > .#{$prfx}ripple-effect {
+  background-color: $btn-primary-ripple-color;
+}
+
+.#{$prfx}btn-danger > .#{$prfx}ripple-effect {
+  background-color: $btn-danger-ripple-color;
+}
+
+.#{$prfx}btn-flat > .#{$prfx}ripple-effect {
+  background-color: $btn-flat-ripple-color;
+}
+
+.#{$prfx}btn-floating > .#{$prfx}ripple-effect {
+  background-color: $btn-floating-ripple-color;
+}

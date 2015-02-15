@@ -1,0 +1,48 @@
+// Text styles
+.#{$prfx}text-display4 {
+  @include mui-text("display4");
+}
+
+.#{$prfx}text-display3 {
+  @include mui-text("display3");
+}
+
+.#{$prfx}text-display2 {
+  @include mui-text("display2");
+}
+
+.#{$prfx}text-display1 {
+  @include mui-text("display1");
+}
+
+.#{$prfx}text-headline {
+  @include mui-text("headline");
+}
+
+.#{$prfx}text-title {
+  @include mui-text("title");
+}
+
+.#{$prfx}text-subhead {
+  @include mui-text("subhead");
+}
+
+.#{$prfx}text-body2 {
+  @include mui-text("body2");
+}
+
+.#{$prfx}text-body1 {
+  @include mui-text("body1");
+}
+
+.#{$prfx}text-caption {
+  @include mui-text("caption");
+}
+
+.#{$prfx}text-menu {
+  @include mui-text("menu");
+}
+
+.#{$prfx}text-button {
+  @include mui-text("button");
+}

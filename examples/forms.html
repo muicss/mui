@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="assets/mui/css/mui.css"/>
+    <script src="assets/mui/js/mui.js"></script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h2>Forms</h2>
+      <div class="mui-panel">
+        <h3>Form with placeholders</h3>
+        <form>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control" placeholder="Placeholder 1">
+          </div>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control" placeholder="Placeholder 2">
+          </div>
+          <button type="submit" class="mui-btn mui-btn-default mui-btn-raised">Submit</button>
+        </form>
+
+        <h3>Form with fixed labels</h3>
+        <form>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control">
+            <label>Input 1</label>
+          </div>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control">
+            <label>Input 2</label>
+          </div>
+          <div class="mui-form-group">
+            <textarea class="mui-form-control"></textarea>
+            <label>Textarea</label>
+          </div>
+          <button type="submit" class="mui-btn mui-btn-default mui-btn-raised">Submit</button>
+        </form>
+        
+        <h3>Form with floating labels</h3>
+        <form>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control" autofocus>
+            <label class="mui-form-floating-label">Auto focused</label>
+          </div>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control">
+            <label class="mui-form-floating-label">Placeholder</label>
+          </div>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control" value="Value on load">
+            <label class="mui-form-floating-label">Placeholder</label>
+          </div>
+          <button type="submit" class="mui-btn mui-btn-default mui-btn-raised">Submit</button>
+        </form>
+
+        <h3>Form controls</h3>
+        <form>
+          <input type="text" class="mui-form-control">
+          <input type="password" class="mui-form-control">
+          <input type="datetime" class="mui-form-control">
+          <input type="datetime-local" class="mui-form-control">
+          <input type="date" class="mui-form-control">
+          <input type="month" class="mui-form-control">
+          <input type="time" class="mui-form-control">
+          <input type="week" class="mui-form-control">
+          <input type="number" class="mui-form-control">
+          <input type="email" class="mui-form-control">
+          <input type="url" class="mui-form-control">
+          <input type="search" class="mui-form-control">
+          <input type="tel" class="mui-form-control">
+          <input type="color" class="mui-form-control">
+        </form>
+
+        <h3>Checkboxes and radios</h3>
+        <form>
+          <div class="mui-checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Option one
+            </label>
+          </div>
+
+          <div class="mui-checkbox disabled">
+            <label>
+              <input type="checkbox" value="" disabled>
+              Option two is disabled
+            </label>
+          </div>
+
+          <div class="mui-radio">
+            <label>
+              <input type="radio"
+                     name="optionsRadios"
+                     id="optionsRadios1"
+                     value="option1"
+                     checked>
+              Option one
+            </label>
+          </div>
+
+          <div class="mui-radio">
+            <label>
+              <input type="radio"
+                     name="optionsRadios"
+                     id="optionsRadios2"
+                     value="option2">
+              Option two
+            </label>
+          </div>
+
+          <div class="mui-radio disabled">
+            <label>
+              <input type="radio"
+                     name="optionsRadios"
+                     id="optionsRadios3"
+                     value="option3"
+                     disabled>
+              Option three is disabled
+            </label>
+          </div>
+        </form>
+
+        <h3>Inline Form</h3>
+        <form class="mui-form-inline">
+          <input type="text" class="mui-form-control">
+          <button class="mui-btn mui-btn-default">submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

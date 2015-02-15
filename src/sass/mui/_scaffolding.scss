@@ -1,0 +1,84 @@
+// Reset box sizing
+* {
+  box-sizing: border-box;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+// Body reset
+html {
+  font-size: 10px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  font-weight: $base-font-weight;
+  line-height: $base-line-height;
+  letter-spacing: $base-letter-spacing;
+  color: $base-font-color;
+  background-color: $body-background-color;
+}
+
+// Reset fonts for relevant elements
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+// Links
+a {
+  color: $link-font-color;
+  text-decoration: $link-text-decoration;
+
+  &:hover,
+  &:focus {
+    color: $link-font-color-hover;
+    text-decoration: $link-text-decoration-hover;
+  }
+
+  &:focus {
+    @include tab-focus;
+  }
+}
+
+// paragraphs
+p {
+  margin: 0 0 ($base-line-height-computed / 2);
+}
+
+// lists
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: ($base-line-height-computed / 2);
+}
+
+// Figures
+// We reset this here because previously Normalize had no `figure` margins. 
+// This ensures we dont break anyones use of the element.
+figure {
+  margin: 0;
+}
+
+// Images
+img {
+  vertical-align: middle;
+}
+
+// Horizontal rules
+hr {
+  margin-top: $base-line-height-computed;
+  margin-bottom: $base-line-height-computed;
+  border: 0;
+  height: 1px;
+  background-color: $hr-color;
+}
