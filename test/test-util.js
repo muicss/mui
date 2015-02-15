@@ -1,4 +1,4 @@
-describe('lib/util.js', function() {
+describe('js/lib/util.js', function() {
   var assert = require('assert'),
       helpers = require('./helpers.js'),
       util,
