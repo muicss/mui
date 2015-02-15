@@ -21,5 +21,8 @@
     "stringify": "^3.0.0",
     "synthetic-dom-events": "^0.2.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "test": "mocha"
+  }
 }
