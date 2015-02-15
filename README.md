@@ -1,5 +1,9 @@
 # MUI HTML/CSS/JS Framework
 
+[![Build Status](https://travis-ci.org/amorey/mui.svg?branch=master)](https://travis-ci.org/amorey/mui)
+[![Dependency Status](https://david-dm.org/amorey/mui.svg)](https://david-dm.org/amorey/mui)
+[![devDependency Status](https://david-dm.org/amorey/mui/dev-status.svg)](https://david-dm.org/amorey/mui#info=devDependencies)
+
 ## Development Dependencies
 
 * nodejs (http://nodejs.org/)
