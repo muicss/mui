@@ -4,6 +4,7 @@
 
 * nodejs (http://nodejs.org/)
 * npm (https://www.npmjs.org/)
+* bower (http://bower.io/)
 * sass (http://sass-lang.com/)
 * http-server (via npm)
 
