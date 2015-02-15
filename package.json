@@ -16,7 +16,7 @@
     "gulp-uglify": "^1.0.1",
     "mocha": "^2.1.0",
     "mocha-jsdom": "^0.2.0",
-    "reactify": "^0.17.1",
+    "reactify": "^1.0.0",
     "streamqueue": "^0.1.1",
     "stringify": "^3.0.0",
     "synthetic-dom-events": "^0.2.2"
