@@ -1,6 +1,3 @@
-// 
-// Based on Craigtut solution from Codepen (http://codepen.io/Craigtut/)
-//
 'use strict';
 
 var config = require('./config.js'),
