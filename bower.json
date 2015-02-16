@@ -2,17 +2,39 @@
   "name": "mui",
   "version": "0.0.1",
   "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests",
-    "dist"
+  "authors": [
+    "Andres Morey <andresmarcel@gmail.com>"
+  ],
+  "homepage": "https://www.muicss.com",
+  "main": [
+    "src/sass/mui.scss",
+    "src/sass/mui/_colors.scss",
+    "src/email/mui-email-inline.scss",
+    "src/email/mui-email-styletag.scss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amorey/mui.git"
+  },
+  "keywords": [
+    "material design",
+    "frontend framework",
+    "html, css, and js framework",
+    "email css template"
   ],
   "dependencies": {
     "normalize.css": "~3.0.2",
     "bootstrap-sass-official": "3.3.1"
-  }
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "dist",
+    "e2e-tests",
+    "examples",
+    "gulpfile.js",
+    "node_modules",
+    "package.json",
+    "test"
+  ]
 }
