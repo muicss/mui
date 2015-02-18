@@ -186,7 +186,6 @@ function sass() {
   return libSass({
     'outputStyle': 'expanded',
     'includePaths': [
-      'bower_components/bootstrap-sass-official/assets/stylesheets/',
       'src/sass/',
       'src/email/'
     ]
