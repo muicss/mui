@@ -29,6 +29,8 @@ $btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn
 // button-flat-color()
 // ===============================
 @mixin button-flat-color($color, $background) {
+  $flatColor: null;
+  
   @if $background == #FFF {
     $flatColor: $btn-default-font-color
   } @else {
