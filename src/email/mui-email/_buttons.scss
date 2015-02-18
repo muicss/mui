@@ -44,6 +44,10 @@ $btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn
 // ==============================
 @mixin button-borders($background, $style: "normal") {
   @if $style == 'raised' {
+    $color1: null;
+    $color2: null;
+    $color3: null;
+    
     @if $background == #FFF {
       $color1: darken($background, 5%);
       $color2: darken($background, 10%);
