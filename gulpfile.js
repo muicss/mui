@@ -186,8 +186,8 @@ function sass() {
   return libSass({
     'outputStyle': 'expanded',
     'includePaths': [
-      'src/sass/',
-      'src/email/'
+      //'src/sass/',
+      //'src/email/'
     ]
   });
 }
