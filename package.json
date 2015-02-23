@@ -2,6 +2,7 @@
   "name": "mui",
   "version": "0.0.1",
   "devDependencies": {
+    "browserify": "^9.0.3",
     "del": "^1.0.0",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.0.0",
@@ -16,10 +17,12 @@
     "gulp-uglify": "^1.0.1",
     "mocha": "^2.1.0",
     "mocha-jsdom": "^0.2.0",
+    "mutation-observer": "^1.0.0",
     "reactify": "^1.0.0",
     "streamqueue": "^0.1.1",
     "stringify": "^3.0.0",
-    "synthetic-dom-events": "^0.2.2"
+    "synthetic-dom-events": "^0.2.2",
+    "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {},
   "scripts": {

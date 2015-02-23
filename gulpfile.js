@@ -13,7 +13,9 @@ var del = require('del'),
     stringify = require('stringify'),
     injectSource = require('gulp-inline-source'),
     inlineCss = require('gulp-inline-css'),
-    pkg = require('./package.json');
+    pkg = require('./package.json'),
+    source = require('vinyl-source-stream'),
+    Browserify = require('browserify');
 
 
 // config
@@ -71,12 +73,11 @@ gulp.task('cssmin', ['sass'], function() {
 
 
 gulp.task('js', function() {
-  return gulp.src('src/js/main.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(browserify())
-    .pipe(rename(pkg.name + '.js'))
-    .pipe(gulp.dest(dirName + '/js'));  
+  return Browserify('./src/js/main.js')
+    .external('mutation-observer')
+    .bundle()
+    .pipe(source(pkg.name + '.js'))
+    .pipe(gulp.dest(dirName + '/js'));
 });
 
 
@@ -179,16 +180,21 @@ gulp.task(
 );
 
 
+gulp.task('mutation-observer', function() {
+  return Browserify()
+    .require('mutation-observer')
+    .bundle()
+    .pipe(source('mutation-observer.js'))
+    .pipe(gulp.dest(dirName + '/polyfills'));
+});
+
+
 /***********************
  * Utility methods
  ***********************/
 function sass() {
   return libSass({
-    'outputStyle': 'expanded',
-    'includePaths': [
-      //'src/sass/',
-      //'src/email/'
-    ]
+    'outputStyle': 'expanded'
   });
 }
 
@@ -206,7 +212,8 @@ function build(options) {
     'webcomponents',
     'webcomponents-uglify',
     'build-email-inline',
-    'build-email-styletag'
+    'build-email-styletag',
+    'mutation-observer'
   ];
 
   if (options.emailInlined) {
