@@ -80,6 +80,11 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
     font-size: 1.3rem;
     line-height: inherit;
   }
+
+  // ignore clicks on child elements
+  * {
+    pointer-events: none;
+  }
 }
 
 
