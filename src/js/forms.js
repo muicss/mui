@@ -5,7 +5,8 @@ var config = require('./config.js'),
     formControlClass = config.cssPrfx + 'form-control',
     formGroupClass = config.cssPrfx + 'form-group',
     floatingLabelBaseClass = config.cssPrfx + 'form-floating-label',
-    floatingLabelActiveClass = floatingLabelBaseClass + '-active';
+    floatingLabelActiveClass = floatingLabelBaseClass + '-active',
+    animationName = config.cssPrfx + 'form-floating-label-inserted';
 
 
 function initialize(labelEl) {
@@ -103,28 +104,12 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    var MutationObserver = window.MutationObserver ||
-      require('mutation-observer');
+    function handlerFn(ev) {
+      if (ev.animationName === animationName) initialize(ev.target);
+    }
 
-    var observer = new MutationObserver(function(mutations) {
-      var addedNodes,
-          j,
-          node;
-
-      for (var i=mutations.length - 1; i >= 0; i--) {
-        addedNodes = mutations[i].addedNodes;
-        
-        for (j=addedNodes.length - 1; j >= 0; j--) {
-          node = addedNodes[j];
-
-          if (node.tagName === 'LABEL' && 
-              jqLite.hasClass(node, floatingLabelBaseClass)) {
-            initialize(node);
-          }
-        }
-      }
-    });
-
-    observer.observe(doc.body, {childList: true, subtree: true});
+    jqLite.on(doc, 'animationstart', handlerFn);
+    jqLite.on(doc, 'mozAnimationStart', handlerFn);
+    jqLite.on(doc, 'webkitAnimationStart', handlerFn);
   }
 };

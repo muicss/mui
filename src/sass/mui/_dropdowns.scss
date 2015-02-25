@@ -1,6 +1,15 @@
+// insertion alert
+@keyframes #{$prfx}dropdown-inserted {
+  from {opacity: 0.99;}
+  to {opacity: 1;}
+}
+
 // Dropdown wrapper
 .#{$prfx}dropdown {
   position: relative;
+
+  animation-duration: 0.001s;
+  animation-name: #{$prfx}dropdown-inserted;
 
   // remove outline
   [data-toggle="dropdown"]:focus {

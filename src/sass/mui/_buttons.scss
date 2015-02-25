@@ -1,3 +1,10 @@
+// insertion alert
+@keyframes #{$prfx}btn-inserted {
+  from {opacity: 0.99;}
+  to {opacity: 1;}
+}
+
+
 // =======================
 // Module variables
 // =======================
@@ -36,6 +43,9 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
   position: relative; 
   display: inline-block;
   overflow: hidden;
+
+  animation-duration: 0.001s;
+  animation-name: #{$prfx}btn-inserted;
   
   // spacing between buttons
   & +.#{$prfx}btn {

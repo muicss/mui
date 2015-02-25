@@ -4,7 +4,8 @@ var config = require('./config.js'),
     jqLite = require('./lib/jqLite.js'),
     wrapperClass = config.cssPrfx + 'dropdown',
     openClass = config.cssPrfx + 'open',
-    menuClass = config.cssPrfx + 'dropdown-menu';
+    menuClass = config.cssPrfx + 'dropdown-menu',
+    animationName = config.cssPrfx + 'dropdown-inserted';
 
 
 function initialize(wrapperEl) {
@@ -108,28 +109,12 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    var MutationObserver = window.MutationObserver || 
-      require('mutation-observer');
+    function handlerFn(ev) {
+      if (ev.animationName === animationName) initialize(ev.target);
+    }
 
-    var observer = new MutationObserver(function(mutations) {
-      var addedNodes,
-          j,
-          node;
-
-      for (var i=mutations.length - 1; i >= 0; i--) {
-        addedNodes = mutations[i].addedNodes;
-
-        for (j=addedNodes.length - 1; j >= 0; j--) {
-          node = addedNodes[j];
-
-          if (node.tagName === 'DIV' &&
-              jqLite.hasClass(node, wrapperClass)) {
-            initialize(node);
-          }
-        }
-      }
-    });
-
-    observer.observe(doc.body, {childList: true, subtree: true});
+    jqLite.on(doc, 'animationstart', handlerFn);
+    jqLite.on(doc, 'mozAnimationStart', handlerFn);
+    jqLite.on(doc, 'webkitAnimationStart', handlerFn);
   }
 };
