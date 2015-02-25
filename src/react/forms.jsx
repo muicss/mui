@@ -28,7 +28,7 @@ var FormControl = React.createClass({
 var FormGroup = React.createClass({
   componentDidMount: function() {
     // use js library to add functionality to label
-    forms.processLabel(this.refs.label.getDOMNode());
+    forms.initialize(this.refs.label.getDOMNode());
   },
   render: function() {
     var labelText = this.props.label,

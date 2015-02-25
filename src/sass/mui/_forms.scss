@@ -165,9 +165,6 @@ input[type="search"] {
       font-size: $input-font-size;
       pointer-events: none;
       color: $input-placeholder-color;
-
-      animation-duration: 0.001s;
-      animation-name: muiNodeInserted;
     }
   }
 

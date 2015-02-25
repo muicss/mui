@@ -1,11 +1,11 @@
 // Dropdown wrapper
 .#{$prfx}dropdown {
   position: relative;
-}
 
-// Prevent focus on dropdown toggle when closing dropdowns
-.#{$prfx}dropdown-toggle:focus {
-  outline: 0;
+  // remove outline
+  [data-toggle="dropdown"]:focus {
+    outline: 0;
+  }
 }
 
 // The dropdown menu (ul)

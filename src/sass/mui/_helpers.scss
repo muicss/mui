@@ -1,11 +1,6 @@
 // ============================
-// DOM manipulation helpers
+// Animation
 // ============================
-@keyframes muiNodeInserted {
-  from {opacity: 0.99;}
-  to {opacity: 1;}
-}
-
 .#{$prfx}notransition {
   transition: none !important;
 }

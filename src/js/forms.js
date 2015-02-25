@@ -8,7 +8,7 @@ var config = require('./config.js'),
     floatingLabelActiveClass = floatingLabelBaseClass + '-active';
 
 
-function processLabel(labelEl) {
+function initialize(labelEl) {
   // check flag
   if (labelEl._muiFloatLabel === true) return;
   else labelEl._muiFloatLabel = true;
@@ -67,9 +67,6 @@ function activateLabel(labelEl) {
 
 function deactivateLabel(labelEl, inputEl) {
   jqLite.removeClass(labelEl, floatingLabelActiveClass);
-
-  if (supportsPointerEvents() === false) {
-  }
 }
 
 
@@ -97,22 +94,37 @@ module.exports = {
   formGroupClass: formGroupClass,
   floatingLabelBaseClass: floatingLabelBaseClass,
   floatingLabelActiveClass: floatingLabelActiveClass,
-  processLabel: processLabel,
+  initialize: initialize,
   initListeners: function() {
     var doc = document;
 
     // markup elements available when method is called
     var elList = doc.getElementsByClassName(floatingLabelBaseClass);
-    for (var i=0; i < elList.length; i++) processLabel(elList[i]);
-    
+    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+
     // listen for new elements
-    function handlerFn(ev) {
-      if (ev.animationName !== 'muiNodeInserted') return;
-      processLabel(ev.target);
-    }
-    
-    jqLite.on(doc, 'animationstart', handlerFn);
-    jqLite.on(doc, 'mozAnimationStart', handlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', handlerFn);
+    var MutationObserver = window.MutationObserver ||
+      require('mutation-observer');
+
+    var observer = new MutationObserver(function(mutations) {
+      var addedNodes,
+          j,
+          node;
+
+      for (var i=mutations.length - 1; i >= 0; i--) {
+        addedNodes = mutations[i].addedNodes;
+        
+        for (j=addedNodes.length - 1; j >= 0; j--) {
+          node = addedNodes[j];
+
+          if (node.tagName === 'LABEL' && 
+              jqLite.hasClass(node, floatingLabelBaseClass)) {
+            initialize(node);
+          }
+        }
+      }
+    });
+
+    observer.observe(doc.body, {childList: true, subtree: true});
   }
 };
