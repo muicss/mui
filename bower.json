@@ -23,7 +23,6 @@
     "email css template"
   ],
   "dependencies": {
-    "normalize.css": "~3.0.2",
     "bootstrap-sass-official": "3.3.1"
   },
   "ignore": [

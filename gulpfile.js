@@ -40,26 +40,14 @@ gulp.task('clean', function(callback) {
 
 
 gulp.task('sass', function() {
-  var stream = streamqueue({objectMode: true});
-
-  // prepend normalize.css
-  stream.queue(
-    gulp.src('bower_components/normalize.css/normalize.css')
-  );
-
-  // compile sass file
-  stream.queue(
-    gulp.src('src/sass/mui.scss')
-      .pipe(sass())
-      .pipe(autoprefixer({
-        browsers: ['last 2 versions'],
-        cascade: false
-      }))
-      .on('error', function(err) {console.log(err.message);})
-  );
-
-  return stream.done()
-    .pipe(concat(pkg.name + '.css'))
+  return gulp.src('src/sass/mui.scss')
+    .pipe(sass())
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .on('error', function(err) {console.log(err.message);})
+    .pipe(rename(pkg.name + '.css'))
     .pipe(gulp.dest(dirName + '/css'));
 });
 
