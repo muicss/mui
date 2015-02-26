@@ -2,6 +2,7 @@
 
 var config = require('./config.js'),
     jqLite = require('./lib/jqLite.js'),
+    util = require('./lib/util.js'),
     wrapperClass = config.cssPrfx + 'dropdown',
     openClass = config.cssPrfx + 'open',
     menuClass = config.cssPrfx + 'dropdown-menu',
@@ -109,12 +110,6 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    function handlerFn(ev) {
-      if (ev.animationName === animationName) initialize(ev.target);
-    }
-
-    jqLite.on(doc, 'animationstart', handlerFn);
-    jqLite.on(doc, 'mozAnimationStart', handlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', handlerFn);
+    util.onAnimationStart(animationName, initialize);
   }
 };

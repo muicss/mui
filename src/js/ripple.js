@@ -2,6 +2,7 @@
 
 var config = require('./config.js'),
     jqLite = require('./lib/jqLite.js'),
+    util = require('./lib/util.js'),
     btnClass = config.cssPrfx + 'btn',
     btnFlatClass = config.cssPrfx + 'btn-flat',
     btnFloatingClass = config.cssPrfx + 'btn-floating',
@@ -76,12 +77,6 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    function handlerFn(ev) {
-      if (ev.animationName === animationName) initialize(ev.target);
-    }
-
-    jqLite.on(doc, 'animationstart', handlerFn);
-    jqLite.on(doc, 'mozAnimationStart', handlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', handlerFn);
+    util.onAnimationStart(animationName, initialize);
   }
 };
