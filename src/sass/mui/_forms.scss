@@ -1,3 +1,9 @@
+// insertion alert
+@keyframes #{$prfx}form-floating-label-inserted {
+  from {opacity: 0.99;}
+  to {opacity: 1;}
+}
+
 // ==========================
 // Normalize non-controls
 // ==========================
@@ -167,7 +173,7 @@ input[type="search"] {
       color: $input-placeholder-color;
 
       animation-duration: 0.001s;
-      animation-name: muiNodeInserted;
+      animation-name: #{$prfx}form-floating-label-inserted;
     }
   }
 

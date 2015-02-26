@@ -3,6 +3,17 @@
   <head>
     <link rel="stylesheet" type="text/css" href="assets/mui/css/mui.css"/>
     <script src="assets/mui/js/mui.js"></script>
+    <script>
+      window.addEventListener('load', function() {
+        var el1 = document.getElementsByClassName('mui-dropdown')[0],
+            el2 = document.createElement('div');
+
+        el2.className = 'mui-dropdown';
+        el2.innerHTML = el1.innerHTML;
+
+        document.getElementsByClassName('mui-panel')[0].appendChild(el2);
+      });
+    </script>
   </head>
   <body>
     <div class="mui-container">

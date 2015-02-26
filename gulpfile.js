@@ -74,7 +74,6 @@ gulp.task('cssmin', ['sass'], function() {
 
 gulp.task('js', function() {
   return Browserify('./src/js/main.js')
-    .external('mutation-observer')
     .bundle()
     .pipe(source(pkg.name + '.js'))
     .pipe(gulp.dest(dirName + '/js'));
@@ -180,15 +179,6 @@ gulp.task(
 );
 
 
-gulp.task('mutation-observer', function() {
-  return Browserify()
-    .require('mutation-observer')
-    .bundle()
-    .pipe(source('mutation-observer.js'))
-    .pipe(gulp.dest(dirName + '/polyfills'));
-});
-
-
 /***********************
  * Utility methods
  ***********************/
@@ -212,8 +202,7 @@ function build(options) {
     'webcomponents',
     'webcomponents-uglify',
     'build-email-inline',
-    'build-email-styletag',
-    'mutation-observer'
+    'build-email-styletag'
   ];
 
   if (options.emailInlined) {

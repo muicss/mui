@@ -2,13 +2,15 @@
 
 var config = require('./config.js'),
     jqLite = require('./lib/jqLite.js'),
+    util = require('./lib/util.js'),
     formControlClass = config.cssPrfx + 'form-control',
     formGroupClass = config.cssPrfx + 'form-group',
     floatingLabelBaseClass = config.cssPrfx + 'form-floating-label',
-    floatingLabelActiveClass = floatingLabelBaseClass + '-active';
+    floatingLabelActiveClass = floatingLabelBaseClass + '-active',
+    animationName = config.cssPrfx + 'form-floating-label-inserted';
 
 
-function processLabel(labelEl) {
+function initialize(labelEl) {
   // check flag
   if (labelEl._muiFloatLabel === true) return;
   else labelEl._muiFloatLabel = true;
@@ -67,9 +69,6 @@ function activateLabel(labelEl) {
 
 function deactivateLabel(labelEl, inputEl) {
   jqLite.removeClass(labelEl, floatingLabelActiveClass);
-
-  if (supportsPointerEvents() === false) {
-  }
 }
 
 
@@ -97,22 +96,15 @@ module.exports = {
   formGroupClass: formGroupClass,
   floatingLabelBaseClass: floatingLabelBaseClass,
   floatingLabelActiveClass: floatingLabelActiveClass,
-  processLabel: processLabel,
+  initialize: initialize,
   initListeners: function() {
     var doc = document;
 
     // markup elements available when method is called
     var elList = doc.getElementsByClassName(floatingLabelBaseClass);
-    for (var i=0; i < elList.length; i++) processLabel(elList[i]);
-    
+    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+
     // listen for new elements
-    function handlerFn(ev) {
-      if (ev.animationName !== 'muiNodeInserted') return;
-      processLabel(ev.target);
-    }
-    
-    jqLite.on(doc, 'animationstart', handlerFn);
-    jqLite.on(doc, 'mozAnimationStart', handlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', handlerFn);
+    util.onAnimationStart(animationName, initialize);
   }
 };

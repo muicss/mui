@@ -1,11 +1,20 @@
+// insertion alert
+@keyframes #{$prfx}dropdown-inserted {
+  from {opacity: 0.99;}
+  to {opacity: 1;}
+}
+
 // Dropdown wrapper
 .#{$prfx}dropdown {
   position: relative;
-}
 
-// Prevent focus on dropdown toggle when closing dropdowns
-.#{$prfx}dropdown-toggle:focus {
-  outline: 0;
+  animation-duration: 0.001s;
+  animation-name: #{$prfx}dropdown-inserted;
+
+  // remove outline
+  [data-toggle="dropdown"]:focus {
+    outline: 0;
+  }
 }
 
 // The dropdown menu (ul)

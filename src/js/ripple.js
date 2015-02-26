@@ -2,23 +2,32 @@
 
 var config = require('./config.js'),
     jqLite = require('./lib/jqLite.js'),
+    util = require('./lib/util.js'),
     btnClass = config.cssPrfx + 'btn',
     btnFlatClass = config.cssPrfx + 'btn-flat',
     btnFloatingClass = config.cssPrfx + 'btn-floating',
-    rippleClass = config.cssPrfx + 'ripple-effect';
+    rippleClass = config.cssPrfx + 'ripple-effect',
+    animationName = config.cssPrfx + 'btn-inserted';
+
+
+function initialize(buttonEl) {
+  // check flag
+  if (buttonEl._muiRipple === true) return;
+  else buttonEl._muiRipple = true;
+
+  // exit if element is INPUT (doesn't support absolute positioned children)
+  if (buttonEl.tagName === 'INPUT') return;
+
+  // attach mousedown handler
+  jqLite.on(buttonEl, 'mousedown', mousedownHandler);
+}
 
 
 function mousedownHandler(ev) {
   // only left clicks
   if (ev.button !== 0) return;
 
-  var buttonEl = ev.target;
-
-  // exit if element doesn't have button class
-  if (!jqLite.hasClass(buttonEl, btnClass)) return;
-
-  // exit if element is INPUT (doesn't support absolute positioned children)
-  if (buttonEl.tagName === 'INPUT') return;
+  var buttonEl = this;
 
   // exit if button is disabled
   if (buttonEl.disabled === true) return;
@@ -61,6 +70,13 @@ function mousedownHandler(ev) {
  **********************************/
 module.exports = {
   initListeners: function() {
-    jqLite.on(document, 'mousedown', mousedownHandler);
+    var doc = document;
+
+    // markup elements available when method is called
+    var elList = doc.getElementsByClassName(btnClass);
+    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+
+    // listen for new elements
+    util.onAnimationStart(animationName, initialize);
   }
 };
