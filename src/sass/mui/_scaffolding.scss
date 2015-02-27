@@ -15,13 +15,13 @@ html {
 }
 
 body {
-  font-family: $base-font-family;
-  font-size: $base-font-size;
-  font-weight: $base-font-weight;
-  line-height: $base-line-height;
-  letter-spacing: $base-letter-spacing;
-  color: $base-font-color;
-  background-color: $body-background-color;
+  font-family: $mui-base-font-family;
+  font-size: $mui-base-font-size;
+  font-weight: $mui-base-font-weight;
+  line-height: $mui-base-line-height;
+  letter-spacing: $mui-base-letter-spacing;
+  color: $mui-base-font-color;
+  background-color: $mui-body-background-color;
 }
 
 // Reset fonts for relevant elements
@@ -36,13 +36,13 @@ textarea {
 
 // Links
 a {
-  color: $link-font-color;
-  text-decoration: $link-text-decoration;
+  color: $mui-link-font-color;
+  text-decoration: $mui-link-text-decoration;
 
   &:hover,
   &:focus {
-    color: $link-font-color-hover;
-    text-decoration: $link-text-decoration-hover;
+    color: $mui-link-font-color-hover;
+    text-decoration: $mui-link-text-decoration-hover;
   }
 
   &:focus {
@@ -52,14 +52,14 @@ a {
 
 // paragraphs
 p {
-  margin: 0 0 ($base-line-height-computed / 2);
+  margin: 0 0 ($mui-base-line-height-computed / 2);
 }
 
 // lists
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: ($base-line-height-computed / 2);
+  margin-bottom: ($mui-base-line-height-computed / 2);
 }
 
 // Figures
@@ -76,9 +76,9 @@ img {
 
 // Horizontal rules
 hr {
-  margin-top: $base-line-height-computed;
-  margin-bottom: $base-line-height-computed;
+  margin-top: $mui-base-line-height-computed;
+  margin-bottom: $mui-base-line-height-computed;
   border: 0;
   height: 1px;
-  background-color: $hr-color;
+  background-color: $mui-hr-color;
 }

@@ -1,5 +1,5 @@
 // insertion alert
-@keyframes #{$prfx}form-floating-label-inserted {
+@keyframes #{$mui-prfx}form-floating-label-inserted {
   from {opacity: 0.99;}
   to {opacity: 1;}
 }
@@ -18,9 +18,9 @@ legend {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: $base-line-height-computed / 2;
-  font-size: $legend-font-size;
-  color: $legend-font-color;
+  margin-bottom: $mui-base-line-height-computed / 2;
+  font-size: $mui-legend-font-size;
+  color: $mui-legend-font-color;
   line-height: inherit;
   border: 0;
 }
@@ -96,16 +96,16 @@ input[type="checkbox"]:focus {
 // input[type="tel"]
 // input[type="color"]
 
-.#{$prfx}form-control {
+.#{$mui-prfx}form-control {
   display: block;
-  background-color: $input-background-color;
-  color: $input-font-color;
+  background-color: $mui-input-background-color;
+  color: $mui-input-font-color;
   border: none;
-  border-bottom: 1px solid $input-border-color;
+  border-bottom: 1px solid $mui-input-border-color;
   outline: none;
-  height: $input-height;
+  height: $mui-input-height;
   width: 100%;
-  font-size: $input-font-size;
+  font-size: $mui-input-font-size;
   padding: 0;
   box-shadow: none;
   border-radius: 0px;
@@ -114,12 +114,12 @@ input[type="checkbox"]:focus {
   background-image: none; 
 
   &::placeholder {
-    color: $input-placeholder-color;
+    color: $mui-input-placeholder-color;
     opacity: 1; // normalize firefox
   }
 
   &:focus {
-    border-color: $input-border-color-focus;
+    border-color: $mui-input-border-color-focus;
     border-width: 2px;
   }
 
@@ -127,20 +127,20 @@ input[type="checkbox"]:focus {
   &[disabled],
   &[readonly],
   fieldset[disabled] & {
-    cursor: $cursor-disabled;
-    background-color: $input-background-color-disabled;
+    cursor: $mui-cursor-disabled;
+    background-color: $mui-input-background-color-disabled;
     opacity: 1; // iOS fix for unreadable disabled content
   }
 }
 
 // Reset height for `textarea`s
-textarea.#{$prfx}form-control {
+textarea.#{$mui-prfx}form-control {
   height: auto;
 }
 
 // Compensate for height change on focus
-input.#{$prfx}form-control:focus {
-  height: $input-height + 1px;
+input.#{$mui-prfx}form-control:focus {
+  height: $mui-input-height + 1px;
   margin-bottom: -1px;
 }
 
@@ -153,49 +153,49 @@ input[type="search"] {
 // =====================
 // Form groups
 // =====================
-.#{$prfx}form-group {
+.#{$mui-prfx}form-group {
   position: relative;
-  margin-bottom: $form-group-margin-bottom;
-  padding-top: $label-font-size + $label-margin-bottom;
+  margin-bottom: $mui-form-group-margin-bottom;
+  padding-top: $mui-label-font-size + $mui-label-margin-bottom;
 
   // position label at top
   > label {
     position: absolute;
-    color: $label-font-color;
+    color: $mui-label-font-color;
     top: 0px;
-    font-size: $label-font-size;
+    font-size: $mui-label-font-size;
     font-weight: 400;
 
-    &.#{$prfx}form-floating-label {
-      top: 5px + $label-font-size + $label-margin-bottom;
-      font-size: $input-font-size;
+    &.#{$mui-prfx}form-floating-label {
+      top: 5px + $mui-label-font-size + $mui-label-margin-bottom;
+      font-size: $mui-input-font-size;
       pointer-events: none;
-      color: $input-placeholder-color;
+      color: $mui-input-placeholder-color;
 
       animation-duration: 0.001s;
-      animation-name: #{$prfx}form-floating-label-inserted;
+      animation-name: #{$mui-prfx}form-floating-label-inserted;
     }
   }
 
   > textarea {
     padding-top: 5px;
-    min-height: $textarea-height;
+    min-height: $mui-textarea-height;
   }
 
   // active floating icon
-  > label.#{$prfx}form-floating-label-active {
-    color: $label-font-color;
+  > label.#{$mui-prfx}form-floating-label-active {
+    color: $mui-label-font-color;
   }
   
-  > label.#{$prfx}form-floating-label-active,
-  > .#{$prfx}form-control:focus + label.#{$prfx}form-floating-label {
-    font-size: $label-font-size;
+  > label.#{$mui-prfx}form-floating-label-active,
+  > .#{$mui-prfx}form-control:focus + label.#{$mui-prfx}form-floating-label {
+    font-size: $mui-label-font-size;
     top: 0px;
   }
 
   // input focus
-  > .#{$prfx}form-control:focus + label {
-    color: $input-border-color-focus;
+  > .#{$mui-prfx}form-control:focus + label {
+    color: $mui-input-border-color-focus;
   }
 }
 
@@ -205,15 +205,15 @@ input[type="search"] {
 // ===========================
 // Indent the labels to position radios/checkboxes as hanging controls.
 
-.#{$prfx}radio,
-.#{$prfx}checkbox {
+.#{$mui-prfx}radio,
+.#{$mui-prfx}checkbox {
   position: relative;
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
 
   label {
-    min-height: $base-line-height-computed;
+    min-height: $mui-base-line-height-computed;
     padding-left: 20px;
     margin-bottom: 0;
     font-weight: normal;
@@ -221,23 +221,23 @@ input[type="search"] {
   }
 }
 
-.#{$prfx}radio input[type="radio"],
+.#{$mui-prfx}radio input[type="radio"],
 .#{prfx}radio-inline input[type="radio"],
-.#{$prfx}checkbox input[type="checkbox"],
-.#{$prfx}checkbox-inline input[type="checkbox"] {
+.#{$mui-prfx}checkbox input[type="checkbox"],
+.#{$mui-prfx}checkbox-inline input[type="checkbox"] {
   position: absolute;
   margin-left: -20px;
   margin-top: 4px;
 }
 
-.#{$prfx}radio + .#{$prfx}radio,
-.#{$prfx}checkbox + .#{$prfx}checkbox {
+.#{$mui-prfx}radio + .#{$mui-prfx}radio,
+.#{$mui-prfx}checkbox + .#{$mui-prfx}checkbox {
   margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
 }
 
 // Radios and checkboxes on same line
-.#{$prfx}radio-inline,
-.#{$prfx}checkbox-inline {
+.#{$mui-prfx}radio-inline,
+.#{$mui-prfx}checkbox-inline {
   display: inline-block;
   padding-left: 20px;
   margin-bottom: 0;
@@ -246,8 +246,8 @@ input[type="search"] {
   cursor: pointer;
 }
 
-.#{$prfx}radio-inline + .#{$prfx}radio-inline,
-.#{$prfx}checkbox-inline + .#{$prfx}checkbox-inline {
+.#{$mui-prfx}radio-inline + .#{$mui-prfx}radio-inline,
+.#{$mui-prfx}checkbox-inline + .#{$mui-prfx}checkbox-inline {
   margin-top: 0;
   margin-left: 10px; // space out consecutive inline controls
 }
@@ -257,24 +257,24 @@ input[type="radio"],
 input[type="checkbox"] {
   &[disabled],
   fieldset[disabled] & {
-    cursor: $cursor-disabled;
+    cursor: $mui-cursor-disabled;
   }
 }
 
 // These classes are used directly on <label>s
-.#{$prfx}radio-inline,
-.#{$prfx}checkbox-inline {
+.#{$mui-prfx}radio-inline,
+.#{$mui-prfx}checkbox-inline {
   fieldset[disabled] & {
-    cursor: $cursor-disabled;
+    cursor: $mui-cursor-disabled;
   }
 }
 
 // These classes are used on elements with <label> descendants
-.#{$prfx}radio,
-.#{$prfx}checkbox {
+.#{$mui-prfx}radio,
+.#{$mui-prfx}checkbox {
   fieldset[disabled] & {
     label {
-      cursor: $cursor-disabled;
+      cursor: $mui-cursor-disabled;
     }
   }
 }
@@ -283,26 +283,26 @@ input[type="checkbox"] {
 // =====================
 // Form-inline
 // =====================
-.#{$prfx}form-inline {
+.#{$mui-prfx}form-inline {
 
   // Kick in the inline
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $mui-screen-sm-min) {
     // Inline-block all the things for "inline"
-    .#{$prfx}form-group {
+    .#{$mui-prfx}form-group {
       display: inline-block;
       margin-bottom: 0;
       vertical-align: middle;
     }
 
-    .#{$prfx}form-control {
+    .#{$mui-prfx}form-control {
       display: inline-block;
       width: auto;
       vertical-align: middle;
     }
     
     // Remove default margin on radios/checkboxes that were used for stacking
-    .#{$prfx}radio,
-    .#{$prfx}checkbox {
+    .#{$mui-prfx}radio,
+    .#{$mui-prfx}checkbox {
       display: inline-block;
       margin-top: 0;
       margin-bottom: 0;
@@ -313,8 +313,8 @@ input[type="checkbox"] {
       }
     }
     
-    .#{$prfx}radio input[type="radio"],
-    .#{$prfx}checkbox input[type="checkbox"] {
+    .#{$mui-prfx}radio input[type="radio"],
+    .#{$mui-prfx}checkbox input[type="checkbox"] {
       position: relative;
       margin-left: 0;
     }

@@ -1,5 +1,5 @@
 // insertion alert
-@keyframes #{$prfx}btn-inserted {
+@keyframes #{$mui-prfx}btn-inserted {
   from {opacity: 0.99;}
   to {opacity: 1;}
 }
@@ -8,18 +8,18 @@
 // =======================
 // Module variables
 // =======================
-$btn-box-shadow-raised: 0 1px 4px 0 rgba(mui-color('black'), 0.37);
+$mui-btn-box-shadow-raised: 0 1px 4px 0 rgba(mui-color('black'), 0.37);
 
-$btn-box-shadow-hover:  0 4px 7px 0 rgba(mui-color('black'), 0.3),
+$mui-btn-box-shadow-hover:  0 4px 7px 0 rgba(mui-color('black'), 0.3),
                         0 2px 3px 0 rgba(mui-color('black'), 0.1);
 
-$btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
+$mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
 
 
 // =======================
 // Main button class
 // =======================
-.#{$prfx}btn {
+.#{$mui-prfx}btn {
   text-align: center;
   vertical-align: middle;
   touch-action: manipulation;
@@ -32,12 +32,12 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
 
   @include mui-text("button");
 
-  height: $btn-height;
-  line-height: $btn-height;
-  padding: 0 $btn-padding-horizontal;
-  border-radius: $btn-border-radius;
-  margin-top: $btn-margin-vertical;
-  margin-bottom: $btn-margin-vertical;
+  height: $mui-btn-height;
+  line-height: $mui-btn-height;
+  padding: 0 $mui-btn-padding-horizontal;
+  border-radius: $mui-btn-border-radius;
+  margin-top: $mui-btn-margin-vertical;
+  margin-bottom: $mui-btn-margin-vertical;
 
   // for ripples
   position: relative; 
@@ -45,19 +45,19 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
   overflow: hidden;
 
   animation-duration: 0.001s;
-  animation-name: #{$prfx}btn-inserted;
+  animation-name: #{$mui-prfx}btn-inserted;
   
   // spacing between buttons
-  & +.#{$prfx}btn {
-    margin-left: $btn-spacing-horizontal;
+  & +.#{$mui-prfx}btn {
+    margin-left: $mui-btn-spacing-horizontal;
   }
   
   &:hover,
   &:focus,
   &:active,
-  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
-    box-shadow: $btn-box-shadow-hover;
-    color: $btn-default-font-color;
+  .#{$mui-prfx}open > &.#{$mui-prfx}dropdown-toggle {
+    box-shadow: $mui-btn-box-shadow-hover;
+    color: $mui-btn-default-font-color;
   }
 
   &:active &:focus {
@@ -70,16 +70,16 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
   }
   
   &:active,
-  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
+  .#{$mui-prfx}open > &.#{$mui-prfx}dropdown-toggle {
     outline: 0;
     background-image: none;
-    box-shadow: $btn-box-shadow-active;
+    box-shadow: $mui-btn-box-shadow-active;
   }
   
   &[disabled],
-  &.#{$prfx}disabled,
+  &.#{$mui-prfx}disabled,
   fieldset[disabled] & {
-    cursor: $cursor-disabled;
+    cursor: $mui-cursor-disabled;
     pointer-events: none;
     opacity: 0.60;
     box-shadow: none;
@@ -94,74 +94,74 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
 
 
 // Button sizes
-.#{$prfx}btn-lg {
-  height: $btn-height-lg;
-  line-height: $btn-height-lg;
+.#{$mui-prfx}btn-lg {
+  height: $mui-btn-height-lg;
+  line-height: $mui-btn-height-lg;
 }
 
 
 // Flat buttons
-.#{$prfx}btn-flat {
-  background-color: $btn-flat-background-color;
+.#{$mui-prfx}btn-flat {
+  background-color: $mui-btn-flat-background-color;
 
   &:hover,
   &:focus,
   &:active,
-  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
+  .#{$mui-prfx}open > &.#{$mui-prfx}dropdown-toggle {
     box-shadow: none;
-    background-color: $btn-flat-background-color-hover;
+    background-color: $mui-btn-flat-background-color-hover;
   }
 }
 
 
 // Raised buttons
-.#{$prfx}btn-raised {
-  box-shadow: $btn-box-shadow-raised;
+.#{$mui-prfx}btn-raised {
+  box-shadow: $mui-btn-box-shadow-raised;
   transition: .2s ease-out;
 
   &:not(:disabled) {
     &:hover,
     &:focus {
-      box-shadow: $btn-box-shadow-hover;
+      box-shadow: $mui-btn-box-shadow-hover;
     }
     
     &:active {
-      box-shadow: $btn-box-shadow-raised;
+      box-shadow: $mui-btn-box-shadow-raised;
     }
   }
 }
 
 
 // Button colors
-.#{$prfx}btn-default {
-  @include button-variant($btn-default-font-color,
-                          $btn-default-background-color);
+.#{$mui-prfx}btn-default {
+  @include button-variant($mui-btn-default-font-color,
+                          $mui-btn-default-background-color);
 
-  @include button-flat-variant($btn-default-font-color,
-                               $btn-flat-background-color-hover);
+  @include button-flat-variant($mui-btn-default-font-color,
+                               $mui-btn-flat-background-color-hover);
 }
 
 
-.#{$prfx}btn-primary {
-  @include button-variant($btn-primary-font-color,
-                          $btn-primary-background-color);
+.#{$mui-prfx}btn-primary {
+  @include button-variant($mui-btn-primary-font-color,
+                          $mui-btn-primary-background-color);
 
-  @include button-flat-variant($btn-primary-background-color,
-                               $btn-flat-background-color-hover);
+  @include button-flat-variant($mui-btn-primary-background-color,
+                               $mui-btn-flat-background-color-hover);
 }
 
 
-.#{$prfx}btn-danger {
-  @include button-variant($btn-danger-font-color,
-                          $btn-danger-background-color);
+.#{$mui-prfx}btn-danger {
+  @include button-variant($mui-btn-danger-font-color,
+                          $mui-btn-danger-background-color);
 
-  @include button-flat-variant($btn-danger-background-color,
-                               $btn-flat-background-color-hover);
+  @include button-flat-variant($mui-btn-danger-background-color,
+                               $mui-btn-flat-background-color-hover);
 }
 
 
 // Floating button
-.#{$prfx}btn-floating {
+.#{$mui-prfx}btn-floating {
   position: relative;
   z-index: 1;
   width: 55px;
@@ -169,16 +169,16 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
   line-height: 55px;
   padding: 0;
   border-radius: 50%;
-  color: $btn-floating-font-color;
-  background-color: $btn-floating-background-color;
-  @extend .#{$prfx}btn-raised;
+  color: $mui-btn-floating-font-color;
+  background-color: $mui-btn-floating-background-color;
+  @extend .#{$mui-prfx}btn-raised;
 
   &:not(:disabled) {
     &:hover,
     &:focus,
     &:active {
-      color: $btn-floating-font-color;
-      background-color: lighten($btn-floating-background-color, 5%);
+      color: $mui-btn-floating-font-color;
+      background-color: lighten($mui-btn-floating-background-color, 5%);
     }
   }
   
@@ -186,14 +186,14 @@ $btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
     width: inherit;
     display: inline-block;
     text-align: center;
-    color: $btn-floating-font-color;
+    color: $mui-btn-floating-font-color;
     font-size: 1.6rem;
     line-height: 55px;
   }
 }
 
 
-.#{$prfx}btn-floating-mini {
+.#{$mui-prfx}btn-floating-mini {
   width: 40px;
   height: 40px;
   line-height: 40px;

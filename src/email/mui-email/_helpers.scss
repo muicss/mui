@@ -1,15 +1,15 @@
 // =======================
 // Alignment helpers
 // =======================
-.#{$prfx}text-left           { text-align: left; }
-.#{$prfx}text-right          { text-align: right; }
-.#{$prfx}text-center         { text-align: center; }
-.#{$prfx}text-justify        { text-align: justify; }
+.#{$mui-prfx}text-left           { text-align: left; }
+.#{$mui-prfx}text-right          { text-align: right; }
+.#{$mui-prfx}text-center         { text-align: center; }
+.#{$mui-prfx}text-justify        { text-align: justify; }
 
 
 // =======================
 // Image helper
 // =======================
-.#{$prfx}image-fix {
+.#{$mui-prfx}image-fix {
   display: block;
 }

@@ -1,33 +1,33 @@
 // ======================
 // Color function
 // ======================
-@function mui-color($key1, $key2: '500') {
+@function mui-color($mui-key1, $mui-key2: '500') {
   // check key1
-  @if map-has-key($mui-colors, $key1) == false {
-    @warn "Color `#{$key1}` not found.";
+  @if map-has-key($mui-mui-colors, $mui-key1) == false {
+    @warn "Color `#{$mui-key1}` not found.";
     @return null;
   }
   
-  $mapVal: map-get($mui-colors, $key1);
+  $mui-mapVal: map-get($mui-mui-colors, $mui-key1);
 
   // use second key
-  @if type-of($mapVal) == 'map' {
+  @if type-of($mui-mapVal) == 'map' {
     // check key2
-    @if map-has-key($mapVal, $key2) == false {
-      @warn "Color `#{$key1}` `#{$key2}` not found.";
+    @if map-has-key($mui-mapVal, $mui-key2) == false {
+      @warn "Color `#{$mui-key1}` `#{$mui-key2}` not found.";
       @return null;
     }
 
-    $mapVal: map-get($mapVal, $key2);
+    $mui-mapVal: map-get($mui-mapVal, $mui-key2);
   }
 
-  @return $mapVal;
+  @return $mui-mapVal;
 }
 
 // ======================
 // Color map
 // ======================
-$mui-colors: (
+$mui-mui-colors: (
   "red": (
     "50": #FFEBEE,
     "100": #FFCDD2,

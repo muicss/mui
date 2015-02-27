@@ -34,12 +34,12 @@
 // Miscellaneous
 // =========================
 
-.#{$prfx}container-fixed {
-  width: $container-max-width;
+.#{$mui-prfx}container-fixed {
+  width: $mui-container-max-width;
   display: block;
   margin: 0 auto;
   clear: both;
   text-align: left;
-  padding-left: $container-padding-horizontal;
-  padding-right: $container-padding-horizontal;
+  padding-left: $mui-container-padding-horizontal;
+  padding-right: $mui-container-padding-horizontal;
 }

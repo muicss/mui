@@ -1,39 +1,39 @@
 // **************************
 // Typography
 // **************************
-@mixin mui-text($name) {
-  $styles: map-get($mui-text-styles, $name);
+@mixin mui-text($mui-name) {
+  $mui-styles: map-get($mui-mui-text-styles, $mui-name);
 
-  font-weight: map-get($styles, "font-weight");
-  font-size: map-get($styles, "font-size");
-  line-height: map-get($styles, "line-height");
-  letter-spacing: map-get($styles, "letter-spacing");
+  font-weight: map-get($mui-styles, "font-weight");
+  font-size: map-get($mui-styles, "font-size");
+  line-height: map-get($mui-styles, "line-height");
+  letter-spacing: map-get($mui-styles, "letter-spacing");
 
-  @if $base-font-color == mui-color('white') {
-    color: rgba(mui-color('white'), map-get($styles, "alpha-white"));
+  @if $mui-base-font-color == mui-color('white') {
+    color: rgba(mui-color('white'), map-get($mui-styles, "alpha-white"));
   } @else {
-    color: rgba($base-font-color, map-get($styles, "alpha-black"));
+    color: rgba($mui-base-font-color, map-get($mui-styles, "alpha-black"));
   }
   
-  @if $name == "button" {
+  @if $mui-name == "button" {
     text-transform: uppercase;
   }
 
-  &.#{$prfx}text-black {
-    color: rgba(mui-color('black'), map-get($styles, "alpha-black"));
+  &.#{$mui-prfx}text-black {
+    color: rgba(mui-color('black'), map-get($mui-styles, "alpha-black"));
   }
 
-  &.#{$prfx}text-white {
-    color: rgba(mui-color('white'), map-get($styles, "alpha-white"));
+  &.#{$mui-prfx}text-white {
+    color: rgba(mui-color('white'), map-get($mui-styles, "alpha-white"));
   }
 
-  &.#{$prfx}text-accent {
-    color: rgba($accent-color, map-get($styles, "alpha-accent"));
+  &.#{$mui-prfx}text-accent {
+    color: rgba($mui-accent-color, map-get($mui-styles, "alpha-accent"));
   }
 }
 
 
-$mui-text-styles: (
+$mui-mui-text-styles: (
   "display4": (
     "font-weight": 300,
     "font-size": 112px,

@@ -1,15 +1,15 @@
 // For body
-.#{$prfx}overlay-on {
+.#{$mui-prfx}overlay-on {
   overflow: hidden !important;
 }
 
 
-##{$prfx}overlay {
+##{$mui-prfx}overlay {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 99999999;
-  background-color: $overlay-background-color;
+  background-color: $mui-overlay-background-color;
 }

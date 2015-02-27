@@ -1,15 +1,15 @@
 // insertion alert
-@keyframes #{$prfx}dropdown-inserted {
+@keyframes #{$mui-prfx}dropdown-inserted {
   from {opacity: 0.99;}
   to {opacity: 1;}
 }
 
 // Dropdown wrapper
-.#{$prfx}dropdown {
+.#{$mui-prfx}dropdown {
   position: relative;
 
   animation-duration: 0.001s;
-  animation-name: #{$prfx}dropdown-inserted;
+  animation-name: #{$mui-prfx}dropdown-inserted;
 
   // remove outline
   [data-toggle="dropdown"]:focus {
@@ -18,7 +18,7 @@
 }
 
 // The dropdown menu (ul)
-.#{$prfx}dropdown-menu {
+.#{$mui-prfx}dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -28,11 +28,11 @@
   padding: 5px 0;
   margin: 2px 0 0; // override default ul
   list-style: none;
-  font-size: $base-font-size;
+  font-size: $mui-base-font-size;
   text-align: left;
-  background-color: $dropdown-background-color;
-  border-radius: $dropdown-border-radius;
-  @extend .#{$prfx}z1;
+  background-color: $mui-dropdown-background-color;
+  border-radius: $mui-dropdown-border-radius;
+  @extend .#{$mui-prfx}z1;
   background-clip: padding-box;
 
   // Links within the dropdown menu
@@ -41,40 +41,40 @@
     padding: 3px 20px;
     clear: both;
     font-weight: normal;
-    line-height: $base-line-height;
-    color: $dropdown-link-font-color;
+    line-height: $mui-base-line-height;
+    color: $mui-dropdown-link-font-color;
     white-space: nowrap; // prevent links from randomly breaking onto new lines
   }
 }
 
 // Hover/Focus state
-.#{$prfx}dropdown-menu > li > a {
+.#{$mui-prfx}dropdown-menu > li > a {
   &:hover,
   &:focus {
     text-decoration: none;
-    color: $dropdown-link-font-color-hover;
-    background-color: $dropdown-link-background-color-hover;
+    color: $mui-dropdown-link-font-color-hover;
+    background-color: $mui-dropdown-link-background-color-hover;
   }
 }
 
 // Active state
-.#{$prfx}dropdown-menu > .#{$prfx}active > a {
+.#{$mui-prfx}dropdown-menu > .#{$mui-prfx}active > a {
   &,
   &:hover,
   &:focus {
-    color: $dropdown-link-font-color-active;
+    color: $mui-dropdown-link-font-color-active;
     text-decoration: none;
     outline: 0;
-    background-color: $dropdown-link-background-color-active;
+    background-color: $mui-dropdown-link-background-color-active;
   }
 }
 
 // Disabled state
-.#{$prfx}dropdown-menu > .#{$prfx}disabled > a {
+.#{$mui-prfx}dropdown-menu > .#{$mui-prfx}disabled > a {
   &,
   &:hover,
   &:focus {
-    color: $dropdown-link-font-color-disabled;
+    color: $mui-dropdown-link-font-color-disabled;
   }
 
   // Nuke hover/focus effects
@@ -83,14 +83,14 @@
     text-decoration: none;
     background-color: transparent;
     background-image: none; // Remove CSS gradient
-    cursor: $cursor-disabled;
+    cursor: $mui-cursor-disabled;
   }
 }
 
 // Open state for the dropdown
-.#{$prfx}open {
+.#{$mui-prfx}open {
   // Show the menu
-  > .#{$prfx}dropdown-menu {
+  > .#{$mui-prfx}dropdown-menu {
     display: block;
   }
 
@@ -101,7 +101,7 @@
 }
 
 // Backdrop to catch body clicks on mobile etc
-.#{$prfx}dropdown-backdrop {
+.#{$mui-prfx}dropdown-backdrop {
   position: fixed;
   left: 0;
   right: 0;
@@ -110,7 +110,7 @@
 }
 
 // Right aligned dropdowns
-.#{$prfx}pull-right > .#{$prfx}dropdown-menu {
+.#{$mui-prfx}pull-right > .#{$mui-prfx}dropdown-menu {
   right: 0;
   left: auto;
 }

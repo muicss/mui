@@ -1,26 +1,26 @@
 // ================================
 // Module variables
 // ================================
-$btn-font-size: 14px;
-$btn-font-weight: 400;
-$btn-letter-spacing: 0.05em;
+$mui-btn-font-size: 14px;
+$mui-btn-font-weight: 400;
+$mui-btn-letter-spacing: 0.05em;
 
-$btn-border-width: 1px;
+$mui-btn-border-width: 1px;
 
-$btn-padding-vertical-computed: ($btn-height - $btn-font-size) / 2 - $btn-border-width;
-$btn-padding-horizontal-computed: $btn-padding-horizontal - $btn-border-width;
-$btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn-border-width;
+$mui-btn-padding-vertical-computed: ($mui-btn-height - $mui-btn-font-size) / 2 - $mui-btn-border-width;
+$mui-btn-padding-horizontal-computed: $mui-btn-padding-horizontal - $mui-btn-border-width;
+$mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size) / 2 - $mui-btn-border-width;
 
 
 // ===============================
 // button-text-styles()
 // ===============================
 @mixin button-text-styles() {
-  font-weight: $btn-font-weight;
-  font-size: $btn-font-size;
-  color: $base-font-color;
-  line-height: $btn-font-size;
-  letter-spacing: $btn-letter-spacing;
+  font-weight: $mui-btn-font-weight;
+  font-size: $mui-btn-font-size;
+  color: $mui-base-font-color;
+  line-height: $mui-btn-font-size;
+  letter-spacing: $mui-btn-letter-spacing;
   text-transform: uppercase;
 }
 
@@ -28,49 +28,49 @@ $btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn
 // ===============================
 // button-flat-color()
 // ===============================
-@mixin button-flat-color($color, $background) {
-  $flatColor: null;
+@mixin button-flat-color($mui-color, $mui-background) {
+  $mui-flatColor: null;
   
-  @if $background == #FFF {
-    $flatColor: $btn-default-font-color
+  @if $mui-background == #FFF {
+    $mui-flatColor: $mui-btn-default-font-color
   } @else {
-    $flatColor: $background;
+    $mui-flatColor: $mui-background;
   }
 
-  color: $flatColor;
+  color: $mui-flatColor;
 }
 
 
 // ==============================
 // button-borders()
 // ==============================
-@mixin button-borders($background, $style: "normal") {
-  @if $style == 'raised' {
-    $color1: null;
-    $color2: null;
-    $color3: null;
+@mixin button-borders($mui-background, $mui-style: "normal") {
+  @if $mui-style == 'raised' {
+    $mui-color1: null;
+    $mui-color2: null;
+    $mui-color3: null;
     
-    @if $background == #FFF {
-      $color1: darken($background, 5%);
-      $color2: darken($background, 10%);
-      $color3: darken($background, 27%);
+    @if $mui-background == #FFF {
+      $mui-color1: darken($mui-background, 5%);
+      $mui-color2: darken($mui-background, 10%);
+      $mui-color3: darken($mui-background, 27%);
     } @else {
-      $color1: lighten($background, 10%);
-      $color2: $background;
-      $color3: darken($background, 15%);
+      $mui-color1: lighten($mui-background, 10%);
+      $mui-color2: $mui-background;
+      $mui-color3: darken($mui-background, 15%);
     }
 
-    border-top: $btn-border-width solid $color1;
-    border-left: $btn-border-width solid $color2;
-    border-right: $btn-border-width solid $color2;
-    border-bottom: 2px solid $color3;
+    border-top: $mui-btn-border-width solid $mui-color1;
+    border-left: $mui-btn-border-width solid $mui-color2;
+    border-right: $mui-btn-border-width solid $mui-color2;
+    border-bottom: 2px solid $mui-color3;
   } @else {
-    $borderColor: $background;
+    $mui-borderColor: $mui-background;
     
-    border-top: $btn-border-width solid $borderColor;
-    border-left: $btn-border-width solid $borderColor;
-    border-right: $btn-border-width solid $borderColor;
-    border-bottom: $btn-border-width solid $borderColor;
+    border-top: $mui-btn-border-width solid $mui-borderColor;
+    border-left: $mui-btn-border-width solid $mui-borderColor;
+    border-right: $mui-btn-border-width solid $mui-borderColor;
+    border-bottom: $mui-btn-border-width solid $mui-borderColor;
   }
 }
 
@@ -78,21 +78,21 @@ $btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn
 // ===============================
 // button-anchor-variant()
 // ===============================
-@mixin button-anchor-variant($color, $background) {
-  color: $color;
-  background-color: $background;
-  @include button-borders($background);
+@mixin button-anchor-variant($mui-color, $mui-background) {
+  color: $mui-color;
+  background-color: $mui-background;
+  @include button-borders($mui-background);
   
   // raised
-  &.#{$prfx}btn-raised {
-    @include button-borders($background, "raised");
+  &.#{$mui-prfx}btn-raised {
+    @include button-borders($mui-background, "raised");
   }
 
   // flat
-  &.#{$prfx}btn-flat {
-    background-color: $btn-flat-background-color;
-    @include button-flat-color($color, $background);
-    @include button-borders($btn-flat-background-color);
+  &.#{$mui-prfx}btn-flat {
+    background-color: $mui-btn-flat-background-color;
+    @include button-flat-color($mui-color, $mui-background);
+    @include button-borders($mui-btn-flat-background-color);
   }
 }
 
@@ -100,36 +100,36 @@ $btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn
 // ==============================
 // button-table-variant()
 // ==============================
-@mixin button-table-variant($color, $background) {
+@mixin button-table-variant($mui-color, $mui-background) {
   > tr > td,
   > tbody > tr > td {
-    background-color: $background;
+    background-color: $mui-background;
     
     > a {
-      color: $color;
-      @include button-borders($background);
+      color: $mui-color;
+      @include button-borders($mui-background);
     }
   }
 
   // raised
-  &.#{$prfx}btn-raised {
+  &.#{$mui-prfx}btn-raised {
     > tr > td,
     > tbody > tr > td {
       > a {
-        @include button-borders($background, "raised");
+        @include button-borders($mui-background, "raised");
       }
     }
   }
 
   // flat
-  &.#{$prfx}btn-flat {
+  &.#{$mui-prfx}btn-flat {
     > tr > td,
     > tbody > tr > td {
-      background-color: $btn-flat-background-color;
+      background-color: $mui-btn-flat-background-color;
 
       > a {
-        @include button-flat-color($color, $background);
-        @include button-borders($btn-flat-background-color);
+        @include button-flat-color($mui-color, $mui-background);
+        @include button-borders($mui-btn-flat-background-color);
       }
     }
   }
@@ -141,52 +141,52 @@ $btn-padding-vertical-lg-computed: ($btn-height-lg - $base-font-size) / 2 - $btn
 // ==============================
 
 // shared btn styles
-.#{$prfx}btn {
+.#{$mui-prfx}btn {
   cursor: pointer;
   white-space: nowrap;
 }
 
 
 // <a> btn styles
-a.#{$prfx}btn {
+a.#{$mui-prfx}btn {
   display: inline-block;
   text-decoration: none;
   text-align: center;
   
   @include button-text-styles();
 
-  border-radius: $btn-border-radius;
-  padding: $btn-padding-vertical-computed $btn-padding-horizontal-computed;
+  border-radius: $mui-btn-border-radius;
+  padding: $mui-btn-padding-vertical-computed $mui-btn-padding-horizontal-computed;
   background-color: transparent;
   @include button-borders(transparent);
 
-  &.#{$prfx}btn-default {
-    @include button-anchor-variant($btn-default-font-color,
-                                   $btn-default-background-color);
+  &.#{$mui-prfx}btn-default {
+    @include button-anchor-variant($mui-btn-default-font-color,
+                                   $mui-btn-default-background-color);
   }
 
-  &.#{$prfx}btn-primary {
-    @include button-anchor-variant($btn-primary-font-color,
-                                   $btn-primary-background-color);
+  &.#{$mui-prfx}btn-primary {
+    @include button-anchor-variant($mui-btn-primary-font-color,
+                                   $mui-btn-primary-background-color);
   }
 
-  &.#{$prfx}btn-danger {
-    @include button-anchor-variant($btn-danger-font-color,
-                                   $btn-danger-background-color);
+  &.#{$mui-prfx}btn-danger {
+    @include button-anchor-variant($mui-btn-danger-font-color,
+                                   $mui-btn-danger-background-color);
   }
 
-  &.#{$prfx}btn-accent {
-    @include button-anchor-variant($btn-accent-font-color,
-                                   $btn-accent-background-color);
+  &.#{$mui-prfx}btn-accent {
+    @include button-anchor-variant($mui-btn-accent-font-color,
+                                   $mui-btn-accent-background-color);
   }
 }
 
 
 // <table> btn styles
-table.#{$prfx}btn {
+table.#{$mui-prfx}btn {
   > tr > td,
   > tbody > tr > td {
-    border-radius: $btn-border-radius;
+    border-radius: $mui-btn-border-radius;
     
     > a {
       display: inline-block;
@@ -195,38 +195,38 @@ table.#{$prfx}btn {
       
       @include button-text-styles();
       
-      border-radius: $btn-border-radius;
-      padding: $btn-padding-vertical-computed $btn-padding-horizontal-computed;
+      border-radius: $mui-btn-border-radius;
+      padding: $mui-btn-padding-vertical-computed $mui-btn-padding-horizontal-computed;
       background-color: transparent;
       @include button-borders(transparent);
     }
   }
 
-  &.#{$prfx}btn-default {
-    @include button-table-variant($btn-default-font-color,
-                                  $btn-default-background-color);
+  &.#{$mui-prfx}btn-default {
+    @include button-table-variant($mui-btn-default-font-color,
+                                  $mui-btn-default-background-color);
   }
 
-  &.#{$prfx}btn-primary {
-    @include button-table-variant($btn-primary-font-color,
-                                  $btn-primary-background-color);
+  &.#{$mui-prfx}btn-primary {
+    @include button-table-variant($mui-btn-primary-font-color,
+                                  $mui-btn-primary-background-color);
   }
 
-  &.#{$prfx}btn-danger {
-    @include button-table-variant($btn-danger-font-color,
-                                  $btn-danger-background-color);
+  &.#{$mui-prfx}btn-danger {
+    @include button-table-variant($mui-btn-danger-font-color,
+                                  $mui-btn-danger-background-color);
   }
 
-  &.#{$prfx}btn-accent {
-    @include button-table-variant($btn-accent-font-color,
-                                  $btn-accent-background-color);
+  &.#{$mui-prfx}btn-accent {
+    @include button-table-variant($mui-btn-accent-font-color,
+                                  $mui-btn-accent-background-color);
   }
 }
 
 
 // large buttons
-a.#{$prfx}btn-lg,
-table.#{$prfx}btn-lg > tr > td > a,
-table.#{$prfx}btn-lg > tbody > tr > td > a {
-  padding: $btn-padding-vertical-lg-computed $btn-padding-horizontal-computed;
+a.#{$mui-prfx}btn-lg,
+table.#{$mui-prfx}btn-lg > tr > td > a,
+table.#{$mui-prfx}btn-lg > tbody > tr > td > a {
+  padding: $mui-btn-padding-vertical-lg-computed $mui-btn-padding-horizontal-computed;
 }

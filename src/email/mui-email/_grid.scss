@@ -1,28 +1,28 @@
 table {
-  &.#{$prfx}body {
+  &.#{$mui-prfx}body {
     height: 100%;
     width: 100%;
     @extend body;
   }
   
-  &.#{$prfx}container {
-    width: $container-width;
+  &.#{$mui-prfx}container {
+    width: $mui-container-width;
     margin: 0 auto;
     text-align: inherit;
 
-    table.#{$prfx}row {
+    table.#{$mui-prfx}row {
       display: block;
     }
   }
 
-  &.#{$prfx}row {
+  &.#{$mui-prfx}row {
     padding: 0px;
     width: 100%;
     position: relative;
   }
 }
 
-td.#{$prfx}wrapper {
-  padding: $wrapper-padding-top $column-gutter 0px 0px;
+td.#{$mui-prfx}wrapper {
+  padding: $mui-wrapper-padding-top $mui-column-gutter 0px 0px;
   position: relative;
 }

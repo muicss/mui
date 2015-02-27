@@ -4,10 +4,10 @@ th {
 }
 
 // Table style
-.#{$prfx}table {
+.#{$mui-prfx}table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: $base-line-height-computed;
+  margin-bottom: $mui-base-line-height-computed;
 
   // Cells
   > thead,
@@ -16,8 +16,8 @@ th {
     > tr {
       > th,
       > td {
-        padding: $table-cell-padding;
-        line-height: $base-line-height;
+        padding: $mui-table-cell-padding;
+        line-height: $mui-base-line-height;
         vertical-align: top;
       }
     }
@@ -26,18 +26,18 @@ th {
   // Bottom align for column headings
   > thead > tr > th {
     vertical-align: bottom;
-    border-bottom: 2px solid $table-border-color;
+    border-bottom: 2px solid $mui-table-border-color;
     font-weight: 700;
   }
 
   // multiple tbody instances
   > tbody + tbody {
-    border-top: 2px solid $table-border-color;
+    border-top: 2px solid $mui-table-border-color;
   }  
 
   // Bordered style
-  &.#{$prfx}table-bordered > tbody > tr > td {
-    border-bottom: 1px solid $table-border-color;
+  &.#{$mui-prfx}table-bordered > tbody > tr > td {
+    border-bottom: 1px solid $mui-table-border-color;
   }
 }
 

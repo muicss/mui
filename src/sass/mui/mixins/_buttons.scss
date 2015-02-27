@@ -1,13 +1,13 @@
-@mixin button-variant($color, $background) {
-  color: $color;
-  background-color: $background;
+@mixin button-variant($mui-color, $mui-background) {
+  color: $mui-color;
+  background-color: $mui-background;
 
   &:hover,
   &:focus,
   &:active,
-  .#{$prfx}open > &.#{$prfx}dropdown-toggle {
-    color: $color;
-    background-color: lighten($background, 5%);
+  .#{$mui-prfx}open > &.#{$mui-prfx}dropdown-toggle {
+    color: $mui-color;
+    background-color: lighten($mui-background, 5%);
   }
 
   &[disabled],
@@ -16,23 +16,23 @@
     &:hover,
     &:focus,
     &:active {
-      color: $color;
-      background-color: $background;
+      color: $mui-color;
+      background-color: $mui-background;
     }
   }
 }
 
-@mixin button-flat-variant($color, $hover-bg) {
-  &.#{$prfx}btn-flat {
-    color: $color;
+@mixin button-flat-variant($mui-color, $mui-hover-bg) {
+  &.#{$mui-prfx}btn-flat {
+    color: $mui-color;
     background-color: transparent;
 
     &:hover,
     &:focus,
     &:active,
-    .#{$prfx}open > &.#{$prfx}dropdown-toggle {
-      color: $color;
-      background-color: $hover-bg;
+    .#{$mui-prfx}open > &.#{$mui-prfx}dropdown-toggle {
+      color: $mui-color;
+      background-color: $mui-hover-bg;
     }
 
     &[disabled],
@@ -41,7 +41,7 @@
       &:hover,
       &:focus,
       &:active {
-        color: $color;
+        color: $mui-color;
         background-color: transparent;
       }
     }
@@ -49,9 +49,9 @@
 }
 
 // Button sizes
-@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
-  padding: ($padding-vertical + 1px) ($padding-horizontal + 1px);
-  font-size: $font-size;
-  line-height: $line-height;
-  border-radius: $border-radius;
+@mixin button-size($mui-padding-vertical, $mui-padding-horizontal, $mui-font-size, $mui-line-height, $mui-border-radius) {
+  padding: ($mui-padding-vertical + 1px) ($mui-padding-horizontal + 1px);
+  font-size: $mui-font-size;
+  line-height: $mui-line-height;
+  border-radius: $mui-border-radius;
 }

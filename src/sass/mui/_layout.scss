@@ -1,17 +1,17 @@
-.#{$prfx}container {
+.#{$mui-prfx}container {
   @include container-fixed;
 
-  @media (min-width: $screen-sm-min) {
-    width: $container-sm;
+  @media (min-width: $mui-screen-sm-min) {
+    width: $mui-container-sm;
   }
-  @media (min-width: $screen-md-min) {
-    width: $container-md;
+  @media (min-width: $mui-screen-md-min) {
+    width: $mui-container-md;
   }
-  @media (min-width: $screen-lg-min) {
-    width: $container-lg;
+  @media (min-width: $mui-screen-lg-min) {
+    width: $mui-container-lg;
   }
 }
 
-.#{$prfx}container-fluid {
+.#{$mui-prfx}container-fluid {
   @include container-fixed;
 }

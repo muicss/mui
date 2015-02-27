@@ -1,21 +1,21 @@
-.#{$prfx}divider {
+.#{$mui-prfx}divider {
   display: block;
   height: 1px;
-  background-color: $divider-color;
+  background-color: $mui-divider-color;
 }
 
-.#{$prfx}divider-top {
-  border-top: 1px solid $divider-color;
+.#{$mui-prfx}divider-top {
+  border-top: 1px solid $mui-divider-color;
 }
 
-.#{$prfx}divider-bottom {
-  border-bottom: 1px solid $divider-color;
+.#{$mui-prfx}divider-bottom {
+  border-bottom: 1px solid $mui-divider-color;
 }
 
-.#{$prfx}divider-left {
-  border-left: 1px solid $divider-color;
+.#{$mui-prfx}divider-left {
+  border-left: 1px solid $mui-divider-color;
 }
 
-.#{$prfx}divider-right {
-  border-right: 1px solid $divider-color;
+.#{$mui-prfx}divider-right {
+  border-right: 1px solid $mui-divider-color;
 }

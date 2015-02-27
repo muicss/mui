@@ -1,7 +1,7 @@
 // ============================
 // Animation
 // ============================
-.#{$prfx}notransition {
+.#{$mui-prfx}notransition {
   transition: none !important;
 }
 
@@ -9,26 +9,26 @@
 // ============================
 // Caret
 // ============================
-.#{$prfx}caret {
+.#{$mui-prfx}caret {
   display: inline-block;
   width: 0;
   height: 0;
   margin-left: 2px;
   vertical-align: middle;
-  border-top:   $caret-width solid;
-  border-right: $caret-width solid transparent;
-  border-left:  $caret-width solid transparent;
+  border-top:   $mui-caret-width solid;
+  border-right: $mui-caret-width solid transparent;
+  border-left:  $mui-caret-width solid transparent;
 }
 
 
 // ===========================
 // Alignment helpers
 // ===========================
-.#{$prfx}text-left           { text-align: left; }
-.#{$prfx}text-right          { text-align: right; }
-.#{$prfx}text-center         { text-align: center; }
-.#{$prfx}text-justify        { text-align: justify; }
-.#{$prfx}text-nowrap         { white-space: nowrap; }
+.#{$mui-prfx}text-left           { text-align: left; }
+.#{$mui-prfx}text-right          { text-align: right; }
+.#{$mui-prfx}text-center         { text-align: center; }
+.#{$mui-prfx}text-justify        { text-align: justify; }
+.#{$mui-prfx}text-nowrap         { white-space: nowrap; }
 
 
 // ===========================
@@ -40,12 +40,12 @@
 }
 
 // [converter] extracted as `@mixin list-unstyled` for libsass compatibility
-.#{$prfx}list-unstyled {
+.#{$mui-prfx}list-unstyled {
   @include list-unstyled;
 }
 
 // Inline turns list items into inline-block
-.#{$prfx}list-inline {
+.#{$mui-prfx}list-inline {
   @include list-unstyled;
   margin-left: -5px;
 
@@ -60,26 +60,26 @@
 // ===========================
 // Depth helpers
 // ===========================
-.#{$prfx}z1 {
+.#{$mui-prfx}z1 {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 }
 
-.#{$prfx}z2 {
+.#{$mui-prfx}z2 {
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3),
               0 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
-.#{$prfx}z3 {
+.#{$mui-prfx}z3 {
   box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3),
               0 11px 7px 0 rgba(0, 0, 0, 0.19);
 }
 
-.#{$prfx}z4 {
+.#{$mui-prfx}z4 {
   box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.3),
               0 14px 12px 0 rgba(0, 0, 0, 0.17);
 }
 
-.#{$prfx}z5 {
+.#{$mui-prfx}z5 {
   box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),
               0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
@@ -88,15 +88,15 @@
 // ===========================
 // Float helpers
 // ===========================
-.#{$prfx}clearfix {
+.#{$mui-prfx}clearfix {
   @include clearfix;
 }
 
-.#{$prfx}pull-right {
+.#{$mui-prfx}pull-right {
   float: right !important;
 }
 
-.#{$prfx}pull-left {
+.#{$mui-prfx}pull-left {
   float: left !important;
 }
 
@@ -104,15 +104,15 @@
 // ===========================
 // Toggle helpers
 // ===========================
-.#{$prfx}hide {
+.#{$mui-prfx}hide {
   display: none !important;
 }
 
-.#{$prfx}show {
+.#{$mui-prfx}show {
   display: block !important;
 }
 
-.#{$prfx}invisible {
+.#{$mui-prfx}invisible {
   visibility: hidden;
 }
 
@@ -120,121 +120,121 @@
 // ===========================
 // Responsive utilities
 // ===========================
-.#{$prfx}visible-xs-block,
-.#{$prfx}visible-xs-inline,
-.#{$prfx}visible-xs-inline-block,
-.#{$prfx}visible-sm-block,
-.#{$prfx}visible-sm-inline,
-.#{$prfx}visible-sm-inline-block,
-.#{$prfx}visible-md-block,
-.#{$prfx}visible-md-inline,
-.#{$prfx}visible-md-inline-block,
-.#{$prfx}visible-lg-block,
-.#{$prfx}visible-lg-inline,
-.#{$prfx}visible-lg-inline-block {
+.#{$mui-prfx}visible-xs-block,
+.#{$mui-prfx}visible-xs-inline,
+.#{$mui-prfx}visible-xs-inline-block,
+.#{$mui-prfx}visible-sm-block,
+.#{$mui-prfx}visible-sm-inline,
+.#{$mui-prfx}visible-sm-inline-block,
+.#{$mui-prfx}visible-md-block,
+.#{$mui-prfx}visible-md-inline,
+.#{$mui-prfx}visible-md-inline-block,
+.#{$mui-prfx}visible-lg-block,
+.#{$mui-prfx}visible-lg-inline,
+.#{$mui-prfx}visible-lg-inline-block {
   display: none !important;
 }
 
-@media (max-width: $screen-xs-max) {
-  @include responsive-visibility('.#{$prfx}visible-xs');
+@media (max-width: $mui-screen-xs-max) {
+  @include responsive-visibility('.#{$mui-prfx}visible-xs');
 }
 
-.#{$prfx}visible-xs-block {
-  @media (max-width: $screen-xs-max) {
+.#{$mui-prfx}visible-xs-block {
+  @media (max-width: $mui-screen-xs-max) {
     display: block !important;
   }
 }
 
-.#{$prfx}visible-xs-inline {
-  @media (max-width: $screen-xs-max) {
+.#{$mui-prfx}visible-xs-inline {
+  @media (max-width: $mui-screen-xs-max) {
     display: inline !important;
   }
 }
 
-.#{$prfx}visible-xs-inline-block {
-  @media (max-width: $screen-xs-max) {
+.#{$mui-prfx}visible-xs-inline-block {
+  @media (max-width: $mui-screen-xs-max) {
     display: inline-block !important;
   }
 }
 
-@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-  @include responsive-visibility('.#{$prfx}visible-sm');
+@media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
+  @include responsive-visibility('.#{$mui-prfx}visible-sm');
 }
 
-.#{$prfx}visible-sm-block {
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+.#{$mui-prfx}visible-sm-block {
+  @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
     display: block !important;
   }
 }
 
-.#{$prfx}visible-sm-inline {
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+.#{$mui-prfx}visible-sm-inline {
+  @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
     display: inline !important;
   }
 }
 
-.#{$prfx}visible-sm-inline-block {
-  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+.#{$mui-prfx}visible-sm-inline-block {
+  @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
     display: inline-block !important;
   }
 }
 
-@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-  @include responsive-visibility('.#{$prfx}visible-md');
+@media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
+  @include responsive-visibility('.#{$mui-prfx}visible-md');
 }
 
-.#{$prfx}visible-md-block {
-  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+.#{$mui-prfx}visible-md-block {
+  @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
     display: block !important;
   }
 }
 
-.#{$prfx}visible-md-inline {
-  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+.#{$mui-prfx}visible-md-inline {
+  @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
     display: inline !important;
   }
 }
 
-.#{$prfx}visible-md-inline-block {
-  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+.#{$mui-prfx}visible-md-inline-block {
+  @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
     display: inline-block !important;
   }
 }
 
-@media (min-width: $screen-lg-min) {
-  @include responsive-visibility('.#{$prfx}visible-lg');
+@media (min-width: $mui-screen-lg-min) {
+  @include responsive-visibility('.#{$mui-prfx}visible-lg');
 }
 
-.#{$prfx}visible-lg-block {
-  @media (min-width: $screen-lg-min) {
+.#{$mui-prfx}visible-lg-block {
+  @media (min-width: $mui-screen-lg-min) {
     display: block !important;
   }
 }
 
-.#{$prfx}visible-lg-inline {
-  @media (min-width: $screen-lg-min) {
+.#{$mui-prfx}visible-lg-inline {
+  @media (min-width: $mui-screen-lg-min) {
     display: inline !important;
   }
 }
 
-.#{$prfx}visible-lg-inline-block {
-  @media (min-width: $screen-lg-min) {
+.#{$mui-prfx}visible-lg-inline-block {
+  @media (min-width: $mui-screen-lg-min) {
     display: inline-block !important;
   }
 }
 
-@media (max-width: $screen-xs-max) {
-  @include responsive-invisibility('.#{$prfx}hidden-xs');
+@media (max-width: $mui-screen-xs-max) {
+  @include responsive-invisibility('.#{$mui-prfx}hidden-xs');
 }
 
-@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-  @include responsive-invisibility('.#{$prfx}hidden-sm');
+@media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
+  @include responsive-invisibility('.#{$mui-prfx}hidden-sm');
 }
 
-@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-  @include responsive-invisibility('.#{$prfx}hidden-md');
+@media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
+  @include responsive-invisibility('.#{$mui-prfx}hidden-md');
 }
 
-@media (min-width: $screen-lg-min) {
-  @include responsive-invisibility('.#{$prfx}hidden-lg');
+@media (min-width: $mui-screen-lg-min) {
+  @include responsive-invisibility('.#{$mui-prfx}hidden-lg');
 }

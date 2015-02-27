@@ -1,5 +1,5 @@
 // Row
-.#{$prfx}row {
+.#{$mui-prfx}row {
   @include make-row;
 }
 
@@ -13,18 +13,18 @@
 
 
 // Small grid
-@media (min-width: $screen-sm-min) {
+@media (min-width: $mui-screen-sm-min) {
   @include make-grid(sm);
 }
 
 
 // Medium grid
-@media (min-width: $screen-md-min) {
+@media (min-width: $mui-screen-md-min) {
   @include make-grid(md);
 }
 
 
 // Large grid
-@media (min-width: $screen-lg-min) {
+@media (min-width: $mui-screen-lg-min) {
   @include make-grid(lg);
 }
