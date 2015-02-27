@@ -1,6 +1,5 @@
 {
   "name": "mui",
-  "version": "0.0.2",
   "repository": "https://github.com/amorey/mui",
   "devDependencies": {
     "browserify": "^9.0.3",
