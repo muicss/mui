@@ -1,13 +1,12 @@
 'use strict';
 
-var config = require('./config.js'),
-    jqLite = require('./lib/jqLite.js'),
+var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
-    formControlClass = config.cssPrfx + 'form-control',
-    formGroupClass = config.cssPrfx + 'form-group',
-    floatingLabelBaseClass = config.cssPrfx + 'form-floating-label',
+    formControlClass = 'mui-form-control',
+    formGroupClass = 'mui-form-group',
+    floatingLabelBaseClass = 'mui-form-floating-label',
     floatingLabelActiveClass = floatingLabelBaseClass + '-active',
-    animationName = config.cssPrfx + 'form-floating-label-inserted';
+    animationName = 'mui-form-floating-label-inserted';
 
 
 function initialize(labelEl) {

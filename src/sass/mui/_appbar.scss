@@ -1,4 +1,4 @@
-.#{$mui-prfx}appbar-height {
+.mui-appbar-height {
   height: $mui-appbar-height-xs-portrait;
 
   // mobile landscape
@@ -11,7 +11,7 @@
   }
 }
 
-.#{$mui-prfx}appbar-min-height {
+.mui-appbar-min-height {
   min-height: $mui-appbar-height-xs-portrait;
 
   // mobile landscape
@@ -24,7 +24,7 @@
   }
 }
 
-.#{$mui-prfx}appbar-line-height {
+.mui-appbar-line-height {
   line-height: $mui-appbar-height-xs-portrait;
 
   // mobile landscape
@@ -37,8 +37,8 @@
   }
 }
 
-.#{$mui-prfx}appbar {
-  @extend .#{$mui-prfx}appbar-min-height;
+.mui-appbar {
+  @extend .mui-appbar-min-height;
 
   background-color: $mui-appbar-background-color;
   color: $mui-appbar-font-color;

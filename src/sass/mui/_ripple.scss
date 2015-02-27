@@ -1,17 +1,17 @@
 // ===========================
 // Ripple styles
 // ===========================
-.#{$mui-prfx}ripple-effect{
+.mui-ripple-effect{
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
   
-  animation: #{$mui-prfx}ripple-animation 2s;
+  animation: mui-ripple-animation 2s;
 }
 
 
-@keyframes #{$mui-prfx}ripple-animation {
+@keyframes mui-ripple-animation {
     from {
       transform: scale(1);
       opacity: 0.4;
@@ -26,22 +26,22 @@
 // =======================
 // Button-specific styles
 // =======================
-.#{$mui-prfx}btn-default > .#{$mui-prfx}ripple-effect {
+.mui-btn-default > .mui-ripple-effect {
   background-color: $mui-btn-default-ripple-color;
 }
 
-.#{$mui-prfx}btn-primary > .#{$mui-prfx}ripple-effect {
+.mui-btn-primary > .mui-ripple-effect {
   background-color: $mui-btn-primary-ripple-color;
 }
 
-.#{$mui-prfx}btn-danger > .#{$mui-prfx}ripple-effect {
+.mui-btn-danger > .mui-ripple-effect {
   background-color: $mui-btn-danger-ripple-color;
 }
 
-.#{$mui-prfx}btn-flat > .#{$mui-prfx}ripple-effect {
+.mui-btn-flat > .mui-ripple-effect {
   background-color: $mui-btn-flat-ripple-color;
 }
 
-.#{$mui-prfx}btn-floating > .#{$mui-prfx}ripple-effect {
+.mui-btn-floating > .mui-ripple-effect {
   background-color: $mui-btn-floating-ripple-color;
 }

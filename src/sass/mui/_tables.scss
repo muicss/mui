@@ -4,7 +4,7 @@ th {
 }
 
 // Table style
-.#{$mui-prfx}table {
+.mui-table {
   width: 100%;
   max-width: 100%;
   margin-bottom: $mui-base-line-height-computed;
@@ -36,7 +36,7 @@ th {
   }  
 
   // Bordered style
-  &.#{$mui-prfx}table-bordered > tbody > tr > td {
+  &.mui-table-bordered > tbody > tr > td {
     border-bottom: 1px solid $mui-table-border-color;
   }
 }

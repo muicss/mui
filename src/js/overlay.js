@@ -1,10 +1,9 @@
 'use strict';
 
-var config = require('./config.js'),
-    util = require('./lib/util.js'),
+var util = require('./lib/util.js'),
     jqLite = require('./lib/jqLite.js'),
-    bodyClass = config.cssPrfx + 'overlay-on',
-    overlayId = config.cssPrfx + 'overlay';
+    bodyClass = 'mui-overlay-on',
+    overlayId = 'mui-overlay';
 
 
 function overlayFn(arg) {

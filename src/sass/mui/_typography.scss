@@ -1,48 +1,48 @@
 // Text styles
-.#{$mui-prfx}text-display4 {
+.mui-text-display4 {
   @include mui-text("display4");
 }
 
-.#{$mui-prfx}text-display3 {
+.mui-text-display3 {
   @include mui-text("display3");
 }
 
-.#{$mui-prfx}text-display2 {
+.mui-text-display2 {
   @include mui-text("display2");
 }
 
-.#{$mui-prfx}text-display1 {
+.mui-text-display1 {
   @include mui-text("display1");
 }
 
-.#{$mui-prfx}text-headline {
+.mui-text-headline {
   @include mui-text("headline");
 }
 
-.#{$mui-prfx}text-title {
+.mui-text-title {
   @include mui-text("title");
 }
 
-.#{$mui-prfx}text-subhead {
+.mui-text-subhead {
   @include mui-text("subhead");
 }
 
-.#{$mui-prfx}text-body2 {
+.mui-text-body2 {
   @include mui-text("body2");
 }
 
-.#{$mui-prfx}text-body1 {
+.mui-text-body1 {
   @include mui-text("body1");
 }
 
-.#{$mui-prfx}text-caption {
+.mui-text-caption {
   @include mui-text("caption");
 }
 
-.#{$mui-prfx}text-menu {
+.mui-text-menu {
   @include mui-text("menu");
 }
 
-.#{$mui-prfx}text-button {
+.mui-text-button {
   @include mui-text("button");
 }

@@ -1,13 +1,12 @@
 'use strict';
 
-var config = require('./config.js'),
-    jqLite = require('./lib/jqLite.js'),
+var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
-    btnClass = config.cssPrfx + 'btn',
-    btnFlatClass = config.cssPrfx + 'btn-flat',
-    btnFloatingClass = config.cssPrfx + 'btn-floating',
-    rippleClass = config.cssPrfx + 'ripple-effect',
-    animationName = config.cssPrfx + 'btn-inserted';
+    btnClass = 'mui-btn',
+    btnFlatClass = 'mui-btn-flat',
+    btnFloatingClass = 'mui-btn-floating',
+    rippleClass = 'mui-ripple-effect',
+    animationName = 'mui-btn-inserted';
 
 
 function initialize(buttonEl) {

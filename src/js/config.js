@@ -3,6 +3,5 @@
  *
  **/
 module.exports = {
-  debug: true,
-  cssPrfx: 'mui-'
+  debug: true
 };

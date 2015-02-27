@@ -4,15 +4,15 @@
 @mixin mui-email-color($mui-name) {
   color: $mui-base-font-color;
   
-  &.#{$mui-prfx}text-black {
+  &.mui-text-black {
     color: lighten(mui-color('black'), 13%);
   }
 
-  &.#{$mui-prfx}text-white {
+  &.mui-text-white {
     color: mui-color('white');
   }
 
-  &.#{$mui-prfx}text-accent {
+  &.mui-text-accent {
     color: lighten($mui-accent-color, 13%);
   }
 }
@@ -21,62 +21,62 @@
 // ============================
 // Text styles
 // ============================
-.#{$mui-prfx}text-display4 {
+.mui-text-display4 {
   @include mui-text("display4");
   @include mui-email-color("display4");
 }
 
-.#{$mui-prfx}text-display3 {
+.mui-text-display3 {
   @include mui-text("display3");
   @include mui-email-color("display3");
 }
 
-.#{$mui-prfx}text-display2 {
+.mui-text-display2 {
   @include mui-text("display2");
   @include mui-email-color("display2");
 }
 
-.#{$mui-prfx}text-display1 {
+.mui-text-display1 {
   @include mui-text("display1");
   @include mui-email-color("display1");
 }
 
-.#{$mui-prfx}text-headline {
+.mui-text-headline {
   @include mui-text("headline");
   @include mui-email-color("headline");
 }
 
-.#{$mui-prfx}text-title {
+.mui-text-title {
   @include mui-text("title");
   @include mui-email-color("title");
 }
 
-.#{$mui-prfx}text-subhead {
+.mui-text-subhead {
   @include mui-text("subhead");
   @include mui-email-color("subhead");
 }
 
-.#{$mui-prfx}text-body2 {
+.mui-text-body2 {
   @include mui-text("body2");
   @include mui-email-color("body2");
 }
 
-.#{$mui-prfx}text-body1 {
+.mui-text-body1 {
   @include mui-text("body1");
   @include mui-email-color("body1");
 }
 
-.#{$mui-prfx}text-caption {
+.mui-text-caption {
   @include mui-text("caption");
   @include mui-email-color("caption");
 }
 
-.#{$mui-prfx}text-menu {
+.mui-text-menu {
   @include mui-text("menu");
   @include mui-email-color("menu");
 }
 
-.#{$mui-prfx}text-button {
+.mui-text-button {
   @include mui-text("button");
   @include mui-email-color("button");
 }

@@ -1,8 +1,8 @@
 // Overrides bootstrap functions to add prfx support
 
-@mixin make-grid-columns($mui-i: 1, $mui-list: ".#{$mui-prfx}col-xs-#{$mui-i}, .#{$mui-prfx}col-sm-#{$mui-i}, .#{$mui-prfx}col-md-#{$mui-i}, .#{$mui-prfx}col-lg-#{$mui-i}") {
+@mixin make-grid-columns($mui-i: 1, $mui-list: ".mui-col-xs-#{$mui-i}, .mui-col-sm-#{$mui-i}, .mui-col-md-#{$mui-i}, .mui-col-lg-#{$mui-i}") {
   @for $mui-i from (1 + 1) through $mui-grid-columns {
-    $mui-list: "#{$mui-list}, .#{$mui-prfx}col-xs-#{$mui-i}, .#{$mui-prfx}col-sm-#{$mui-i}, .#{$mui-prfx}col-md-#{$mui-i}, .#{$mui-prfx}col-lg-#{$mui-i}";
+    $mui-list: "#{$mui-list}, .mui-col-xs-#{$mui-i}, .mui-col-sm-#{$mui-i}, .mui-col-md-#{$mui-i}, .mui-col-lg-#{$mui-i}";
   }
   #{$mui-list} {
     // Prevent columns from collapsing when empty
@@ -13,9 +13,9 @@
   }
 }
 
-@mixin float-grid-columns($mui-class, $mui-i: 1, $mui-list: ".#{$mui-prfx}col-#{$mui-class}-#{$mui-i}") {
+@mixin float-grid-columns($mui-class, $mui-i: 1, $mui-list: ".mui-col-#{$mui-class}-#{$mui-i}") {
   @for $mui-i from (1 + 1) through $mui-grid-columns {
-    $mui-list: "#{$mui-list}, .#{$mui-prfx}col-#{$mui-class}-#{$mui-i}";
+    $mui-list: "#{$mui-list}, .mui-col-#{$mui-class}-#{$mui-i}";
   }
   #{$mui-list} {
     float: left;
@@ -24,37 +24,37 @@
 
 @mixin calc-grid-column($mui-index, $mui-class, $mui-type) {
   @if ($mui-type == width) and ($mui-index > 0) {
-    .#{$mui-prfx}col-#{$mui-class}-#{$mui-index} {
+    .mui-col-#{$mui-class}-#{$mui-index} {
       width: percentage(($mui-index / $mui-grid-columns));
     }
   }
   @if ($mui-type == push) and ($mui-index > 0) {
-    .#{$mui-prfx}col-#{$mui-class}-push-#{$mui-index} {
+    .mui-col-#{$mui-class}-push-#{$mui-index} {
       left: percentage(($mui-index / $mui-grid-columns));
     }
   }
   @if ($mui-type == push) and ($mui-index == 0) {
-    .#{$mui-prfx}col-#{$mui-class}-push-0 {
+    .mui-col-#{$mui-class}-push-0 {
       left: auto;
     }
   }
   @if ($mui-type == pull) and ($mui-index > 0) {
-    .#{$mui-prfx}col-#{$mui-class}-pull-#{$mui-index} {
+    .mui-col-#{$mui-class}-pull-#{$mui-index} {
       right: percentage(($mui-index / $mui-grid-columns));
     }
   }
   @if ($mui-type == pull) and ($mui-index > 0) {
-    .#{$mui-prfx}col-#{$mui-class}-pull-#{$mui-index} {
+    .mui-col-#{$mui-class}-pull-#{$mui-index} {
       right: percentage(($mui-index / $mui-grid-columns));
     }
   }
   @if ($mui-type == pull) and ($mui-index == 0) {
-    .#{$mui-prfx}col-#{$mui-class}-pull-0 {
+    .mui-col-#{$mui-class}-pull-0 {
       right: auto;
     }
   }
   @if ($mui-type == offset) {
-    .#{$mui-prfx}col-#{$mui-class}-offset-#{$mui-index} {
+    .mui-col-#{$mui-class}-offset-#{$mui-index} {
       margin-left: percentage(($mui-index / $mui-grid-columns));
     }
   }

@@ -19,15 +19,15 @@
     text-transform: uppercase;
   }
 
-  &.#{$mui-prfx}text-black {
+  &.mui-text-black {
     color: rgba(mui-color('black'), map-get($mui-styles, "alpha-black"));
   }
 
-  &.#{$mui-prfx}text-white {
+  &.mui-text-white {
     color: rgba(mui-color('white'), map-get($mui-styles, "alpha-white"));
   }
 
-  &.#{$mui-prfx}text-accent {
+  &.mui-text-accent {
     color: rgba($mui-accent-color, map-get($mui-styles, "alpha-accent"));
   }
 }

@@ -1,4 +1,4 @@
-.#{$mui-prfx}container {
+.mui-container {
   @include container-fixed;
 
   @media (min-width: $mui-screen-sm-min) {
@@ -12,6 +12,6 @@
   }
 }
 
-.#{$mui-prfx}container-fluid {
+.mui-container-fluid {
   @include container-fixed;
 }

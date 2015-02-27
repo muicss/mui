@@ -5,7 +5,7 @@
   &:hover,
   &:focus,
   &:active,
-  .#{$mui-prfx}open > &.#{$mui-prfx}dropdown-toggle {
+  .mui-open > &.mui-dropdown-toggle {
     color: $mui-color;
     background-color: lighten($mui-background, 5%);
   }
@@ -23,14 +23,14 @@
 }
 
 @mixin button-flat-variant($mui-color, $mui-hover-bg) {
-  &.#{$mui-prfx}btn-flat {
+  &.mui-btn-flat {
     color: $mui-color;
     background-color: transparent;
 
     &:hover,
     &:focus,
     &:active,
-    .#{$mui-prfx}open > &.#{$mui-prfx}dropdown-toggle {
+    .mui-open > &.mui-dropdown-toggle {
       color: $mui-color;
       background-color: $mui-hover-bg;
     }

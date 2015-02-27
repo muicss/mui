@@ -1,28 +1,28 @@
 table {
-  &.#{$mui-prfx}body {
+  &.mui-body {
     height: 100%;
     width: 100%;
     @extend body;
   }
   
-  &.#{$mui-prfx}container {
+  &.mui-container {
     width: $mui-container-width;
     margin: 0 auto;
     text-align: inherit;
 
-    table.#{$mui-prfx}row {
+    table.mui-row {
       display: block;
     }
   }
 
-  &.#{$mui-prfx}row {
+  &.mui-row {
     padding: 0px;
     width: 100%;
     position: relative;
   }
 }
 
-td.#{$mui-prfx}wrapper {
+td.mui-wrapper {
   padding: $mui-wrapper-padding-top $mui-column-gutter 0px 0px;
   position: relative;
 }

@@ -1,12 +1,11 @@
 'use strict';
 
-var config = require('./config.js'),
-    jqLite = require('./lib/jqLite.js'),
+var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
-    wrapperClass = config.cssPrfx + 'dropdown',
-    openClass = config.cssPrfx + 'open',
-    menuClass = config.cssPrfx + 'dropdown-menu',
-    animationName = config.cssPrfx + 'dropdown-inserted';
+    wrapperClass = 'mui-dropdown',
+    openClass = 'mui-open',
+    menuClass = 'mui-dropdown-menu',
+    animationName = 'mui-dropdown-inserted';
 
 
 function initialize(wrapperEl) {

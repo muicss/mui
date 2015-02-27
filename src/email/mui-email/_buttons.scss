@@ -84,12 +84,12 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
   @include button-borders($mui-background);
   
   // raised
-  &.#{$mui-prfx}btn-raised {
+  &.mui-btn-raised {
     @include button-borders($mui-background, "raised");
   }
 
   // flat
-  &.#{$mui-prfx}btn-flat {
+  &.mui-btn-flat {
     background-color: $mui-btn-flat-background-color;
     @include button-flat-color($mui-color, $mui-background);
     @include button-borders($mui-btn-flat-background-color);
@@ -112,7 +112,7 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
   }
 
   // raised
-  &.#{$mui-prfx}btn-raised {
+  &.mui-btn-raised {
     > tr > td,
     > tbody > tr > td {
       > a {
@@ -122,7 +122,7 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
   }
 
   // flat
-  &.#{$mui-prfx}btn-flat {
+  &.mui-btn-flat {
     > tr > td,
     > tbody > tr > td {
       background-color: $mui-btn-flat-background-color;
@@ -141,14 +141,14 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
 // ==============================
 
 // shared btn styles
-.#{$mui-prfx}btn {
+.mui-btn {
   cursor: pointer;
   white-space: nowrap;
 }
 
 
 // <a> btn styles
-a.#{$mui-prfx}btn {
+a.mui-btn {
   display: inline-block;
   text-decoration: none;
   text-align: center;
@@ -160,22 +160,22 @@ a.#{$mui-prfx}btn {
   background-color: transparent;
   @include button-borders(transparent);
 
-  &.#{$mui-prfx}btn-default {
+  &.mui-btn-default {
     @include button-anchor-variant($mui-btn-default-font-color,
                                    $mui-btn-default-background-color);
   }
 
-  &.#{$mui-prfx}btn-primary {
+  &.mui-btn-primary {
     @include button-anchor-variant($mui-btn-primary-font-color,
                                    $mui-btn-primary-background-color);
   }
 
-  &.#{$mui-prfx}btn-danger {
+  &.mui-btn-danger {
     @include button-anchor-variant($mui-btn-danger-font-color,
                                    $mui-btn-danger-background-color);
   }
 
-  &.#{$mui-prfx}btn-accent {
+  &.mui-btn-accent {
     @include button-anchor-variant($mui-btn-accent-font-color,
                                    $mui-btn-accent-background-color);
   }
@@ -183,7 +183,7 @@ a.#{$mui-prfx}btn {
 
 
 // <table> btn styles
-table.#{$mui-prfx}btn {
+table.mui-btn {
   > tr > td,
   > tbody > tr > td {
     border-radius: $mui-btn-border-radius;
@@ -202,22 +202,22 @@ table.#{$mui-prfx}btn {
     }
   }
 
-  &.#{$mui-prfx}btn-default {
+  &.mui-btn-default {
     @include button-table-variant($mui-btn-default-font-color,
                                   $mui-btn-default-background-color);
   }
 
-  &.#{$mui-prfx}btn-primary {
+  &.mui-btn-primary {
     @include button-table-variant($mui-btn-primary-font-color,
                                   $mui-btn-primary-background-color);
   }
 
-  &.#{$mui-prfx}btn-danger {
+  &.mui-btn-danger {
     @include button-table-variant($mui-btn-danger-font-color,
                                   $mui-btn-danger-background-color);
   }
 
-  &.#{$mui-prfx}btn-accent {
+  &.mui-btn-accent {
     @include button-table-variant($mui-btn-accent-font-color,
                                   $mui-btn-accent-background-color);
   }
@@ -225,8 +225,8 @@ table.#{$mui-prfx}btn {
 
 
 // large buttons
-a.#{$mui-prfx}btn-lg,
-table.#{$mui-prfx}btn-lg > tr > td > a,
-table.#{$mui-prfx}btn-lg > tbody > tr > td > a {
+a.mui-btn-lg,
+table.mui-btn-lg > tr > td > a,
+table.mui-btn-lg > tbody > tr > td > a {
   padding: $mui-btn-padding-vertical-lg-computed $mui-btn-padding-horizontal-computed;
 }

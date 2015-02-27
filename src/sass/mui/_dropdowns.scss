@@ -1,15 +1,15 @@
 // insertion alert
-@keyframes #{$mui-prfx}dropdown-inserted {
+@keyframes mui-dropdown-inserted {
   from {opacity: 0.99;}
   to {opacity: 1;}
 }
 
 // Dropdown wrapper
-.#{$mui-prfx}dropdown {
+.mui-dropdown {
   position: relative;
 
   animation-duration: 0.001s;
-  animation-name: #{$mui-prfx}dropdown-inserted;
+  animation-name: mui-dropdown-inserted;
 
   // remove outline
   [data-toggle="dropdown"]:focus {
@@ -18,7 +18,7 @@
 }
 
 // The dropdown menu (ul)
-.#{$mui-prfx}dropdown-menu {
+.mui-dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -32,7 +32,7 @@
   text-align: left;
   background-color: $mui-dropdown-background-color;
   border-radius: $mui-dropdown-border-radius;
-  @extend .#{$mui-prfx}z1;
+  @extend .mui-z1;
   background-clip: padding-box;
 
   // Links within the dropdown menu
@@ -48,7 +48,7 @@
 }
 
 // Hover/Focus state
-.#{$mui-prfx}dropdown-menu > li > a {
+.mui-dropdown-menu > li > a {
   &:hover,
   &:focus {
     text-decoration: none;
@@ -58,7 +58,7 @@
 }
 
 // Active state
-.#{$mui-prfx}dropdown-menu > .#{$mui-prfx}active > a {
+.mui-dropdown-menu > .mui-active > a {
   &,
   &:hover,
   &:focus {
@@ -70,7 +70,7 @@
 }
 
 // Disabled state
-.#{$mui-prfx}dropdown-menu > .#{$mui-prfx}disabled > a {
+.mui-dropdown-menu > .mui-disabled > a {
   &,
   &:hover,
   &:focus {
@@ -88,9 +88,9 @@
 }
 
 // Open state for the dropdown
-.#{$mui-prfx}open {
+.mui-open {
   // Show the menu
-  > .#{$mui-prfx}dropdown-menu {
+  > .mui-dropdown-menu {
     display: block;
   }
 
@@ -101,7 +101,7 @@
 }
 
 // Backdrop to catch body clicks on mobile etc
-.#{$mui-prfx}dropdown-backdrop {
+.mui-dropdown-backdrop {
   position: fixed;
   left: 0;
   right: 0;
@@ -110,7 +110,7 @@
 }
 
 // Right aligned dropdowns
-.#{$mui-prfx}pull-right > .#{$mui-prfx}dropdown-menu {
+.mui-pull-right > .mui-dropdown-menu {
   right: 0;
   left: auto;
 }
