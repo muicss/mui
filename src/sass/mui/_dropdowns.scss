@@ -6,14 +6,20 @@
 
 // Dropdown wrapper
 .mui-dropdown {
+  display: inline-block;
   position: relative;
+}
 
+// Toggle element
+[data-toggle="dropdown"] {
   animation-duration: 0.001s;
   animation-name: mui-dropdown-inserted;
 
-  // remove outline
-  [data-toggle="dropdown"]:focus {
-    outline: 0;
+  outline: 0;
+
+  &.mui-btn {
+    animation-name: mui-dropdown-inserted, mui-btn-inserted;
+    animation-duration: 0.001s, 0.001s;
   }
 }
 
@@ -23,7 +29,6 @@
   top: 100%;
   left: 0;
   display: none;
-  float: left;
   min-width: 160px;
   padding: 5px 0;
   margin: 2px 0 0; // override default ul
@@ -35,6 +40,11 @@
   @extend .mui-z1;
   background-clip: padding-box;
 
+  // open state
+  &.mui-open {
+    display: block;
+  }
+  
   // Links within the dropdown menu
   > li > a {
     display: block;
@@ -43,74 +53,37 @@
     font-weight: normal;
     line-height: $mui-base-line-height;
     color: $mui-dropdown-link-font-color;
-    white-space: nowrap; // prevent links from randomly breaking onto new lines
+    white-space: nowrap; 
+                         
+    // Hover & Focus state
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: $mui-dropdown-link-font-color-hover;
+      background-color: $mui-dropdown-link-background-color-hover;
+    }
+  }
+
+  > .mui-disabled > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $mui-dropdown-link-font-color-disabled;
+    }
+    
+    // Nuke hover & focus effects
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: transparent;
+      background-image: none;
+      cursor: $mui-cursor-disabled;
+    }
   }
 }
 
-// Hover/Focus state
-.mui-dropdown-menu > li > a {
-  &:hover,
-  &:focus {
-    text-decoration: none;
-    color: $mui-dropdown-link-font-color-hover;
-    background-color: $mui-dropdown-link-background-color-hover;
-  }
-}
-
-// Active state
-.mui-dropdown-menu > .mui-active > a {
-  &,
-  &:hover,
-  &:focus {
-    color: $mui-dropdown-link-font-color-active;
-    text-decoration: none;
-    outline: 0;
-    background-color: $mui-dropdown-link-background-color-active;
-  }
-}
-
-// Disabled state
-.mui-dropdown-menu > .mui-disabled > a {
-  &,
-  &:hover,
-  &:focus {
-    color: $mui-dropdown-link-font-color-disabled;
-  }
-
-  // Nuke hover/focus effects
-  &:hover,
-  &:focus {
-    text-decoration: none;
-    background-color: transparent;
-    background-image: none; // Remove CSS gradient
-    cursor: $mui-cursor-disabled;
-  }
-}
-
-// Open state for the dropdown
-.mui-open {
-  // Show the menu
-  > .mui-dropdown-menu {
-    display: block;
-  }
-
-  // Remove the outline when :focus is triggered
-  > a {
-    outline: 0;
-  }
-}
-
-// Backdrop to catch body clicks on mobile etc
-.mui-dropdown-backdrop {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-}
-
-// Right aligned dropdowns
-.mui-pull-right > .mui-dropdown-menu {
-  right: 0;
+// Right align
+.mui-dropdown-menu-right {
   left: auto;
+  right: 0;
 }

@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.0.5 - March 7, 2015
+
+* Added .mui-dropdown-menu-right to support right-aligned dropdowns
+* Improved handling of dropdowns by triggering on toggle button instead of wrapper
+* Added .mui-align-[baseline|top|middle|bottom] helper classes
+
 ## 0.0.4 - March 7, 2015
 
 * Fixed bug in webcomponents/buttons.js that was causing syntax error
