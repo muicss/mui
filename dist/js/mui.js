@@ -40,28 +40,20 @@ module.exports = {
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
+    attrSelector = '[data-toggle="dropdown"]',
     wrapperClass = 'mui-dropdown',
     openClass = 'mui-open',
     menuClass = 'mui-dropdown-menu',
     animationName = 'mui-dropdown-inserted';
 
 
-function initialize(wrapperEl) {
+function initialize(toggleEl) {
   // check flag
-  if (wrapperEl._muiDropdown === true) return;
-  else wrapperEl._muiDropdown = true;
+  if (toggleEl._muiDropdown === true) return;
+  else toggleEl._muiDropdown = true;
 
-  var el;
-
-  // attach click handler to toggle button
-  for (var i=wrapperEl.childNodes.length - 1; i >= 0; i--) {
-    el = wrapperEl.childNodes[i];
-
-    if (el.getAttribute && el.getAttribute('data-toggle') === 'dropdown') {
-      jqLite.on(el, 'click', clickHandler);
-      break;
-    }
-  }
+  // attach click handler
+  jqLite.on(toggleEl, 'click', clickHandler);
 }
 
 
@@ -83,18 +75,14 @@ function clickHandler(ev) {
 
 function toggleDropdown(toggleEl) {
   var wrapperEl = toggleEl.parentNode,
-      doc = wrapperEl.ownerDocument,
-      menuEl;
+      menuEl = toggleEl.nextElementSibling,
+      doc = wrapperEl.ownerDocument;
 
-  // get menu element
-  menuEl = toggleEl.nextElementSibling;
-  while (menuEl) {
-    if (jqLite.hasClass(menuEl, menuClass)) break;
-    menuEl = menuEl.nextElementSibling;
+  // exit if no menu element
+  if (!menuEl || !jqLite.hasClass(menuEl, menuClass)) {
+    util.raiseError('Dropdown menu element not found');
+    return;
   }
-
-  // exit if no menu found
-  if (!menuEl) return;
 
   // method to ignore clicks inside menu
   function stopPropagationFn(ev) {
@@ -103,7 +91,7 @@ function toggleDropdown(toggleEl) {
 
   // method to close dropdown
   function closeDropdownFn() {
-    jqLite.removeClass(wrapperEl, openClass);
+    jqLite.removeClass(menuEl, openClass);
       
     // remove event handlers
     jqLite.off(doc, 'click', closeDropdownFn);
@@ -121,7 +109,7 @@ function toggleDropdown(toggleEl) {
     jqLite.css(menuEl, 'top', top + 'px');
 
     // add open class to wrapper
-    jqLite.addClass(wrapperEl, openClass);
+    jqLite.addClass(menuEl, openClass);
 
     // close dropdown when user clicks outside of menu
     jqLite.on(toggleEl, 'click', stopPropagationFn);
@@ -130,7 +118,7 @@ function toggleDropdown(toggleEl) {
   }
 
   // toggle dropdown
-  if (jqLite.hasClass(wrapperEl, openClass)) closeDropdownFn();
+  if (jqLite.hasClass(menuEl, openClass)) closeDropdownFn();
   else openDropdownFn();
 }
 
@@ -143,7 +131,7 @@ module.exports = {
     var doc = document;
 
     // markup elements available when method is called
-    var elList = doc.getElementsByClassName(wrapperClass);
+    var elList = doc.querySelectorAll(attrSelector);
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements

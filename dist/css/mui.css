@@ -1683,20 +1683,26 @@ th {
     opacity: 1; } }
 
 .mui-dropdown {
-  position: relative;
+  display: inline-block;
+  position: relative; }
+
+[data-toggle="dropdown"] {
   -webkit-animation-duration: 0.001s;
   animation-duration: 0.001s;
   -webkit-animation-name: mui-dropdown-inserted;
-  animation-name: mui-dropdown-inserted; }
-  .mui-dropdown [data-toggle="dropdown"]:focus {
-    outline: 0; }
+  animation-name: mui-dropdown-inserted;
+  outline: 0; }
+  [data-toggle="dropdown"].mui-btn {
+    -webkit-animation-name: mui-dropdown-inserted, mui-btn-inserted;
+    animation-name: mui-dropdown-inserted, mui-btn-inserted;
+    -webkit-animation-duration: 0.001s, 0.001s;
+    animation-duration: 0.001s, 0.001s; }
 
 .mui-dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
   display: none;
-  float: left;
   min-width: 160px;
   padding: 5px 0;
   margin: 2px 0 0;
@@ -1706,6 +1712,8 @@ th {
   background-color: #FFF;
   border-radius: 2px;
   background-clip: padding-box; }
+  .mui-dropdown-menu.mui-open {
+    display: block; }
   .mui-dropdown-menu > li > a {
     display: block;
     padding: 3px 20px;
@@ -1714,41 +1722,21 @@ th {
     line-height: 1.429;
     color: rgba(0, 0, 0, 0.87);
     white-space: nowrap; }
+    .mui-dropdown-menu > li > a:hover, .mui-dropdown-menu > li > a:focus {
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.87);
+      background-color: #EEEEEE; }
+  .mui-dropdown-menu > .mui-disabled > a, .mui-dropdown-menu > .mui-disabled > a:hover, .mui-dropdown-menu > .mui-disabled > a:focus {
+    color: #EEEEEE; }
+  .mui-dropdown-menu > .mui-disabled > a:hover, .mui-dropdown-menu > .mui-disabled > a:focus {
+    text-decoration: none;
+    background-color: transparent;
+    background-image: none;
+    cursor: false; }
 
-.mui-dropdown-menu > li > a:hover, .mui-dropdown-menu > li > a:focus {
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #EEEEEE; }
-
-.mui-dropdown-menu > .mui-active > a, .mui-dropdown-menu > .mui-active > a:hover, .mui-dropdown-menu > .mui-active > a:focus {
-  color: #FF4081;
-  text-decoration: none;
-  outline: 0;
-  background-color: #FFF; }
-
-.mui-dropdown-menu > .mui-disabled > a, .mui-dropdown-menu > .mui-disabled > a:hover, .mui-dropdown-menu > .mui-disabled > a:focus {
-  color: #EEEEEE; }
-.mui-dropdown-menu > .mui-disabled > a:hover, .mui-dropdown-menu > .mui-disabled > a:focus {
-  text-decoration: none;
-  background-color: transparent;
-  background-image: none;
-  cursor: false; }
-
-.mui-open > .mui-dropdown-menu {
-  display: block; }
-.mui-open > a {
-  outline: 0; }
-
-.mui-dropdown-backdrop {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0; }
-
-.mui-pull-right > .mui-dropdown-menu {
-  right: 0;
-  left: auto; }
+.mui-dropdown-menu-right {
+  left: auto;
+  right: 0; }
 
 .mui-overlay-on {
   overflow: hidden !important; }
@@ -1789,6 +1777,18 @@ th {
 
 .mui-text-nowrap {
   white-space: nowrap; }
+
+.mui-align-baseline {
+  vertical-align: baseline; }
+
+.mui-align-top {
+  vertical-align: top; }
+
+.mui-align-middle {
+  vertical-align: middle; }
+
+.mui-align-bottom {
+  vertical-align: bottom; }
 
 .mui-list-unstyled {
   padding-left: 0;
