@@ -2,7 +2,7 @@
 
 var config = require('../js/config.js'),
     jqLite = require('../js/lib/jqLite.js'),
-    btnClass = config.cssPrfx + 'btn',
+    btnClass = 'mui-btn',
     btnTagName = btnClass;
 
 

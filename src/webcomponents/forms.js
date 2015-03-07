@@ -35,7 +35,7 @@ FormControlProto.createdCallback = function() {
     innerEl.appendChild(labelEl);
 
     // add event listeners
-    muiForms.processLabel(labelEl);
+    muiForms.initialize(labelEl);
   }
 
   // add to root

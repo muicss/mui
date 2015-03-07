@@ -3,7 +3,6 @@
 node_modules
 .sass-cache
 npm-debug.log
-dist
 bower_components
 examples/assets/mui
 examples/email-inlined
