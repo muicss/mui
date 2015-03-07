@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.0.4 - March 7, 2015
+
+* Fixed bug in webcomponents/buttons.js that was causing syntax error
+* Fixed bug in webcomponents/forms.js that was causing an undefined function error
+* Added dist/ to repository to better support 3rd party frameworks
+
 ## 0.0.3 - February 26, 2015
 
 * Removed configurable prfx in favor of explicit 'mui-'
