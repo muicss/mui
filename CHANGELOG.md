@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.0.6 - ????
+
+* Set z-index of mui-dropdown-menu to 1
+
 ## 0.0.5 - March 7, 2015
 
 * Added .mui-dropdown-menu-right to support right-aligned dropdowns

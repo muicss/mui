@@ -37,6 +37,7 @@
   text-align: left;
   background-color: $mui-dropdown-background-color;
   border-radius: $mui-dropdown-border-radius;
+  z-index: 1;
   @extend .mui-z1;
   background-clip: padding-box;
 
