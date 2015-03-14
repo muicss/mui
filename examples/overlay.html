@@ -7,7 +7,14 @@
       window.addEventListener('load', function() {
         var buttonEl = document.getElementsByClassName('mui-btn')[0];
         buttonEl.addEventListener('click', function() {
-          var overlayEl = mui.overlay('on');
+          var modalEl = document.createElement('div');
+          modalEl.style.position = 'absolute';
+          modalEl.style.top = '50px';
+          modalEl.style.width = '300px';
+          modalEl.style.height = '100px';
+          modalEl.style.margin = '0 auto';
+
+          var overlayEl = mui.overlay('on', modalEl);
 
           overlayEl.addEventListener('click', function offFn() {
             mui.overlay('off');
