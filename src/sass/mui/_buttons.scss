@@ -1,10 +1,3 @@
-// insertion alert
-@keyframes mui-btn-inserted {
-  from {opacity: 0.99;}
-  to {opacity: 1;}
-}
-
-
 // =======================
 // Module variables
 // =======================
@@ -45,7 +38,7 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
   overflow: hidden;
 
   animation-duration: 0.001s;
-  animation-name: mui-btn-inserted;
+  animation-name: mui-node-inserted;
   
   // spacing between buttons
   & +.mui-btn {

@@ -104,6 +104,8 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onAnimationStart(animationName, initialize);
+    util.onNodeInserted(function(el) {
+      if (jqLite.hasClass(el, floatingLabelBaseClass)) initialize(el);
+    });
   }
 };

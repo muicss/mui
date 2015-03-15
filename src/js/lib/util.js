@@ -62,44 +62,51 @@ function raiseErrorFn(msg) {
 
 
 // -------------------------
-// onAnimationStart
+// onNodeInserted
 // -------------------------
-var animationCallbacks = {};
+var nodeInsertedCallbacks = [];
 
 
-function onAnimationStartFn(animationName, callbackFn) {
-  if (animationName in animationCallbacks) {
-    animationCallbacks[animationName].push(callbackFn);
-  } else {
-    animationCallbacks[animationName] = [callbackFn];
-  }
+/**
+ * Register callbacks on muiNodeInserted event
+ * @param {function} callbackFn - The callback function.
+ */
+function onNodeInsertedFn(callbackFn) {
+  nodeInsertedCallbacks.push(callbackFn);
 
   // initalize listeners
-  if (animationCallbacks._initialized === undefined) {
+  if (nodeInsertedCallbacks._initialized === undefined) {
     jqLite.on(doc, 'animationstart', animationHandlerFn);
     jqLite.on(doc, 'mozAnimationStart', animationHandlerFn);
     jqLite.on(doc, 'webkitAnimationStart', animationHandlerFn);
 
-    animationCallbacks._initialized = true;
+    nodeInsertedCallbacks._initialized = true;
   }
 }
 
 
+/**
+ * Execute muiNodeInserted callbacks
+ * @param {Event} ev - The DOM event.
+ **/
 function animationHandlerFn(ev) {
-  var callbacks = animationCallbacks[ev.animationName];
+  if (ev.animationName !== 'mui-node-inserted') return;
 
-  if (callbacks) {
-    for (var i=callbacks.length - 1; i >= 0; i--) callbacks[i](ev.target);
+  var el = ev.target;
+
+  // iterate through callbacks
+  for (var i=nodeInsertedCallbacks.length - 1; i >= 0; i--) {
+    nodeInsertedCallbacks[i](el);
   }
 }
 
 
-// -------------------------
-// Module API
-// -------------------------
+/**
+ * Define the module API
+ */
 module.exports = {
   log: logFn,
   loadStyle: loadStyleFn,
-  onAnimationStart: onAnimationStartFn,
+  onNodeInserted: onNodeInsertedFn,
   raiseError: raiseErrorFn
 };

@@ -2,11 +2,10 @@
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
-    attrSelector = '[data-toggle="dropdown"]',
-    wrapperClass = 'mui-dropdown',
+    attrKey = 'data-mui-toggle',
+    attrSelector = '[data-mui-toggle="dropdown"]',
     openClass = 'mui-open',
-    menuClass = 'mui-dropdown-menu',
-    animationName = 'mui-dropdown-inserted';
+    menuClass = 'mui-dropdown-menu';
 
 
 function initialize(toggleEl) {
@@ -42,8 +41,7 @@ function toggleDropdown(toggleEl) {
 
   // exit if no menu element
   if (!menuEl || !jqLite.hasClass(menuEl, menuClass)) {
-    util.raiseError('Dropdown menu element not found');
-    return;
+    return util.raiseError('Dropdown menu element not found');
   }
 
   // method to ignore clicks inside menu
@@ -97,6 +95,8 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onAnimationStart(animationName, initialize);
+    util.onNodeInserted(function(el) {
+      if (el.getAttribute(attrKey) === 'dropdown') initialize(el);
+    });
   }
 };
