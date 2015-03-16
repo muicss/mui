@@ -1,0 +1,49 @@
+.mui-tabs {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  
+  > li {
+    display: inline-block;
+
+    > a {
+      display: block;
+      white-space: nowrap;
+      text-transform: uppercase;
+      @include mui-text("body2");
+      cursor: default;
+      height: 48px;
+      line-height: 48px;
+      padding-left: 24px;
+      padding-right: 24px;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &.mui-active {
+      border-bottom: 2px solid $mui-primary-color;
+
+      > a {
+        color: $mui-primary-color;
+      }
+    }
+  }
+}
+
+.mui-tab-content {
+  > .mui-tab-pane {
+    display: none;
+
+    &.mui-active {
+      display: block;
+    }
+  }
+}
+
+[data-mui-toggle="tab"] {
+  animation-duration: 0.001s;
+  animation-name: mui-node-inserted;
+}

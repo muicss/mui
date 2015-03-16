@@ -88,7 +88,7 @@ function onNodeInsertedFn(callbackFn) {
 /**
  * Execute muiNodeInserted callbacks
  * @param {Event} ev - The DOM event.
- **/
+ */
 function animationHandlerFn(ev) {
   if (ev.animationName !== 'mui-node-inserted') return;
 

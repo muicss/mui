@@ -10,6 +10,7 @@
       forms = require('./forms.js'),
       ripple = require('./ripple.js'),
       dropdowns = require('./dropdowns.js'),
+      tabs = require('./tabs.js'),
       overlay = require('./overlay.js');
 
   // expose api
@@ -22,5 +23,6 @@
     forms.initListeners();
     ripple.initListeners();
     dropdowns.initListeners();
+    tabs.initListeners();
   });
 })(window);
