@@ -21,9 +21,6 @@ var util = require('./lib/util.js'),
  * @param {Element} [childElement] Child element to add to overlay.
  */
 function overlayFn2(action) {
-  var bodyEl = document.body,
-      overlayEl = document.getElementById(overlayId);
-  
   if (action === 'on') {
     // extract arguments
     var arg, options, childElement;
@@ -48,10 +45,10 @@ function overlayFn2(action) {
     options.static = (options.static === undefined ? true : false);
 
     // execute method
-    overlayEl = overlayOn(bodyEl, overlayEl, options, childElement);
+    overlayEl = overlayOn(options, childElement);
 
   } else if (action === 'off') {
-    overlayOff(bodyEl, overlayEl);
+    overlayEl = overlayOff();
 
   } else {
     // raise error
@@ -62,12 +59,15 @@ function overlayFn2(action) {
 }
 
 
-function overlayOn(bodyEl, overlayEl, options, childElement) {
+function overlayOn(options, childElement) {
+  var bodyEl = document.body,
+      overlayEl = document.getElementById(overlayId);
+    
   // add overlay
   jqLite.addClass(bodyEl, bodyClass);
 
-  // get-or-create overlayEl
   if (!overlayEl) {
+    // create overlayEl
     overlayEl = document.createElement('div');
     overlayEl.setAttribute('id', overlayId);
     
@@ -84,13 +84,29 @@ function overlayOn(bodyEl, overlayEl, options, childElement) {
     if (childElement) overlayEl.appendChild(childElement);
   }
 
+  // handle options
+  if (options.keyboard) jqLite.on(document, 'keypress', onKeypress);
+  else jqLite.off(document, 'keypress', onKeypress);
+
+  if (options.static) jqLite.off(overlayEl, 'click', onClick);
+  else jqLite.on(overlayEl, 'click', onClick);
+  
   return overlayEl;
 }
 
 
-function overlayOff(bodyEl, overlayEl) {
+function overlayOff() {
+  var overlayEl = document.getElementById(overlayId);
+
+  // remove overlayEl from body
   if (overlayEl) overlayEl.parentNode.removeChild(overlayEl);
-  jqLite.removeClass(bodyEl, bodyClass);
+  jqLite.removeClass(document.body, bodyClass);
+
+  // remove option handlers
+  jqLite.off(document, 'keypress', onKeypress);
+  jqLite.off(overlayEl, 'click', onClick);
+  
+  return overlayEl;
 }
 
 
