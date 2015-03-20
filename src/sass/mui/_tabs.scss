@@ -52,39 +52,6 @@
   }
 }
 
-.mui-tabs-scrollable {
-  position: relative;
-  padding-left: 64px;
-  padding-right: 64px;
-  
-  > .mui-tabs {
-    overflow-x: hidden;
-  }
-
-  .mui-tabs-leftscroll,
-  .mui-tabs-rightscroll {
-    position: absolute;
-    top: 0px;
-    width: 48px;
-    height: 48px;
-    padding: 10px;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    display: none;
-  }
-
-  .mui-tabs-leftscroll {
-    left: 8px;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMTUuNDEgNy40MUwxNCA2bC02IDYgNiA2IDEuNDEtMS40MUwxMC44MyAxMnoiPjwvcGF0aD48L3N2Zz4=');
-  }
-
-  .mui-tabs-rightscroll {
-    right: 8px;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMTAgNkw4LjU5IDcuNDEgMTMuMTcgMTJsLTQuNTggNC41OUwxMCAxOGw2LTZ6Ij48L3BhdGg+PC9zdmc+');
-  }
-}
-
 .mui-tab-content {
   > .mui-tab-pane {
     display: none;
