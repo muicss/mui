@@ -3,6 +3,7 @@
 ## 0.0.6 - ????
 
 * Set z-index of mui-dropdown-menu to 1
+* Added tabs CSS/JS
 
 ## 0.0.5 - March 7, 2015
 
