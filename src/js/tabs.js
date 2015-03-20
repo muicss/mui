@@ -4,7 +4,8 @@ var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
     attrSelector = '[data-mui-toggle="tab"]',
     controlsAttrKey = 'data-mui-controls',
-    activeClass = 'mui-active';
+    activeClass = 'mui-active',
+    scrollableClass = 'mui-tabs-scrollable';
 
 
 /**
@@ -18,6 +19,12 @@ function initialize(toggleEl) {
 
   // attach click handler
   jqLite.on(toggleEl, 'click', clickHandler);
+
+  // check for scrollable wrapper element
+  var wrapperEl = toggleEl.parentNode.parentNode.parentNode;
+  if (jqLite.hasClass(wrapperEl, scrollableClass)) {
+    initializeScrollable(wrapperEl, toggleEl.parentNode.parentNode);
+  }
 }
 
 
@@ -77,6 +84,57 @@ function activateTab(toggleEl) {
 }
 
 
+/**
+ * Initialize scrollable tabs
+ * @param {HTMLElement} wrapperEl - The scrollable tabs wrapper element.
+ * @param {HTMLElement} tabsEl - The tabs container element.
+ */
+function initializeScrollable(wrapperEl, tabsEl) {
+  // check flag
+  if (wrapperEl._muiTabs === true) return;
+  else wrapperEl._muiTabs = true;
+
+
+  // add scroll elements
+  var scrollLeftEl = document.createElement('div');
+  scrollLeftEl.className = 'mui-tabs-leftscroll';
+  wrapperEl.appendChild(scrollLeftEl);
+  
+  var scrollRightEl = document.createElement('div');
+  scrollRightEl.className = 'mui-tabs-rightscroll';
+  wrapperEl.appendChild(scrollRightEl);
+  
+  
+  // window resize event handler
+  var lastOverflow = false;
+  
+  function onResize() {
+    var currOverflow = (tabsEl.scrollWidth > tabsEl.clientWidth);
+
+    // check last value
+    if (currOverflow !== lastOverflow) onOverflowChange(currOverflow);
+
+    lastOverflow = currOverflow;
+  }
+
+  
+  // overflow change event handler
+  function onOverflowChange(status) {
+    if (status === false) {
+      jqLite.css(scrollLeftEl, 'display', 'none');
+      jqLite.css(scrollRightEl, 'display', 'none');
+    } else {
+      jqLite.css(scrollLeftEl, 'display', 'block');
+      jqLite.css(scrollRightEl, 'display', 'block');
+    }
+  }
+
+  
+  jqLite.on(window, 'resize', onResize);
+  onResize();
+}
+
+ 
 /**
  * Define module API.
  */

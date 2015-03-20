@@ -90,6 +90,7 @@ function onNodeInsertedFn(callbackFn) {
  * @param {Event} ev - The DOM event.
  */
 function animationHandlerFn(ev) {
+  // check animation name
   if (ev.animationName !== 'mui-node-inserted') return;
 
   var el = ev.target;

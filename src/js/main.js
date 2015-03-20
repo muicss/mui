@@ -7,6 +7,7 @@
   
   // load dependencies
   var jqLite = require('./lib/jqLite.js'),
+      util = require('./lib/util.js'),
       forms = require('./forms.js'),
       ripple = require('./ripple.js'),
       dropdowns = require('./dropdowns.js'),
