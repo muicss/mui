@@ -1,7 +1,6 @@
 /**
- * MUI JS config module
- *
- **/
+ * Module export
+ */
 module.exports = {
   debug: true
 };

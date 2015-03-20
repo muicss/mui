@@ -8,6 +8,10 @@ var jqLite = require('./lib/jqLite.js'),
     menuClass = 'mui-dropdown-menu';
 
 
+/**
+ * Initialize toggle element.
+ * @param {HTMLElement} toggleEl - The toggle element.
+ */
 function initialize(toggleEl) {
   // check flag
   if (toggleEl._muiDropdown === true) return;
@@ -18,6 +22,10 @@ function initialize(toggleEl) {
 }
 
 
+/**
+ * Handle click events on dropdown toggle element.
+ * @param {Event} ev - The DOM event
+ */
 function clickHandler(ev) {
   // only left clicks
   if (ev.button !== 0) return;
@@ -34,6 +42,10 @@ function clickHandler(ev) {
 }
 
 
+/**
+ * Toggle the dropdown.
+ * @param {HTMLElement} toggleEl - The dropdown toggle element.
+ */
 function toggleDropdown(toggleEl) {
   var wrapperEl = toggleEl.parentNode,
       menuEl = toggleEl.nextElementSibling,
@@ -83,9 +95,9 @@ function toggleDropdown(toggleEl) {
 }
 
   
-/**************************
+/**
  * Module API
- **************************/
+ */
 module.exports = {
   initListeners: function() {
     var doc = document;

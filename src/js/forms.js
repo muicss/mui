@@ -9,6 +9,10 @@ var jqLite = require('./lib/jqLite.js'),
     animationName = 'mui-form-floating-label-inserted';
 
 
+/**
+ * Initialize floating labels.
+ * @param {HTMLElement} labelEl - The floating label element.
+ */
 function initialize(labelEl) {
   // check flag
   if (labelEl._muiFloatLabel === true) return;
@@ -43,6 +47,10 @@ function initialize(labelEl) {
 }
 
 
+/**
+ * Handle inputs into the form control.
+ * @param {Event} ev - The DOM event.
+ */
 function inputHandler(ev) {
   var inputEl = ev.target,
       labelEl = inputEl.nextElementSibling;
@@ -57,6 +65,10 @@ function inputHandler(ev) {
 }
 
 
+/**
+ * Activate the floating label
+ * @param {HTMLElement} labelEl - The floating label element.
+ */
 function activateLabel(labelEl) {
   jqLite.addClass(labelEl, floatingLabelActiveClass);
 
@@ -66,16 +78,25 @@ function activateLabel(labelEl) {
 }
 
 
+/**
+ * De-activate the floating label
+ * @param {HTMLElement} labelEl - The floating label element.
+ * @param {HTMLElement} inputEl - The form-control input element.
+ */
 function deactivateLabel(labelEl, inputEl) {
   jqLite.removeClass(labelEl, floatingLabelActiveClass);
 }
 
 
-/******************************
- * Utilities
- ******************************/
+// -----------------------------
+// Utilities
+// -----------------------------
 var _supportsPointerEvents;
 
+
+/**
+ * Check if client supports pointer events.
+ */
 function supportsPointerEvents() {
   // check cache
   if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
@@ -87,9 +108,9 @@ function supportsPointerEvents() {
 }
 
 
-/******************************
+/**
  * Module API
- ******************************/
+ */
 module.exports = {
   formControlClass: formControlClass,
   formGroupClass: formGroupClass,
