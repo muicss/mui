@@ -2,27 +2,24 @@
  * MUI CSS/JS utilities module
  * @module lib/util
  */
+
 'use strict';
 
 
 var config = require('../config.js'),
-    jqLite = require('./jqLite.js');
+    jqLite = require('./jqLite.js'),
+    win = window,
+    doc = window.document,
+    nodeInsertedCallbacks = [],
+    head;
 
 
-// --------------------------
-// Shared variables
-// --------------------------
-var win = window,
-    doc = window.document;
-
-var head = doc.head
-  || doc.getElementsByTagName('head')[0] 
-  || doc.documentElement;
+head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
 
-// -------------------------
-// log
-// -------------------------
+/**
+ * Logging function
+ */
 function logFn() {
   if (config.debug && typeof win.console !== "undefined") {
     try {
@@ -35,18 +32,19 @@ function logFn() {
 }
 
 
-// -------------------------
-// loadStyle
-// -------------------------
-function loadStyleFn(s) {
+/**
+ * Load CSS text in new stylesheet
+ * @param {String} cssText - The css text.
+ */
+function loadStyleFn(cssText) {
   if (doc.createStyleSheet) {
-    doc.createStyleSheet().cssText = s;
+    doc.createStyleSheet().cssText = cssText;
   } else {
     var e = doc.createElement('style');
     e.type = 'text/css';
     
-    if (e.styleSheet) e.styleSheet.cssText = s;
-    else e.appendChild(doc.createTextNode(s));
+    if (e.styleSheet) e.styleSheet.cssText = cssText;
+    else e.appendChild(doc.createTextNode(cssText));
     
     // add to document
     head.insertBefore(e, head.firstChild);
@@ -54,18 +52,13 @@ function loadStyleFn(s) {
 }
 
 
-// -------------------------
-// Raise
-// -------------------------
+/**
+ * Raise an error
+ * @param {String} msg - The error message.
+ */
 function raiseErrorFn(msg) {
   throw "MUI Error: " + msg;
 }
-
-
-// -------------------------
-// onNodeInserted
-// -------------------------
-var nodeInsertedCallbacks = [];
 
 
 /**
@@ -107,8 +100,15 @@ function animationHandlerFn(ev) {
  * Define the module API
  */
 module.exports = {
+  /** Log messages to the console when debug is turned on */
   log: logFn,
+
+  /** Load CSS text as new stylesheet */
   loadStyle: loadStyleFn,
+
+  /** Register muiNodeInserted handler */
   onNodeInserted: onNodeInsertedFn,
+
+  /** Raise MUI error */
   raiseError: raiseErrorFn
 };

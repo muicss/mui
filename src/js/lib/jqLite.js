@@ -2,12 +2,15 @@
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
  */
+
 'use strict';
 
 
-// ----------------------
-// addClass
-// ----------------------
+/**
+ * Add a class to an element.
+ * @param {HTMLElement} element - The DOM element.
+ * @param {String} cssClasses - Space separated list of class names.
+ */
 function jqLiteAddClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;
 
@@ -26,9 +29,12 @@ function jqLiteAddClass(element, cssClasses) {
 }
 
 
-// ---------------------
-// css
-// ---------------------
+/**
+ * Get or set CSS properties.
+ * @param {HTMLElement} element - The DOM element.
+ * @param {String} [name] - The property name.
+ * @param {String} [value] - The property value.
+ */
 function jqLiteCss(element, name, value) {
   // --- Return full style object ---
   if (name === undefined) {
@@ -67,18 +73,21 @@ function jqLiteCss(element, name, value) {
 }
 
 
-// ---------------------
-// hasClass
-// ---------------------
-function jqLiteHasClass(element, selector) {
-  if (!selector || !element.getAttribute) return false;
-  return (_getExistingClasses(element).indexOf(' ' + selector + ' ') > -1);
+/**
+ * Check if element has class.
+ * @param {HTMLElement} element - The DOM element.
+ * @param {String} cls - The class name string.
+ */
+function jqLiteHasClass(element, cls) {
+  if (!cls || !element.getAttribute) return false;
+  return (_getExistingClasses(element).indexOf(' ' + cls + ' ') > -1);
 }
 
 
-// ------------------------
-// type
-// ------------------------
+/**
+ * Return the type of a variable.
+ * @param {} somevar - The JavaScript variable.
+ */
 function jqLiteType(somevar) {
   // handle undefined
   if (somevar === undefined) return 'undefined';
@@ -93,9 +102,13 @@ function jqLiteType(somevar) {
 }
 
 
-// ------------------------
-// on
-// ------------------------
+/**
+ * Attach an event handler to a DOM element
+ * @param {HTMLElement} element - The DOM element.
+ * @param {String} type - The event type name.
+ * @param {Function} callback - The callback function.
+ * @param {Boolean} useCapture - Use capture flag.
+ */
 function jqLiteOn(element, type, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
@@ -109,9 +122,13 @@ function jqLiteOn(element, type, callback, useCapture) {
 }
 
 
-// -----------------------
-// off
-// -----------------------
+/**
+ * Remove an event handler from a DOM element
+ * @param {HTMLElement} element - The DOM element.
+ * @param {String} type - The event type name.
+ * @param {Function} callback - The callback function.
+ * @param {Boolean} useCapture - Use capture flag.
+ */
 function jqLiteOff(element, type, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
@@ -139,9 +156,13 @@ function jqLiteOff(element, type, callback, useCapture) {
 }
 
 
-// ---------------------
-// one
-// ---------------------
+/**
+ * Attach an event hander which will only execute once
+ * @param {HTMLElement} element - The DOM element.
+ * @param {String} type - The event type name.
+ * @param {Function} callback - The callback function.
+ * @param {Boolean} useCapture - Use capture flag.
+ */
 function jqLiteOne(element, type, callback, useCapture) {
   // remove functions after event fires
   jqLiteOn(element, type, function onFn() {
@@ -154,9 +175,10 @@ function jqLiteOne(element, type, callback, useCapture) {
 }
 
 
-// -----------------------
-// offset
-// -----------------------
+/**
+ * Return object representing top/left offset and element height/width.
+ * @param {HTMLElement} element - The DOM element.
+ */
 function jqLiteOffset(element) {
   var win = window,
       docEl = document.documentElement,
@@ -176,9 +198,10 @@ function jqLiteOffset(element) {
 }
 
 
-// -----------------------
-// ready
-// -----------------------
+/**
+ * Attach a callback to the DOM ready event listener
+ * @param {Function} fn - The callback function.
+ */
 function jqLiteReady(fn) {
   var done = false,
       top = true,
@@ -217,9 +240,11 @@ function jqLiteReady(fn) {
 }
 
 
-// ---------------------
-// removeClass
-// ---------------------
+/**
+ * Remove classes from a DOM element
+ * @param {HTMLElement} element - The DOM element.
+ * @param {String} cssClasses - Space separated list of class names.
+ */
 function jqLiteRemoveClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;
 
@@ -238,9 +263,9 @@ function jqLiteRemoveClass(element, cssClasses) {
 }
 
 
-/**************************
- * Utilities
- **************************/
+// ------------------------------
+// Utilities
+// ------------------------------
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
     ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g,
@@ -291,18 +316,37 @@ function _getCurrCssProp(elem, name, computed) {
 }
 
 
-/**************************
+/**
  * Module API
- **************************/
+ */
 module.exports = {
+  /** Add classes */
   addClass: jqLiteAddClass,
+
+  /** Get or set CSS properties */
   css: jqLiteCss,
+
+  /** Check for class */
   hasClass: jqLiteHasClass,
+
+  /** Remove event handlers */
   off: jqLiteOff,
+
+  /** Return offset values */
   offset: jqLiteOffset,
+
+  /** Add event handlers */
   on: jqLiteOn,
+
+  /** Add an execute-once event handler */
   one: jqLiteOne,
+
+  /** DOM ready event handler */
   ready: jqLiteReady,
+
+  /** Remove classes */
   removeClass: jqLiteRemoveClass,
+
+  /** Check JavaScript variable instance type */
   type: jqLiteType
 };
