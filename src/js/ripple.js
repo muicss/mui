@@ -1,4 +1,10 @@
+/**
+ * MUI CSS/JS ripple module
+ * @module ripple
+ */
+
 'use strict';
+
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
@@ -9,6 +15,10 @@ var jqLite = require('./lib/jqLite.js'),
     animationName = 'mui-btn-inserted';
 
 
+/**
+ * Add ripple effects to button element.
+ * @param {HTMLElement} buttonEl - The button element.
+ */
 function initialize(buttonEl) {
   // check flag
   if (buttonEl._muiRipple === true) return;
@@ -22,6 +32,10 @@ function initialize(buttonEl) {
 }
 
 
+/**
+ * Mousedown event handler
+ * @param {Event} ev - The DOM event
+ */
 function mousedownHandler(ev) {
   // only left clicks
   if (ev.button !== 0) return;
@@ -64,10 +78,11 @@ function mousedownHandler(ev) {
 }
 
 
-/**********************************
- * Module API
- **********************************/
+/**
+ * Module export API
+ */
 module.exports = {
+  /** Initialize module listeners */
   initListeners: function() {
     var doc = document;
 

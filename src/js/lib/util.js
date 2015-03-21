@@ -1,8 +1,9 @@
 /**
- * MUI JS lib module
- *
- **/
+ * MUI CSS/JS utilities module
+ * @module lib/util
+ */
 'use strict';
+
 
 var config = require('../config.js'),
     jqLite = require('./jqLite.js');

@@ -1,4 +1,10 @@
+/**
+ * MUI CSS/JS tabs module
+ * @module tabs
+ */
+
 'use strict';
+
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
@@ -81,6 +87,7 @@ function activateTab(toggleEl) {
  * Define module API.
  */
 module.exports = {
+  /** Initialize module listeners */
   initListeners: function() {
     // markup elements available when method is called
     var elList = document.querySelectorAll(attrSelector);

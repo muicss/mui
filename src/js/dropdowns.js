@@ -1,4 +1,10 @@
+/**
+ * MUI CSS/JS dropdown module
+ * @module dropdowns
+ */
+
 'use strict';
+
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
@@ -99,6 +105,7 @@ function toggleDropdown(toggleEl) {
  * Module API
  */
 module.exports = {
+  /** Initialize module listeners */
   initListeners: function() {
     var doc = document;
 

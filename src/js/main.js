@@ -1,3 +1,8 @@
+/**
+ * MUI CSS/JS main module
+ * @module main
+ */
+
 (function(win) {
   'use strict';
 

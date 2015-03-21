@@ -1,4 +1,10 @@
+/**
+ * MUI CSS/JS overlay module
+ * @module overlay
+ */
+
 'use strict';
+
 
 var util = require('./lib/util.js'),
     jqLite = require('./lib/jqLite.js'),

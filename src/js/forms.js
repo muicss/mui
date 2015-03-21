@@ -1,4 +1,10 @@
+/**
+ * MUI CSS/JS forms module
+ * @module forms
+ */
+
 'use strict';
+
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
@@ -6,7 +12,8 @@ var jqLite = require('./lib/jqLite.js'),
     formGroupClass = 'mui-form-group',
     floatingLabelBaseClass = 'mui-form-floating-label',
     floatingLabelActiveClass = floatingLabelBaseClass + '-active',
-    animationName = 'mui-form-floating-label-inserted';
+    animationName = 'mui-form-floating-label-inserted',
+    _supportsPointerEvents;    
 
 
 /**
@@ -88,12 +95,6 @@ function deactivateLabel(labelEl, inputEl) {
 }
 
 
-// -----------------------------
-// Utilities
-// -----------------------------
-var _supportsPointerEvents;
-
-
 /**
  * Check if client supports pointer events.
  */
@@ -112,11 +113,22 @@ function supportsPointerEvents() {
  * Module API
  */
 module.exports = {
+  /** The form control class name */
   formControlClass: formControlClass,
+
+  /** The form group class name */
   formGroupClass: formGroupClass,
+
+  /** The floating label base class name */
   floatingLabelBaseClass: floatingLabelBaseClass,
+
+  /** The active floating label class name */
   floatingLabelActiveClass: floatingLabelActiveClass,
+
+  /** Initialize floating label element */
   initialize: initialize,
+
+  /** Initialize module listeners */
   initListeners: function() {
     var doc = document;
 

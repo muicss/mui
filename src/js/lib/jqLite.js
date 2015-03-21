@@ -1,7 +1,7 @@
 /**
- * MUI JS jqLite module
- *
- **/
+ * MUI CSS/JS jqLite module
+ * @module lib/jqLite
+ */
 'use strict';
 
 
