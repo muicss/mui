@@ -4,6 +4,7 @@
 
 * Set z-index of mui-dropdown-menu to 1
 * Added tabs CSS/JS
+* Added jsdoc documentation to javascript modules
 
 ## 0.0.5 - March 7, 2015
 

@@ -78,9 +78,7 @@ function mousedownHandler(ev) {
 }
 
 
-/**
- * Module export API
- */
+/** Define module API */
 module.exports = {
   /** Initialize module listeners */
   initListeners: function() {

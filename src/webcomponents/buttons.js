@@ -1,4 +1,10 @@
+/**
+ * MUI WebComponents buttons module
+ * @module webcomponents/buttons
+ */
+
 'use strict';
+
 
 var config = require('../js/config.js'),
     jqLite = require('../js/lib/jqLite.js'),
@@ -6,11 +12,14 @@ var config = require('../js/config.js'),
     btnTagName = btnClass;
 
 
-// ----------------------
-// Btn
-// ----------------------
+/**
+ * Class representing a button.
+ * @class
+ */
 var BtnProto = Object.create(HTMLElement.prototype);
 
+
+/** Button createdCallback */
 BtnProto.createdCallback = function() {
   var root = this.createShadowRoot(),
       innerEl = document.createElement('button');
@@ -58,10 +67,11 @@ BtnProto.createdCallback = function() {
 };
 
 
-/************************
- * Utilities
- ************************/
+// ----------------------------
+// Utilities
+// ----------------------------
 var styleEl;
+
 
 function _getStyleEl() {
   // get or create cached element
@@ -74,10 +84,9 @@ function _getStyleEl() {
 }
 
 
-/************************
- * Module API
- ************************/
+/** Define module API */
 module.exports = {
+  /** Register module elements */
   registerElements: function() {
     var BtnElement = document.registerElement(btnTagName, {
       prototype: BtnProto

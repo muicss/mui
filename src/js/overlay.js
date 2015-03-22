@@ -40,7 +40,5 @@ function overlayFn(arg) {
 }
 
 
-/**************************
- * Module API
- **************************/
+/** Define module API */
 module.exports = overlayFn;

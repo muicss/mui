@@ -1,3 +1,8 @@
+/**
+ * MUI WebComponents main module
+ * @module webcomponents/main
+ */
+
 (function(win) {
   // return if library has already been loaded
   if (win._muiLoadedWC) return;

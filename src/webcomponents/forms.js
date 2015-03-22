@@ -1,15 +1,24 @@
+/**
+ * MUI WebComponents forms module
+ * @module webcomponents/forms
+ */
+
 'use strict';
+
 
 var jqLite = require('../js/lib/jqLite.js'),
     muiForms = require('../js/forms.js'),
     formControlTagName = muiForms.formControlClass;
 
 
-// ----------------------
-// Form Control
-// ----------------------
+/**
+ * Class representing a FormControl element.
+ * @class
+ */
 var FormControlProto = Object.create(HTMLElement.prototype);
 
+
+/** FormControl createdCallback */
 FormControlProto.createdCallback = function() {
   var root = this.createShadowRoot(),
       innerEl = document.createElement('div'),
@@ -44,10 +53,11 @@ FormControlProto.createdCallback = function() {
 }
 
 
-/************************
- * Utilities
- ************************/
+// ------------------------------
+// Utilities
+// ------------------------------
 var styleEl;
+
 
 function _getStyleEl() {
   // get or create cached element
@@ -96,10 +106,9 @@ function _createLabelEl(attrs) {
 }
 
 
-/************************
- * Module API
- ************************/
+/** Define module API */
 module.exports = {
+  /** Register module elements */
   registerElements: function() {
     var FormControlElement = document.registerElement(formControlTagName, {
       prototype: FormControlProto

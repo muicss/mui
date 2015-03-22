@@ -1,12 +1,19 @@
+/**
+ * MUI React forms module
+ * @module react/forms
+ */
+
 'use strict';
+
 
 var jqLite = require('../js/lib/jqLite.js'),
     forms = require('../js/forms.js');
 
 
-// ------------------------
-// Form Control
-// ------------------------
+/**
+ * Constructs a FormControl element.
+ * @class
+ */
 var FormControl = React.createClass({
   render: function() {
     return (
@@ -22,9 +29,10 @@ var FormControl = React.createClass({
 });
 
 
-// -----------------------
-// Form Group
-// -----------------------
+/**
+ * Constructs a FormGroup element.
+ * @class
+ */
 var FormGroup = React.createClass({
   componentDidMount: function() {
     // use js library to add functionality to label
@@ -66,10 +74,11 @@ var FormGroup = React.createClass({
 });
 
 
-/***********************
- * Module API
- ***********************/
+/** Define module API */
 module.exports = {
+  /** FormControl constructor */
   FormControl: FormControl,
+
+  /** FormGroup constructor */
   FormGroup: FormGroup
 };

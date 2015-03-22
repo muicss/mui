@@ -1,3 +1,8 @@
+/**
+ * MUI React main module
+ * @module react/main
+ */
+
 (function(win) {
   // return if library has been loaded already
   if (win._muiLoadedReact) return;

@@ -109,9 +109,7 @@ function supportsPointerEvents() {
 }
 
 
-/**
- * Module API
- */
+/** Define module API */
 module.exports = {
   /** The form control class name */
   formControlClass: formControlClass,
