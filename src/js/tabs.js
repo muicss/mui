@@ -15,7 +15,7 @@ var jqLite = require('./lib/jqLite.js'),
 
 /**
  * Initialize the toggle element
- * @param {HTMLElement} toggleEl - The toggle element.
+ * @param {Element} toggleEl - The toggle element.
  */
 function initialize(toggleEl) {
   // check flag
@@ -49,7 +49,7 @@ function clickHandler(ev) {
 
 /**
  * Activate the tab controlled by the toggle element.
- * @param {HTMLElement} toggleEl - The toggle element.
+ * @param {Element} toggleEl - The toggle element.
  */
 function activateTab(toggleEl) {
   var tabEl = toggleEl.parentNode,

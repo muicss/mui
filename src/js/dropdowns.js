@@ -16,7 +16,7 @@ var jqLite = require('./lib/jqLite.js'),
 
 /**
  * Initialize toggle element.
- * @param {HTMLElement} toggleEl - The toggle element.
+ * @param {Element} toggleEl - The toggle element.
  */
 function initialize(toggleEl) {
   // check flag
@@ -50,7 +50,7 @@ function clickHandler(ev) {
 
 /**
  * Toggle the dropdown.
- * @param {HTMLElement} toggleEl - The dropdown toggle element.
+ * @param {Element} toggleEl - The dropdown toggle element.
  */
 function toggleDropdown(toggleEl) {
   var wrapperEl = toggleEl.parentNode,

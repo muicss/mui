@@ -34,7 +34,7 @@ function logFn() {
 
 /**
  * Load CSS text in new stylesheet
- * @param {String} cssText - The css text.
+ * @param {string} cssText - The css text.
  */
 function loadStyleFn(cssText) {
   if (doc.createStyleSheet) {
@@ -54,7 +54,7 @@ function loadStyleFn(cssText) {
 
 /**
  * Raise an error
- * @param {String} msg - The error message.
+ * @param {string} msg - The error message.
  */
 function raiseErrorFn(msg) {
   throw "MUI Error: " + msg;

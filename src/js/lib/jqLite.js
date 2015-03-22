@@ -8,8 +8,8 @@
 
 /**
  * Add a class to an element.
- * @param {HTMLElement} element - The DOM element.
- * @param {String} cssClasses - Space separated list of class names.
+ * @param {Element} element - The DOM element.
+ * @param {string} cssClasses - Space separated list of class names.
  */
 function jqLiteAddClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;
@@ -31,9 +31,9 @@ function jqLiteAddClass(element, cssClasses) {
 
 /**
  * Get or set CSS properties.
- * @param {HTMLElement} element - The DOM element.
- * @param {String} [name] - The property name.
- * @param {String} [value] - The property value.
+ * @param {Element} element - The DOM element.
+ * @param {string} [name] - The property name.
+ * @param {string} [value] - The property value.
  */
 function jqLiteCss(element, name, value) {
   // --- Return full style object ---
@@ -75,8 +75,8 @@ function jqLiteCss(element, name, value) {
 
 /**
  * Check if element has class.
- * @param {HTMLElement} element - The DOM element.
- * @param {String} cls - The class name string.
+ * @param {Element} element - The DOM element.
+ * @param {string} cls - The class name string.
  */
 function jqLiteHasClass(element, cls) {
   if (!cls || !element.getAttribute) return false;
@@ -104,8 +104,8 @@ function jqLiteType(somevar) {
 
 /**
  * Attach an event handler to a DOM element
- * @param {HTMLElement} element - The DOM element.
- * @param {String} type - The event type name.
+ * @param {Element} element - The DOM element.
+ * @param {string} type - The event type name.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
@@ -124,8 +124,8 @@ function jqLiteOn(element, type, callback, useCapture) {
 
 /**
  * Remove an event handler from a DOM element
- * @param {HTMLElement} element - The DOM element.
- * @param {String} type - The event type name.
+ * @param {Element} element - The DOM element.
+ * @param {string} type - The event type name.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
@@ -158,8 +158,8 @@ function jqLiteOff(element, type, callback, useCapture) {
 
 /**
  * Attach an event hander which will only execute once
- * @param {HTMLElement} element - The DOM element.
- * @param {String} type - The event type name.
+ * @param {Element} element - The DOM element.
+ * @param {string} type - The event type name.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
@@ -177,7 +177,7 @@ function jqLiteOne(element, type, callback, useCapture) {
 
 /**
  * Return object representing top/left offset and element height/width.
- * @param {HTMLElement} element - The DOM element.
+ * @param {Element} element - The DOM element.
  */
 function jqLiteOffset(element) {
   var win = window,
@@ -242,8 +242,8 @@ function jqLiteReady(fn) {
 
 /**
  * Remove classes from a DOM element
- * @param {HTMLElement} element - The DOM element.
- * @param {String} cssClasses - Space separated list of class names.
+ * @param {Element} element - The DOM element.
+ * @param {string} cssClasses - Space separated list of class names.
  */
 function jqLiteRemoveClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;

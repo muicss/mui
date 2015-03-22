@@ -13,14 +13,16 @@ var util = require('./lib/util.js'),
 
 
 /**
- * Turn overlay on/off
- * @param {string} action Turn overlay "on"/"off".
+ * Turn overlay on/off.
+ * @param {string} action - Turn overlay "on"/"off".
  * @param {object} [options]
- * @config {boolean} [keyboard] If true, close if escape key is pressed.
- * @config {boolean} [static] If false, close if backdrop is clicked.
- * @param {Element} [childElement] Child element to add to overlay.
+ * @config {boolean} [keyboard] - If true, close when escape key is pressed.
+ * @config {boolean} [static] - If false, close when backdrop is clicked.
+ * @param {Element} [childElement] - Child element to add to overlay.
  */
-function overlayFn2(action) {
+function overlayFn(action) {
+  var overlayEl;
+  
   if (action === 'on') {
     // extract arguments
     var arg, options, childElement;
@@ -28,22 +30,16 @@ function overlayFn2(action) {
     // pull options and childElement from arguments
     for (var i=arguments.length - 1; i > 0; i--) {
       arg = arguments[i];
-      
-      switch (jqLite.type(arg)) {
-      case 'Object':
-        options = arg;
-        break;
-      case 'HTMLDivElement':
-        childElement = arg;
-        break;
-      }
+
+      if (jqLite.type(arg) === 'object') options = arg;
+      if (arg instanceof Element && arg.nodeType === 1) childElement = arg;
     }
 
     // option defaults
     options = options || {};
-    options.keyboard = (options.keyboard === undefined ? true : false);
-    options.static = (options.static === undefined ? true : false);
-
+    if (options.keyboard === undefined) options.keyboard = true;
+    if (options.static === undefined) options.static = false;
+    
     // execute method
     overlayEl = overlayOn(options, childElement);
 
@@ -59,6 +55,11 @@ function overlayFn2(action) {
 }
 
 
+/**
+ * Turn on overlay.
+ * @param {object} options - Overlay options.
+ * @param {Element} childElement - The child element.
+ */
 function overlayOn(options, childElement) {
   var bodyEl = document.body,
       overlayEl = document.getElementById(overlayId);
@@ -85,56 +86,85 @@ function overlayOn(options, childElement) {
   }
 
   // handle options
-  if (options.keyboard) jqLite.on(document, 'keypress', onKeypress);
-  else jqLite.off(document, 'keypress', onKeypress);
+  if (options.keyboard) addKeyupHandler();
+  else removeKeyupHandler();
 
-  if (options.static) jqLite.off(overlayEl, 'click', onClick);
-  else jqLite.on(overlayEl, 'click', onClick);
+  if (options.static) removeClickHandler(overlayEl);
+  else addClickHandler(overlayEl);
   
   return overlayEl;
 }
 
 
+/**
+ * Turn off overlay.
+ */
 function overlayOff() {
   var overlayEl = document.getElementById(overlayId);
 
-  // remove overlayEl from body
-  if (overlayEl) overlayEl.parentNode.removeChild(overlayEl);
+  if (overlayEl) {
+    // remove children
+    while (overlayEl.firstChild) overlayEl.removeChild(overlayEl.firstChild);
+
+    // remove overlay element
+    overlayEl.parentNode.removeChild(overlayEl);
+  }
+
   jqLite.removeClass(document.body, bodyClass);
 
   // remove option handlers
-  jqLite.off(document, 'keypress', onKeypress);
-  jqLite.off(overlayEl, 'click', onClick);
+  removeKeyupHandler();
+  removeClickHandler(overlayEl);
   
   return overlayEl;
 }
 
 
-function overlayFn(arg) {
-  var bodyEl = document.body,
-      overlayEl = document.getElementById(overlayId);
-  
-  if (arg === 'on') {
-    // add overlay
-    jqLite.addClass(bodyEl, bodyClass);
+/**
+ * Add keyup handler.
+ */
+function addKeyupHandler() {
+  jqLite.on(document, 'keyup', onKeyup);
+}
 
-    if (!overlayEl) {
-      overlayEl = document.createElement('div');
-      overlayEl.setAttribute('id', overlayId);
-      bodyEl.appendChild(overlayEl);
-    }
 
-  } else if (arg === 'off') {
-    // remove overlay
-    if (overlayEl) overlayEl.parentNode.removeChild(overlayEl);
-    jqLite.removeClass(bodyEl, bodyClass);
+/**
+ * Remove keyup handler.
+ */
+function removeKeyupHandler() {
+  jqLite.off(document, 'keyup', onKeyup);
+}
 
-  } else {
-    // raise error
-    util.raiseError("Expecting 'on' or 'off'");
-  }
 
-  return overlayEl;
+/**
+ * Teardown overlay when escape key is pressed.
+ */
+function onKeyup(ev) {
+  if (ev.keyCode === 27) overlayOff();
+}
+
+
+/**
+ * Add click handler.
+ */
+function addClickHandler(overlayEl) {
+  jqLite.on(overlayEl, 'click', onClick);
+}
+
+
+/**
+ * Remove click handler.
+ */
+function removeClickHandler(overlayEl) {
+  jqLite.off(overlayEl, 'click', onClick);
+}
+
+
+/**
+ * Teardown overlay when backdrop is clicked.
+ */
+function onClick(ev) {
+  if (ev.target.id === overlayId) overlayOff();
 }
 
 

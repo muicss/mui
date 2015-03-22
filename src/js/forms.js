@@ -18,7 +18,7 @@ var jqLite = require('./lib/jqLite.js'),
 
 /**
  * Initialize floating labels.
- * @param {HTMLElement} labelEl - The floating label element.
+ * @param {Element} labelEl - The floating label element.
  */
 function initialize(labelEl) {
   // check flag
@@ -74,7 +74,7 @@ function inputHandler(ev) {
 
 /**
  * Activate the floating label
- * @param {HTMLElement} labelEl - The floating label element.
+ * @param {Element} labelEl - The floating label element.
  */
 function activateLabel(labelEl) {
   jqLite.addClass(labelEl, floatingLabelActiveClass);
@@ -87,8 +87,8 @@ function activateLabel(labelEl) {
 
 /**
  * De-activate the floating label
- * @param {HTMLElement} labelEl - The floating label element.
- * @param {HTMLElement} inputEl - The form-control input element.
+ * @param {Element} labelEl - The floating label element.
+ * @param {Element} inputEl - The form-control input element.
  */
 function deactivateLabel(labelEl, inputEl) {
   jqLite.removeClass(labelEl, floatingLabelActiveClass);

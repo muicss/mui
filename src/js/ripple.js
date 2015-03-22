@@ -17,7 +17,7 @@ var jqLite = require('./lib/jqLite.js'),
 
 /**
  * Add ripple effects to button element.
- * @param {HTMLElement} buttonEl - The button element.
+ * @param {Element} buttonEl - The button element.
  */
 function initialize(buttonEl) {
   // check flag
