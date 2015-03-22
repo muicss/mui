@@ -21,8 +21,6 @@ var util = require('./lib/util.js'),
  * @param {Element} [childElement] - Child element to add to overlay.
  */
 function overlayFn(action) {
-  var overlayEl;
-  
   if (action === 'on') {
     // extract arguments
     var arg, options, childElement;
@@ -41,17 +39,15 @@ function overlayFn(action) {
     if (options.static === undefined) options.static = false;
     
     // execute method
-    overlayEl = overlayOn(options, childElement);
-
+    overlayOn(options, childElement);
+    
   } else if (action === 'off') {
-    overlayEl = overlayOff();
+    overlayOff();
 
   } else {
     // raise error
     util.raiseError("Expecting 'on' or 'off'");
   }
-
-  return overlayEl;
 }
 
 
@@ -91,8 +87,6 @@ function overlayOn(options, childElement) {
 
   if (options.static) removeClickHandler(overlayEl);
   else addClickHandler(overlayEl);
-  
-  return overlayEl;
 }
 
 
@@ -115,8 +109,6 @@ function overlayOff() {
   // remove option handlers
   removeKeyupHandler();
   removeClickHandler(overlayEl);
-  
-  return overlayEl;
 }
 
 
