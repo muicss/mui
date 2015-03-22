@@ -1,15 +1,24 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
- * MUI JS config module
- *
- **/
+ * MUI config module
+ * @module config
+ */
+
+/** Define module API */
 module.exports = {
+  /** Use debug mode */
   debug: true
 };
 
 
 },{}],2:[function(require,module,exports){
+/**
+ * MUI CSS/JS forms module
+ * @module forms
+ */
+
 'use strict';
+
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
@@ -17,9 +26,14 @@ var jqLite = require('./lib/jqLite.js'),
     formGroupClass = 'mui-form-group',
     floatingLabelBaseClass = 'mui-form-floating-label',
     floatingLabelActiveClass = floatingLabelBaseClass + '-active',
-    animationName = 'mui-form-floating-label-inserted';
+    animationName = 'mui-form-floating-label-inserted',
+    _supportsPointerEvents;    
 
 
+/**
+ * Initialize floating labels.
+ * @param {Element} labelEl - The floating label element.
+ */
 function initialize(labelEl) {
   // check flag
   if (labelEl._muiFloatLabel === true) return;
@@ -54,6 +68,10 @@ function initialize(labelEl) {
 }
 
 
+/**
+ * Handle inputs into the form control.
+ * @param {Event} ev - The DOM event.
+ */
 function inputHandler(ev) {
   var inputEl = ev.target,
       labelEl = inputEl.nextElementSibling;
@@ -68,6 +86,10 @@ function inputHandler(ev) {
 }
 
 
+/**
+ * Activate the floating label
+ * @param {Element} labelEl - The floating label element.
+ */
 function activateLabel(labelEl) {
   jqLite.addClass(labelEl, floatingLabelActiveClass);
 
@@ -77,16 +99,19 @@ function activateLabel(labelEl) {
 }
 
 
+/**
+ * De-activate the floating label
+ * @param {Element} labelEl - The floating label element.
+ * @param {Element} inputEl - The form-control input element.
+ */
 function deactivateLabel(labelEl, inputEl) {
   jqLite.removeClass(labelEl, floatingLabelActiveClass);
 }
 
 
-/******************************
- * Utilities
- ******************************/
-var _supportsPointerEvents;
-
+/**
+ * Check if client supports pointer events.
+ */
 function supportsPointerEvents() {
   // check cache
   if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
@@ -98,15 +123,24 @@ function supportsPointerEvents() {
 }
 
 
-/******************************
- * Module API
- ******************************/
+/** Define module API */
 module.exports = {
+  /** The form control class name */
   formControlClass: formControlClass,
+
+  /** The form group class name */
   formGroupClass: formGroupClass,
+
+  /** The floating label base class name */
   floatingLabelBaseClass: floatingLabelBaseClass,
+
+  /** The active floating label class name */
   floatingLabelActiveClass: floatingLabelActiveClass,
+
+  /** Initialize floating label element */
   initialize: initialize,
+
+  /** Initialize module listeners */
   initListeners: function() {
     var doc = document;
 
@@ -115,22 +149,27 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onAnimationStart(animationName, initialize);
+    util.onNodeInserted(function(el) {
+      if (jqLite.hasClass(el, floatingLabelBaseClass)) initialize(el);
+    });
   }
 };
 
 
 },{"./lib/jqLite.js":3,"./lib/util.js":4}],3:[function(require,module,exports){
 /**
- * MUI JS jqLite module
- *
- **/
+ * MUI CSS/JS jqLite module
+ * @module lib/jqLite
+ */
+
 'use strict';
 
 
-// ----------------------
-// addClass
-// ----------------------
+/**
+ * Add a class to an element.
+ * @param {Element} element - The DOM element.
+ * @param {string} cssClasses - Space separated list of class names.
+ */
 function jqLiteAddClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;
 
@@ -149,9 +188,12 @@ function jqLiteAddClass(element, cssClasses) {
 }
 
 
-// ---------------------
-// css
-// ---------------------
+/**
+ * Get or set CSS properties.
+ * @param {Element} element - The DOM element.
+ * @param {string} [name] - The property name.
+ * @param {string} [value] - The property value.
+ */
 function jqLiteCss(element, name, value) {
   // --- Return full style object ---
   if (name === undefined) {
@@ -190,18 +232,21 @@ function jqLiteCss(element, name, value) {
 }
 
 
-// ---------------------
-// hasClass
-// ---------------------
-function jqLiteHasClass(element, selector) {
-  if (!selector || !element.getAttribute) return false;
-  return (_getExistingClasses(element).indexOf(' ' + selector + ' ') > -1);
+/**
+ * Check if element has class.
+ * @param {Element} element - The DOM element.
+ * @param {string} cls - The class name string.
+ */
+function jqLiteHasClass(element, cls) {
+  if (!cls || !element.getAttribute) return false;
+  return (_getExistingClasses(element).indexOf(' ' + cls + ' ') > -1);
 }
 
 
-// ------------------------
-// type
-// ------------------------
+/**
+ * Return the type of a variable.
+ * @param {} somevar - The JavaScript variable.
+ */
 function jqLiteType(somevar) {
   // handle undefined
   if (somevar === undefined) return 'undefined';
@@ -216,9 +261,13 @@ function jqLiteType(somevar) {
 }
 
 
-// ------------------------
-// on
-// ------------------------
+/**
+ * Attach an event handler to a DOM element
+ * @param {Element} element - The DOM element.
+ * @param {string} type - The event type name.
+ * @param {Function} callback - The callback function.
+ * @param {Boolean} useCapture - Use capture flag.
+ */
 function jqLiteOn(element, type, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
@@ -232,9 +281,13 @@ function jqLiteOn(element, type, callback, useCapture) {
 }
 
 
-// -----------------------
-// off
-// -----------------------
+/**
+ * Remove an event handler from a DOM element
+ * @param {Element} element - The DOM element.
+ * @param {string} type - The event type name.
+ * @param {Function} callback - The callback function.
+ * @param {Boolean} useCapture - Use capture flag.
+ */
 function jqLiteOff(element, type, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
@@ -262,9 +315,13 @@ function jqLiteOff(element, type, callback, useCapture) {
 }
 
 
-// ---------------------
-// one
-// ---------------------
+/**
+ * Attach an event hander which will only execute once
+ * @param {Element} element - The DOM element.
+ * @param {string} type - The event type name.
+ * @param {Function} callback - The callback function.
+ * @param {Boolean} useCapture - Use capture flag.
+ */
 function jqLiteOne(element, type, callback, useCapture) {
   // remove functions after event fires
   jqLiteOn(element, type, function onFn() {
@@ -277,9 +334,10 @@ function jqLiteOne(element, type, callback, useCapture) {
 }
 
 
-// -----------------------
-// offset
-// -----------------------
+/**
+ * Return object representing top/left offset and element height/width.
+ * @param {Element} element - The DOM element.
+ */
 function jqLiteOffset(element) {
   var win = window,
       docEl = document.documentElement,
@@ -299,9 +357,10 @@ function jqLiteOffset(element) {
 }
 
 
-// -----------------------
-// ready
-// -----------------------
+/**
+ * Attach a callback to the DOM ready event listener
+ * @param {Function} fn - The callback function.
+ */
 function jqLiteReady(fn) {
   var done = false,
       top = true,
@@ -340,9 +399,11 @@ function jqLiteReady(fn) {
 }
 
 
-// ---------------------
-// removeClass
-// ---------------------
+/**
+ * Remove classes from a DOM element
+ * @param {Element} element - The DOM element.
+ * @param {string} cssClasses - Space separated list of class names.
+ */
 function jqLiteRemoveClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;
 
@@ -361,9 +422,9 @@ function jqLiteRemoveClass(element, cssClasses) {
 }
 
 
-/**************************
- * Utilities
- **************************/
+// ------------------------------
+// Utilities
+// ------------------------------
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
     ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g,
@@ -414,48 +475,65 @@ function _getCurrCssProp(elem, name, computed) {
 }
 
 
-/**************************
+/**
  * Module API
- **************************/
+ */
 module.exports = {
+  /** Add classes */
   addClass: jqLiteAddClass,
+
+  /** Get or set CSS properties */
   css: jqLiteCss,
+
+  /** Check for class */
   hasClass: jqLiteHasClass,
+
+  /** Remove event handlers */
   off: jqLiteOff,
+
+  /** Return offset values */
   offset: jqLiteOffset,
+
+  /** Add event handlers */
   on: jqLiteOn,
+
+  /** Add an execute-once event handler */
   one: jqLiteOne,
+
+  /** DOM ready event handler */
   ready: jqLiteReady,
+
+  /** Remove classes */
   removeClass: jqLiteRemoveClass,
+
+  /** Check JavaScript variable instance type */
   type: jqLiteType
 };
 
 
 },{}],4:[function(require,module,exports){
 /**
- * MUI JS lib module
- *
- **/
+ * MUI CSS/JS utilities module
+ * @module lib/util
+ */
+
 'use strict';
 
+
 var config = require('../config.js'),
-    jqLite = require('./jqLite.js');
+    jqLite = require('./jqLite.js'),
+    win = window,
+    doc = window.document,
+    nodeInsertedCallbacks = [],
+    head;
 
 
-// --------------------------
-// Shared variables
-// --------------------------
-var win = window,
-    doc = window.document;
-
-var head = doc.head
-  || doc.getElementsByTagName('head')[0] 
-  || doc.documentElement;
+head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
 
-// -------------------------
-// log
-// -------------------------
+/**
+ * Logging function
+ */
 function logFn() {
   if (config.debug && typeof win.console !== "undefined") {
     try {
@@ -468,18 +546,19 @@ function logFn() {
 }
 
 
-// -------------------------
-// loadStyle
-// -------------------------
-function loadStyleFn(s) {
+/**
+ * Load CSS text in new stylesheet
+ * @param {string} cssText - The css text.
+ */
+function loadStyleFn(cssText) {
   if (doc.createStyleSheet) {
-    doc.createStyleSheet().cssText = s;
+    doc.createStyleSheet().cssText = cssText;
   } else {
     var e = doc.createElement('style');
     e.type = 'text/css';
     
-    if (e.styleSheet) e.styleSheet.cssText = s;
-    else e.appendChild(doc.createTextNode(s));
+    if (e.styleSheet) e.styleSheet.cssText = cssText;
+    else e.appendChild(doc.createTextNode(cssText));
     
     // add to document
     head.insertBefore(e, head.firstChild);
@@ -487,60 +566,76 @@ function loadStyleFn(s) {
 }
 
 
-// -------------------------
-// Raise
-// -------------------------
+/**
+ * Raise an error
+ * @param {string} msg - The error message.
+ */
 function raiseErrorFn(msg) {
   throw "MUI Error: " + msg;
 }
 
 
-// -------------------------
-// onAnimationStart
-// -------------------------
-var animationCallbacks = {};
-
-
-function onAnimationStartFn(animationName, callbackFn) {
-  if (animationName in animationCallbacks) {
-    animationCallbacks[animationName].push(callbackFn);
-  } else {
-    animationCallbacks[animationName] = [callbackFn];
-  }
+/**
+ * Register callbacks on muiNodeInserted event
+ * @param {function} callbackFn - The callback function.
+ */
+function onNodeInsertedFn(callbackFn) {
+  nodeInsertedCallbacks.push(callbackFn);
 
   // initalize listeners
-  if (animationCallbacks._initialized === undefined) {
+  if (nodeInsertedCallbacks._initialized === undefined) {
     jqLite.on(doc, 'animationstart', animationHandlerFn);
     jqLite.on(doc, 'mozAnimationStart', animationHandlerFn);
     jqLite.on(doc, 'webkitAnimationStart', animationHandlerFn);
 
-    animationCallbacks._initialized = true;
+    nodeInsertedCallbacks._initialized = true;
   }
 }
 
 
+/**
+ * Execute muiNodeInserted callbacks
+ * @param {Event} ev - The DOM event.
+ */
 function animationHandlerFn(ev) {
-  var callbacks = animationCallbacks[ev.animationName];
+  // check animation name
+  if (ev.animationName !== 'mui-node-inserted') return;
 
-  if (callbacks) {
-    for (var i=callbacks.length - 1; i >= 0; i--) callbacks[i](ev.target);
+  var el = ev.target;
+
+  // iterate through callbacks
+  for (var i=nodeInsertedCallbacks.length - 1; i >= 0; i--) {
+    nodeInsertedCallbacks[i](el);
   }
 }
 
 
-// -------------------------
-// Module API
-// -------------------------
+/**
+ * Define the module API
+ */
 module.exports = {
+  /** Log messages to the console when debug is turned on */
   log: logFn,
+
+  /** Load CSS text as new stylesheet */
   loadStyle: loadStyleFn,
-  onAnimationStart: onAnimationStartFn,
+
+  /** Register muiNodeInserted handler */
+  onNodeInserted: onNodeInsertedFn,
+
+  /** Raise MUI error */
   raiseError: raiseErrorFn
 };
 
 
 },{"../config.js":1,"./jqLite.js":3}],5:[function(require,module,exports){
+/**
+ * MUI CSS/JS ripple module
+ * @module ripple
+ */
+
 'use strict';
+
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
@@ -551,6 +646,10 @@ var jqLite = require('./lib/jqLite.js'),
     animationName = 'mui-btn-inserted';
 
 
+/**
+ * Add ripple effects to button element.
+ * @param {Element} buttonEl - The button element.
+ */
 function initialize(buttonEl) {
   // check flag
   if (buttonEl._muiRipple === true) return;
@@ -564,6 +663,10 @@ function initialize(buttonEl) {
 }
 
 
+/**
+ * Mousedown event handler
+ * @param {Event} ev - The DOM event
+ */
 function mousedownHandler(ev) {
   // only left clicks
   if (ev.button !== 0) return;
@@ -606,10 +709,9 @@ function mousedownHandler(ev) {
 }
 
 
-/**********************************
- * Module API
- **********************************/
+/** Define module API */
 module.exports = {
+  /** Initialize module listeners */
   initListeners: function() {
     var doc = document;
 
@@ -618,12 +720,19 @@ module.exports = {
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onAnimationStart(animationName, initialize);
+    util.onNodeInserted(function(el) {
+      if (jqLite.hasClass(el, btnClass)) initialize(el);
+    });
   }
 };
 
 
 },{"./lib/jqLite.js":3,"./lib/util.js":4}],6:[function(require,module,exports){
+/**
+ * MUI React main module
+ * @module react/main
+ */
+
 (function(win) {
   // return if library has been loaded already
   if (win._muiLoadedReact) return;
@@ -647,15 +756,22 @@ module.exports = {
 
 
 },{"../js/lib/jqLite.js":3,"../js/ripple.js":5,"./forms.jsx":7}],7:[function(require,module,exports){
+/**
+ * MUI React forms module
+ * @module react/forms
+ */
+
 'use strict';
+
 
 var jqLite = require('../js/lib/jqLite.js'),
     forms = require('../js/forms.js');
 
 
-// ------------------------
-// Form Control
-// ------------------------
+/**
+ * Constructs a FormControl element.
+ * @class
+ */
 var FormControl = React.createClass({displayName: "FormControl",
   render: function() {
     return (
@@ -671,9 +787,10 @@ var FormControl = React.createClass({displayName: "FormControl",
 });
 
 
-// -----------------------
-// Form Group
-// -----------------------
+/**
+ * Constructs a FormGroup element.
+ * @class
+ */
 var FormGroup = React.createClass({displayName: "FormGroup",
   componentDidMount: function() {
     // use js library to add functionality to label
@@ -715,11 +832,12 @@ var FormGroup = React.createClass({displayName: "FormGroup",
 });
 
 
-/***********************
- * Module API
- ***********************/
+/** Define module API */
 module.exports = {
+  /** FormControl constructor */
   FormControl: FormControl,
+
+  /** FormGroup constructor */
   FormGroup: FormGroup
 };
 

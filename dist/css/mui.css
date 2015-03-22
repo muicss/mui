@@ -1168,20 +1168,6 @@ hr {
   .mui-panel:after {
     clear: both; }
 
-@-webkit-keyframes mui-btn-inserted {
-  from {
-    opacity: 0.99; }
-
-  to {
-    opacity: 1; } }
-
-@keyframes mui-btn-inserted {
-  from {
-    opacity: 0.99; }
-
-  to {
-    opacity: 1; } }
-
 .mui-btn {
   text-align: center;
   vertical-align: middle;
@@ -1213,8 +1199,8 @@ hr {
   overflow: hidden;
   -webkit-animation-duration: 0.001s;
   animation-duration: 0.001s;
-  -webkit-animation-name: mui-btn-inserted;
-  animation-name: mui-btn-inserted; }
+  -webkit-animation-name: mui-node-inserted;
+  animation-name: mui-node-inserted; }
   .mui-btn.mui-text-black {
     color: rgba(0, 0, 0, 0.87); }
   .mui-btn.mui-text-white {
@@ -1456,20 +1442,6 @@ h4, h5, h6 {
 .mui-divider-right {
   border-right: 1px solid rgba(0, 0, 0, 0.12); }
 
-@-webkit-keyframes mui-form-floating-label-inserted {
-  from {
-    opacity: 0.99; }
-
-  to {
-    opacity: 1; } }
-
-@keyframes mui-form-floating-label-inserted {
-  from {
-    opacity: 0.99; }
-
-  to {
-    opacity: 1; } }
-
 fieldset {
   padding: 0;
   margin: 0;
@@ -1574,8 +1546,8 @@ input[type="search"] {
       color: rgba(0, 0, 0, 0.26);
       -webkit-animation-duration: 0.001s;
       animation-duration: 0.001s;
-      -webkit-animation-name: mui-form-floating-label-inserted;
-      animation-name: mui-form-floating-label-inserted; }
+      -webkit-animation-name: mui-node-inserted;
+      animation-name: mui-node-inserted; }
   .mui-form-group > textarea {
     padding-top: 5px;
     min-height: 64px; }
@@ -1668,35 +1640,16 @@ th {
   .mui-table.mui-table-bordered > tbody > tr > td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
 
-@-webkit-keyframes mui-dropdown-inserted {
-  from {
-    opacity: 0.99; }
-
-  to {
-    opacity: 1; } }
-
-@keyframes mui-dropdown-inserted {
-  from {
-    opacity: 0.99; }
-
-  to {
-    opacity: 1; } }
-
 .mui-dropdown {
   display: inline-block;
   position: relative; }
 
-[data-toggle="dropdown"] {
+[data-mui-toggle="dropdown"] {
   -webkit-animation-duration: 0.001s;
   animation-duration: 0.001s;
-  -webkit-animation-name: mui-dropdown-inserted;
-  animation-name: mui-dropdown-inserted;
+  -webkit-animation-name: mui-node-inserted;
+  animation-name: mui-node-inserted;
   outline: 0; }
-  [data-toggle="dropdown"].mui-btn {
-    -webkit-animation-name: mui-dropdown-inserted, mui-btn-inserted;
-    animation-name: mui-dropdown-inserted, mui-btn-inserted;
-    -webkit-animation-duration: 0.001s, 0.001s;
-    animation-duration: 0.001s, 0.001s; }
 
 .mui-dropdown-menu {
   position: absolute;
@@ -1711,6 +1664,7 @@ th {
   text-align: left;
   background-color: #FFF;
   border-radius: 2px;
+  z-index: 1;
   background-clip: padding-box; }
   .mui-dropdown-menu.mui-open {
     display: block; }
@@ -1738,6 +1692,54 @@ th {
   left: auto;
   right: 0; }
 
+.mui-tabs {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  white-space: nowrap; }
+  .mui-tabs > li {
+    display: inline-block; }
+    .mui-tabs > li > a {
+      display: block;
+      white-space: nowrap;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.87);
+      cursor: default;
+      height: 48px;
+      line-height: 48px;
+      padding-left: 24px;
+      padding-right: 24px; }
+      .mui-tabs > li > a:hover {
+        text-decoration: none; }
+    .mui-tabs > li.mui-active {
+      border-bottom: 2px solid #2196F3; }
+      .mui-tabs > li.mui-active > a {
+        color: #2196F3; }
+  .mui-tabs.mui-tabs-justified {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }
+    .mui-tabs.mui-tabs-justified > li {
+      display: table-cell; }
+      .mui-tabs.mui-tabs-justified > li > a {
+        text-align: center;
+        padding-left: 0px;
+        padding-right: 0px; }
+
+.mui-tab-content > .mui-tab-pane {
+  display: none; }
+  .mui-tab-content > .mui-tab-pane.mui-active {
+    display: block; }
+
+[data-mui-toggle="tab"] {
+  -webkit-animation-duration: 0.001s;
+  animation-duration: 0.001s;
+  -webkit-animation-name: mui-node-inserted;
+  animation-name: mui-node-inserted; }
+
 .mui-overlay-on {
   overflow: hidden !important; }
 
@@ -1748,7 +1750,22 @@ th {
   bottom: 0;
   left: 0;
   z-index: 99999999;
-  background-color: rgba(0, 0, 0, 0.2); }
+  background-color: rgba(0, 0, 0, 0.2);
+  overflow: auto; }
+
+@-webkit-keyframes mui-node-inserted {
+  from {
+    opacity: 0.99; }
+
+  to {
+    opacity: 1; } }
+
+@keyframes mui-node-inserted {
+  from {
+    opacity: 0.99; }
+
+  to {
+    opacity: 1; } }
 
 .mui-notransition {
   transition: none !important; }

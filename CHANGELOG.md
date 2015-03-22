@@ -3,7 +3,8 @@
 ## 0.0.6 - ????
 
 * Set z-index of mui-dropdown-menu to 1
-* Added tabs CSS/JS
+* Added tabs to CSS/JS
+* Added support for overlay options and childElement
 * Added jsdoc documentation to javascript modules
 
 ## 0.0.5 - March 7, 2015
