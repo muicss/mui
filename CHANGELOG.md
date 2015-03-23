@@ -7,6 +7,8 @@
 * Added tabs to CSS/JS
 * Added support for overlay options and childElement
 * Added jsdoc documentation to javascript modules
+* Removed vertical-align from mui-table
+* Added !important to mui-align helpers
 
 ## 0.0.5 - March 7, 2015
 

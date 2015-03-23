@@ -1779,31 +1779,31 @@ th {
   border-left: 4px solid transparent; }
 
 .mui-text-left {
-  text-align: left; }
+  text-align: left !important; }
 
 .mui-text-right {
-  text-align: right; }
+  text-align: right !important; }
 
 .mui-text-center {
-  text-align: center; }
+  text-align: center !important; }
 
 .mui-text-justify {
-  text-align: justify; }
+  text-align: justify !important; }
 
 .mui-text-nowrap {
-  white-space: nowrap; }
+  white-space: nowrap !important; }
 
 .mui-align-baseline {
-  vertical-align: baseline; }
+  vertical-align: baseline !important; }
 
 .mui-align-top {
-  vertical-align: top; }
+  vertical-align: top !important; }
 
 .mui-align-middle {
-  vertical-align: middle; }
+  vertical-align: middle !important; }
 
 .mui-align-bottom {
-  vertical-align: bottom; }
+  vertical-align: bottom !important; }
 
 .mui-list-unstyled {
   padding-left: 0;

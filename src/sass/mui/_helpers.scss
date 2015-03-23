@@ -32,16 +32,16 @@
 // ===========================
 // Alignment helpers
 // ===========================
-.mui-text-left           { text-align: left; }
-.mui-text-right          { text-align: right; }
-.mui-text-center         { text-align: center; }
-.mui-text-justify        { text-align: justify; }
-.mui-text-nowrap         { white-space: nowrap; }
+.mui-text-left           { text-align: left !important; }
+.mui-text-right          { text-align: right !important; }
+.mui-text-center         { text-align: center !important; }
+.mui-text-justify        { text-align: justify !important; }
+.mui-text-nowrap         { white-space: nowrap !important; }
 
-.mui-align-baseline      { vertical-align: baseline; }
-.mui-align-top           { vertical-align: top; }
-.mui-align-middle        { vertical-align: middle; }
-.mui-align-bottom        { vertical-align: bottom; }
+.mui-align-baseline      { vertical-align: baseline !important; }
+.mui-align-top           { vertical-align: top !important; }
+.mui-align-middle        { vertical-align: middle !important; }
+.mui-align-bottom        { vertical-align: bottom !important; }
 
 
 // ===========================
