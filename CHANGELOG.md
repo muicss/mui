@@ -1,6 +1,6 @@
 # MUI Changelog
 
-## 0.0.6 - ????
+## 0.0.6 - March 23, 2015
 
 * Set z-index of mui-dropdown-menu to 1
 * Added tabs to CSS/JS

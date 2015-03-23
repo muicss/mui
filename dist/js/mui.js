@@ -793,7 +793,8 @@ module.exports = {
 var util = require('./lib/util.js'),
     jqLite = require('./lib/jqLite.js'),
     bodyClass = 'mui-overlay-on',
-    overlayId = 'mui-overlay';
+    overlayId = 'mui-overlay',
+    iosRegex = /(iPad|iPhone|iPod)/g;
 
 
 /**
@@ -805,6 +806,8 @@ var util = require('./lib/util.js'),
  * @param {Element} [childElement] - Child element to add to overlay.
  */
 function overlayFn(action) {
+  var overlayEl;
+  
   if (action === 'on') {
     // extract arguments
     var arg, options, childElement;
@@ -823,15 +826,17 @@ function overlayFn(action) {
     if (options.static === undefined) options.static = false;
     
     // execute method
-    overlayOn(options, childElement);
+    overlayEl = overlayOn(options, childElement);
     
   } else if (action === 'off') {
-    overlayOff();
+    overlayEl = overlayOff();
 
   } else {
     // raise error
     util.raiseError("Expecting 'on' or 'off'");
   }
+
+  return overlayEl;
 }
 
 
@@ -854,7 +859,7 @@ function overlayOn(options, childElement) {
     
     // add child element
     if (childElement) overlayEl.appendChild(childElement);
-    
+
     bodyEl.appendChild(overlayEl);
     
   } else {
@@ -865,12 +870,19 @@ function overlayOn(options, childElement) {
     if (childElement) overlayEl.appendChild(childElement);
   }
 
+  // iOS bugfix
+  if (iosRegex.test(navigator.userAgent)) {
+    jqLite.css(overlayEl, 'cursor', 'pointer');
+  }
+
   // handle options
   if (options.keyboard) addKeyupHandler();
   else removeKeyupHandler();
 
   if (options.static) removeClickHandler(overlayEl);
   else addClickHandler(overlayEl);
+
+  return overlayEl;
 }
 
 
@@ -893,6 +905,8 @@ function overlayOff() {
   // remove option handlers
   removeKeyupHandler();
   removeClickHandler(overlayEl);
+
+  return overlayEl;
 }
 
 
