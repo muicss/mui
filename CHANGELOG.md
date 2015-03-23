@@ -3,6 +3,7 @@
 ## 0.0.6 - March 23, 2015
 
 * Set z-index of mui-dropdown-menu to 1
+* Changed data attribute name of dropdown to "data-mui-toggle"
 * Added tabs to CSS/JS
 * Added support for overlay options and childElement
 * Added jsdoc documentation to javascript modules
