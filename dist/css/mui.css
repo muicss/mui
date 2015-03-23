@@ -1629,10 +1629,8 @@ th {
   margin-bottom: 20px; }
   .mui-table > thead > tr > th, .mui-table > thead > tr > td, .mui-table > tbody > tr > th, .mui-table > tbody > tr > td, .mui-table > tfoot > tr > th, .mui-table > tfoot > tr > td {
     padding: 10px;
-    line-height: 1.429;
-    vertical-align: top; }
+    line-height: 1.429; }
   .mui-table > thead > tr > th {
-    vertical-align: bottom;
     border-bottom: 2px solid rgba(0, 0, 0, 0.12);
     font-weight: 700; }
   .mui-table > tbody + tbody {
