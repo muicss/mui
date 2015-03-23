@@ -30,7 +30,11 @@
       border-bottom: 2px solid $mui-tab-border-color-active;
 
       > a {
-        color: $mui-tab-font-color-active;
+        @if $mui-tab-font-color-active == null {
+          color: $mui-tab-font-color;
+        } @else {
+          color: $mui-tab-font-color-active;
+        }
       }
     }
   }
