@@ -36,20 +36,20 @@ function jqLiteAddClass(element, cssClasses) {
  * @param {string} [value] - The property value.
  */
 function jqLiteCss(element, name, value) {
-  // --- Return full style object ---
+  // Return full style object
   if (name === undefined) {
     return getComputedStyle(element);
   }
 
   var nameType = jqLiteType(name);
 
-  // --- Set multiple values ---
+  // Set multiple values
   if (nameType === 'object') {
     for (var key in name) element.style[_camelCase(key)] = name[key];
     return;
   }
 
-  // --- Set a single value ---
+  // Set a single value
   if (nameType === 'string' && value !== undefined) {
     element.style[_camelCase(name)] = value;
   }
@@ -57,10 +57,10 @@ function jqLiteCss(element, name, value) {
   var styleObj = getComputedStyle(element),
       isArray = (jqLiteType(name) === 'array');
 
-  // --- Read single value ---
+  // Read single value
   if (!isArray) return _getCurrCssProp(element, name, styleObj);
 
-  // --- Read multiple values ---
+  // Read multiple values
   var outObj = {},
       key;
 
