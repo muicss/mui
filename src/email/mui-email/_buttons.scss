@@ -28,49 +28,49 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
 // ===============================
 // button-flat-color()
 // ===============================
-@mixin button-flat-color($mui-color, $mui-background) {
-  $mui-flatColor: null;
+@mixin button-flat-color($font-color, $bg-color) {
+  $flat-font-color: null;
   
-  @if $mui-background == #FFF {
-    $mui-flatColor: $mui-btn-default-font-color
+  @if $bg-color == #FFF {
+    $flat-font-color: $mui-btn-default-font-color
   } @else {
-    $mui-flatColor: $mui-background;
+    $flat-font-color: $bg-color;
   }
 
-  color: $mui-flatColor;
+  color: $flat-font-color;
 }
 
 
 // ==============================
 // button-borders()
 // ==============================
-@mixin button-borders($mui-background, $mui-style: "normal") {
-  @if $mui-style == 'raised' {
-    $mui-color1: null;
-    $mui-color2: null;
-    $mui-color3: null;
+@mixin button-borders($bg-color, $btn-style: "normal") {
+  @if $btn-style == 'raised' {
+    $color1: null;
+    $color2: null;
+    $color3: null;
     
-    @if $mui-background == #FFF {
-      $mui-color1: darken($mui-background, 5%);
-      $mui-color2: darken($mui-background, 10%);
-      $mui-color3: darken($mui-background, 27%);
+    @if $bg-color == #FFF {
+      $color1: darken($bg-color, 5%);
+      $color2: darken($bg-color, 10%);
+      $color3: darken($bg-color, 27%);
     } @else {
-      $mui-color1: lighten($mui-background, 10%);
-      $mui-color2: $mui-background;
-      $mui-color3: darken($mui-background, 15%);
+      $color1: lighten($bg-color, 10%);
+      $color2: $bg-color;
+      $color3: darken($bg-color, 15%);
     }
 
-    border-top: $mui-btn-border-width solid $mui-color1;
-    border-left: $mui-btn-border-width solid $mui-color2;
-    border-right: $mui-btn-border-width solid $mui-color2;
-    border-bottom: 2px solid $mui-color3;
+    border-top: $mui-btn-border-width solid $color1;
+    border-left: $mui-btn-border-width solid $color2;
+    border-right: $mui-btn-border-width solid $color2;
+    border-bottom: 2px solid $color3;
   } @else {
-    $mui-borderColor: $mui-background;
+    $border-color: $bg-color;
     
-    border-top: $mui-btn-border-width solid $mui-borderColor;
-    border-left: $mui-btn-border-width solid $mui-borderColor;
-    border-right: $mui-btn-border-width solid $mui-borderColor;
-    border-bottom: $mui-btn-border-width solid $mui-borderColor;
+    border-top: $mui-btn-border-width solid $border-color;
+    border-left: $mui-btn-border-width solid $border-color;
+    border-right: $mui-btn-border-width solid $border-color;
+    border-bottom: $mui-btn-border-width solid $border-color;
   }
 }
 
@@ -78,21 +78,21 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
 // ===============================
 // button-anchor-variant()
 // ===============================
-@mixin button-anchor-variant($mui-color, $mui-background) {
-  color: $mui-color;
-  background-color: $mui-background;
-  @include button-borders($mui-background);
+@mixin button-anchor-variant($font-color, $bg-color) {
+  color: $font-color;
+  background-color: $bg-color;
+  @include button-borders($bg-color);
   
   // raised
   &.mui-btn-raised {
-    @include button-borders($mui-background, "raised");
+    @include button-borders($bg-color, "raised");
   }
 
   // flat
   &.mui-btn-flat {
-    background-color: $mui-btn-flat-background-color;
-    @include button-flat-color($mui-color, $mui-background);
-    @include button-borders($mui-btn-flat-background-color);
+    background-color: $mui-btn-flat-bg-color;
+    @include button-flat-color($font-color, $bg-color);
+    @include button-borders($mui-btn-flat-bg-color);
   }
 }
 
@@ -100,14 +100,14 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
 // ==============================
 // button-table-variant()
 // ==============================
-@mixin button-table-variant($mui-color, $mui-background) {
+@mixin button-table-variant($font-color, $bg-color) {
   > tr > td,
   > tbody > tr > td {
-    background-color: $mui-background;
+    background-color: $bg-color;
     
     > a {
-      color: $mui-color;
-      @include button-borders($mui-background);
+      color: $font-color;
+      @include button-borders($bg-color);
     }
   }
 
@@ -116,7 +116,7 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
     > tr > td,
     > tbody > tr > td {
       > a {
-        @include button-borders($mui-background, "raised");
+        @include button-borders($bg-color, "raised");
       }
     }
   }
@@ -125,11 +125,11 @@ $mui-btn-padding-vertical-lg-computed: ($mui-btn-height-lg - $mui-base-font-size
   &.mui-btn-flat {
     > tr > td,
     > tbody > tr > td {
-      background-color: $mui-btn-flat-background-color;
+      background-color: $mui-btn-flat-bg-color;
 
       > a {
-        @include button-flat-color($mui-color, $mui-background);
-        @include button-borders($mui-btn-flat-background-color);
+        @include button-flat-color($font-color, $bg-color);
+        @include button-borders($mui-btn-flat-bg-color);
       }
     }
   }
@@ -162,22 +162,22 @@ a.mui-btn {
 
   &.mui-btn-default {
     @include button-anchor-variant($mui-btn-default-font-color,
-                                   $mui-btn-default-background-color);
+                                   $mui-btn-default-bg-color);
   }
 
   &.mui-btn-primary {
     @include button-anchor-variant($mui-btn-primary-font-color,
-                                   $mui-btn-primary-background-color);
+                                   $mui-btn-primary-bg-color);
   }
 
   &.mui-btn-danger {
     @include button-anchor-variant($mui-btn-danger-font-color,
-                                   $mui-btn-danger-background-color);
+                                   $mui-btn-danger-bg-color);
   }
 
   &.mui-btn-accent {
     @include button-anchor-variant($mui-btn-accent-font-color,
-                                   $mui-btn-accent-background-color);
+                                   $mui-btn-accent-bg-color);
   }
 }
 
@@ -204,22 +204,22 @@ table.mui-btn {
 
   &.mui-btn-default {
     @include button-table-variant($mui-btn-default-font-color,
-                                  $mui-btn-default-background-color);
+                                  $mui-btn-default-bg-color);
   }
 
   &.mui-btn-primary {
     @include button-table-variant($mui-btn-primary-font-color,
-                                  $mui-btn-primary-background-color);
+                                  $mui-btn-primary-bg-color);
   }
 
   &.mui-btn-danger {
     @include button-table-variant($mui-btn-danger-font-color,
-                                  $mui-btn-danger-background-color);
+                                  $mui-btn-danger-bg-color);
   }
 
   &.mui-btn-accent {
     @include button-table-variant($mui-btn-accent-font-color,
-                                  $mui-btn-accent-background-color);
+                                  $mui-btn-accent-bg-color);
   }
 }
 

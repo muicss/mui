@@ -95,14 +95,14 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
 
 // Flat buttons
 .mui-btn-flat {
-  background-color: $mui-btn-flat-background-color;
+  background-color: $mui-btn-flat-bg-color;
 
   &:hover,
   &:focus,
   &:active,
   .mui-open > &.mui-dropdown-toggle {
     box-shadow: none;
-    background-color: $mui-btn-flat-background-color-hover;
+    background-color: $mui-btn-flat-bg-color-hover;
   }
 }
 
@@ -128,28 +128,28 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
 // Button colors
 .mui-btn-default {
   @include button-variant($mui-btn-default-font-color,
-                          $mui-btn-default-background-color);
+                          $mui-btn-default-bg-color);
 
   @include button-flat-variant($mui-btn-default-font-color,
-                               $mui-btn-flat-background-color-hover);
+                               $mui-btn-flat-bg-color-hover);
 }
 
 
 .mui-btn-primary {
   @include button-variant($mui-btn-primary-font-color,
-                          $mui-btn-primary-background-color);
+                          $mui-btn-primary-bg-color);
 
-  @include button-flat-variant($mui-btn-primary-background-color,
-                               $mui-btn-flat-background-color-hover);
+  @include button-flat-variant($mui-btn-primary-bg-color,
+                               $mui-btn-flat-bg-color-hover);
 }
 
 
 .mui-btn-danger {
   @include button-variant($mui-btn-danger-font-color,
-                          $mui-btn-danger-background-color);
+                          $mui-btn-danger-bg-color);
 
-  @include button-flat-variant($mui-btn-danger-background-color,
-                               $mui-btn-flat-background-color-hover);
+  @include button-flat-variant($mui-btn-danger-bg-color,
+                               $mui-btn-flat-bg-color-hover);
 }
 
 
@@ -163,7 +163,7 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
   padding: 0;
   border-radius: 50%;
   color: $mui-btn-floating-font-color;
-  background-color: $mui-btn-floating-background-color;
+  background-color: $mui-btn-floating-bg-color;
   @extend .mui-btn-raised;
 
   &:not(:disabled) {
@@ -171,7 +171,7 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
     &:focus,
     &:active {
       color: $mui-btn-floating-font-color;
-      background-color: lighten($mui-btn-floating-background-color, 5%);
+      background-color: lighten($mui-btn-floating-bg-color, 5%);
     }
   }
   

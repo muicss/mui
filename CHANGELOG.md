@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.0.8 - April 11, 2015
+
+* Fixed reversed values of $mui-accent-color-dark and $mui-accent-color-light
+* Changed MUI SASS variable names with "-background" to "-bg"
+
 ## 0.0.7 - April 11, 2015
 
 * Updated npm dependencies

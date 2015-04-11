@@ -11,8 +11,8 @@
   line-height: $mui-base-line-height;
   letter-spacing: $mui-base-letter-spacing;
   
-  @if $mui-body-background-color {
-    background-color: $mui-body-background-color;
+  @if $mui-body-bg-color {
+    background-color: $mui-body-bg-color;
   }
 }
 

@@ -1,13 +1,13 @@
-@mixin button-variant($mui-color, $mui-background) {
-  color: $mui-color;
-  background-color: $mui-background;
+@mixin button-variant($font-color, $bg-color) {
+  color: $font-color;
+  background-color: $bg-color;
 
   &:hover,
   &:focus,
   &:active,
   .mui-open > &.mui-dropdown-toggle {
-    color: $mui-color;
-    background-color: lighten($mui-background, 5%);
+    color: $font-color;
+    background-color: lighten($bg-color, 5%);
   }
 
   &[disabled],
@@ -16,23 +16,23 @@
     &:hover,
     &:focus,
     &:active {
-      color: $mui-color;
-      background-color: $mui-background;
+      color: $font-color;
+      background-color: $bg-color;
     }
   }
 }
 
-@mixin button-flat-variant($mui-color, $mui-hover-bg) {
+@mixin button-flat-variant($font-color, $bg-color-hover) {
   &.mui-btn-flat {
-    color: $mui-color;
+    color: $font-color;
     background-color: transparent;
 
     &:hover,
     &:focus,
     &:active,
     .mui-open > &.mui-dropdown-toggle {
-      color: $mui-color;
-      background-color: $mui-hover-bg;
+      color: $font-color;
+      background-color: $bg-color-hover;
     }
 
     &[disabled],
@@ -41,7 +41,7 @@
       &:hover,
       &:focus,
       &:active {
-        color: $mui-color;
+        color: $font-color;
         background-color: transparent;
       }
     }
@@ -49,9 +49,10 @@
 }
 
 // Button sizes
-@mixin button-size($mui-padding-vertical, $mui-padding-horizontal, $mui-font-size, $mui-line-height, $mui-border-radius) {
-  padding: ($mui-padding-vertical + 1px) ($mui-padding-horizontal + 1px);
-  font-size: $mui-font-size;
-  line-height: $mui-line-height;
-  border-radius: $mui-border-radius;
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size,
+                   $line-height, $border-radius) {
+  padding: ($padding-vertical + 1px) ($padding-horizontal + 1px);
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
 }

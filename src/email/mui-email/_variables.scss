@@ -23,7 +23,7 @@ $mui-container-padding-horizontal:   15px !default;
 // Scaffolding
 // =============================
 
-$mui-body-background-color:     mui-color('white') !default;
+$mui-body-bg-color:     mui-color('white') !default;
 $mui-link-font-color:           $mui-primary-color !default;
 $mui-link-text-decoration:      none !default;
 $mui-hr-color:                  lighten(mui-color('black'), 88%) !default;
@@ -47,19 +47,19 @@ $mui-btn-height-lg:                  $mui-btn-height * 1.5 !default;
 $mui-btn-border-radius:              3px !default;
 $mui-btn-padding-horizontal:         26px !default;
 
-$mui-btn-default-background-color:   mui-color('white') !default;
+$mui-btn-default-bg-color:   mui-color('white') !default;
 $mui-btn-default-font-color:         $mui-base-font-color !default;
 
-$mui-btn-primary-background-color:   $mui-primary-color !default;
+$mui-btn-primary-bg-color:   $mui-primary-color !default;
 $mui-btn-primary-font-color:         mui-color('white') !default;
 
-$mui-btn-danger-background-color:    $mui-danger-color !default;
+$mui-btn-danger-bg-color:    $mui-danger-color !default;
 $mui-btn-danger-font-color:          mui-color('white') !default;
 
-$mui-btn-accent-background-color:    $mui-accent-color !default;
+$mui-btn-accent-bg-color:    $mui-accent-color !default;
 $mui-btn-accent-font-color:          mui-color('white') !default;
 
-$mui-btn-flat-background-color:      transparent !default;
+$mui-btn-flat-bg-color:      transparent !default;
 
 // ===============================
 // Panels

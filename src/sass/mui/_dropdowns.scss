@@ -26,7 +26,7 @@
   list-style: none;
   font-size: $mui-base-font-size;
   text-align: left;
-  background-color: $mui-dropdown-background-color;
+  background-color: $mui-dropdown-bg-color;
   border-radius: $mui-dropdown-border-radius;
   z-index: 1;
   @extend .mui-z1;
@@ -52,7 +52,7 @@
     &:focus {
       text-decoration: none;
       color: $mui-dropdown-link-font-color-hover;
-      background-color: $mui-dropdown-link-background-color-hover;
+      background-color: $mui-dropdown-link-bg-color-hover;
     }
   }
 
