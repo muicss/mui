@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.0.7 - April 11, 2015
+
+* Updated npm dependencies
+* Added touchstart listener for ripple effect
+
 ## 0.0.6 - March 23, 2015
 
 * Set z-index of mui-dropdown-menu to 1

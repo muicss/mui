@@ -27,16 +27,17 @@ function initialize(buttonEl) {
   // exit if element is INPUT (doesn't support absolute positioned children)
   if (buttonEl.tagName === 'INPUT') return;
 
-  // attach mousedown handler
-  jqLite.on(buttonEl, 'mousedown', mousedownHandler);
+  // attach event handler
+  jqLite.on(buttonEl, 'touchstart', eventHandler);
+  jqLite.on(buttonEl, 'mousedown', eventHandler);
 }
 
 
 /**
- * Mousedown event handler
+ * Event handler
  * @param {Event} ev - The DOM event
  */
-function mousedownHandler(ev) {
+function eventHandler(ev) {
   // only left clicks
   if (ev.button !== 0) return;
 
@@ -44,7 +45,17 @@ function mousedownHandler(ev) {
 
   // exit if button is disabled
   if (buttonEl.disabled === true) return;
-  
+
+  // de-dupe touchstart and mousedown with 100msec flag
+  if (buttonEl.touchFlag === true) {
+    return;
+  } else {
+    buttonEl.touchFlag = true;
+    setTimeout(function() {
+      buttonEl.touchFlag = false;
+    }, 100);
+  }
+
   var rippleEl = document.createElement('div');
   rippleEl.className = rippleClass;
 

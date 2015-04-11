@@ -350,20 +350,20 @@ function jqLiteAddClass(element, cssClasses) {
  * @param {string} [value] - The property value.
  */
 function jqLiteCss(element, name, value) {
-  // --- Return full style object ---
+  // Return full style object
   if (name === undefined) {
     return getComputedStyle(element);
   }
 
   var nameType = jqLiteType(name);
 
-  // --- Set multiple values ---
+  // Set multiple values
   if (nameType === 'object') {
     for (var key in name) element.style[_camelCase(key)] = name[key];
     return;
   }
 
-  // --- Set a single value ---
+  // Set a single value
   if (nameType === 'string' && value !== undefined) {
     element.style[_camelCase(name)] = value;
   }
@@ -371,10 +371,10 @@ function jqLiteCss(element, name, value) {
   var styleObj = getComputedStyle(element),
       isArray = (jqLiteType(name) === 'array');
 
-  // --- Read single value ---
+  // Read single value
   if (!isArray) return _getCurrCssProp(element, name, styleObj);
 
-  // --- Read multiple values ---
+  // Read multiple values
   var outObj = {},
       key;
 
@@ -991,16 +991,17 @@ function initialize(buttonEl) {
   // exit if element is INPUT (doesn't support absolute positioned children)
   if (buttonEl.tagName === 'INPUT') return;
 
-  // attach mousedown handler
-  jqLite.on(buttonEl, 'mousedown', mousedownHandler);
+  // attach event handler
+  jqLite.on(buttonEl, 'touchstart', eventHandler);
+  jqLite.on(buttonEl, 'mousedown', eventHandler);
 }
 
 
 /**
- * Mousedown event handler
+ * Event handler
  * @param {Event} ev - The DOM event
  */
-function mousedownHandler(ev) {
+function eventHandler(ev) {
   // only left clicks
   if (ev.button !== 0) return;
 
@@ -1008,7 +1009,17 @@ function mousedownHandler(ev) {
 
   // exit if button is disabled
   if (buttonEl.disabled === true) return;
-  
+
+  // de-dupe touchstart and mousedown with 100msec flag
+  if (buttonEl.touchFlag === true) {
+    return;
+  } else {
+    buttonEl.touchFlag = true;
+    setTimeout(function() {
+      buttonEl.touchFlag = false;
+    }, 100);
+  }
+
   var rippleEl = document.createElement('div');
   rippleEl.className = rippleClass;
 
