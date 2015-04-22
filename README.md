@@ -4,10 +4,24 @@
 
 [![Documentation](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com)
 
+A lightweight HTML/CSS/JS framework for sites that follow Google's Material Design guidelines.
 
 [![Build Status](https://travis-ci.org/amorey/mui.svg?branch=master)](https://travis-ci.org/amorey/mui)
 [![Dependency Status](https://david-dm.org/amorey/mui.svg)](https://david-dm.org/amorey/mui)
 [![devDependency Status](https://david-dm.org/amorey/mui/dev-status.svg)](https://david-dm.org/amorey/mui#info=devDependencies)
+
+**Use From the CDN:**
+
+```html
+<link href="//cdn.muicss.com/mui-0.0.8/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.0.8/js/mui.min.js"></script>
+```
+
+***Install with Bower:**
+
+```shell
+$ bower install mui
+```
 
 ## Development Dependencies
 
