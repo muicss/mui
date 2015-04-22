@@ -1,8 +1,8 @@
 [![Documentation](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com)
 
-A lightweight HTML/CSS/JS framework for sites that follow Google's Material Design guidelines.
-
 [![Join the chat at https://gitter.im/amorey/mui](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/amorey/mui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+A lightweight HTML/CSS/JS framework for sites that follow Google's Material Design guidelines.
 
 [![Build Status](https://travis-ci.org/amorey/mui.svg?branch=master)](https://travis-ci.org/amorey/mui)
 [![Dependency Status](https://david-dm.org/amorey/mui.svg)](https://david-dm.org/amorey/mui)
@@ -15,11 +15,24 @@ A lightweight HTML/CSS/JS framework for sites that follow Google's Material Desi
 <script src="//cdn.muicss.com/mui-0.0.8/js/mui.min.js"></script>
 ```
 
-***Install with Bower:**
+**Install with Bower:**
 
 ```shell
 $ bower install mui
 ```
+
+## Features
+
+MUI is designed from the ground up to be fast, small and developer friendly. By design it only includes the basic components you need to build a site that follows Google's Material Design guidelines:
+
+* Small footprint: mui.min.css - 5.6K, mui.min.js - 3.7K (gzipped)
+* A responsive grid to make mobile-friendly sites
+* No external dependencies
+* CSS library that can be customized so you can choose your own colors
+* JS library can be loaded asyncronously
+* Email library for styling HTML emails
+
+To get started using MUI, go to the [MUI website](https://www.muicss.com) to see examples and download boilerplate HTML.
 
 ## Development Dependencies
 
