@@ -1,6 +1,9 @@
-# MUI HTML/CSS/JS Framework
+# MUI
 
 [![Join the chat at https://gitter.im/amorey/mui](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/amorey/mui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+[![Documentation](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com)
+
 
 [![Build Status](https://travis-ci.org/amorey/mui.svg?branch=master)](https://travis-ci.org/amorey/mui)
 [![Dependency Status](https://david-dm.org/amorey/mui.svg)](https://david-dm.org/amorey/mui)
