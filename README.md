@@ -34,15 +34,23 @@ MUI is designed from the ground up to be fast, small and developer friendly. By 
 
 To get started using MUI, go to the [MUI website](https://www.muicss.com) to see examples and download boilerplate HTML.
 
-## Development Dependencies
+## Browser Support 
 
-* nodejs (http://nodejs.org/)
-* npm (https://www.npmjs.org/)
-* bower (http://bower.io/)
-* sass (http://sass-lang.com/)
-* http-server (via npm)
+MUI is tested and works in:
+
+* IE10+
+* Latest Stable: Firefox, Chrome, Safari
+* iOS 6+
 
 ## Development Quickstart
+
+1. Install dependencies
+
+  * nodejs (http://nodejs.org/)
+  * npm (https://www.npmjs.org/)
+  * bower (http://bower.io/)
+  * sass (http://sass-lang.com/)
+  * http-server (via npm)
 
 1. Clone repository
 
