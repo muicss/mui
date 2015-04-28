@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.0.9 - April 27, 2015
+
+* Added accent color buttons
+
 ## 0.0.8 - April 11, 2015
 
 * Fixed reversed values of $mui-accent-color-dark and $mui-accent-color-light

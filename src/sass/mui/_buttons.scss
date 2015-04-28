@@ -153,6 +153,15 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
 }
 
 
+.mui-btn-accent {
+  @include button-variant($mui-btn-accent-font-color,
+                          $mui-btn-accent-bg-color);
+
+  @include button-flat-variant($mui-btn-accent-bg-color,
+                               $mui-btn-flat-bg-color-hover);
+}
+
+
 // Floating button
 .mui-btn-floating {
   position: relative;

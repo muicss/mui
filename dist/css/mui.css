@@ -1306,6 +1306,25 @@ hr {
       color: #F44336;
       background-color: transparent; }
 
+.mui-btn-accent {
+  color: #FFF;
+  background-color: #FF4081; }
+  .mui-btn-accent:hover, .mui-btn-accent:focus, .mui-btn-accent:active, .mui-open > .mui-btn-accent.mui-dropdown-toggle {
+    color: #FFF;
+    background-color: #ff5a92; }
+  .mui-btn-accent[disabled], .mui-btn-accent[disabled]:hover, .mui-btn-accent[disabled]:focus, .mui-btn-accent[disabled]:active, fieldset[disabled] .mui-btn-accent, fieldset[disabled] .mui-btn-accent:hover, fieldset[disabled] .mui-btn-accent:focus, fieldset[disabled] .mui-btn-accent:active {
+    color: #FFF;
+    background-color: #FF4081; }
+  .mui-btn-accent.mui-btn-flat {
+    color: #FF4081;
+    background-color: transparent; }
+    .mui-btn-accent.mui-btn-flat:hover, .mui-btn-accent.mui-btn-flat:focus, .mui-btn-accent.mui-btn-flat:active, .mui-open > .mui-btn-accent.mui-btn-flat.mui-dropdown-toggle {
+      color: #FF4081;
+      background-color: #f2f2f2; }
+    .mui-btn-accent.mui-btn-flat[disabled], .mui-btn-accent.mui-btn-flat[disabled]:hover, .mui-btn-accent.mui-btn-flat[disabled]:focus, .mui-btn-accent.mui-btn-flat[disabled]:active, fieldset[disabled] .mui-btn-accent.mui-btn-flat, fieldset[disabled] .mui-btn-accent.mui-btn-flat:hover, fieldset[disabled] .mui-btn-accent.mui-btn-flat:focus, fieldset[disabled] .mui-btn-accent.mui-btn-flat:active {
+      color: #FF4081;
+      background-color: transparent; }
+
 .mui-btn-floating {
   position: relative;
   z-index: 1;
