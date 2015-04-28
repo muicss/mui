@@ -1392,6 +1392,9 @@ hr {
 .mui-btn-danger > .mui-ripple-effect {
   background-color: #FFF; }
 
+.mui-btn-accent > .mui-ripple-effect {
+  background-color: #FFF; }
+
 .mui-btn-flat > .mui-ripple-effect {
   background-color: #a6a6a6; }
 

@@ -38,6 +38,10 @@
   background-color: $mui-btn-danger-ripple-color;
 }
 
+.mui-btn-accent > .mui-ripple-effect {
+  background-color: $mui-btn-accent-ripple-color;
+}
+
 .mui-btn-flat > .mui-ripple-effect {
   background-color: $mui-btn-flat-ripple-color;
 }
