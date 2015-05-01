@@ -25851,14 +25851,14 @@ exports.TYPES = {
 // rough regular expressions
 var integerRegEx = /^[\-+]?[0-9]+$/;
 var numberRegEx = /^[\-+]?[0-9]*\.[0-9]+$/;
-var lengthRegEx = /^(0|[\-+]?[0-9]?\.?[0-9]+(in|cm|em|mm|pt|pc|px))$/;
-var percentRegEx = /^[\-+]?[0-9]?\.?[0-9]+%$/;
+var lengthRegEx = /^(0|[\-+]?[0-9]*\.?[0-9]+(in|cm|em|mm|pt|pc|px))$/;
+var percentRegEx = /^[\-+]?[0-9]*\.?[0-9]+%$/;
 var urlRegEx = /^url\(\s*([^\)]*)\s*\)$/;
 var stringRegEx = /^("[^"]*"|'[^']*')$/;
 var colorRegEx1 = /^#[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]([0-9a-fA-F][0-9a-fA-F][0-9a-fA-F])?$/;
 var colorRegEx2 = /^rgb\(([^\)]*)\)$/;
 var colorRegEx3 = /^rgba\(([^\)]*)\)$/;
-var angleRegEx = /^([\-+]?[0-9]?\.?[0-9]+)(deg|grad|rad)$/;
+var angleRegEx = /^([\-+]?[0-9]*\.?[0-9]+)(deg|grad|rad)$/;
 /*jslint regexp: false*/
 
 // This will return one of the above types based on the passed in string
@@ -49271,7 +49271,7 @@ module.exports={
   },
   "_id": "escodegen@1.6.1",
   "_shasum": "367de17d8510540d12bc6dcb8b3f918391265815",
-  "_from": "escodegen@^1.6.1",
+  "_from": "escodegen@>=1.6.1 <2.0.0",
   "_npmVersion": "2.0.0-alpha-5",
   "_npmUser": {
     "name": "constellation",
