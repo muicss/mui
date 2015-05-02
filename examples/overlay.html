@@ -14,7 +14,8 @@
           modalEl.style.margin = '30px auto';
           modalEl.style.backgroundColor = '#fff';
 
-          mui.overlay('on', modalEl);
+          var options = {onclose: function() {console.log('onclose');}};
+          mui.overlay('on', options, modalEl);
         });
       });
     </script>

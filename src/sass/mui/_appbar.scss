@@ -37,6 +37,19 @@
   }
 }
 
+.mui-appbar-top {
+  top: $mui-appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
+    top: $mui-appbar-height-xs-landscape;
+  }
+
+  @media (min-width: $mui-screen-xs) {
+    top: $mui-appbar-height;
+  }
+}
+
 .mui-appbar {
   @extend .mui-appbar-min-height;
 
