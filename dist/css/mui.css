@@ -1428,6 +1428,15 @@ hr {
     .mui-appbar-line-height {
       line-height: 64px; } }
 
+.mui-appbar-top {
+  top: 56px; }
+  @media (orientation: landscape) and (max-height: 480px) {
+    .mui-appbar-top {
+      top: 48px; } }
+  @media (min-width: 480px) {
+    .mui-appbar-top {
+      top: 64px; } }
+
 .mui-appbar {
   background-color: #2196F3;
   color: #FFF; }

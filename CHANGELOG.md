@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.0.10 - May 1, 2015
+
+* Added .mui-appbar-top helper
+* Added onclose callback option to overlay
+
 ## 0.0.9 - April 27, 2015
 
 * Added accent color buttons

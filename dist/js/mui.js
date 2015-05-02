@@ -803,6 +803,7 @@ var util = require('./lib/util.js'),
  * @param {object} [options]
  * @config {boolean} [keyboard] - If true, close when escape key is pressed.
  * @config {boolean} [static] - If false, close when backdrop is clicked.
+ * @config {Function} [onclose] - Callback function to execute on close
  * @param {Element} [childElement] - Child element to add to overlay.
  */
 function overlayFn(action) {
@@ -882,6 +883,9 @@ function overlayOn(options, childElement) {
   if (options.static) removeClickHandler(overlayEl);
   else addClickHandler(overlayEl);
 
+  // attach options
+  overlayEl.muiOptions = options;
+
   return overlayEl;
 }
 
@@ -890,7 +894,8 @@ function overlayOn(options, childElement) {
  * Turn off overlay.
  */
 function overlayOff() {
-  var overlayEl = document.getElementById(overlayId);
+  var overlayEl = document.getElementById(overlayId),
+      callbackFn;
 
   if (overlayEl) {
     // remove children
@@ -898,6 +903,9 @@ function overlayOff() {
 
     // remove overlay element
     overlayEl.parentNode.removeChild(overlayEl);
+
+    // callback reference
+    callbackFn = overlayEl.muiOptions.onclose;
   }
 
   jqLite.removeClass(document.body, bodyClass);
@@ -905,6 +913,9 @@ function overlayOff() {
   // remove option handlers
   removeKeyupHandler();
   removeClickHandler(overlayEl);
+
+  // execute callback
+  if (callbackFn) callbackFn();
 
   return overlayEl;
 }
