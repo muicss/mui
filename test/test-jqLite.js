@@ -8,6 +8,7 @@ describe('js/lib/jqLite.js', function() {
   before(function() {
     jqLite = require('../src/js/lib/jqLite.js');
   });
+
   
   // ----------------------
   // class methods
@@ -43,6 +44,7 @@ describe('js/lib/jqLite.js', function() {
     });
   });
 
+  
   // --------------------
   // event handlers
   // --------------------
@@ -105,8 +107,24 @@ describe('js/lib/jqLite.js', function() {
       assert.equal(trigger1, false);
       assert.equal(trigger2, false);
     });
+
+    it('should only trigger once', function() {
+      var t = 0;
+      function fn() {t += 1;};
+      
+      jqLite.one(el, 'click', fn);
+      
+      // trigger once
+      el.dispatchEvent(event('click'));
+      assert.equal(t, 1);
+      
+      // trigger again
+      el.dispatchEvent(event('click'));
+      assert.equal(t, 1);
+    });
   });
 
+  
   // --------------------
   // css helper
   // --------------------
