@@ -4,11 +4,8 @@
 $mui-btn-box-shadow-raised: 0 1px 3px rgba(mui-color('black'), 0.12),
                             0 1px 2px rgba(mui-color('black'), 0.24);
 
-$mui-btn-box-shadow-hover: 0 10px 20px rgba(mui-color('black'), 0.19),
-                           0 6px 6px rgba(mui-color('black'), 0.23);
-
-$mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
-
+$mui-btn-box-shadow-active: 0 10px 20px rgba(mui-color('black'), 0.19),
+                            0 6px 6px rgba(mui-color('black'), 0.23);
 
 // =======================
 // Main button class
@@ -50,17 +47,14 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
   &:focus,
   &:active,
   .mui-open > &.mui-dropdown-toggle {
-    box-shadow: $mui-btn-box-shadow-hover;
     color: $mui-btn-default-font-color;
-  }
-
-  &:active &:focus {
-    @include tab-focus;
   }
   
   &:hover,
   &:focus {
+    outline: 0;
     text-decoration: none;
+    box-shadow: $mui-btn-box-shadow-raised;
   }
   
   &:active,
@@ -111,16 +105,11 @@ $mui-btn-box-shadow-active: inset 0 3px 5px rgba(mui-color('black'), .125);
 // Raised buttons
 .mui-btn-raised {
   box-shadow: $mui-btn-box-shadow-raised;
-  transition: .2s ease-out;
+  transition: all 0.2s ease-in-out;
 
   &:not(:disabled) {
-    &:hover,
-    &:focus {
-      box-shadow: $mui-btn-box-shadow-hover;
-    }
-    
     &:active {
-      box-shadow: $mui-btn-box-shadow-raised;
+      box-shadow: $mui-btn-box-shadow-active;
     }
   }
 }
