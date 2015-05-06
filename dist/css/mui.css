@@ -1143,7 +1143,7 @@ hr {
     color: rgba(255, 64, 129, 0.87); }
 
 .mui-text-button {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0.05em;
@@ -1181,8 +1181,8 @@ hr {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  transition: .2s ease-out;
-  font-weight: 400;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0.05em;
@@ -1210,7 +1210,7 @@ hr {
   .mui-btn + .mui-btn {
     margin-left: 8px; }
   .mui-btn:hover, .mui-btn:focus, .mui-btn:active, .mui-open > .mui-btn.mui-dropdown-toggle {
-    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.3), 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     color: rgba(0, 0, 0, 0.87); }
   .mui-btn:active .mui-btn:focus {
     outline: thin dotted;
@@ -1242,12 +1242,12 @@ hr {
     background-color: #f2f2f2; }
 
 .mui-btn-raised, .mui-btn-floating {
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: .2s ease-out; }
   .mui-btn-raised:not(:disabled):hover, .mui-btn-floating:not(:disabled):hover, .mui-btn-raised:not(:disabled):focus, .mui-btn-floating:not(:disabled):focus {
-    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.3), 0 2px 3px 0 rgba(0, 0, 0, 0.1); }
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
   .mui-btn-raised:not(:disabled):active, .mui-btn-floating:not(:disabled):active {
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37); }
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
 .mui-btn-default {
   color: rgba(0, 0, 0, 0.87);
@@ -1850,19 +1850,19 @@ th {
     padding-right: 5px; }
 
 .mui-z1, .mui-dropdown-menu {
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37); }
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
 .mui-z2 {
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .mui-z3 {
-  box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3), 0 11px 7px 0 rgba(0, 0, 0, 0.19); }
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
 
 .mui-z4 {
-  box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.3), 0 14px 12px 0 rgba(0, 0, 0, 0.17); }
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
 
 .mui-z5 {
-  box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
 
 .mui-clearfix:before, .mui-clearfix:after {
   content: " ";

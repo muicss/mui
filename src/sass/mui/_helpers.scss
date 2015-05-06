@@ -75,27 +75,28 @@
 // Depth helpers
 // ===========================
 .mui-z1 {
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 1px 3px rgba(mui-color('black'), 0.12),
+              0 1px 2px rgba(mui-color('black'), 0.24);
 }
 
 .mui-z2 {
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3),
-              0 2px 2px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 6px rgba(mui-color('black'), 0.16),
+              0 3px 6px rgba(mui-color('black'), 0.23);
 }
 
 .mui-z3 {
-  box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3),
-              0 11px 7px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 10px 20px rgba(mui-color('black'), 0.19),
+              0 6px 6px rgba(mui-color('black'), 0.23);
 }
 
 .mui-z4 {
-  box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.3),
-              0 14px 12px 0 rgba(0, 0, 0, 0.17);
+  box-shadow: 0 14px 28px rgba(mui-color('black'), 0.25),
+              0 10px 10px rgba(mui-color('black'), 0.22);  
 }
 
 .mui-z5 {
-  box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),
-              0 17px 17px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 19px 38px rgba(mui-color('black'), 0.30),
+              0 15px 12px rgba(mui-color('black'), 0.22);
 }
 
 

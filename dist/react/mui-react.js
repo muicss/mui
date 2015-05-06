@@ -330,7 +330,7 @@ function jqLiteOne(element, type, callback, useCapture) {
   });
 
   // add listener
-  jqLiteOn(element, type, fn);
+  jqLiteOn(element, type, callback, useCapture);
 }
 
 
