@@ -1,13 +1,23 @@
 #outlook a {
-  padding: 0; }
+  padding: 0;
+}
 
 .ReadMsgBody {
-  width: 100%; }
+  width: 100%;
+}
 
 .ExternalClass {
-  width: 100%; }
-  .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
-    line-height: 100%; }
+  width: 100%;
+}
+
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+  line-height: 100%;
+}
 
 .mui-container-fixed {
   width: 600px;
@@ -16,4 +26,5 @@
   clear: both;
   text-align: left;
   padding-left: 15px;
-  padding-right: 15px; }
+  padding-right: 15px;
+}
