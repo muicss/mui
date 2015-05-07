@@ -1,6 +1,7 @@
 *~
 \#*
 node_modules
+.versions
 .sass-cache
 npm-debug.log
 bower_components
