@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.0.11 - May 6, 2015
+
+* Improved mui-btn box-shadow rules
+* Removed outline from mui-btn on focus
+* Improved CSS depth helper box-shadow rules
+
 ## 0.0.10 - May 1, 2015
 
 * Added .mui-appbar-top helper
