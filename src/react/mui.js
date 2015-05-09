@@ -9,17 +9,14 @@
   else win._muiLoadedReact = true;
 
   // load dependencies
-  var jqLite = require('../js/lib/jqLite.js'),
+  var tabs = require('./tabs.jsx'),
       forms = require('./forms.jsx'),
-      ripple = require('../js/ripple.js'),
       doc = win.document;
 
   // export React classes
+  win.MUITabs = tabs.Tabs;
+  win.MUITabItem = tabs.TabItem;
   win.MUIFormControl = forms.FormControl;
   win.MUIFormGroup = forms.FormGroup;
-
-  // init libraries
-  jqLite.ready(function() {
-    ripple.initListeners();
-  });
+  
 })(window);

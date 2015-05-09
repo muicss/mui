@@ -77,7 +77,7 @@ gulp.task('uglify', ['js'], function() {
 
 
 gulp.task('react', ['clean'], function() {
-  return gulp.src('src/react/main.js')
+  return gulp.src('src/react/mui.js')
     .pipe(browserify({
       transform: [reactify]
     }))

@@ -5,9 +5,28 @@
 
 'use strict';
 
+var formControlClass = 'mui-form-control',
+    formGroupClass = 'mui-form-group',
+    floatingLabelBaseClass = 'mui-form-floating-label',
+    floatingLabelActiveClass = floatingLabelBaseClass + '-active',
+    animationName = 'mui-form-floating-label-inserted',
+    _supportsPointerEvents;
 
-var jqLite = require('../js/lib/jqLite.js'),
-    forms = require('../js/forms.js');
+var React = require('react');
+var cx = require('classnames');
+
+/**
+ * Check if client supports pointer events.
+ */
+function supportsPointerEvents() {
+    // check cache
+    if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
+    
+    var element = document.createElement('x');
+    element.style.cssText = 'pointer-events:auto';
+    _supportsPointerEvents = (element.style.pointerEvents === 'auto');
+    return _supportsPointerEvents;
+}
 
 
 /**
@@ -15,17 +34,59 @@ var jqLite = require('../js/lib/jqLite.js'),
  * @class
  */
 var FormControl = React.createClass({
-  render: function() {
-    return (
-      <input
-          type={this.props.type || 'text'}
-          className={forms.formControlClass}
-          value={this.props.value}
-          autoFocus={this.props.autofocus}
-          onInput={this.props.onInput}
-      />
-    );
-  }
+    render: function() {
+        return (
+            <input
+                type={this.props.type || 'text'}
+                className={ formControlClass }
+                value={this.props.value}
+                autoFocus={this.props.autofocus}
+                onInput={this.props.onInput}
+            />
+        );
+    }
+});
+
+
+var FormLabel = React.createClass({
+    getInitialState: function() {
+        return {
+            style: {} 
+        };
+    },
+    componentDidMount: function() {
+        setTimeout(function() {
+            var s = '.15s ease-out';
+            var style = {
+                transition: s,
+                WebkitTransition: s,
+                MozTransition: s,
+                OTransition: s,
+                msTransform: s
+            }
+
+            this.setState({
+                style: style
+            });
+        }.bind(this), 150);
+    },
+    render: function() {
+        var labelText = this.props.text;
+
+        
+        if (labelText) {
+            var labelClass = {};
+            labelClass[floatingLabelBaseClass] = this.props.floating;
+            labelClass[floatingLabelActiveClass] = this.props.active;
+            labelClass = cx(labelClass);
+        }
+        
+        return (
+            <label className={ labelClass } style={ this.state.style } onClick={ this.props.onClick }>
+                { labelText }
+            </label>
+        );
+    }
 });
 
 
@@ -34,51 +95,67 @@ var FormControl = React.createClass({
  * @class
  */
 var FormGroup = React.createClass({
-  componentDidMount: function() {
-    // use js library to add functionality to label
-    forms.initialize(this.refs.label.getDOMNode());
-  },
-  render: function() {
-    var labelText = this.props.label,
-        labelEl;
-    
-    if (labelText) {
-      var labelClass = '';
+    getInitialState: function() {
+        return {
+            hasInput: false
+        };
+    },
+    componentDidMount: function() {
+        if (this.props.value) {
+            this.setState({
+                hasInput: true
+            });
+        }
+    },
+    render: function() {
+        var labelText = this.props.label;
+        return (
+            <div className={ formGroupClass }>
+                <FormControl 
+                        type={this.props.type}
+                        value={this.props.value}
+                        autoFocus={this.props.autofocus}
+                        onInput={ this._input }
+                />
+                { labelText && <FormLabel text={labelText} onClick={ this._focus } active={ this.state.hasInput } floating={ this.props.isLabelFloating } /> }
+            </div>
+        );
+    },
+    _focus: function (e) {
+        // pointer-events shim
+        if (supportsPointerEvents() === false) {
+            var labelEl = e.target;
+            labelEl.style.cursor = 'text';
 
-      if (this.props.isLabelFloating) {
-        labelClass += ' ' + forms.floatingLabelBaseClass;
-      }
+            if (!this.state.hasInput) {
+                var inputEl = React.findDOMNode(this.refs.input);
+                inputEl.focus();
+            }
+        }
+    },
+    _input: function (e) {
+        if (e.target.value) {
+            this.setState({
+                hasInput: true 
+            });
+        } else {
+            this.setState({
+                hasInput: false 
+            });
+        }
 
-      if (this.props.value) {
-        labelClass += ' ' + forms.floatingLabelActiveClass;
-      }
-
-      labelEl = (
-        <label className={labelClass} ref="label">
-          {labelText}
-        </label>
-      );
+        if (this.props.onClick) {
+            this.props.onClick(e);
+        }
     }
-
-    return (
-      <div className={forms.formGroupClass}>
-        <FormControl 
-            type={this.props.type}
-            value={this.props.value}
-            autoFocus={this.props.autofocus}
-        />
-        {labelEl}
-      </div>
-    );
-  }
 });
 
 
 /** Define module API */
 module.exports = {
-  /** FormControl constructor */
-  FormControl: FormControl,
+    /** FormControl constructor */
+    FormControl: FormControl,
 
-  /** FormGroup constructor */
-  FormGroup: FormGroup
+    /** FormGroup constructor */
+    FormGroup: FormGroup
 };

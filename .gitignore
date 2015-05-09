@@ -7,3 +7,4 @@ npm-debug.log
 bower_components
 examples/assets/mui
 examples/email-inlined
+*.sublime-*
