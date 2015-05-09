@@ -1602,7 +1602,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
 },{}],6:[function(require,module,exports){
-exports.read = function(buffer, offset, isLE, mLen, nBytes) {
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
       eMax = (1 << eLen) - 1,
@@ -1610,32 +1610,32 @@ exports.read = function(buffer, offset, isLE, mLen, nBytes) {
       nBits = -7,
       i = isLE ? (nBytes - 1) : 0,
       d = isLE ? -1 : 1,
-      s = buffer[offset + i];
+      s = buffer[offset + i]
 
-  i += d;
+  i += d
 
-  e = s & ((1 << (-nBits)) - 1);
-  s >>= (-nBits);
-  nBits += eLen;
-  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8);
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
 
-  m = e & ((1 << (-nBits)) - 1);
-  e >>= (-nBits);
-  nBits += mLen;
-  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8);
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
 
   if (e === 0) {
-    e = 1 - eBias;
+    e = 1 - eBias
   } else if (e === eMax) {
-    return m ? NaN : ((s ? -1 : 1) * Infinity);
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
   } else {
-    m = m + Math.pow(2, mLen);
-    e = e - eBias;
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
   }
-  return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
-};
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
 
-exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   var e, m, c,
       eLen = nBytes * 8 - mLen - 1,
       eMax = (1 << eLen) - 1,
@@ -1643,49 +1643,49 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0),
       i = isLE ? 0 : (nBytes - 1),
       d = isLE ? 1 : -1,
-      s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0;
+      s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
 
-  value = Math.abs(value);
+  value = Math.abs(value)
 
   if (isNaN(value) || value === Infinity) {
-    m = isNaN(value) ? 1 : 0;
-    e = eMax;
+    m = isNaN(value) ? 1 : 0
+    e = eMax
   } else {
-    e = Math.floor(Math.log(value) / Math.LN2);
+    e = Math.floor(Math.log(value) / Math.LN2)
     if (value * (c = Math.pow(2, -e)) < 1) {
-      e--;
-      c *= 2;
+      e--
+      c *= 2
     }
     if (e + eBias >= 1) {
-      value += rt / c;
+      value += rt / c
     } else {
-      value += rt * Math.pow(2, 1 - eBias);
+      value += rt * Math.pow(2, 1 - eBias)
     }
     if (value * c >= 2) {
-      e++;
-      c /= 2;
+      e++
+      c /= 2
     }
 
     if (e + eBias >= eMax) {
-      m = 0;
-      e = eMax;
+      m = 0
+      e = eMax
     } else if (e + eBias >= 1) {
-      m = (value * c - 1) * Math.pow(2, mLen);
-      e = e + eBias;
+      m = (value * c - 1) * Math.pow(2, mLen)
+      e = e + eBias
     } else {
-      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen);
-      e = 0;
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
     }
   }
 
-  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8);
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
 
-  e = (e << mLen) | m;
-  eLen += mLen;
-  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8);
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
 
-  buffer[offset + i - d] |= s * 128;
-};
+  buffer[offset + i - d] |= s * 128
+}
 
 },{}],7:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
@@ -62811,14 +62811,13 @@ function jqLiteOff(element, type, callback, useCapture) {
  * @param {Boolean} useCapture - Use capture flag.
  */
 function jqLiteOne(element, type, callback, useCapture) {
-  // remove functions after event fires
-  jqLiteOn(element, type, function onFn() {
-    jqLiteOff(element, type, callback);
-    jqLiteOff(element, type, onFn);
-  });
+  jqLiteOn(element, type, function onFn(ev) {
+    // execute callback
+    if (callback) callback.apply(this, arguments);
 
-  // add listener
-  jqLiteOn(element, type, fn);
+    // remove wrapper
+    jqLiteOff(element, type, onFn);
+  }, useCapture);
 }
 
 
@@ -63013,7 +63012,8 @@ var config = require('../config.js'),
     win = window,
     doc = window.document,
     nodeInsertedCallbacks = [],
-    head;
+    head,
+    _supportsPointerEvents;
 
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
@@ -63099,6 +63099,34 @@ function animationHandlerFn(ev) {
 
 
 /**
+ * Convert Classname object, with class as key and true/false as value, to an class string
+ * @param  {Object} classes The classes
+ * @return {String}         class string
+ */
+function classNamesFn(classes) {
+  var cs = '';
+  for (var i in classes) {
+    cs += (classes[i]) ? i + ' ' : '';
+  }
+  return cs.trim();
+}
+
+
+/**
+ * Check if client supports pointer events.
+ */
+function supportsPointerEventsFn() {
+  // check cache
+  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
+  
+  var element = document.createElement('x');
+  element.style.cssText = 'pointer-events:auto';
+  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
+  return _supportsPointerEvents;
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -63112,7 +63140,13 @@ module.exports = {
   onNodeInserted: onNodeInsertedFn,
 
   /** Raise MUI error */
-  raiseError: raiseErrorFn
+  raiseError: raiseErrorFn,
+
+  /** Classnames object to string */
+  classNames: classNamesFn,
+
+  /** Support Pointer Events check */
+  supportsPointerEvents: supportsPointerEventsFn
 };
 
 
@@ -63127,6 +63161,7 @@ describe('js/lib/jqLite.js', function() {
   before(function() {
     jqLite = require('../src/js/lib/jqLite.js');
   });
+
   
   // ----------------------
   // class methods
@@ -63162,6 +63197,7 @@ describe('js/lib/jqLite.js', function() {
     });
   });
 
+  
   // --------------------
   // event handlers
   // --------------------
@@ -63224,8 +63260,24 @@ describe('js/lib/jqLite.js', function() {
       assert.equal(trigger1, false);
       assert.equal(trigger2, false);
     });
+
+    it('should only trigger once', function() {
+      var t = 0;
+      function fn() {t += 1;};
+      
+      jqLite.one(el, 'click', fn);
+
+      // trigger once
+      el.dispatchEvent(event('click'));
+      assert.equal(t, 1);
+
+      // trigger again
+      el.dispatchEvent(event('click'));
+      assert.equal(t, 1);
+    });
   });
 
+  
   // --------------------
   // css helper
   // --------------------

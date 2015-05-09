@@ -164,14 +164,13 @@ function jqLiteOff(element, type, callback, useCapture) {
  * @param {Boolean} useCapture - Use capture flag.
  */
 function jqLiteOne(element, type, callback, useCapture) {
-  // remove functions after event fires
-  jqLiteOn(element, type, function onFn() {
-    jqLiteOff(element, type, callback);
-    jqLiteOff(element, type, onFn);
-  });
+  jqLiteOn(element, type, function onFn(ev) {
+    // execute callback
+    if (callback) callback.apply(this, arguments);
 
-  // add listener
-  jqLiteOn(element, type, callback, useCapture);
+    // remove wrapper
+    jqLiteOff(element, type, onFn);
+  }, useCapture);
 }
 
 

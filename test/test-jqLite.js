@@ -113,11 +113,11 @@ describe('js/lib/jqLite.js', function() {
       function fn() {t += 1;};
       
       jqLite.one(el, 'click', fn);
-      
+
       // trigger once
       el.dispatchEvent(event('click'));
       assert.equal(t, 1);
-      
+
       // trigger again
       el.dispatchEvent(event('click'));
       assert.equal(t, 1);
