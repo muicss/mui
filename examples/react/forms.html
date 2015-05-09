@@ -1,17 +1,26 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
-    <script src="../assets/vendor/react/0.12.2/react.js"></script>
-    <script src="../assets/mui/react/mui-react.js"></script>
-    
-    <!-- for example only -->
-    <script src="../assets/vendor/jquery-1.11.2.min.js"></script>
-    <script src="../assets/vendor/react/0.12.2/JSXTransformer.js"></script>
+    <!-- for example only -->   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
     <!-- end -->
 
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/react/mui-react.js"></script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h2>Forms</h2>
+      <div class="mui-panel">
+        <h3>MUIFormControl</h3>
+        <div id="form-control-example"></div>
+
+        <h3>MUIFormGroup</h3>
+        <div id="form-group-example"></div>
+      </div>
+    </div>
     <script type="text/jsx">
-     jQuery(function() {
        React.render(
          <MUIFormControl type="password" autofocus={true}/>,
          document.getElementById('form-control-example')
@@ -25,19 +34,6 @@
          />,
          document.getElementById('form-group-example')
        );
-     });
     </script>
-  </head>
-  <body>
-    <div class="mui-container">
-      <h2>Forms</h2>
-      <div class="mui-panel">
-        <h3>MUIFormControl</h3>
-        <div id="form-control-example"></div>
-
-        <h3>MUIFormGroup</h3>
-        <div id="form-group-example"></div>
-      </div>
-    </div>
   </body>
 </html>
