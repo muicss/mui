@@ -19,13 +19,13 @@ var cx = require('classnames');
  * Check if client supports pointer events.
  */
 function supportsPointerEvents() {
-    // check cache
-    if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-    
-    var element = document.createElement('x');
-    element.style.cssText = 'pointer-events:auto';
-    _supportsPointerEvents = (element.style.pointerEvents === 'auto');
-    return _supportsPointerEvents;
+  // check cache
+  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
+  
+  var element = document.createElement('x');
+  element.style.cssText = 'pointer-events:auto';
+  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
+  return _supportsPointerEvents;
 }
 
 
@@ -34,59 +34,59 @@ function supportsPointerEvents() {
  * @class
  */
 var FormControl = React.createClass({
-    render: function() {
-        return (
-            <input
-                type={this.props.type || 'text'}
-                className={ formControlClass }
-                value={this.props.value}
-                autoFocus={this.props.autofocus}
-                onInput={this.props.onInput}
-            />
-        );
-    }
+  render: function() {
+    return (
+      <input
+        type={this.props.type || 'text'}
+        className={ formControlClass }
+        value={this.props.value}
+        autoFocus={this.props.autofocus}
+        onInput={this.props.onInput}
+      />
+    );
+  }
 });
 
 
 var FormLabel = React.createClass({
-    getInitialState: function() {
-        return {
-            style: {} 
-        };
-    },
-    componentDidMount: function() {
-        setTimeout(function() {
-            var s = '.15s ease-out';
-            var style = {
-                transition: s,
-                WebkitTransition: s,
-                MozTransition: s,
-                OTransition: s,
-                msTransform: s
-            }
+  getInitialState: function() {
+    return {
+      style: {} 
+    };
+  },
+  componentDidMount: function() {
+    setTimeout(function() {
+      var s = '.15s ease-out';
+      var style = {
+        transition: s,
+        WebkitTransition: s,
+        MozTransition: s,
+        OTransition: s,
+        msTransform: s
+      }
 
-            this.setState({
-                style: style
-            });
-        }.bind(this), 150);
-    },
-    render: function() {
-        var labelText = this.props.text;
+      this.setState({
+        style: style
+      });
+    }.bind(this), 150);
+  },
+  render: function() {
+    var labelText = this.props.text;
 
-        
-        if (labelText) {
-            var labelClass = {};
-            labelClass[floatingLabelBaseClass] = this.props.floating;
-            labelClass[floatingLabelActiveClass] = this.props.active;
-            labelClass = cx(labelClass);
-        }
-        
-        return (
-            <label className={ labelClass } style={ this.state.style } onClick={ this.props.onClick }>
-                { labelText }
-            </label>
-        );
+    
+    if (labelText) {
+      var labelClass = {};
+      labelClass[floatingLabelBaseClass] = this.props.floating;
+      labelClass[floatingLabelActiveClass] = this.props.active;
+      labelClass = cx(labelClass);
     }
+    
+    return (
+      <label className={ labelClass } style={ this.state.style } onClick={ this.props.onClick }>
+        { labelText }
+      </label>
+    );
+  }
 });
 
 
@@ -95,67 +95,67 @@ var FormLabel = React.createClass({
  * @class
  */
 var FormGroup = React.createClass({
-    getInitialState: function() {
-        return {
-            hasInput: false
-        };
-    },
-    componentDidMount: function() {
-        if (this.props.value) {
-            this.setState({
-                hasInput: true
-            });
-        }
-    },
-    render: function() {
-        var labelText = this.props.label;
-        return (
-            <div className={ formGroupClass }>
-                <FormControl 
-                        type={this.props.type}
-                        value={this.props.value}
-                        autoFocus={this.props.autofocus}
-                        onInput={ this._input }
-                />
-                { labelText && <FormLabel text={labelText} onClick={ this._focus } active={ this.state.hasInput } floating={ this.props.isLabelFloating } /> }
-            </div>
-        );
-    },
-    _focus: function (e) {
-        // pointer-events shim
-        if (supportsPointerEvents() === false) {
-            var labelEl = e.target;
-            labelEl.style.cursor = 'text';
-
-            if (!this.state.hasInput) {
-                var inputEl = React.findDOMNode(this.refs.input);
-                inputEl.focus();
-            }
-        }
-    },
-    _input: function (e) {
-        if (e.target.value) {
-            this.setState({
-                hasInput: true 
-            });
-        } else {
-            this.setState({
-                hasInput: false 
-            });
-        }
-
-        if (this.props.onClick) {
-            this.props.onClick(e);
-        }
+  getInitialState: function() {
+    return {
+      hasInput: false
+    };
+  },
+  componentDidMount: function() {
+    if (this.props.value) {
+      this.setState({
+        hasInput: true
+      });
     }
+  },
+  render: function() {
+    var labelText = this.props.label;
+    return (
+      <div className={ formGroupClass }>
+        <FormControl 
+            type={this.props.type}
+            value={this.props.value}
+            autoFocus={this.props.autofocus}
+            onInput={ this._input }
+        />
+        { labelText && <FormLabel text={labelText} onClick={ this._focus } active={ this.state.hasInput } floating={ this.props.isLabelFloating } /> }
+      </div>
+    );
+  },
+  _focus: function (e) {
+    // pointer-events shim
+    if (supportsPointerEvents() === false) {
+      var labelEl = e.target;
+      labelEl.style.cursor = 'text';
+
+      if (!this.state.hasInput) {
+        var inputEl = React.findDOMNode(this.refs.input);
+        inputEl.focus();
+      }
+    }
+  },
+  _input: function (e) {
+    if (e.target.value) {
+      this.setState({
+        hasInput: true 
+      });
+    } else {
+      this.setState({
+        hasInput: false 
+      });
+    }
+
+    if (this.props.onClick) {
+      this.props.onClick(e);
+    }
+  }
 });
 
 
 /** Define module API */
 module.exports = {
-    /** FormControl constructor */
-    FormControl: FormControl,
+  /** FormControl constructor */
+  FormControl: FormControl,
 
-    /** FormGroup constructor */
-    FormGroup: FormGroup
+  /** FormGroup constructor */
+  FormGroup: FormGroup
 };

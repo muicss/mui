@@ -12,78 +12,78 @@
   </head>
   <body>
     <div class="mui-container">
-        <h1>Tabs</h1>
-        <div id="normal"></div>
-        <div id="justified"></div>
-        <div id="tabs-in-tabs"></div>
+      <h1>Tabs</h1>
+      <div id="normal"></div>
+      <div id="justified"></div>
+      <div id="tabs-in-tabs"></div>
     </div>
     <script type="text/jsx">
-        var NormalTabs = React.createClass({
-            render: function() {
-                return (
-                    <div className="mui-panel">
-                        <h2>mui-tabs</h2>
-                        <MUITabs>
-                            <MUITabItem id="home" label="Home">
-                                <span>Whatever you need in home</span>
-                            </MUITabItem>
-                            <MUITabItem id="profile" label="Profile">
-                                <span>Whatever you need in profile</span>
-                            </MUITabItem>
-                            <MUITabItem id="messages" label="Messages">
-                                <span>Whatever you need in messages</span>
-                            </MUITabItem>
-                        </MUITabs>
-                    </div>
-                );
-            }
-        });
+      var NormalTabs = React.createClass({
+        render: function() {
+          return (
+            <div className="mui-panel">
+              <h2>mui-tabs</h2>
+              <MUITabs>
+                <MUITabItem id="home" label="Home">
+                  <span>Whatever you need in home</span>
+                </MUITabItem>
+                <MUITabItem id="profile" label="Profile">
+                  <span>Whatever you need in profile</span>
+                </MUITabItem>
+                <MUITabItem id="messages" label="Messages">
+                  <span>Whatever you need in messages</span>
+                </MUITabItem>
+              </MUITabs>
+            </div>
+          );
+        }
+      });
 
-        var Justified = React.createClass({
-            render: function () {
-                return (
-                    <div className="mui-panel">
-                        <h2>mui-tabs-justified</h2>
-                        <MUITabs justified={ true } activeTab="profile">
-                            <MUITabItem id="home" label="Home">
-                                <span>Whatever you need in home</span>
-                            </MUITabItem>
-                            <MUITabItem id="profile" label="Profile">
-                                <span>Whatever you need in profile</span>
-                            </MUITabItem>
-                            <MUITabItem id="messages" label="Messages">
-                                <span>Whatever you need in messages</span>
-                            </MUITabItem>
-                        </MUITabs>
-                    </div>
-                );
-            }
-        });
+      var Justified = React.createClass({
+        render: function () {
+          return (
+            <div className="mui-panel">
+              <h2>mui-tabs-justified</h2>
+              <MUITabs justified={ true } activeTab="profile">
+                <MUITabItem id="home" label="Home">
+                  <span>Whatever you need in home</span>
+                </MUITabItem>
+                <MUITabItem id="profile" label="Profile">
+                  <span>Whatever you need in profile</span>
+                </MUITabItem>
+                <MUITabItem id="messages" label="Messages">
+                  <span>Whatever you need in messages</span>
+                </MUITabItem>
+              </MUITabs>
+            </div>
+          );
+        }
+      });
 
-        var TabsInTabs = React.createClass({
-            render: function () {
-                return (
-                    <div className="mui-panel">
-                        <h2>mui-tabs-in-tabs</h2>
-                        <MUITabs justified={ true } >
-                            <MUITabItem id="home" label="Home">
-                                <NormalTabs />
-                            </MUITabItem>
-                            <MUITabItem id="profile" label="Profile">
-                                <Justified />
-                            </MUITabItem>
-                            <MUITabItem id="messages" label="Messages">
-                                <span>Whatever you need in messages</span>
-                            </MUITabItem>
-                        </MUITabs>
-                    </div>
-                );
-            }
-        });
+      var TabsInTabs = React.createClass({
+        render: function () {
+          return (
+            <div className="mui-panel">
+              <h2>mui-tabs-in-tabs</h2>
+              <MUITabs justified={ true } >
+                <MUITabItem id="home" label="Home">
+                  <NormalTabs />
+                </MUITabItem>
+                <MUITabItem id="profile" label="Profile">
+                  <Justified />
+                </MUITabItem>
+                <MUITabItem id="messages" label="Messages">
+                  <span>Whatever you need in messages</span>
+                </MUITabItem>
+              </MUITabs>
+            </div>
+          );
+        }
+      });
 
-        React.render(<NormalTabs />, document.getElementById('normal'));
-        React.render(<Justified />, document.getElementById('justified'));
-        React.render(<TabsInTabs />, document.getElementById('tabs-in-tabs'));
+      React.render(<NormalTabs />, document.getElementById('normal'));
+      React.render(<Justified />, document.getElementById('justified'));
+      React.render(<TabsInTabs />, document.getElementById('tabs-in-tabs'));
     </script>
   </body>
 </html>
