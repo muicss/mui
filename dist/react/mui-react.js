@@ -13,151 +13,6 @@ module.exports = {
 
 },{}],2:[function(require,module,exports){
 /**
- * MUI CSS/JS forms module
- * @module forms
- */
-
-'use strict';
-
-
-var jqLite = require('./lib/jqLite.js'),
-    util = require('./lib/util.js'),
-    formControlClass = 'mui-form-control',
-    formGroupClass = 'mui-form-group',
-    floatingLabelBaseClass = 'mui-form-floating-label',
-    floatingLabelActiveClass = floatingLabelBaseClass + '-active',
-    animationName = 'mui-form-floating-label-inserted',
-    _supportsPointerEvents;    
-
-
-/**
- * Initialize floating labels.
- * @param {Element} labelEl - The floating label element.
- */
-function initialize(labelEl) {
-  // check flag
-  if (labelEl._muiFloatLabel === true) return;
-  else labelEl._muiFloatLabel = true;
-  
-  var inputEl = labelEl.previousElementSibling;
-
-  if (inputEl.value.length) jqLite.addClass(labelEl, floatingLabelActiveClass);
-
-  // handle input events
-  jqLite.on(inputEl, 'input', inputHandler);
-  
-  // add transition after timeout to avoid screen jitter
-  setTimeout(function() {
-    var s = '.15s ease-out';
-
-    jqLite.css(labelEl, {
-      '-webkit-transition': s,
-      '-moz-transition': s,
-      '-o-transition': s,
-      'transition': s
-    });
-  }, 150);
-
-  // pointer-events shim
-  if (supportsPointerEvents() === false) {
-    jqLite.css(labelEl, 'cursor', 'text');
-    jqLite.on(labelEl, 'click', function() {
-      if (!jqLite.hasClass(labelEl, floatingLabelActiveClass)) inputEl.focus();
-    });
-  }
-}
-
-
-/**
- * Handle inputs into the form control.
- * @param {Event} ev - The DOM event.
- */
-function inputHandler(ev) {
-  var inputEl = ev.target,
-      labelEl = inputEl.nextElementSibling;
-
-  if (jqLite.hasClass(labelEl, floatingLabelBaseClass)) {
-    if (inputEl.value.length === 0) {
-      jqLite.removeClass(labelEl, floatingLabelActiveClass);
-    } else {
-      jqLite.addClass(labelEl, floatingLabelActiveClass);
-    }
-  }
-}
-
-
-/**
- * Activate the floating label
- * @param {Element} labelEl - The floating label element.
- */
-function activateLabel(labelEl) {
-  jqLite.addClass(labelEl, floatingLabelActiveClass);
-
-  if (supportsPointerEvents() === false) {
-    jqLite.css(labelEl, 'cursor', 'default');
-  }
-}
-
-
-/**
- * De-activate the floating label
- * @param {Element} labelEl - The floating label element.
- * @param {Element} inputEl - The form-control input element.
- */
-function deactivateLabel(labelEl, inputEl) {
-  jqLite.removeClass(labelEl, floatingLabelActiveClass);
-}
-
-
-/**
- * Check if client supports pointer events.
- */
-function supportsPointerEvents() {
-  // check cache
-  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-  
-  var element = document.createElement('x');
-  element.style.cssText = 'pointer-events:auto';
-  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
-  return _supportsPointerEvents;
-}
-
-
-/** Define module API */
-module.exports = {
-  /** The form control class name */
-  formControlClass: formControlClass,
-
-  /** The form group class name */
-  formGroupClass: formGroupClass,
-
-  /** The floating label base class name */
-  floatingLabelBaseClass: floatingLabelBaseClass,
-
-  /** The active floating label class name */
-  floatingLabelActiveClass: floatingLabelActiveClass,
-
-  /** Initialize floating label element */
-  initialize: initialize,
-
-  /** Initialize module listeners */
-  initListeners: function() {
-    var doc = document;
-
-    // markup elements available when method is called
-    var elList = doc.getElementsByClassName(floatingLabelBaseClass);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
-
-    // listen for new elements
-    util.onNodeInserted(function(el) {
-      if (jqLite.hasClass(el, floatingLabelBaseClass)) initialize(el);
-    });
-  }
-};
-
-
-},{"./lib/jqLite.js":3,"./lib/util.js":4}],3:[function(require,module,exports){
-/**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
  */
@@ -323,14 +178,13 @@ function jqLiteOff(element, type, callback, useCapture) {
  * @param {Boolean} useCapture - Use capture flag.
  */
 function jqLiteOne(element, type, callback, useCapture) {
-  // remove functions after event fires
-  jqLiteOn(element, type, function onFn() {
-    jqLiteOff(element, type, callback);
-    jqLiteOff(element, type, onFn);
-  });
+  jqLiteOn(element, type, function onFn(ev) {
+    // execute callback
+    if (callback) callback.apply(this, arguments);
 
-  // add listener
-  jqLiteOn(element, type, callback, useCapture);
+    // remove wrapper
+    jqLiteOff(element, type, onFn);
+  }, useCapture);
 }
 
 
@@ -511,7 +365,7 @@ module.exports = {
 };
 
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -525,7 +379,8 @@ var config = require('../config.js'),
     win = window,
     doc = window.document,
     nodeInsertedCallbacks = [],
-    head;
+    head,
+    _supportsPointerEvents;
 
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
@@ -611,6 +466,34 @@ function animationHandlerFn(ev) {
 
 
 /**
+ * Convert Classname object, with class as key and true/false as value, to an class string
+ * @param  {Object} classes The classes
+ * @return {String}         class string
+ */
+function classNamesFn(classes) {
+  var cs = '';
+  for (var i in classes) {
+    cs += (classes[i]) ? i + ' ' : '';
+  }
+  return cs.trim();
+}
+
+
+/**
+ * Check if client supports pointer events.
+ */
+function supportsPointerEventsFn() {
+  // check cache
+  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
+  
+  var element = document.createElement('x');
+  element.style.cssText = 'pointer-events:auto';
+  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
+  return _supportsPointerEvents;
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -624,121 +507,223 @@ module.exports = {
   onNodeInserted: onNodeInsertedFn,
 
   /** Raise MUI error */
-  raiseError: raiseErrorFn
+  raiseError: raiseErrorFn,
+
+  /** Classnames object to string */
+  classNames: classNamesFn,
+
+  /** Support Pointer Events check */
+  supportsPointerEvents: supportsPointerEventsFn
 };
 
 
-},{"../config.js":1,"./jqLite.js":3}],5:[function(require,module,exports){
+},{"../config.js":1,"./jqLite.js":2}],4:[function(require,module,exports){
 /**
- * MUI CSS/JS ripple module
- * @module ripple
+ * MUI React buttons module
+ * @module react/buttons
  */
 
 'use strict';
 
+var buttonClass = 'mui-btn';
+var flatClass = buttonClass + '-flat',
+    raisedClass = buttonClass + '-raised',
+    largeClass = buttonClass + '-lg',
+    floatingClass = buttonClass + '-floating';
 
-var jqLite = require('./lib/jqLite.js'),
-    util = require('./lib/util.js'),
-    btnClass = 'mui-btn',
-    btnFlatClass = 'mui-btn-flat',
-    btnFloatingClass = 'mui-btn-floating',
-    rippleClass = 'mui-ripple-effect',
-    animationName = 'mui-btn-inserted';
+var Ripple = require('./ripple.jsx');
+var util = require('../js/lib/util.js');
 
-
-/**
- * Add ripple effects to button element.
- * @param {Element} buttonEl - The button element.
- */
-function initialize(buttonEl) {
-  // check flag
-  if (buttonEl._muiRipple === true) return;
-  else buttonEl._muiRipple = true;
-
-  // exit if element is INPUT (doesn't support absolute positioned children)
-  if (buttonEl.tagName === 'INPUT') return;
-
-  // attach event handler
-  jqLite.on(buttonEl, 'touchstart', eventHandler);
-  jqLite.on(buttonEl, 'mousedown', eventHandler);
-}
-
-
-/**
- * Event handler
- * @param {Event} ev - The DOM event
- */
-function eventHandler(ev) {
-  // only left clicks
-  if (ev.button !== 0) return;
-
-  var buttonEl = this;
-
-  // exit if button is disabled
-  if (buttonEl.disabled === true) return;
-
-  // de-dupe touchstart and mousedown with 100msec flag
-  if (buttonEl.touchFlag === true) {
-    return;
-  } else {
-    buttonEl.touchFlag = true;
-    setTimeout(function() {
-      buttonEl.touchFlag = false;
-    }, 100);
+var Button = React.createClass({displayName: "Button",
+  mixins: [Ripple],
+  getDefaultProps: function() {
+    return {
+      type: 'default', // one of default, primary, danger or accent
+      disabled: false
+    };
+  },
+  render: function() {
+    var cs = {};
+    cs[buttonClass] = true;
+    cs[buttonClass + '-' + this.props.type] = true;
+    cs[flatClass] = this.props.flat;
+    cs[raisedClass] = this.props.raised;
+    cs[largeClass] = this.props.large;
+    cs = util.classNames(cs);
+    return (
+      React.createElement("button", {className:  cs, disabled:  this.props.disabled, onMouseDown:  this.ripple, onTouchStart:  this.ripple, onClick:  this.props.onClick}, 
+         this.props.children, 
+         this.state.ripples && this.renderRipples()
+      )
+    );
   }
+});
 
-  var rippleEl = document.createElement('div');
-  rippleEl.className = rippleClass;
-
-  var offset = jqLite.offset(buttonEl),
-      xPos = ev.pageX - offset.left,
-      yPos = ev.pageY - offset.top,
-      diameter,
-      radius;
-
-  // get height
-  if (jqLite.hasClass(buttonEl, btnFloatingClass)) {
-    diameter = offset.height / 2;
-  } else {
-    diameter = offset.height;
+var RoundButton = React.createClass({displayName: "RoundButton",
+  mixins: [Ripple],
+  getDefaultProps: function() {
+    return {
+      floating: true
+    };
+  },
+  render: function() {
+    var cs = {};
+    cs[buttonClass] = true;
+    cs[floatingClass] = true;
+    cs[floatingClass + '-mini'] = this.props.mini;
+    cs = util.classNames(cs);
+    return (
+      React.createElement("button", {className:  cs, disabled:  this.props.disabled, onMouseDown:  this.ripple, onTouchStart:  this.ripple, onClick:  this.props.onClick}, 
+         this.props.children, 
+         this.state.ripples && this.renderRipples()
+      )
+    );
   }
+})
 
-  radius = diameter / 2;
-  
-  jqLite.css(rippleEl, {
-    height: diameter + 'px',
-    width: diameter + 'px',
-    top: yPos - radius + 'px',
-    left: xPos - radius + 'px'
-  });
-
-  buttonEl.appendChild(rippleEl);
-  
-  window.setTimeout(function() {
-    buttonEl.removeChild(rippleEl);
-  }, 2000);
-}
-
-
-/** Define module API */
 module.exports = {
-  /** Initialize module listeners */
-  initListeners: function() {
-    var doc = document;
-
-    // markup elements available when method is called
-    var elList = doc.getElementsByClassName(btnClass);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
-
-    // listen for new elements
-    util.onNodeInserted(function(el) {
-      if (jqLite.hasClass(el, btnClass)) initialize(el);
-    });
-  }
+  Button: Button,
+  RoundButton: RoundButton
 };
 
+},{"../js/lib/util.js":3,"./ripple.jsx":9}],5:[function(require,module,exports){
+/**
+ * MUI React dropdowns module
+ * @module react/dropdowns
+ */
+/* jshint quotmark:false */
+// jscs:disable validateQuoteMarks
 
-},{"./lib/jqLite.js":3,"./lib/util.js":4}],6:[function(require,module,exports){
+'use strict';
+
+var dropdownClass = 'mui-dropdown',
+    caretClass = 'mui-caret',
+    menuClass = 'mui-dropdown-menu',
+    openClass = 'mui-open',
+    rightClass = 'mui-dropdown-menu-right';
+
+var util = require('../js/lib/util'),
+    jqLite = require('../js/lib/jqLite');
+
+var buttons = require('./buttons.jsx');
+var Button = buttons.Button;
+var RoundButton = buttons.RoundButton;
+
+var Dropdown = React.createClass({displayName: "Dropdown",
+  menuStyle: { top: 0 },
+  getInitialState: function() {
+    return {
+      opened: false
+    };
+  },
+  componentWillMount: function() {
+    document.addEventListener('click', this._outsideClick);
+  },
+  componentWillUnmount: function() {
+    document.addRemoveListener('click', this._outsideClick);
+  },
+  render: function() {
+    var button;
+    if (this.props.round) {
+      button = (
+        React.createElement(RoundButton, {ref: "button", onClick:  this._click, mini:  this.props.mini, disabled:  this.props.disabled}, 
+           this.props.label, 
+          React.createElement("span", {className:  caretClass })
+        )
+      );
+    } else {
+      button = (
+        React.createElement(Button, {ref: "button", onClick:  this._click, type:  this.props.type, flat:  this.props.flat, raised:  this.props.raised, large:  this.props.large, disabled:  this.props.disabled}, 
+           this.props.label, 
+          React.createElement("span", {className:  caretClass })
+        )
+      );
+    }
+    var cs = {};
+    cs[menuClass] = true;
+    cs[openClass] = this.state.opened;
+    cs[rightClass] = this.props.right;
+    cs = util.classNames(cs);
+    return (
+      React.createElement("div", {className:  dropdownClass, style:  {padding: '0px 2px 0px'} }, 
+         button, 
+         this.state.opened && (
+          React.createElement("ul", {className:  cs, style:  this.menuStyle, ref: "menu", onClick:  this._select}, 
+             this.props.children
+          ))
+        
+      )
+    );
+  },
+  _click: function (ev) {
+    // only left clicks
+    if (ev.button !== 0) return;
+
+    // exit if toggle button is disabled
+    if (this.props.disabled) return;
+
+    setTimeout(function () {
+      if (!ev.defaultPrevented) this._toggle();
+    }.bind(this), 0);
+  },
+  _toggle: function () {
+    // exit if no menu element
+    if (!this.props.children) {
+      return util.raiseError('Dropdown menu element not found');
+    }
+
+    if (this.state.opened) this._close();
+    else this._open();
+  },
+  _open: function () {
+    // position menu element below toggle button
+    var wrapperRect = React.findDOMNode(this).getBoundingClientRect(),
+        toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
+
+    this.menuStyle.top = toggleRect.top - wrapperRect.top + toggleRect.height;
+
+    this.setState({
+      opened: true
+    });
+  },
+  _close: function () {
+    this.setState({
+      opened: false
+    });
+  },
+  _select: function (ev) {
+    if (this.props.onClick) this.props.onClick(this, ev);
+  },
+  _outsideClick: function (ev) {
+    var isClickInside = React.findDOMNode(this).contains(event.target);
+
+    if (!isClickInside) {
+      this._close();
+    }
+  }
+});
+
+var DropdownItem = React.createClass({displayName: "DropdownItem",
+  render: function () {
+    return (
+      React.createElement("li", null, 
+        React.createElement("a", {href:  this.props.link || '#', onClick:  this._click}, 
+           this.props.children
+        )
+      )
+    );
+  },
+  _click: function (ev) {
+    if (this.props.onClick) this.props.onClick(this, ev);
+  }
+});
+
+module.exports = {
+  Dropdown: Dropdown,
+  DropdownItem: DropdownItem
+};
+
+},{"../js/lib/jqLite":2,"../js/lib/util":3,"./buttons.jsx":4}],6:[function(require,module,exports){
 /**
  * MUI React main module
  * @module react/main
@@ -750,23 +735,34 @@ module.exports = {
   else win._muiLoadedReact = true;
 
   // load dependencies
-  var jqLite = require('../js/lib/jqLite.js'),
+  var layout = require('./layout.jsx'),
       forms = require('./forms.jsx'),
-      ripple = require('../js/ripple.js'),
+      buttons = require('./buttons.jsx'),
+      dropdowns = require('./dropdowns.jsx'),
+      tabs = require('./tabs.jsx'),
       doc = win.document;
 
   // export React classes
+  win.MUIContainer = layout.Container;
+  win.MUIFluidContainer = layout.FluidContainer;
+  win.MUIPanel = layout.Panel;
+
   win.MUIFormControl = forms.FormControl;
   win.MUIFormGroup = forms.FormGroup;
 
-  // init libraries
-  jqLite.ready(function() {
-    ripple.initListeners();
-  });
+  win.MUIButton = buttons.Button;
+  win.MUIRoundButton = buttons.RoundButton;
+
+  win.MUIDropdown = dropdowns.Dropdown;
+  win.MUIDropdownItem = dropdowns.DropdownItem;
+ 
+  win.MUITabs = tabs.Tabs;
+  win.MUITabItem = tabs.TabItem;
+  
 })(window);
 
 
-},{"../js/lib/jqLite.js":3,"../js/ripple.js":5,"./forms.jsx":7}],7:[function(require,module,exports){
+},{"./buttons.jsx":4,"./dropdowns.jsx":5,"./forms.jsx":7,"./layout.jsx":8,"./tabs.jsx":10}],7:[function(require,module,exports){
 /**
  * MUI React forms module
  * @module react/forms
@@ -774,10 +770,14 @@ module.exports = {
 
 'use strict';
 
+var formControlClass = 'mui-form-control',
+    formGroupClass = 'mui-form-group',
+    floatingLabelBaseClass = 'mui-form-floating-label',
+    floatingLabelActiveClass = floatingLabelBaseClass + '-active',
+    animationName = 'mui-form-floating-label-inserted',
+    _supportsPointerEvents;
 
-var jqLite = require('../js/lib/jqLite.js'),
-    forms = require('../js/forms.js');
-
+var util = require('../js/lib/util.js');
 
 /**
  * Constructs a FormControl element.
@@ -787,11 +787,53 @@ var FormControl = React.createClass({displayName: "FormControl",
   render: function() {
     return (
       React.createElement("input", {
-          type: this.props.type || 'text', 
-          className: forms.formControlClass, 
-          value: this.props.value, 
-          autoFocus: this.props.autofocus, 
-          onInput: this.props.onInput}
+        type: this.props.type || 'text', 
+        className:  formControlClass, 
+        value: this.props.value, 
+        autoFocus: this.props.autofocus, 
+        onInput: this.props.onInput}
+      )
+    );
+  }
+});
+
+
+var FormLabel = React.createClass({displayName: "FormLabel",
+  getInitialState: function() {
+    return {
+      style: {} 
+    };
+  },
+  componentDidMount: function() {
+    setTimeout(function() {
+      var s = '.15s ease-out';
+      var style = {
+        transition: s,
+        WebkitTransition: s,
+        MozTransition: s,
+        OTransition: s,
+        msTransform: s
+      }
+
+      this.setState({
+        style: style
+      });
+    }.bind(this), 150);
+  },
+  render: function() {
+    var labelText = this.props.text;
+
+    
+    if (labelText) {
+      var labelClass = {};
+      labelClass[floatingLabelBaseClass] = this.props.floating;
+      labelClass[floatingLabelActiveClass] = this.props.active;
+      labelClass = util.classNames(labelClass);
+    }
+    
+    return (
+      React.createElement("label", {className:  labelClass, style:  this.state.style, onClick:  this.props.onClick}, 
+         labelText 
       )
     );
   }
@@ -803,42 +845,58 @@ var FormControl = React.createClass({displayName: "FormControl",
  * @class
  */
 var FormGroup = React.createClass({displayName: "FormGroup",
+  getInitialState: function() {
+    return {
+      hasInput: false
+    };
+  },
   componentDidMount: function() {
-    // use js library to add functionality to label
-    forms.initialize(this.refs.label.getDOMNode());
+    if (this.props.value) {
+      this.setState({
+        hasInput: true
+      });
+    }
   },
   render: function() {
-    var labelText = this.props.label,
-        labelEl;
-    
-    if (labelText) {
-      var labelClass = '';
-
-      if (this.props.isLabelFloating) {
-        labelClass += ' ' + forms.floatingLabelBaseClass;
-      }
-
-      if (this.props.value) {
-        labelClass += ' ' + forms.floatingLabelActiveClass;
-      }
-
-      labelEl = (
-        React.createElement("label", {className: labelClass, ref: "label"}, 
-          labelText
-        )
-      );
-    }
-
+    var labelText = this.props.label;
     return (
-      React.createElement("div", {className: forms.formGroupClass}, 
+      React.createElement("div", {className:  formGroupClass }, 
         React.createElement(FormControl, {
             type: this.props.type, 
             value: this.props.value, 
-            autoFocus: this.props.autofocus}
+            autoFocus: this.props.autofocus, 
+            onInput:  this._input}
         ), 
-        labelEl
+         labelText && React.createElement(FormLabel, {text: labelText, onClick:  this._focus, active:  this.state.hasInput, floating:  this.props.isLabelFloating})
       )
     );
+  },
+  _focus: function (e) {
+    // pointer-events shim
+    if (util.supportsPointerEvents() === false) {
+      var labelEl = e.target;
+      labelEl.style.cursor = 'text';
+
+      if (!this.state.hasInput) {
+        var inputEl = React.findDOMNode(this.refs.input);
+        inputEl.focus();
+      }
+    }
+  },
+  _input: function (e) {
+    if (e.target.value) {
+      this.setState({
+        hasInput: true 
+      });
+    } else {
+      this.setState({
+        hasInput: false 
+      });
+    }
+
+    if (this.props.onClick) {
+      this.props.onClick(e);
+    }
   }
 });
 
@@ -853,4 +911,314 @@ module.exports = {
 };
 
 
-},{"../js/forms.js":2,"../js/lib/jqLite.js":3}]},{},[6])
+},{"../js/lib/util.js":3}],8:[function(require,module,exports){
+/**
+ * MUI React layout module
+ * @module react/layout
+ */
+
+'use strict';
+
+var containerClass = 'mui-container',
+    fluidClass = 'mui-container-fluid',
+    panelClass = 'mui-panel';
+
+
+var Container = React.createClass({displayName: "Container",
+  render: function() {
+    return (
+      React.createElement("div", {className:  containerClass }, 
+         this.props.children
+      )
+    );
+  }
+});
+
+var FluidContainer = React.createClass({displayName: "FluidContainer",
+  render: function() {
+    return (
+      React.createElement("div", {className:  fluidClass }, 
+         this.props.children
+      )
+    );
+  }
+});
+
+var Panel = React.createClass({displayName: "Panel",
+  render: function() {
+    return (
+      React.createElement("div", {className:  panelClass }, 
+         this.props.children
+      )
+    );
+  }
+});
+
+module.exports = {
+  Container: Container,
+  FluidContainer: FluidContainer,
+  Panel: Panel
+};
+
+},{}],9:[function(require,module,exports){
+/**
+ * MUI React ripple module
+ * @module react/ripple
+ */
+
+'use strict';
+
+var rippleClass = 'mui-ripple-effect';
+
+var jqLite = require('../js/lib/jqLite.js');
+
+var Ripple = {
+  getInitialState: function() {
+    return {
+      touchFlag: false,
+      ripples: []
+    };
+  },
+  getDefaultProps: function() {
+    return {
+      rippleClass: rippleClass
+    };
+  },
+  ripple: function (ev) {
+    // only left clicks
+    if (ev.button !== 0) return;
+
+    var buttonEl = React.findDOMNode(this);
+
+    // exit if button is disabled
+    if (this.props.disabled === true) return;
+
+    // de-dupe touchstart and mousedown with 100msec flag
+    if (this.state.touchFlag === true) {
+      return;
+    } else {
+      this.setState({ touchFlag: true });
+      setTimeout(function() {
+        this.setState({ touchFlag: false });
+      }.bind(this), 100);
+    }
+
+    var offset = jqLite.offset(buttonEl),
+      xPos = ev.pageX - offset.left,
+      yPos = ev.pageY - offset.top,
+      diameter,
+      radius;
+
+    // get height
+    if (this.props.floating) {
+      diameter = offset.height / 2;
+    } else {
+      diameter = offset.height;
+    }
+
+    radius = diameter / 2;
+
+    var style = {
+      height: diameter,
+      width: diameter,
+      top: yPos - radius,
+      left: xPos - radius
+    };
+
+    var ripples = this.state.ripples || [];
+      
+    window.setTimeout(function() {
+      this._removeRipple();
+    }.bind(this), 2000);
+
+    ripples.push({ style: style });
+
+    this.setState({
+      ripples: ripples
+    });
+  },
+  _removeRipple: function () {
+    this.state.ripples.shift();
+    this.setState({
+      ripples: this.state.ripples
+    });
+  },
+  renderRipples: function () {
+    if (this.state.ripples.length === 0) return;
+
+    var i = 0;
+    return this.state.ripples.map(function (ripple) {
+      i++;
+      return (React.createElement("div", {className:  this.props.rippleClass, key:  i, style:  ripple.style}));
+    }.bind(this));
+  }
+};
+
+module.exports = Ripple;
+
+},{"../js/lib/jqLite.js":2}],10:[function(require,module,exports){
+/**
+ * MUI React tabs module
+ * @module react/tabs
+ */
+/* jshint quotmark:false */
+// jscs:disable validateQuoteMarks
+
+'use strict';
+
+var tabClass = 'mui-tabs',
+    contentClass = 'mui-tab-content',
+    paneClass = 'mui-tab-pane',
+    justifiedClass = 'mui-tabs-justified',
+    activeClass = 'mui-active';
+
+var util = require('../js/lib/util.js');
+
+var Tabs = React.createClass({displayName: "Tabs",
+  getDefaultProps: function() {
+    return {
+      justified: false
+    };
+  },
+  getInitialState: function() {
+    return {
+      activeTab: ""
+    };
+  },
+  componentDidMount: function() {
+    if (this.props.activeTab) {
+      this.setState({
+        activeTab: this.props.activeTab
+      });
+    } else {
+      this.setState({
+        activeTab: this.props.children && this.props.children[0].props.id
+      });
+    }
+  },
+  render: function() {
+    var items = this.props.children.map(function (item) {
+      return { name: item.props.id, label: item.props.label, pane: item.props.children }
+    });
+    return (
+      React.createElement("div", {className: "tabs"}, 
+        React.createElement(TabHeaders, {items:  items, justified:  this.props.justified, active:  this.state.activeTab, onClick:  this._changeTab}), 
+        React.createElement(TabContainers, {items:  items, active:  this.state.activeTab})
+      )
+    );
+  },
+  _changeTab: function (toWhich, e) {
+    // only left clicks
+    if (e.button !== 0) return;
+
+    if (e.target.getAttribute('disabled') !== null) return;
+
+    setTimeout(function () {
+      if (!e.defaultPrevented) {
+        this.setState({
+          activeTab: toWhich
+        });
+      }
+    }.bind(this), 0);
+  }
+});
+
+var TabHeaders = React.createClass({displayName: "TabHeaders",
+  getDefaultProps: function() {
+    return {
+      items: []
+    };
+  },
+  render: function() {
+    var classes = {};
+    classes[tabClass] = true;
+    classes[justifiedClass] = this.props.justified;
+    classes = util.classNames(classes);
+
+    var items = this.props.items.map(function (item) {
+      return (
+        React.createElement(TabHeaderItem, {key:  item.name, 
+          name:  item.name, 
+          label:  item.label, 
+          active:  item.name === this.props.active, 
+          onClick:  this.props.onClick})
+      );
+    }.bind(this));
+    return (
+      React.createElement("ul", {className:  classes }, 
+         items 
+      )
+    );
+  }
+});
+
+var TabHeaderItem = React.createClass({displayName: "TabHeaderItem",
+  render: function () {
+    var classes = {};
+    classes[activeClass] = this.props.active;
+    classes = util.classNames(classes);
+    return (
+      React.createElement("li", {className:  classes }, 
+        React.createElement("a", {onClick:  this._click}, 
+           this.props.label
+        )
+      )
+    );
+  },
+  _click: function (e) {
+    if (this.props.onClick) {
+      this.props.onClick(this.props.name, e);
+    }
+  }
+});
+
+var TabContainers = React.createClass({displayName: "TabContainers",
+  getDefaultProps: function() {
+    return {
+      items: []
+    };
+  },
+  render: function() {
+    var items = this.props.items.map(function (item) {
+      return (
+        React.createElement(TabPane, {key:  item.name, 
+          active:  item.name === this.props.active}, 
+           item.pane
+        )
+      );
+    }.bind(this));
+    return (
+      React.createElement("div", {className:  contentClass }, 
+         items 
+      )
+    );
+  }
+});
+
+var TabPane = React.createClass({displayName: "TabPane",
+  render: function () {
+    var classes = {};
+    classes[paneClass] = true;
+    classes[activeClass] = this.props.active;
+    classes = util.classNames(classes);
+    return (
+      React.createElement("div", {className:  classes }, 
+         this.props.children
+      )
+    );
+  }
+});
+
+// Just a container to hold data
+var TabItem = React.createClass({displayName: "TabItem",
+  render: function() {
+    return null;
+  }
+});
+
+module.exports = {
+  Tabs: Tabs,
+  TabItem: TabItem
+};
+
+},{"../js/lib/util.js":3}]},{},[6])

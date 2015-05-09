@@ -182,8 +182,7 @@ var jqLite = require('./lib/jqLite.js'),
     formGroupClass = 'mui-form-group',
     floatingLabelBaseClass = 'mui-form-floating-label',
     floatingLabelActiveClass = floatingLabelBaseClass + '-active',
-    animationName = 'mui-form-floating-label-inserted',
-    _supportsPointerEvents;    
+    animationName = 'mui-form-floating-label-inserted';
 
 
 /**
@@ -249,7 +248,7 @@ function inputHandler(ev) {
 function activateLabel(labelEl) {
   jqLite.addClass(labelEl, floatingLabelActiveClass);
 
-  if (supportsPointerEvents() === false) {
+  if (util.supportsPointerEvents() === false) {
     jqLite.css(labelEl, 'cursor', 'default');
   }
 }
@@ -262,20 +261,6 @@ function activateLabel(labelEl) {
  */
 function deactivateLabel(labelEl, inputEl) {
   jqLite.removeClass(labelEl, floatingLabelActiveClass);
-}
-
-
-/**
- * Check if client supports pointer events.
- */
-function supportsPointerEvents() {
-  // check cache
-  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-  
-  var element = document.createElement('x');
-  element.style.cssText = 'pointer-events:auto';
-  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
-  return _supportsPointerEvents;
 }
 
 
@@ -478,14 +463,13 @@ function jqLiteOff(element, type, callback, useCapture) {
  * @param {Boolean} useCapture - Use capture flag.
  */
 function jqLiteOne(element, type, callback, useCapture) {
-  // remove functions after event fires
-  jqLiteOn(element, type, function onFn() {
-    jqLiteOff(element, type, callback);
-    jqLiteOff(element, type, onFn);
-  });
+  jqLiteOn(element, type, function onFn(ev) {
+    // execute callback
+    if (callback) callback.apply(this, arguments);
 
-  // add listener
-  jqLiteOn(element, type, callback, useCapture);
+    // remove wrapper
+    jqLiteOff(element, type, onFn);
+  }, useCapture);
 }
 
 
@@ -679,7 +663,8 @@ var config = require('../config.js'),
     win = window,
     doc = window.document,
     nodeInsertedCallbacks = [],
-    head;
+    head,
+    _supportsPointerEvents;
 
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
@@ -765,6 +750,34 @@ function animationHandlerFn(ev) {
 
 
 /**
+ * Convert Classname object, with class as key and true/false as value, to an class string
+ * @param  {Object} classes The classes
+ * @return {String}         class string
+ */
+function classNamesFn(classes) {
+  var cs = '';
+  for (var i in classes) {
+    cs += (classes[i]) ? i + ' ' : '';
+  }
+  return cs.trim();
+}
+
+
+/**
+ * Check if client supports pointer events.
+ */
+function supportsPointerEventsFn() {
+  // check cache
+  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
+  
+  var element = document.createElement('x');
+  element.style.cssText = 'pointer-events:auto';
+  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
+  return _supportsPointerEvents;
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -778,7 +791,13 @@ module.exports = {
   onNodeInserted: onNodeInsertedFn,
 
   /** Raise MUI error */
-  raiseError: raiseErrorFn
+  raiseError: raiseErrorFn,
+
+  /** Classnames object to string */
+  classNames: classNamesFn,
+
+  /** Support Pointer Events check */
+  supportsPointerEvents: supportsPointerEventsFn
 };
 
 },{"../config.js":2,"./jqLite.js":5}],7:[function(require,module,exports){
