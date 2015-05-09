@@ -12,22 +12,7 @@ var formControlClass = 'mui-form-control',
     animationName = 'mui-form-floating-label-inserted',
     _supportsPointerEvents;
 
-var React = require('react');
-var cx = require('classnames');
-
-/**
- * Check if client supports pointer events.
- */
-function supportsPointerEvents() {
-  // check cache
-  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-  
-  var element = document.createElement('x');
-  element.style.cssText = 'pointer-events:auto';
-  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
-  return _supportsPointerEvents;
-}
-
+var util = require('../js/lib/util.js');
 
 /**
  * Constructs a FormControl element.
@@ -78,7 +63,7 @@ var FormLabel = React.createClass({
       var labelClass = {};
       labelClass[floatingLabelBaseClass] = this.props.floating;
       labelClass[floatingLabelActiveClass] = this.props.active;
-      labelClass = cx(labelClass);
+      labelClass = util.classNames(labelClass);
     }
     
     return (
@@ -123,7 +108,7 @@ var FormGroup = React.createClass({
   },
   _focus: function (e) {
     // pointer-events shim
-    if (supportsPointerEvents() === false) {
+    if (util.supportsPointerEvents() === false) {
       var labelEl = e.target;
       labelEl.style.cursor = 'text';
 

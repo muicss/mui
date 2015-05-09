@@ -11,7 +11,8 @@ var config = require('../config.js'),
     win = window,
     doc = window.document,
     nodeInsertedCallbacks = [],
-    head;
+    head,
+    _supportsPointerEvents;
 
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
@@ -97,6 +98,34 @@ function animationHandlerFn(ev) {
 
 
 /**
+ * Convert Classname object, with class as key and true/false as value, to an class string
+ * @param  {Object} classes The classes
+ * @return {String}         class string
+ */
+function classNamesFn(classes) {
+  var cs = '';
+  for (var i in classes) {
+    cs += (classes[i]) ? i + ' ' : '';
+  }
+  return cs.trim();
+}
+
+
+/**
+ * Check if client supports pointer events.
+ */
+function supportsPointerEventsFn() {
+  // check cache
+  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
+  
+  var element = document.createElement('x');
+  element.style.cssText = 'pointer-events:auto';
+  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
+  return _supportsPointerEvents;
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -110,5 +139,11 @@ module.exports = {
   onNodeInserted: onNodeInsertedFn,
 
   /** Raise MUI error */
-  raiseError: raiseErrorFn
+  raiseError: raiseErrorFn,
+
+  /** Classnames object to string */
+  classNames: classNamesFn,
+
+  /** Support Pointer Events check */
+  supportsPointerEvents: supportsPointerEventsFn
 };

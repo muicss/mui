@@ -12,6 +12,7 @@
   var layout = require('./layout.jsx'),
       forms = require('./forms.jsx'),
       buttons = require('./buttons.jsx'),
+      dropdowns = require('./dropdowns.jsx'),
       tabs = require('./tabs.jsx'),
       doc = win.document;
 
@@ -20,11 +21,14 @@
   win.MUIFluidContainer = layout.FluidContainer;
   win.MUIPanel = layout.Panel;
 
+  win.MUIFormControl = forms.FormControl;
+  win.MUIFormGroup = forms.FormGroup;
+
   win.MUIButton = buttons.Button;
   win.MUIRoundButton = buttons.RoundButton;
 
-  win.MUIFormControl = forms.FormControl;
-  win.MUIFormGroup = forms.FormGroup;
+  win.MUIDropdown = dropdowns.Dropdown;
+  win.MUIDropdownItem = dropdowns.DropdownItem;
  
   win.MUITabs = tabs.Tabs;
   win.MUITabItem = tabs.TabItem;

@@ -12,8 +12,7 @@ var jqLite = require('./lib/jqLite.js'),
     formGroupClass = 'mui-form-group',
     floatingLabelBaseClass = 'mui-form-floating-label',
     floatingLabelActiveClass = floatingLabelBaseClass + '-active',
-    animationName = 'mui-form-floating-label-inserted',
-    _supportsPointerEvents;    
+    animationName = 'mui-form-floating-label-inserted';
 
 
 /**
@@ -79,7 +78,7 @@ function inputHandler(ev) {
 function activateLabel(labelEl) {
   jqLite.addClass(labelEl, floatingLabelActiveClass);
 
-  if (supportsPointerEvents() === false) {
+  if (util.supportsPointerEvents() === false) {
     jqLite.css(labelEl, 'cursor', 'default');
   }
 }
@@ -92,20 +91,6 @@ function activateLabel(labelEl) {
  */
 function deactivateLabel(labelEl, inputEl) {
   jqLite.removeClass(labelEl, floatingLabelActiveClass);
-}
-
-
-/**
- * Check if client supports pointer events.
- */
-function supportsPointerEvents() {
-  // check cache
-  if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-  
-  var element = document.createElement('x');
-  element.style.cssText = 'pointer-events:auto';
-  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
-  return _supportsPointerEvents;
 }
 
 

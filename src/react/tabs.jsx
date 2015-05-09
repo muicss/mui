@@ -13,8 +13,7 @@ var tabClass = 'mui-tabs',
     justifiedClass = 'mui-tabs-justified',
     activeClass = 'mui-active';
 
-var React = require('react');
-var cx = require('classnames');
+var util = require('../js/lib/util.js');
 
 var Tabs = React.createClass({
   getDefaultProps: function() {
@@ -75,7 +74,7 @@ var TabHeaders = React.createClass({
     var classes = {};
     classes[tabClass] = true;
     classes[justifiedClass] = this.props.justified;
-    classes = cx(classes);
+    classes = util.classNames(classes);
 
     var items = this.props.items.map(function (item) {
       return (
@@ -98,7 +97,7 @@ var TabHeaderItem = React.createClass({
   render: function () {
     var classes = {};
     classes[activeClass] = this.props.active;
-    classes = cx(classes);
+    classes = util.classNames(classes);
     return (
       <li className={ classes }>
         <a onClick={ this._click }>
@@ -142,7 +141,7 @@ var TabPane = React.createClass({
     var classes = {};
     classes[paneClass] = true;
     classes[activeClass] = this.props.active;
-    classes = cx(classes);
+    classes = util.classNames(classes);
     return (
       <div className={ classes }>
         { this.props.children }

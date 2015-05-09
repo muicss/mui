@@ -11,10 +11,8 @@ var flatClass = buttonClass + '-flat',
     largeClass = buttonClass + '-lg',
     floatingClass = buttonClass + '-floating';
 
-var React = require('react');
-var cx = require('classnames');
-
 var Ripple = require('./ripple.jsx');
+var util = require('../js/lib/util.js');
 
 var Button = React.createClass({
   mixins: [Ripple],
@@ -31,7 +29,7 @@ var Button = React.createClass({
     cs[flatClass] = this.props.flat;
     cs[raisedClass] = this.props.raised;
     cs[largeClass] = this.props.large;
-    cs = cx(cs);
+    cs = util.classNames(cs);
     return (
       <button className={ cs } disabled={ this.props.disabled } onMouseDown={ this.ripple } onTouchStart={ this.ripple } onClick={ this.props.onClick }>
         { this.props.children }
@@ -53,7 +51,7 @@ var RoundButton = React.createClass({
     cs[buttonClass] = true;
     cs[floatingClass] = true;
     cs[floatingClass + '-mini'] = this.props.mini;
-    cs = cx(cs);
+    cs = util.classNames(cs);
     return (
       <button className={ cs } disabled={ this.props.disabled } onMouseDown={ this.ripple } onTouchStart={ this.ripple } onClick={ this.props.onClick }>
         { this.props.children }

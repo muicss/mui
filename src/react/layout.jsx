@@ -9,7 +9,6 @@ var containerClass = 'mui-container',
     fluidClass = 'mui-container-fluid',
     panelClass = 'mui-panel';
 
-var React = require('react');
 
 var Container = React.createClass({
   render: function() {

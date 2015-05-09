@@ -7,27 +7,7 @@
 
 var rippleClass = 'mui-ripple-effect';
 
-/**
- * Return object representing top/left offset and element height/width.
- * @param {Element} element - The DOM element.
- */
-function getOffset(element) {
-  var win = window,
-    docEl = document.documentElement,
-    rect = element.getBoundingClientRect(),
-    viewLeft,
-    viewTop;
-
-  viewLeft = (win.pageXOffset || docEl.scrollLeft) - (docEl.clientLeft || 0);
-  viewTop = (win.pageYOffset || docEl.scrollTop) - (docEl.clientTop || 0);
-
-  return {
-  top: rect.top + viewTop,
-  left: rect.left + viewLeft,
-  height: rect.height,
-  width: rect.width
-  };
-}
+var jqLite = require('../js/lib/jqLite.js');
 
 var Ripple = {
   getInitialState: function() {
@@ -60,7 +40,7 @@ var Ripple = {
       }.bind(this), 100);
     }
 
-    var offset = getOffset(buttonEl),
+    var offset = jqLite.offset(buttonEl),
       xPos = ev.pageX - offset.left,
       yPos = ev.pageY - offset.top,
       diameter,
