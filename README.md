@@ -4,9 +4,9 @@
 
 A lightweight HTML/CSS/JS framework for sites that follow Google's Material Design guidelines.
 
-[![Build Status](https://travis-ci.org/amorey/mui.svg?branch=master)](https://travis-ci.org/amorey/mui)
-[![Dependency Status](https://david-dm.org/amorey/mui.svg)](https://david-dm.org/amorey/mui)
-[![devDependency Status](https://david-dm.org/amorey/mui/dev-status.svg)](https://david-dm.org/amorey/mui#info=devDependencies)
+[![Build Status](https://travis-ci.org/muicss/mui.svg?branch=master)](https://travis-ci.org/muicss/mui)
+[![Dependency Status](https://david-dm.org/muicss/mui.svg)](https://david-dm.org/muicss/mui)
+[![devDependency Status](https://david-dm.org/muicss/mui/dev-status.svg)](https://david-dm.org/muicss/mui#info=devDependencies)
 
 **Use From the CDN:**
 
