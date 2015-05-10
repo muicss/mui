@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.1.0 - May 9, 2015
+
+* Improved React forms
+* Added React buttons, dropdowns, tabs
+
 ## 0.0.11 - May 6, 2015
 
 * Improved mui-btn box-shadow rules

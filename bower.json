@@ -1,9 +1,9 @@
 {
   "name": "mui",
-  "version": "0.0.11-rc1",
+  "version": "0.1.0",
   "license": "MIT",
   "authors": [
-    "Andres Morey <andresmarcel@gmail.com>"
+    "Andres Morey <andres@muicss.com>"
   ],
   "homepage": "https://www.muicss.com",
   "main": [
