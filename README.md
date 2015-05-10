@@ -23,6 +23,8 @@ $ bower install mui
 
 ## Features
 
+[![Join the chat at https://gitter.im/muicss/mui](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/muicss/mui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 MUI is designed from the ground up to be fast, small and developer friendly. By design it only includes the basic components you need to build a site that follows Google's Material Design guidelines. Some of the key features of MUI are:
 
 * Small footprint: mui.min.css - 5.6K, mui.min.js - 3.7K (gzipped)
