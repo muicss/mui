@@ -1,4 +1,4 @@
-[![Join the chat at https://gitter.im/amorey/mui](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/amorey/mui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/muicss/mui](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/muicss/mui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![MUI](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com)
 
@@ -55,7 +55,7 @@ MUI is tested and works in:
 1. Clone repository
 
    ```bash
-   $ git clone git@github.com:amorey/mui.git
+   $ git clone git@github.com:muicss/mui.git
    $ cd mui
    ```
 
