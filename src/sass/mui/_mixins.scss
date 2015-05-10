@@ -4,13 +4,13 @@
 
 // Bootstrap
 @import
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/clearfix",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/grid",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/grid-framework",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/image",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/tab-focus",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/responsive-visibility",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/forms";
+"../../../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/clearfix",
+"../../../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/grid",
+"../../../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/grid-framework",
+"../../../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/image",
+"../../../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/tab-focus",
+"../../../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/responsive-visibility",
+"../../../../bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/forms";
 
 // Bootstrap override
 @import "mixins/grid-framework";
