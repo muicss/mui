@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.1.1 - May 10, 2015
+
+* Removed bower dependencies
+* Copied bootstrap source into repo
+
 ## 0.1.0 - May 9, 2015
 
 * Improved React forms

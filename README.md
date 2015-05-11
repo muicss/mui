@@ -48,7 +48,6 @@ MUI is tested and works in:
 
   * nodejs (http://nodejs.org/)
   * npm (https://www.npmjs.org/)
-  * bower (http://bower.io/)
   * sass (http://sass-lang.com/)
   * http-server (via npm)
 
@@ -63,12 +62,6 @@ MUI is tested and works in:
 
    ```bash
    $ npm install
-   ```
-
-1. Install bower dependencies
-
-   ```bash
-   $ bower install
    ```
 
 1. Build examples

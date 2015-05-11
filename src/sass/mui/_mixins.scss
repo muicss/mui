@@ -4,13 +4,13 @@
 
 // Bootstrap
 @import
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/clearfix",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/grid",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/grid-framework",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/image",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/tab-focus",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/responsive-visibility",
-"bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins/forms";
+"../bootstrap-3.3.1/assets/stylesheets/bootstrap/mixins/clearfix",
+"../bootstrap-3.3.1/assets/stylesheets/bootstrap/mixins/grid",
+"../bootstrap-3.3.1/assets/stylesheets/bootstrap/mixins/grid-framework",
+"../bootstrap-3.3.1/assets/stylesheets/bootstrap/mixins/image",
+"../bootstrap-3.3.1/assets/stylesheets/bootstrap/mixins/tab-focus",
+"../bootstrap-3.3.1/assets/stylesheets/bootstrap/mixins/responsive-visibility",
+"../bootstrap-3.3.1/assets/stylesheets/bootstrap/mixins/forms";
 
 // Bootstrap override
 @import "mixins/grid-framework";

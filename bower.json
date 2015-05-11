@@ -1,6 +1,6 @@
 {
   "name": "mui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "authors": [
     "Andres Morey <andres@muicss.com>"
@@ -23,11 +23,9 @@
     "email css template"
   ],
   "dependencies": {
-    "bootstrap-sass-official": "3.3.1"
   },
   "ignore": [
     "**/.*",
-    "bower_components",
     "dist",
     "e2e-tests",
     "examples",
