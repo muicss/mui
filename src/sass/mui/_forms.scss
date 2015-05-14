@@ -275,6 +275,31 @@ input[type="checkbox"] {
 
 
 // =====================
+// Select
+// =====================
+select.mui-form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 0px;
+  padding-right: 25px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  background-position: right center;
+  cursor: pointer;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  &:focus {
+    height: $mui-input-height + 1px;
+    margin-bottom: -1px;
+  }
+}
+
+
+// =====================
 // Form-inline
 // =====================
 .mui-form-inline {
