@@ -57,7 +57,7 @@ function initialize(labelEl) {
   }, 150);
 
   // pointer-events shim
-  if (supportsPointerEvents() === false) {
+  if (util.supportsPointerEvents() === false) {
     jqLite.css(labelEl, 'cursor', 'text');
     jqLite.on(labelEl, 'click', function() {
       if (!jqLite.hasClass(labelEl, floatingLabelActiveClass)) inputEl.focus();
