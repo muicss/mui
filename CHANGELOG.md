@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.2 -
+
+* Fixed bug to prevent form submission on dropdown click
+
 ## 0.1.1 - May 10, 2015
 
 * Removed bower dependencies

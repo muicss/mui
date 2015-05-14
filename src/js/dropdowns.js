@@ -41,10 +41,12 @@ function clickHandler(ev) {
   // exit if toggle button is disabled
   if (toggleEl.getAttribute('disabled') !== null) return;
 
-  // let event bubble before toggling dropdown
-  setTimeout(function() {
-    if (!ev.defaultPrevented) toggleDropdown(toggleEl);
-  }, 0);
+  // prevent form submission
+  ev.preventDefault();
+  ev.stopPropagation();
+
+  // toggle dropdown
+  toggleDropdown(toggleEl);
 }
 
 
