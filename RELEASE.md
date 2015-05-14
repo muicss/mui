@@ -12,6 +12,8 @@
 
 1. Change version number in package.js
 
+1. Change version number in README.md
+
 1. Commit changes and tag code
 
   ```bash

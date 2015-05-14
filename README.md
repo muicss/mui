@@ -11,8 +11,8 @@ A lightweight HTML/CSS/JS framework for sites that follow Google's Material Desi
 **Use From the CDN:**
 
 ```html
-<link href="//cdn.muicss.com/mui-0.0.8/css/mui.min.css" rel="stylesheet" type="text/css" />
-<script src="//cdn.muicss.com/mui-0.0.8/js/mui.min.js"></script>
+<link href="//cdn.muicss.com/mui-0.1.2/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.1.2/js/mui.min.js"></script>
 ```
 
 **Install with Bower:**
