@@ -1,0 +1,5 @@
+Authors ordered by first contribution.
+
+Andres Morey <andresmarcel@gmail.com>
+Matt Bogado <mattbogado@gmail.com>
+scryver <https://github.com/scryver>
