@@ -1,0 +1,62 @@
+/**
+ * MUI CSS/JS select module
+ * @module forms/select
+ */
+
+'use strict';
+
+
+var jqLite = require('../lib/jqLite.js'),
+    util = require('../lib/util.js'),
+    wrapperClass = 'mui-select',
+    cssSelector = '.mui-select select';
+
+
+/**
+ * Initialize select element.
+ * @param {Element} selectEl - The select element.
+ */
+function initialize(selectEl) {
+  // check flag
+  if (selectEl._muiSelect === true) return;
+  else selectEl._muiSelect = true;
+
+  // attach click handler
+  jqLite.on(selectEl, 'click', clickHandler);
+}
+
+
+/**
+ * Handle click events on select element.
+ * @param {Event} ev - The DOM event
+ */
+function clickHandler(ev) {
+  // only left clicks
+  if (ev.button !== 0) return;
+
+  var selectEl = this;
+
+  // exit if disabled
+  if (selectEl.getAttribute('disabled') !== null) return;
+}
+
+
+/** Define module API */
+module.exports = {
+  /** Initialize module listeners */
+  initListeners: function() {
+    var doc = document;
+
+    // markup elements available when method is called
+    var elList = doc.querySelectorAll(cssSelector);
+    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+
+    // listen for new elements
+    util.onNodeInserted(function(el) {
+      if (el.tagName === 'SELECT' &&
+          jqLite.hasClass(el.parentNode, wrapperClass)) {
+        initialize(el);
+      }
+    });
+  }
+};

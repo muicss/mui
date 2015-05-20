@@ -277,24 +277,32 @@ input[type="checkbox"] {
 // =====================
 // Select
 // =====================
-select.mui-form-control {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border-radius: 0px;
-  padding-right: 25px;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
-  background-repeat: no-repeat;
-  background-position: right center;
-  cursor: pointer;
+.mui-select {
+  position: relative;
 
-  &::-ms-expand {
-    display: none;
-  }
+  select {
+    @extend .mui-form-control;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0px;
+    padding-right: 25px;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+    background-repeat: no-repeat;
+    background-position: right center;
+    cursor: pointer;
 
-  &:focus {
-    height: $mui-input-height + 1px;
-    margin-bottom: -1px;
+    animation-duration: 0.001s;
+    animation-name: mui-node-inserted;
+    
+    &::-ms-expand {
+      display: none;
+    }
+    
+    &:focus {
+      height: $mui-input-height + 1px;
+      margin-bottom: -1px;
+    }
   }
 }
 
@@ -306,6 +314,11 @@ select.mui-form-control {
 
   // Kick in the inline
   @media (min-width: $mui-screen-sm-min) {
+    // bottom align children
+    > * {
+      vertical-align: bottom;
+    }
+    
     // Inline-block all the things for "inline"
     .mui-form-group {
       display: inline-block;
@@ -336,6 +349,10 @@ select.mui-form-control {
     .mui-checkbox input[type="checkbox"] {
       position: relative;
       margin-left: 0;
+    }
+
+    .mui-select {
+      display: inline-block;
     }
   }
 }
