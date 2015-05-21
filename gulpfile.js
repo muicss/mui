@@ -13,19 +13,19 @@ var del = require('del'),
     stringify = require('stringify'),
     injectSource = require('gulp-inline-source'),
     inlineCss = require('gulp-inline-css'),
-    pkg = require('./package.json'),
     source = require('vinyl-source-stream'),
     Browserify = require('browserify');
 
 
 // config
 var taskName = process.argv[process.argv.length - 1],
+    pkgName = 'mui',
     dirName = null;
 
 if (taskName === 'build-dist') {
   dirName = 'dist';
 } else if (taskName === 'build-examples' || taskName === 'watch') {
-  dirName = 'examples/assets/' + pkg.name;
+  dirName = 'examples/assets/' + pkgName;
 } else if (taskName !== 'build-e2e-tests') {
   throw 'Did not understand task "' + taskName + '"';
 }
@@ -47,15 +47,15 @@ gulp.task('sass', function() {
       cascade: false
     }))
     .on('error', function(err) {console.log(err.message);})
-    .pipe(rename(pkg.name + '.css'))
+    .pipe(rename(pkgName + '.css'))
     .pipe(gulp.dest(dirName + '/css'));
 });
 
 
 gulp.task('cssmin', ['sass'], function() {
-  return gulp.src(dirName + '/css/' + pkg.name + '.css')
+  return gulp.src(dirName + '/css/' + pkgName + '.css')
     .pipe(cssmin())
-    .pipe(rename(pkg.name + '.min.css'))
+    .pipe(rename(pkgName + '.min.css'))
     .pipe(gulp.dest(dirName + '/css'));
 });
 
@@ -63,15 +63,15 @@ gulp.task('cssmin', ['sass'], function() {
 gulp.task('js', function() {
   return Browserify('./src/js/main.js')
     .bundle()
-    .pipe(source(pkg.name + '.js'))
+    .pipe(source(pkgName + '.js'))
     .pipe(gulp.dest(dirName + '/js'));
 });
 
 
 gulp.task('uglify', ['js'], function() {
-  return gulp.src(dirName + '/js/' + pkg.name + '.js')
+  return gulp.src(dirName + '/js/' + pkgName + '.js')
     .pipe(uglify())
-    .pipe(rename(pkg.name + '.min.js'))
+    .pipe(rename(pkgName + '.min.js'))
     .pipe(gulp.dest(dirName + '/js'));  
 });
 
@@ -81,15 +81,15 @@ gulp.task('react', ['clean'], function() {
     .pipe(browserify({
       transform: [reactify]
     }))
-    .pipe(rename(pkg.name + '-react.js'))
+    .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));
 });
 
 
 gulp.task('react-uglify', ['react'], function() {
-  return gulp.src(dirName + '/react/' + pkg.name + '-react.js')
+  return gulp.src(dirName + '/react/' + pkgName + '-react.js')
     .pipe(uglify())
-    .pipe(rename(pkg.name + '-react.min.js'))
+    .pipe(rename(pkgName + '-react.min.js'))
     .pipe(gulp.dest(dirName + '/react'));  
 });
 
@@ -100,15 +100,15 @@ gulp.task('webcomponents', ['clean', 'sass'], function() {
       transform: [stringify(['.css'])],
       paths: [dirName + '/css']
     }))
-    .pipe(rename(pkg.name + '-webcomponents.js'))
+    .pipe(rename(pkgName + '-webcomponents.js'))
     .pipe(gulp.dest(dirName + '/webcomponents'));
 });
 
 
 gulp.task('webcomponents-uglify', ['webcomponents'], function() {
-  return gulp.src(dirName + '/webcomponents/' + pkg.name + '-webcomponents.js')
+  return gulp.src(dirName + '/webcomponents/' + pkgName + '-webcomponents.js')
     .pipe(uglify())
-    .pipe(rename(pkg.name + '-webcomponents.min.js'))
+    .pipe(rename(pkgName + '-webcomponents.min.js'))
     .pipe(gulp.dest(dirName + '/webcomponents'));
 });
 
@@ -116,7 +116,7 @@ gulp.task('webcomponents-uglify', ['webcomponents'], function() {
 gulp.task('build-email-inline', function() {
   return gulp.src('src/email/mui-email-inline.scss')
     .pipe(sass())
-    .pipe(rename(pkg.name + '-email-inline.css'))
+    .pipe(rename(pkgName + '-email-inline.css'))
     .pipe(gulp.dest(dirName + '/email'));
 });
 
@@ -124,7 +124,7 @@ gulp.task('build-email-inline', function() {
 gulp.task('build-email-styletag', function() {
   return gulp.src('src/email/mui-email-styletag.scss')
     .pipe(sass())
-    .pipe(rename(pkg.name + '-email-styletag.css'))
+    .pipe(rename(pkgName + '-email-styletag.css'))
     .pipe(gulp.dest(dirName + '/email'));
 });
 
