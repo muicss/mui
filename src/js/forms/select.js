@@ -21,6 +21,17 @@ function initialize(selectEl) {
   if (selectEl._muiSelect === true) return;
   else selectEl._muiSelect = true;
 
+  // disable dropdown selector
+  jqLite.on(selectEl, 'mousedown', function(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+  });
+
+  jqLite.on(selectEl, 'keydown', function(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+  });
+  
   // attach click handler
   jqLite.on(selectEl, 'click', clickHandler);
 }
