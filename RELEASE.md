@@ -8,6 +8,8 @@
 
 1. Add release notes to CHANGELOG.md
 
+1. Change version number in package.json
+
 1. Change version number in bower.json
 
 1. Change version number in package.js
@@ -22,6 +24,12 @@
   $ git push origin master
   $ git tag <version-number>
   $ git push --tags
+  ```
+
+1. Push changes to NPM
+
+  ```bash
+  $ npm publish
   ```
 
 1. Update package on Meteor repository
