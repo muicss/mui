@@ -28,8 +28,11 @@ function initialize(selectEl) {
   });
 
   jqLite.on(selectEl, 'keydown', function(ev) {
-    ev.stopPropagation();
-    ev.preventDefault();
+    // spacebar, down, up
+    if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
+      ev.stopPropagation();
+      ev.preventDefault();
+    }
   });
   
   // attach click handler
@@ -49,6 +52,17 @@ function clickHandler(ev) {
 
   // exit if disabled
   if (selectEl.getAttribute('disabled') !== null) return;
+
+  var menuEl = document.createElement('div');
+  jqLite.css(menuEl, {
+    position: 'absolute',
+    top: 0,
+    width: '10px',
+    height: '10px',
+    backgroundColor: 'red'
+  });
+
+  selectEl.parentNode.appendChild(menuEl);
 }
 
 
