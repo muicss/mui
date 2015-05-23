@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.3 - May 23, 2015
+
+* Using un-minified files for meteor distribution
+
 ## 0.1.2 - May 14, 2015
 
 * Fixed bug to prevent form submission on dropdown click
