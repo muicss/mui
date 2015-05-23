@@ -13,7 +13,7 @@ Package.describe({
 Package.onUse(function (api) {
   api.versionsFrom('METEOR@1.0');
   api.addFiles([
-    'dist/css/mui.min.css',
-    'dist/js/mui.min.js'
+    'dist/css/mui.css',
+    'dist/js/mui.js'
   ], 'client');
 });
