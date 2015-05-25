@@ -122,13 +122,25 @@
 
         <h3>Select</h3>
         <form>
-          <div class="mui-select">
-            <select>
-              <option>Option 1</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-              <option>Option 4</option>
-            </select>
+          <div class="mui-form-group">
+            <div class="mui-select">
+              <select>
+                <option>Option 1</option>
+                <option selected>Option 2</option>
+                <option>Option 3</option>
+                <option>Option 4</option>
+              </select>
+            </div>
+          </div>
+          <div class="mui-form-group">
+            <div class="mui-select">
+              <select disabled onclick="alert('hi');">
+                <option>Option 1</option>
+                <option selected>Option 2</option>
+                <option>Option 3</option>
+                <option>Option 4</option>
+              </select>
+            </div>
           </div>
         </form>
         

@@ -280,7 +280,7 @@ input[type="checkbox"] {
 .mui-select {
   position: relative;
 
-  select {
+  > select {
     @extend .mui-form-control;
     appearance: none;
     -webkit-appearance: none;
@@ -298,12 +298,58 @@ input[type="checkbox"] {
     &::-ms-expand {
       display: none;
     }
-    
+
     &:focus {
+      outline: 0;
       height: $mui-input-height + 1px;
       margin-bottom: -1px;
     }
+
+    &:disabled {
+      color: mui-color('black-alpha-26');
+      cursor: $mui-cursor-disabled;
+      background-color: $mui-input-bg-color-disabled;
+      opacity: 1; // iOS fix for unreadable disabled content
+    }
   }
+
+  &:focus {
+    outline: 0;
+    
+    > select {
+      height: $mui-input-height + 1px;
+      margin-bottom: -1px;
+      border-color: $mui-input-border-color-focus;
+      border-width: 2px;
+    }
+  }
+}
+
+.mui-select-menu {
+  position: absolute;
+  background-color: mui-color('white');
+  min-width: 100%;
+  padding: 8px 0;
+  font-size: $mui-input-font-size;
+  @extend .mui-z1;
+  z-index: 1;
+  
+  > div {
+    padding: 0 22px;
+    height: $mui-input-font-size + 26px;
+    line-height: $mui-input-font-size + 26px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: mui-color('grey', '300');
+    }
+
+    &[selected] {
+      background-color: mui-color('grey', '200'); 
+    }
+  }
+  
 }
 
 
