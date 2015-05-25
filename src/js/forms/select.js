@@ -127,7 +127,7 @@ function showDropdown(selectEl) {
   }
 
   // add selected class
-  menuEl.children[selectedPos].setAttribute('selected', true);
+  menuEl.children[selectedPos].selected = true;
   
   // set position
   top += selectedPos * 42;
@@ -142,8 +142,8 @@ function showDropdown(selectEl) {
     if (pos === undefined) return;
 
     // select option
-    selectEl.children[selectedPos].removeAttribute('selected');
-    selectEl.children[pos].setAttribute('selected', true);
+    selectEl.children[selectedPos].selected = false;
+    selectEl.children[pos].selected = true;
     
     // destroy menu
     menuEl.parentNode.removeChild(menuEl);
