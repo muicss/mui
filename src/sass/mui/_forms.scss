@@ -279,14 +279,23 @@ input[type="checkbox"] {
 // =====================
 .mui-select {
   position: relative;
-
+  
   > select {
-    @extend .mui-form-control;
+    display: block;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    height: $mui-input-height;
+    width: 100%;
+    color: $mui-input-font-color;
+    font-size: $mui-input-font-size;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid $mui-input-border-color;
     border-radius: 0px;
-    padding-right: 25px;
+    box-shadow: none;
+    padding: 0 25px 0 0;
+    background-color: $mui-input-bg-color;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
     background-repeat: no-repeat;
     background-position: right center;

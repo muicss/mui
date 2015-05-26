@@ -28,9 +28,10 @@ function initialize(selectEl) {
   wrapperEl._selectEl = selectEl;
   
   // handle focus
-  wrapperEl.setAttribute('tabindex', '-1');
-  jqLite.on(selectEl, 'focus', focusHandler);
-
+  wrapperEl.tabIndex = -1;
+  jqLite.on(selectEl, 'focus', selectFocusHandler);
+  jqLite.on(wrapperEl, 'focus', wrapperFocusHandler);
+  
   // handle key presses
   jqLite.on(wrapperEl, 'keydown', keydownHandler);
 
@@ -41,22 +42,27 @@ function initialize(selectEl) {
 
 
 /**
- * Handle focus events.
+ * Handle focus event on select element.
  */
-function focusHandler(ev) {
+function selectFocusHandler() {
   var selectEl = this,
       parentEl = selectEl.parentNode,
-      origIndex = selectEl.getAttribute('tabindex');
+      origIndex = selectEl.tabIndex;
 
   // disable tabfocus once
-  selectEl.setAttribute('tabindex', '-1');
-  jqLite.one(parentEl, 'blur', function() {
-    if (origIndex !== null) selectEl.setAttribute('tabindex', origIndex);
-    else selectEl.removeAttribute('tabindex');
-  });
+  selectEl.tabIndex = -1;
+  jqLite.one(parentEl, 'blur', function() {selectEl.tabIndex = origIndex;});
   
   // defer focus to parent
   parentEl.focus();
+}
+
+
+/**
+ * Handle focus event on wrapper element.
+ */
+function wrapperFocusHandler() {
+  if (this._selectEl.disabled) this.blur();
 }
 
 
@@ -67,6 +73,7 @@ function focusHandler(ev) {
 function keydownHandler(ev) {
   // spacebar, down, up
   if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
+    // prevent window scroll
     ev.preventDefault();
 
     var selectEl = this._selectEl;
@@ -104,11 +111,11 @@ function showDropdown(selectEl) {
   var menuEl = document.createElement('div'),
       optionList = selectEl.children,
       m = optionList.length,
+      selectedPos = 0,
+      top = 13,
       optionEl,
       itemEl,
-      i,
-      selectedPos = 0,
-      top = 13;
+      i;
 
   // build menu
   menuEl.className = menuClass;
@@ -127,30 +134,86 @@ function showDropdown(selectEl) {
   }
 
   // add selected class
-  menuEl.children[selectedPos].selected = true;
+  menuEl.children[selectedPos].setAttribute('selected', true);
   
   // set position
   top += selectedPos * 42;
   jqLite.css(menuEl, 'top', '-' + top + 'px');
 
-  // attach click handler
-  jqLite.on(menuEl, 'click', function(ev) {
-    var el = ev.target,
-        pos = el._muiPos;
+  // attach click handlers
+  attachMenuClickHandlers(menuEl, selectEl, selectedPos);
 
+  // add to DOM
+  selectEl.parentNode.appendChild(menuEl);
+}
+
+
+/**
+ * Attach click handlers to menu element.
+ */
+function attachMenuClickHandlers(menuEl, selectEl, selectedPos) {
+  function destroyFn() {
+    menuEl.parentNode.removeChild(menuEl);
+    selectEl.parentNode.focus();
+    jqLite.off(document, 'click', destroyFn);
+  }
+  
+  // menu element
+  jqLite.on(menuEl, 'click', function(ev) {
+    // don't allow events to bubble
+    ev.stopPropagation();
+    
+    var pos = ev.target._muiPos;
+    
     // ignore clicks on non-items
     if (pos === undefined) return;
-
+    
     // select option
     selectEl.children[selectedPos].selected = false;
     selectEl.children[pos].selected = true;
     
     // destroy menu
-    menuEl.parentNode.removeChild(menuEl);
-    selectEl.parentNode.focus();
+    destroyFn();
   });
+
+  // destroy when user clicks outside of menu
+  setTimeout(function() {jqLite.on(document, 'click', destroyFn);}, 0);
+}
+
+
+/**
+ * Handle clicks on menu element.
+ * @param {Event} - The DOM event
+ */
+function menuClickHandler(ev) {
+  // don't allow events to bubble
+  ev.stopPropagation();
   
-  selectEl.parentNode.appendChild(menuEl);
+  var menuEl = this,
+      selectEl = menuEl._selectEl,
+      pos = ev.target._muiPos;
+  
+  // ignore clicks on non-items
+  if (pos === undefined) return;
+  
+  // select option
+  selectEl.children[selectedPos].selected = false;
+  selectEl.children[pos].selected = true;
+  
+  // destroy menu
+  menuEl.parentNode.removeChild(menuEl);
+  selectEl.parentNode.focus();
+}
+
+
+/**
+ * Handle clicks on window.
+ */
+function docClickHandler(ev) {
+  menuEl.parentNode.removeChild(menuEl);
+  selectEl.parentNode.focus();
+  
+  jqLite.off(window, 'click', destroyFn);
 }
 
 
