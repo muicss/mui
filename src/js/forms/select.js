@@ -150,6 +150,9 @@ function showDropdown(selectEl) {
 
 /**
  * Attach click handlers to menu element.
+ * @param menuEl {Element} - The menu element
+ * @param selectEl {Element} - The original select element
+ * @param selectedPos {Integer} - The index of the currently selected item
  */
 function attachMenuClickHandlers(menuEl, selectEl, selectedPos) {
   function destroyFn() {
