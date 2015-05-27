@@ -312,6 +312,8 @@ input[type="checkbox"] {
       outline: 0;
       height: $mui-input-height + 1px;
       margin-bottom: -1px;
+      border-color: $mui-input-border-color-focus;
+      border-width: 2px;
     }
 
     &:disabled {
