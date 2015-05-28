@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/mui/css/mui.css"/>
     <script src="assets/mui/js/mui.js"></script>
   </head>
@@ -80,7 +81,7 @@
             </label>
           </div>
 
-          <div class="mui-checkbox disabled">
+          <div class="mui-checkbox">
             <label>
               <input type="checkbox" value="" disabled>
               Option two is disabled
@@ -108,7 +109,7 @@
             </label>
           </div>
 
-          <div class="mui-radio disabled">
+          <div class="mui-radio">
             <label>
               <input type="radio"
                      name="optionsRadios"
@@ -120,10 +121,47 @@
           </div>
         </form>
 
+        <h3>Select</h3>
+        <form>
+          <div class="mui-form-group">
+            <div class="mui-select">
+              <select>
+                <option>Option 1</option>
+                <option selected>Option 2</option>
+                <option>Option 3</option>
+                <option>Option 4</option>
+              </select>
+            </div>
+          </div>
+          <div class="mui-form-group">
+            <div class="mui-select">
+              <select disabled>
+                <option>Option 1</option>
+                <option selected>Option 2</option>
+                <option>Option 3</option>
+                <option>Option 4</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        
         <h3>Inline Form</h3>
         <form class="mui-form-inline">
           <input type="text" class="mui-form-control">
           <button class="mui-btn mui-btn-default">submit</button>
+        </form>
+        <form class="mui-form-inline">
+          <div class="mui-select">
+            <select>
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+              <option>Option 4</option>
+            </select>
+          </div>
+          <div class="mui-form-group">
+            <input type="text" class="mui-form-control" placeholder="Placeholder">
+          </div>
         </form>
       </div>
     </div>

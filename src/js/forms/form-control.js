@@ -6,13 +6,12 @@
 'use strict';
 
 
-var jqLite = require('./lib/jqLite.js'),
-    util = require('./lib/util.js'),
+var jqLite = require('../lib/jqLite.js'),
+    util = require('../lib/util.js'),
     formControlClass = 'mui-form-control',
     formGroupClass = 'mui-form-group',
     floatingLabelBaseClass = 'mui-form-floating-label',
-    floatingLabelActiveClass = floatingLabelBaseClass + '-active',
-    animationName = 'mui-form-floating-label-inserted';
+    floatingLabelActiveClass = floatingLabelBaseClass + '-active';
 
 
 /**

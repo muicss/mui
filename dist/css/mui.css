@@ -2386,7 +2386,95 @@ fieldset[disabled] .mui-checkbox label {
   cursor: not-allowed;
 }
 
+.mui-select {
+  position: relative;
+}
+
+.mui-select > select {
+  display: block;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 32px;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 16px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+  border-radius: 0px;
+  box-shadow: none;
+  padding: 0 25px 0 0;
+  background-color: transparent;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  background-position: right center;
+  cursor: pointer;
+  -webkit-animation-duration: 0.001s;
+  animation-duration: 0.001s;
+  -webkit-animation-name: mui-node-inserted;
+  animation-name: mui-node-inserted;
+}
+
+.mui-select > select::-ms-expand {
+  display: none;
+}
+
+.mui-select > select:focus {
+  outline: 0;
+  height: 33px;
+  margin-bottom: -1px;
+  border-color: #2196F3;
+  border-width: 2px;
+}
+
+.mui-select > select:disabled {
+  color: rgba(0, 0, 0, 0.26);
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1;
+}
+
+.mui-select:focus {
+  outline: 0;
+}
+
+.mui-select:focus > select {
+  height: 33px;
+  margin-bottom: -1px;
+  border-color: #2196F3;
+  border-width: 2px;
+}
+
+.mui-select-menu {
+  position: absolute;
+  background-color: #FFF;
+  min-width: 100%;
+  padding: 8px 0;
+  font-size: 16px;
+  z-index: 1;
+}
+
+.mui-select-menu > div {
+  padding: 0 22px;
+  height: 42px;
+  line-height: 42px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mui-select-menu > div:hover {
+  background-color: #E0E0E0;
+}
+
+.mui-select-menu > div[selected] {
+  background-color: #EEEEEE;
+}
+
 @media (min-width: 768px) {
+  .mui-form-inline > * {
+    vertical-align: bottom;
+  }
   .mui-form-inline .mui-form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -2412,6 +2500,9 @@ fieldset[disabled] .mui-checkbox label {
   .mui-form-inline .mui-checkbox input[type="checkbox"] {
     position: relative;
     margin-left: 0;
+  }
+  .mui-form-inline .mui-select {
+    display: inline-block;
   }
 }
 
@@ -2688,7 +2779,7 @@ th {
   padding-right: 5px;
 }
 
-.mui-z1, .mui-dropdown-menu {
+.mui-z1, .mui-select-menu, .mui-dropdown-menu {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 

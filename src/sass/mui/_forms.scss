@@ -275,12 +275,107 @@ input[type="checkbox"] {
 
 
 // =====================
+// Select
+// =====================
+.mui-select {
+  position: relative;
+  
+  > select {
+    display: block;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: $mui-input-height;
+    width: 100%;
+    color: $mui-input-font-color;
+    font-size: $mui-input-font-size;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid $mui-input-border-color;
+    border-radius: 0px;
+    box-shadow: none;
+    padding: 0 25px 0 0;
+    background-color: $mui-input-bg-color;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+    background-repeat: no-repeat;
+    background-position: right center;
+    cursor: pointer;
+
+    animation-duration: 0.001s;
+    animation-name: mui-node-inserted;
+    
+    &::-ms-expand {
+      display: none;
+    }
+
+    &:focus {
+      outline: 0;
+      height: $mui-input-height + 1px;
+      margin-bottom: -1px;
+      border-color: $mui-input-border-color-focus;
+      border-width: 2px;
+    }
+
+    &:disabled {
+      color: mui-color('black-alpha-26');
+      cursor: $mui-cursor-disabled;
+      background-color: $mui-input-bg-color-disabled;
+      opacity: 1; // iOS fix for unreadable disabled content
+    }
+  }
+
+  &:focus {
+    outline: 0;
+    
+    > select {
+      height: $mui-input-height + 1px;
+      margin-bottom: -1px;
+      border-color: $mui-input-border-color-focus;
+      border-width: 2px;
+    }
+  }
+}
+
+.mui-select-menu {
+  position: absolute;
+  background-color: mui-color('white');
+  min-width: 100%;
+  padding: 8px 0;
+  font-size: $mui-input-font-size;
+  @extend .mui-z1;
+  z-index: 1;
+  
+  > div {
+    padding: 0 22px;
+    height: $mui-input-font-size + 26px;
+    line-height: $mui-input-font-size + 26px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: mui-color('grey', '300');
+    }
+
+    &[selected] {
+      background-color: mui-color('grey', '200'); 
+    }
+  }
+  
+}
+
+
+// =====================
 // Form-inline
 // =====================
 .mui-form-inline {
 
   // Kick in the inline
   @media (min-width: $mui-screen-sm-min) {
+    // bottom align children
+    > * {
+      vertical-align: bottom;
+    }
+    
     // Inline-block all the things for "inline"
     .mui-form-group {
       display: inline-block;
@@ -311,6 +406,10 @@ input[type="checkbox"] {
     .mui-checkbox input[type="checkbox"] {
       position: relative;
       margin-left: 0;
+    }
+
+    .mui-select {
+      display: inline-block;
     }
   }
 }
