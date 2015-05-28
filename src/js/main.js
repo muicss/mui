@@ -13,7 +13,7 @@
   // load dependencies
   var jqLite = require('./lib/jqLite.js'),
       util = require('./lib/util.js'),
-      forms = require('./forms.js'),
+      formControl = require('./forms/form-control.js'),
       select = require('./forms/select.js'),
       ripple = require('./ripple.js'),
       dropdowns = require('./dropdowns.js'),
@@ -27,7 +27,7 @@
   
   // init libraries
   jqLite.ready(function() {
-    forms.initListeners();
+    formControl.initListeners();
     select.initListeners();
     ripple.initListeners();
     dropdowns.initListeners();
