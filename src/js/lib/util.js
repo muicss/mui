@@ -98,7 +98,8 @@ function animationHandlerFn(ev) {
 
 
 /**
- * Convert Classname object, with class as key and true/false as value, to an class string
+ * Convert Classname object, with class as key and true/false as value, to an
+ * class string.
  * @param  {Object} classes The classes
  * @return {String}         class string
  */
@@ -126,9 +127,25 @@ function supportsPointerEventsFn() {
 
 
 /**
+ * Create callback closure.
+ * @param {Object} instance - The object instance.
+ * @param {String} funcName - The name of the callback function.
+ */
+function callbackFn(instance, funcName) {
+  return function() {instance[funcName].apply(instance, arguments);};
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
+  /** Create callback closures */
+  callback: callbackFn,
+  
+  /** Classnames object to string */
+  classNames: classNamesFn,
+
   /** Log messages to the console when debug is turned on */
   log: logFn,
 
@@ -140,9 +157,6 @@ module.exports = {
 
   /** Raise MUI error */
   raiseError: raiseErrorFn,
-
-  /** Classnames object to string */
-  classNames: classNamesFn,
 
   /** Support Pointer Events check */
   supportsPointerEvents: supportsPointerEventsFn
