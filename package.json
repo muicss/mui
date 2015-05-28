@@ -1,6 +1,6 @@
 {
   "name": "muicss",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "repository": "https://github.com/muicss/mui",
   "devDependencies": {
     "browserify": "^10.1.1",

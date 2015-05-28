@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.1.4 - May 28, 2015
+
+* Added mui-select component to CSS/JS
+* Split forms.js into two libraries in source code
+
 ## 0.1.3 - May 23, 2015
 
 * Using un-minified files for meteor distribution
