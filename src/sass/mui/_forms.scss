@@ -413,3 +413,24 @@ input[type="checkbox"] {
     }
   }
 }
+
+
+// ========================
+// Form validation
+// ========================
+
+// handle border
+.mui-form-control:not(:required):invalid:not(:focus) {
+  border-color: $mui-danger-color;
+  border-width: 2px;
+}
+
+input.mui-form-control:not(:required):invalid:not(:focus) {
+  height: $mui-input-height + 1px;
+  margin-bottom: -1px;
+}
+
+// handle labels
+.mui-form-group > .mui-form-control:not(:required):not(:focus):invalid + label {
+  color: $mui-danger-color;
+}
