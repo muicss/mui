@@ -3,7 +3,7 @@
 @each $key1, $mapVal1 in $mui-colors {
   @if type-of($mapVal1) == 'map' {
     @each $key2, $mapVal2 in $mapVal1 {
-      .mui-font-color-#{$key1}-#{$key2} {
+      .mui-color-#{$key1}-#{$key2} {
         color: $mapVal2 !important;
       }
 
@@ -12,7 +12,7 @@
       }
 
       @if $key2 == '500' {
-        .mui-font-color-#{$key1} {
+        .mui-color-#{$key1} {
           color: $mapVal2 !important;
         }
 
@@ -23,7 +23,7 @@
     }
     
   } @else {
-    .mui-font-color-#{$key1} {
+    .mui-color-#{$key1} {
       color: $mapVal1 !important;
     }
 
