@@ -3,12 +3,12 @@
 // ======================
 @function mui-color($mui-key1, $mui-key2: '500') {
   // check key1
-  @if map-has-key($mui-mui-colors, $mui-key1) == false {
+  @if map-has-key($mui-colors, $mui-key1) == false {
     @warn "Color `#{$mui-key1}` not found.";
     @return null;
   }
   
-  $mui-mapVal: map-get($mui-mui-colors, $mui-key1);
+  $mui-mapVal: map-get($mui-colors, $mui-key1);
 
   // use second key
   @if type-of($mui-mapVal) == 'map' {
@@ -27,7 +27,7 @@
 // ======================
 // Color map
 // ======================
-$mui-mui-colors: (
+$mui-colors: (
   "red": (
     "50": #FFEBEE,
     "100": #FFCDD2,

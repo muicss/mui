@@ -60,6 +60,15 @@ gulp.task('cssmin', ['sass'], function() {
 });
 
 
+gulp.task('colors', function() {
+  return gulp.src('src/sass/mui-colors.scss')
+    .pipe(sass())
+    .pipe(cssmin())
+    .pipe(rename(pkgName + '-colors.css'))
+    .pipe(gulp.dest(dirName + '/css'));
+});
+
+
 gulp.task('js', function() {
   return Browserify('./src/js/main.js')
     .bundle()
@@ -183,6 +192,7 @@ function build(options) {
   var tasks = [
     'sass',
     'cssmin',
+    'colors',
     'js',
     'uglify',
     'react',
