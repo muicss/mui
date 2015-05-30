@@ -23,6 +23,7 @@ function initialize(inputEl) {
   else inputEl._muiValidation = true;
 
   if (inputEl.value.length) jqLite.addClass(inputEl, notEmptyClass);
+  else jqLite.addClass(inputEl, emptyClass);
 
   jqLite.on(inputEl, 'input', function(ev) {
     var inputEl = this;
