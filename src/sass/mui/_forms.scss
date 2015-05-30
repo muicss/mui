@@ -419,18 +419,62 @@ input[type="checkbox"] {
 // Form validation
 // ========================
 
-// handle border
-.mui-form-control:not(:required):invalid:not(:focus) {
-  border-color: $mui-danger-color;
-  border-width: 2px;
+.mui-form-control.mui-has-error {
+  border-color: $mui-danger-color !important;
+  border-width: 2px !important;
 }
 
-input.mui-form-control:not(:required):invalid:not(:focus) {
-  height: $mui-input-height + 1px;
-  margin-bottom: -1px;
+input.mui-form-control.mui-has-error {
+  height: $mui-input-height + 1px !important;
+  margin-bottom: -1px !important;
+}
+
+input[type="email"],
+input[type="tel"],
+input[type="url"] {
+  &.mui-form-control:not(:focus) {
+    &:invalid {
+      @extend .mui-form-control.mui-has-error;
+      @extend input.mui-form-control.mui-has-error;
+    }
+    
+    // handle pristine required inputs
+    &:required:not([value]),
+    &:required[value=""] {
+      border-color: $mui-input-border-color;
+      border-width: 1px;
+      height: $mui-input-height;
+      margin-bottom: 0px;
+    }
+  }
 }
 
 // handle labels
-.mui-form-group > .mui-form-control:not(:required):not(:focus):invalid + label {
-  color: $mui-danger-color;
+.mui-form-group {
+  > .mui-form-control:required + label:after {
+    content: ' *';
+  }
+  
+  > .mui-form-control.mui-has-error {
+    &:focus + label,
+    + label:not(.mui-form-floating-label),
+    + label.mui-form-floating-label-active {
+      color: $mui-danger-color !important;
+    }
+  }
+  
+  > input[type="email"],
+  > input[type="tel"],
+  > input[type="url"] {
+    &.mui-form-control:not(:focus) {
+      &:invalid + label {
+        color: $mui-danger-color;
+      }
+
+      &:required:not([value]) + label,
+      &:required[value=""] + label {
+        color: $mui-input-placeholder-color;
+      }
+    }
+  }
 }
