@@ -419,62 +419,54 @@ input[type="checkbox"] {
 // Form validation
 // ========================
 
-.mui-form-control.mui-has-error {
-  border-color: $mui-danger-color !important;
-  border-width: 2px !important;
+// required
+.mui-form-group > .mui-form-control:required + label:after {
+  content: ' *';
 }
 
-input.mui-form-control.mui-has-error {
-  height: $mui-input-height + 1px !important;
-  margin-bottom: -1px !important;
+.mui-form-control:required:invalid:not(:focus) {
+  border-color: $mui-primary-color-light;
+  border-width: 2px;
 }
 
-input[type="email"],
-input[type="tel"],
-input[type="url"] {
-  &.mui-form-control:not(:focus) {
-    &:invalid {
-      @extend .mui-form-control.mui-has-error;
-      @extend input.mui-form-control.mui-has-error;
-    }
-    
-    // handle pristine required inputs
-    &:required:not([value]),
-    &:required[value=""] {
-      border-color: $mui-input-border-color;
-      border-width: 1px;
-      height: $mui-input-height;
-      margin-bottom: 0px;
-    }
+input.mui-form-control:required:invalid:not(:focus) {
+  height: $mui-input-height + 1px;
+  margin-bottom: -1px;
+}
+
+
+// validators
+.mui-form-control:invalid:not(:focus) {
+  &:not(:required),
+  &:required[value]:not([value=""]):not(.mui-empty),
+  &:required.mui-not-empty {
+    border-color: $mui-danger-color;
+    border-width: 2px;
   }
 }
 
-// handle labels
-.mui-form-group {
-  > .mui-form-control:required + label:after {
-    content: ' *';
+input.mui-form-control:invalid:not(:focus) {
+  &:not(:required),
+  &:required[value]:not([value=""]):not(.mui-empty),
+  &:required.mui-not-empty {
+    height: $mui-input-height + 1px;
+    margin-bottom: -1px;
   }
-  
-  > .mui-form-control.mui-has-error {
-    &:focus + label,
+}
+
+.mui-form-group > .mui-form-control:invalid:not(:focus) {
+  &:not(:required),
+  &:required[value]:not([value=""]):not(.mui-empty),
+  &:required.mui-not-empty {
     + label:not(.mui-form-floating-label),
     + label.mui-form-floating-label-active {
-      color: $mui-danger-color !important;
+      color: $mui-danger-color;
     }
   }
-  
-  > input[type="email"],
-  > input[type="tel"],
-  > input[type="url"] {
-    &.mui-form-control:not(:focus) {
-      &:invalid + label {
-        color: $mui-danger-color;
-      }
+}
 
-      &:required:not([value]) + label,
-      &:required[value=""] + label {
-        color: $mui-input-placeholder-color;
-      }
-    }
-  }
+// javascript markup
+.mui-form-control:required {
+  animation-duration: 0.001s;
+  animation-name: mui-node-inserted;  
 }

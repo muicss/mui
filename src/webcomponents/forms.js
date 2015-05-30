@@ -7,7 +7,7 @@
 
 
 var jqLite = require('../js/lib/jqLite.js'),
-    muiForms = require('../js/forms/form-control.js'),
+    muiForms = require('../js/forms/floating-label.js'),
     formControlTagName = muiForms.formControlClass;
 
 

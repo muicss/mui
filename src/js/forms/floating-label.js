@@ -1,6 +1,6 @@
 /**
- * MUI CSS/JS forms module
- * @module forms
+ * MUI CSS/JS floating label module
+ * @module forms/floating-label
  */
 
 'use strict';
