@@ -47,24 +47,6 @@ function inputHandler() {
 }
 
 
-/**
- * Add CSS transitions
- */
-function addCssTransitions() {
-  setTimeout(function() {
-    var css = '.' + floatingLabelClass + '{' + [
-      '-webkit-transition',
-      '-moz-transition',
-      '-o-transition',
-      'transition',
-      ''
-    ].join(':all .15s ease-out;') + '}';
-    
-    util.loadStyle(css);
-  }, 150);
-}
-
-
 /** Define module API */
 module.exports = {
   /** Initialize input elements */

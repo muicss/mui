@@ -2230,6 +2230,10 @@ input[type="checkbox"]:focus {
   box-shadow: none;
   border-radius: 0px;
   background-image: none;
+  -webkit-animation-duration: 0.001s;
+  animation-duration: 0.001s;
+  -webkit-animation-name: mui-node-inserted;
+  animation-name: mui-node-inserted;
 }
 
 .mui-form-control::-webkit-input-placeholder {
@@ -2297,10 +2301,7 @@ input[type="search"] {
   font-size: 16px;
   pointer-events: none;
   color: rgba(0, 0, 0, 0.26);
-  -webkit-animation-duration: 0.001s;
-  animation-duration: 0.001s;
-  -webkit-animation-name: mui-node-inserted;
-  animation-name: mui-node-inserted;
+  cursor: text;
 }
 
 .mui-form-group > textarea {
@@ -2308,11 +2309,11 @@ input[type="search"] {
   min-height: 64px;
 }
 
-.mui-form-group > label.mui-form-floating-label-active {
+.mui-form-group > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label {
   color: rgba(0, 0, 0, 0.54);
 }
 
-.mui-form-group > label.mui-form-floating-label-active,
+.mui-form-group > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label,
 .mui-form-group > .mui-form-control:focus + label.mui-form-floating-label {
   font-size: 12px;
   top: 0px;
@@ -2504,6 +2505,43 @@ fieldset[disabled] .mui-checkbox label {
   .mui-form-inline .mui-select {
     display: inline-block;
   }
+}
+
+.mui-form-group > .mui-form-control:required + label:after {
+  content: ' *';
+}
+
+.mui-form-control:required:invalid:not(:focus) {
+  border-color: #BBDEFB;
+  border-width: 2px;
+}
+
+input.mui-form-control:required:invalid:not(:focus) {
+  height: 33px;
+  margin-bottom: -1px;
+}
+
+.mui-form-control:invalid:not(:focus):not(:required),
+.mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty),
+.mui-form-control:invalid:not(:focus):required.mui-not-empty {
+  border-color: #F44336;
+  border-width: 2px;
+}
+
+input.mui-form-control:invalid:not(:focus):not(:required),
+input.mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty),
+input.mui-form-control:invalid:not(:focus):required.mui-not-empty {
+  height: 33px;
+  margin-bottom: -1px;
+}
+
+.mui-form-group > .mui-form-control:invalid:not(:focus):not(:required) + label:not(.mui-form-floating-label),
+.mui-form-group > .mui-form-control:invalid:not(:focus):not(:required) + label.mui-form-floating-label-active,
+.mui-form-group > .mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty) + label:not(.mui-form-floating-label),
+.mui-form-group > .mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty) + label.mui-form-floating-label-active,
+.mui-form-group > .mui-form-control:invalid:not(:focus):required.mui-not-empty + label:not(.mui-form-floating-label),
+.mui-form-group > .mui-form-control:invalid:not(:focus):required.mui-not-empty + label.mui-form-floating-label-active {
+  color: #F44336;
 }
 
 th {

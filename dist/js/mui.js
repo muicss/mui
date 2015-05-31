@@ -173,8 +173,8 @@ module.exports = {
 
 },{"./lib/jqLite.js":6,"./lib/util.js":7}],4:[function(require,module,exports){
 /**
- * MUI CSS/JS forms module
- * @module forms
+ * MUI CSS/JS form-control module
+ * @module forms/form-control
  */
 
 'use strict';
@@ -182,120 +182,88 @@ module.exports = {
 
 var jqLite = require('../lib/jqLite.js'),
     util = require('../lib/util.js'),
+    cssSelector = '.mui-form-control',
+    emptyClass = 'mui-empty',
+    notEmptyClass = 'mui-not-empty',
     formControlClass = 'mui-form-control',
-    formGroupClass = 'mui-form-group',
-    floatingLabelBaseClass = 'mui-form-floating-label',
-    floatingLabelActiveClass = floatingLabelBaseClass + '-active';
+    floatingLabelClass = 'mui-form-floating-label';
 
 
 /**
- * Initialize floating labels.
- * @param {Element} labelEl - The floating label element.
+ * Initialize input element.
+ * @param {Element} inputEl - The input element.
  */
-function initialize(labelEl) {
+function initialize(inputEl) {
   // check flag
-  if (labelEl._muiFloatLabel === true) return;
-  else labelEl._muiFloatLabel = true;
-  
-  var inputEl = labelEl.previousElementSibling;
+  if (inputEl._muiFormControl === true) return;
+  else inputEl._muiFormControl = true;
 
-  if (inputEl.value.length) jqLite.addClass(labelEl, floatingLabelActiveClass);
+  if (inputEl.value.length) jqLite.addClass(inputEl, notEmptyClass);
+  else jqLite.addClass(inputEl, emptyClass);
 
-  // handle input events
   jqLite.on(inputEl, 'input', inputHandler);
-  
-  // add transition after timeout to avoid screen jitter
-  setTimeout(function() {
-    var s = '.15s ease-out';
-
-    jqLite.css(labelEl, {
-      '-webkit-transition': s,
-      '-moz-transition': s,
-      '-o-transition': s,
-      'transition': s
-    });
-  }, 150);
-
-  // pointer-events shim
-  if (util.supportsPointerEvents() === false) {
-    jqLite.css(labelEl, 'cursor', 'text');
-    jqLite.on(labelEl, 'click', function() {
-      if (!jqLite.hasClass(labelEl, floatingLabelActiveClass)) inputEl.focus();
-    });
-  }
 }
 
 
 /**
- * Handle inputs into the form control.
- * @param {Event} ev - The DOM event.
+ * Handle input events.
  */
-function inputHandler(ev) {
-  var inputEl = ev.target,
-      labelEl = inputEl.nextElementSibling;
+function inputHandler() {
+  var inputEl = this;
 
-  if (jqLite.hasClass(labelEl, floatingLabelBaseClass)) {
-    if (inputEl.value.length === 0) {
-      jqLite.removeClass(labelEl, floatingLabelActiveClass);
-    } else {
-      jqLite.addClass(labelEl, floatingLabelActiveClass);
-    }
+  if (inputEl.value.length) {
+    jqLite.removeClass(inputEl, emptyClass);
+    jqLite.addClass(inputEl, notEmptyClass);
+  } else {
+    jqLite.removeClass(inputEl, notEmptyClass);
+    jqLite.addClass(inputEl, emptyClass)
   }
-}
-
-
-/**
- * Activate the floating label
- * @param {Element} labelEl - The floating label element.
- */
-function activateLabel(labelEl) {
-  jqLite.addClass(labelEl, floatingLabelActiveClass);
-
-  if (util.supportsPointerEvents() === false) {
-    jqLite.css(labelEl, 'cursor', 'default');
-  }
-}
-
-
-/**
- * De-activate the floating label
- * @param {Element} labelEl - The floating label element.
- * @param {Element} inputEl - The form-control input element.
- */
-function deactivateLabel(labelEl, inputEl) {
-  jqLite.removeClass(labelEl, floatingLabelActiveClass);
 }
 
 
 /** Define module API */
 module.exports = {
-  /** The form control class name */
-  formControlClass: formControlClass,
-
-  /** The form group class name */
-  formGroupClass: formGroupClass,
-
-  /** The floating label base class name */
-  floatingLabelBaseClass: floatingLabelBaseClass,
-
-  /** The active floating label class name */
-  floatingLabelActiveClass: floatingLabelActiveClass,
-
-  /** Initialize floating label element */
+  /** Initialize input elements */
   initialize: initialize,
-
+  
   /** Initialize module listeners */
   initListeners: function() {
     var doc = document;
-
+    
     // markup elements available when method is called
-    var elList = doc.getElementsByClassName(floatingLabelBaseClass);
+    var elList = doc.querySelectorAll(cssSelector);
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
     // listen for new elements
     util.onNodeInserted(function(el) {
-      if (jqLite.hasClass(el, floatingLabelBaseClass)) initialize(el);
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') initialize(el);
     });
+
+    // add transition css for floating labels
+    setTimeout(function() {
+      var css = '.' + floatingLabelClass + '{' + [
+        '-webkit-transition',
+        '-moz-transition',
+        '-o-transition',
+        'transition',
+        ''
+      ].join(':all .15s ease-out;') + '}';
+      
+      util.loadStyle(css);
+    }, 150);
+
+    // pointer-events shim for floating labels
+    if (util.supportsPointerEvents() === false) {
+      jqLite.on(document, 'click', function(ev) {
+        var targetEl = ev.target;
+
+        if (targetEl.tagName === 'LABEL' &&
+            jqLite.hasClass(targetEl, floatingLabelClass)) {
+          var inputEl = targetEl.previousElementSibling;
+          if (jqLite.hasClass(inputEl, formControlClass)) inputEl.focus();
+        }
+      });
+    }
   }
 };
 
