@@ -182,11 +182,11 @@ input[type="search"] {
   > .mui-form-control {
     // focused
     &:focus {
-      + label {
+      ~ label {
         color: $mui-input-border-color-focus;
       }
 
-      + .mui-form-floating-label {
+      ~ .mui-form-floating-label {
         font-size: $mui-label-font-size;
         top: 0px;
       }
@@ -197,7 +197,7 @@ input[type="search"] {
       &.mui-not-empty,
       &[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
       &:not(:empty):not(.mui-empty):not(.mui-not-empty) {
-        + .mui-form-floating-label {
+        ~ .mui-form-floating-label {
           color: $mui-label-font-color;
           font-size: $mui-label-font-size;
           top: 0px;
@@ -205,23 +205,6 @@ input[type="search"] {
       }
     }
   }
-
-  /*
-  // active floating icon
-  > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label {
-    color: $mui-label-font-color;
-  }
-  
-  > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label,
-  > .mui-form-control:focus + label.mui-form-floating-label {
-    font-size: $mui-label-font-size;
-    top: 0px;
-  }
-
-  // input focus
-  > .mui-form-control:focus + label {
-    color: $mui-input-border-color-focus;
-  }*/
 }
 
 
@@ -451,7 +434,7 @@ input[type="checkbox"] {
 // ========================
 
 // required
-.mui-form-group > .mui-form-control:required + label:after {
+.mui-form-group > .mui-form-control:required ~ label:after {
   content: ' *';
 }
 
@@ -492,7 +475,7 @@ input.mui-form-control:invalid:not(:focus) {
   &:required.mui-not-empty,
   &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
   &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
-    + label {
+    ~ label {
       color: $mui-danger-color;
     }
   }
