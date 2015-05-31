@@ -2286,6 +2286,22 @@ input[type="search"] {
   position: relative;
   margin-bottom: 20px;
   padding-top: 15px;
+  /*
+  // active floating icon
+  > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label {
+    color: $mui-label-font-color;
+  }
+  
+  > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label,
+  > .mui-form-control:focus + label.mui-form-floating-label {
+    font-size: $mui-label-font-size;
+    top: 0px;
+  }
+
+  // input focus
+  > .mui-form-control:focus + label {
+    color: $mui-input-border-color-focus;
+  }*/
 }
 
 .mui-form-group > label {
@@ -2309,18 +2325,21 @@ input[type="search"] {
   min-height: 64px;
 }
 
-.mui-form-group > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label {
-  color: rgba(0, 0, 0, 0.54);
+.mui-form-group > .mui-form-control:focus + label {
+  color: #2196F3;
 }
 
-.mui-form-group > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label,
-.mui-form-group > .mui-form-control:focus + label.mui-form-floating-label {
+.mui-form-group > .mui-form-control:focus + .mui-form-floating-label {
   font-size: 12px;
   top: 0px;
 }
 
-.mui-form-group > .mui-form-control:focus + label {
-  color: #2196F3;
+.mui-form-group > .mui-form-control:not(:focus).mui-not-empty + .mui-form-floating-label,
+.mui-form-group > .mui-form-control:not(:focus)[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty) + .mui-form-floating-label,
+.mui-form-group > .mui-form-control:not(:focus):not(:empty):not(.mui-empty):not(.mui-not-empty) + .mui-form-floating-label {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  top: 0px;
 }
 
 .mui-radio,
@@ -2522,25 +2541,25 @@ input.mui-form-control:required:invalid:not(:focus) {
 }
 
 .mui-form-control:invalid:not(:focus):not(:required),
-.mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty),
-.mui-form-control:invalid:not(:focus):required.mui-not-empty {
+.mui-form-control:invalid:not(:focus):required.mui-not-empty,
+.mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
+.mui-form-control:invalid:not(:focus):required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
   border-color: #F44336;
   border-width: 2px;
 }
 
 input.mui-form-control:invalid:not(:focus):not(:required),
-input.mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty),
-input.mui-form-control:invalid:not(:focus):required.mui-not-empty {
+input.mui-form-control:invalid:not(:focus):required.mui-not-empty,
+input.mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
+input.mui-form-control:invalid:not(:focus):required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
   height: 33px;
   margin-bottom: -1px;
 }
 
-.mui-form-group > .mui-form-control:invalid:not(:focus):not(:required) + label:not(.mui-form-floating-label),
-.mui-form-group > .mui-form-control:invalid:not(:focus):not(:required) + label.mui-form-floating-label-active,
-.mui-form-group > .mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty) + label:not(.mui-form-floating-label),
-.mui-form-group > .mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty) + label.mui-form-floating-label-active,
-.mui-form-group > .mui-form-control:invalid:not(:focus):required.mui-not-empty + label:not(.mui-form-floating-label),
-.mui-form-group > .mui-form-control:invalid:not(:focus):required.mui-not-empty + label.mui-form-floating-label-active {
+.mui-form-group > .mui-form-control:invalid:not(:focus):not(:required) + label,
+.mui-form-group > .mui-form-control:invalid:not(:focus):required.mui-not-empty + label,
+.mui-form-group > .mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty) + label,
+.mui-form-group > .mui-form-control:invalid:not(:focus):required:not(:empty):not(.mui-empty):not(.mui-not-empty) + label {
   color: #F44336;
 }
 
