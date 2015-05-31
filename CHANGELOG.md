@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.1.5 - May 29, 2015
+
+* Added form validator handlers
+* Implemented form-control handler to set mui-empty classes
+* Migrated floating labels to use mui-empty classes
+* Added 'change' event dispatching to select component
+
 ## 0.1.4 - May 28, 2015
 
 * Added mui-select component to CSS/JS
