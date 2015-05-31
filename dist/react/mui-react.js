@@ -505,6 +505,23 @@ function callbackFn(instance, funcName) {
 
 
 /**
+ * Dispatch event.
+ * @param {Element} element - The DOM element.
+ * @param {String} eventType - The event type.
+ * @param {Boolean} bubbles=true - If true, event bubbles.
+ * @param {Boolean} cancelable=true = If true, event is cancelable
+ */
+function dispatchEventFn(element, eventType, bubbles, cancelable) {
+  var ev = document.createEvent('HTMLEvents'),
+      bubbles = (bubbles !== undefined) ? bubbles : true,
+      cancelable = (cancelable !== undefined) ? cancelable : true;
+  
+  ev.initEvent(eventType, bubbles, cancelable);
+  element.dispatchEvent(ev);
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -514,6 +531,9 @@ module.exports = {
   /** Classnames object to string */
   classNames: classNamesFn,
 
+  /** Dispatch event */
+  dispatchEvent: dispatchEventFn,
+  
   /** Log messages to the console when debug is turned on */
   log: logFn,
 

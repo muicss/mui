@@ -148,7 +148,8 @@ Select.prototype.renderMenu = function() {
  */
 function Menu(selectEl) {
   // instance variables
-  this.currentIndex = 0;
+  this.origIndex = null;
+  this.currentIndex = null;
   this.selectEl = selectEl;
   this.menuEl = this._createMenuEl(selectEl);
   this.clickCallbackFn = util.callback(this, 'clickHandler');
@@ -206,6 +207,9 @@ Menu.prototype._createMenuEl = function(selectEl) {
 
   // add selected attribute
   menuEl.children[selectedPos].setAttribute('selected', true);
+
+  // save indices
+  this.origIndex = selectedPos;
   this.currentIndex = selectedPos;
 
   // set position
@@ -258,8 +262,8 @@ Menu.prototype.clickHandler = function(ev) {
   if (pos === undefined) return;
 
   // select option
-  this.selectEl.children[this.currentIndex].selected = false;
-  this.selectEl.children[pos].selected = true;
+  this.currentIndex = pos;
+  this.selectCurrent();
 
   // destroy menu
   this.destroy();
@@ -294,7 +298,13 @@ Menu.prototype.decrement = function() {
  * Select current item
  */
 Menu.prototype.selectCurrent = function() {
-  this.selectEl.children[this.currentIndex].selected = true;
+  if (this.currentIndex !== this.origIndex) {
+    this.selectEl.children[this.origIndex].selected = false;
+    this.selectEl.children[this.currentIndex].selected = true;
+
+    // trigger change event
+    util.dispatchEvent(this.selectEl, 'change');
+  }
 }
 
 
