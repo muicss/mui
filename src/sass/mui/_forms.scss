@@ -107,6 +107,9 @@ input[type="checkbox"]:focus {
   // bugfix for firefox-android
   background-image: none; 
 
+  animation-duration: 0.001s;
+  animation-name: mui-node-inserted;
+  
   &::placeholder {
     color: $mui-input-placeholder-color;
     opacity: 1; // normalize firefox
@@ -165,9 +168,7 @@ input[type="search"] {
       font-size: $mui-input-font-size;
       pointer-events: none;
       color: $mui-input-placeholder-color;
-
-      animation-duration: 0.001s;
-      animation-name: mui-node-inserted;
+      cursor: text; // for ie10
     }
   }
 
@@ -177,11 +178,11 @@ input[type="search"] {
   }
 
   // active floating icon
-  > label.mui-form-floating-label-active {
+  > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label {
     color: $mui-label-font-color;
   }
   
-  > label.mui-form-floating-label-active,
+  > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label,
   > .mui-form-control:focus + label.mui-form-floating-label {
     font-size: $mui-label-font-size;
     top: 0px;
@@ -463,10 +464,4 @@ input.mui-form-control:invalid:not(:focus) {
       color: $mui-danger-color;
     }
   }
-}
-
-// javascript markup
-.mui-form-control:required {
-  animation-duration: 0.001s;
-  animation-name: mui-node-inserted;  
 }

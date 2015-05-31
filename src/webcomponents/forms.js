@@ -7,8 +7,11 @@
 
 
 var jqLite = require('../js/lib/jqLite.js'),
-    muiForms = require('../js/forms/floating-label.js'),
-    formControlTagName = muiForms.formControlClass;
+    muiFormControl = require('../js/forms/form-control.js'),
+    formControlClass = 'mui-form-control',
+    formControlTagName = formControlClass,
+    formGroupClass = 'mui-form-group',
+    floatingLabelClass = 'mui-form-floating-label';
 
 
 /**
@@ -33,7 +36,7 @@ FormControlProto.createdCallback = function() {
   };
 
   // create wrapper
-  innerEl.setAttribute('class', muiForms.formGroupClass);
+  innerEl.setAttribute('class', formGroupClass);
 
   // input element
   innerEl.appendChild(_createInputEl(attrs));
@@ -42,9 +45,6 @@ FormControlProto.createdCallback = function() {
   if (attrs.label) {
     var labelEl = _createLabelEl(attrs);
     innerEl.appendChild(labelEl);
-
-    // add event listeners
-    muiForms.initialize(labelEl);
   }
 
   // add to root
@@ -87,8 +87,11 @@ function _createInputEl(attrs) {
     inputEl.setAttribute('placeholder', attrs.placeholder);
   }
 
-  inputEl.setAttribute('class', muiForms.formControlClass);
+  inputEl.setAttribute('class', formControlClass);
 
+  // add event listeners
+  muiFormControl.initialize(inputEl);
+  
   return inputEl;
 }
 
@@ -99,7 +102,7 @@ function _createLabelEl(attrs) {
   
   // configure floating label
   if (attrs.floating !== null) {
-    labelEl.setAttribute('class', muiForms.floatingLabelBaseClass);
+    labelEl.setAttribute('class', floatingLabelClass);
   }
 
   return labelEl;
