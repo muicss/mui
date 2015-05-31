@@ -177,6 +177,36 @@ input[type="search"] {
     min-height: $mui-textarea-height;
   }
 
+
+  // labels
+  > .mui-form-control {
+    // focused
+    &:focus {
+      + label {
+        color: $mui-input-border-color-focus;
+      }
+
+      + .mui-form-floating-label {
+        font-size: $mui-label-font-size;
+        top: 0px;
+      }
+    }
+
+    // not focused and not empty
+    &:not(:focus) {
+      &.mui-not-empty,
+      &[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
+      &:not(:empty):not(.mui-empty):not(.mui-not-empty) {
+        + .mui-form-floating-label {
+          color: $mui-label-font-color;
+          font-size: $mui-label-font-size;
+          top: 0px;
+        }
+      }
+    }
+  }
+
+  /*
   // active floating icon
   > .mui-form-control.mui-not-empty:not(:focus) + .mui-form-floating-label {
     color: $mui-label-font-color;
@@ -191,7 +221,7 @@ input[type="search"] {
   // input focus
   > .mui-form-control:focus + label {
     color: $mui-input-border-color-focus;
-  }
+  }*/
 }
 
 
@@ -439,8 +469,9 @@ input.mui-form-control:required:invalid:not(:focus) {
 // validators
 .mui-form-control:invalid:not(:focus) {
   &:not(:required),
-  &:required[value]:not([value=""]):not(.mui-empty),
-  &:required.mui-not-empty {
+  &:required.mui-not-empty,
+  &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
+  &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
     border-color: $mui-danger-color;
     border-width: 2px;
   }
@@ -448,8 +479,9 @@ input.mui-form-control:required:invalid:not(:focus) {
 
 input.mui-form-control:invalid:not(:focus) {
   &:not(:required),
-  &:required[value]:not([value=""]):not(.mui-empty),
-  &:required.mui-not-empty {
+  &:required.mui-not-empty,
+  &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
+  &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
     height: $mui-input-height + 1px;
     margin-bottom: -1px;
   }
@@ -457,10 +489,10 @@ input.mui-form-control:invalid:not(:focus) {
 
 .mui-form-group > .mui-form-control:invalid:not(:focus) {
   &:not(:required),
-  &:required[value]:not([value=""]):not(.mui-empty),
-  &:required.mui-not-empty {
-    + label:not(.mui-form-floating-label),
-    + label.mui-form-floating-label-active {
+  &:required.mui-not-empty,
+  &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
+  &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
+    + label {
       color: $mui-danger-color;
     }
   }
