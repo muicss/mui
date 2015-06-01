@@ -2515,13 +2515,7 @@ fieldset[disabled] .mui-checkbox label {
 }
 
 .mui-form-control:required:invalid:not(:focus) {
-  border-color: #BBDEFB;
-  border-width: 2px;
-}
-
-input.mui-form-control:required:invalid:not(:focus) {
-  height: 33px;
-  margin-bottom: -1px;
+  border-color: #2196F3;
 }
 
 .mui-form-control:invalid:not(:focus):not(:required),

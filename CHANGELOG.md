@@ -1,6 +1,10 @@
 # MUI Changelog
 
-## 0.1.5 - May 29, 2015
+## 0.1.6 - May 31, 2015
+
+* Changed style of empty required fields
+
+## 0.1.5 - May 31, 2015
 
 * Added form validator handlers
 * Implemented form-control handler to set mui-empty classes

@@ -439,15 +439,8 @@ input[type="checkbox"] {
 }
 
 .mui-form-control:required:invalid:not(:focus) {
-  border-color: $mui-primary-color-light;
-  border-width: 2px;
+  border-color: $mui-primary-color;
 }
-
-input.mui-form-control:required:invalid:not(:focus) {
-  height: $mui-input-height + 1px;
-  margin-bottom: -1px;
-}
-
 
 // validators
 .mui-form-control:invalid:not(:focus) {
