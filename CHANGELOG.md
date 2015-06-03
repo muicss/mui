@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.8 - June 3, 2015
+
+* Added compiled files to release
+
 ## 0.1.7 - June 3, 2015
 
 * Fixed typo in React dropdown componentWillUnmount()

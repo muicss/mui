@@ -654,7 +654,7 @@ var Dropdown = React.createClass({displayName: "Dropdown",
     document.addEventListener('click', this._outsideClick);
   },
   componentWillUnmount: function() {
-    document.addRemoveListener('click', this._outsideClick);
+    document.removeEventListener('click', this._outsideClick);
   },
   render: function() {
     var button;
@@ -756,6 +756,7 @@ module.exports = {
   Dropdown: Dropdown,
   DropdownItem: DropdownItem
 };
+
 
 },{"../js/lib/jqLite":2,"../js/lib/util":3,"./buttons.jsx":4}],6:[function(require,module,exports){
 /**
