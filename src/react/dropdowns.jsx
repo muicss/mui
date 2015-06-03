@@ -31,7 +31,7 @@ var Dropdown = React.createClass({
     document.addEventListener('click', this._outsideClick);
   },
   componentWillUnmount: function() {
-    document.addRemoveListener('click', this._outsideClick);
+    document.removeEventListener('click', this._outsideClick);
   },
   render: function() {
     var button;
