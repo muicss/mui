@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.7 - June 3, 2015
+
+* Fixed typo in React dropdown componentWillUnmount()
+
 ## 0.1.6 - May 31, 2015
 
 * Changed style of empty required fields
