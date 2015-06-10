@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.9 - June 10, 2015
+
+* Fixed bug in dropdown to close menu on item select
+
 ## 0.1.8 - June 3, 2015
 
 * Added compiled files to release

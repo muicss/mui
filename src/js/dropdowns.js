@@ -64,19 +64,12 @@ function toggleDropdown(toggleEl) {
     return util.raiseError('Dropdown menu element not found');
   }
 
-  // method to ignore clicks inside menu
-  function stopPropagationFn(ev) {
-    ev.stopPropagation();
-  }
-
   // method to close dropdown
   function closeDropdownFn() {
     jqLite.removeClass(menuEl, openClass);
       
     // remove event handlers
     jqLite.off(doc, 'click', closeDropdownFn);
-    jqLite.off(menuEl, 'click', stopPropagationFn);
-    jqLite.off(toggleEl, 'click', stopPropagationFn);
   }
 
   // method to open dropdown
@@ -92,8 +85,6 @@ function toggleDropdown(toggleEl) {
     jqLite.addClass(menuEl, openClass);
 
     // close dropdown when user clicks outside of menu
-    jqLite.on(toggleEl, 'click', stopPropagationFn);
-    jqLite.on(menuEl, 'click', stopPropagationFn);    
     jqLite.on(doc, 'click', closeDropdownFn);
   }
 

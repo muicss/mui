@@ -1,43 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
- * MUI CSS/JS main module
- * @module main
- */
-
-(function(win) {
-  'use strict';
-
-  // return if library has been loaded already
-  if (win._muiLoadedJS) return;
-  else win._muiLoadedJS = true;
-  
-  // load dependencies
-  var jqLite = require('./lib/jqLite.js'),
-      util = require('./lib/util.js'),
-      formControl = require('./forms/form-control.js'),
-      select = require('./forms/select.js'),
-      ripple = require('./ripple.js'),
-      dropdowns = require('./dropdowns.js'),
-      tabs = require('./tabs.js'),
-      overlay = require('./overlay.js');
-
-  // expose api
-  win.mui = {
-    overlay: overlay
-  };
-  
-  // init libraries
-  jqLite.ready(function() {
-    formControl.initListeners();
-    select.initListeners();
-    ripple.initListeners();
-    dropdowns.initListeners();
-    tabs.initListeners();
-  });
-})(window);
-
-},{"./dropdowns.js":3,"./forms/form-control.js":4,"./forms/select.js":5,"./lib/jqLite.js":6,"./lib/util.js":7,"./overlay.js":8,"./ripple.js":9,"./tabs.js":10}],2:[function(require,module,exports){
-/**
  * MUI config module
  * @module config
  */
@@ -48,7 +10,7 @@ module.exports = {
   debug: true
 };
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 /**
  * MUI CSS/JS dropdown module
  * @module dropdowns
@@ -115,19 +77,12 @@ function toggleDropdown(toggleEl) {
     return util.raiseError('Dropdown menu element not found');
   }
 
-  // method to ignore clicks inside menu
-  function stopPropagationFn(ev) {
-    ev.stopPropagation();
-  }
-
   // method to close dropdown
   function closeDropdownFn() {
     jqLite.removeClass(menuEl, openClass);
       
     // remove event handlers
     jqLite.off(doc, 'click', closeDropdownFn);
-    jqLite.off(menuEl, 'click', stopPropagationFn);
-    jqLite.off(toggleEl, 'click', stopPropagationFn);
   }
 
   // method to open dropdown
@@ -143,8 +98,6 @@ function toggleDropdown(toggleEl) {
     jqLite.addClass(menuEl, openClass);
 
     // close dropdown when user clicks outside of menu
-    jqLite.on(toggleEl, 'click', stopPropagationFn);
-    jqLite.on(menuEl, 'click', stopPropagationFn);    
     jqLite.on(doc, 'click', closeDropdownFn);
   }
 
@@ -171,7 +124,7 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite.js":6,"./lib/util.js":7}],4:[function(require,module,exports){
+},{"./lib/jqLite.js":5,"./lib/util.js":6}],3:[function(require,module,exports){
 /**
  * MUI CSS/JS form-control module
  * @module forms/form-control
@@ -267,7 +220,7 @@ module.exports = {
   }
 };
 
-},{"../lib/jqLite.js":6,"../lib/util.js":7}],5:[function(require,module,exports){
+},{"../lib/jqLite.js":5,"../lib/util.js":6}],4:[function(require,module,exports){
 /**
  * MUI CSS/JS select module
  * @module forms/select
@@ -613,7 +566,7 @@ module.exports = {
   }
 };
 
-},{"../lib/jqLite.js":6,"../lib/util.js":7}],6:[function(require,module,exports){
+},{"../lib/jqLite.js":5,"../lib/util.js":6}],5:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -966,7 +919,7 @@ module.exports = {
   type: jqLiteType
 };
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -1151,7 +1104,45 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config.js":2,"./jqLite.js":6}],8:[function(require,module,exports){
+},{"../config.js":1,"./jqLite.js":5}],7:[function(require,module,exports){
+/**
+ * MUI CSS/JS main module
+ * @module main
+ */
+
+(function(win) {
+  'use strict';
+
+  // return if library has been loaded already
+  if (win._muiLoadedJS) return;
+  else win._muiLoadedJS = true;
+  
+  // load dependencies
+  var jqLite = require('./lib/jqLite.js'),
+      util = require('./lib/util.js'),
+      formControl = require('./forms/form-control.js'),
+      select = require('./forms/select.js'),
+      ripple = require('./ripple.js'),
+      dropdowns = require('./dropdowns.js'),
+      tabs = require('./tabs.js'),
+      overlay = require('./overlay.js');
+
+  // expose api
+  win.mui = {
+    overlay: overlay
+  };
+  
+  // init libraries
+  jqLite.ready(function() {
+    formControl.initListeners();
+    select.initListeners();
+    ripple.initListeners();
+    dropdowns.initListeners();
+    tabs.initListeners();
+  });
+})(window);
+
+},{"./dropdowns.js":2,"./forms/form-control.js":3,"./forms/select.js":4,"./lib/jqLite.js":5,"./lib/util.js":6,"./overlay.js":8,"./ripple.js":9,"./tabs.js":10}],8:[function(require,module,exports){
 /**
  * MUI CSS/JS overlay module
  * @module overlay
@@ -1342,7 +1333,7 @@ function onClick(ev) {
 /** Define module API */
 module.exports = overlayFn;
 
-},{"./lib/jqLite.js":6,"./lib/util.js":7}],9:[function(require,module,exports){
+},{"./lib/jqLite.js":5,"./lib/util.js":6}],9:[function(require,module,exports){
 /**
  * MUI CSS/JS ripple module
  * @module ripple
@@ -1451,7 +1442,7 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite.js":6,"./lib/util.js":7}],10:[function(require,module,exports){
+},{"./lib/jqLite.js":5,"./lib/util.js":6}],10:[function(require,module,exports){
 /**
  * MUI CSS/JS tabs module
  * @module tabs
@@ -1552,4 +1543,4 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite.js":6,"./lib/util.js":7}]},{},[1]);
+},{"./lib/jqLite.js":5,"./lib/util.js":6}]},{},[7]);
