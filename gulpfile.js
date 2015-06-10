@@ -54,7 +54,7 @@ gulp.task('sass', function() {
 
 gulp.task('cssmin', ['sass'], function() {
   return gulp.src(dirName + '/css/' + pkgName + '.css')
-    .pipe(cssmin())
+    .pipe(cssmin({advanced: false}))
     .pipe(rename(pkgName + '.min.css'))
     .pipe(gulp.dest(dirName + '/css'));
 });

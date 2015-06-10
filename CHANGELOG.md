@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.10 - June 11, 2015
+
+* Re-built dist to fix css issue
+
 ## 0.1.9 - June 10, 2015
 
 * Fixed bug in dropdown to close menu on item select
