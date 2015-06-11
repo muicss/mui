@@ -8,7 +8,8 @@
 
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
-    attrSelector = '[data-mui-toggle="tab"]',
+    attrKey = 'data-mui-toggle',
+    attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',
     activeClass = 'mui-active';
 
@@ -93,7 +94,7 @@ module.exports = {
 
     // TODO: listen for new elements
     util.onNodeInserted(function(el) {
-      if (el.getAttribute(attrSelector) !== null) initialize(el);
+      if (el.getAttribute(attrKey) === 'tab') initialize(el);
     });
   }
 };

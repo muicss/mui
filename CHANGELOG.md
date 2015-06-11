@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.11 - June 11, 2015
+
+* Bugfix to js/tabs.js in DOM node listener
+
 ## 0.1.10 - June 11, 2015
 
 * Re-built dist to fix css issue
