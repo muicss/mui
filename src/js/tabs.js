@@ -93,7 +93,8 @@ module.exports = {
 
     // TODO: listen for new elements
     util.onNodeInserted(function(el) {
-      if (el.getAttribute(attrSelector) !== null) initialize(el);
+        var attrKey = 'data-mui-toggle';
+        if (el.getAttribute(attrKey) === 'tab') initialize(el);
     });
   }
 };
