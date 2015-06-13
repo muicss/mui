@@ -15,6 +15,13 @@ MUI is a lightweight HTML/CSS/JS framework that follows Google's Material Design
 <script src="//cdn.muicss.com/mui-0.1.12/js/mui.min.js"></script>
 ```
 
+Or for development you can use the latest:
+
+```html
+<link href="//cdn.muicss.com/mui-latest/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-latest/js/mui.min.js"></script>
+```
+
 **Install with Bower:**
 
 ```shell
