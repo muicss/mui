@@ -91,10 +91,24 @@ module.exports = {
     // markup elements available when method is called
     var elList = document.querySelectorAll(attrSelector);
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
-
+    
     // TODO: listen for new elements
     util.onNodeInserted(function(el) {
       if (el.getAttribute(attrKey) === 'tab') initialize(el);
     });
+  },
+  
+  /** External API */
+  api: {
+    activate: function(paneId) {
+      var cssSelector = '[' + controlsAttrKey + '=' + paneId + ']',
+          toggleEl = document.querySelectorAll(cssSelector);
+
+      if (!toggleEl.length) {
+        util.raiseError('Tab control for pane "' + paneId + '" not found');
+      }
+
+      activateTab(toggleEl[0]);
+    }
   }
 };

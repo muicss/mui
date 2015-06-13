@@ -22,7 +22,8 @@
 
   // expose api
   win.mui = {
-    overlay: overlay
+    overlay: overlay,
+    tabs: tabs.api
   };
   
   // init libraries

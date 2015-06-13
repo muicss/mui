@@ -70,7 +70,7 @@ gulp.task('colors', function() {
 
 
 gulp.task('js', function() {
-  return Browserify('./src/js/main.js')
+  return Browserify('./src/js/mui.js')
     .bundle()
     .pipe(source(pkgName + '.js'))
     .pipe(gulp.dest(dirName + '/js'));

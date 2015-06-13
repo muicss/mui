@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.12 - June 13, 2015
+
+* Added secret mui.tabs.activate() method
+
 ## 0.1.11 - June 11, 2015
 
 * Bugfix to js/tabs.js in DOM node listener
