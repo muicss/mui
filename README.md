@@ -126,7 +126,8 @@ The build will be located in the `dist` directory:
 dist/
 ├── css
 │   ├── mui.css
-│   └── mui.min.css
+│   ├── mui.min.css
+│   └── mui-colors.css
 ├── email
 │   ├── mui-email-inline.css
 |   └── mui-email-styletag.css
