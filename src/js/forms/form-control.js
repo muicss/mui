@@ -11,6 +11,7 @@ var jqLite = require('../lib/jqLite.js'),
     cssSelector = '.mui-form-control',
     emptyClass = 'mui-empty',
     notEmptyClass = 'mui-not-empty',
+    dirtyClass = 'mui-dirty',
     formControlClass = 'mui-form-control',
     floatingLabelClass = 'mui-form-floating-label';
 
@@ -28,6 +29,9 @@ function initialize(inputEl) {
   else jqLite.addClass(inputEl, emptyClass);
 
   jqLite.on(inputEl, 'input', inputHandler);
+
+  // add dirty class on focus
+  jqLite.on(inputEl, 'focus', function(){jqLite.addClass(this, dirtyClass);});
 }
 
 
@@ -44,6 +48,8 @@ function inputHandler() {
     jqLite.removeClass(inputEl, notEmptyClass);
     jqLite.addClass(inputEl, emptyClass)
   }
+
+  jqLite.addClass(inputEl, dirtyClass);
 }
 
 

@@ -446,6 +446,7 @@ input[type="checkbox"] {
 .mui-form-control:invalid:not(:focus) {
   &:not(:required),
   &:required.mui-not-empty,
+  &:required.mui-empty.mui-dirty,
   &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
   &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
     border-color: $mui-danger-color;
@@ -456,6 +457,7 @@ input[type="checkbox"] {
 input.mui-form-control:invalid:not(:focus) {
   &:not(:required),
   &:required.mui-not-empty,
+  &:required.mui-empty.mui-dirty,
   &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
   &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
     height: $mui-input-height + 1px;
@@ -471,5 +473,9 @@ input.mui-form-control:invalid:not(:focus) {
     ~ label {
       color: $mui-danger-color;
     }
+  }
+
+  &:required.mui-empty.mui-dirty ~ label:not(.mui-form-floating-label) {
+    color: $mui-danger-color;
   }
 }

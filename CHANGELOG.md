@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.13 - June 14, 2015
+
+* Added .mui-dirty class to .mui-form-control elements on focus
+
 ## 0.1.12 - June 13, 2015
 
 * Added secret mui.tabs.activate() method

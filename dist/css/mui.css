@@ -2520,6 +2520,7 @@ fieldset[disabled] .mui-checkbox label {
 
 .mui-form-control:invalid:not(:focus):not(:required),
 .mui-form-control:invalid:not(:focus):required.mui-not-empty,
+.mui-form-control:invalid:not(:focus):required.mui-empty.mui-dirty,
 .mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
 .mui-form-control:invalid:not(:focus):required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
   border-color: #F44336;
@@ -2528,6 +2529,7 @@ fieldset[disabled] .mui-checkbox label {
 
 input.mui-form-control:invalid:not(:focus):not(:required),
 input.mui-form-control:invalid:not(:focus):required.mui-not-empty,
+input.mui-form-control:invalid:not(:focus):required.mui-empty.mui-dirty,
 input.mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
 input.mui-form-control:invalid:not(:focus):required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
   height: 33px;
@@ -2538,6 +2540,10 @@ input.mui-form-control:invalid:not(:focus):required:not(:empty):not(.mui-empty):
 .mui-form-group > .mui-form-control:invalid:not(:focus):required.mui-not-empty ~ label,
 .mui-form-group > .mui-form-control:invalid:not(:focus):required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty) ~ label,
 .mui-form-group > .mui-form-control:invalid:not(:focus):required:not(:empty):not(.mui-empty):not(.mui-not-empty) ~ label {
+  color: #F44336;
+}
+
+.mui-form-group > .mui-form-control:invalid:not(:focus):required.mui-empty.mui-dirty ~ label:not(.mui-form-floating-label) {
   color: #F44336;
 }
 
