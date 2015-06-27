@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.14 - June 27, 2015
+
+* Added support for label wrapping to mui-form-group via data-attribute
+
 ## 0.1.13 - June 14, 2015
 
 * Added .mui-dirty class to .mui-form-control elements on focus

@@ -151,24 +151,40 @@ input[type="search"] {
 // Form groups
 // =====================
 .mui-form-group {
-  position: relative;
-  margin-bottom: $mui-form-group-margin-bottom;
-  padding-top: $mui-label-font-size + $mui-label-margin-bottom;
+  $labelLineHeight: floor($mui-label-font-size * 1.25);
 
-  // position label at top
+  display: block;
+  width: 100%;
+  padding-top: $labelLineHeight;
+  margin-bottom: $mui-form-group-margin-bottom;
+  position: relative;
+
   > label {
+    display: block;
+
     position: absolute;
+    top: 0;
+
     color: $mui-label-font-color;
-    top: 0px;
     font-size: $mui-label-font-size;
+    line-height: $labelLineHeight;
     font-weight: 400;
 
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+
     &.mui-form-floating-label {
-      top: 5px + $mui-label-font-size + $mui-label-margin-bottom;
+      position: absolute;
+      top: $labelLineHeight;
+
       font-size: $mui-input-font-size;
+      line-height: $mui-input-height;
       pointer-events: none;
       color: $mui-input-placeholder-color;
       cursor: text; // for ie10
+      text-overflow: clip;
     }
   }
 
@@ -177,10 +193,9 @@ input[type="search"] {
     min-height: $mui-textarea-height;
   }
 
-
-  // labels
   > .mui-form-control {
-    // focused
+    display: block;
+
     &:focus {
       ~ label {
         color: $mui-input-border-color-focus;
@@ -188,7 +203,9 @@ input[type="search"] {
 
       ~ .mui-form-floating-label {
         font-size: $mui-label-font-size;
+        line-height: $labelLineHeight;
         top: 0px;
+        text-overflow: ellipsis;
       }
     }
 
@@ -200,9 +217,24 @@ input[type="search"] {
         ~ .mui-form-floating-label {
           color: $mui-label-font-color;
           font-size: $mui-label-font-size;
+          line-height: $labelLineHeight;
           top: 0px;
+          text-overflow: ellipsis;
         }
       }
+    }
+
+  }
+
+  &[data-mui-wrap-label="true"] {
+    display: table;
+    padding-top: 0px;
+
+    > label:not(.mui-form-floating-label) {
+      display: table-header-group;
+      position: static;
+      white-space: normal;
+      overflow-x: visible;
     }
   }
 }

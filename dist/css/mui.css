@@ -2283,30 +2283,45 @@ input[type="search"] {
 }
 
 .mui-form-group {
-  position: relative;
-  margin-bottom: 20px;
+  display: block;
+  width: 100%;
   padding-top: 15px;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .mui-form-group > label {
+  display: block;
   position: absolute;
+  top: 0;
   color: rgba(0, 0, 0, 0.54);
-  top: 0px;
   font-size: 12px;
+  line-height: 15px;
   font-weight: 400;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .mui-form-group > label.mui-form-floating-label {
-  top: 20px;
+  position: absolute;
+  top: 15px;
   font-size: 16px;
+  line-height: 32px;
   pointer-events: none;
   color: rgba(0, 0, 0, 0.26);
   cursor: text;
+  text-overflow: clip;
 }
 
 .mui-form-group > textarea {
   padding-top: 5px;
   min-height: 64px;
+}
+
+.mui-form-group > .mui-form-control {
+  display: block;
 }
 
 .mui-form-group > .mui-form-control:focus ~ label {
@@ -2315,7 +2330,9 @@ input[type="search"] {
 
 .mui-form-group > .mui-form-control:focus ~ .mui-form-floating-label {
   font-size: 12px;
+  line-height: 15px;
   top: 0px;
+  text-overflow: ellipsis;
 }
 
 .mui-form-group > .mui-form-control:not(:focus).mui-not-empty ~ .mui-form-floating-label,
@@ -2323,7 +2340,21 @@ input[type="search"] {
 .mui-form-group > .mui-form-control:not(:focus):not(:empty):not(.mui-empty):not(.mui-not-empty) ~ .mui-form-floating-label {
   color: rgba(0, 0, 0, 0.54);
   font-size: 12px;
+  line-height: 15px;
   top: 0px;
+  text-overflow: ellipsis;
+}
+
+.mui-form-group[data-mui-wrap-label="true"] {
+  display: table;
+  padding-top: 0px;
+}
+
+.mui-form-group[data-mui-wrap-label="true"] > label:not(.mui-form-floating-label) {
+  display: table-header-group;
+  position: static;
+  white-space: normal;
+  overflow-x: visible;
 }
 
 .mui-radio,
