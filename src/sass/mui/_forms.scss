@@ -188,6 +188,11 @@ input[type="search"] {
     }
   }
 
+  > textarea {
+    padding-top: 5px;
+    min-height: $mui-textarea-height;
+  }
+
   > .mui-form-control {
     display: block;
 
