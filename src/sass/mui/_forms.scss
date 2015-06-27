@@ -226,7 +226,7 @@ input[type="search"] {
 
   }
 
-  &.mui-form-group-wrap-label {
+  &[data-mui-wrap-label="true"] {
     display: table;
     padding-top: 0px;
 
