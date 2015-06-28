@@ -1,16 +1,21 @@
-// ============================================================================
-// Buttons module
-// ============================================================================
-$mui-btn-box-shadow-raised: 0 1px 3px rgba(mui-color('black'), 0.12),
-                            0 1px 2px rgba(mui-color('black'), 0.24);
+/**
+ * MUI Buttons
+ */
+$mui-btn-box-shadow-raised: 
+  0 1px 3px rgba(mui-color('black'), 0.12),
+  0 1px 2px rgba(mui-color('black'), 0.24);
 
-$mui-btn-box-shadow-active: 0 10px 20px rgba(mui-color('black'), 0.19),
-                            0 6px 6px rgba(mui-color('black'), 0.23);
+$mui-btn-box-shadow-active:
+  0 10px 20px rgba(mui-color('black'), 0.19),
+  0 6px 6px rgba(mui-color('black'), 0.23);
+
+
 
 
 // ----------------------------------------------------------------------------
 // Main button class
 // ----------------------------------------------------------------------------
+
 .mui-btn {
   @include mui-node-inserted();
   @include mui-text("button");
@@ -78,18 +83,24 @@ $mui-btn-box-shadow-active: 0 10px 20px rgba(mui-color('black'), 0.19),
 }
 
 
+
+
 // ----------------------------------------------------------------------------
 // Button sizes
 // ----------------------------------------------------------------------------
+
 .mui-btn-lg {
   height: $mui-btn-height-lg;
   line-height: $mui-btn-height-lg;
 }
 
 
+
+
 // ----------------------------------------------------------------------------
 // Flat buttons
 // ----------------------------------------------------------------------------
+
 .mui-btn-flat {
   background-color: $mui-btn-flat-bg-color;
 
@@ -103,9 +114,12 @@ $mui-btn-box-shadow-active: 0 10px 20px rgba(mui-color('black'), 0.19),
 }
 
 
+
+
 // ----------------------------------------------------------------------------
 // Raised buttons
 // ----------------------------------------------------------------------------
+
 .mui-btn-raised {
   box-shadow: $mui-btn-box-shadow-raised;
 
@@ -116,44 +130,58 @@ $mui-btn-box-shadow-active: 0 10px 20px rgba(mui-color('black'), 0.19),
 }
 
 
+
+
 // ----------------------------------------------------------------------------
 // Button colors
 // ----------------------------------------------------------------------------
+
 .mui-btn-default {
-  @include button-variant($mui-btn-default-font-color,
-                          $mui-btn-default-bg-color);
-  @include button-flat-variant($mui-btn-default-font-color,
-                               $mui-btn-flat-bg-color-hover);
+  @include button-variant(
+    $mui-btn-default-font-color,
+    $mui-btn-default-bg-color);
+  @include button-flat-variant(
+    $mui-btn-default-font-color,
+    $mui-btn-flat-bg-color-hover);
 }
 
 
 .mui-btn-primary {
-  @include button-variant($mui-btn-primary-font-color,
-                          $mui-btn-primary-bg-color);
-  @include button-flat-variant($mui-btn-primary-bg-color,
-                               $mui-btn-flat-bg-color-hover);
+  @include button-variant(
+    $mui-btn-primary-font-color,
+    $mui-btn-primary-bg-color);
+  @include button-flat-variant(
+    $mui-btn-primary-bg-color,
+    $mui-btn-flat-bg-color-hover);
 }
 
 
 .mui-btn-danger {
-  @include button-variant($mui-btn-danger-font-color,
-                          $mui-btn-danger-bg-color);
-  @include button-flat-variant($mui-btn-danger-bg-color,
-                               $mui-btn-flat-bg-color-hover);
+  @include button-variant(
+    $mui-btn-danger-font-color,
+    $mui-btn-danger-bg-color);
+  @include button-flat-variant(
+    $mui-btn-danger-bg-color,
+    $mui-btn-flat-bg-color-hover);
 }
 
 
 .mui-btn-accent {
-  @include button-variant($mui-btn-accent-font-color,
-                          $mui-btn-accent-bg-color);
-  @include button-flat-variant($mui-btn-accent-bg-color,
-                               $mui-btn-flat-bg-color-hover);
+  @include button-variant(
+    $mui-btn-accent-font-color,
+    $mui-btn-accent-bg-color);
+  @include button-flat-variant(
+    $mui-btn-accent-bg-color,
+    $mui-btn-flat-bg-color-hover);
 }
+
+
 
 
 // ----------------------------------------------------------------------------
 // Floating button
 // ----------------------------------------------------------------------------
+
 .mui-btn-floating {
   @extend .mui-btn-raised;
 
@@ -177,9 +205,12 @@ $mui-btn-box-shadow-active: 0 10px 20px rgba(mui-color('black'), 0.19),
 }
 
 
+
+
 // ----------------------------------------------------------------------------
 // Floating button sizes
 // ----------------------------------------------------------------------------
+
 .mui-btn-floating-mini {
   width: 40px;
   height: 40px;

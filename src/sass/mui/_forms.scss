@@ -1,12 +1,16 @@
-// ============================================================================
-// Forms module
-// ============================================================================
-$formLabelLineHeight: floor($mui-label-font-size * 1.25);
+/**
+ * MUI Form styles
+ * 
+ */
+$xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
+
+
 
 
 // ----------------------------------------------------------------------------
-// Normalizations
+// NORMALIZATIONS
 // ----------------------------------------------------------------------------
+
 fieldset {
   padding: 0;
   margin: 0;
@@ -81,9 +85,12 @@ input[type="checkbox"]:disabled {
 }
 
 
+
+
 // ----------------------------------------------------------------------------
-// Form controls
+// FORM-CONTROL
 // ----------------------------------------------------------------------------
+
 .mui-form-control {
   @include mui-node-inserted();
 
@@ -142,13 +149,16 @@ input[type="search"] {
 }
 
 
+
+
 // ----------------------------------------------------------------------------
-// Form groups
+// FORM-GROUP
 // ----------------------------------------------------------------------------
+
 .mui-form-group {
   display: block;
   width: 100%;
-  padding-top: $formLabelLineHeight;
+  padding-top: $xFormLabelLineHeight;
   margin-bottom: $mui-form-group-margin-bottom;
   position: relative;
 
@@ -162,7 +172,7 @@ input[type="search"] {
     // typography
     color: $mui-label-font-color;
     font-size: $mui-label-font-size;
-    line-height: $formLabelLineHeight;
+    line-height: $xFormLabelLineHeight;
     font-weight: 400;
     
     // default overflow policy
@@ -172,11 +182,11 @@ input[type="search"] {
     text-overflow: ellipsis;
   }
 
-  
-  > label.mui-form-floating-label {
+
+  > .mui-form-floating-label {
     // layout
     position: absolute;
-    top: $formLabelLineHeight;
+    top: $xFormLabelLineHeight;
     
     // typography
     font-size: $mui-input-font-size;
@@ -208,29 +218,6 @@ input[type="search"] {
   }
 
 
-  > .mui-form-control:focus ~ .mui-form-floating-label {
-    top: 0px;
-    font-size: $mui-label-font-size;
-    line-height: $formLabelLineHeight;
-    text-overflow: ellipsis;
-  }
-
-
-  > .mui-form-control:not(:focus) {
-    &.mui-not-empty,
-    &[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
-    &:not(:empty):not(.mui-empty):not(.mui-not-empty) {
-      ~ .mui-form-floating-label {
-        color: $mui-label-font-color;
-        font-size: $mui-label-font-size;
-        line-height: $formLabelLineHeight;
-        top: 0px;
-        text-overflow: ellipsis;
-      }
-    }
-  }
-
-
   &[data-mui-wrap-label="true"] {
     display: table;
     padding-top: 0px;
@@ -246,9 +233,38 @@ input[type="search"] {
 }
 
 
+
+// placed outside of form-group for performance
+.mui-form-control:focus ~ .mui-form-floating-label {
+  top: 0px;
+  font-size: $mui-label-font-size;
+  line-height: $xFormLabelLineHeight;
+  text-overflow: ellipsis;
+}
+
+
+// placed outside of form-group for performance
+.mui-form-control:not(:focus) {
+  &.mui-not-empty,
+  &[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
+  &:not(:empty):not(.mui-empty):not(.mui-not-empty) {
+    ~ .mui-form-floating-label {
+      color: $mui-label-font-color;
+      font-size: $mui-label-font-size;
+      line-height: $xFormLabelLineHeight;
+      top: 0px;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+
+
+
 // ----------------------------------------------------------------------------
-// Checkboxes and radios
+// CHECKBOXES-AND-RADIOS
 // ----------------------------------------------------------------------------
+
 .mui-radio,
 .mui-checkbox {
   position: relative;
@@ -267,10 +283,10 @@ input[type="search"] {
 }
 
 
-.mui-radio input[type="radio"],
-.mui-radio-inline input[type="radio"],
-.mui-checkbox input[type="checkbox"],
-.mui-checkbox-inline input[type="checkbox"] {
+.mui-radio > label > input[type="radio"],
+.mui-radio-inline > label > input[type="radio"],
+.mui-checkbox > label> input[type="checkbox"],
+.mui-checkbox-inline > label > input[type="checkbox"] {
   position: absolute;
   margin-left: -20px;
   margin-top: 4px;
@@ -304,9 +320,12 @@ input[type="search"] {
 }
 
 
+
+
 // ----------------------------------------------------------------------------
-// Select component
+// SELECT-COMPONENT
 // ----------------------------------------------------------------------------
+
 .mui-select {
   position: relative;
 
@@ -408,9 +427,12 @@ input[type="search"] {
 }
 
 
+
+
 // ----------------------------------------------------------------------------
-// Form-inline
+// INLINE-FORMS
 // ----------------------------------------------------------------------------
+
 .mui-form-inline {
   @media (min-width: $mui-screen-sm-min) {
     > * {
@@ -419,22 +441,23 @@ input[type="search"] {
     }
   
 
-    .mui-form-group {
+    > .mui-form-group {
       display: inline-block;
       margin-bottom: 0;
       vertical-align: middle;
     }
 
   
-    .mui-form-control {
+    > .mui-form-control,
+    > .mui-form-group > .mui-form-group {
       display: inline-block;
       width: auto;
       vertical-align: middle;
     }
 
 
-    .mui-radio,
-    .mui-checkbox {
+    > .mui-radio,
+    > .mui-checkbox {
       display: inline-block;
       margin-top: 0;
       margin-bottom: 0;
@@ -447,29 +470,34 @@ input[type="search"] {
     }
 
     
-    .mui-radio input[type="radio"],
-    .mui-checkbox input[type="checkbox"] {
+    > .mui-radio > label > input[type="radio"],
+    > .mui-checkbox > label > input[type="checkbox"] {
       position: relative;
       margin-left: 0;
     }
 
 
-    .mui-select {
+    > .mui-select {
       display: inline-block;
     }
   }
 }
 
 
+
+
 // ----------------------------------------------------------------------------
-// Form validation
+// FORM-VALIDATION
 // ----------------------------------------------------------------------------
+
 .mui-form-control {
+  // highlight required fields with thin colored line
   &:required:invalid:not(:focus) {
     border-color: $mui-primary-color;
   }
 
   
+  // use thick colored border for invalid fields
   &:invalid:not(:focus) {
     &:not(:required),
     &:required.mui-not-empty,
@@ -483,6 +511,7 @@ input[type="search"] {
 }
 
 
+// treat <input>'s different from <textarea>'s
 input.mui-form-control:invalid:not(:focus) {
   &:not(:required),
   &:required.mui-not-empty,
