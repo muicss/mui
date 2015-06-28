@@ -6,6 +6,7 @@
     "Andres Morey <andres@muicss.com>"
   ],
   "homepage": "https://www.muicss.com",
+  "description": "MUI is a lightweight HTML/CSS/JS framework that follows Google's Material Design guidelines.",
   "main": [
     "src/sass/mui.scss",
     "src/sass/mui/_colors.scss",
@@ -26,7 +27,6 @@
   },
   "ignore": [
     "**/.*",
-    "dist",
     "e2e-tests",
     "examples",
     "gulpfile.js",

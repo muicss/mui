@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.15 - June 28, 2015
+
+* Removed ignore 'dist' directory from bower.json
+
 ## 0.1.14 - June 27, 2015
 
 * Added support for label wrapping to mui-form-group via data-attribute
