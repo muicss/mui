@@ -239,7 +239,9 @@ var jqLite = require('../lib/jqLite.js'),
     util = require('../lib/util.js'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
-    menuClass = 'mui-select-menu';
+    menuClass = 'mui-select-menu',
+    optionHeight = 42,  // from CSS
+    menuPadding = 8;  // from CSS
 
 
 /**
@@ -399,7 +401,9 @@ function Menu(selectEl) {
   // attach event handlers
   jqLite.on(this.menuEl, 'click', this.clickCallbackFn);
   jqLite.on(document, 'keydown', this.keydownCallbackFn);
+  jqLite.on(window, 'resize', this.destroyCallbackFn);
 
+  // attach event handler after current event loop exits
   var fn = this.destroyCallbackFn;
   setTimeout(function() {jqLite.on(document, 'click', fn);}, 0);
 }
@@ -441,9 +445,22 @@ Menu.prototype._createMenuEl = function(selectEl) {
   this.origIndex = selectedPos;
   this.currentIndex = selectedPos;
 
+  var viewHeight = document.documentElement.clientHeight;
+
+  // set height (use viewport as maximum height)
+  var height = m * optionHeight + 2 * menuPadding;
+  height = Math.min(height, viewHeight);
+  jqLite.css(menuEl, 'height', height + 'px');
+
   // set position
-  top += selectedPos * 42;
-  jqLite.css(menuEl, 'top', '-' + top + 'px');
+  top += selectedPos * optionHeight;
+
+  // prevent overflow top (set max to parent relative to viewport)
+  top = Math.min(top, selectEl.getBoundingClientRect().top);
+
+  // TODO: prevent overflow bottom
+  
+  jqLite.css(menuEl, 'top', (-1 * top) + 'px');
 
   return menuEl;
 }
@@ -549,6 +566,7 @@ Menu.prototype.destroy = function() {
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);
   jqLite.off(document, 'keydown', this.keydownCallbackFn);
   jqLite.off(document, 'click', this.destroyCallbackFn);
+  jqLite.off(window, 'resize', this.destroyCallbackFn);
 }
 
 

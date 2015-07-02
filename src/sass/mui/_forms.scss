@@ -114,12 +114,12 @@ input[type="checkbox"]:disabled {
 
   &::placeholder {
     color: $mui-input-placeholder-color;
-    opacity: 1;  // normalize firefox
+    opacity: 1;  // Normalize firefox
   }
 }
 
 textarea.mui-form-control {
-  height: auto;  // reset height for <textarea>'s
+  height: auto;  // Reset height for <textarea>'s
 }
 
 input.mui-form-control:focus {
@@ -129,7 +129,7 @@ input.mui-form-control:focus {
 }
 
 input[type="search"] {
-  -webkit-appearance: none;  // search inputs in iOS
+  -webkit-appearance: none;  // Search inputs in iOS
 }
 
 
@@ -335,7 +335,7 @@ input[type="search"] {
     padding: 0 25px 0 0;
 
     &::ms-expand {
-      display: none;  // for IE
+      display: none;  // For IE
     }
     
     &:focus {
@@ -358,12 +358,18 @@ input[type="search"] {
 .mui-select-menu {
   @extend .mui-z1;
 
+  // Positioning
   position: absolute;
-  background-color: mui-color('white');
-  min-width: 100%;
-  padding: 8px 0;
-  font-size: $mui-input-font-size;
   z-index: 1;
+
+  // Display
+  min-width: 100%;
+  overflow-y: auto;
+  padding: 8px 0;
+
+  // Other
+  background-color: mui-color('white');
+  font-size: $mui-input-font-size;
 
   > div {
     padding: 0 22px;
@@ -431,8 +437,8 @@ input[type="search"] {
     }
 
     > .mui-btn {
-      margin-top: 0px;
-      margin-bottom: 0px;
+      margin-bottom: 0;
+      margin-top: 0;
     }
   }
 }
@@ -470,7 +476,6 @@ input.mui-form-control:invalid:not(:focus) {
 }
 
 .mui-form-group > .mui-form-control {
-  // unfocused required fields
   &:invalid:not(:focus) {
     // Set label color to danger color
     &:not(:required),
