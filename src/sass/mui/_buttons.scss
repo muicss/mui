@@ -13,7 +13,6 @@ $mui-btn-box-shadow-active:
 
 
 
-
 // ============================================================================
 // MAIN-BUTTON-CLASS
 // ============================================================================
@@ -24,31 +23,30 @@ $mui-btn-box-shadow-active:
 
   transition: all 0.2s ease-in-out;
   
-  // layout
+  // Layout
   display: inline-block;
   height: $mui-btn-height;
   padding: 0 $mui-btn-padding-horizontal;
   margin-top: $mui-btn-margin-vertical;
   margin-bottom: $mui-btn-margin-vertical;
   
-  // look and feel
+  // Look and feel
   border: none;
   border-radius: $mui-btn-border-radius;
   cursor: pointer;
   touch-action: manipulation;
   background-image: none;  // reset unusual Firefox-on-Android
 
-  // typography
+  // Typography
   text-align: center;
   line-height: $mui-btn-height;
   vertical-align: middle;
   white-space: nowrap;
   user-select: none;
 
-  // for ripples
+  // For ripples
   position: relative;
   overflow: hidden;
-
   
   &:hover,
   &:focus,
@@ -58,17 +56,14 @@ $mui-btn-box-shadow-active:
     color: $mui-btn-default-font-color;
   }
 
-
   &:hover,
   &:focus {
     box-shadow: $mui-btn-box-shadow-raised;
   }
-
   
   &:active {
     box-shadow: $mui-btn-box-shadow-active;
   }
-
   
   &:disabled,
   &.mui-disabled {
@@ -79,11 +74,9 @@ $mui-btn-box-shadow-active:
   }
 }
 
-
 .mui-btn + .mui-btn {
   margin-left: $mui-btn-spacing-horizontal;
 }
-
 
 
 
@@ -98,14 +91,12 @@ $mui-btn-box-shadow-active:
 
 
 
-
 // ============================================================================
 // FLAT-BUTTONS
 // ============================================================================
 
 .mui-btn-flat {
   background-color: $mui-btn-flat-bg-color;
-
 
   &:hover,
   &:focus,
@@ -117,7 +108,6 @@ $mui-btn-box-shadow-active:
 
 
 
-
 // ============================================================================
 // RAISED-BUTTONS
 // ============================================================================
@@ -125,12 +115,10 @@ $mui-btn-box-shadow-active:
 .mui-btn-raised {
   box-shadow: $mui-btn-box-shadow-raised;
 
-
   &:active {
     box-shadow: $mui-btn-box-shadow-active;
   }
 }
-
 
 
 
@@ -147,7 +135,6 @@ $mui-btn-box-shadow-active:
     $mui-btn-flat-bg-color-hover);
 }
 
-
 .mui-btn-primary {
   @include button-variant(
     $mui-btn-primary-font-color,
@@ -156,7 +143,6 @@ $mui-btn-box-shadow-active:
     $mui-btn-primary-bg-color,
     $mui-btn-flat-bg-color-hover);
 }
-
 
 .mui-btn-danger {
   @include button-variant(
@@ -167,7 +153,6 @@ $mui-btn-box-shadow-active:
     $mui-btn-flat-bg-color-hover);
 }
 
-
 .mui-btn-accent {
   @include button-variant(
     $mui-btn-accent-font-color,
@@ -176,7 +161,6 @@ $mui-btn-box-shadow-active:
     $mui-btn-accent-bg-color,
     $mui-btn-flat-bg-color-hover);
 }
-
 
 
 
@@ -197,7 +181,6 @@ $mui-btn-box-shadow-active:
   color: $mui-btn-floating-font-color;
   background-color: $mui-btn-floating-bg-color;
 
-
   &:hover,
   &:focus,
   &:active {
@@ -205,7 +188,6 @@ $mui-btn-box-shadow-active:
     background-color: lighten($mui-btn-floating-bg-color, 5%);
   }
 }
-
 
 
 
