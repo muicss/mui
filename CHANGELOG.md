@@ -5,7 +5,7 @@
 * Removed on-load underline from required fields
 * Removed '*' from required field labels
 * Removed top/bottom margin from form-inline buttons
-
+* Improved raised button box shadow
 
 ## 0.1.15 - June 28, 2015
 
