@@ -7,7 +7,6 @@
   font-weight: map-get($mui-styles, "font-weight");
   font-size: map-get($mui-styles, "font-size");
   line-height: map-get($mui-styles, "line-height");
-  letter-spacing: map-get($mui-styles, "letter-spacing");
 
   @if $mui-base-font-color == mui-color('white') {
     color: rgba(mui-color('white'), map-get($mui-styles, "alpha-white"));
@@ -40,8 +39,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.54,
     "alpha-white": 0.70,
     "alpha-accent": 0.54,
-    "line-height": 112px,
-    "letter-spacing": -0.01em
+    "line-height": 112px
   ),
   "display3": (
     "font-weight": 400,
@@ -49,8 +47,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.54,
     "alpha-white": 0.70,
     "alpha-accent": 0.54,
-    "line-height": 56px,
-    "letter-spacing": -0.005em
+    "line-height": 56px
   ),
   "display2": (
     "font-weight": 400,
@@ -58,8 +55,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.54,
     "alpha-white": 0.70,
     "alpha-accent": 0.54,
-    "line-height": 48px,
-    "letter-spacing": 0em
+    "line-height": 48px
   ),
   "display1": (
     "font-weight": 400,
@@ -67,8 +63,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.54,
     "alpha-white": 0.70,
     "alpha-accent": 0.54,
-    "line-height": 40px,
-    "letter-spacing": 0em
+    "line-height": 40px
   ),
   "headline": (
     "font-weight": 400,
@@ -76,8 +71,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.87,
     "alpha-white": 1.00,
     "alpha-accent": 0.87,
-    "line-height": 32px,
-    "letter-spacing": 0em
+    "line-height": 32px
   ),
   "title": (
     "font-weight": 400,
@@ -85,8 +79,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.87,
     "alpha-white": 1.00,
     "alpha-accent": 0.87,
-    "line-height": 28px,
-    "letter-spacing": 0.005em
+    "line-height": 28px
   ),
   "subhead": (
     "font-weight": 400,
@@ -94,8 +87,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.87,
     "alpha-white": 1.00,
     "alpha-accent": 0.87,
-    "line-height": 24px,
-    "letter-spacing": 0.001em
+    "line-height": 24px
   ),
   "body2": (
     "font-weight": 500,
@@ -103,8 +95,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.87,
     "alpha-white": 1.00,
     "alpha-accent": 0.87,
-    "line-height": 24px,
-    "letter-spacing": 0.001em
+    "line-height": 24px
   ),
   "body1": (
     "font-weight": 400,
@@ -112,8 +103,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.87,
     "alpha-white": 1.00,
     "alpha-accent": 0.87,
-    "line-height": 20px,
-    "letter-spacing": 0.001em
+    "line-height": 20px
   ),
   "caption": (
     "font-weight": 400,
@@ -121,8 +111,7 @@ $mui-mui-text-styles: (
     "alpha-black": 0.54,
     "alpha-white": 0.70,
     "alpha-accent": 0.54,
-    "line-height": 16px,
-    "letter-spacing": 0.002em
+    "line-height": 16px
   ),
   "menu": (
     "font-weight": 500,
@@ -130,16 +119,14 @@ $mui-mui-text-styles: (
     "alpha-black": 0.87,
     "alpha-white": 1.00,
     "alpha-accent": 0.87,
-    "line-height": 17px,
-    "letter-spacing": 0.001em
+    "line-height": 17px
   ),
   "button": (
-    "font-weight": 400,
+    "font-weight": 500,
     "font-size": 14px,
     "alpha-black": 0.87,
     "alpha-white": 1.00,
     "alpha-accent": 0.87,
-    "line-height": 18px,
-    "letter-spacing": 0.05em
+    "line-height": 18px
   )
 );

@@ -2,6 +2,13 @@
   color: $font-color;
   background-color: $bg-color;
 
+  // handle font-smoothing issues
+  @if $mui-base-font-smoothing == true and $font-color == mui-color('white') {
+    &:not(.mui-btn-flat) {
+      font-weight: 600;
+    }
+  }
+
   &:hover,
   &:focus,
   &:active,

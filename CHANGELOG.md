@@ -6,6 +6,9 @@
 * Removed '*' from required field labels
 * Removed top/bottom margin from form-inline buttons
 * Improved raised button box shadow
+* Added text font-smoothing to body by default
+* Removed custom letter-spacing
+* Set button font-weight to 500, 600 for white text
 
 ## 0.1.15 - June 28, 2015
 

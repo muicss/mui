@@ -19,9 +19,14 @@ body {
   font-size: $mui-base-font-size;
   font-weight: $mui-base-font-weight;
   line-height: $mui-base-line-height;
-  letter-spacing: $mui-base-letter-spacing;
   color: $mui-base-font-color;
   background-color: $mui-body-bg-color;
+
+  @if $mui-base-font-smoothing == true {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  }
 }
 
 // Reset fonts for relevant elements
