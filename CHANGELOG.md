@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.1.16 - July 5, 2015
+
+* Removed on-load underline from required fields
+* Removed '*' from required field labels
+* Removed top/bottom margin from form-inline buttons
+
+
 ## 0.1.15 - June 28, 2015
 
 * Removed ignore 'dist' directory from bower.json
