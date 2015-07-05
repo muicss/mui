@@ -439,11 +439,6 @@ input[type="search"] {
 // ============================================================================
 
 .mui-form-control {
-  // Highlight required fields with thin colored line
-  &:required:invalid:not(:focus) {
-    border-color: $mui-primary-color;
-  }
-  
   // Use thick colored border for invalid fields
   &:invalid:not(:focus) {
     &:not(:required),
@@ -470,11 +465,6 @@ input.mui-form-control:invalid:not(:focus) {
 }
 
 .mui-form-group > .mui-form-control {
-  // Add asterisk to required field labels
-  &:required ~ label:after {
-    content: ' *';
-  }
-    
   // unfocused required fields
   &:invalid:not(:focus) {
     // Set label color to danger color
