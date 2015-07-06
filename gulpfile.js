@@ -219,7 +219,23 @@ gulp.task('cssjs-combined', ['clean', 'cssmin'], function() {
       transform: [stringify(['.css'])],
       paths: [dirName + '/css']
     }))
+    .pipe(uglify())
     .pipe(rename(pkgName + '-combined.js'))
+    .pipe(gulp.dest(dirName + '/extra'));
+});
+
+
+gulp.task('react-combined', ['clean', 'cssmin'], function() {
+  return gulp.src('src/react/mui.js')
+    .pipe(browserify({
+      transform: [
+        reactify,
+        stringify(['.css'])
+      ],
+      paths: [dirName + '/css']
+    }))
+    .pipe(uglify())
+    .pipe(rename(pkgName + '-react-combined.js'))
     .pipe(gulp.dest(dirName + '/extra'));
 });
 
@@ -252,7 +268,8 @@ function build(options) {
     'build-email-inline',
     'build-email-styletag',
     'colors',
-    'cssjs-combined'
+    'cssjs-combined',
+    'react-combined'
   ];
 
   if (options.emailInlined) {

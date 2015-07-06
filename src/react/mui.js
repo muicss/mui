@@ -5,8 +5,8 @@
 
 (function(win) {
   // return if library has been loaded already
-  if (win._muiLoadedReact) return;
-  else win._muiLoadedReact = true;
+  if (win._muiReactLoaded) return;
+  else win._muiReactLoaded = true;
 
   // load dependencies
   var layout = require('./layout.jsx'),

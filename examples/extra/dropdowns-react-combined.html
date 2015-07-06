@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- for example only -->   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
+    <!-- end -->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/extra/mui-react-combined.js"></script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Dropdowns</h1>
+      <div id="dropdowns"></div>
+    </div>
+    <script type="text/jsx">
+      var Dropdown = React.createClass({
+        render: function() {
+          return (
+            <MUIDropdown type="primary" label="Dropdown" onClick={ function (ref, ev) { console.log('option selected') } }>
+              <MUIDropdownItem link="#/link1">Option    1</MUIDropdownItem>
+              <MUIDropdownItem>Option     2</MUIDropdownItem>
+              <MUIDropdownItem>Option     3</MUIDropdownItem>
+              <MUIDropdownItem onClick={ function (ref, ev) { alert("Option 4 selected"); } }>Option     4</MUIDropdownItem>
+            </MUIDropdown>
+          );
+        }
+      });
+
+      var DropdownRight = React.createClass({
+        render: function() {
+          return (
+            <MUIDropdown right={ true } type="primary" label="Dropdown">
+              <MUIDropdownItem>Option     1</MUIDropdownItem>
+              <MUIDropdownItem>Option     2</MUIDropdownItem>
+              <MUIDropdownItem>Option     3</MUIDropdownItem>
+              <MUIDropdownItem>Option     4</MUIDropdownItem>
+            </MUIDropdown>
+          );
+        }
+      });
+
+      React.render((<div className="mui-panel"><h2>React</h2><Dropdown /><DropdownRight /></div>), document.getElementById('dropdowns'));
+    </script>
+  </body>
+</html>
