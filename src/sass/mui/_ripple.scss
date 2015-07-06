@@ -1,15 +1,17 @@
-// ===========================
-// Ripple styles
-// ===========================
+/**
+ * MUI Ripple module
+ */
+
+// ============================================================================
+// RIPPLE
+// ============================================================================
 .mui-ripple-effect{
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
-  
   animation: mui-ripple-animation 2s;
 }
-
 
 @keyframes mui-ripple-animation {
     from {
@@ -23,9 +25,11 @@
 }
 
 
-// =======================
-// Button-specific styles
-// =======================
+
+
+// ============================================================================
+// BUTTON-SPECIFIC STYLES
+// ============================================================================
 .mui-btn-default > .mui-ripple-effect {
   background-color: $mui-btn-default-ripple-color;
 }

@@ -1,3 +1,6 @@
+/**
+ * MUI Colors module
+ */
 body {
   width: 100% !important;
   min-width: 100%;
@@ -124,7 +127,6 @@ h4, h5, h6 {
   font-weight: 300;
   font-size: 112px;
   line-height: 112px;
-  letter-spacing: -0.01em;
   color: rgba(33, 33, 33, 0.54);
   color: #212121;
 }
@@ -157,7 +159,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 56px;
   line-height: 56px;
-  letter-spacing: -0.005em;
   color: rgba(33, 33, 33, 0.54);
   color: #212121;
 }
@@ -190,7 +191,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 45px;
   line-height: 48px;
-  letter-spacing: 0em;
   color: rgba(33, 33, 33, 0.54);
   color: #212121;
 }
@@ -223,7 +223,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 34px;
   line-height: 40px;
-  letter-spacing: 0em;
   color: rgba(33, 33, 33, 0.54);
   color: #212121;
 }
@@ -256,7 +255,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 24px;
   line-height: 32px;
-  letter-spacing: 0em;
   color: rgba(33, 33, 33, 0.87);
   color: #212121;
 }
@@ -289,7 +287,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 20px;
   line-height: 28px;
-  letter-spacing: 0.005em;
   color: rgba(33, 33, 33, 0.87);
   color: #212121;
 }
@@ -322,7 +319,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing: 0.001em;
   color: rgba(33, 33, 33, 0.87);
   color: #212121;
 }
@@ -355,7 +351,6 @@ h4, h5, h6 {
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  letter-spacing: 0.001em;
   color: rgba(33, 33, 33, 0.87);
   color: #212121;
 }
@@ -388,7 +383,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing: 0.001em;
   color: rgba(33, 33, 33, 0.87);
   color: #212121;
 }
@@ -421,7 +415,6 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  letter-spacing: 0.002em;
   color: rgba(33, 33, 33, 0.54);
   color: #212121;
 }
@@ -454,7 +447,6 @@ h4, h5, h6 {
   font-weight: 500;
   font-size: 13px;
   line-height: 17px;
-  letter-spacing: 0.001em;
   color: rgba(33, 33, 33, 0.87);
   color: #212121;
 }
@@ -484,10 +476,9 @@ h4, h5, h6 {
 }
 
 .mui-text-button {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  letter-spacing: 0.05em;
   color: rgba(33, 33, 33, 0.87);
   text-transform: uppercase;
   color: #212121;

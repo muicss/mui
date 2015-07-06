@@ -1,3 +1,7 @@
+/**
+ * MUI Tabs module
+ */
+
 .mui-tabs {
   list-style: none;
   padding-left: 0;
@@ -67,6 +71,5 @@
 }
 
 [data-mui-toggle="tab"] {
-  animation-duration: 0.001s;
-  animation-name: mui-node-inserted;
+  @include mui-node-inserted();
 }

@@ -1,9 +1,14 @@
-// Dropdown wrapper
+/**
+ * MUI Dropdown module
+ */
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 .mui-dropdown {
   display: inline-block;
   position: relative;
 }
-
 
 // Toggle element
 [data-mui-toggle="dropdown"] {
@@ -14,22 +19,27 @@
 }
 
 
-// The dropdown menu (ul)
+
+
+// ============================================================================
+// MENU ELEMENT
+// ============================================================================
 .mui-dropdown-menu {
+  @extend .mui-z1;
+
   position: absolute;
   top: 100%;
   left: 0;
   display: none;
   min-width: 160px;
   padding: 5px 0;
-  margin: 2px 0 0; // override default ul
+  margin: 2px 0 0;  // override default ul
   list-style: none;
   font-size: $mui-base-font-size;
   text-align: left;
   background-color: $mui-dropdown-bg-color;
   border-radius: $mui-dropdown-border-radius;
   z-index: 1;
-  @extend .mui-z1;
   background-clip: padding-box;
 
   // open state
@@ -37,7 +47,7 @@
     display: block;
   }
   
-  // Links within the dropdown menu
+  // links within the dropdown menu
   > li > a {
     display: block;
     padding: 3px 20px;
@@ -47,7 +57,7 @@
     color: $mui-dropdown-link-font-color;
     white-space: nowrap; 
                          
-    // Hover & Focus state
+    // hover & focus state
     &:hover,
     &:focus {
       text-decoration: none;
@@ -63,7 +73,7 @@
       color: $mui-dropdown-link-font-color-disabled;
     }
     
-    // Nuke hover & focus effects
+    // nuke hover & focus effects
     &:hover,
     &:focus {
       text-decoration: none;
@@ -74,7 +84,7 @@
   }
 }
 
-// Right align
+// right align
 .mui-dropdown-menu-right {
   left: auto;
   right: 0;

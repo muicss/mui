@@ -1,9 +1,14 @@
+/**
+ * MUI Panel module
+ */
+
 .mui-panel {
+  @include clearfix();
+
   padding: $mui-panel-padding;
   margin-bottom: $mui-base-line-height-computed;
   border-radius: $mui-panel-border-radius;
   background-color: $mui-panel-bg;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16),
               0 0px 2px 0 rgba(0, 0, 0, 0.12);
-  @include clearfix();
 }
