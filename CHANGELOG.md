@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.1.18 - July 6, 2015
+
+* Disabled font-smoothing by default
+* Set all button font weights to 500
+
 ## 0.1.17 - July 5, 2015
 
 * Bugfix to add font-smoothing to inputs, textareas and buttons on Safari

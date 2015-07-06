@@ -421,14 +421,6 @@ body {
   background-color: #FFF;
 }
 
-html,
-body,
-button, input, textarea {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-}
-
 input,
 button,
 select,
@@ -1811,10 +1803,6 @@ fieldset[disabled] .mui-btn-default.mui-btn-flat:active {
   background-color: #2196F3;
 }
 
-.mui-btn-primary:not(.mui-btn-flat) {
-  font-weight: 600;
-}
-
 .mui-btn-primary:hover,
 .mui-btn-primary:focus,
 .mui-btn-primary:active,
@@ -1865,10 +1853,6 @@ fieldset[disabled] .mui-btn-primary.mui-btn-flat:active {
   background-color: #F44336;
 }
 
-.mui-btn-danger:not(.mui-btn-flat) {
-  font-weight: 600;
-}
-
 .mui-btn-danger:hover,
 .mui-btn-danger:focus,
 .mui-btn-danger:active,
@@ -1917,10 +1901,6 @@ fieldset[disabled] .mui-btn-danger.mui-btn-flat:active {
 .mui-btn-accent {
   color: #FFF;
   background-color: #FF4081;
-}
-
-.mui-btn-accent:not(.mui-btn-flat) {
-  font-weight: 600;
 }
 
 .mui-btn-accent:hover,
