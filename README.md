@@ -127,17 +127,20 @@ dist/
 ├── css
 │   ├── mui.css
 │   ├── mui.min.css
-│   └── mui-colors.css
-├── email
-│   ├── mui-email-inline.css
-|   └── mui-email-styletag.css
 ├── js
 │   ├── mui.js
 │   └── mui.min.js
+├── email
+│   ├── mui-email-inline.css
+|   └── mui-email-styletag.css
 ├── react
 │   ├── mui-react.js
 │   └── mui-react.min.js
 └── webcomponents
-    ├── mui-webcomponents.js
-    └── mui-webcomponents.min.js
+|   ├── mui-webcomponents.js
+|   └── mui-webcomponents.min.js
+└── extra
+    ├── mui-colors.css
+    ├── mui-combined.js
+    └── mui-react-combined.js
 </pre>
