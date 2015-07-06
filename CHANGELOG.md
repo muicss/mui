@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.19 - In progress
+
+* Bugfix to mui-react-combined.js build script
+
 ## 0.1.18 - July 6, 2015
 
 * Disabled font-smoothing by default
