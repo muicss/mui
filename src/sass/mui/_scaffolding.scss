@@ -29,13 +29,21 @@ body {
   line-height: $mui-base-line-height;
   color: $mui-base-font-color;
   background-color: $mui-body-bg-color;
+}
 
-  @if $mui-base-font-smoothing == true {
+@if $mui-base-font-smoothing == true {
+  html,
+  body,
+  button,  // safari issue
+  input,  // safari issue
+  textarea {  // safari issue
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   }
 }
+
+
 
 
 // ============================================================================

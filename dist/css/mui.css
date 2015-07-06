@@ -419,6 +419,11 @@ body {
   line-height: 1.429;
   color: rgba(0, 0, 0, 0.87);
   background-color: #FFF;
+}
+
+html,
+body,
+button, input, textarea {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);

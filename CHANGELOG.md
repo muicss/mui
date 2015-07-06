@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.17 - July 5, 2015
+
+* Bugfix to add font-smoothing to inputs, textareas and buttons on Safari
+
 ## 0.1.16 - July 5, 2015
 
 * Removed on-load underline from required fields
