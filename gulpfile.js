@@ -1,3 +1,7 @@
+/**
+ * MUI gulp file
+ */
+
 var del = require('del'),
     streamqueue = require('streamqueue'),
     gulp = require('gulp'),
@@ -17,7 +21,12 @@ var del = require('del'),
     Browserify = require('browserify');
 
 
-// config
+
+
+// ============================================================================
+// CONFIG
+// ============================================================================
+
 var taskName = process.argv[process.argv.length - 1],
     pkgName = 'mui',
     dirName = null;
@@ -31,14 +40,21 @@ if (taskName === 'build-dist') {
 }
 
 
-/*************************
- * recipes
- *************************/
+
+
+// ============================================================================
+// RECIPES
+// ============================================================================
+
 gulp.task('clean', function(callback) {
   del([dirName], callback);
 });
 
 
+
+// ----------------------------------------------------------------------------
+// CSS
+// ----------------------------------------------------------------------------
 gulp.task('sass', function() {
   return gulp.src('src/sass/mui.scss')
     .pipe(sass())
@@ -60,15 +76,10 @@ gulp.task('cssmin', ['sass'], function() {
 });
 
 
-gulp.task('colors', function() {
-  return gulp.src('src/sass/mui-colors.scss')
-    .pipe(sass())
-    .pipe(cssmin())
-    .pipe(rename(pkgName + '-colors.css'))
-    .pipe(gulp.dest(dirName + '/css'));
-});
 
-
+// ----------------------------------------------------------------------------
+// JS
+// ----------------------------------------------------------------------------
 gulp.task('js', function() {
   return Browserify('./src/js/mui.js')
     .bundle()
@@ -85,6 +96,10 @@ gulp.task('uglify', ['js'], function() {
 });
 
 
+
+// ----------------------------------------------------------------------------
+// REACT
+// ----------------------------------------------------------------------------
 gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
@@ -103,7 +118,11 @@ gulp.task('react-uglify', ['react'], function() {
 });
 
 
-gulp.task('webcomponents', ['clean', 'sass'], function() {
+
+// ----------------------------------------------------------------------------
+// WEB COMPONENTS
+// ----------------------------------------------------------------------------
+gulp.task('webcomponents', ['clean', 'cssmin'], function() {
   return gulp.src('src/webcomponents/main.js')
     .pipe(browserify({
       transform: [stringify(['.css'])],
@@ -122,6 +141,10 @@ gulp.task('webcomponents-uglify', ['webcomponents'], function() {
 });
 
 
+
+// ----------------------------------------------------------------------------
+// EMAIL
+// ----------------------------------------------------------------------------
 gulp.task('build-email-inline', function() {
   return gulp.src('src/email/mui-email-inline.scss')
     .pipe(sass())
@@ -176,9 +199,37 @@ gulp.task(
 );
 
 
-/***********************
- * Utility methods
- ***********************/
+
+// ----------------------------------------------------------------------------
+// EXTRA
+// ----------------------------------------------------------------------------
+
+gulp.task('colors', function() {
+  return gulp.src('src/sass/mui-colors.scss')
+    .pipe(sass())
+    .pipe(cssmin())
+    .pipe(rename(pkgName + '-colors.css'))
+    .pipe(gulp.dest(dirName + '/extra'));
+});
+
+
+gulp.task('cssjs-combined', ['clean', 'cssmin'], function() {
+  return gulp.src('src/js/mui-combined.js')
+    .pipe(browserify({
+      transform: [stringify(['.css'])],
+      paths: [dirName + '/css']
+    }))
+    .pipe(rename(pkgName + '-combined.js'))
+    .pipe(gulp.dest(dirName + '/extra'));
+});
+
+
+
+
+// ============================================================================
+// UTILITY METHODS
+// ============================================================================
+
 function sass() {
   return libSass({
     'outputStyle': 'expanded'
@@ -192,7 +243,6 @@ function build(options) {
   var tasks = [
     'sass',
     'cssmin',
-    'colors',
     'js',
     'uglify',
     'react',
@@ -200,7 +250,9 @@ function build(options) {
     'webcomponents',
     'webcomponents-uglify',
     'build-email-inline',
-    'build-email-styletag'
+    'build-email-styletag',
+    'colors',
+    'cssjs-combined'
   ];
 
   if (options.emailInlined) {
@@ -212,9 +264,12 @@ function build(options) {
 }
 
 
-/***********************
- * public tasks
- ***********************/
+
+
+// ============================================================================
+// PUBLIC TASKS
+// ============================================================================
+
 gulp.task('build-dist', ['clean'], function() {
   build();
 });

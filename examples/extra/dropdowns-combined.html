@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="../assets/mui/extra/mui-combined.js"></script>
+    <script>
+      window.addEventListener('load', function() {
+        var el1 = document.getElementsByClassName('mui-dropdown')[0],
+            el2 = document.createElement('div');
+
+        el2.className = 'mui-dropdown';
+        el2.innerHTML = el1.innerHTML;
+
+        document.getElementsByClassName('mui-panel')[0].appendChild(el2);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Dropdowns</h1>
+      <div class="mui-panel">
+        <h2>CSS</h2>
+        <div class="mui-dropdown">
+          <button class="mui-btn mui-btn-primary" data-mui-toggle="dropdown">
+            Dropdown
+            <span class="mui-caret"></span>
+          </button>
+          <ul class="mui-dropdown-menu">
+            <li><a href="#">Option 1</a></li>
+            <li><a href="#">Option 2</a></li>
+            <li><a href="#">Option 3</a></li>
+            <li><a href="#">Option 4</a></li>
+          </ul>
+        </div>
+        <div class="mui-dropdown">
+          <button class="mui-btn mui-btn-primary" data-mui-toggle="dropdown">
+            Dropdown
+            <span class="mui-caret"></span>
+          </button>
+          <ul class="mui-dropdown-menu mui-dropdown-menu-right">
+            <li><a href="#">Option 1</a></li>
+            <li><a href="#">Option 2</a></li>
+            <li><a href="#">Option 3</a></li>
+            <li><a href="#">Option 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
