@@ -9,6 +9,8 @@
 * Added text font-smoothing to body by default
 * Removed custom letter-spacing
 * Set button font-weight to 500, 600 for white text
+* Moved mui-colors.css to extra/ directory in dist/
+* Added mui-combined.js to extra/
 
 ## 0.1.15 - June 28, 2015
 
