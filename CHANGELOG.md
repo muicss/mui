@@ -12,6 +12,7 @@
 * Moved mui-colors.css to extra/ directory in dist/
 * Added mui-combined.js to extra/
 * Added mui-react-combined.js to extra/
+* Set maximum height of select element menu to viewport height
 
 ## 0.1.15 - June 28, 2015
 

@@ -185,13 +185,14 @@ function Menu(selectEl) {
  * @param {Element} selectEl - The select element
  */
 Menu.prototype._createMenuEl = function(selectEl) {
-  var optionEl, itemEl, i;
+  var optionEl, itemEl, i, minTop, maxTop, top;
 
   var menuEl = document.createElement('div'),
       optionList = selectEl.children,
       m = optionList.length,
       selectedPos = 0,
-      top = 13;
+      idealTop = 13;
+  
 
   // create element
   menuEl.className = menuClass;
@@ -223,15 +224,21 @@ Menu.prototype._createMenuEl = function(selectEl) {
   height = Math.min(height, viewHeight);
   jqLite.css(menuEl, 'height', height + 'px');
 
-  // set position
-  top += selectedPos * optionHeight;
+  // ideal position
+  idealTop += selectedPos * optionHeight;
+  idealTop = -1 * idealTop;
 
-  // prevent overflow top (set max to parent relative to viewport)
-  top = Math.min(top, selectEl.getBoundingClientRect().top);
+  // minimum position
+  minTop = -1 * selectEl.getBoundingClientRect().top;
 
-  // TODO: prevent overflow bottom
-  
-  jqLite.css(menuEl, 'top', (-1 * top) + 'px');
+  // maximium position
+  maxTop = (viewHeight - height) + minTop;
+
+  // prevent overflow-y
+  top = Math.max(idealTop, minTop);
+  top = Math.min(top, maxTop);
+
+  jqLite.css(menuEl, 'top', top + 'px');
 
   return menuEl;
 }
