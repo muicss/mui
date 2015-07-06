@@ -226,7 +226,7 @@ gulp.task('cssjs-combined', ['clean', 'cssmin'], function() {
 
 
 gulp.task('react-combined', ['clean', 'cssmin'], function() {
-  return gulp.src('src/react/mui.js')
+  return gulp.src('src/react/mui-combined.js')
     .pipe(browserify({
       transform: [
         reactify,
