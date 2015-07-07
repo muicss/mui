@@ -67,14 +67,20 @@ BtnProto.createdCallback = function() {
 };
 
 
-// ----------------------------
-// Utilities
-// ----------------------------
+
+
+// ============================================================================
+// UTILITIES
+// ============================================================================
+
 var styleEl;
 
 
+/**
+ * Get or create a style element.
+ * @function
+ */
 function _getStyleEl() {
-  // get or create cached element
   if (styleEl === undefined) {
     styleEl = document.createElement('style');
     styleEl.innerHTML = require('mui.min.css');

@@ -720,14 +720,20 @@ BtnProto.createdCallback = function() {
 };
 
 
-// ----------------------------
-// Utilities
-// ----------------------------
+
+
+// ============================================================================
+// UTILITIES
+// ============================================================================
+
 var styleEl;
 
 
+/**
+ * Get or create a style element.
+ * @function
+ */
 function _getStyleEl() {
-  // get or create cached element
   if (styleEl === undefined) {
     styleEl = document.createElement('style');
     styleEl.innerHTML = require('mui.min.css');
@@ -832,14 +838,20 @@ FormControlProto.createdCallback = function() {
 }
 
 
-// ------------------------------
-// Utilities
-// ------------------------------
+
+
+// ============================================================================
+// UTILITIES
+// ============================================================================
+
 var styleEl;
 
 
+/**
+ * Get or create style
+ * @function
+ */
 function _getStyleEl() {
-  // get or create cached element
   if (styleEl === undefined) {
     styleEl = document.createElement('style');
     styleEl.innerHTML = require('mui.min.css');
@@ -849,6 +861,10 @@ function _getStyleEl() {
 }
 
 
+/**
+ * Create input element.
+ * @function
+ */
 function _createInputEl(attrs) {
   var inputEl;
 
@@ -875,6 +891,10 @@ function _createInputEl(attrs) {
 }
 
 
+/**
+ * Create label element.
+ * @function
+ */
 function _createLabelEl(attrs) {
   var labelEl = document.createElement('label');
   labelEl.appendChild(document.createTextNode(attrs.label));
