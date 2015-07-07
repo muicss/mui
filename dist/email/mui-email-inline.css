@@ -55,6 +55,9 @@ img {
   -ms-interpolation-mode: bicubic;
 }
 
+/**
+ * MUI Email Scaffolding
+ */
 body {
   color: #212121;
   font-family: "Helvetica Neue", Helvetica, Arial, Verdana, "Trebuchet MS";
@@ -81,6 +84,9 @@ hr {
   border: none;
 }
 
+/**
+ * MUI Email Layout
+ */
 .mui-body {
   margin: 0;
   padding: 0;
@@ -109,6 +115,9 @@ hr {
   width: 600px;
 }
 
+/**
+ * MUI Email Semantic Markup
+ */
 strong {
   font-weight: 700;
 }
@@ -123,6 +132,9 @@ h4, h5, h6 {
   margin-bottom: 10px;
 }
 
+/**
+ * MUI Email Typography
+ */
 .mui-text-display4 {
   font-weight: 300;
   font-size: 112px;
@@ -508,6 +520,9 @@ h4, h5, h6 {
   color: #ff82ad;
 }
 
+/**
+ * MUI Email Buttons
+ */
 .mui-btn {
   cursor: pointer;
   white-space: nowrap;
@@ -807,6 +822,9 @@ table.mui-btn-lg > tbody > tr > td > a {
   padding: 19px 25px;
 }
 
+/**
+ * MUI Email Panel
+ */
 .mui-panel {
   padding: 15px;
   border-radius: 0;
@@ -817,6 +835,9 @@ table.mui-btn-lg > tbody > tr > td > a {
   border-bottom: 2px solid #d4d4d4;
 }
 
+/**
+ * MUI Email Dividers
+ */
 .mui-divider {
   display: block;
   height: 1px;
@@ -839,6 +860,9 @@ table.mui-btn-lg > tbody > tr > td > a {
   border-right: 1px solid #e0e0e0;
 }
 
+/**
+ * MUI Email Helpers
+ */
 .mui-text-left {
   text-align: left;
 }
