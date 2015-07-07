@@ -1,5 +1,10 @@
-// Test helpers
+/**
+ * Test helpers
+ * @module test/helpers
+ */
 
+
+/** Define module API */
 module.exports = {
   initDOM: function() {
     // initialize jsdom if document is undefined

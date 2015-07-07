@@ -1,3 +1,9 @@
+/**
+ * MUI Test Util library
+ * @module test/test-util
+ */
+
+
 describe('js/lib/util.js', function() {
   var assert = require('assert'),
       helpers = require('./helpers.js'),
@@ -5,23 +11,28 @@ describe('js/lib/util.js', function() {
       el;
 
   helpers.initDOM();
+
   
   before(function() {
     util = require('../src/js/lib/util.js');
   });
+
 
   beforeEach(function() {
     el = document.createElement('div');
     document.body.appendChild(el);
   });
 
+
   afterEach(function() {
     el.parentNode.removeChild(el);
   });
 
-  // ----------------------
-  // loadStyle
-  // ----------------------
+
+  // --------------------------------------------------------------------------
+  // LOADSTYLE
+  // --------------------------------------------------------------------------
+
   it('should load styles dynamically', function() {
     var s = '.my-class {color: rgb(255, 0, 0);}';
     util.loadStyle(s);
