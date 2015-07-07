@@ -55,6 +55,7 @@ gulp.task('clean', function(callback) {
 // ----------------------------------------------------------------------------
 // CSS
 // ----------------------------------------------------------------------------
+
 gulp.task('sass', function() {
   return gulp.src('src/sass/mui.scss')
     .pipe(sass())
@@ -80,6 +81,7 @@ gulp.task('cssmin', ['sass'], function() {
 // ----------------------------------------------------------------------------
 // JS
 // ----------------------------------------------------------------------------
+
 gulp.task('js', function() {
   return Browserify('./src/js/mui.js')
     .bundle()
@@ -100,6 +102,7 @@ gulp.task('uglify', ['js'], function() {
 // ----------------------------------------------------------------------------
 // REACT
 // ----------------------------------------------------------------------------
+
 gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
@@ -122,6 +125,7 @@ gulp.task('react-uglify', ['react'], function() {
 // ----------------------------------------------------------------------------
 // WEB COMPONENTS
 // ----------------------------------------------------------------------------
+
 gulp.task('webcomponents', ['clean', 'cssmin'], function() {
   return gulp.src('src/webcomponents/main.js')
     .pipe(browserify({
@@ -145,6 +149,7 @@ gulp.task('webcomponents-uglify', ['webcomponents'], function() {
 // ----------------------------------------------------------------------------
 // EMAIL
 // ----------------------------------------------------------------------------
+
 gulp.task('build-email-inline', function() {
   return gulp.src('src/email/mui-email-inline.scss')
     .pipe(sass())
