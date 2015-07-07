@@ -514,22 +514,22 @@ h4, h5, h6 {
 }
 
 a.mui-btn {
-  display: inline-block;
-  text-decoration: none;
-  text-align: center;
   font-weight: 400;
   font-size: 14px;
   color: #212121;
   line-height: 14px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  border-radius: 3px;
-  padding: 10px 25px;
-  background-color: transparent;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 3px;
+  padding: 10px 25px;
+  background-color: transparent;
 }
 
 a.mui-btn.mui-btn-default {
@@ -639,22 +639,22 @@ table.mui-btn > tbody > tr > td {
 
 table.mui-btn > tr > td > a,
 table.mui-btn > tbody > tr > td > a {
-  display: inline-block;
-  text-decoration: none;
-  text-align: center;
   font-weight: 400;
   font-size: 14px;
   color: #212121;
   line-height: 14px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  border-radius: 3px;
-  padding: 10px 25px;
-  background-color: transparent;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 3px;
+  padding: 10px 25px;
+  background-color: transparent;
 }
 
 table.mui-btn.mui-btn-default > tr > td,
