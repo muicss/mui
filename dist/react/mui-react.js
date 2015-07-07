@@ -559,33 +559,46 @@ module.exports = {
 
 'use strict';
 
-var buttonClass = 'mui-btn';
-var flatClass = buttonClass + '-flat',
+var util = require('../js/lib/util.js'),
+    Ripple = require('./ripple.jsx');
+
+var buttonClass = 'mui-btn',
+    flatClass = buttonClass + '-flat',
     raisedClass = buttonClass + '-raised',
     largeClass = buttonClass + '-lg',
     floatingClass = buttonClass + '-floating';
 
-var Ripple = require('./ripple.jsx');
-var util = require('../js/lib/util.js');
 
+/**
+ * Button constructor
+ * @class
+ */
 var Button = React.createClass({displayName: "Button",
   mixins: [Ripple],
   getDefaultProps: function() {
     return {
-      type: 'default', // one of default, primary, danger or accent
+      type: 'default',  // one of default, primary, danger or accent
       disabled: false
     };
   },
   render: function() {
     var cs = {};
+
     cs[buttonClass] = true;
     cs[buttonClass + '-' + this.props.type] = true;
     cs[flatClass] = this.props.flat;
     cs[raisedClass] = this.props.raised;
     cs[largeClass] = this.props.large;
     cs = util.classNames(cs);
+
     return (
-      React.createElement("button", {className:  cs, disabled:  this.props.disabled, onMouseDown:  this.ripple, onTouchStart:  this.ripple, onClick:  this.props.onClick}, 
+      React.createElement("button", {
+        className:  cs, 
+        disabled:  this.props.disabled, 
+        onMouseDown:  this.ripple, 
+        onTouchStart:  this.ripple, 
+        onClick:  this.props.onClick
+      }, 
          this.props.children, 
          this.state.ripples && this.renderRipples()
       )
@@ -593,6 +606,11 @@ var Button = React.createClass({displayName: "Button",
   }
 });
 
+
+/**
+ * Round button constructor
+ * @class
+ */
 var RoundButton = React.createClass({displayName: "RoundButton",
   mixins: [Ripple],
   getDefaultProps: function() {
@@ -602,12 +620,20 @@ var RoundButton = React.createClass({displayName: "RoundButton",
   },
   render: function() {
     var cs = {};
+
     cs[buttonClass] = true;
     cs[floatingClass] = true;
     cs[floatingClass + '-mini'] = this.props.mini;
     cs = util.classNames(cs);
+
     return (
-      React.createElement("button", {className:  cs, disabled:  this.props.disabled, onMouseDown:  this.ripple, onTouchStart:  this.ripple, onClick:  this.props.onClick}, 
+      React.createElement("button", {
+        className:  cs, 
+        disabled:  this.props.disabled, 
+        onMouseDown:  this.ripple, 
+        onTouchStart:  this.ripple, 
+        onClick:  this.props.onClick
+      }, 
          this.props.children, 
          this.state.ripples && this.renderRipples()
       )
@@ -615,10 +641,13 @@ var RoundButton = React.createClass({displayName: "RoundButton",
   }
 })
 
+
+/** Define module API */
 module.exports = {
   Button: Button,
   RoundButton: RoundButton
 };
+
 
 },{"../js/lib/util.js":3,"./ripple.jsx":9}],5:[function(require,module,exports){
 /**
@@ -630,19 +659,23 @@ module.exports = {
 
 'use strict';
 
+var util = require('../js/lib/util'),
+    jqLite = require('../js/lib/jqLite'),
+    buttons = require('./buttons.jsx'),
+    Button = buttons.Button,
+    RoundButton = buttons.RoundButton;
+
 var dropdownClass = 'mui-dropdown',
     caretClass = 'mui-caret',
     menuClass = 'mui-dropdown-menu',
     openClass = 'mui-open',
     rightClass = 'mui-dropdown-menu-right';
 
-var util = require('../js/lib/util'),
-    jqLite = require('../js/lib/jqLite');
 
-var buttons = require('./buttons.jsx');
-var Button = buttons.Button;
-var RoundButton = buttons.RoundButton;
-
+/**
+ * Dropdown constructor
+ * @class
+ */
 var Dropdown = React.createClass({displayName: "Dropdown",
   menuStyle: { top: 0 },
   getInitialState: function() {
@@ -658,33 +691,55 @@ var Dropdown = React.createClass({displayName: "Dropdown",
   },
   render: function() {
     var button;
+
     if (this.props.round) {
       button = (
-        React.createElement(RoundButton, {ref: "button", onClick:  this._click, mini:  this.props.mini, disabled:  this.props.disabled}, 
+        React.createElement(RoundButton, {
+          ref: "button", 
+          onClick:  this._click, 
+          mini:  this.props.mini, 
+          disabled:  this.props.disabled
+        }, 
            this.props.label, 
           React.createElement("span", {className:  caretClass })
         )
       );
     } else {
       button = (
-        React.createElement(Button, {ref: "button", onClick:  this._click, type:  this.props.type, flat:  this.props.flat, raised:  this.props.raised, large:  this.props.large, disabled:  this.props.disabled}, 
+        React.createElement(Button, {
+          ref: "button", 
+          onClick:  this._click, 
+          type:  this.props.type, 
+          flat:  this.props.flat, 
+          raised:  this.props.raised, 
+          large:  this.props.large, 
+          disabled:  this.props.disabled
+        }, 
            this.props.label, 
           React.createElement("span", {className:  caretClass })
         )
       );
     }
+
     var cs = {};
+
     cs[menuClass] = true;
     cs[openClass] = this.state.opened;
     cs[rightClass] = this.props.right;
     cs = util.classNames(cs);
+
     return (
       React.createElement("div", {className:  dropdownClass, style:  {padding: '0px 2px 0px'} }, 
          button, 
          this.state.opened && (
-          React.createElement("ul", {className:  cs, style:  this.menuStyle, ref: "menu", onClick:  this._select}, 
-             this.props.children
-          ))
+            React.createElement("ul", {
+              className:  cs, 
+              style:  this.menuStyle, 
+              ref: "menu", 
+              onClick:  this._select
+            }, 
+               this.props.children
+            ))
         
       )
     );
@@ -712,8 +767,9 @@ var Dropdown = React.createClass({displayName: "Dropdown",
   _open: function () {
     // position menu element below toggle button
     var wrapperRect = React.findDOMNode(this).getBoundingClientRect(),
-        toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
+        toggleRect;
 
+    toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
     this.menuStyle.top = toggleRect.top - wrapperRect.top + toggleRect.height;
 
     this.setState({
@@ -737,6 +793,11 @@ var Dropdown = React.createClass({displayName: "Dropdown",
   }
 });
 
+
+/**
+ * DropdownItem constructor
+ * @class
+ */
 var DropdownItem = React.createClass({displayName: "DropdownItem",
   render: function () {
     return (
@@ -752,6 +813,8 @@ var DropdownItem = React.createClass({displayName: "DropdownItem",
   }
 });
 
+
+/** Define module API */
 module.exports = {
   Dropdown: Dropdown,
   DropdownItem: DropdownItem
@@ -805,15 +868,16 @@ module.exports = {
 
 'use strict';
 
+var util = require('../js/lib/util.js');
+
 var formControlClass = 'mui-form-control',
     formGroupClass = 'mui-form-group',
     floatingLabelBaseClass = 'mui-form-floating-label',
     floatingLabelActiveClass = floatingLabelBaseClass + '-active';
 
-var util = require('../js/lib/util.js');
 
 /**
- * Constructs a FormControl element.
+ * FormControl constructor
  * @class
  */
 var FormControl = React.createClass({displayName: "FormControl",
@@ -831,6 +895,10 @@ var FormControl = React.createClass({displayName: "FormControl",
 });
 
 
+/**
+ * FormLabel constructor
+ * @class
+ */
 var FormLabel = React.createClass({displayName: "FormLabel",
   getInitialState: function() {
     return {
@@ -839,14 +907,16 @@ var FormLabel = React.createClass({displayName: "FormLabel",
   },
   componentDidMount: function() {
     setTimeout(function() {
-      var s = '.15s ease-out';
-      var style = {
+      var s = '.15s ease-out',
+          style;
+
+      style = {
         transition: s,
         WebkitTransition: s,
         MozTransition: s,
         OTransition: s,
         msTransform: s
-      }
+      };
 
       this.setState({
         style: style
@@ -854,18 +924,22 @@ var FormLabel = React.createClass({displayName: "FormLabel",
     }.bind(this), 150);
   },
   render: function() {
-    var labelText = this.props.text;
-
+    var labelText = this.props.text,
+        labelClass;
     
     if (labelText) {
-      var labelClass = {};
+      labelClass = {};
       labelClass[floatingLabelBaseClass] = this.props.floating;
       labelClass[floatingLabelActiveClass] = this.props.active;
       labelClass = util.classNames(labelClass);
     }
     
     return (
-      React.createElement("label", {className:  labelClass, style:  this.state.style, onClick:  this.props.onClick}, 
+      React.createElement("label", {
+        className:  labelClass, 
+        style:  this.state.style, 
+        onClick:  this.props.onClick
+      }, 
          labelText 
       )
     );
@@ -874,7 +948,7 @@ var FormLabel = React.createClass({displayName: "FormLabel",
 
 
 /**
- * Constructs a FormGroup element.
+ * FormGroup constructor
  * @class
  */
 var FormGroup = React.createClass({displayName: "FormGroup",
@@ -895,12 +969,19 @@ var FormGroup = React.createClass({displayName: "FormGroup",
     return (
       React.createElement("div", {className:  formGroupClass }, 
         React.createElement(FormControl, {
-            type: this.props.type, 
-            value: this.props.value, 
-            autoFocus: this.props.autofocus, 
-            onInput:  this._input}
+          type: this.props.type, 
+          value: this.props.value, 
+          autoFocus: this.props.autofocus, 
+          onInput:  this._input}
         ), 
-         labelText && React.createElement(FormLabel, {text: labelText, onClick:  this._focus, active:  this.state.hasInput, floating:  this.props.isLabelFloating})
+         labelText &&
+          React.createElement(FormLabel, {
+            text: labelText, 
+            onClick:  this._focus, 
+            active:  this.state.hasInput, 
+            floating:  this.props.isLabelFloating}
+          )
+        
       )
     );
   },
@@ -936,10 +1017,7 @@ var FormGroup = React.createClass({displayName: "FormGroup",
 
 /** Define module API */
 module.exports = {
-  /** FormControl constructor */
   FormControl: FormControl,
-
-  /** FormGroup constructor */
   FormGroup: FormGroup
 };
 
@@ -957,6 +1035,10 @@ var containerClass = 'mui-container',
     panelClass = 'mui-panel';
 
 
+/**
+ * Container constructor
+ * @class
+ */
 var Container = React.createClass({displayName: "Container",
   render: function() {
     return (
@@ -967,6 +1049,11 @@ var Container = React.createClass({displayName: "Container",
   }
 });
 
+
+/**
+ * FluidContainer constructor
+ * @class
+ */
 var FluidContainer = React.createClass({displayName: "FluidContainer",
   render: function() {
     return (
@@ -977,6 +1064,11 @@ var FluidContainer = React.createClass({displayName: "FluidContainer",
   }
 });
 
+
+/**
+ * Panel constructor
+ * @class
+ */
 var Panel = React.createClass({displayName: "Panel",
   render: function() {
     return (
@@ -987,11 +1079,14 @@ var Panel = React.createClass({displayName: "Panel",
   }
 });
 
+
+/** Define module API */
 module.exports = {
   Container: Container,
   FluidContainer: FluidContainer,
   Panel: Panel
 };
+
 
 },{}],9:[function(require,module,exports){
 /**
@@ -1001,10 +1096,14 @@ module.exports = {
 
 'use strict';
 
-var rippleClass = 'mui-ripple-effect';
-
 var jqLite = require('../js/lib/jqLite.js');
 
+var rippleClass = 'mui-ripple-effect';
+
+
+/**
+ * Ripple singleton
+ */
 var Ripple = {
   getInitialState: function() {
     return {
@@ -1082,11 +1181,19 @@ var Ripple = {
     var i = 0;
     return this.state.ripples.map(function (ripple) {
       i++;
-      return (React.createElement("div", {className:  this.props.rippleClass, key:  i, style:  ripple.style}));
+      return (
+        React.createElement("div", {
+          className:  this.props.rippleClass, 
+          key:  i, 
+          style:  ripple.style}
+        )
+      );
     }.bind(this));
   }
 };
 
+
+/** Define module API */
 module.exports = Ripple;
 
 },{"../js/lib/jqLite.js":2}],10:[function(require,module,exports){
@@ -1099,14 +1206,19 @@ module.exports = Ripple;
 
 'use strict';
 
+var util = require('../js/lib/util.js');
+
 var tabClass = 'mui-tabs',
     contentClass = 'mui-tab-content',
     paneClass = 'mui-tab-pane',
     justifiedClass = 'mui-tabs-justified',
     activeClass = 'mui-active';
 
-var util = require('../js/lib/util.js');
 
+/**
+ * Tabs constructor
+ * @class
+ */
 var Tabs = React.createClass({displayName: "Tabs",
   getDefaultProps: function() {
     return {
@@ -1131,11 +1243,20 @@ var Tabs = React.createClass({displayName: "Tabs",
   },
   render: function() {
     var items = this.props.children.map(function (item) {
-      return { name: item.props.id, label: item.props.label, pane: item.props.children }
+      return {
+        name: item.props.id,
+        label: item.props.label,
+        pane: item.props.children
+      };
     });
     return (
       React.createElement("div", {className: "tabs"}, 
-        React.createElement(TabHeaders, {items:  items, justified:  this.props.justified, active:  this.state.activeTab, onClick:  this._changeTab}), 
+        React.createElement(TabHeaders, {
+          items:  items, 
+          justified:  this.props.justified, 
+          active:  this.state.activeTab, 
+          onClick:  this._changeTab}
+        ), 
         React.createElement(TabContainers, {items:  items, active:  this.state.activeTab})
       )
     );
@@ -1156,6 +1277,11 @@ var Tabs = React.createClass({displayName: "Tabs",
   }
 });
 
+
+/**
+ * TabHeaders constructor
+ * @class
+ */
 var TabHeaders = React.createClass({displayName: "TabHeaders",
   getDefaultProps: function() {
     return {
@@ -1185,6 +1311,11 @@ var TabHeaders = React.createClass({displayName: "TabHeaders",
   }
 });
 
+
+/**
+ * TabHeaderItem constructor
+ * @class
+ */
 var TabHeaderItem = React.createClass({displayName: "TabHeaderItem",
   render: function () {
     var classes = {};
@@ -1205,6 +1336,11 @@ var TabHeaderItem = React.createClass({displayName: "TabHeaderItem",
   }
 });
 
+
+/**
+ * TabContainers constructor
+ * @class
+ */
 var TabContainers = React.createClass({displayName: "TabContainers",
   getDefaultProps: function() {
     return {
@@ -1228,6 +1364,11 @@ var TabContainers = React.createClass({displayName: "TabContainers",
   }
 });
 
+
+/**
+ * TabPane constructor
+ * @class
+ */
 var TabPane = React.createClass({displayName: "TabPane",
   render: function () {
     var classes = {};
@@ -1242,16 +1383,23 @@ var TabPane = React.createClass({displayName: "TabPane",
   }
 });
 
-// Just a container to hold data
+
+/**
+ * TabItem constructor
+ * @class
+ */
 var TabItem = React.createClass({displayName: "TabItem",
   render: function() {
     return null;
   }
 });
 
+
+/** Define module API */
 module.exports = {
   Tabs: Tabs,
   TabItem: TabItem
 };
+
 
 },{"../js/lib/util.js":3}]},{},[6])

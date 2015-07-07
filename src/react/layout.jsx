@@ -10,6 +10,10 @@ var containerClass = 'mui-container',
     panelClass = 'mui-panel';
 
 
+/**
+ * Container constructor
+ * @class
+ */
 var Container = React.createClass({
   render: function() {
     return (
@@ -20,6 +24,11 @@ var Container = React.createClass({
   }
 });
 
+
+/**
+ * FluidContainer constructor
+ * @class
+ */
 var FluidContainer = React.createClass({
   render: function() {
     return (
@@ -30,6 +39,11 @@ var FluidContainer = React.createClass({
   }
 });
 
+
+/**
+ * Panel constructor
+ * @class
+ */
 var Panel = React.createClass({
   render: function() {
     return (
@@ -40,6 +54,8 @@ var Panel = React.createClass({
   }
 });
 
+
+/** Define module API */
 module.exports = {
   Container: Container,
   FluidContainer: FluidContainer,

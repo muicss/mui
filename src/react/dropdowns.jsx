@@ -7,19 +7,23 @@
 
 'use strict';
 
+var util = require('../js/lib/util'),
+    jqLite = require('../js/lib/jqLite'),
+    buttons = require('./buttons.jsx'),
+    Button = buttons.Button,
+    RoundButton = buttons.RoundButton;
+
 var dropdownClass = 'mui-dropdown',
     caretClass = 'mui-caret',
     menuClass = 'mui-dropdown-menu',
     openClass = 'mui-open',
     rightClass = 'mui-dropdown-menu-right';
 
-var util = require('../js/lib/util'),
-    jqLite = require('../js/lib/jqLite');
 
-var buttons = require('./buttons.jsx');
-var Button = buttons.Button;
-var RoundButton = buttons.RoundButton;
-
+/**
+ * Dropdown constructor
+ * @class
+ */
 var Dropdown = React.createClass({
   menuStyle: { top: 0 },
   getInitialState: function() {
@@ -35,33 +39,55 @@ var Dropdown = React.createClass({
   },
   render: function() {
     var button;
+
     if (this.props.round) {
       button = (
-        <RoundButton ref="button" onClick={ this._click } mini={ this.props.mini } disabled={ this.props.disabled }>
+        <RoundButton
+          ref="button"
+          onClick={ this._click }
+          mini={ this.props.mini }
+          disabled={ this.props.disabled }
+        >
           { this.props.label }
           <span className={ caretClass } />
         </RoundButton>
       );
     } else {
       button = (
-        <Button ref="button" onClick={ this._click } type={ this.props.type } flat={ this.props.flat } raised={ this.props.raised } large={ this.props.large } disabled={ this.props.disabled }>
+        <Button
+          ref="button"
+          onClick={ this._click }
+          type={ this.props.type }
+          flat={ this.props.flat }
+          raised={ this.props.raised }
+          large={ this.props.large }
+          disabled={ this.props.disabled }
+        >
           { this.props.label }
           <span className={ caretClass } />
         </Button>
       );
     }
+
     var cs = {};
+
     cs[menuClass] = true;
     cs[openClass] = this.state.opened;
     cs[rightClass] = this.props.right;
     cs = util.classNames(cs);
+
     return (
       <div className={ dropdownClass } style={ {padding: '0px 2px 0px'} } >
         { button }
         { this.state.opened && (
-          <ul className={ cs } style={ this.menuStyle } ref="menu" onClick={ this._select }>
-            { this.props.children }
-          </ul>)
+            <ul
+              className={ cs }
+              style={ this.menuStyle }
+              ref="menu"
+              onClick={ this._select }
+            >
+              { this.props.children }
+            </ul>)
         }
       </div>
     );
@@ -89,8 +115,9 @@ var Dropdown = React.createClass({
   _open: function () {
     // position menu element below toggle button
     var wrapperRect = React.findDOMNode(this).getBoundingClientRect(),
-        toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
+        toggleRect;
 
+    toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
     this.menuStyle.top = toggleRect.top - wrapperRect.top + toggleRect.height;
 
     this.setState({
@@ -114,6 +141,11 @@ var Dropdown = React.createClass({
   }
 });
 
+
+/**
+ * DropdownItem constructor
+ * @class
+ */
 var DropdownItem = React.createClass({
   render: function () {
     return (
@@ -129,6 +161,8 @@ var DropdownItem = React.createClass({
   }
 });
 
+
+/** Define module API */
 module.exports = {
   Dropdown: Dropdown,
   DropdownItem: DropdownItem

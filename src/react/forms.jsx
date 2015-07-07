@@ -5,15 +5,16 @@
 
 'use strict';
 
+var util = require('../js/lib/util.js');
+
 var formControlClass = 'mui-form-control',
     formGroupClass = 'mui-form-group',
     floatingLabelBaseClass = 'mui-form-floating-label',
     floatingLabelActiveClass = floatingLabelBaseClass + '-active';
 
-var util = require('../js/lib/util.js');
 
 /**
- * Constructs a FormControl element.
+ * FormControl constructor
  * @class
  */
 var FormControl = React.createClass({
@@ -31,6 +32,10 @@ var FormControl = React.createClass({
 });
 
 
+/**
+ * FormLabel constructor
+ * @class
+ */
 var FormLabel = React.createClass({
   getInitialState: function() {
     return {
@@ -39,14 +44,16 @@ var FormLabel = React.createClass({
   },
   componentDidMount: function() {
     setTimeout(function() {
-      var s = '.15s ease-out';
-      var style = {
+      var s = '.15s ease-out',
+          style;
+
+      style = {
         transition: s,
         WebkitTransition: s,
         MozTransition: s,
         OTransition: s,
         msTransform: s
-      }
+      };
 
       this.setState({
         style: style
@@ -54,18 +61,22 @@ var FormLabel = React.createClass({
     }.bind(this), 150);
   },
   render: function() {
-    var labelText = this.props.text;
-
+    var labelText = this.props.text,
+        labelClass;
     
     if (labelText) {
-      var labelClass = {};
+      labelClass = {};
       labelClass[floatingLabelBaseClass] = this.props.floating;
       labelClass[floatingLabelActiveClass] = this.props.active;
       labelClass = util.classNames(labelClass);
     }
     
     return (
-      <label className={ labelClass } style={ this.state.style } onClick={ this.props.onClick }>
+      <label
+        className={ labelClass }
+        style={ this.state.style }
+        onClick={ this.props.onClick }
+      >
         { labelText }
       </label>
     );
@@ -74,7 +85,7 @@ var FormLabel = React.createClass({
 
 
 /**
- * Constructs a FormGroup element.
+ * FormGroup constructor
  * @class
  */
 var FormGroup = React.createClass({
@@ -95,12 +106,19 @@ var FormGroup = React.createClass({
     return (
       <div className={ formGroupClass }>
         <FormControl 
-            type={this.props.type}
-            value={this.props.value}
-            autoFocus={this.props.autofocus}
-            onInput={ this._input }
+          type={this.props.type}
+          value={this.props.value}
+          autoFocus={this.props.autofocus}
+          onInput={ this._input }
         />
-        { labelText && <FormLabel text={labelText} onClick={ this._focus } active={ this.state.hasInput } floating={ this.props.isLabelFloating } /> }
+        { labelText &&
+          <FormLabel
+            text={labelText}
+            onClick={ this._focus }
+            active={ this.state.hasInput }
+            floating={ this.props.isLabelFloating }
+          />
+        }
       </div>
     );
   },
@@ -136,9 +154,6 @@ var FormGroup = React.createClass({
 
 /** Define module API */
 module.exports = {
-  /** FormControl constructor */
   FormControl: FormControl,
-
-  /** FormGroup constructor */
   FormGroup: FormGroup
 };

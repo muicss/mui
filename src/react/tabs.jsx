@@ -7,14 +7,19 @@
 
 'use strict';
 
+var util = require('../js/lib/util.js');
+
 var tabClass = 'mui-tabs',
     contentClass = 'mui-tab-content',
     paneClass = 'mui-tab-pane',
     justifiedClass = 'mui-tabs-justified',
     activeClass = 'mui-active';
 
-var util = require('../js/lib/util.js');
 
+/**
+ * Tabs constructor
+ * @class
+ */
 var Tabs = React.createClass({
   getDefaultProps: function() {
     return {
@@ -39,11 +44,20 @@ var Tabs = React.createClass({
   },
   render: function() {
     var items = this.props.children.map(function (item) {
-      return { name: item.props.id, label: item.props.label, pane: item.props.children }
+      return {
+        name: item.props.id,
+        label: item.props.label,
+        pane: item.props.children
+      };
     });
     return (
       <div className="tabs">
-        <TabHeaders items={ items } justified={ this.props.justified } active={ this.state.activeTab } onClick={ this._changeTab }/>
+        <TabHeaders
+          items={ items }
+          justified={ this.props.justified }
+          active={ this.state.activeTab }
+          onClick={ this._changeTab }
+        />
         <TabContainers items={ items } active={ this.state.activeTab } />
       </div>
     );
@@ -64,6 +78,11 @@ var Tabs = React.createClass({
   }
 });
 
+
+/**
+ * TabHeaders constructor
+ * @class
+ */
 var TabHeaders = React.createClass({
   getDefaultProps: function() {
     return {
@@ -93,6 +112,11 @@ var TabHeaders = React.createClass({
   }
 });
 
+
+/**
+ * TabHeaderItem constructor
+ * @class
+ */
 var TabHeaderItem = React.createClass({
   render: function () {
     var classes = {};
@@ -113,6 +137,11 @@ var TabHeaderItem = React.createClass({
   }
 });
 
+
+/**
+ * TabContainers constructor
+ * @class
+ */
 var TabContainers = React.createClass({
   getDefaultProps: function() {
     return {
@@ -136,6 +165,11 @@ var TabContainers = React.createClass({
   }
 });
 
+
+/**
+ * TabPane constructor
+ * @class
+ */
 var TabPane = React.createClass({
   render: function () {
     var classes = {};
@@ -150,13 +184,19 @@ var TabPane = React.createClass({
   }
 });
 
-// Just a container to hold data
+
+/**
+ * TabItem constructor
+ * @class
+ */
 var TabItem = React.createClass({
   render: function() {
     return null;
   }
 });
 
+
+/** Define module API */
 module.exports = {
   Tabs: Tabs,
   TabItem: TabItem

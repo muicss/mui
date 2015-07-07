@@ -5,10 +5,14 @@
 
 'use strict';
 
-var rippleClass = 'mui-ripple-effect';
-
 var jqLite = require('../js/lib/jqLite.js');
 
+var rippleClass = 'mui-ripple-effect';
+
+
+/**
+ * Ripple singleton
+ */
 var Ripple = {
   getInitialState: function() {
     return {
@@ -86,9 +90,17 @@ var Ripple = {
     var i = 0;
     return this.state.ripples.map(function (ripple) {
       i++;
-      return (<div className={ this.props.rippleClass } key={ i } style={ ripple.style } />);
+      return (
+        <div
+          className={ this.props.rippleClass }
+          key={ i }
+          style={ ripple.style }
+        />
+      );
     }.bind(this));
   }
 };
 
+
+/** Define module API */
 module.exports = Ripple;
