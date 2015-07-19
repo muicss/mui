@@ -75,10 +75,17 @@ describe('js/lib/jqLite.js', function() {
     
     beforeEach(function() {
       el = document.createElement('button');
+      document.body.appendChild(el);  // for IE10
     });
 
 
-    it('should attach an listener', function() {
+    afterEach(function() {
+      el.parentNode.removeChild(el);
+    });
+
+
+    
+    it('should attach a listener', function() {
       var isClicked = false;
       jqLite.on(el, 'click', function() {
         isClicked = true;
