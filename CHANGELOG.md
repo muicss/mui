@@ -3,6 +3,7 @@
 ## 0.1.19 - In progress
 
 * Bugfix to mui-react-combined.js build script
+* Removed styles on bare <label> element
 
 ## 0.1.18 - July 6, 2015
 
