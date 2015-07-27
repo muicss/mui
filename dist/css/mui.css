@@ -2158,13 +2158,6 @@ h4, h5, h6 {
  * MUI Form styles
  * 
  */
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  min-width: 0;
-}
-
 legend {
   display: block;
   width: 100%;
@@ -2178,26 +2171,6 @@ legend {
 
 input[type="search"] {
   box-sizing: border-box;
-}
-
-input[type="radio"],
-input[type="checkbox"] {
-  margin: 4px 0 0;
-  line-height: normal;
-}
-
-input[type="file"] {
-  display: block;
-}
-
-input[type="range"] {
-  display: block;
-  width: 100%;
-}
-
-select[multiple],
-select[size] {
-  height: auto;
 }
 
 input[type="file"]:focus,
@@ -2392,6 +2365,18 @@ input[type="search"] {
   vertical-align: middle;
   font-weight: normal;
   cursor: pointer;
+}
+
+.mui-radio-inline > input[type="radio"],
+.mui-radio-inline > input[type="checkbox"],
+.mui-radio-inline > label > input[type="radio"],
+.mui-radio-inline > label > input[type="checkbox"],
+.mui-checkbox-inline > input[type="radio"],
+.mui-checkbox-inline > input[type="checkbox"],
+.mui-checkbox-inline > label > input[type="radio"],
+.mui-checkbox-inline > label > input[type="checkbox"] {
+  margin: 4px 0 0;
+  line-height: normal;
 }
 
 .mui-radio-inline + .mui-radio-inline,
@@ -2600,8 +2585,8 @@ th {
 }
 
 [data-mui-toggle="dropdown"] {
-  -webkit-animation-duration: 0.001s;
-  animation-duration: 0.001s;
+  -webkit-animation-duration: 0.0001s;
+  animation-duration: 0.0001s;
   -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   outline: 0;

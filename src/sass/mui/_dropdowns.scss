@@ -12,8 +12,7 @@
 
 // Toggle element
 [data-mui-toggle="dropdown"] {
-  animation-duration: 0.001s;
-  animation-name: mui-node-inserted;
+  @include mui-node-inserted();
 
   outline: 0;
 }

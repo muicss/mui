@@ -4,6 +4,9 @@
 
 * Bugfix to mui-react-combined.js build script
 * Removed styles on bare <label> element
+* Removed styles on bare <fieldset> element
+* Removed styles on bare input[type="radio"], input[type="checkbox"],
+  input[type="range"], select[multiple], select[size]
 
 ## 0.1.18 - July 6, 2015
 
