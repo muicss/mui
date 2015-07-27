@@ -11,13 +11,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 // NORMALIZATIONS
 // ============================================================================
 
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  min-width: 0;
-}
-
 legend {
   display: block;
   width: 100%;
@@ -29,32 +22,9 @@ legend {
   border: 0;
 }
 
+// override content-box in normalize.css
 input[type="search"] {
   box-sizing: border-box;
-}
-
-input[type="radio"],
-input[type="checkbox"] {
-  // Position radios and checkboxes better
-  margin: 4px 0 0;
-  line-height: normal;
-}
-
-input[type="file"] {
-  // Set the height of file controls to match text inputs
-  display: block;
-}
-
-input[type="range"] {
-  // Make range inputs behave like textual form controls
-  display: block;
-  width: 100%;
-}
-
-select[multiple],
-select[size] {
-  // Make multiple select elements height not fixed
-  height: auto;
 }
 
 input[type="file"]:focus,
@@ -271,6 +241,14 @@ input[type="search"] {
   vertical-align: middle;
   font-weight: normal;
   cursor: pointer;
+
+  > input[type="radio"],
+  > input[type="checkbox"],
+  > label > input[type="radio"],
+  > label > input[type="checkbox"] {
+    margin: 4px 0 0;
+    line-height: normal;
+  }
 }
 
 .mui-radio-inline + .mui-radio-inline,

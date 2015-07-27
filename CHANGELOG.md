@@ -1,9 +1,14 @@
 # MUI Changelog
 
-## 0.1.19 - In progress
+## 0.1.19 - July 26, 2015
 
 * Bugfix to mui-react-combined.js build script
 * Removed styles on bare <label> element
+* Removed styles on bare <fieldset> element
+* Removed styles on bare input[type="radio"], input[type="checkbox"],
+  input[type="range"], select[multiple], select[size]
+* Renamed $mui-panel-bg to $mui-panel-bg-color
+* Changed btn-raised box-shadow to 0 2px 2px rgba(0, 0, 0, 0.20)
 
 ## 0.1.18 - July 6, 2015
 
