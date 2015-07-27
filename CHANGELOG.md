@@ -7,6 +7,7 @@
 * Removed styles on bare <fieldset> element
 * Removed styles on bare input[type="radio"], input[type="checkbox"],
   input[type="range"], select[multiple], select[size]
+* Renamed $mui-panel-bg to $mui-panel-bg-color
 
 ## 0.1.18 - July 6, 2015
 
