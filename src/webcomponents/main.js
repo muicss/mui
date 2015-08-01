@@ -10,7 +10,7 @@
 
   // check browser support
   if (typeof HTMLElement === 'undefined' || !document.registerElement) {
-    throw "MUI: Client does not support web components";
+    throw new Error("MUI: Client does not support web components");
   }
 
   // imports

@@ -58,7 +58,7 @@ function loadStyleFn(cssText) {
  * @param {string} msg - The error message.
  */
 function raiseErrorFn(msg) {
-  throw "MUI Error: " + msg;
+  throw new Error("MUI: " + msg);
 }
 
 

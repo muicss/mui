@@ -1408,7 +1408,7 @@ function jqLiteType(somevar) {
   if (typeStr.indexOf('[object ') === 0) {
     return typeStr.slice(8, -1).toLowerCase();
   } else {
-    throw "Could not understand type: " + typeStr;
+    throw new Error("MUI: Could not understand type: " + typeStr);
   }    
 }
 
@@ -1723,7 +1723,7 @@ function loadStyleFn(cssText) {
  * @param {string} msg - The error message.
  */
 function raiseErrorFn(msg) {
-  throw "MUI Error: " + msg;
+  throw new Error("MUI: " + msg);
 }
 
 
@@ -1929,17 +1929,17 @@ describe('js/lib/jqLite.js', function() {
       document.body.appendChild(el);  // for IE10
     });
 
+
     afterEach(function() {
       el.parentNode.removeChild(el);
     });
 
 
+    
     it('should attach a listener', function() {
-      //document.body.appendChild(el);
       var isClicked = false;
       jqLite.on(el, 'click', function() {
         isClicked = true;
-        //done();
       });
       el.dispatchEvent(event('click'));
       assert.equal(isClicked, true);

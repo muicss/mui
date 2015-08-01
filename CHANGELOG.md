@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.20 - IN PROGRESS
+
+* Raising Error objects
+
 ## 0.1.19 - July 26, 2015
 
 * Bugfix to mui-react-combined.js build script

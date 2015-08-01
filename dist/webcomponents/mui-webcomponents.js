@@ -212,7 +212,7 @@ function jqLiteType(somevar) {
   if (typeStr.indexOf('[object ') === 0) {
     return typeStr.slice(8, -1).toLowerCase();
   } else {
-    throw "Could not understand type: " + typeStr;
+    throw new Error("MUI: Could not understand type: " + typeStr);
   }    
 }
 
@@ -526,7 +526,7 @@ function loadStyleFn(cssText) {
  * @param {string} msg - The error message.
  */
 function raiseErrorFn(msg) {
-  throw "MUI Error: " + msg;
+  throw new Error("MUI: " + msg);
 }
 
 
@@ -770,7 +770,7 @@ module.exports = {
 
   // check browser support
   if (typeof HTMLElement === 'undefined' || !document.registerElement) {
-    throw "MUI: Client does not support web components";
+    throw new Error("MUI: Client does not support web components");
   }
 
   // imports
