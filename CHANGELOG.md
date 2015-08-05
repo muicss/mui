@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.21 - August 5, 2015
+
+* Removed default down arrow on select component on IE
+
 ## 0.1.20 - August 5, 2015
 
 * Raising Error objects

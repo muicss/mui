@@ -2426,7 +2426,7 @@ input[type="search"] {
   padding: 0 25px 0 0;
 }
 
-.mui-select > select::ms-expand {
+.mui-select > select::-ms-expand {
   display: none;
 }
 

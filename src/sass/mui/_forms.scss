@@ -306,7 +306,7 @@ input[type="search"] {
     font-size: $mui-input-font-size;
     padding: 0 25px 0 0;
 
-    &::ms-expand {
+    &::-ms-expand {
       display: none;  // For IE
     }
     
