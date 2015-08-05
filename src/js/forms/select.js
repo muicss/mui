@@ -12,8 +12,9 @@ var jqLite = require('../lib/jqLite.js'),
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select-menu',
     optionHeight = 42,  // from CSS
-    menuPadding = 8;  // from CSS
-
+    menuPadding = 8,  // from CSS
+    doc = document,
+    win = window;
 
 /**
  * Initialize select element.
@@ -23,6 +24,9 @@ function initialize(selectEl) {
   // check flag
   if (selectEl._muiSelect === true) return;
   else selectEl._muiSelect = true;
+
+  // use default behavior on touch devices
+  if ('ontouchstart' in doc.docElement) return;
 
   // initialize element
   new Select(selectEl);
@@ -37,10 +41,9 @@ function Select(selectEl) {
   // instance variables
   this.selectEl = selectEl;
   this.wrapperEl = selectEl.parentNode;
-  this.useDefault = false;
+  this.useDefault = false;  // currently unused but let's keep just in case
 
   // attach event handlers
-  jqLite.on(selectEl, 'touchstart', util.callback(this, 'touchstartHandler'));
   jqLite.on(selectEl, 'mousedown', util.callback(this, 'mousedownHandler'));
   jqLite.on(selectEl, 'focus', util.callback(this, 'focusHandler'));
   jqLite.on(selectEl, 'click', util.callback(this, 'clickHandler'));
@@ -49,15 +52,6 @@ function Select(selectEl) {
   this.wrapperEl.tabIndex = -1;
   var callbackFn = util.callback(this, 'wrapperFocusHandler');
   jqLite.on(this.wrapperEl, 'focus', callbackFn);
-}
-
-
-/**
- * Use default on touch devices.
- */
-Select.prototype.touchstartHandler = function() {
-  // set flag
-  this.useDefault = true;
 }
 
 
@@ -85,13 +79,13 @@ Select.prototype.focusHandler = function(ev) {
       keydownFn = util.callback(this, 'keydownHandler');
 
   // attach keydown handler
-  jqLite.on(document, 'keydown', keydownFn);
+  jqLite.on(doc, 'keydown', keydownFn);
 
   // disable tabfocus once
   selectEl.tabIndex = -1;
   jqLite.one(wrapperEl, 'blur', function() {
     selectEl.tabIndex = origIndex;
-    jqLite.off(document, 'keydown', keydownFn);
+    jqLite.off(doc, 'keydown', keydownFn);
   });
   
   // defer focus to parent
@@ -100,12 +94,12 @@ Select.prototype.focusHandler = function(ev) {
 
 
 /**
- * Handle keydown events on document
+ * Handle keydown events on doc
  **/
 Select.prototype.keydownHandler = function(ev) {
   // spacebar, down, up
   if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
-    // prevent window scroll
+    // prevent win scroll
     ev.preventDefault();
     
     if (this.selectEl.disabled !== true) this.renderMenu();
@@ -164,19 +158,19 @@ function Menu(selectEl) {
   // blur active element
   setTimeout(function() {
     // ie10 bugfix
-    if (document.activeElement.nodeName.toLowerCase() !== "body") {
-      document.activeElement.blur();
+    if (doc.activeElement.nodeName.toLowerCase() !== "body") {
+      doc.activeElement.blur();
     }
   }, 0);
   
   // attach event handlers
   jqLite.on(this.menuEl, 'click', this.clickCallbackFn);
-  jqLite.on(document, 'keydown', this.keydownCallbackFn);
-  jqLite.on(window, 'resize', this.destroyCallbackFn);
+  jqLite.on(doc, 'keydown', this.keydownCallbackFn);
+  jqLite.on(win, 'resize', this.destroyCallbackFn);
 
   // attach event handler after current event loop exits
   var fn = this.destroyCallbackFn;
-  setTimeout(function() {jqLite.on(document, 'click', fn);}, 0);
+  setTimeout(function() {jqLite.on(doc, 'click', fn);}, 0);
 }
 
 
@@ -187,7 +181,7 @@ function Menu(selectEl) {
 Menu.prototype._createMenuEl = function(selectEl) {
   var optionEl, itemEl, i, minTop, maxTop, top;
 
-  var menuEl = document.createElement('div'),
+  var menuEl = doc.createElement('div'),
       optionList = selectEl.children,
       m = optionList.length,
       selectedPos = 0,
@@ -201,7 +195,7 @@ Menu.prototype._createMenuEl = function(selectEl) {
   for (i=0; i < m; i++) {
     optionEl = optionList[i];
 
-    itemEl = document.createElement('div');
+    itemEl = doc.createElement('div');
     itemEl.textContent = optionEl.textContent;
     itemEl._muiPos = i;
 
@@ -217,7 +211,7 @@ Menu.prototype._createMenuEl = function(selectEl) {
   this.origIndex = selectedPos;
   this.currentIndex = selectedPos;
 
-  var viewHeight = document.documentElement.clientHeight;
+  var viewHeight = doc.docElement.clientHeight;
 
   // set height (use viewport as maximum height)
   var height = m * optionHeight + 2 * menuPadding;
@@ -245,7 +239,7 @@ Menu.prototype._createMenuEl = function(selectEl) {
 
 
 /**
- * Handle keydown events on document element.
+ * Handle keydown events on doc element.
  * @param {Event} ev - The DOM event
  */
 Menu.prototype.keydownHandler = function(ev) {
@@ -342,9 +336,9 @@ Menu.prototype.destroy = function() {
   
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);
-  jqLite.off(document, 'keydown', this.keydownCallbackFn);
-  jqLite.off(document, 'click', this.destroyCallbackFn);
-  jqLite.off(window, 'resize', this.destroyCallbackFn);
+  jqLite.off(doc, 'keydown', this.keydownCallbackFn);
+  jqLite.off(doc, 'click', this.destroyCallbackFn);
+  jqLite.off(win, 'resize', this.destroyCallbackFn);
 }
 
 
@@ -352,8 +346,6 @@ Menu.prototype.destroy = function() {
 module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
-    var doc = document;
-
     // markup elements available when method is called
     var elList = doc.querySelectorAll(cssSelector);
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
