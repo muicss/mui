@@ -1,6 +1,6 @@
 # MUI Changelog
 
-## 0.1.20 - IN PROGRESS
+## 0.1.20 - August 5, 2015
 
 * Raising Error objects
 * Decreased $mui-container-sm width by 18px to account for vertical scrollbar
