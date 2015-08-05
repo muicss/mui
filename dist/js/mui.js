@@ -255,7 +255,7 @@ function initialize(selectEl) {
   else selectEl._muiSelect = true;
 
   // use default behavior on touch devices
-  if ('ontouchstart' in doc.docElement) return;
+  if ('ontouchstart' in doc.documentElement) return;
 
   // initialize element
   new Select(selectEl);
@@ -440,7 +440,7 @@ Menu.prototype._createMenuEl = function(selectEl) {
   this.origIndex = selectedPos;
   this.currentIndex = selectedPos;
 
-  var viewHeight = doc.docElement.clientHeight;
+  var viewHeight = doc.documentElement.clientHeight;
 
   // set height (use viewport as maximum height)
   var height = m * optionHeight + 2 * menuPadding;
