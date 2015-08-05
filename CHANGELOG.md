@@ -3,6 +3,8 @@
 ## 0.1.20 - IN PROGRESS
 
 * Raising Error objects
+* Decreased $mui-container-sm width by 18px to account for vertical scrollbar
+* Bugfix to _outsideClick handler in react library
 
 ## 0.1.19 - July 26, 2015
 

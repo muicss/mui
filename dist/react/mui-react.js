@@ -744,18 +744,18 @@ var Dropdown = React.createClass({displayName: "Dropdown",
       )
     );
   },
-  _click: function (ev) {
+  _click: function(ev) {
     // only left clicks
     if (ev.button !== 0) return;
 
     // exit if toggle button is disabled
     if (this.props.disabled) return;
 
-    setTimeout(function () {
+    setTimeout(function() {
       if (!ev.defaultPrevented) this._toggle();
     }.bind(this), 0);
   },
-  _toggle: function () {
+  _toggle: function() {
     // exit if no menu element
     if (!this.props.children) {
       return util.raiseError('Dropdown menu element not found');
@@ -764,7 +764,7 @@ var Dropdown = React.createClass({displayName: "Dropdown",
     if (this.state.opened) this._close();
     else this._open();
   },
-  _open: function () {
+  _open: function() {
     // position menu element below toggle button
     var wrapperRect = React.findDOMNode(this).getBoundingClientRect(),
         toggleRect;
@@ -776,16 +776,16 @@ var Dropdown = React.createClass({displayName: "Dropdown",
       opened: true
     });
   },
-  _close: function () {
+  _close: function() {
     this.setState({
       opened: false
     });
   },
-  _select: function (ev) {
+  _select: function(ev) {
     if (this.props.onClick) this.props.onClick(this, ev);
   },
-  _outsideClick: function (ev) {
-    var isClickInside = React.findDOMNode(this).contains(event.target);
+  _outsideClick: function(ev) {
+    var isClickInside = React.findDOMNode(this).contains(ev.target);
 
     if (!isClickInside) {
       this._close();
@@ -799,7 +799,7 @@ var Dropdown = React.createClass({displayName: "Dropdown",
  * @class
  */
 var DropdownItem = React.createClass({displayName: "DropdownItem",
-  render: function () {
+  render: function() {
     return (
       React.createElement("li", null, 
         React.createElement("a", {href:  this.props.link || '#', onClick:  this._click}, 
@@ -808,7 +808,7 @@ var DropdownItem = React.createClass({displayName: "DropdownItem",
       )
     );
   },
-  _click: function (ev) {
+  _click: function(ev) {
     if (this.props.onClick) this.props.onClick(this, ev);
   }
 });
