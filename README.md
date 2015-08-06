@@ -2,7 +2,7 @@
 
 [![MUI](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com)
 
-MUI is a lightweight HTML/CSS/JS framework that follows Google's Material Design guidelines.
+MUI is a lightweight CSS framework that follows Google's Material Design guidelines.
 
 [![Build Status](https://travis-ci.org/muicss/mui.svg?branch=master)](https://travis-ci.org/muicss/mui)
 [![Dependency Status](https://david-dm.org/muicss/mui.svg)](https://david-dm.org/muicss/mui)
