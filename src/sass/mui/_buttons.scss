@@ -65,7 +65,7 @@ $mui-btn-box-shadow-active:
   }
   
   &:disabled,
-  &.mui-disabled {
+  &.mui-is-disabled {
     cursor: $mui-cursor-disabled;
     pointer-events: none;
     opacity: 0.60;

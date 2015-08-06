@@ -42,7 +42,7 @@
   background-clip: padding-box;
 
   // open state
-  &.mui-open {
+  &.mui-is-open {
     display: block;
   }
   
@@ -65,7 +65,7 @@
     }
   }
 
-  > .mui-disabled > a {
+  > .mui-is-disabled > a {
     &,
     &:hover,
     &:focus {

@@ -1713,7 +1713,7 @@ hr {
 }
 
 .mui-btn:disabled,
-.mui-btn.mui-disabled {
+.mui-btn.mui-is-disabled {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.60;
@@ -2561,7 +2561,7 @@ th {
   background-clip: padding-box;
 }
 
-.mui-dropdown-menu.mui-open {
+.mui-dropdown-menu.mui-is-open {
   display: block;
 }
 
@@ -2582,14 +2582,14 @@ th {
   background-color: #EEEEEE;
 }
 
-.mui-dropdown-menu > .mui-disabled > a,
-.mui-dropdown-menu > .mui-disabled > a:hover,
-.mui-dropdown-menu > .mui-disabled > a:focus {
+.mui-dropdown-menu > .mui-is-disabled > a,
+.mui-dropdown-menu > .mui-is-disabled > a:hover,
+.mui-dropdown-menu > .mui-is-disabled > a:focus {
   color: #EEEEEE;
 }
 
-.mui-dropdown-menu > .mui-disabled > a:hover,
-.mui-dropdown-menu > .mui-disabled > a:focus {
+.mui-dropdown-menu > .mui-is-disabled > a:hover,
+.mui-dropdown-menu > .mui-is-disabled > a:focus {
   text-decoration: none;
   background-color: transparent;
   background-image: none;
@@ -2634,11 +2634,11 @@ th {
   text-decoration: none;
 }
 
-.mui-tabs > li.mui-active {
+.mui-tabs > li.mui-is-active {
   border-bottom: 2px solid #2196F3;
 }
 
-.mui-tabs > li.mui-active > a {
+.mui-tabs > li.mui-is-active > a {
   color: #2196F3;
 }
 
@@ -2662,7 +2662,7 @@ th {
   display: none;
 }
 
-.mui-tab-content > .mui-tab-pane.mui-active {
+.mui-tab-content > .mui-tab-pane.mui-is-active {
   display: block;
 }
 

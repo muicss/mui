@@ -3,6 +3,7 @@
 ## 0.2.1 - IN PROGRESS
 
 * Removed unnecessary styles from button CSS
+* Using "mui-is-" syntax for stateful CSS (e.g. mui-is-active)
 
 ## 0.1.21 - August 5, 2015
 

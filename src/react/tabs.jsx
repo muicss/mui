@@ -13,7 +13,7 @@ var tabClass = 'mui-tabs',
     contentClass = 'mui-tab-content',
     paneClass = 'mui-tab-pane',
     justifiedClass = 'mui-tabs-justified',
-    activeClass = 'mui-active';
+    activeClass = 'mui-is-active';
 
 
 /**

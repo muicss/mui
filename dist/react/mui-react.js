@@ -668,7 +668,7 @@ var util = require('../js/lib/util'),
 var dropdownClass = 'mui-dropdown',
     caretClass = 'mui-caret',
     menuClass = 'mui-dropdown-menu',
-    openClass = 'mui-open',
+    openClass = 'mui-is-open',
     rightClass = 'mui-dropdown-menu-right';
 
 
@@ -1212,7 +1212,7 @@ var tabClass = 'mui-tabs',
     contentClass = 'mui-tab-content',
     paneClass = 'mui-tab-pane',
     justifiedClass = 'mui-tabs-justified',
-    activeClass = 'mui-active';
+    activeClass = 'mui-is-active';
 
 
 /**

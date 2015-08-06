@@ -10,7 +10,7 @@ var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[data-mui-toggle="dropdown"]',
-    openClass = 'mui-open',
+    openClass = 'mui-is-open',
     menuClass = 'mui-dropdown-menu';
 
 

@@ -16,7 +16,7 @@ var util = require('../js/lib/util'),
 var dropdownClass = 'mui-dropdown',
     caretClass = 'mui-caret',
     menuClass = 'mui-dropdown-menu',
-    openClass = 'mui-open',
+    openClass = 'mui-is-open',
     rightClass = 'mui-dropdown-menu-right';
 
 

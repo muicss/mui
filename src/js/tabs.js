@@ -11,7 +11,7 @@ var jqLite = require('./lib/jqLite.js'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',
-    activeClass = 'mui-active';
+    activeClass = 'mui-is-active';
 
 
 /**

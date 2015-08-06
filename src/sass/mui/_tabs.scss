@@ -30,7 +30,7 @@
       }
     }
 
-    &.mui-active {
+    &.mui-is-active {
       border-bottom: 2px solid $mui-tab-border-color-active;
 
       > a {
@@ -64,7 +64,7 @@
   > .mui-tab-pane {
     display: none;
 
-    &.mui-active {
+    &.mui-is-active {
       display: block;
     }
   }
