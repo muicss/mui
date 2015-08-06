@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.1 - IN PROGRESS
+
+* Removed unnecessary styles from button CSS
+
 ## 0.1.21 - August 5, 2015
 
 * Removed default down arrow on select component on IE

@@ -4,15 +4,12 @@
 
   &:hover,
   &:focus,
-  &:active,
-  .mui-open > &.mui-dropdown-toggle {
+  &:active {
     color: $font-color;
     background-color: lighten($bg-color, 5%);
   }
 
-  &[disabled],
-  fieldset[disabled] & {
-    &,
+  &[disabled] {
     &:hover,
     &:focus,
     &:active {
@@ -29,15 +26,12 @@
 
     &:hover,
     &:focus,
-    &:active,
-    .mui-open > &.mui-dropdown-toggle {
+    &:active {
       color: $font-color;
       background-color: $bg-color-hover;
     }
 
-    &[disabled],
-    fieldset[disabled] & {
-      &,
+    &[disabled] {
       &:hover,
       &:focus,
       &:active {
