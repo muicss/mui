@@ -1,4 +1,4 @@
-# MUI - Material Design CSS Framework
+# Material Design CSS Framework
 
 [![MUI](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com)
 
