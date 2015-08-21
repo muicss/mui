@@ -151,10 +151,12 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
       k;
   
   ev.initEvent(eventType, bubbles, cancelable);
-  element.dispatchEvent(ev);
 
   // add data to event object
   if (data) for (k in data) ev[k] = data[k];
+
+  // dispatch
+  if (element) element.dispatchEvent(ev);
 
   return ev;
 }

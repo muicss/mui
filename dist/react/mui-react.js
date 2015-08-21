@@ -510,14 +510,23 @@ function callbackFn(instance, funcName) {
  * @param {String} eventType - The event type.
  * @param {Boolean} bubbles=true - If true, event bubbles.
  * @param {Boolean} cancelable=true = If true, event is cancelable
+ * @param {Object} [data] - Data to add to event object
  */
-function dispatchEventFn(element, eventType, bubbles, cancelable) {
+function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-      cancelable = (cancelable !== undefined) ? cancelable : true;
+      cancelable = (cancelable !== undefined) ? cancelable : true,
+      k;
   
   ev.initEvent(eventType, bubbles, cancelable);
-  element.dispatchEvent(ev);
+
+  // add data to event object
+  if (data) for (k in data) ev[k] = data[k];
+
+  // dispatch
+  if (element) element.dispatchEvent(ev);
+
+  return ev;
 }
 
 

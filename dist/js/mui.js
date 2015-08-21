@@ -1087,14 +1087,23 @@ function callbackFn(instance, funcName) {
  * @param {String} eventType - The event type.
  * @param {Boolean} bubbles=true - If true, event bubbles.
  * @param {Boolean} cancelable=true = If true, event is cancelable
+ * @param {Object} [data] - Data to add to event object
  */
-function dispatchEventFn(element, eventType, bubbles, cancelable) {
+function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-      cancelable = (cancelable !== undefined) ? cancelable : true;
+      cancelable = (cancelable !== undefined) ? cancelable : true,
+      k;
   
   ev.initEvent(eventType, bubbles, cancelable);
-  element.dispatchEvent(ev);
+
+  // add data to event object
+  if (data) for (k in data) ev[k] = data[k];
+
+  // dispatch
+  if (element) element.dispatchEvent(ev);
+
+  return ev;
 }
 
 
@@ -1482,7 +1491,11 @@ var jqLite = require('./lib/jqLite.js'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',
-    activeClass = 'mui-is-active';
+    activeClass = 'mui-is-active',
+    showstartKey = 'mui.tabs.showstart',
+    showendKey = 'mui.tabs.showend',
+    hidestartKey = 'mui.tabs.hidestart',
+    hideendKey = 'mui.tabs.hideend';
 
 
 /**
@@ -1512,10 +1525,7 @@ function clickHandler(ev) {
   // exit if toggle element is disabled
   if (toggleEl.getAttribute('disabled') !== null) return;
 
-  // let event bubble before toggling tab
-  setTimeout(function() {
-    if (!ev.defaultPrevented) activateTab(toggleEl);
-  }, 0);
+  activateTab(toggleEl);
 }
 
 
@@ -1524,34 +1534,67 @@ function clickHandler(ev) {
  * @param {Element} toggleEl - The toggle element.
  */
 function activateTab(toggleEl) {
-  var tabEl = toggleEl.parentNode,
-      paneId = toggleEl.getAttribute(controlsAttrKey),
-      paneEl = document.getElementById(paneId),
-      tabs,
-      panes,
-      el,
-      i;
+  var currTabEl = toggleEl.parentNode,
+      currPaneId = toggleEl.getAttribute(controlsAttrKey),
+      currPaneEl = document.getElementById(currPaneId),
+      prevTabEl,
+      prevPaneEl,
+      currData,
+      prevData,
+      ev1,
+      ev2;
 
   // raise error if pane doesn't exist
-  if (!paneEl) util.raiseError('Tab pane "' + paneId + '" not found');
+  if (!currPaneEl) util.raiseError('Tab pane "' + currPaneId + '" not found');
 
-  // de-activate tab siblings
-  tabs = tabEl.parentNode.children;
-  for (i=tabs.length - 1; i >= 0; i--) {
-    el = tabs[i];
-    if (el !== tabEl) jqLite.removeClass(el, activeClass);
-  }
+  // get previous tab & pane
+  prevTabEl = getActiveSibling(currTabEl);
+  prevPaneEl = getActiveSibling(currPaneEl);
   
-  // de-activate pane siblings
-  panes = paneEl.parentNode.children;
-  for (i=panes.length - 1; i >= 0; i--) {
-    el = panes[i];
-    if (el !== paneEl) jqLite.removeClass(el, activeClass);
+  // define event data
+  currData = {relatedTarget: prevTabEl};
+  prevData = {relatedTarget: currTabEl};
+
+  // dispatch 'hidestart', 'showstart' events
+  ev1 = util.dispatchEvent(prevTabEl, hidestartKey, true, true, prevData);
+  ev2 = util.dispatchEvent(currTabEl, showstartKey, true, true, currData);
+
+  // let events bubble
+  setTimeout(function() {
+    // exit if events were canceled
+    if (ev1.defaultPrevented || ev2.defaultPrevented) return;
+
+    // de-activate previous
+    if (prevTabEl) jqLite.removeClass(prevTabEl, activeClass);
+    if (prevPaneEl) jqLite.removeClass(prevPaneEl, activeClass);
+
+    // activate current
+    jqLite.addClass(currTabEl, activeClass);
+    jqLite.addClass(currPaneEl, activeClass);
+
+    // dispatch 'hideend', 'showend' events
+    util.dispatchEvent(prevTabEl, hideendKey, true, false, prevData);
+    util.dispatchEvent(currTabEl, showendKey, true, false, currData);
+  }, 0);
+}
+
+
+/** 
+ * Get previous active sibling.
+ * @param {Element} el - The anchor element.
+ */
+function getActiveSibling(el) {
+  var elList = el.parentNode.children,
+      q = elList.length,
+      activeEl = null,
+      tmpEl;
+
+  while (q-- && !activeEl) {
+    tmpEl = elList[q];
+    if (tmpEl !== el && jqLite.hasClass(tmpEl, activeClass)) activeEl = tmpEl
   }
-  
-  // activate tab and pane
-  jqLite.addClass(tabEl, activeClass);
-  jqLite.addClass(paneEl, activeClass);
+
+  return activeEl;
 }
 
 
