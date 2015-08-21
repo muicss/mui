@@ -81,7 +81,7 @@ function activateTab(toggleEl) {
 
   // let events bubble
   setTimeout(function() {
-    // exit if events were canceled
+    // exit if either event was canceled
     if (ev1.defaultPrevented || ev2.defaultPrevented) return;
 
     // de-activate previous
