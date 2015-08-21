@@ -56,13 +56,19 @@ function activateTab(toggleEl) {
   var tabEl = toggleEl.parentNode,
       paneId = toggleEl.getAttribute(controlsAttrKey),
       paneEl = document.getElementById(paneId),
-      tabs,
-      panes,
       el,
-      i;
+      ev,
+      i,
+      panes,
+      tabs;
 
   // raise error if pane doesn't exist
   if (!paneEl) util.raiseError('Tab pane "' + paneId + '" not found');
+
+  // trigger events
+  ev = util.dispatchEvent(tabEl, 'mui.tabs.showstart', true, true, {
+    relatedTarget: null
+  });
 
   // de-activate tab siblings
   tabs = tabEl.parentNode.children;
