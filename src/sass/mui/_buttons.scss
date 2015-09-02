@@ -42,6 +42,7 @@ $mui-btn-box-shadow-active:
   vertical-align: middle;
   white-space: nowrap;
   user-select: none;
+  font-size: $mui-btn-font-size;
 
   // For ripples
   position: relative;
@@ -82,10 +83,19 @@ $mui-btn-box-shadow-active:
 // ============================================================================
 // BUTTON-SIZES
 // ============================================================================
+.mui-btn[data-mui-size="small"] {
+  height: $mui-btn-height-sm;
+  line-height: $mui-btn-height-sm;
+  padding: 0 $mui-btn-padding-horizontal-sm;
+  font-size: $mui-btn-font-size-sm;
+}
+
 .mui-btn-lg,
 .mui-btn[data-mui-size="large"] {
   height: $mui-btn-height-lg;
   line-height: $mui-btn-height-lg;
+  padding: 0 $mui-btn-padding-horizontal-lg;
+  font-size: $mui-btn-font-size-lg;
 }
 
 

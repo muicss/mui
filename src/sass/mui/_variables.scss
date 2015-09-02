@@ -86,10 +86,18 @@ $mui-base-font-smoothing: false;
 // ============================================================================
 
 $mui-btn-height:                      36px !default;
+$mui-btn-height-sm:                   $mui-btn-height * 0.85 !default;
 $mui-btn-height-lg:                   $mui-btn-height * 1.5 !default;
 
 $mui-btn-border-radius:               $mui-border-radius-default !default;
+
 $mui-btn-padding-horizontal:          26px !default;
+$mui-btn-padding-horizontal-sm:       16px !default;
+$mui-btn-padding-horizontal-lg:       $mui-btn-padding-horizontal !default;
+
+$mui-btn-font-size:                   14px !default;
+$mui-btn-font-size-sm:                13px !default;
+$mui-btn-font-size-lg:                $mui-btn-font-size !default;
 
 $mui-btn-margin-vertical:             6px !default;
 $mui-btn-spacing-horizontal:          8px !default;
