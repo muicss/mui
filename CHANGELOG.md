@@ -1,9 +1,12 @@
 # MUI Changelog
 
-## 0.2.1 - IN PROGRESS
+## 0.1.22-rc1 - September 3, 2015
 
 * Removed unnecessary styles from button CSS
 * Using "mui-is-" syntax for stateful CSS (e.g. mui-is-active)
+* Added data-attributes syntax for buttons, dropdowns, tables, container
+* Added a dark button option
+* Changed floating action button naming from "floating" to "fab"
 
 ## 0.1.21 - August 5, 2015
 
