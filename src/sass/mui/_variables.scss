@@ -101,7 +101,7 @@ $mui-btn-font-size-lg:                $mui-btn-font-size !default;
 
 $mui-btn-fab-diameter:                55px !default;
 $mui-btn-fab-diameter-sm:             44px !default;
-$mui-btn-fab-diameter-lg:             70px !default;
+$mui-btn-fab-diameter-lg:             75px !default;
 
 $mui-btn-margin-vertical:             6px !default;
 $mui-btn-spacing-horizontal:          8px !default;
@@ -120,13 +120,13 @@ $mui-btn-primary-bg-color:            $mui-primary-color !default;
 $mui-btn-primary-font-color:          mui-color('white') !default;
 $mui-btn-primary-ripple-color:        mui-color('white') !default;
 
-$mui-btn-dark-bg-color:               mui-color('grey', '800') !default;
-$mui-btn-dark-font-color:             mui-color('white') !default;
-$mui-btn-dark-ripple-color:           mui-color('white') !default;
-
 $mui-btn-danger-bg-color:             $mui-danger-color !default;
 $mui-btn-danger-font-color:           mui-color('white') !default;
 $mui-btn-danger-ripple-color:         mui-color('white') !default;
+
+$mui-btn-dark-bg-color:               mui-color('grey', '800') !default;
+$mui-btn-dark-font-color:             mui-color('white') !default;
+$mui-btn-dark-ripple-color:           mui-color('white') !default;
 
 $mui-btn-accent-bg-color:             $mui-accent-color !default;
 $mui-btn-accent-font-color:           mui-color('white') !default;
