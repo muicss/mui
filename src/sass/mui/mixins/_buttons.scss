@@ -20,7 +20,8 @@
 }
 
 @mixin button-flat-variant($font-color, $bg-color-hover) {
-  &.mui-btn-flat {
+  &.mui-btn-flat,
+  &[data-mui-style="flat"] {
     color: $font-color;
     background-color: transparent;
 

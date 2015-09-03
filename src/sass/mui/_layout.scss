@@ -16,6 +16,7 @@
   }
 }
 
-.mui-container-fluid {
+.mui-container-fluid,
+.mui-container[data-mui-fluid="true"] {
   @include container-fixed;
 }

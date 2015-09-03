@@ -13,12 +13,20 @@ $mui-btn-box-shadow-active:
 
 
 // ============================================================================
-// MAIN-BUTTON-CLASS
+// DEFAULT-BUTTON
 // ============================================================================
 
 .mui-btn {
   @include mui-node-inserted();
   @include mui-text("button");
+
+  @include button-variant(
+    $mui-btn-default-font-color,
+    $mui-btn-default-bg-color);
+
+  @include button-flat-variant(
+    $mui-btn-default-font-color,
+    $mui-btn-flat-bg-color-hover);
 
   transition: all 0.2s ease-in-out;
   
@@ -42,6 +50,7 @@ $mui-btn-box-shadow-active:
   vertical-align: middle;
   white-space: nowrap;
   user-select: none;
+  font-size: $mui-btn-font-size;
 
   // For ripples
   position: relative;
@@ -80,21 +89,16 @@ $mui-btn-box-shadow-active:
 
 
 // ============================================================================
-// BUTTON-SIZES
+// BUTTON-STYLES
 // ============================================================================
 
-.mui-btn-lg {
-  height: $mui-btn-height-lg;
-  line-height: $mui-btn-height-lg;
-}
 
+// ----------------------------------------------------------------------------
+// FLAT
+// ----------------------------------------------------------------------------
 
-
-// ============================================================================
-// FLAT-BUTTONS
-// ============================================================================
-
-.mui-btn-flat {
+.mui-btn-flat,
+.mui-btn[data-mui-style="flat"] {
   background-color: $mui-btn-flat-bg-color;
 
   &:hover,
@@ -106,12 +110,12 @@ $mui-btn-box-shadow-active:
 }
 
 
+// ----------------------------------------------------------------------------
+// RAISED
+// ----------------------------------------------------------------------------
 
-// ============================================================================
-// RAISED-BUTTONS
-// ============================================================================
-
-.mui-btn-raised {
+.mui-btn-raised,
+.mui-btn[data-mui-style="raised"] {
   box-shadow: $mui-btn-box-shadow-raised;
 
   &:active {
@@ -120,21 +124,32 @@ $mui-btn-box-shadow-active:
 }
 
 
+// ----------------------------------------------------------------------------
+// FLOATING-ACTION-BUTTON-(FAB)
+// ----------------------------------------------------------------------------
+
+.mui-btn-floating,
+.mui-btn[data-mui-style="fab"] {
+  @extend .mui-btn-raised;
+
+  // Layout
+  position: relative;
+  padding: 0;
+  width: $mui-btn-fab-diameter;
+  height: $mui-btn-fab-diameter;
+  line-height: $mui-btn-fab-diameter;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+
 
 // ============================================================================
 // BUTTON-COLORS
 // ============================================================================
 
-.mui-btn-default {
-  @include button-variant(
-    $mui-btn-default-font-color,
-    $mui-btn-default-bg-color);
-  @include button-flat-variant(
-    $mui-btn-default-font-color,
-    $mui-btn-flat-bg-color-hover);
-}
-
-.mui-btn-primary {
+.mui-btn-primary,
+.mui-btn[data-mui-color="primary"] {
   @include button-variant(
     $mui-btn-primary-font-color,
     $mui-btn-primary-bg-color);
@@ -143,7 +158,17 @@ $mui-btn-box-shadow-active:
     $mui-btn-flat-bg-color-hover);
 }
 
-.mui-btn-danger {
+.mui-btn[data-mui-color="dark"] {
+  @include button-variant(
+    $mui-btn-dark-font-color,
+    $mui-btn-dark-bg-color);
+  @include button-flat-variant(
+    $mui-btn-dark-bg-color,
+    $mui-btn-flat-bg-color-hover);
+}
+
+.mui-btn-danger,
+.mui-btn[data-mui-color="danger"] {
   @include button-variant(
     $mui-btn-danger-font-color,
     $mui-btn-danger-bg-color);
@@ -152,7 +177,8 @@ $mui-btn-box-shadow-active:
     $mui-btn-flat-bg-color-hover);
 }
 
-.mui-btn-accent {
+.mui-btn-accent,
+.mui-btn[data-mui-color="accent"] {
   @include button-variant(
     $mui-btn-accent-font-color,
     $mui-btn-accent-bg-color);
@@ -164,38 +190,33 @@ $mui-btn-box-shadow-active:
 
 
 // ============================================================================
-// FLOATING-BUTTON
+// BUTTON-SIZES
 // ============================================================================
 
-.mui-btn-floating {
-  @extend .mui-btn-raised;
-
-  position: relative;
-  z-index: 1;
-  width: 55px;
-  height: 55px;
-  line-height: 55px;
-  padding: 0;
-  border-radius: 50%;
-  color: $mui-btn-floating-font-color;
-  background-color: $mui-btn-floating-bg-color;
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: $mui-btn-floating-font-color;
-    background-color: lighten($mui-btn-floating-bg-color, 5%);
-  }
+.mui-btn[data-mui-size="small"] {
+  height: $mui-btn-height-sm;
+  line-height: $mui-btn-height-sm;
+  padding: 0 $mui-btn-padding-horizontal-sm;
+  font-size: $mui-btn-font-size-sm;
 }
 
+.mui-btn-lg,
+.mui-btn[data-mui-size="large"] {
+  height: $mui-btn-height-lg;
+  line-height: $mui-btn-height-lg;
+  padding: 0 $mui-btn-padding-horizontal-lg;
+  font-size: $mui-btn-font-size-lg;
+}
 
+.mui-btn-floating-mini,
+.mui-btn[data-mui-size="small"][data-mui-style="fab"] {
+  width: $mui-btn-fab-diameter-sm;
+  height: $mui-btn-fab-diameter-sm;
+  line-height: $mui-btn-fab-diameter-sm;
+}
 
-// ============================================================================
-// FLOATING-BUTTON-SIZES
-// ============================================================================
-
-.mui-btn-floating-mini {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+.mui-btn[data-mui-size="large"][data-mui-style="fab"] {
+  width: $mui-btn-fab-diameter-lg;
+  height: $mui-btn-fab-diameter-lg;
+  line-height: $mui-btn-fab-diameter-lg;
 }

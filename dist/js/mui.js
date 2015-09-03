@@ -1369,7 +1369,7 @@ module.exports = overlayFn;
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
     btnClass = 'mui-btn',
-    btnFlatClass = 'mui-btn-flat',
+    btnStyleKey = 'data-mui-style',
     btnFloatingClass = 'mui-btn-floating',
     rippleClass = 'mui-ripple-effect',
     animationName = 'mui-btn-inserted';
@@ -1426,7 +1426,9 @@ function eventHandler(ev) {
       radius;
 
   // get height
-  if (jqLite.hasClass(buttonEl, btnFloatingClass)) {
+  // TODO: remove class check
+  if (jqLite.hasClass(buttonEl, btnFloatingClass) || 
+      buttonEl.getAttribute(btnStyleKey) === 'fab') {
     diameter = offset.height / 2;
   } else {
     diameter = offset.height;

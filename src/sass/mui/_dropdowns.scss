@@ -84,7 +84,8 @@
 }
 
 // right align
-.mui-dropdown-menu-right {
+.mui-dropdown-menu-right,
+.mui-dropdown-menu[data-mui-align="right"] {
   left: auto;
   right: 0;
 }
