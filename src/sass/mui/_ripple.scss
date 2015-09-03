@@ -14,14 +14,14 @@
 }
 
 @keyframes mui-ripple-animation {
-    from {
-      transform: scale(1);
-      opacity: 0.4;
-    }
-    to {
-      transform: scale(100);
-      opacity: 0;
-    }
+  from {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(100);
+    opacity: 0;
+  }
 }
 
 
@@ -30,26 +30,32 @@
 // ============================================================================
 // BUTTON-SPECIFIC STYLES
 // ============================================================================
-.mui-btn-default > .mui-ripple-effect {
+.mui-btn-default > .mui-ripple-effect,
+.mui-btn > .mui-ripple-effect {
   background-color: $mui-btn-default-ripple-color;
 }
 
-.mui-btn-primary > .mui-ripple-effect {
+.mui-btn-primary > .mui-ripple-effect,
+.mui-btn[data-mui-color="primary"] > .mui-ripple-effect {
   background-color: $mui-btn-primary-ripple-color;
 }
 
-.mui-btn-danger > .mui-ripple-effect {
+.mui-btn[data-mui-color="dark"] > .mui-ripple-effect {
+  background-color: $mui-btn-dark-ripple-color;
+}
+
+.mui-btn-danger > .mui-ripple-effect,
+.mui-btn[data-mui-color="danger"] > .mui-ripple-effect {
   background-color: $mui-btn-danger-ripple-color;
 }
 
-.mui-btn-accent > .mui-ripple-effect {
+.mui-btn-accent > .mui-ripple-effect,
+.mui-btn[data-mui-color="accent"] > .mui-ripple-effect {
   background-color: $mui-btn-accent-ripple-color;
 }
 
-.mui-btn-flat > .mui-ripple-effect {
+.mui-btn-flat > .mui-ripple-effect,
+.mui-btn[data-mui-style="flat"] > .mui-ripple-effect {
   background-color: $mui-btn-flat-ripple-color;
 }
 
-.mui-btn-floating > .mui-ripple-effect {
-  background-color: $mui-btn-floating-ripple-color;
-}
