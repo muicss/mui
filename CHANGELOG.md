@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.22 - September 18, 2015
+
+* Added tab events
+
 ## 0.1.22-rc1 - September 3, 2015
 
 * Removed unnecessary styles from button CSS
