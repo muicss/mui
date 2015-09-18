@@ -53,31 +53,39 @@ function clickHandler(ev) {
  * Activate the tab controlled by the toggle element.
  * @param {Element} toggleEl - The toggle element.
  */
-function activateTab(toggleEl) {
-  var currTabEl = toggleEl.parentNode,
-      currPaneId = toggleEl.getAttribute(controlsAttrKey),
+function activateTab(currToggleEl) {
+  var currTabEl = currToggleEl.parentNode,
+      currPaneId = currToggleEl.getAttribute(controlsAttrKey),
       currPaneEl = document.getElementById(currPaneId),
       prevTabEl,
       prevPaneEl,
+      prevPaneId,
+      prevToggleEl,
       currData,
       prevData,
       ev1,
-      ev2;
+      ev2,
+      cssSelector;
 
   // raise error if pane doesn't exist
   if (!currPaneEl) util.raiseError('Tab pane "' + currPaneId + '" not found');
 
-  // get previous tab & pane
-  prevTabEl = getActiveSibling(currTabEl);
+  // get previous pane
   prevPaneEl = getActiveSibling(currPaneEl);
-  
+  prevPaneId = prevPaneEl.id;
+
+  // get previous toggle and tab elements
+  cssSelector = '[' + controlsAttrKey + '="' + prevPaneId + '"]';
+  prevToggleEl = document.querySelectorAll(cssSelector)[0];
+  prevTabEl = prevToggleEl.parentNode;
+
   // define event data
-  currData = {relatedTarget: prevTabEl};
-  prevData = {relatedTarget: currTabEl};
+  currData = {paneId: currPaneId, relatedPaneId: prevPaneId};
+  prevData = {paneId: prevPaneId, relatedPaneId: currPaneId};
 
   // dispatch 'hidestart', 'showstart' events
-  ev1 = util.dispatchEvent(prevTabEl, hidestartKey, true, true, prevData);
-  ev2 = util.dispatchEvent(currTabEl, showstartKey, true, true, currData);
+  ev1 = util.dispatchEvent(prevToggleEl, hidestartKey, true, true, prevData);
+  ev2 = util.dispatchEvent(currToggleEl, showstartKey, true, true, currData);
 
   // let events bubble
   setTimeout(function() {
@@ -93,8 +101,8 @@ function activateTab(toggleEl) {
     jqLite.addClass(currPaneEl, activeClass);
 
     // dispatch 'hideend', 'showend' events
-    util.dispatchEvent(prevTabEl, hideendKey, true, false, prevData);
-    util.dispatchEvent(currTabEl, showendKey, true, false, currData);
+    util.dispatchEvent(prevToggleEl, hideendKey, true, false, prevData);
+    util.dispatchEvent(currToggleEl, showendKey, true, false, currData);
   }, 0);
 }
 

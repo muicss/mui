@@ -25,7 +25,8 @@
               tabEl.addEventListener('mui.tabs.' + events[k], function(ev) {
                 console.log(ev.type);
                 console.log(ev.target);
-                console.log(ev.relatedTarget);
+                console.log(ev.paneId);
+                console.log(ev.relatedPaneId);
               });
             }
           }
