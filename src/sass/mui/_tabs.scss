@@ -43,7 +43,8 @@
     }
   }
 
-  &.mui-tabs-justified {
+  &.mui-tabs-justified,
+  &[data-mui-justified="true"] {
     display: table;
     width: 100%;
     table-layout: fixed;

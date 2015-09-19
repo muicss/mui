@@ -2806,17 +2806,20 @@ th {
   color: #2196F3;
 }
 
-.mui-tabs.mui-tabs-justified {
+.mui-tabs.mui-tabs-justified,
+.mui-tabs[data-mui-justified="true"] {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
 
-.mui-tabs.mui-tabs-justified > li {
+.mui-tabs.mui-tabs-justified > li,
+.mui-tabs[data-mui-justified="true"] > li {
   display: table-cell;
 }
 
-.mui-tabs.mui-tabs-justified > li > a {
+.mui-tabs.mui-tabs-justified > li > a,
+.mui-tabs[data-mui-justified="true"] > li > a {
   text-align: center;
   padding-left: 0px;
   padding-right: 0px;

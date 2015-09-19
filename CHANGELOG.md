@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.1.23 - September 19, 2015
+
+* Added support for data-attributes in Tabs CSS
+
 ## 0.1.22 - September 18, 2015
 
 * Added tab events
