@@ -13,77 +13,77 @@
   <body>
     <div class="mui-container">
       <h1>Tabs</h1>
-      <div id="normal"></div>
-      <div id="justified"></div>
-      <div id="tabs-in-tabs"></div>
+      <div class="mui-panel">
+        <div id="tabs-example1"></div>
+      </div>
+      <div class="mui-panel">
+        <div id="tabs-example2"></div>
+      </div>
+      <div class="mui-panel">
+        <div id="tabs-example3"></div>
+      </div>
     </div>
     <script type="text/jsx">
-      var NormalTabs = React.createClass({
+      // default tabs
+      var Example1 = React.createClass({
         render: function() {
           return (
-            <div className="mui-panel">
-              <h2>mui-tabs</h2>
-              <MUITabs>
-                <MUITabItem id="home" label="Home">
-                  <span>Whatever you need in home</span>
-                </MUITabItem>
-                <MUITabItem id="profile" label="Profile">
-                  <span>Whatever you need in profile</span>
-                </MUITabItem>
-                <MUITabItem id="messages" label="Messages">
-                  <span>Whatever you need in messages</span>
-                </MUITabItem>
-              </MUITabs>
-            </div>
+            <MUITabs onChange={ this._handleChange } initialSelectedIndex="1">
+              <MUITab
+                  value="pane-1"
+                  label="Tab 1"
+                  onActive={ this._handleActive }
+              >
+                Content 1
+              </MUITab>
+              <MUITab value="pane-2" label="Tab 2">
+                Content 2
+              </MUITab>
+            </MUITabs>
           );
+        },
+        _handleChange: function(i, value, tab, ev) {
+          console.log(arguments)
+        },
+        _handleActive: function(tab) {
+          console.log(arguments);
         }
       });
 
-      var Justified = React.createClass({
-        render: function () {
-          return (
-            <div className="mui-panel">
-              <h2>mui-tabs-justified</h2>
-              <MUITabs justified={ true } activeTab="profile">
-                <MUITabItem id="home" label="Home">
-                  <span>Whatever you need in home</span>
-                </MUITabItem>
-                <MUITabItem id="profile" label="Profile">
-                  <span>Whatever you need in profile</span>
-                </MUITabItem>
-                <MUITabItem id="messages" label="Messages">
-                  <span>Whatever you need in messages</span>
-                </MUITabItem>
-              </MUITabs>
-            </div>
-          );
-        }
-      });
+      React.render(<Example1/>, document.getElementById('tabs-example1'));
+                   
 
-      var TabsInTabs = React.createClass({
-        render: function () {
-          return (
-            <div className="mui-panel">
-              <h2>mui-tabs-in-tabs</h2>
-              <MUITabs justified={ true } >
-                <MUITabItem id="home" label="Home">
-                  <NormalTabs />
-                </MUITabItem>
-                <MUITabItem id="profile" label="Profile">
-                  <Justified />
-                </MUITabItem>
-                <MUITabItem id="messages" label="Messages">
-                  <span>Whatever you need in messages</span>
-                </MUITabItem>
-              </MUITabs>
-            </div>
-          );
-        }
-      });
+      // justified tabs
+      React.render(
+        <MUITabs
+          onChange={ this._handleChange }
+          initialSelectedIndex="1"
+          justified={ true }
+        >
+          <MUITab value="pane-1" label="Tab 1" onActive={ this._handleActive }>
+            Content 1
+          </MUITab>
+          <MUITab value="pane-2" label="Tab 2">
+            Content 2
+          </MUITab>
+        </MUITabs>,
+        document.getElementById('tabs-example2'));
 
-      React.render(<NormalTabs />, document.getElementById('normal'));
-      React.render(<Justified />, document.getElementById('justified'));
-      React.render(<TabsInTabs />, document.getElementById('tabs-in-tabs'));
+        
+      // tabs in tabs
+      React.render(
+        <MUITabs>
+          <MUITab label="Tab 1">
+            <MUITabs>
+              <MUITab label="Tab 1-1">Content 1-1</MUITab>
+              <MUITab label="Tab 1-2">Content 1-2</MUITab>
+            </MUITabs>
+          </MUITab>
+          <MUITab label="Tab 2">
+            Content 2
+          </MUITab>
+        </MUITabs>,
+        document.getElementById('tabs-example3'));
     </script>
   </body>
 </html>

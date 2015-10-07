@@ -8,12 +8,12 @@
 
 var jqLite = require('../lib/jqLite.js'),
     util = require('../lib/util.js'),
-    cssSelector = '.mui-form-control',
-    emptyClass = 'mui-empty',
-    notEmptyClass = 'mui-not-empty',
-    dirtyClass = 'mui-dirty',
-    formControlClass = 'mui-form-control',
-    floatingLabelClass = 'mui-form-floating-label';
+    cssSelector = '.mui-textfield__input',
+    emptyClass = 'mui--is-empty',
+    notEmptyClass = 'mui--is-not-empty',
+    dirtyClass = 'mui--is-dirty',
+    formControlClass = 'mui-textfield__input',
+    floatingLabelClass = 'mui-textfield__label--floating';
 
 
 /**
@@ -22,8 +22,8 @@ var jqLite = require('../lib/jqLite.js'),
  */
 function initialize(inputEl) {
   // check flag
-  if (inputEl._muiFormControl === true) return;
-  else inputEl._muiFormControl = true;
+  if (inputEl._muiTextfield === true) return;
+  else inputEl._muiTextfield = true;
 
   if (inputEl.value.length) jqLite.addClass(inputEl, notEmptyClass);
   else jqLite.addClass(inputEl, emptyClass);

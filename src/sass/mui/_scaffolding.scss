@@ -72,7 +72,7 @@ a {
   }
 
   &:focus {
-    @include tab-focus;
+    @include mui-tab-focus();
   }
 }
 

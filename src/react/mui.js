@@ -21,16 +21,14 @@
   win.MUIFluidContainer = layout.FluidContainer;
   win.MUIPanel = layout.Panel;
 
-  win.MUIFormControl = forms.FormControl;
-  win.MUIFormGroup = forms.FormGroup;
+  win.MUITextfield = forms.Textfield;
 
   win.MUIButton = buttons.Button;
-  win.MUIRoundButton = buttons.RoundButton;
 
   win.MUIDropdown = dropdowns.Dropdown;
   win.MUIDropdownItem = dropdowns.DropdownItem;
  
+  win.MUITab = tabs.Tab;
   win.MUITabs = tabs.Tabs;
-  win.MUITabItem = tabs.TabItem;
   
 })(window);

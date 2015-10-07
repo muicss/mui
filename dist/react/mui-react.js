@@ -571,11 +571,8 @@ module.exports = {
 var util = require('../js/lib/util.js'),
     Ripple = require('./ripple.jsx');
 
-var buttonClass = 'mui-btn',
-    flatClass = buttonClass + '-flat',
-    raisedClass = buttonClass + '-raised',
-    largeClass = buttonClass + '-lg',
-    floatingClass = buttonClass + '-floating';
+var btnClass = 'mui-btn',
+    btnAttrs = {style: 1, color: 1, size: 1};
 
 
 /**
@@ -586,23 +583,25 @@ var Button = React.createClass({displayName: "Button",
   mixins: [Ripple],
   getDefaultProps: function() {
     return {
-      type: 'default',  // one of default, primary, danger or accent
+      style: 'default', // default|flat|raised|fab
+      color: 'default', // default|primary|danger|dark|accent
+      size: 'default', // default|small|large
       disabled: false
     };
   },
   render: function() {
-    var cs = {};
-
-    cs[buttonClass] = true;
-    cs[buttonClass + '-' + this.props.type] = true;
-    cs[flatClass] = this.props.flat;
-    cs[raisedClass] = this.props.raised;
-    cs[largeClass] = this.props.large;
-    cs = util.classNames(cs);
+    var cls = btnClass,
+        k,
+        v;
+    
+    for (k in btnAttrs) {
+      v = this.props[k];
+      if (v !== 'default') cls += ' ' + btnClass + '--' + v;
+    }
 
     return (
       React.createElement("button", {
-        className:  cs, 
+        className:  cls, 
         disabled:  this.props.disabled, 
         onMouseDown:  this.ripple, 
         onTouchStart:  this.ripple, 
@@ -616,45 +615,9 @@ var Button = React.createClass({displayName: "Button",
 });
 
 
-/**
- * Round button constructor
- * @class
- */
-var RoundButton = React.createClass({displayName: "RoundButton",
-  mixins: [Ripple],
-  getDefaultProps: function() {
-    return {
-      floating: true
-    };
-  },
-  render: function() {
-    var cs = {};
-
-    cs[buttonClass] = true;
-    cs[floatingClass] = true;
-    cs[floatingClass + '-mini'] = this.props.mini;
-    cs = util.classNames(cs);
-
-    return (
-      React.createElement("button", {
-        className:  cs, 
-        disabled:  this.props.disabled, 
-        onMouseDown:  this.ripple, 
-        onTouchStart:  this.ripple, 
-        onClick:  this.props.onClick
-      }, 
-         this.props.children, 
-         this.state.ripples && this.renderRipples()
-      )
-    );
-  }
-})
-
-
 /** Define module API */
 module.exports = {
-  Button: Button,
-  RoundButton: RoundButton
+  Button: Button
 };
 
 
@@ -671,14 +634,13 @@ module.exports = {
 var util = require('../js/lib/util'),
     jqLite = require('../js/lib/jqLite'),
     buttons = require('./buttons.jsx'),
-    Button = buttons.Button,
-    RoundButton = buttons.RoundButton;
+    Button = buttons.Button;
 
 var dropdownClass = 'mui-dropdown',
     caretClass = 'mui-caret',
-    menuClass = 'mui-dropdown-menu',
-    openClass = 'mui-is-open',
-    rightClass = 'mui-dropdown-menu-right';
+    menuClass = 'mui-dropdown__menu',
+    openClass = 'mui--is-open',
+    rightClass = 'mui-dropdown__menu--right';
 
 
 /**
@@ -686,10 +648,20 @@ var dropdownClass = 'mui-dropdown',
  * @class
  */
 var Dropdown = React.createClass({displayName: "Dropdown",
-  menuStyle: { top: 0 },
+  getDefaultProps: function() {
+    return {
+      style: 'default',
+      color: 'default',
+      size: 'default',
+      label: '',
+      right: false,
+      disabled: false
+    };
+  },
   getInitialState: function() {
     return {
-      opened: false
+      opened: false,
+      menuTop: 0
     };
   },
   componentWillMount: function() {
@@ -701,34 +673,19 @@ var Dropdown = React.createClass({displayName: "Dropdown",
   render: function() {
     var button;
 
-    if (this.props.round) {
-      button = (
-        React.createElement(RoundButton, {
-          ref: "button", 
-          onClick:  this._click, 
-          mini:  this.props.mini, 
-          disabled:  this.props.disabled
-        }, 
-           this.props.label, 
-          React.createElement("span", {className:  caretClass })
-        )
-      );
-    } else {
-      button = (
+    button = (
         React.createElement(Button, {
           ref: "button", 
           onClick:  this._click, 
-          type:  this.props.type, 
-          flat:  this.props.flat, 
-          raised:  this.props.raised, 
-          large:  this.props.large, 
+          style:  this.props.style, 
+          color:  this.props.color, 
+          size:  this.props.size, 
           disabled:  this.props.disabled
         }, 
            this.props.label, 
           React.createElement("span", {className:  caretClass })
         )
-      );
-    }
+    );
 
     var cs = {};
 
@@ -738,13 +695,12 @@ var Dropdown = React.createClass({displayName: "Dropdown",
     cs = util.classNames(cs);
 
     return (
-      React.createElement("div", {className:  dropdownClass, style:  {padding: '0px 2px 0px'} }, 
+      React.createElement("div", {className:  dropdownClass }, 
          button, 
          this.state.opened && (
             React.createElement("ul", {
               className:  cs, 
-              style:  this.menuStyle, 
-              ref: "menu", 
+              style:  {top: this.state.menuTop}, 
               onClick:  this._select
             }, 
                this.props.children
@@ -779,16 +735,14 @@ var Dropdown = React.createClass({displayName: "Dropdown",
         toggleRect;
 
     toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
-    this.menuStyle.top = toggleRect.top - wrapperRect.top + toggleRect.height;
 
     this.setState({
-      opened: true
+      opened: true,
+      menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
     });
   },
   _close: function() {
-    this.setState({
-      opened: false
-    });
+    this.setState({opened: false});
   },
   _select: function(ev) {
     if (this.props.onClick) this.props.onClick(this, ev);
@@ -796,9 +750,7 @@ var Dropdown = React.createClass({displayName: "Dropdown",
   _outsideClick: function(ev) {
     var isClickInside = React.findDOMNode(this).contains(ev.target);
 
-    if (!isClickInside) {
-      this._close();
-    }
+    if (!isClickInside) this._close();
   }
 });
 
@@ -811,7 +763,7 @@ var DropdownItem = React.createClass({displayName: "DropdownItem",
   render: function() {
     return (
       React.createElement("li", null, 
-        React.createElement("a", {href:  this.props.link || '#', onClick:  this._click}, 
+        React.createElement("a", {href:  this.props.link, onClick:  this._click}, 
            this.props.children
         )
       )
@@ -854,17 +806,15 @@ module.exports = {
   win.MUIFluidContainer = layout.FluidContainer;
   win.MUIPanel = layout.Panel;
 
-  win.MUIFormControl = forms.FormControl;
-  win.MUIFormGroup = forms.FormGroup;
+  win.MUITextfield = forms.Textfield;
 
   win.MUIButton = buttons.Button;
-  win.MUIRoundButton = buttons.RoundButton;
 
   win.MUIDropdown = dropdowns.Dropdown;
   win.MUIDropdownItem = dropdowns.DropdownItem;
  
+  win.MUITab = tabs.Tab;
   win.MUITabs = tabs.Tabs;
-  win.MUITabItem = tabs.TabItem;
   
 })(window);
 
@@ -879,39 +829,97 @@ module.exports = {
 
 var util = require('../js/lib/util.js');
 
-var formControlClass = 'mui-form-control',
-    formGroupClass = 'mui-form-group',
-    floatingLabelBaseClass = 'mui-form-floating-label',
-    floatingLabelActiveClass = floatingLabelBaseClass + '-active';
+var textfieldClass = 'mui-textfield',
+    textfieldInputClass = 'mui-textfield__input',
+    floatingLabelClass = 'mui-textfield__label--floating',
+    isEmptyClass = 'mui--is-empty',
+    isNotEmptyClass = 'mui--is-not-empty',
+    isDirtyClass = 'mui--is-dirty';
 
 
 /**
- * FormControl constructor
+ * Input constructor
  * @class
  */
-var FormControl = React.createClass({displayName: "FormControl",
+var Input = React.createClass({displayName: "Input",
+  getDefaultProps: function() {
+    return {
+      value: '',
+      type: 'text',
+      autofocus: false,
+      onChange: null
+    };
+  },
+  getInitialState: function() {
+    return {
+      value: this.props.value,
+      isDirty: Boolean(this.props.value.length)
+    };
+  },
   render: function() {
-    return (
-      React.createElement("input", {
-        type: this.props.type || 'text', 
-        className:  formControlClass, 
-        value: this.props.value, 
-        autoFocus: this.props.autofocus, 
-        onInput: this.props.onInput}
-      )
-    );
+    var cls = {},
+        isNotEmpty = Boolean(this.state.value),
+        inputEl;
+
+    cls[textfieldInputClass] = true;
+    cls[isEmptyClass] = !isNotEmpty;
+    cls[isNotEmptyClass] = isNotEmpty;
+    cls[isDirtyClass] = this.state.isDirty;
+
+    cls = util.classNames(cls);
+
+    if (this.props.type === 'textarea') {
+      inputEl = (
+        React.createElement("textarea", {
+          ref: "input", 
+          className:  cls, 
+          value:  this.props.value, 
+          autoFocus:  this.props.autofocus, 
+          onChange:  this._handleChange, 
+          onFocus:  this._handleFocus}
+        )
+      );
+    } else {
+      inputEl = (
+        React.createElement("input", {
+          ref: "input", 
+          className:  cls, 
+          type:  this.props.type, 
+          value:  this.state.value, 
+          autoFocus:  this.props.autofocus, 
+          onChange:  this._handleChange, 
+          onFocus:  this._handleFocus}
+        )
+      );
+    }
+
+    return inputEl;
+  },
+  _handleChange: function(ev) {
+    this.setState({value: ev.target.value});
+    if (this.props.onChange) this.props.onChange(ev);
+  },
+  _handleFocus: function(ev) {
+    this.setState({isDirty: true});
   }
 });
 
 
 /**
- * FormLabel constructor
+ * Label constructor
  * @class
  */
-var FormLabel = React.createClass({displayName: "FormLabel",
+var Label = React.createClass({displayName: "Label",
+  getDefaultProps: function() {
+    return {
+      text: '',
+      floating: false,
+      onClick: null
+    };
+  },
   getInitialState: function() {
     return {
-      style: {} 
+      style: {}
     };
   },
   componentDidMount: function() {
@@ -933,92 +941,67 @@ var FormLabel = React.createClass({displayName: "FormLabel",
     }.bind(this), 150);
   },
   render: function() {
-    var labelText = this.props.text,
-        labelClass;
-    
-    if (labelText) {
-      labelClass = {};
-      labelClass[floatingLabelBaseClass] = this.props.floating;
-      labelClass[floatingLabelActiveClass] = this.props.active;
-      labelClass = util.classNames(labelClass);
-    }
-    
     return (
       React.createElement("label", {
-        className:  labelClass, 
+        refs: "label", 
+        className:  (this.props.floating) ? floatingLabelClass : '', 
         style:  this.state.style, 
         onClick:  this.props.onClick
       }, 
-         labelText 
+         this.props.text
       )
     );
   }
 });
 
 
+
+
 /**
- * FormGroup constructor
+ * Textfield constructor
  * @class
  */
-var FormGroup = React.createClass({displayName: "FormGroup",
-  getInitialState: function() {
+var Textfield = React.createClass({displayName: "Textfield",
+  getDefaultProps: function() {
     return {
-      hasInput: false
+      type: 'text',
+      value: '',
+      label: '',
+      isLabelFloating: false,
+      autofocus: false,
+      onChange: null
     };
   },
-  componentDidMount: function() {
-    if (this.props.value) {
-      this.setState({
-        hasInput: true
-      });
-    }
-  },
   render: function() {
-    var labelText = this.props.label;
+    var labelEl;
+
+    if (this.props.label.length) {
+      labelEl = (
+        React.createElement(Label, {
+          text:  this.props.label, 
+          onClick:  this._focus, 
+          floating:  this.props.isLabelFloating}
+        )
+      );
+    }
+
     return (
-      React.createElement("div", {className:  formGroupClass }, 
-        React.createElement(FormControl, {
-          type: this.props.type, 
-          value: this.props.value, 
-          autoFocus: this.props.autofocus, 
-          onInput:  this._input}
+      React.createElement("div", {className:  textfieldClass }, 
+        React.createElement(Input, {
+          type:  this.props.type, 
+          value:  this.props.value, 
+          autoFocus:  this.props.autofocus, 
+          onChange:  this.props.onChange}
         ), 
-         labelText &&
-          React.createElement(FormLabel, {
-            text: labelText, 
-            onClick:  this._focus, 
-            active:  this.state.hasInput, 
-            floating:  this.props.isLabelFloating}
-          )
-        
+         labelEl 
       )
     );
   },
-  _focus: function (e) {
+  _focus: function(e) {
     // pointer-events shim
     if (util.supportsPointerEvents() === false) {
-      var labelEl = e.target;
-      labelEl.style.cursor = 'text';
-
-      if (!this.state.hasInput) {
-        var inputEl = React.findDOMNode(this.refs.input);
-        inputEl.focus();
-      }
-    }
-  },
-  _input: function (e) {
-    if (e.target.value) {
-      this.setState({
-        hasInput: true 
-      });
-    } else {
-      this.setState({
-        hasInput: false 
-      });
-    }
-
-    if (this.props.onClick) {
-      this.props.onClick(e);
+      e.target.style.cursor = 'text';
+      React.findDOMNode(this.refs.input).focus();
     }
   }
 });
@@ -1026,8 +1009,7 @@ var FormGroup = React.createClass({displayName: "FormGroup",
 
 /** Define module API */
 module.exports = {
-  FormControl: FormControl,
-  FormGroup: FormGroup
+  Textfield: Textfield
 };
 
 
@@ -1217,11 +1199,10 @@ module.exports = Ripple;
 
 var util = require('../js/lib/util.js');
 
-var tabClass = 'mui-tabs',
-    contentClass = 'mui-tab-content',
-    paneClass = 'mui-tab-pane',
-    justifiedClass = 'mui-tabs-justified',
-    activeClass = 'mui-is-active';
+var tabsBarClass = 'mui-tabs__bar',
+    tabsBarJustifiedClass = 'mui-tabs__bar--justified',
+    tabsPaneClass = 'mui-tabs__pane',
+    isActiveClass = 'mui--is-active';
 
 
 /**
@@ -1231,173 +1212,96 @@ var tabClass = 'mui-tabs',
 var Tabs = React.createClass({displayName: "Tabs",
   getDefaultProps: function() {
     return {
-      justified: false
+      justified: false,
+      onChange: null,
+      initialSelectedIndex: 0
     };
   },
   getInitialState: function() {
     return {
-      activeTab: ""
+      currentSelectedIndex: parseInt(this.props.initialSelectedIndex)
     };
   },
-  componentDidMount: function() {
-    if (this.props.activeTab) {
-      this.setState({
-        activeTab: this.props.activeTab
-      });
-    } else {
-      this.setState({
-        activeTab: this.props.children && this.props.children[0].props.id
-      });
-    }
-  },
   render: function() {
-    var items = this.props.children.map(function (item) {
-      return {
-        name: item.props.id,
-        label: item.props.label,
-        pane: item.props.children
-      };
-    });
+    var tabEls = [],
+        paneEls = [],
+        children = this.props.children,
+        m = children.length,
+        selectedIndex = this.state.currentSelectedIndex % m,
+        isActive,
+        item,
+        cls,
+        i;
+
+
+    for (i=0; i < m; i++) {
+      item = children[i];
+
+      // only accept MUITab elements
+      if (item.type !== Tab) util.raiseError('Expecting MUITab React Element');
+
+      isActive = (i === selectedIndex) ? true : false;
+
+      // tab element
+      tabEls.push(
+        React.createElement("li", {className:  (isActive) ? isActiveClass : ''}, 
+          React.createElement("a", {onClick:  this._handleClick.bind(this, i, item) }, 
+             item.props.label
+          )
+        )
+      );
+
+      // pane element
+      cls = tabsPaneClass + ' ';
+      if (isActive) cls += isActiveClass;
+
+      paneEls.push(
+        React.createElement("div", {className:  cls }, 
+           item.props.children
+        )
+      );
+    }
+
+    cls = tabsBarClass;
+    if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+    
     return (
-      React.createElement("div", {className: "tabs"}, 
-        React.createElement(TabHeaders, {
-          items:  items, 
-          justified:  this.props.justified, 
-          active:  this.state.activeTab, 
-          onClick:  this._changeTab}
+      React.createElement("div", null, 
+        React.createElement("ul", {className:  cls }, 
+           tabEls 
         ), 
-        React.createElement(TabContainers, {items:  items, active:  this.state.activeTab})
+         paneEls 
       )
     );
   },
-  _changeTab: function (toWhich, e) {
-    // only left clicks
-    if (e.button !== 0) return;
+  _handleClick: function(i, tab, ev) {
+    if (i !== this.state.currentSelectedIndex) {
+      this.setState({currentSelectedIndex: i});
 
-    if (e.target.getAttribute('disabled') !== null) return;
+      // onActive callback
+      if (tab.props.onActive) tab.props.onActive(tab);
 
-    setTimeout(function () {
-      if (!e.defaultPrevented) {
-        this.setState({
-          activeTab: toWhich
-        });
+      // onChange callback
+      if (this.props.onChange) {
+        this.props.onChange(i, tab.props.value, tab, ev);
       }
-    }.bind(this), 0);
-  }
-});
-
-
-/**
- * TabHeaders constructor
- * @class
- */
-var TabHeaders = React.createClass({displayName: "TabHeaders",
-  getDefaultProps: function() {
-    return {
-      items: []
-    };
-  },
-  render: function() {
-    var classes = {};
-    classes[tabClass] = true;
-    classes[justifiedClass] = this.props.justified;
-    classes = util.classNames(classes);
-
-    var items = this.props.items.map(function (item) {
-      return (
-        React.createElement(TabHeaderItem, {key:  item.name, 
-          name:  item.name, 
-          label:  item.label, 
-          active:  item.name === this.props.active, 
-          onClick:  this.props.onClick})
-      );
-    }.bind(this));
-    return (
-      React.createElement("ul", {className:  classes }, 
-         items 
-      )
-    );
-  }
-});
-
-
-/**
- * TabHeaderItem constructor
- * @class
- */
-var TabHeaderItem = React.createClass({displayName: "TabHeaderItem",
-  render: function () {
-    var classes = {};
-    classes[activeClass] = this.props.active;
-    classes = util.classNames(classes);
-    return (
-      React.createElement("li", {className:  classes }, 
-        React.createElement("a", {onClick:  this._click}, 
-           this.props.label
-        )
-      )
-    );
-  },
-  _click: function (e) {
-    if (this.props.onClick) {
-      this.props.onClick(this.props.name, e);
     }
   }
 });
 
 
 /**
- * TabContainers constructor
+ * Tab constructor
  * @class
  */
-var TabContainers = React.createClass({displayName: "TabContainers",
+var Tab = React.createClass({displayName: "Tab",
   getDefaultProps: function() {
     return {
-      items: []
+      value: null,
+      label: '',
+      onActive: null
     };
   },
-  render: function() {
-    var items = this.props.items.map(function (item) {
-      return (
-        React.createElement(TabPane, {key:  item.name, 
-          active:  item.name === this.props.active}, 
-           item.pane
-        )
-      );
-    }.bind(this));
-    return (
-      React.createElement("div", {className:  contentClass }, 
-         items 
-      )
-    );
-  }
-});
-
-
-/**
- * TabPane constructor
- * @class
- */
-var TabPane = React.createClass({displayName: "TabPane",
-  render: function () {
-    var classes = {};
-    classes[paneClass] = true;
-    classes[activeClass] = this.props.active;
-    classes = util.classNames(classes);
-    return (
-      React.createElement("div", {className:  classes }, 
-         this.props.children
-      )
-    );
-  }
-});
-
-
-/**
- * TabItem constructor
- * @class
- */
-var TabItem = React.createClass({displayName: "TabItem",
   render: function() {
     return null;
   }
@@ -1406,8 +1310,8 @@ var TabItem = React.createClass({displayName: "TabItem",
 
 /** Define module API */
 module.exports = {
-  Tabs: Tabs,
-  TabItem: TabItem
+  Tab: Tab,
+  Tabs: Tabs
 };
 
 

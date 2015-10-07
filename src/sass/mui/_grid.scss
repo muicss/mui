@@ -4,26 +4,29 @@
 
 // row
 .mui-row {
-  @include make-row;
+  @include mui-clearfix();
+
+  margin-left: ($mui-grid-gutter-width / -2);
+  margin-right: ($mui-grid-gutter-width / -2);
 }
 
 // columns
-@include make-grid-columns;
+@include mui-make-grid-columns();
 
 // extra small grid
-@include make-grid(xs);
+@include mui-make-grid('xs');
 
 // small grid
 @media (min-width: $mui-screen-sm-min) {
-  @include make-grid(sm);
+  @include mui-make-grid('sm');
 }
 
 // medium grid
 @media (min-width: $mui-screen-md-min) {
-  @include make-grid(md);
+  @include mui-make-grid('md');
 }
 
 // large grid
 @media (min-width: $mui-screen-lg-min) {
-  @include make-grid(lg);
+  @include mui-make-grid('lg');
 }

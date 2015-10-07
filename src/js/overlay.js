@@ -8,8 +8,8 @@
 
 var util = require('./lib/util.js'),
     jqLite = require('./lib/jqLite.js'),
-    bodyClass = 'mui-overlay-on',
     overlayId = 'mui-overlay',
+    bodyClass = 'mui--overflow-hidden',
     iosRegex = /(iPad|iPhone|iPod)/g;
 
 

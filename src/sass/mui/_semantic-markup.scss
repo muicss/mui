@@ -15,23 +15,23 @@ abbr[title] {
 
 // headers
 h1 {
-  @extend .mui-text-display1;
+  @extend .mui--text-display1;
 }
 
 h2 {
-  @extend .mui-text-headline;
+  @extend .mui--text-headline;
 }
 
 h3 {
-  @extend .mui-text-title;
+  @extend .mui--text-title;
 }
 
 h4 {
-  @extend .mui-text-subhead;
+  @extend .mui--text-subhead;
 }
 
 h5 {
-  @extend .mui-text-body2;
+  @extend .mui--text-body2;
 }
 
 h1, h2, h3 {

@@ -2,7 +2,7 @@
  * MUI Tabs module
  */
 
-.mui-tabs {
+.mui-tabs__bar {
   list-style: none;
   padding-left: 0;
   margin-bottom: 0;
@@ -24,13 +24,14 @@
       line-height: 48px;
       padding-left: 24px;
       padding-right: 24px;
+      user-select: none;
 
       &:hover {
         text-decoration: none;
       }
     }
 
-    &.mui-is-active {
+    &.mui--is-active {
       border-bottom: 2px solid $mui-tab-border-color-active;
 
       > a {
@@ -43,8 +44,7 @@
     }
   }
 
-  &.mui-tabs-justified,
-  &[data-mui-justified="true"] {
+  &.mui-tabs__bar--justified {
     display: table;
     width: 100%;
     table-layout: fixed;
@@ -61,13 +61,11 @@
   }
 }
 
-.mui-tab-content {
-  > .mui-tab-pane {
-    display: none;
+.mui-tabs__pane {
+  display: none;
 
-    &.mui-is-active {
-      display: block;
-    }
+  &.mui--is-active {
+    display: block;
   }
 }
 

@@ -51,6 +51,7 @@ $mui-btn-box-shadow-active:
   white-space: nowrap;
   user-select: none;
   font-size: $mui-btn-font-size;
+  letter-spacing: 0.03em;
 
   // For ripples
   position: relative;
@@ -74,7 +75,7 @@ $mui-btn-box-shadow-active:
   }
   
   &:disabled,
-  &.mui-is-disabled {
+  &.mui--is-disabled {
     cursor: $mui-cursor-disabled;
     pointer-events: none;
     opacity: 0.60;
@@ -89,7 +90,7 @@ $mui-btn-box-shadow-active:
 
 
 // ============================================================================
-// BUTTON-STYLES
+// BUTTON-TYPES
 // ============================================================================
 
 
@@ -97,8 +98,7 @@ $mui-btn-box-shadow-active:
 // FLAT
 // ----------------------------------------------------------------------------
 
-.mui-btn-flat,
-.mui-btn[data-mui-style="flat"] {
+.mui-btn--flat {
   background-color: $mui-btn-flat-bg-color;
 
   &:hover,
@@ -114,8 +114,7 @@ $mui-btn-box-shadow-active:
 // RAISED
 // ----------------------------------------------------------------------------
 
-.mui-btn-raised,
-.mui-btn[data-mui-style="raised"] {
+.mui-btn--raised {
   box-shadow: $mui-btn-box-shadow-raised;
 
   &:active {
@@ -128,9 +127,8 @@ $mui-btn-box-shadow-active:
 // FLOATING-ACTION-BUTTON-(FAB)
 // ----------------------------------------------------------------------------
 
-.mui-btn-floating,
-.mui-btn[data-mui-style="fab"] {
-  @extend .mui-btn-raised;
+.mui-btn--fab {
+  @extend .mui-btn--raised;
 
   // Layout
   position: relative;
@@ -145,11 +143,10 @@ $mui-btn-box-shadow-active:
 
 
 // ============================================================================
-// BUTTON-COLORS
+// BUTTON-STYLES
 // ============================================================================
 
-.mui-btn-primary,
-.mui-btn[data-mui-color="primary"] {
+.mui-btn--primary {
   @include button-variant(
     $mui-btn-primary-font-color,
     $mui-btn-primary-bg-color);
@@ -158,7 +155,7 @@ $mui-btn-box-shadow-active:
     $mui-btn-flat-bg-color-hover);
 }
 
-.mui-btn[data-mui-color="dark"] {
+.mui-btn--dark {
   @include button-variant(
     $mui-btn-dark-font-color,
     $mui-btn-dark-bg-color);
@@ -167,8 +164,7 @@ $mui-btn-box-shadow-active:
     $mui-btn-flat-bg-color-hover);
 }
 
-.mui-btn-danger,
-.mui-btn[data-mui-color="danger"] {
+.mui-btn--danger {
   @include button-variant(
     $mui-btn-danger-font-color,
     $mui-btn-danger-bg-color);
@@ -177,8 +173,7 @@ $mui-btn-box-shadow-active:
     $mui-btn-flat-bg-color-hover);
 }
 
-.mui-btn-accent,
-.mui-btn[data-mui-color="accent"] {
+.mui-btn--accent {
   @include button-variant(
     $mui-btn-accent-font-color,
     $mui-btn-accent-bg-color);
@@ -193,29 +188,27 @@ $mui-btn-box-shadow-active:
 // BUTTON-SIZES
 // ============================================================================
 
-.mui-btn[data-mui-size="small"] {
+.mui-btn--small {
   height: $mui-btn-height-sm;
   line-height: $mui-btn-height-sm;
   padding: 0 $mui-btn-padding-horizontal-sm;
   font-size: $mui-btn-font-size-sm;
 }
 
-.mui-btn-lg,
-.mui-btn[data-mui-size="large"] {
+.mui-btn--large {
   height: $mui-btn-height-lg;
   line-height: $mui-btn-height-lg;
   padding: 0 $mui-btn-padding-horizontal-lg;
   font-size: $mui-btn-font-size-lg;
 }
 
-.mui-btn-floating-mini,
-.mui-btn[data-mui-size="small"][data-mui-style="fab"] {
+.mui-btn--fab.mui-btn--small {
   width: $mui-btn-fab-diameter-sm;
   height: $mui-btn-fab-diameter-sm;
   line-height: $mui-btn-fab-diameter-sm;
 }
 
-.mui-btn[data-mui-size="large"][data-mui-style="fab"] {
+.mui-btn--fab.mui-btn--large {
   width: $mui-btn-fab-diameter-lg;
   height: $mui-btn-fab-diameter-lg;
   line-height: $mui-btn-fab-diameter-lg;

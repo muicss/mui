@@ -6,10 +6,10 @@
 // ALIGNMENT
 // ============================================================================
 
-.mui-text-left           { text-align: left; }
-.mui-text-right          { text-align: right; }
-.mui-text-center         { text-align: center; }
-.mui-text-justify        { text-align: justify; }
+.mui--text-left           { text-align: left; }
+.mui--text-right          { text-align: right; }
+.mui--text-center         { text-align: center; }
+.mui--text-justify        { text-align: justify; }
 
 
 
@@ -18,6 +18,6 @@
 // IMAGES
 // ============================================================================
 
-.mui-image-fix {
+.mui-image--fix {
   display: block;
 }

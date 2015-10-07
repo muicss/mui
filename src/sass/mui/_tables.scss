@@ -38,8 +38,7 @@ th {
   }  
 
   // Bordered style
-  &.mui-table-bordered > tbody > tr > td,
-  &[data-mui-borders="true"] > tbody > tr > td {
+  &.mui-table--bordered > tbody > tr > td {
     border-bottom: 1px solid $mui-table-border-color;
   }
 }

@@ -25,13 +25,14 @@ legend {
 // override content-box in normalize.css
 input[type="search"] {
   box-sizing: border-box;
+  -webkit-appearance: none;  // Search inputs in iOS
 }
 
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
   // Focus for file, radio, and checkbox
-  @include tab-focus;
+  @include mui-tab-focus();
 }
 
 input[type="radio"]:disabled,
@@ -42,10 +43,102 @@ input[type="checkbox"]:disabled {
 
 
 // ============================================================================
-// FORM-CONTROL
+// TEXTFIELD
 // ============================================================================
 
-.mui-form-control {
+.mui-textfield {
+  display: block;
+  padding-top: $xFormLabelLineHeight;
+  margin-bottom: $mui-form-group-margin-bottom;
+  position: relative;
+
+  > label {
+    // Positioning
+    position: absolute;
+    top: 0;
+
+    // Display
+    display: block;
+    width: 100%;
+
+    // Other
+    color: $mui-label-font-color;
+    font-size: $mui-label-font-size;
+    font-weight: 400;
+    line-height: $xFormLabelLineHeight;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  > .mui-textfield__label--floating {
+    // Layout
+    position: absolute;
+    top: $xFormLabelLineHeight;
+    
+    // Typography
+    font-size: $mui-input-font-size;
+    line-height: $mui-input-height;
+    color: $mui-input-placeholder-color;
+    
+    // Overflow policy
+    text-overflow: clip;
+
+    // Cursor
+    cursor: text;  // for ie10
+    pointer-events: none;
+  }
+
+  > textarea {
+    padding-top: 5px;
+    min-height: $mui-textarea-height;
+  }
+
+  > .mui-textfield__input {
+    display: block;
+  }
+
+  > .mui-textfield__input:focus ~ label {
+    color: $mui-input-border-color-focus;
+  }
+}
+
+.mui-textfield--wrap-label {
+  display: table;
+  padding-top: 0px;
+
+  > label:not(.mui-textfield__label--floating) {
+    display: table-header-group;
+    position: static;
+    white-space: normal;
+    overflow-x: visible;
+  }
+}
+
+// Placed outside of form-group for performance
+.mui-textfield__input:focus ~ .mui-textfield__label--floating {
+  top: 0px;
+  font-size: $mui-label-font-size;
+  line-height: $xFormLabelLineHeight;
+  text-overflow: ellipsis;
+}
+
+// Placed outside of form-group for performance
+.mui-textfield__input:not(:focus) {
+  &.mui--is-not-empty,
+  &[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+  &:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
+    ~ .mui-textfield__label--floating {
+      color: $mui-label-font-color;
+      font-size: $mui-label-font-size;
+      line-height: $xFormLabelLineHeight;
+      top: 0px;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.mui-textfield__input {
   @include mui-node-inserted();
 
   display: block;
@@ -82,117 +175,14 @@ input[type="checkbox"]:disabled {
   }
 }
 
-textarea.mui-form-control {
+textarea.mui-textfield__input {
   height: auto;  // Reset height for <textarea>s
 }
 
-input.mui-form-control:focus {
+input.mui-textfield__input:focus {
   // Compensate for height change on focus
   height: $mui-input-height + 1px;
   margin-bottom: -1px;
-}
-
-input[type="search"] {
-  -webkit-appearance: none;  // Search inputs in iOS
-}
-
-
-
-// ============================================================================
-// FORM-GROUP
-// ============================================================================
-
-.mui-form-group {
-  display: block;
-  width: 100%;
-  padding-top: $xFormLabelLineHeight;
-  margin-bottom: $mui-form-group-margin-bottom;
-  position: relative;
-
-  > label {
-    // Positioning
-    position: absolute;
-    top: 0;
-
-    // Display
-    display: block;
-    width: 100%;
-
-    // Other
-    color: $mui-label-font-color;
-    font-size: $mui-label-font-size;
-    font-weight: 400;
-    line-height: $xFormLabelLineHeight;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  > .mui-form-floating-label {
-    // Layout
-    position: absolute;
-    top: $xFormLabelLineHeight;
-    
-    // Typography
-    font-size: $mui-input-font-size;
-    line-height: $mui-input-height;
-    color: $mui-input-placeholder-color;
-    
-    // Overflow policy
-    text-overflow: clip;
-
-    // Cursor
-    cursor: text;  // for ie10
-    pointer-events: none;
-  }
-
-  > textarea {
-    padding-top: 5px;
-    min-height: $mui-textarea-height;
-  }
-
-  > .mui-form-control {
-    display: block;
-  }
-
-  > .mui-form-control:focus ~ label {
-    color: $mui-input-border-color-focus;
-  }
-
-  &[data-mui-wrap-label="true"] {
-    display: table;
-    padding-top: 0px;
-
-    > label:not(.mui-form-floating-label) {
-      display: table-header-group;
-      position: static;
-      white-space: normal;
-      overflow-x: visible;
-    }
-  }
-}
-
-// Placed outside of form-group for performance
-.mui-form-control:focus ~ .mui-form-floating-label {
-  top: 0px;
-  font-size: $mui-label-font-size;
-  line-height: $xFormLabelLineHeight;
-  text-overflow: ellipsis;
-}
-
-// Placed outside of form-group for performance
-.mui-form-control:not(:focus) {
-  &.mui-not-empty,
-  &[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
-  &:not(:empty):not(.mui-empty):not(.mui-not-empty) {
-    ~ .mui-form-floating-label {
-      color: $mui-label-font-color;
-      font-size: $mui-label-font-size;
-      line-height: $xFormLabelLineHeight;
-      top: 0px;
-      text-overflow: ellipsis;
-    }
-  }
 }
 
 
@@ -218,9 +208,9 @@ input[type="search"] {
 }
 
 .mui-radio > label > input[type="radio"],
-.mui-radio-inline > label > input[type="radio"],
+.mui-radio--inline > label > input[type="radio"],
 .mui-checkbox > label> input[type="checkbox"],
-.mui-checkbox-inline > label > input[type="checkbox"] {
+.mui-checkbox--inline > label > input[type="checkbox"] {
   position: absolute;
   margin-left: -20px;
   margin-top: 4px;
@@ -232,8 +222,8 @@ input[type="search"] {
   margin-top: -5px; 
 }
 
-.mui-radio-inline,
-.mui-checkbox-inline {
+.mui-radio--inline,
+.mui-checkbox--inline {
   // Radios and checkboxes on same line
   display: inline-block;
   padding-left: 20px;
@@ -251,8 +241,8 @@ input[type="search"] {
   }
 }
 
-.mui-radio-inline + .mui-radio-inline,
-.mui-checkbox-inline + .mui-checkbox-inline {
+.mui-radio--inline + .mui-radio--inline,
+.mui-checkbox--inline + .mui-checkbox--inline {
   // Space out consecutive inline controls
   margin-top: 0;
   margin-left: 10px; 
@@ -265,6 +255,9 @@ input[type="search"] {
 // ============================================================================
 
 .mui-select {
+  display: block;
+  padding-top: $xFormLabelLineHeight;
+  margin-bottom: $mui-form-group-margin-bottom;
   position: relative;
 
   &:focus {
@@ -327,8 +320,8 @@ input[type="search"] {
   }
 }
 
-.mui-select-menu {
-  @extend .mui-z1;
+.mui-select__menu {
+  @extend .mui--z1;
 
   // Positioning
   position: absolute;
@@ -366,24 +359,16 @@ input[type="search"] {
 // INLINE-FORMS
 // ============================================================================
 
-.mui-form-inline {
+.mui-form--inline {
   @media (min-width: $mui-screen-sm-min) {
-    > * {
-      // Bottom align children
-      vertical-align: bottom;
-    }
-  
-    > .mui-form-group {
+    > .mui-textfield {
       display: inline-block;
       margin-bottom: 0;
-      vertical-align: middle;
     }
 
-    > .mui-form-control,
-    > .mui-form-group > .mui-form-group {
+    > .mui-textfield__input {
       display: inline-block;
       width: auto;
-      vertical-align: middle;
     }
 
     > .mui-radio,
@@ -411,6 +396,7 @@ input[type="search"] {
     > .mui-btn {
       margin-bottom: 0;
       margin-top: 0;
+      vertical-align: bottom;
     }
   }
 }
@@ -421,14 +407,14 @@ input[type="search"] {
 // FORM-VALIDATION
 // ============================================================================
 
-.mui-form-control {
+.mui-textfield__input {
   // Use thick colored border for invalid fields
   &:invalid:not(:focus) {
     &:not(:required),
-    &:required.mui-not-empty,
-    &:required.mui-empty.mui-dirty,
-    &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
-    &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
+    &:required.mui--is-not-empty,
+    &:required.mui--is-empty.mui--is-dirty,
+    &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+    &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
       border-color: $mui-danger-color;
       border-width: 2px;
     }
@@ -436,31 +422,31 @@ input[type="search"] {
 }
 
 // Treat <input>'s different from <textarea>'s
-input.mui-form-control:invalid:not(:focus) {
+input.mui-textfield__input:invalid:not(:focus) {
   &:not(:required),
-  &:required.mui-not-empty,
-  &:required.mui-empty.mui-dirty,
-  &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
-  &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
+  &:required.mui--is-not-empty,
+  &:required.mui--is-empty.mui--is-dirty,
+  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+  &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     height: $mui-input-height + 1px;
     margin-bottom: -1px;
   }
 }
 
-.mui-form-group > .mui-form-control {
+.mui-textfield > .mui-textfield__input {
   &:invalid:not(:focus) {
     // Set label color to danger color
     &:not(:required),
-    &:required.mui-not-empty,
-    &:required[value]:not([value=""]):not(.mui-empty):not(.mui-not-empty),
-    &:required:not(:empty):not(.mui-empty):not(.mui-not-empty) {
+    &:required.mui--is-not-empty,
+    &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+    &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
       ~ label {
         color: $mui-danger-color;
       }
     }
     
     // Set label color to danger color for dirty, empty fields
-    &:required.mui-empty.mui-dirty ~ label:not(.mui-form-floating-label) {
+    &:required.mui--is-empty.mui--is-dirty ~ label:not(.mui-textfield__label--floating) {
       color: $mui-danger-color;
     }
   }

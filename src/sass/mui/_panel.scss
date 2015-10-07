@@ -3,7 +3,7 @@
  */
 
 .mui-panel {
-  @include clearfix();
+  @include mui-clearfix();
 
   padding: $mui-panel-padding;
   margin-bottom: $mui-base-line-height-computed;

@@ -9,7 +9,8 @@
 var config = require('../js/config.js'),
     jqLite = require('../js/lib/jqLite.js'),
     btnClass = 'mui-btn',
-    btnTagName = btnClass;
+    btnTagName = btnClass,
+    btnAttrs = {style: 1, color: 1, size: 1};
 
 
 /**
@@ -22,45 +23,28 @@ var BtnProto = Object.create(HTMLElement.prototype);
 /** Button createdCallback */
 BtnProto.createdCallback = function() {
   var root = this.createShadowRoot(),
-      innerEl = document.createElement('button');
-
-  var attrs = {
-    type: this.getAttribute('type'),
-    color: this.getAttribute('color') || 'default',
-    depth: this.getAttribute('depth') || 'normal',
-    size: this.getAttribute('size') || 'normal',
-    disabled: this.getAttribute('disabled')
-  }
+      innerEl = document.createElement('button'),
+      cls = btnClass,
+      k,
+      v;
 
   // populate innerEl
   for (var i=0; i < this.childNodes.length; i++) {
     innerEl.appendChild(this.childNodes[i]);
   }
 
-  jqLite.addClass(innerEl, btnClass);
-
-  // color
-  jqLite.addClass(innerEl, btnClass + '-' + attrs.color);
-
-  // depth
-  if (attrs.depth !== 'normal') {
-    jqLite.addClass(innerEl, btnClass + '-' + attrs.depth);
+  // style|color|size
+  for (k in btnAttrs) {
+    v = this.getAttribute(k);
+    if (v !== 'default') cls += ' ' + btnClass + '--' + v;
   }
 
-  // floating
-  if (attrs.type === 'floating') {
-    jqLite.addClass(innerEl, btnClass + '-floating');
-
-    if (attrs.size !== 'normal') {
-      jqLite.addClass(innerEl, btnClass + '-floating-' + attrs.size);
-    }
-  } else if (attrs.size !== 'normal') {
-    // size
-    jqLite.addClass(innerEl, btnClass + '-' + attrs.size);
-  }
+  jqLite.addClass(innerEl, cls);
 
   // disabled
-  if (attrs.disabled !== null) innerEl.setAttribute('disabled', 'disabled');
+  if (this.getAttribute('disabled') !== null) {
+    innerEl.setAttribute('disabled', 'disabled');
+  }
 
   root.appendChild(_getStyleEl().cloneNode(true));
   root.appendChild(innerEl);

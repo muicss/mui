@@ -7,22 +7,22 @@
 
 
 var jqLite = require('../js/lib/jqLite.js'),
-    muiFormControl = require('../js/forms/form-control.js'),
-    formControlClass = 'mui-form-control',
-    formControlTagName = formControlClass,
-    formGroupClass = 'mui-form-group',
-    floatingLabelClass = 'mui-form-floating-label';
+    muiTextfield = require('../js/forms/textfield.js'),
+    textfieldClass = 'mui-textfield',
+    textfieldInputClass = 'mui-textfield__input',
+    textfieldLabelFloatingClass = 'mui-textfield__label--floating',
+    textfieldTagName = textfieldClass;
 
 
 /**
- * Class representing a FormControl element.
+ * Class representing a Textfield element.
  * @class
  */
-var FormControlProto = Object.create(HTMLElement.prototype);
+var TextfieldProto = Object.create(HTMLElement.prototype);
 
 
-/** FormControl createdCallback */
-FormControlProto.createdCallback = function() {
+/** Textfield createdCallback */
+TextfieldProto.createdCallback = function() {
   var root = this.createShadowRoot(),
       innerEl = document.createElement('div'),
       labelEl;
@@ -36,7 +36,7 @@ FormControlProto.createdCallback = function() {
   };
 
   // create wrapper
-  innerEl.setAttribute('class', formGroupClass);
+  innerEl.setAttribute('class', textfieldClass);
 
   // input element
   innerEl.appendChild(_createInputEl(attrs));
@@ -97,10 +97,10 @@ function _createInputEl(attrs) {
     inputEl.setAttribute('placeholder', attrs.placeholder);
   }
 
-  inputEl.setAttribute('class', formControlClass);
+  inputEl.setAttribute('class', textfieldInputClass);
 
   // add event listeners
-  muiFormControl.initialize(inputEl);
+  muiTextfield.initialize(inputEl);
   
   return inputEl;
 }
@@ -116,7 +116,7 @@ function _createLabelEl(attrs) {
   
   // configure floating label
   if (attrs.floating !== null) {
-    labelEl.setAttribute('class', floatingLabelClass);
+    labelEl.setAttribute('class', textfieldLabelFloatingClass);
   }
 
   return labelEl;
@@ -127,12 +127,12 @@ function _createLabelEl(attrs) {
 module.exports = {
   /** Register module elements */
   registerElements: function() {
-    var FormControlElement = document.registerElement(formControlTagName, {
-      prototype: FormControlProto
+    var TextfieldElement = document.registerElement(textfieldTagName, {
+      prototype: TextfieldProto
     });
 
     return {
-      FormControlElement: FormControlElement
+      TextfieldElement: TextfieldElement
     };
   }
 };

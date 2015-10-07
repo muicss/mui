@@ -16,17 +16,26 @@
     </style>
   </head>
   <body>
+    <h1>Container Element</h1>
     <div class="mui-appbar">
-      <div class="mui-container mui-appbar-height">
-        <div class="flexbox">
-          <div class="item">item 1</div>
-          <div class="item">item 2</div>
-          <div class="item">item 3</div>
-        </div>
-      </div>
     </div>
-    <div class="mui-container">
-      <div class="mui-panel"></div>
+    <h1>Helpers</h1>
+    <h2>.mui--appbar-height</h2>
+    <div class="mui-appbar">
+      <table width="100%">
+        <tr class="mui--align-middle">
+          <td class="mui--appbar-height">Left Side</td>
+          <td class="mui--appbar-height" align="right">Right Side</td>
+        </tr>
+      </table>
+    </div>
+    <h2>.mui--appbar-min-height</h2>
+    <div class="mui--appbar-min-height mui--divider-top mui--divider-bottom">
+      Content
+    </div>
+    <h2>.mui--appbar-line-height</h2>
+    <div class="mui-appbar mui--appbar-line-height">
+      Content
     </div>
   </body>
 </html>

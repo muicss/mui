@@ -9,11 +9,10 @@
 
 var util = require('../js/lib/util.js');
 
-var tabClass = 'mui-tabs',
-    contentClass = 'mui-tab-content',
-    paneClass = 'mui-tab-pane',
-    justifiedClass = 'mui-tabs-justified',
-    activeClass = 'mui-is-active';
+var tabsBarClass = 'mui-tabs__bar',
+    tabsBarJustifiedClass = 'mui-tabs__bar--justified',
+    tabsPaneClass = 'mui-tabs__pane',
+    isActiveClass = 'mui--is-active';
 
 
 /**
@@ -23,173 +22,96 @@ var tabClass = 'mui-tabs',
 var Tabs = React.createClass({
   getDefaultProps: function() {
     return {
-      justified: false
+      justified: false,
+      onChange: null,
+      initialSelectedIndex: 0
     };
   },
   getInitialState: function() {
     return {
-      activeTab: ""
+      currentSelectedIndex: parseInt(this.props.initialSelectedIndex)
     };
   },
-  componentDidMount: function() {
-    if (this.props.activeTab) {
-      this.setState({
-        activeTab: this.props.activeTab
-      });
-    } else {
-      this.setState({
-        activeTab: this.props.children && this.props.children[0].props.id
-      });
-    }
-  },
   render: function() {
-    var items = this.props.children.map(function (item) {
-      return {
-        name: item.props.id,
-        label: item.props.label,
-        pane: item.props.children
-      };
-    });
+    var tabEls = [],
+        paneEls = [],
+        children = this.props.children,
+        m = children.length,
+        selectedIndex = this.state.currentSelectedIndex % m,
+        isActive,
+        item,
+        cls,
+        i;
+
+
+    for (i=0; i < m; i++) {
+      item = children[i];
+
+      // only accept MUITab elements
+      if (item.type !== Tab) util.raiseError('Expecting MUITab React Element');
+
+      isActive = (i === selectedIndex) ? true : false;
+
+      // tab element
+      tabEls.push(
+        <li className={ (isActive) ? isActiveClass : '' }>
+          <a onClick={ this._handleClick.bind(this, i, item) }>
+            { item.props.label }
+          </a>
+        </li>
+      );
+
+      // pane element
+      cls = tabsPaneClass + ' ';
+      if (isActive) cls += isActiveClass;
+
+      paneEls.push(
+        <div className={ cls }>
+          { item.props.children }
+        </div>
+      );
+    }
+
+    cls = tabsBarClass;
+    if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+    
     return (
-      <div className="tabs">
-        <TabHeaders
-          items={ items }
-          justified={ this.props.justified }
-          active={ this.state.activeTab }
-          onClick={ this._changeTab }
-        />
-        <TabContainers items={ items } active={ this.state.activeTab } />
+      <div>
+        <ul className={ cls }>
+          { tabEls }
+        </ul>
+        { paneEls }
       </div>
     );
   },
-  _changeTab: function (toWhich, e) {
-    // only left clicks
-    if (e.button !== 0) return;
+  _handleClick: function(i, tab, ev) {
+    if (i !== this.state.currentSelectedIndex) {
+      this.setState({currentSelectedIndex: i});
 
-    if (e.target.getAttribute('disabled') !== null) return;
+      // onActive callback
+      if (tab.props.onActive) tab.props.onActive(tab);
 
-    setTimeout(function () {
-      if (!e.defaultPrevented) {
-        this.setState({
-          activeTab: toWhich
-        });
+      // onChange callback
+      if (this.props.onChange) {
+        this.props.onChange(i, tab.props.value, tab, ev);
       }
-    }.bind(this), 0);
-  }
-});
-
-
-/**
- * TabHeaders constructor
- * @class
- */
-var TabHeaders = React.createClass({
-  getDefaultProps: function() {
-    return {
-      items: []
-    };
-  },
-  render: function() {
-    var classes = {};
-    classes[tabClass] = true;
-    classes[justifiedClass] = this.props.justified;
-    classes = util.classNames(classes);
-
-    var items = this.props.items.map(function (item) {
-      return (
-        <TabHeaderItem key={ item.name }
-          name={ item.name }
-          label={ item.label }
-          active={ item.name === this.props.active }
-          onClick={ this.props.onClick } />
-      );
-    }.bind(this));
-    return (
-      <ul className={ classes }>
-        { items }
-      </ul>
-    );
-  }
-});
-
-
-/**
- * TabHeaderItem constructor
- * @class
- */
-var TabHeaderItem = React.createClass({
-  render: function () {
-    var classes = {};
-    classes[activeClass] = this.props.active;
-    classes = util.classNames(classes);
-    return (
-      <li className={ classes }>
-        <a onClick={ this._click }>
-          { this.props.label }
-        </a>
-      </li>
-    );
-  },
-  _click: function (e) {
-    if (this.props.onClick) {
-      this.props.onClick(this.props.name, e);
     }
   }
 });
 
 
 /**
- * TabContainers constructor
+ * Tab constructor
  * @class
  */
-var TabContainers = React.createClass({
+var Tab = React.createClass({
   getDefaultProps: function() {
     return {
-      items: []
+      value: null,
+      label: '',
+      onActive: null
     };
   },
-  render: function() {
-    var items = this.props.items.map(function (item) {
-      return (
-        <TabPane key={ item.name }
-          active={ item.name === this.props.active }>
-          { item.pane }
-        </TabPane>
-      );
-    }.bind(this));
-    return (
-      <div className={ contentClass }>
-        { items }
-      </div>
-    );
-  }
-});
-
-
-/**
- * TabPane constructor
- * @class
- */
-var TabPane = React.createClass({
-  render: function () {
-    var classes = {};
-    classes[paneClass] = true;
-    classes[activeClass] = this.props.active;
-    classes = util.classNames(classes);
-    return (
-      <div className={ classes }>
-        { this.props.children }
-      </div>
-    );
-  }
-});
-
-
-/**
- * TabItem constructor
- * @class
- */
-var TabItem = React.createClass({
   render: function() {
     return null;
   }
@@ -198,6 +120,6 @@ var TabItem = React.createClass({
 
 /** Define module API */
 module.exports = {
-  Tabs: Tabs,
-  TabItem: TabItem
+  Tab: Tab,
+  Tabs: Tabs
 };

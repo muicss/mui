@@ -54,9 +54,18 @@ $mui-base-letter-spacing:       0.001em !default;
 // ============================================================================
 
 $mui-btn-height:                     36px !default;
+$mui-btn-height-sm:                  $mui-btn-height * 0.85 !default;
 $mui-btn-height-lg:                  $mui-btn-height * 1.5 !default;
+
 $mui-btn-border-radius:              3px !default;
+
 $mui-btn-padding-horizontal:         26px !default;
+$mui-btn-padding-horizontal-sm:      16px !default;
+$mui-btn-padding-horizontal-lg:      $mui-btn-padding-horizontal !default;
+
+$mui-btn-font-size:                  14px !default;
+$mui-btn-font-size-sm:               13px !default;
+$mui-btn-font-size-lg:               $mui-btn-font-size !default;
 
 $mui-btn-default-bg-color:           mui-color('white') !default;
 $mui-btn-default-font-color:         $mui-base-font-color !default;
@@ -66,6 +75,9 @@ $mui-btn-primary-font-color:         mui-color('white') !default;
 
 $mui-btn-danger-bg-color:            $mui-danger-color !default;
 $mui-btn-danger-font-color:          mui-color('white') !default;
+
+$mui-btn-dark-bg-color:              mui-color('grey', '800') !default;
+$mui-btn-dark-font-color:            mui-color('white') !default;
 
 $mui-btn-accent-bg-color:            $mui-accent-color !default;
 $mui-btn-accent-font-color:          mui-color('white') !default;

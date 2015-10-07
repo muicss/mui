@@ -18,7 +18,7 @@
 // ANIMATION
 // ============================================================================
 
-.mui-notransition {
+.mui--notransition {
   transition: none !important;
 }
 
@@ -47,16 +47,16 @@
 // ALIGNMENT HELPERS
 // ============================================================================
 
-.mui-text-left           { text-align: left !important; }
-.mui-text-right          { text-align: right !important; }
-.mui-text-center         { text-align: center !important; }
-.mui-text-justify        { text-align: justify !important; }
-.mui-text-nowrap         { white-space: nowrap !important; }
+.mui--text-left           { text-align: left !important; }
+.mui--text-right          { text-align: right !important; }
+.mui--text-center         { text-align: center !important; }
+.mui--text-justify        { text-align: justify !important; }
+.mui--text-nowrap         { white-space: nowrap !important; }
 
-.mui-align-baseline      { vertical-align: baseline !important; }
-.mui-align-top           { vertical-align: top !important; }
-.mui-align-middle        { vertical-align: middle !important; }
-.mui-align-bottom        { vertical-align: bottom !important; }
+.mui--align-baseline      { vertical-align: baseline !important; }
+.mui--align-top           { vertical-align: top !important; }
+.mui--align-middle        { vertical-align: middle !important; }
+.mui--align-bottom        { vertical-align: bottom !important; }
 
 
 
@@ -65,19 +65,20 @@
 // LISTS
 // ============================================================================
 
-@mixin list-unstyled {
+@mixin x-list-unstyled {
   padding-left: 0;
   list-style: none;
 }
 
 // [converter] extracted as `@mixin list-unstyled` for libsass compatibility
-.mui-list-unstyled {
-  @include list-unstyled;
+.mui-list--unstyled {
+  @include x-list-unstyled();
 }
 
 // Inline turns list items into inline-block
-.mui-list-inline {
-  @include list-unstyled;
+.mui-list--inline {
+  @include x-list-unstyled();
+
   margin-left: -5px;
 
   > li {
@@ -94,27 +95,27 @@
 // DEPTH HELPERS
 // ============================================================================
 
-.mui-z1 {
+.mui--z1 {
   box-shadow: 0 1px 3px rgba(mui-color('black'), 0.12),
               0 1px 2px rgba(mui-color('black'), 0.24);
 }
 
-.mui-z2 {
+.mui--z2 {
   box-shadow: 0 3px 6px rgba(mui-color('black'), 0.16),
               0 3px 6px rgba(mui-color('black'), 0.23);
 }
 
-.mui-z3 {
+.mui--z3 {
   box-shadow: 0 10px 20px rgba(mui-color('black'), 0.19),
               0 6px 6px rgba(mui-color('black'), 0.23);
 }
 
-.mui-z4 {
+.mui--z4 {
   box-shadow: 0 14px 28px rgba(mui-color('black'), 0.25),
               0 10px 10px rgba(mui-color('black'), 0.22);  
 }
 
-.mui-z5 {
+.mui--z5 {
   box-shadow: 0 19px 38px rgba(mui-color('black'), 0.30),
               0 15px 12px rgba(mui-color('black'), 0.22);
 }
@@ -126,15 +127,15 @@
 // FLOAT HELPERS
 // ============================================================================
 
-.mui-clearfix {
-  @include clearfix;
+.mui--clearfix {
+  @include mui-clearfix();
 }
 
-.mui-pull-right {
+.mui--pull-right {
   float: right !important;
 }
 
-.mui-pull-left {
+.mui--pull-left {
   float: left !important;
 }
 
@@ -145,18 +146,21 @@
 // TOGGLE HELPERS
 // ============================================================================
 
-.mui-hide {
+.mui--hide {
   display: none !important;
 }
 
-.mui-show {
+.mui--show {
   display: block !important;
 }
 
-.mui-invisible {
+.mui--invisible {
   visibility: hidden;
 }
 
+.mui--overflow-hidden {
+  overflow: hidden !important;
+}
 
 
 
@@ -164,121 +168,139 @@
 // RESPONSIVE UTILITIES
 // ============================================================================
 
-.mui-visible-xs-block,
-.mui-visible-xs-inline,
-.mui-visible-xs-inline-block,
-.mui-visible-sm-block,
-.mui-visible-sm-inline,
-.mui-visible-sm-inline-block,
-.mui-visible-md-block,
-.mui-visible-md-inline,
-.mui-visible-md-inline-block,
-.mui-visible-lg-block,
-.mui-visible-lg-inline,
-.mui-visible-lg-inline-block {
+@mixin x-responsive-visibility($parent) {
+  #{$parent} {
+    display: block !important;
+  }
+
+  table#{$parent}  { display: table; }
+  tr#{$parent}     { display: table-row !important; }
+  th#{$parent},
+  td#{$parent}     { display: table-cell !important; }
+}
+
+// [converter] $parent hack
+@mixin x-responsive-invisibility($parent) {
+  #{$parent} {
+    display: none !important;
+  }
+}
+
+.mui--visible-xs-block,
+.mui--visible-xs-inline,
+.mui--visible-xs-inline-block,
+.mui--visible-sm-block,
+.mui--visible-sm-inline,
+.mui--visible-sm-inline-block,
+.mui--visible-md-block,
+.mui--visible-md-inline,
+.mui--visible-md-inline-block,
+.mui--visible-lg-block,
+.mui--visible-lg-inline,
+.mui--visible-lg-inline-block {
   display: none !important;
 }
 
 @media (max-width: $mui-screen-xs-max) {
-  @include responsive-visibility('.mui-visible-xs');
+  @include x-responsive-visibility('.mui-visible-xs');
 }
 
-.mui-visible-xs-block {
+.mui--visible-xs-block {
   @media (max-width: $mui-screen-xs-max) {
     display: block !important;
   }
 }
 
-.mui-visible-xs-inline {
+.mui--visible-xs-inline {
   @media (max-width: $mui-screen-xs-max) {
     display: inline !important;
   }
 }
 
-.mui-visible-xs-inline-block {
+.mui--visible-xs-inline-block {
   @media (max-width: $mui-screen-xs-max) {
     display: inline-block !important;
   }
 }
 
 @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
-  @include responsive-visibility('.mui-visible-sm');
+  @include x-responsive-visibility('.mui--visible-sm');
 }
 
-.mui-visible-sm-block {
+.mui--visible-sm-block {
   @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
     display: block !important;
   }
 }
 
-.mui-visible-sm-inline {
+.mui--visible-sm-inline {
   @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
     display: inline !important;
   }
 }
 
-.mui-visible-sm-inline-block {
+.mui--visible-sm-inline-block {
   @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
     display: inline-block !important;
   }
 }
 
 @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
-  @include responsive-visibility('.mui-visible-md');
+  @include x-responsive-visibility('.mui--visible-md');
 }
 
-.mui-visible-md-block {
+.mui--visible-md-block {
   @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
     display: block !important;
   }
 }
 
-.mui-visible-md-inline {
+.mui--visible-md-inline {
   @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
     display: inline !important;
   }
 }
 
-.mui-visible-md-inline-block {
+.mui--visible-md-inline-block {
   @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
     display: inline-block !important;
   }
 }
 
 @media (min-width: $mui-screen-lg-min) {
-  @include responsive-visibility('.mui-visible-lg');
+  @include x-responsive-visibility('.mui--visible-lg');
 }
 
-.mui-visible-lg-block {
+.mui--visible-lg-block {
   @media (min-width: $mui-screen-lg-min) {
     display: block !important;
   }
 }
 
-.mui-visible-lg-inline {
+.mui--visible-lg-inline {
   @media (min-width: $mui-screen-lg-min) {
     display: inline !important;
   }
 }
 
-.mui-visible-lg-inline-block {
+.mui--visible-lg-inline-block {
   @media (min-width: $mui-screen-lg-min) {
     display: inline-block !important;
   }
 }
 
 @media (max-width: $mui-screen-xs-max) {
-  @include responsive-invisibility('.mui-hidden-xs');
+  @include x-responsive-invisibility('.mui--hidden-xs');
 }
 
 @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
-  @include responsive-invisibility('.mui-hidden-sm');
+  @include x-responsive-invisibility('.mui--hidden-sm');
 }
 
 @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
-  @include responsive-invisibility('.mui-hidden-md');
+  @include x-responsive-invisibility('.mui--hidden-md');
 }
 
 @media (min-width: $mui-screen-lg-min) {
-  @include responsive-invisibility('.mui-hidden-lg');
+  @include x-responsive-invisibility('.mui--hidden-lg');
 }

@@ -7,39 +7,97 @@
 
 var util = require('../js/lib/util.js');
 
-var formControlClass = 'mui-form-control',
-    formGroupClass = 'mui-form-group',
-    floatingLabelBaseClass = 'mui-form-floating-label',
-    floatingLabelActiveClass = floatingLabelBaseClass + '-active';
+var textfieldClass = 'mui-textfield',
+    textfieldInputClass = 'mui-textfield__input',
+    floatingLabelClass = 'mui-textfield__label--floating',
+    isEmptyClass = 'mui--is-empty',
+    isNotEmptyClass = 'mui--is-not-empty',
+    isDirtyClass = 'mui--is-dirty';
 
 
 /**
- * FormControl constructor
+ * Input constructor
  * @class
  */
-var FormControl = React.createClass({
+var Input = React.createClass({
+  getDefaultProps: function() {
+    return {
+      value: '',
+      type: 'text',
+      autofocus: false,
+      onChange: null
+    };
+  },
+  getInitialState: function() {
+    return {
+      value: this.props.value,
+      isDirty: Boolean(this.props.value.length)
+    };
+  },
   render: function() {
-    return (
-      <input
-        type={this.props.type || 'text'}
-        className={ formControlClass }
-        value={this.props.value}
-        autoFocus={this.props.autofocus}
-        onInput={this.props.onInput}
-      />
-    );
+    var cls = {},
+        isNotEmpty = Boolean(this.state.value),
+        inputEl;
+
+    cls[textfieldInputClass] = true;
+    cls[isEmptyClass] = !isNotEmpty;
+    cls[isNotEmptyClass] = isNotEmpty;
+    cls[isDirtyClass] = this.state.isDirty;
+
+    cls = util.classNames(cls);
+
+    if (this.props.type === 'textarea') {
+      inputEl = (
+        <textarea
+          ref="input"
+          className={ cls }
+          value={ this.props.value }
+          autoFocus={ this.props.autofocus }
+          onChange={ this._handleChange }
+          onFocus={ this._handleFocus }
+        />
+      );
+    } else {
+      inputEl = (
+        <input
+          ref="input"
+          className={ cls }
+          type={ this.props.type }
+          value={ this.state.value }
+          autoFocus={ this.props.autofocus }
+          onChange={ this._handleChange }
+          onFocus={ this._handleFocus }
+        />
+      );
+    }
+
+    return inputEl;
+  },
+  _handleChange: function(ev) {
+    this.setState({value: ev.target.value});
+    if (this.props.onChange) this.props.onChange(ev);
+  },
+  _handleFocus: function(ev) {
+    this.setState({isDirty: true});
   }
 });
 
 
 /**
- * FormLabel constructor
+ * Label constructor
  * @class
  */
-var FormLabel = React.createClass({
+var Label = React.createClass({
+  getDefaultProps: function() {
+    return {
+      text: '',
+      floating: false,
+      onClick: null
+    };
+  },
   getInitialState: function() {
     return {
-      style: {} 
+      style: {}
     };
   },
   componentDidMount: function() {
@@ -61,92 +119,67 @@ var FormLabel = React.createClass({
     }.bind(this), 150);
   },
   render: function() {
-    var labelText = this.props.text,
-        labelClass;
-    
-    if (labelText) {
-      labelClass = {};
-      labelClass[floatingLabelBaseClass] = this.props.floating;
-      labelClass[floatingLabelActiveClass] = this.props.active;
-      labelClass = util.classNames(labelClass);
-    }
-    
     return (
       <label
-        className={ labelClass }
+        refs="label"
+        className={ (this.props.floating) ? floatingLabelClass : '' }
         style={ this.state.style }
         onClick={ this.props.onClick }
       >
-        { labelText }
+        { this.props.text }
       </label>
     );
   }
 });
 
 
+
+
 /**
- * FormGroup constructor
+ * Textfield constructor
  * @class
  */
-var FormGroup = React.createClass({
-  getInitialState: function() {
+var Textfield = React.createClass({
+  getDefaultProps: function() {
     return {
-      hasInput: false
+      type: 'text',
+      value: '',
+      label: '',
+      isLabelFloating: false,
+      autofocus: false,
+      onChange: null
     };
   },
-  componentDidMount: function() {
-    if (this.props.value) {
-      this.setState({
-        hasInput: true
-      });
-    }
-  },
   render: function() {
-    var labelText = this.props.label;
-    return (
-      <div className={ formGroupClass }>
-        <FormControl 
-          type={this.props.type}
-          value={this.props.value}
-          autoFocus={this.props.autofocus}
-          onInput={ this._input }
+    var labelEl;
+
+    if (this.props.label.length) {
+      labelEl = (
+        <Label
+          text={ this.props.label }
+          onClick={ this._focus }
+          floating={ this.props.isLabelFloating }
         />
-        { labelText &&
-          <FormLabel
-            text={labelText}
-            onClick={ this._focus }
-            active={ this.state.hasInput }
-            floating={ this.props.isLabelFloating }
-          />
-        }
+      );
+    }
+
+    return (
+      <div className={ textfieldClass }>
+        <Input
+          type={ this.props.type }
+          value={ this.props.value }
+          autoFocus={ this.props.autofocus }
+          onChange={ this.props.onChange }
+        />
+        { labelEl }
       </div>
     );
   },
-  _focus: function (e) {
+  _focus: function(e) {
     // pointer-events shim
     if (util.supportsPointerEvents() === false) {
-      var labelEl = e.target;
-      labelEl.style.cursor = 'text';
-
-      if (!this.state.hasInput) {
-        var inputEl = React.findDOMNode(this.refs.input);
-        inputEl.focus();
-      }
-    }
-  },
-  _input: function (e) {
-    if (e.target.value) {
-      this.setState({
-        hasInput: true 
-      });
-    } else {
-      this.setState({
-        hasInput: false 
-      });
-    }
-
-    if (this.props.onClick) {
-      this.props.onClick(e);
+      e.target.style.cursor = 'text';
+      React.findDOMNode(this.refs.input).focus();
     }
   }
 });
@@ -154,6 +187,5 @@ var FormGroup = React.createClass({
 
 /** Define module API */
 module.exports = {
-  FormControl: FormControl,
-  FormGroup: FormGroup
+  Textfield: Textfield
 };

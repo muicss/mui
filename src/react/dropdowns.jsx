@@ -10,14 +10,13 @@
 var util = require('../js/lib/util'),
     jqLite = require('../js/lib/jqLite'),
     buttons = require('./buttons.jsx'),
-    Button = buttons.Button,
-    RoundButton = buttons.RoundButton;
+    Button = buttons.Button;
 
 var dropdownClass = 'mui-dropdown',
     caretClass = 'mui-caret',
-    menuClass = 'mui-dropdown-menu',
-    openClass = 'mui-is-open',
-    rightClass = 'mui-dropdown-menu-right';
+    menuClass = 'mui-dropdown__menu',
+    openClass = 'mui--is-open',
+    rightClass = 'mui-dropdown__menu--right';
 
 
 /**
@@ -25,10 +24,20 @@ var dropdownClass = 'mui-dropdown',
  * @class
  */
 var Dropdown = React.createClass({
-  menuStyle: { top: 0 },
+  getDefaultProps: function() {
+    return {
+      style: 'default',
+      color: 'default',
+      size: 'default',
+      label: '',
+      right: false,
+      disabled: false
+    };
+  },
   getInitialState: function() {
     return {
-      opened: false
+      opened: false,
+      menuTop: 0
     };
   },
   componentWillMount: function() {
@@ -40,34 +49,19 @@ var Dropdown = React.createClass({
   render: function() {
     var button;
 
-    if (this.props.round) {
-      button = (
-        <RoundButton
-          ref="button"
-          onClick={ this._click }
-          mini={ this.props.mini }
-          disabled={ this.props.disabled }
-        >
-          { this.props.label }
-          <span className={ caretClass } />
-        </RoundButton>
-      );
-    } else {
-      button = (
+    button = (
         <Button
           ref="button"
           onClick={ this._click }
-          type={ this.props.type }
-          flat={ this.props.flat }
-          raised={ this.props.raised }
-          large={ this.props.large }
+          style={ this.props.style }
+          color={ this.props.color }
+          size={ this.props.size }
           disabled={ this.props.disabled }
         >
           { this.props.label }
           <span className={ caretClass } />
         </Button>
-      );
-    }
+    );
 
     var cs = {};
 
@@ -77,13 +71,12 @@ var Dropdown = React.createClass({
     cs = util.classNames(cs);
 
     return (
-      <div className={ dropdownClass } style={ {padding: '0px 2px 0px'} } >
+      <div className={ dropdownClass }>
         { button }
         { this.state.opened && (
             <ul
               className={ cs }
-              style={ this.menuStyle }
-              ref="menu"
+              style={ {top: this.state.menuTop } }
               onClick={ this._select }
             >
               { this.props.children }
@@ -118,16 +111,14 @@ var Dropdown = React.createClass({
         toggleRect;
 
     toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
-    this.menuStyle.top = toggleRect.top - wrapperRect.top + toggleRect.height;
 
     this.setState({
-      opened: true
+      opened: true,
+      menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
     });
   },
   _close: function() {
-    this.setState({
-      opened: false
-    });
+    this.setState({opened: false});
   },
   _select: function(ev) {
     if (this.props.onClick) this.props.onClick(this, ev);
@@ -135,9 +126,7 @@ var Dropdown = React.createClass({
   _outsideClick: function(ev) {
     var isClickInside = React.findDOMNode(this).contains(ev.target);
 
-    if (!isClickInside) {
-      this._close();
-    }
+    if (!isClickInside) this._close();
   }
 });
 
@@ -150,7 +139,7 @@ var DropdownItem = React.createClass({
   render: function() {
     return (
       <li>
-        <a href={ this.props.link || '#' } onClick={ this._click }>
+        <a href={ this.props.link } onClick={ this._click }>
           { this.props.children }
         </a>
       </li>

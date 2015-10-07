@@ -3,7 +3,7 @@
  */
 
 .mui-container {
-  @include container-fixed;
+  @include mui-container-fixed();
 
   @media (min-width: $mui-screen-sm-min) {
     width: $mui-container-sm;
@@ -16,7 +16,6 @@
   }
 }
 
-.mui-container-fluid,
-.mui-container[data-mui-fluid="true"] {
-  @include container-fixed;
+.mui-container-fluid {
+  @include mui-container-fixed();
 }

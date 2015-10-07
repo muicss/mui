@@ -11,7 +11,7 @@ var jqLite = require('./lib/jqLite.js'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',
-    activeClass = 'mui-is-active',
+    activeClass = 'mui--is-active',
     showstartKey = 'mui.tabs.showstart',
     showendKey = 'mui.tabs.showend',
     hidestartKey = 'mui.tabs.hidestart',
@@ -66,6 +66,9 @@ function activateTab(currToggleEl) {
       ev1,
       ev2,
       cssSelector;
+
+  // exit if already active
+  if (jqLite.hasClass(currTabEl, activeClass)) return;
 
   // raise error if pane doesn't exist
   if (!currPaneEl) util.raiseError('Tab pane "' + currPaneId + '" not found');

@@ -19,11 +19,19 @@
       var Dropdown = React.createClass({
         render: function() {
           return (
-            <MUIDropdown type="primary" label="Dropdown" onClick={ function (ref, ev) { console.log('option selected') } }>
-              <MUIDropdownItem link="#/link1">Option    1</MUIDropdownItem>
-              <MUIDropdownItem>Option     2</MUIDropdownItem>
-              <MUIDropdownItem>Option     3</MUIDropdownItem>
-              <MUIDropdownItem onClick={ function (ref, ev) { alert("Option 4 selected"); } }>Option     4</MUIDropdownItem>
+            <MUIDropdown
+                style="primary"
+                label="Dropdown"
+                onClick={ function(ref, ev) {console.log('option selected')} }
+            >
+              <MUIDropdownItem link="#/link1">Option 1</MUIDropdownItem>
+              <MUIDropdownItem>Option 2</MUIDropdownItem>
+              <MUIDropdownItem>Option 3</MUIDropdownItem>
+              <MUIDropdownItem 
+                  onClick={ function (ref, ev){alert("Option 4 selected");} }
+              >
+                Option     4
+              </MUIDropdownItem>
             </MUIDropdown>
           );
         }
@@ -32,11 +40,14 @@
       var DropdownRight = React.createClass({
         render: function() {
           return (
-            <MUIDropdown right={ true } type="primary" label="Dropdown">
-              <MUIDropdownItem>Option     1</MUIDropdownItem>
-              <MUIDropdownItem>Option     2</MUIDropdownItem>
-              <MUIDropdownItem>Option     3</MUIDropdownItem>
-              <MUIDropdownItem>Option     4</MUIDropdownItem>
+            <MUIDropdown 
+                style="primary"
+                right={ true }
+                label="Dropdown">
+              <MUIDropdownItem>Option 1</MUIDropdownItem>
+              <MUIDropdownItem>Option 2</MUIDropdownItem>
+              <MUIDropdownItem>Option 3</MUIDropdownItem>
+              <MUIDropdownItem>Option 4</MUIDropdownItem>
             </MUIDropdown>
           );
         }

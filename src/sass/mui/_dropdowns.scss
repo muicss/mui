@@ -23,8 +23,8 @@
 // ============================================================================
 // MENU ELEMENT
 // ============================================================================
-.mui-dropdown-menu {
-  @extend .mui-z1;
+.mui-dropdown__menu {
+  @extend .mui--z1;
 
   position: absolute;
   top: 100%;
@@ -42,7 +42,7 @@
   background-clip: padding-box;
 
   // open state
-  &.mui-is-open {
+  &.mui--is-open {
     display: block;
   }
   
@@ -65,7 +65,7 @@
     }
   }
 
-  > .mui-is-disabled > a {
+  > .mui--is-disabled > a {
     &,
     &:hover,
     &:focus {
@@ -84,8 +84,7 @@
 }
 
 // right align
-.mui-dropdown-menu-right,
-.mui-dropdown-menu[data-mui-align="right"] {
+.mui-dropdown__menu--right {
   left: auto;
   right: 0;
 }

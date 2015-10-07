@@ -12,91 +12,168 @@
   <body>
     <div class="mui-container">
       <h1>Buttons</h1>
-      <div id="normal-buttons"></div>
+      <div id="default-buttons"></div>
       <div id="flat-buttons"></div>
       <div id="raised-buttons"></div>
-      <div id="large-buttons"></div>
+      <div id="button-sizes"></div>
       <div id="floating-buttons"></div>
     </div>
     <script type="text/jsx">
-        var Buttons = React.createClass({
-          render: function() {
-            return (
-              <div className="buttons">
-                <MUIButton disabled={ this.props.disabled } flat={ this.props.flat } raised={ this.props.raised } large={ this.props.large }>Button</MUIButton>
-                <MUIButton disabled={ this.props.disabled } flat={ this.props.flat } raised={ this.props.raised } large={ this.props.large } type="primary">Button</MUIButton>
-                <MUIButton disabled={ this.props.disabled } flat={ this.props.flat } raised={ this.props.raised } large={ this.props.large } type="danger">Button</MUIButton>
-                <MUIButton disabled={ this.props.disabled } flat={ this.props.flat } raised={ this.props.raised } large={ this.props.large } type="accent">Button</MUIButton>
-              </div>
-            );
-          }
-        });
+      var Buttons = React.createClass({
+        render: function() {
+          return (
+            <div className="buttons">
+              <MUIButton
+                type={ this.props.type }
+                size={ this.props.size }
+                disabled={ this.props.disabled }>
+                Button
+              </MUIButton>
+              <MUIButton
+                style="primary"
+                type={ this.props.type }
+                size={ this.props.size }
+                disabled={ this.props.disabled }>
+                Button
+              </MUIButton>
+              <MUIButton 
+                style="danger"
+                type={ this.props.type }
+                size={ this.props.size }
+                disabled={ this.props.disabled }>
+                Button
+              </MUIButton>
+              <MUIButton 
+                style="dark"
+                type={ this.props.type }
+                size={ this.props.size }
+                disabled={ this.props.disabled }>
+                Button
+              </MUIButton>
+              <MUIButton
+                style="accent"
+                type={ this.props.type }
+                size={ this.props.size }
+                disabled={ this.props.disabled }>
+                Button
+              </MUIButton>
+            </div>
+          );
+        }
+      });
 
-        var NormalButtons = React.createClass({
-          render: function() {
-            return (
-              <div className="mui-panel">
-                <h3>Normal buttons</h3>
-                <Buttons />
-                <Buttons disabled={ true } />
-              </div>
-            );
-          }
-        });
 
-        var FlatButtons = React.createClass({
-          render: function() {
-            return (
-              <div className="mui-panel">
-                <h3>Flat buttons</h3>
-                <Buttons flat={ true } />
-                <Buttons flat={ true } disabled={ true } />
-              </div>
-            );
-          }
-        });
+      var ButtonSizes = React.createClass({
+        render: function() {
+          return (
+            <div>
+              <MUIButton
+                style="primary"
+                size={ this.props.size }>
+                Button
+              </MUIButton>
+              <MUIButton
+                style="primary"
+                type="flat"
+                size={ this.props.size }>
+                Button
+              </MUIButton>
+              <MUIButton
+                style="primary"
+                type="raised"
+                size={ this.props.size }>
+                Button
+              </MUIButton>
+              <MUIButton
+                style="primary"
+                type="fab"
+                size={ this.props.size }>
+                +
+              </MUIButton>
+            </div>
+          );
+        }
+      });
+      
+            
+      var FABButtons = React.createClass({
+        render: function() {
+          return (
+            <div>
+              <MUIButton
+                type="fab"
+                disabled={ this.props.disabled }>
+                +
+              </MUIButton>
+              <MUIButton
+                type="fab"
+                style="primary"
+                disabled={ this.props.disabled }>
+                +
+              </MUIButton>
+              <MUIButton
+                type="fab"
+                style="danger"
+                disabled={ this.props.disabled }>
+                +
+              </MUIButton>
+              <MUIButton
+                type="fab"
+                style="dark"
+                disabled={ this.props.disabled }>
+                +
+              </MUIButton>
+              <MUIButton
+                type="fab"
+                style="accent"
+                disabled={ this.props.disabled }>
+                +
+              </MUIButton>
+            </div>
+          );
+        }
+      });
 
-        var RaisedButtons = React.createClass({
-          render: function() {
-            return (
-              <div className="mui-panel">
-                <h3>Raised buttons</h3>
-                <Buttons raised={ true } />
-                <Buttons raised={ true } disabled={ true } />
-              </div>
-            );
-          }
-        });
+      
+      React.render(<div className="mui-panel">
+                     <h3>Default buttons</h3>
+                     <Buttons />
+                     <Buttons disabled={ true } />
+                   </div>,
+                   document.getElementById('default-buttons'));
 
-        var LargeButtons = React.createClass({
-          render: function() {
-            return (
-              <div className="mui-panel">
-                <h3>Large buttons</h3>
-                <Buttons large={ true } />
-                <Buttons large={ true } disabled={ true } />
-              </div>
-            );
-          }
-        });
 
-        var FloatingButtons = React.createClass({
-          render: function() {
-            return (
-              <div className="mui-panel">
-                <h3>Floating action buttons</h3>
-                <MUIRoundButton>+</MUIRoundButton>
-                <MUIRoundButton mini={ true } onClick={ function () { alert('Really tiny'); } }>+</MUIRoundButton>
-              </div>
-            );
-          }
-        });
+      React.render(<div className="mui-panel">
+                     <h3>Flat buttons</h3>
+                     <Buttons type="flat" />
+                     <Buttons type="flat" disabled={ true } />
+                   </div>,
+                   document.getElementById('flat-buttons'));
 
-        React.render(<NormalButtons />, document.getElementById('normal-buttons'));
-        React.render(<FlatButtons />, document.getElementById('flat-buttons'));
-        React.render(<RaisedButtons />, document.getElementById('raised-buttons'));
-        React.render(<LargeButtons />, document.getElementById('large-buttons'));
-        React.render(<FloatingButtons />, document.getElementById('floating-buttons'));
+
+      React.render(<div className="mui-panel">
+                     <h3>Raised buttons</h3>
+                     <Buttons type="raised" />
+                     <Buttons type="raised" disabled={ true } />
+                   </div>,
+                   document.getElementById('raised-buttons'));
+
+
+      React.render(<div className="mui-panel">
+                     <h3>Floating Action Buttons</h3>
+                     <FABButtons />
+                     <FABButtons disabled={ true } />
+                   </div>,
+                   document.getElementById('floating-buttons'));
+
+
+      React.render(<div className="mui-panel">
+                     <h3>Button sizes</h3>
+                     <ButtonSizes size="small" />
+                     <ButtonSizes />
+                     <ButtonSizes size="large" />
+                   </div>,
+                   document.getElementById('button-sizes'));
     </script>
   </body>
 </html>
