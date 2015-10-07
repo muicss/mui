@@ -1,14 +1,10 @@
 # MUI Changelog
 
-## 0.2.0 - IN PROGRESS
+## 0.2.0-rc1 - IN PROGRESS
 
-* Changed button attribute names to type/style/size
+* Migrated CSS/JS and Email Libraries to BEM syntax
+* Removed internal bootstrap source code dependency
 * Removed MUIRoundButton from React library
-* Changed .mui-btn-floating to .mui-btn-fab in CSS/JS library
-* Changed .mui-btn-lg to .mui-btn-large in CSS/JS and Email libraries
-* Modifed Email library so .mui-btn-default is not necessary
-* Added .mui-btn-small to Email library
-* Added small/large SASS customization variables to Email library
 
 ## 0.1.23 - September 19, 2015
 
