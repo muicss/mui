@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/mui/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="../assets/mui/js/mui.min.js"></script>
+    <style>
+      /**
+       * Body CSS
+       */
+      html,
+      body {
+        height: 100%;
+      }
+
+      html,
+      body,
+      input,
+      textarea,
+      buttons {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+      }
+
+
+      /**
+       * Header CSS
+       */
+      header {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 2;
+      }
+
+      header ul.mui-list--inline {
+        margin-bottom: 0;
+      }
+
+      header a {
+       color: white;
+      }
+
+      header a:hover {
+       color: white;
+      }
+
+
+      /**
+       * Content CSS
+       */
+      #content-wrapper {
+        min-height: 100%;
+        margin-bottom: -80px;
+        padding-bottom: 80px;
+      }
+
+
+      /**
+       * Footer CSS
+       */
+      footer {
+        height: 80px;
+        background-color: #eee;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="mui-appbar mui--z1">
+      <div class="mui-container">
+        <table width="100%">
+          <tr class="mui--appbar-height">
+            <td class="mui--text-title">Brand.io</td>
+            <td align="right">
+              <ul class="mui-list--inline mui--text-body2">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Login</a></li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </header>
+    <div id="content-wrapper" class="mui--text-center">
+      <div class="mui--appbar-height"></div>
+      <br>
+      <br>
+      <div class="mui--text-display3">Brand.io</div>
+      <br>
+      <br>
+      <button class="mui-btn mui-btn--raised">Get started</button>
+    </div>
+    <footer>
+      <div class="mui-container mui--text-center mui--text-bottom">
+        Made with ♥ by <a href="https://www.muicss.com">MUICSS</a>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -139,20 +139,7 @@ h4, h5, h6 {
   font-weight: 300;
   font-size: 112px;
   line-height: 112px;
-  color: rgba(33, 33, 33, 0.54);
   color: #212121;
-}
-
-.mui--text-display4.mui--text-black {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-.mui--text-display4.mui--text-white {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.mui--text-display4.mui--text-accent {
-  color: rgba(255, 64, 129, 0.54);
 }
 
 .mui--text-display4.mui--text-black {
@@ -171,20 +158,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 56px;
   line-height: 56px;
-  color: rgba(33, 33, 33, 0.54);
   color: #212121;
-}
-
-.mui--text-display3.mui--text-black {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-.mui--text-display3.mui--text-white {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.mui--text-display3.mui--text-accent {
-  color: rgba(255, 64, 129, 0.54);
 }
 
 .mui--text-display3.mui--text-black {
@@ -203,20 +177,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 45px;
   line-height: 48px;
-  color: rgba(33, 33, 33, 0.54);
   color: #212121;
-}
-
-.mui--text-display2.mui--text-black {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-.mui--text-display2.mui--text-white {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.mui--text-display2.mui--text-accent {
-  color: rgba(255, 64, 129, 0.54);
 }
 
 .mui--text-display2.mui--text-black {
@@ -235,20 +196,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 34px;
   line-height: 40px;
-  color: rgba(33, 33, 33, 0.54);
   color: #212121;
-}
-
-.mui--text-display1.mui--text-black {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-.mui--text-display1.mui--text-white {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.mui--text-display1.mui--text-accent {
-  color: rgba(255, 64, 129, 0.54);
 }
 
 .mui--text-display1.mui--text-black {
@@ -267,20 +215,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 24px;
   line-height: 32px;
-  color: rgba(33, 33, 33, 0.87);
   color: #212121;
-}
-
-.mui--text-headline.mui--text-black {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mui--text-headline.mui--text-white {
-  color: white;
-}
-
-.mui--text-headline.mui--text-accent {
-  color: rgba(255, 64, 129, 0.87);
 }
 
 .mui--text-headline.mui--text-black {
@@ -299,20 +234,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 20px;
   line-height: 28px;
-  color: rgba(33, 33, 33, 0.87);
   color: #212121;
-}
-
-.mui--text-title.mui--text-black {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mui--text-title.mui--text-white {
-  color: white;
-}
-
-.mui--text-title.mui--text-accent {
-  color: rgba(255, 64, 129, 0.87);
 }
 
 .mui--text-title.mui--text-black {
@@ -331,20 +253,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: rgba(33, 33, 33, 0.87);
   color: #212121;
-}
-
-.mui--text-subhead.mui--text-black {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mui--text-subhead.mui--text-white {
-  color: white;
-}
-
-.mui--text-subhead.mui--text-accent {
-  color: rgba(255, 64, 129, 0.87);
 }
 
 .mui--text-subhead.mui--text-black {
@@ -363,20 +272,7 @@ h4, h5, h6 {
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  color: rgba(33, 33, 33, 0.87);
   color: #212121;
-}
-
-.mui--text-body2.mui--text-black {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mui--text-body2.mui--text-white {
-  color: white;
-}
-
-.mui--text-body2.mui--text-accent {
-  color: rgba(255, 64, 129, 0.87);
 }
 
 .mui--text-body2.mui--text-black {
@@ -395,20 +291,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  color: rgba(33, 33, 33, 0.87);
   color: #212121;
-}
-
-.mui--text-body1.mui--text-black {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mui--text-body1.mui--text-white {
-  color: white;
-}
-
-.mui--text-body1.mui--text-accent {
-  color: rgba(255, 64, 129, 0.87);
 }
 
 .mui--text-body1.mui--text-black {
@@ -427,20 +310,7 @@ h4, h5, h6 {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  color: rgba(33, 33, 33, 0.54);
   color: #212121;
-}
-
-.mui--text-caption.mui--text-black {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-.mui--text-caption.mui--text-white {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.mui--text-caption.mui--text-accent {
-  color: rgba(255, 64, 129, 0.54);
 }
 
 .mui--text-caption.mui--text-black {
@@ -459,20 +329,7 @@ h4, h5, h6 {
   font-weight: 500;
   font-size: 13px;
   line-height: 17px;
-  color: rgba(33, 33, 33, 0.87);
   color: #212121;
-}
-
-.mui--text-menu.mui--text-black {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mui--text-menu.mui--text-white {
-  color: white;
-}
-
-.mui--text-menu.mui--text-accent {
-  color: rgba(255, 64, 129, 0.87);
 }
 
 .mui--text-menu.mui--text-black {
@@ -491,21 +348,8 @@ h4, h5, h6 {
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: rgba(33, 33, 33, 0.87);
   text-transform: uppercase;
   color: #212121;
-}
-
-.mui--text-button.mui--text-black {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mui--text-button.mui--text-white {
-  color: white;
-}
-
-.mui--text-button.mui--text-accent {
-  color: rgba(255, 64, 129, 0.87);
 }
 
 .mui--text-button.mui--text-black {

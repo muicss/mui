@@ -1,6 +1,12 @@
 # MUI Changelog
 
-## 0.2.0-rc1 - IN PROGRESS
+## 0.2.0-rc2 - October 8, 2015
+
+* Removed color attribute from typography classes
+* Added text color helpers
+* Migrated colors.css to BEM syntax
+
+## 0.2.0-rc1 - October 7, 2015
 
 * Migrated CSS/JS and Email Libraries to BEM syntax
 * Removed internal bootstrap source code dependency

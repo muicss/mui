@@ -8,26 +8,8 @@
   font-size: map-get($mui-styles, "font-size");
   line-height: map-get($mui-styles, "line-height");
 
-  @if $mui-base-font-color == mui-color('white') {
-    color: rgba(mui-color('white'), map-get($mui-styles, "alpha-white"));
-  } @else {
-    color: rgba($mui-base-font-color, map-get($mui-styles, "alpha-black"));
-  }
-  
   @if $mui-name == "button" {
     text-transform: uppercase;
-  }
-
-  &.mui--text-black {
-    color: rgba(mui-color('black'), map-get($mui-styles, "alpha-black"));
-  }
-
-  &.mui--text-white {
-    color: rgba(mui-color('white'), map-get($mui-styles, "alpha-white"));
-  }
-
-  &.mui--text-accent {
-    color: rgba($mui-accent-color, map-get($mui-styles, "alpha-accent"));
   }
 }
 
@@ -36,97 +18,61 @@ $mui-mui-text-styles: (
   "display4": (
     "font-weight": 300,
     "font-size": 112px,
-    "alpha-black": 0.54,
-    "alpha-white": 0.70,
-    "alpha-accent": 0.54,
     "line-height": 112px
   ),
   "display3": (
     "font-weight": 400,
     "font-size": 56px,
-    "alpha-black": 0.54,
-    "alpha-white": 0.70,
-    "alpha-accent": 0.54,
     "line-height": 56px
   ),
   "display2": (
     "font-weight": 400,
     "font-size": 45px,
-    "alpha-black": 0.54,
-    "alpha-white": 0.70,
-    "alpha-accent": 0.54,
     "line-height": 48px
   ),
   "display1": (
     "font-weight": 400,
     "font-size": 34px,
-    "alpha-black": 0.54,
-    "alpha-white": 0.70,
-    "alpha-accent": 0.54,
     "line-height": 40px
   ),
   "headline": (
     "font-weight": 400,
     "font-size": 24px,
-    "alpha-black": 0.87,
-    "alpha-white": 1.00,
-    "alpha-accent": 0.87,
     "line-height": 32px
   ),
   "title": (
     "font-weight": 400,
     "font-size": 20px,
-    "alpha-black": 0.87,
-    "alpha-white": 1.00,
-    "alpha-accent": 0.87,
     "line-height": 28px
   ),
   "subhead": (
     "font-weight": 400,
     "font-size": 16px,
-    "alpha-black": 0.87,
-    "alpha-white": 1.00,
-    "alpha-accent": 0.87,
     "line-height": 24px
   ),
   "body2": (
     "font-weight": 500,
     "font-size": 14px,
-    "alpha-black": 0.87,
-    "alpha-white": 1.00,
-    "alpha-accent": 0.87,
     "line-height": 24px
   ),
   "body1": (
     "font-weight": 400,
     "font-size": 14px,
-    "alpha-black": 0.87,
-    "alpha-white": 1.00,
-    "alpha-accent": 0.87,
     "line-height": 20px
   ),
   "caption": (
     "font-weight": 400,
     "font-size": 12px,
-    "alpha-black": 0.54,
-    "alpha-white": 0.70,
-    "alpha-accent": 0.54,
     "line-height": 16px
   ),
   "menu": (
     "font-weight": 500,
     "font-size": 13px,
-    "alpha-black": 0.87,
-    "alpha-white": 1.00,
-    "alpha-accent": 0.87,
     "line-height": 17px
   ),
   "button": (
     "font-weight": 500,
     "font-size": 14px,
-    "alpha-black": 0.87,
-    "alpha-white": 1.00,
-    "alpha-accent": 0.87,
     "line-height": 18px
   )
 );

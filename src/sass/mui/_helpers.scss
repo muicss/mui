@@ -7,8 +7,8 @@
 // ============================================================================
 
 @keyframes mui-node-inserted {
-  from {opacity: 0.99;}
-  to {opacity: 1;}
+  from { opacity: 0.99; }
+  to { opacity: 1; }
 }
 
 
@@ -59,6 +59,30 @@
 .mui--align-bottom        { vertical-align: bottom !important; }
 
 
+
+
+// ============================================================================
+// TEXT COLOR HELPERS
+// ============================================================================
+
+.mui--text-danger   { color: $mui-danger-color; }
+
+.mui--text-black    { color: mui-color('black'); }
+.mui--text-black-87 { color: mui-color('black-alpha-87'); }
+.mui--text-black-54 { color: mui-color('black-alpha-54'); }
+.mui--text-black-26 { color: mui-color('black-alpha-26'); }
+.mui--text-black-12 { color: mui-color('black-alpha-12'); }
+
+.mui--text-white    { color: mui-color('white'); }
+.mui--text-white-70 { color: mui-color('white-alpha-70'); }
+.mui--text-white-30 { color: mui-color('white-alpha-30'); }
+.mui--text-white-12 { color: mui-color('white-alpha-12'); }
+
+.mui--text-accent    { color: $mui-accent-color; }
+.mui--text-accent-87 { color: rgba($mui-accent-color, .87); }
+.mui--text-accent-54 { color: rgba($mui-accent-color, .54); }
+.mui--text-accent-26 { color: rgba($mui-accent-color, .26); }
+.mui--text-accent-12 { color: rgba($mui-accent-color, .12); }
 
 
 // ============================================================================
