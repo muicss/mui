@@ -2579,8 +2579,15 @@ th {
   }
 }
 
-.mui--notransition {
+.mui--no-transition {
   transition: none !important;
+}
+
+.mui--no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .mui-caret {

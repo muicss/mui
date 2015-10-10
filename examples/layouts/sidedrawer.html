@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/mui/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="../assets/mui/js/mui.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style>
+     /**
+      * Body CSS
+      */
+     html,
+     body {
+       height: 100%;
+       background-color: #eee;
+     }
+
+
+     /**
+      * Layout CSS
+      */
+     #header {
+       position: fixed;
+       top: 0;
+       right: 0;
+       left: 0;
+       z-index: 2;
+       transition: left 0.2s;
+     }
+
+     #sidedrawer {
+       position: fixed;
+       top: 0;
+       bottom: 0;
+       width: 200px;
+       left: -200px;
+       overflow: auto;
+       z-index: 2;
+       background-color: #fff;
+       transition: left 0.2s;
+     }
+
+     #content-wrapper {
+       min-height: 100%;
+       overflow-x: hidden;
+       margin-left: 0px;
+       transition: margin-left 0.2s;
+
+       /* sticky bottom */
+       margin-bottom: -160px;
+       padding-bottom: 160px;
+     }
+
+     #footer {
+       height: 160px;
+       margin-left: 0px;
+       transition: margin-left 0.2s;
+     }
+
+     @media (min-width: 768px) {
+       #header {
+         left: 200px;
+         transition: left 0.2s;
+       }
+
+       #sidedrawer {
+         left: 0;
+         transition: left 0.2s;
+       }
+
+       #content-wrapper {
+         margin-left: 200px;
+         transition: margin-left 0.2s;
+       }
+
+       #footer {
+         margin-left: 200px;
+         transition: margin-left: 0.2s;
+       }
+
+       body.hide-sidedrawer #header {
+         left: 0;
+       }
+
+       body.hide-sidedrawer #sidedrawer {
+         left: -200px;
+       }
+
+       body.hide-sidedrawer #content-wrapper {
+         margin-left: 0;
+       }
+
+       body.hide-sidedrawer #footer {
+         margin-left: 0;
+       }
+     }
+
+
+     /**
+      * Toggle Sidedrawer
+      */
+     #sidedrawer.active {
+       left: 0;
+       transition: left 0.2s;
+     }
+
+
+     /**
+      * Header CSS
+      */
+     .sidedrawer-toggle {
+       color: #fff;
+       cursor: pointer;
+       font-size: 20px;
+       line-height: 20px;
+       margin-right: 10px;
+     }
+
+     .sidedrawer-toggle:hover {
+       color: #fff;
+       text-decoration: none;
+     }
+
+
+     /**
+      * Sidedrawer CSS
+      */
+     #sidedrawer-brand {
+       padding-left: 20px;
+     }
+
+     #sidedrawer ul {
+       list-style: none;
+     }
+
+     #sidedrawer > ul {
+       padding-left: 0px;
+     }
+
+     #sidedrawer > ul > li:first-child {
+       padding-top: 15px;
+     }
+
+     #sidedrawer strong {
+       display: block;
+       padding: 15px 22px;
+       cursor: pointer;
+     }
+
+     #sidedrawer strong:hover {
+       background-color: #E0E0E0;
+     }
+
+     #sidedrawer strong + ul > li {
+       padding: 6px 0px;
+     }
+
+
+     /**
+      * Footer CSS
+      */
+     #footer {
+       background-color: #0288D1;
+       color: #fff;
+     }
+
+     #footer a {
+       color: #fff;
+       text-decoration: underline;
+     }
+    </style>
+    <script>
+      jQuery(function($) {
+        var $bodyEl = $('body'),
+            $sidedrawerEl = $('#sidedrawer');
+
+
+        // ====================================================================
+        // Toggle Sidedrawer
+        // ====================================================================
+        function showSidedrawer() {
+          console.log('show');
+
+          // show overlay
+          var options = {
+            onclose: function() {
+              $sidedrawerEl
+                .removeClass('active')
+                .appendTo(document.body);
+            }
+          };
+
+          var $overlayEl = $(mui.overlay('on', options));
+
+          // show element
+          $sidedrawerEl.appendTo($overlayEl);
+          setTimeout(function() {
+            $sidedrawerEl.addClass('active');
+          }, 20);
+        }
+        
+        
+        function hideSidedrawer() {
+          $bodyEl.toggleClass('hide-sidedrawer');
+        }
+        
+        
+        $('.js-show-sidedrawer').on('click', showSidedrawer);
+        $('.js-hide-sidedrawer').on('click', hideSidedrawer);
+
+
+        // ====================================================================
+        // Animate menu
+        // ====================================================================
+        (function() {
+          // hide L2
+          var $titleEls = $('strong', $sidedrawerEl);
+
+          $titleEls
+            .next()
+            .hide();
+
+          $titleEls.on('click', function() {
+            $(this).next().slideToggle(200);
+          });
+        })();
+      });
+    </script>
+  </head>
+  <body>
+    <header id="header">
+      <div class="mui-appbar mui--appbar-line-height">
+        <div class="mui-container-fluid">
+          <a class="sidedrawer-toggle mui--visible-xs-inline-block js-show-sidedrawer">☰</a>
+          <a class="sidedrawer-toggle mui--hidden-xs js-hide-sidedrawer ">☰</a>
+          <span class="mui--text-title mui--visible-xs-inline-block">Brand.io</span>
+        </div>
+      </div>
+    </header>
+    <div id="sidedrawer" class="mui--no-user-select">
+      <div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title">Brand.io</div>
+      <div class="mui-divider"></div>
+      <ul>
+        <li>
+          <strong>Category 1</strong>
+          <ul>
+            <li><a href="#">Item 1</a></li>
+            <li><a href="#">Item 2</a></li>
+            <li><a href="#">Item 3</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Category 2</strong>
+          <ul>
+            <li><a href="#">Item 1</a></li>
+            <li><a href="#">Item 2</a></li>
+            <li><a href="#">Item 3</a></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Category 3</strong>
+          <ul>
+            <li><a href="#">Item 1</a></li>
+            <li><a href="#">Item 2</a></li>
+            <li><a href="#">Item 3</a></li>
+        </li>
+      </ul>
+    </div>
+    <div id="content-wrapper">
+      <div class="mui--appbar-height"></div>
+      <div class="mui-container-fluid">
+        <br>
+        <h1>Brand.io</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sollicitudin volutpat molestie. Nullam id tempor nulla. Aenean sit amet urna et elit pharetra consequat. Aliquam fringilla tortor vitae lectus tempor, tempor bibendum nunc elementum. Etiam ultrices tristique diam, vitae sodales metus bibendum id. Suspendisse blandit ligula eu fringilla pretium. Mauris dictum gravida tortor eu lacinia. Donec purus purus, ornare sit amet consectetur sed, dictum sit amet ex. Vivamus sit amet imperdiet tellus. Quisque ultrices risus a massa laoreet, vitae tempus sem congue. Maecenas nec eros ut lectus vehicula rutrum. Donec consequat tincidunt arcu non faucibus. Duis elementum, ante venenatis lacinia cursus, turpis massa congue magna, sed dapibus felis nibh sed tellus. Nam consectetur non nibh vitae sodales. Pellentesque malesuada dolor nec mi volutpat, eget vehicula eros ultrices.</p>
+        <p>Aenean vehicula tortor a tellus porttitor, id elementum est tincidunt. Etiam varius odio tortor. Praesent vel pulvinar sapien. Praesent ac sodales sem. Phasellus id ultrices massa. Sed id erat sit amet magna accumsan vulputate eu at quam. Etiam feugiat semper imperdiet. Sed a sem vitae massa condimentum vestibulum. In vehicula, quam vel aliquet aliquam, enim elit placerat libero, at pretium nisi lorem in ex. Vestibulum lorem augue, semper a efficitur in, dictum vitae libero. Donec velit est, sollicitudin a volutpat quis, iaculis sit amet metus. Nulla at ante nec dolor euismod mattis cursus eu nisl.</p>
+        <p>Quisque interdum facilisis consectetur. Nam eu purus purus. Curabitur in ligula quam. Nam euismod ligula eu tellus pellentesque laoreet. Aliquam erat volutpat. Curabitur eu bibendum velit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc efficitur lorem sit amet quam porta pharetra. Cras ultricies pellentesque eros sit amet semper.</p>
+      </div>
+    </div>
+    <footer id="footer">
+      <div class="mui-container-fluid">
+        <br>
+        Made with ♥ by <a href="https://www.muicss.com">MUI</a>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.2.0-rc3 - IN PROGRESS
+
+* Changed .mui--notransition to .mui--no-transition
+* Added .mui--no-user-select
+
 ## 0.2.0-rc2 - October 8, 2015
 
 * Removed color attribute from typography classes

@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../assets/mui/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="../assets/mui/js/mui.min.js"></script>
+    <style>
+      /**
+       * Body CSS
+       */
+      html,
+      body {
+        height: 100%;
+      }
+
+      html,
+      body,
+      input,
+      textarea,
+      buttons {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+      }
+
+
+      /**
+       * Sidebar CSS
+       */
+      #sidebar {
+        background-color: #E57373;
+        padding: 15px;
+      }
+
+      @media (min-width: 768px) {
+        #sidebar {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          width: 180px;
+          height: 100%;
+          padding-top: 30px;
+        }
+      }
+
+
+      /**
+       * Content CSS
+       */
+      @media (min-width: 768px) {
+        #content {
+          margin-left: 180px;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="sidebar">
+      <div class="mui--text-white mui--text-display1 mui--align-vertical" style="height:100%;">SAMPLE BLOG</div>
+    </div>
+    <div id="content" class="mui-container-fluid">
+      <div class="mui-row">
+        <div class="mui-col-sm-10 mui-col-sm-offset-1">
+          <br>
+          <br>
+          <div class="mui--text-black-54 mui--text-body2">PINNED POST</div>
+          <div class="mui-divider"></div>
+          <br>
+          <div class="mui--text-headline">MUI Acquires New Features</div>
+          <div class="mui--text-black-54">By <a href="#">Team MUI</a> 3 days ago</div>
+          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In facilisis aliquam ipsum sed dignissim. Sed ac accumsan odio. Vivamus tristique dignissim neque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc cursus felis nec purus condimentum vestibulum. Donec mauris nisi, sollicitudin eget iaculis id, suscipit id odio. <a href="#">Read more...</a></div>
+          <br>
+          <br>
+          <div class="mui--text-black-54 mui--text-body2">RECENT POSTS</div>
+          <div class="mui-divider"></div>
+          <br>
+          <div class="mui--text-headline">MUI Acquires New Features</div>
+          <div class="mui--text-black-54">By <a href="#">Team MUI</a> 1 week ago</div>
+          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In facilisis aliquam ipsum sed dignissim. Sed ac accumsan odio. Vivamus tristique dignissim neque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc cursus felis nec purus condimentum vestibulum. Donec mauris nisi, sollicitudin eget iaculis id, suscipit id odio. <a href="#">Read more...</a></div>
+          <br>
+          <div class="mui--text-headline">MUI Acquires New Features</div>
+          <div class="mui--text-black-54">By <a href="#">Team MUI</a> 3 weeks ago</div>
+          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In facilisis aliquam ipsum sed dignissim. Sed ac accumsan odio. Vivamus tristique dignissim neque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc cursus felis nec purus condimentum vestibulum. Donec mauris nisi, sollicitudin eget iaculis id, suscipit id odio. <a href="#">Read more...</a></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
