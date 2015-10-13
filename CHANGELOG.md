@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.0 - October 12, 2015
+
+* Added html email example layout
+
 ## 0.2.0-rc3 - October 10, 2015
 
 * Changed .mui--notransition to .mui--no-transition
