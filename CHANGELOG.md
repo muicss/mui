@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.2.1 - October 16, 2015
+
+* Moved textfield floating label modifier to wrapper class
+* Disabled use of .mui-textfield__input and .mui-textfield__label--floating
+
 ## 0.2.0 - October 12, 2015
 
 * Added html email example layout

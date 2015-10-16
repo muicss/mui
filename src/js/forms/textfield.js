@@ -8,12 +8,11 @@
 
 var jqLite = require('../lib/jqLite.js'),
     util = require('../lib/util.js'),
-    cssSelector = '.mui-textfield__input',
+    cssSelector = '.mui-textfield > input, .mui-textfield > textarea',
     emptyClass = 'mui--is-empty',
     notEmptyClass = 'mui--is-not-empty',
     dirtyClass = 'mui--is-dirty',
-    formControlClass = 'mui-textfield__input',
-    floatingLabelClass = 'mui-textfield__label--floating';
+    floatingLabelClass = 'mui-textfield--float-label';
 
 
 /**
@@ -73,7 +72,7 @@ module.exports = {
 
     // add transition css for floating labels
     setTimeout(function() {
-      var css = '.' + floatingLabelClass + '{' + [
+      var css = '.mui-textfield.mui-textfield--float-label > label {' + [
         '-webkit-transition',
         '-moz-transition',
         '-o-transition',
@@ -90,9 +89,9 @@ module.exports = {
         var targetEl = ev.target;
 
         if (targetEl.tagName === 'LABEL' &&
-            jqLite.hasClass(targetEl, floatingLabelClass)) {
+            jqLite.hasClass(targetEl.parentNode, floatingLabelClass)) {
           var inputEl = targetEl.previousElementSibling;
-          if (jqLite.hasClass(inputEl, formControlClass)) inputEl.focus();
+          if (inputEl) inputEl.focus();
         }
       });
     }

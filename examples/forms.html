@@ -28,10 +28,10 @@
         <h3>Form with placeholders</h3>
         <form>
           <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input" placeholder="Placeholder 1">
+            <input type="text" placeholder="Placeholder 1">
           </div>
           <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input" placeholder="Placeholder 2">
+            <input type="text" placeholder="Placeholder 2">
           </div>
           <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
         </form>
@@ -39,15 +39,15 @@
         <h3>Form with fixed labels</h3>
         <form>
           <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input">
+            <input type="text">
             <label>Input 1</label>
           </div>
           <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input">
+            <input type="text">
             <label>Input 2</label>
           </div>
           <div class="mui-textfield">
-            <textarea class="mui-textfield__input"></textarea>
+            <textarea></textarea>
             <label>Textarea</label>
           </div>
           <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
@@ -55,21 +55,21 @@
         
         <h3>Form with floating labels</h3>
         <form>
-          <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input" autofocus>
-            <label class="mui-textfield__label--floating">Auto focused</label>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" autofocus>
+            <label>Auto focused</label>
           </div>
-          <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input">
-            <label class="mui-textfield__label--floating">Placeholder</label>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text">
+            <label>Placeholder</label>
           </div>
-          <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input" value="Value on load">
-            <label class="mui-textfield__label--floating">Placeholder</label>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" value="Value on load">
+            <label>Placeholder</label>
           </div>
-          <div class="mui-textfield">
-            <textarea class="mui-textfield__input">Value on load</textarea>
-            <label class="mui-textfield__label--floating">Placeholder</label>
+          <div class="mui-textfield mui-textfield--float-label">
+            <textarea>Value on load</textarea>
+            <label>Placeholder</label>
           </div>
           <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
         </form>
@@ -77,31 +77,17 @@
         <h3>Label overflow</h3>
         <form>
           <div class="mui-textfield mui-textfield--wrap-label">
-            <input type="text" class="mui-textfield__input">
+            <input type="text">
             <label>Very long long long long long long label</label>
           </div>
           <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input">
+            <input type="text">
             <label>Very long long long long long long label</label>
           </div>
-          <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input">
-            <label class="mui-textfield__label--floating">Very long long long long long long label</label>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text">
+            <label>Very long long long long long long label</label>
           </div>
-          <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input">
-            <label class="mui-textfield__label--floating">Very long long long long long long label</label>
-          </div>
-        </form>
-
-        <h3>Form controls</h3>
-        <form>
-          <input type="text" class="mui-textfield__input">
-          <input type="password" class="mui-textfield__input">
-          <input type="email" class="mui-textfield__input">
-          <input type="url" class="mui-textfield__input">
-          <input type="search" class="mui-textfield__input">
-          <input type="tel" class="mui-textfield__input">
         </form>
 
         <h3>Checkboxes and radios</h3>
@@ -175,7 +161,9 @@
         
         <h3>Inline Form</h3>
         <form class="mui-form--inline">
-          <input type="text" class="mui-textfield__input">
+          <div class="mui-textfield">
+            <input type="text">
+          </div>
           <button class="mui-btn">submit</button>
         </form>
         <form class="mui-form--inline">
@@ -188,41 +176,41 @@
             </select>
           </div>
           <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input" placeholder="Placeholder">
+            <input type="text" placeholder="Placeholder">
           </div>
         </form>
 
         <h3>Form Validation</h3>
         <form>
           <div class="mui-textfield">
-            <input type="email" class="mui-textfield__input" placeholder="Email address">
+            <input type="email" placeholder="Email address">
           </div>
           <div class="mui-textfield">
-            <input type="email" class="mui-textfield__input">
+            <input type="email">
             <label>Email address</label>
           </div>
-          <div class="mui-textfield">
-            <input type="email" class="mui-textfield__input" value="err">
-            <label class="mui-textfield__label--floating">Email address</label>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="email" value="err">
+            <label>Email address</label>
           </div>
-          <div class="mui-textfield">
-            <input type="text" class="mui-textfield__input" required>
-            <label class="mui-textfield__label--floating">Text *</label>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" required>
+            <label>Text *</label>
           </div>
-          <div class="mui-textfield">
-            <input type="email" class="mui-textfield__input" required>
-            <label class="mui-textfield__label--floating">Email address *</label>
-          </div>
-          <div class="mui-textfield">
-            <input type="email" class="mui-textfield__input" required>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="email" required>
             <label>Email address *</label>
           </div>
           <div class="mui-textfield">
-            <input type="email" class="mui-textfield__input" value="err" required>
-            <label class="mui-textfield__label--floating">Email address *</label>
+            <input type="email" required>
+            <label>Email address *</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="email" value="err" required>
+            <label>Email address *</label>
           </div>
           <div class="mui-textfield">
-            <input type="email" class="mui-textfield__input mui--is-not-empty" value="err" placeholder="Email address *" required>
+            <input type="email" class="mui--is-not-empty" value="err" placeholder="Email address *" required>
           </div>
           <button class="mui-btn">submit</button>
         </form>

@@ -830,8 +830,7 @@ module.exports = {
 var util = require('../js/lib/util.js');
 
 var textfieldClass = 'mui-textfield',
-    textfieldInputClass = 'mui-textfield__input',
-    floatingLabelClass = 'mui-textfield__label--floating',
+    floatMod = '--float-label',
     isEmptyClass = 'mui--is-empty',
     isNotEmptyClass = 'mui--is-not-empty',
     isDirtyClass = 'mui--is-dirty';
@@ -846,6 +845,7 @@ var Input = React.createClass({displayName: "Input",
     return {
       value: '',
       type: 'text',
+      placeholder: '',
       autofocus: false,
       onChange: null
     };
@@ -861,7 +861,6 @@ var Input = React.createClass({displayName: "Input",
         isNotEmpty = Boolean(this.state.value),
         inputEl;
 
-    cls[textfieldInputClass] = true;
     cls[isEmptyClass] = !isNotEmpty;
     cls[isNotEmptyClass] = isNotEmpty;
     cls[isDirtyClass] = this.state.isDirty;
@@ -873,6 +872,7 @@ var Input = React.createClass({displayName: "Input",
         React.createElement("textarea", {
           ref: "input", 
           className:  cls, 
+          placeholder:  this.props.placeholder, 
           value:  this.props.value, 
           autoFocus:  this.props.autofocus, 
           onChange:  this._handleChange, 
@@ -886,6 +886,7 @@ var Input = React.createClass({displayName: "Input",
           className:  cls, 
           type:  this.props.type, 
           value:  this.state.value, 
+          placeholder:  this.props.placeholder, 
           autoFocus:  this.props.autofocus, 
           onChange:  this._handleChange, 
           onFocus:  this._handleFocus}
@@ -944,7 +945,6 @@ var Label = React.createClass({displayName: "Label",
     return (
       React.createElement("label", {
         refs: "label", 
-        className:  (this.props.floating) ? floatingLabelClass : '', 
         style:  this.state.style, 
         onClick:  this.props.onClick
       }, 
@@ -967,29 +967,35 @@ var Textfield = React.createClass({displayName: "Textfield",
       type: 'text',
       value: '',
       label: '',
+      placeholder: '',
       isLabelFloating: false,
       autofocus: false,
       onChange: null
     };
   },
   render: function() {
-    var labelEl;
+    var cls = {},
+        labelEl;
 
     if (this.props.label.length) {
       labelEl = (
         React.createElement(Label, {
           text:  this.props.label, 
-          onClick:  this._focus, 
-          floating:  this.props.isLabelFloating}
+          onClick:  this._focus}
         )
       );
     }
 
+    cls[textfieldClass] = true;
+    cls[textfieldClass + floatMod] = this.props.isLabelFloating;
+    cls = util.classNames(cls);
+
     return (
-      React.createElement("div", {className:  textfieldClass }, 
+      React.createElement("div", {className:  cls }, 
         React.createElement(Input, {
           type:  this.props.type, 
           value:  this.props.value, 
+          placeholder:  this.props.placeholder, 
           autoFocus:  this.props.autofocus, 
           onChange:  this.props.onChange}
         ), 

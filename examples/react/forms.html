@@ -21,13 +21,17 @@
     </div>
     <script type="text/jsx">
        React.render(
-         <MUITextfield type="password" autofocus={ true }/>,
+         <MUITextfield
+             type="password"
+             autofocus={ true }
+             placeholder="password"
+         />,
          document.getElementById('textfield-example1')
        );
 
        React.render(
          <MUITextfield
-           type="text"
+           type="email"
            label="Email address"
            isLabelFloating={ true }
          />,

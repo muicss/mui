@@ -71,7 +71,23 @@ input[type="checkbox"]:disabled {
     white-space: nowrap;
   }
 
-  > .mui-textfield__label--floating {
+  > textarea {
+    padding-top: 5px;
+    min-height: $mui-textarea-height;
+  }
+
+  > input,
+  > textarea {
+    display: block;
+
+    &:focus ~ label {
+      color: $mui-input-border-color-focus;
+    }
+  }
+}
+
+.mui-textfield--float-label {
+  > label {
     // Layout
     position: absolute;
     top: $xFormLabelLineHeight;
@@ -83,31 +99,43 @@ input[type="checkbox"]:disabled {
     
     // Overflow policy
     text-overflow: clip;
-
+    
     // Cursor
     cursor: text;  // for ie10
     pointer-events: none;
   }
 
+  > input,
   > textarea {
-    padding-top: 5px;
-    min-height: $mui-textarea-height;
-  }
+    &:focus ~ label {
+      top: 0px;
+      font-size: $mui-label-font-size;
+      line-height: $xFormLabelLineHeight;
+      text-overflow: ellipsis;
+    }
 
-  > .mui-textfield__input {
-    display: block;
-  }
-
-  > .mui-textfield__input:focus ~ label {
-    color: $mui-input-border-color-focus;
+    &:not(:focus) {
+      &.mui--is-not-empty,
+      &[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+      &:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
+        ~ label {
+          color: $mui-label-font-color;
+          font-size: $mui-label-font-size;
+          line-height: $xFormLabelLineHeight;
+          top: 0px;
+          text-overflow: ellipsis;
+        }
+      }
+    }
   }
 }
 
 .mui-textfield--wrap-label {
   display: table;
+  width: 100%;
   padding-top: 0px;
 
-  > label:not(.mui-textfield__label--floating) {
+  &:not(.mui-textfield--float-label) > label {
     display: table-header-group;
     position: static;
     white-space: normal;
@@ -115,30 +143,8 @@ input[type="checkbox"]:disabled {
   }
 }
 
-// Placed outside of form-group for performance
-.mui-textfield__input:focus ~ .mui-textfield__label--floating {
-  top: 0px;
-  font-size: $mui-label-font-size;
-  line-height: $xFormLabelLineHeight;
-  text-overflow: ellipsis;
-}
-
-// Placed outside of form-group for performance
-.mui-textfield__input:not(:focus) {
-  &.mui--is-not-empty,
-  &[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-  &:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
-    ~ .mui-textfield__label--floating {
-      color: $mui-label-font-color;
-      font-size: $mui-label-font-size;
-      line-height: $xFormLabelLineHeight;
-      top: 0px;
-      text-overflow: ellipsis;
-    }
-  }
-}
-
-.mui-textfield__input {
+.mui-textfield > input,
+.mui-textfield > textarea {
   @include mui-node-inserted();
 
   display: block;
@@ -175,11 +181,11 @@ input[type="checkbox"]:disabled {
   }
 }
 
-textarea.mui-textfield__input {
+.mui-textfield > textarea {
   height: auto;  // Reset height for <textarea>s
 }
 
-input.mui-textfield__input:focus {
+.mui-textfield > input:focus {
   // Compensate for height change on focus
   height: $mui-input-height + 1px;
   margin-bottom: -1px;
@@ -366,11 +372,6 @@ input.mui-textfield__input:focus {
       margin-bottom: 0;
     }
 
-    > .mui-textfield__input {
-      display: inline-block;
-      width: auto;
-    }
-
     > .mui-radio,
     > .mui-checkbox {
       display: inline-block;
@@ -407,7 +408,8 @@ input.mui-textfield__input:focus {
 // FORM-VALIDATION
 // ============================================================================
 
-.mui-textfield__input {
+.mui-textfield > input,
+.mui-textfield > textarea {
   // Use thick colored border for invalid fields
   &:invalid:not(:focus) {
     &:not(:required),
@@ -422,7 +424,7 @@ input.mui-textfield__input:focus {
 }
 
 // Treat <input>'s different from <textarea>'s
-input.mui-textfield__input:invalid:not(:focus) {
+.mui-textfield > input:invalid:not(:focus) {
   &:not(:required),
   &:required.mui--is-not-empty,
   &:required.mui--is-empty.mui--is-dirty,
@@ -433,7 +435,8 @@ input.mui-textfield__input:invalid:not(:focus) {
   }
 }
 
-.mui-textfield > .mui-textfield__input {
+.mui-textfield > input,
+.mui-textfield > textarea {
   &:invalid:not(:focus) {
     // Set label color to danger color
     &:not(:required),
@@ -444,10 +447,17 @@ input.mui-textfield__input:invalid:not(:focus) {
         color: $mui-danger-color;
       }
     }
-    
-    // Set label color to danger color for dirty, empty fields
-    &:required.mui--is-empty.mui--is-dirty ~ label:not(.mui-textfield__label--floating) {
-      color: $mui-danger-color;
+  }
+}
+
+.mui-textfield:not(.mui-textfield--float-label) {
+  > input,
+  > textarea {
+    &:invalid:not(:focus) {
+      // Set label color to danger color for dirty, empty fields
+      &:required.mui--is-empty.mui--is-dirty ~ label {
+        color: $mui-danger-color;
+      }
     }
   }
 }

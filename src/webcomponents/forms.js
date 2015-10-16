@@ -9,8 +9,7 @@
 var jqLite = require('../js/lib/jqLite.js'),
     muiTextfield = require('../js/forms/textfield.js'),
     textfieldClass = 'mui-textfield',
-    textfieldInputClass = 'mui-textfield__input',
-    textfieldLabelFloatingClass = 'mui-textfield__label--floating',
+    floatingMod = '--float-label',
     textfieldTagName = textfieldClass;
 
 
@@ -25,7 +24,7 @@ var TextfieldProto = Object.create(HTMLElement.prototype);
 TextfieldProto.createdCallback = function() {
   var root = this.createShadowRoot(),
       innerEl = document.createElement('div'),
-      labelEl;
+      cls;
 
   var attrs = {
     type: this.getAttribute('type') || 'text',
@@ -35,10 +34,13 @@ TextfieldProto.createdCallback = function() {
     floating: this.getAttribute('floating')
   };
 
-  // create wrapper
-  innerEl.setAttribute('class', textfieldClass);
+  // set class
+  cls = textfieldClass;
+  if (attrs.floating !== null) cls += ' ' + textfieldClass + floatingMod;
 
-  // input element
+  innerEl.setAttribute('class', cls);
+
+  // add input element
   innerEl.appendChild(_createInputEl(attrs));
 
   // label element
@@ -97,8 +99,6 @@ function _createInputEl(attrs) {
     inputEl.setAttribute('placeholder', attrs.placeholder);
   }
 
-  inputEl.setAttribute('class', textfieldInputClass);
-
   // add event listeners
   muiTextfield.initialize(inputEl);
   
@@ -114,11 +114,6 @@ function _createLabelEl(attrs) {
   var labelEl = document.createElement('label');
   labelEl.appendChild(document.createTextNode(attrs.label));
   
-  // configure floating label
-  if (attrs.floating !== null) {
-    labelEl.setAttribute('class', textfieldLabelFloatingClass);
-  }
-
   return labelEl;
 }
 
