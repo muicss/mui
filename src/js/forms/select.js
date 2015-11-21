@@ -11,6 +11,9 @@ var jqLite = require('../lib/jqLite.js'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
+    overflowCss = 'body,html{overflow:hidden!important;}',
+    wrapperPadding = 15,  // from CSS
+    inputHeight = 32,  // from CSS
     optionHeight = 42,  // from CSS
     menuPadding = 8,  // from CSS
     doc = document,
@@ -134,7 +137,7 @@ Select.prototype.renderMenu = function() {
   // check and reset flag
   if (this.useDefault === true) return this.useDefault = false;
 
-  new Menu(this.selectEl);
+  new Menu(this.wrapperEl, this.selectEl);
 }
 
 
@@ -142,18 +145,20 @@ Select.prototype.renderMenu = function() {
  * Creates a new Menu
  * @class
  */
-function Menu(selectEl) {
+function Menu(wrapperEl, selectEl) {
   // instance variables
   this.origIndex = null;
   this.currentIndex = null;
   this.selectEl = selectEl;
-  this.menuEl = this._createMenuEl(selectEl);
+  this.scrollStyleEl = util.loadStyle(overflowCss);  // prevent scroll
+  this.menuEl = this._createMenuEl(wrapperEl, selectEl);
   this.clickCallbackFn = util.callback(this, 'clickHandler');
   this.keydownCallbackFn = util.callback(this, 'keydownHandler');
   this.destroyCallbackFn = util.callback(this, 'destroy');
 
   // add to DOM
-  selectEl.parentNode.appendChild(this.menuEl);
+  wrapperEl.appendChild(this.menuEl);
+  this.menuEl.scrollTop = this.menuEl._muiScrollTop;
 
   // blur active element
   setTimeout(function() {
@@ -162,7 +167,7 @@ function Menu(selectEl) {
       doc.activeElement.blur();
     }
   }, 0);
-  
+
   // attach event handlers
   jqLite.on(this.menuEl, 'click', this.clickCallbackFn);
   jqLite.on(doc, 'keydown', this.keydownCallbackFn);
@@ -178,15 +183,14 @@ function Menu(selectEl) {
  * Create menu element
  * @param {Element} selectEl - The select element
  */
-Menu.prototype._createMenuEl = function(selectEl) {
+Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   var optionEl, itemEl, i, minTop, maxTop, top;
 
   var menuEl = doc.createElement('div'),
       optionList = selectEl.children,
       m = optionList.length,
       selectedPos = 0,
-      idealTop = 13;
-  
+      initTop = (menuPadding + optionHeight) - (wrapperPadding + inputHeight);
 
   // create element
   menuEl.className = menuClass;
@@ -214,25 +218,42 @@ Menu.prototype._createMenuEl = function(selectEl) {
   var viewHeight = doc.documentElement.clientHeight;
 
   // set height (use viewport as maximum height)
-  var height = m * optionHeight + 2 * menuPadding;
+  var height = m * optionHeight + 2 * menuPadding,
+      isOverflow = height > viewHeight;
+
   height = Math.min(height, viewHeight);
   jqLite.css(menuEl, 'height', height + 'px');
 
   // ideal position
-  idealTop += selectedPos * optionHeight;
-  idealTop = -1 * idealTop;
+  initTop -= selectedPos * optionHeight;
 
   // minimum position
-  minTop = -1 * selectEl.getBoundingClientRect().top;
+  minTop = -1 * wrapperEl.getBoundingClientRect().top;
 
   // maximium position
   maxTop = (viewHeight - height) + minTop;
 
   // prevent overflow-y
-  top = Math.max(idealTop, minTop);
+  top = Math.max(initTop, minTop);
   top = Math.min(top, maxTop);
 
   jqLite.css(menuEl, 'top', top + 'px');
+
+  // set menu scroll position
+  if (isOverflow) {
+    var scrollIdeal, scrollMax;
+
+    scrollIdeal = (menuPadding + (selectedPos + 1) * optionHeight) - 
+      (-1 * top + wrapperPadding + inputHeight);
+
+    scrollMax = m * optionHeight + 2 * menuPadding - height;
+
+    menuEl._muiHasOverflow = true;
+    menuEl._muiScrollTop = Math.min(scrollIdeal, scrollMax);
+  } else {
+    menuEl._muiHasOverflow = false;
+    menuEl._muiScrollTop = 0;
+  }
 
   return menuEl;
 }
@@ -333,7 +354,10 @@ Menu.prototype.destroy = function() {
   // remove element and focus element
   this.menuEl.parentNode.removeChild(this.menuEl);
   this.selectEl.focus();
-  
+
+  // restore body scroll
+  this.scrollStyleEl.parentNode.removeChild(this.scrollStyleEl);
+
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);
   jqLite.off(doc, 'keydown', this.keydownCallbackFn);

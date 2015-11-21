@@ -1703,18 +1703,16 @@ function logFn() {
  * @param {string} cssText - The css text.
  */
 function loadStyleFn(cssText) {
-  if (doc.createStyleSheet) {
-    doc.createStyleSheet().cssText = cssText;
-  } else {
-    var e = doc.createElement('style');
-    e.type = 'text/css';
+  var e = doc.createElement('style');
+  e.type = 'text/css';
     
-    if (e.styleSheet) e.styleSheet.cssText = cssText;
-    else e.appendChild(doc.createTextNode(cssText));
-    
-    // add to document
-    head.insertBefore(e, head.firstChild);
-  }
+  if (e.styleSheet) e.styleSheet.cssText = cssText;
+  else e.appendChild(doc.createTextNode(cssText));
+  
+  // add to document
+  head.insertBefore(e, head.firstChild);
+
+  return e;
 }
 
 

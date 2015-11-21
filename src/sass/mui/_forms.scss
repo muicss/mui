@@ -342,6 +342,12 @@ input[type="checkbox"]:disabled {
   background-color: mui-color('white');
   font-size: $mui-input-font-size;
 
+  // IE10+ bugfix
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    border-left: 1px solid mui-color('black-alpha-12');
+    border-top: 1px solid mui-color('black-alpha-12');
+  }
+
   > div {
     padding: 0 22px;
     height: $mui-input-font-size + 26px;

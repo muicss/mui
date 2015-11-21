@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.2.2 - November 20, 2015
+
+* Improved IE10+ CSS borders for buttons, panels and select menu
+* Improved positioning of select menu
+* Improved logic of select menu initial scroll position
+
 ## 0.2.1 - October 16, 2015
 
 * Moved textfield floating label modifier to wrapper class
