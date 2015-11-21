@@ -1,6 +1,6 @@
 {
   "name": "muicss",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "repository": "https://github.com/muicss/mui",
   "main": "js/mui.min.js",
   "jspm": {
