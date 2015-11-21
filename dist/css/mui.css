@@ -1490,6 +1490,12 @@ hr {
   clear: both;
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-panel {
+    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+  }
+}
+
 /**
  * MUI Buttons
  */
@@ -1576,8 +1582,21 @@ hr {
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-btn:hover,
+  .mui-btn:focus {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .mui-btn:active {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-btn:active {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
 }
 
 .mui-btn:disabled,
@@ -1607,8 +1626,20 @@ hr {
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-btn--raised, .mui-btn--fab {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .mui-btn--raised:active, .mui-btn--fab:active {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-btn--raised:active, .mui-btn--fab:active {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
 }
 
 .mui-btn--fab {
@@ -2295,6 +2326,13 @@ input[type="checkbox"]:disabled {
   font-size: 16px;
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-select__menu {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
 .mui-select__menu > div {
   padding: 0 22px;
   height: 42px;
@@ -2499,6 +2537,7 @@ th {
   margin-bottom: 0;
   background-color: transparent;
   white-space: nowrap;
+  overflow-x: auto;
 }
 
 .mui-tabs__bar > li {
@@ -2787,6 +2826,14 @@ th {
 
 .mui--overflow-hidden {
   overflow: hidden !important;
+}
+
+.mui--overflow-hidden-x {
+  overflow-x: hidden !important;
+}
+
+.mui--overflow-hidden-y {
+  overflow-y: hidden !important;
 }
 
 .mui--visible-xs-block,
