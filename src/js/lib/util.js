@@ -9,11 +9,13 @@
 var config = require('../config.js'),
     jqLite = require('./jqLite.js'),
     win = window,
-    doc = window.document,
+    doc = document,
     nodeInsertedCallbacks = [],
+    scrollLock = 0,
+    scrollLockPos,
+    scrollLockEl,
     head,
     _supportsPointerEvents;
-
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
@@ -161,6 +163,41 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
 
 
 /**
+ * Turn on window scroll lock.
+ */
+function enableScrollLockFn() {
+  // increment counter
+  scrollLock += 1
+
+  // add lock
+  if (scrollLock === 1) {
+    scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
+    scrollLockEl = loadStyleFn('body{overflow:hidden!important;}');
+    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+  }
+}
+
+
+/**
+ * Turn off window scroll lock.
+ */
+function disableScrollLockFn() {
+  // ignore
+  if (scrollLock === 0) return;
+
+  // decrement counter
+  scrollLock -= 1
+
+  // remove lock 
+  if (scrollLock === 0) {
+    scrollLockEl.parentNode.removeChild(scrollLockEl);
+    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    scrollLockEl = null;
+  }
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -170,9 +207,15 @@ module.exports = {
   /** Classnames object to string */
   classNames: classNamesFn,
 
+  /** Disable scroll lock */
+  disableScrollLock: disableScrollLockFn,
+
   /** Dispatch event */
   dispatchEvent: dispatchEventFn,
   
+  /** Enable scroll lock */
+  enableScrollLock: enableScrollLockFn,
+
   /** Log messages to the console when debug is turned on */
   log: logFn,
 

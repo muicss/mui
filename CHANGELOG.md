@@ -5,6 +5,7 @@
 * Improved IE10+ CSS borders for buttons, panels and select menu
 * Improved positioning of select menu
 * Improved logic of select menu initial scroll position
+* Improved window scroll lock
 
 ## 0.2.1 - October 16, 2015
 

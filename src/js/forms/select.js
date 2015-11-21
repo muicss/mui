@@ -11,13 +11,13 @@ var jqLite = require('../lib/jqLite.js'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
-    overflowCss = 'body,html{overflow:hidden!important;}',
     wrapperPadding = 15,  // from CSS
     inputHeight = 32,  // from CSS
     optionHeight = 42,  // from CSS
     menuPadding = 8,  // from CSS
     doc = document,
     win = window;
+
 
 /**
  * Initialize select element.
@@ -146,11 +146,13 @@ Select.prototype.renderMenu = function() {
  * @class
  */
 function Menu(wrapperEl, selectEl) {
+  // add scroll lock
+  util.enableScrollLock();
+
   // instance variables
   this.origIndex = null;
   this.currentIndex = null;
   this.selectEl = selectEl;
-  this.scrollStyleEl = util.loadStyle(overflowCss);  // prevent scroll
   this.menuEl = this._createMenuEl(wrapperEl, selectEl);
   this.clickCallbackFn = util.callback(this, 'clickHandler');
   this.keydownCallbackFn = util.callback(this, 'keydownHandler');
@@ -158,7 +160,7 @@ function Menu(wrapperEl, selectEl) {
 
   // add to DOM
   wrapperEl.appendChild(this.menuEl);
-  this.menuEl.scrollTop = this.menuEl._muiScrollTop;
+  jqLite.scrollTop(this.menuEl, this.menuEl._muiScrollTop);
 
   // blur active element
   setTimeout(function() {
@@ -355,8 +357,8 @@ Menu.prototype.destroy = function() {
   this.menuEl.parentNode.removeChild(this.menuEl);
   this.selectEl.focus();
 
-  // restore body scroll
-  this.scrollStyleEl.parentNode.removeChild(this.scrollStyleEl);
+  // remove scroll lock
+  util.disableScrollLock();
 
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);

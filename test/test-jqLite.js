@@ -197,4 +197,50 @@ describe('js/lib/jqLite.js', function() {
 
     // TODO: specify missing values API
   });
+
+
+
+  // --------------------------------------------------------------------------
+  // SCROLL METHODS
+  // --------------------------------------------------------------------------
+  describe('scroll methods', function() {
+    var el;
+
+
+    beforeEach(function() {
+      el = document.createElement('div');
+      document.body.appendChild(el);
+    });
+    
+
+    afterEach(function() {
+      el.parentNode.removeChild(el);
+    });
+
+
+    it('should set scroll position', function() {
+      var innerEl = document.createElement('div');
+      el.appendChild(innerEl);
+
+      // add overflow
+      jqLite.css(innerEl, {
+        'height': '100px',
+        'width': '100px',
+        'background-color': 'red'
+      });
+
+      jqLite.css(el, {
+        'height': '50px',
+        'width': '50px',
+        'overflow': 'auto'
+      });
+
+      // scroll
+      jqLite.scrollTop(el, 25);
+      assert.equal(jqLite.scrollTop(el), 25);
+
+      jqLite.scrollLeft(el, 30);
+      assert.equal(jqLite.scrollLeft(el), 30);
+    });
+  });
 });

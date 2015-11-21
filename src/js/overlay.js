@@ -67,7 +67,8 @@ function overlayOn(options, childElement) {
       overlayEl = document.getElementById(overlayId);
     
   // add overlay
-  jqLite.addClass(bodyEl, bodyClass);
+  util.enableScrollLock();
+  //jqLite.addClass(bodyEl, bodyClass);
 
   if (!overlayEl) {
     // create overlayEl
@@ -124,7 +125,7 @@ function overlayOff() {
     callbackFn = overlayEl.muiOptions.onclose;
   }
 
-  jqLite.removeClass(document.body, bodyClass);
+  util.disableScrollLock();
 
   // remove option handlers
   removeKeyupHandler();

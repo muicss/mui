@@ -5,6 +5,11 @@
 
 'use strict';
 
+// Global vars
+var gDoc = document,
+    gDocEl = gDoc.documentElement,
+    gWin = window;
+
 
 /**
  * Add a class to an element.
@@ -175,22 +180,62 @@ function jqLiteOne(element, type, callback, useCapture) {
 
 
 /**
+ * Get or set horizontal scroll position
+ * @param {Element} element - The DOM element
+ * @param {number} [value] - The scroll position
+ */
+function jqLiteScrollLeft(element, value) {
+  // get
+  if (value === undefined) {
+    if (element === gWin) {
+      var t = (gWin.pageXOffset || gDocEl.scrollLeft)
+      return t - (gDocEl.clientLeft || 0);
+    } else {
+      return element.scrollLeft;
+    }
+  }
+
+  // set
+  if (element === gWin) gWin.scrollTo(value, jqLiteScrollTop(gWin));
+  else element.scrollLeft = value;
+}
+
+
+/**
+ * Get or set vertical scroll position
+ * @param {Element} element - The DOM element
+ * @param {number} value - The scroll position
+ */
+function jqLiteScrollTop(element, value) {
+  //return _scrollPos(element, 'top', value);
+
+  // get
+  if (value === undefined) {
+    if (element === gWin) {
+      return (gWin.pageYOffset || gDocEl.scrollTop) - (gDocEl.clientTop || 0);
+    } else {
+      return element.scrollTop;
+    }
+  }
+
+  // set
+  if (element === gWin) gWin.scrollTo(jqLiteScrollLeft(gWin), value);
+  else element.scrollTop = value;
+}
+
+
+/**
  * Return object representing top/left offset and element height/width.
  * @param {Element} element - The DOM element.
  */
 function jqLiteOffset(element) {
-  var win = window,
-      docEl = document.documentElement,
-      rect = element.getBoundingClientRect(),
-      viewLeft,
-      viewTop;
-
-  viewLeft = (win.pageXOffset || docEl.scrollLeft) - (docEl.clientLeft || 0);
-  viewTop = (win.pageYOffset || docEl.scrollTop) - (docEl.clientTop || 0);
+  var rect = element.getBoundingClientRect(),
+      scrollTop = jqLiteScrollTop(gWin),
+      scrollLeft = jqLiteScrollLeft(gWin);
 
   return {
-    top: rect.top + viewTop,
-    left: rect.left + viewLeft,
+    top: rect.top + scrollTop,
+    left: rect.left + scrollLeft,
     height: rect.height,
     width: rect.width
   };
@@ -347,5 +392,11 @@ module.exports = {
   removeClass: jqLiteRemoveClass,
 
   /** Check JavaScript variable instance type */
-  type: jqLiteType
+  type: jqLiteType,
+
+  /** Get or set horizontal scroll position */
+  scrollLeft: jqLiteScrollLeft,
+
+  /** Get or set vertical scroll position */
+  scrollTop: jqLiteScrollTop
 };

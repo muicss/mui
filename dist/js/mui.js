@@ -138,13 +138,13 @@ var jqLite = require('../lib/jqLite.js'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
-    overflowCss = 'body,html{overflow:hidden!important;}',
     wrapperPadding = 15,  // from CSS
     inputHeight = 32,  // from CSS
     optionHeight = 42,  // from CSS
     menuPadding = 8,  // from CSS
     doc = document,
     win = window;
+
 
 /**
  * Initialize select element.
@@ -273,11 +273,13 @@ Select.prototype.renderMenu = function() {
  * @class
  */
 function Menu(wrapperEl, selectEl) {
+  // add scroll lock
+  util.enableScrollLock();
+
   // instance variables
   this.origIndex = null;
   this.currentIndex = null;
   this.selectEl = selectEl;
-  this.scrollStyleEl = util.loadStyle(overflowCss);  // prevent scroll
   this.menuEl = this._createMenuEl(wrapperEl, selectEl);
   this.clickCallbackFn = util.callback(this, 'clickHandler');
   this.keydownCallbackFn = util.callback(this, 'keydownHandler');
@@ -285,7 +287,7 @@ function Menu(wrapperEl, selectEl) {
 
   // add to DOM
   wrapperEl.appendChild(this.menuEl);
-  this.menuEl.scrollTop = this.menuEl._muiScrollTop;
+  jqLite.scrollTop(this.menuEl, this.menuEl._muiScrollTop);
 
   // blur active element
   setTimeout(function() {
@@ -482,8 +484,8 @@ Menu.prototype.destroy = function() {
   this.menuEl.parentNode.removeChild(this.menuEl);
   this.selectEl.focus();
 
-  // restore body scroll
-  this.scrollStyleEl.parentNode.removeChild(this.scrollStyleEl);
+  // remove scroll lock
+  util.disableScrollLock();
 
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);
@@ -619,6 +621,11 @@ module.exports = {
  */
 
 'use strict';
+
+// Global vars
+var gDoc = document,
+    gDocEl = gDoc.documentElement,
+    gWin = window;
 
 
 /**
@@ -790,22 +797,62 @@ function jqLiteOne(element, type, callback, useCapture) {
 
 
 /**
+ * Get or set horizontal scroll position
+ * @param {Element} element - The DOM element
+ * @param {number} [value] - The scroll position
+ */
+function jqLiteScrollLeft(element, value) {
+  // get
+  if (value === undefined) {
+    if (element === gWin) {
+      var t = (gWin.pageXOffset || gDocEl.scrollLeft)
+      return t - (gDocEl.clientLeft || 0);
+    } else {
+      return element.scrollLeft;
+    }
+  }
+
+  // set
+  if (element === gWin) gWin.scrollTo(value, jqLiteScrollTop(gWin));
+  else element.scrollLeft = value;
+}
+
+
+/**
+ * Get or set vertical scroll position
+ * @param {Element} element - The DOM element
+ * @param {number} value - The scroll position
+ */
+function jqLiteScrollTop(element, value) {
+  //return _scrollPos(element, 'top', value);
+
+  // get
+  if (value === undefined) {
+    if (element === gWin) {
+      return (gWin.pageYOffset || gDocEl.scrollTop) - (gDocEl.clientTop || 0);
+    } else {
+      return element.scrollTop;
+    }
+  }
+
+  // set
+  if (element === gWin) gWin.scrollTo(jqLiteScrollLeft(gWin), value);
+  else element.scrollTop = value;
+}
+
+
+/**
  * Return object representing top/left offset and element height/width.
  * @param {Element} element - The DOM element.
  */
 function jqLiteOffset(element) {
-  var win = window,
-      docEl = document.documentElement,
-      rect = element.getBoundingClientRect(),
-      viewLeft,
-      viewTop;
-
-  viewLeft = (win.pageXOffset || docEl.scrollLeft) - (docEl.clientLeft || 0);
-  viewTop = (win.pageYOffset || docEl.scrollTop) - (docEl.clientTop || 0);
+  var rect = element.getBoundingClientRect(),
+      scrollTop = jqLiteScrollTop(gWin),
+      scrollLeft = jqLiteScrollLeft(gWin);
 
   return {
-    top: rect.top + viewTop,
-    left: rect.left + viewLeft,
+    top: rect.top + scrollTop,
+    left: rect.left + scrollLeft,
     height: rect.height,
     width: rect.width
   };
@@ -962,7 +1009,13 @@ module.exports = {
   removeClass: jqLiteRemoveClass,
 
   /** Check JavaScript variable instance type */
-  type: jqLiteType
+  type: jqLiteType,
+
+  /** Get or set horizontal scroll position */
+  scrollLeft: jqLiteScrollLeft,
+
+  /** Get or set vertical scroll position */
+  scrollTop: jqLiteScrollTop
 };
 
 },{}],6:[function(require,module,exports){
@@ -977,11 +1030,13 @@ module.exports = {
 var config = require('../config.js'),
     jqLite = require('./jqLite.js'),
     win = window,
-    doc = window.document,
+    doc = document,
     nodeInsertedCallbacks = [],
+    scrollLock = 0,
+    scrollLockPos,
+    scrollLockEl,
     head,
     _supportsPointerEvents;
-
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
@@ -1129,6 +1184,41 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
 
 
 /**
+ * Turn on window scroll lock.
+ */
+function enableScrollLockFn() {
+  // increment counter
+  scrollLock += 1
+
+  // add lock
+  if (scrollLock === 1) {
+    scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
+    scrollLockEl = loadStyleFn('body{overflow:hidden!important;}');
+    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+  }
+}
+
+
+/**
+ * Turn off window scroll lock.
+ */
+function disableScrollLockFn() {
+  // ignore
+  if (scrollLock === 0) return;
+
+  // decrement counter
+  scrollLock -= 1
+
+  // remove lock 
+  if (scrollLock === 0) {
+    scrollLockEl.parentNode.removeChild(scrollLockEl);
+    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    scrollLockEl = null;
+  }
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -1138,9 +1228,15 @@ module.exports = {
   /** Classnames object to string */
   classNames: classNamesFn,
 
+  /** Disable scroll lock */
+  disableScrollLock: disableScrollLockFn,
+
   /** Dispatch event */
   dispatchEvent: dispatchEventFn,
   
+  /** Enable scroll lock */
+  enableScrollLock: enableScrollLockFn,
+
   /** Log messages to the console when debug is turned on */
   log: logFn,
 
@@ -1266,7 +1362,8 @@ function overlayOn(options, childElement) {
       overlayEl = document.getElementById(overlayId);
     
   // add overlay
-  jqLite.addClass(bodyEl, bodyClass);
+  util.enableScrollLock();
+  //jqLite.addClass(bodyEl, bodyClass);
 
   if (!overlayEl) {
     // create overlayEl
@@ -1323,7 +1420,7 @@ function overlayOff() {
     callbackFn = overlayEl.muiOptions.onclose;
   }
 
-  jqLite.removeClass(document.body, bodyClass);
+  util.disableScrollLock();
 
   // remove option handlers
   removeKeyupHandler();
