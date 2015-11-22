@@ -54,7 +54,7 @@ var Tabs = React.createClass({
 
       // tab element
       tabEls.push(
-        <li className={ (isActive) ? isActiveClass : '' }>
+        <li key={ i } className={ (isActive) ? isActiveClass : '' }>
           <a onClick={ this._handleClick.bind(this, i, item) }>
             { item.props.label }
           </a>
@@ -66,7 +66,7 @@ var Tabs = React.createClass({
       if (isActive) cls += isActiveClass;
 
       paneEls.push(
-        <div className={ cls }>
+        <div key={ i } className={ cls }>
           { item.props.children }
         </div>
       );

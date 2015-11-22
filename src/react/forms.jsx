@@ -185,7 +185,7 @@ var Textfield = React.createClass({
     // pointer-events shim
     if (util.supportsPointerEvents() === false) {
       e.target.style.cursor = 'text';
-      React.findDOMNode(this.refs.input).focus();
+      ReactDOM.findDOMNode(this.refs.input).focus();
     }
   }
 });

@@ -107,10 +107,10 @@ var Dropdown = React.createClass({
   },
   _open: function() {
     // position menu element below toggle button
-    var wrapperRect = React.findDOMNode(this).getBoundingClientRect(),
+    var wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect(),
         toggleRect;
 
-    toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
+    toggleRect = ReactDOM.findDOMNode(this.refs.button).getBoundingClientRect();
 
     this.setState({
       opened: true,
@@ -124,7 +124,7 @@ var Dropdown = React.createClass({
     if (this.props.onClick) this.props.onClick(this, ev);
   },
   _outsideClick: function(ev) {
-    var isClickInside = React.findDOMNode(this).contains(ev.target);
+    var isClickInside = ReactDOM.findDOMNode(this).contains(ev.target);
 
     if (!isClickInside) this._close();
   }

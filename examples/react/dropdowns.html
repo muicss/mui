@@ -2,8 +2,9 @@
 <html>
   <head>
     <!-- for example only -->   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
     <!-- end -->
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,12 +16,12 @@
       <h1>Dropdowns</h1>
       <div id="dropdowns"></div>
     </div>
-    <script type="text/jsx">
+    <script type="text/babel">
       var Dropdown = React.createClass({
         render: function() {
           return (
             <MUIDropdown
-                style="primary"
+                color="primary"
                 label="Dropdown"
                 onClick={ function(ref, ev) {console.log('option selected')} }
             >
@@ -41,7 +42,7 @@
         render: function() {
           return (
             <MUIDropdown 
-                style="primary"
+                color="primary"
                 right={ true }
                 label="Dropdown">
               <MUIDropdownItem>Option 1</MUIDropdownItem>
@@ -53,7 +54,12 @@
         }
       });
 
-      React.render((<div className="mui-panel"><h2>React</h2><Dropdown /><DropdownRight /></div>), document.getElementById('dropdowns'));
+      ReactDOM.render(<div className="mui-panel">
+                        <h2>React</h2>
+                        <Dropdown />
+                        <DropdownRight />
+                      </div>,
+                      document.getElementById('dropdowns'));
     </script>
   </body>
 </html>

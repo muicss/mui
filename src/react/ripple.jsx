@@ -29,7 +29,7 @@ var Ripple = {
     // only left clicks
     if (ev.button !== 0) return;
 
-    var buttonEl = React.findDOMNode(this);
+    var buttonEl = ReactDOM.findDOMNode(this);
 
     // exit if button is disabled
     if (this.props.disabled === true) return;

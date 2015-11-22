@@ -823,10 +823,10 @@ var Dropdown = React.createClass({displayName: "Dropdown",
   },
   _open: function() {
     // position menu element below toggle button
-    var wrapperRect = React.findDOMNode(this).getBoundingClientRect(),
+    var wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect(),
         toggleRect;
 
-    toggleRect = React.findDOMNode(this.refs.button).getBoundingClientRect();
+    toggleRect = ReactDOM.findDOMNode(this.refs.button).getBoundingClientRect();
 
     this.setState({
       opened: true,
@@ -840,7 +840,7 @@ var Dropdown = React.createClass({displayName: "Dropdown",
     if (this.props.onClick) this.props.onClick(this, ev);
   },
   _outsideClick: function(ev) {
-    var isClickInside = React.findDOMNode(this).contains(ev.target);
+    var isClickInside = ReactDOM.findDOMNode(this).contains(ev.target);
 
     if (!isClickInside) this._close();
   }
@@ -1099,7 +1099,7 @@ var Textfield = React.createClass({displayName: "Textfield",
     // pointer-events shim
     if (util.supportsPointerEvents() === false) {
       e.target.style.cursor = 'text';
-      React.findDOMNode(this.refs.input).focus();
+      ReactDOM.findDOMNode(this.refs.input).focus();
     }
   }
 });
@@ -1209,7 +1209,7 @@ var Ripple = {
     // only left clicks
     if (ev.button !== 0) return;
 
-    var buttonEl = React.findDOMNode(this);
+    var buttonEl = ReactDOM.findDOMNode(this);
 
     // exit if button is disabled
     if (this.props.disabled === true) return;
@@ -1342,7 +1342,7 @@ var Tabs = React.createClass({displayName: "Tabs",
 
       // tab element
       tabEls.push(
-        React.createElement("li", {className:  (isActive) ? isActiveClass : ''}, 
+        React.createElement("li", {key:  i, className:  (isActive) ? isActiveClass : ''}, 
           React.createElement("a", {onClick:  this._handleClick.bind(this, i, item) }, 
              item.props.label
           )
@@ -1354,7 +1354,7 @@ var Tabs = React.createClass({displayName: "Tabs",
       if (isActive) cls += isActiveClass;
 
       paneEls.push(
-        React.createElement("div", {className:  cls }, 
+        React.createElement("div", {key:  i, className:  cls }, 
            item.props.children
         )
       );

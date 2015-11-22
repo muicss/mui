@@ -2,8 +2,9 @@
 <html>
   <head>
     <!-- for example only -->   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
     <!-- end -->
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,14 +17,8 @@
       <div class="mui-panel">
         <div id="tabs-example1"></div>
       </div>
-      <div class="mui-panel">
-        <div id="tabs-example2"></div>
-      </div>
-      <div class="mui-panel">
-        <div id="tabs-example3"></div>
-      </div>
     </div>
-    <script type="text/jsx">
+    <script type="text/babel">
       // default tabs
       var Example1 = React.createClass({
         render: function() {
@@ -50,40 +45,7 @@
         }
       });
 
-      React.render(<Example1/>, document.getElementById('tabs-example1'));
-                   
-
-      // justified tabs
-      React.render(
-        <MUITabs
-          onChange={ this._handleChange }
-          initialSelectedIndex="1"
-          justified={ true }
-        >
-          <MUITab value="pane-1" label="Tab 1" onActive={ this._handleActive }>
-            Content 1
-          </MUITab>
-          <MUITab value="pane-2" label="Tab 2">
-            Content 2
-          </MUITab>
-        </MUITabs>,
-        document.getElementById('tabs-example2'));
-
-        
-      // tabs in tabs
-      React.render(
-        <MUITabs>
-          <MUITab label="Tab 1">
-            <MUITabs>
-              <MUITab label="Tab 1-1">Content 1-1</MUITab>
-              <MUITab label="Tab 1-2">Content 1-2</MUITab>
-            </MUITabs>
-          </MUITab>
-          <MUITab label="Tab 2">
-            Content 2
-          </MUITab>
-        </MUITabs>,
-        document.getElementById('tabs-example3'));
+      ReactDOM.render(<Example1/>, document.getElementById('tabs-example1'));
     </script>
   </body>
 </html>
