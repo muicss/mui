@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.3 - November 21, 2015
+
+* Upgraded to React 0.14.3
+
 ## 0.2.2 - November 20, 2015
 
 * Improved IE10+ CSS borders for buttons, panels and select menu
