@@ -2,23 +2,25 @@
  * MUI gulp file
  */
 
-var del = require('del'),
-    streamqueue = require('streamqueue'),
-    gulp = require('gulp'),
-    libSass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssmin = require('gulp-cssmin'),
-    jshint = require('gulp-jshint'),
-    browserify = require('gulp-browserify'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
-    concat = require('gulp-concat'),
-    reactify = require('reactify'),
-    stringify = require('stringify'),
-    injectSource = require('gulp-inline-source'),
-    inlineCss = require('gulp-inline-css'),
-    source = require('vinyl-source-stream'),
-    Browserify = require('browserify');
+var del                      =      require('del'),
+    streamqueue      =      require('streamqueue'),
+    gulp                         =      require('gulp'),
+    libSass                 =      require('gulp-sass'),
+    nib                            =     require('nib'),
+    stylus                    =     require('gulp-stylus'),
+    autoprefixer    =     require('gulp-autoprefixer'),
+    cssmin                    =     require('gulp-cssmin'),
+    jshint                    =     require('gulp-jshint'),
+    browserify         =      require('gulp-browserify'),
+    uglify                    =     require('gulp-uglify'),
+    rename                    =     require('gulp-rename'),
+    concat                    =     require('gulp-concat'),
+    reactify               =     require('reactify'),
+    stringify            =     require('stringify'),
+    injectSource    =     require('gulp-inline-source'),
+    inlineCss             =    require('gulp-inline-css'),
+    source                     =    require('vinyl-source-stream'),
+    Browserify          =     require('browserify');
 
 
 
@@ -40,8 +42,6 @@ if (taskName === 'build-dist') {
 }
 
 
-
-
 // ============================================================================
 // RECIPES
 // ============================================================================
@@ -56,6 +56,23 @@ gulp.task('clean', function(callback) {
 // CSS
 // ----------------------------------------------------------------------------
 
+gulp.task('stylus', function() {
+  return gulp.src('src/stylus/mui.styl')
+    .pipe(stylus({
+      error: true,
+      use: [
+        nib()
+      ]
+    }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .on('error', function(err) {console.log(err.message);})
+    .pipe(rename(pkgName + '.css'))
+    .pipe(gulp.dest(dirName + '/css'));
+});
+
 gulp.task('sass', function() {
   return gulp.src('src/sass/mui.scss')
     .pipe(sass())
@@ -69,7 +86,7 @@ gulp.task('sass', function() {
 });
 
 
-gulp.task('cssmin', ['sass'], function() {
+gulp.task('cssmin', ['stylus'], function() {
   return gulp.src(dirName + '/css/' + pkgName + '.css')
     .pipe(cssmin({advanced: false}))
     .pipe(rename(pkgName + '.min.css'))
@@ -209,6 +226,23 @@ gulp.task(
 // EXTRA
 // ----------------------------------------------------------------------------
 
+gulp.task('colors_stylus', function() {
+  return gulp.src('src/stylus/mui-colors.styl')
+    .pipe(stylus({
+      error: true,
+      use: [
+        nib()
+      ]
+    }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .on('error', function(err) {console.log(err.message);})
+    .pipe(rename(pkgName + '-colors.css'))
+    .pipe(gulp.dest(dirName + '/extra'));
+});
+
 gulp.task('colors', function() {
   return gulp.src('src/sass/mui-colors.scss')
     .pipe(sass())
@@ -262,7 +296,7 @@ function build(options) {
   options = options || {};
   
   var tasks = [
-    'sass',
+    'stylus',
     'cssmin',
     'js',
     'uglify',
@@ -272,7 +306,7 @@ function build(options) {
     'webcomponents-uglify',
     'build-email-inline',
     'build-email-styletag',
-    'colors',
+    'colors_stylus',
     'cssjs-combined',
     'react-combined'
   ];
