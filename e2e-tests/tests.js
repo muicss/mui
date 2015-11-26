@@ -1728,8 +1728,8 @@ var config = require('../config.js'),
     doc = document,
     nodeInsertedCallbacks = [],
     scrollLock = 0,
+    scrollLockCls = 'mui-body--scroll-lock',
     scrollLockPos,
-    scrollLockEl,
     head,
     _supportsPointerEvents;
 
@@ -1888,7 +1888,7 @@ function enableScrollLockFn() {
   // add lock
   if (scrollLock === 1) {
     scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
-    scrollLockEl = loadStyleFn('body{overflow:hidden!important;}');
+    jqLite.addClass(doc.body, scrollLockCls);
     win.scrollTo(scrollLockPos.left, scrollLockPos.top);
   }
 }
@@ -1906,9 +1906,8 @@ function disableScrollLockFn() {
 
   // remove lock 
   if (scrollLock === 0) {
-    scrollLockEl.parentNode.removeChild(scrollLockEl);
+    jqLite.removeClass(doc.body, scrollLockCls);
     win.scrollTo(scrollLockPos.left, scrollLockPos.top);
-    scrollLockEl = null;
   }
 }
 
