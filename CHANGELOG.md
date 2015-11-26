@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.4 - November 26, 2015
+
+* Uses body class for scroll lock
+
 ## 0.2.3 - November 21, 2015
 
 * Upgraded to React 0.14.3

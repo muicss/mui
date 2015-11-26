@@ -1518,8 +1518,6 @@ function jqLiteScrollLeft(element, value) {
  * @param {number} value - The scroll position
  */
 function jqLiteScrollTop(element, value) {
-  //return _scrollPos(element, 'top', value);
-
   // get
   if (value === undefined) {
     if (element === gWin) {
@@ -1728,7 +1726,7 @@ var config = require('../config.js'),
     doc = document,
     nodeInsertedCallbacks = [],
     scrollLock = 0,
-    scrollLockCls = 'mui-body--scroll-lock',
+    scrollLockCls = 'mui--overflow-hidden',
     scrollLockPos,
     head,
     _supportsPointerEvents;

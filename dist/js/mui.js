@@ -824,8 +824,6 @@ function jqLiteScrollLeft(element, value) {
  * @param {number} value - The scroll position
  */
 function jqLiteScrollTop(element, value) {
-  //return _scrollPos(element, 'top', value);
-
   // get
   if (value === undefined) {
     if (element === gWin) {
