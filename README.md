@@ -33,7 +33,7 @@ $ bower install mui
 
 MUI is designed from the ground up to be fast, small and developer friendly. By design it only includes the basic components you need to build a site that follows Google's Material Design guidelines. Some of the key features of MUI are:
 
-* Small footprint: mui.min.css - 6.7K, mui.min.js - 4.9K (gzipped)
+* Small footprint: mui.min.css - 6.6K, mui.min.js - 5.4K (gzipped)
 * A responsive grid to make mobile-friendly sites
 * No external dependencies
 * CSS library that can be customized with your own colors
