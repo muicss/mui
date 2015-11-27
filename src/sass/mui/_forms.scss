@@ -90,7 +90,7 @@ input[type="checkbox"]:disabled {
   > label {
     // Layout
     position: absolute;
-    top: $xFormLabelLineHeight;
+    transform: translate(0px, $xFormLabelLineHeight);
     
     // Typography
     font-size: $mui-input-font-size;
@@ -108,7 +108,7 @@ input[type="checkbox"]:disabled {
   > input,
   > textarea {
     &:focus ~ label {
-      top: 0px;
+      transform: translate(0px, 0px);
       font-size: $mui-label-font-size;
       line-height: $xFormLabelLineHeight;
       text-overflow: ellipsis;
@@ -122,7 +122,7 @@ input[type="checkbox"]:disabled {
           color: $mui-label-font-color;
           font-size: $mui-label-font-size;
           line-height: $xFormLabelLineHeight;
-          top: 0px;
+          transform: translate(0px, 0px);
           text-overflow: ellipsis;
         }
       }

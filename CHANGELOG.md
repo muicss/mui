@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.6 - November 27, 2015
+
+* Improves floating label animation by using CSS transform
+
 ## 0.2.5 - November 27, 2015
 
 * Added .mui-body--scroll-lock specifically for scroll lock
