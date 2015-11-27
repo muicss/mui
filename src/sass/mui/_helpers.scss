@@ -346,3 +346,13 @@
 @media (min-width: $mui-screen-lg-min) {
   @include x-responsive-invisibility('.mui--hidden-lg');
 }
+
+
+
+// ============================================================================
+// SCROLL BLOCK
+// ============================================================================
+
+body.mui-body--scroll-lock {
+  overflow: hidden !important;
+}

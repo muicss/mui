@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.5 - November 27, 2015
+
+* Added .mui-body--scroll-lock specifically for scroll lock
+
 ## 0.2.4 - November 26, 2015
 
 * Uses body class for scroll lock

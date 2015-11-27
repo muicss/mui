@@ -12,7 +12,7 @@ var config = require('../config.js'),
     doc = document,
     nodeInsertedCallbacks = [],
     scrollLock = 0,
-    scrollLockCls = 'mui--overflow-hidden',
+    scrollLockCls = 'mui-body--scroll-lock',
     scrollLockPos,
     head,
     _supportsPointerEvents;
