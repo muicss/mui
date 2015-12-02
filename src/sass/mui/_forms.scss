@@ -318,7 +318,7 @@ input[type="checkbox"]:disabled {
     }
 
     &:disabled {
-      color: mui-color('black-alpha-26');
+      color: mui-color('black-alpha-38');
       cursor: $mui-cursor-disabled;
       background-color: $mui-input-bg-color-disabled;
       opacity: 1;  // iOS fix for unreadable disabled content

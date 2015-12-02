@@ -2313,7 +2313,7 @@ input[type="checkbox"]:disabled {
 }
 
 .mui-select > select:disabled {
-  color: rgba(0, 0, 0, 0.26);
+  color: rgba(0, 0, 0, 0.38);
   cursor: not-allowed;
   background-color: transparent;
   opacity: 1;
@@ -2716,8 +2716,8 @@ th {
   color: rgba(0, 0, 0, 0.54);
 }
 
-.mui--text-black-26 {
-  color: rgba(0, 0, 0, 0.26);
+.mui--text-black-38 {
+  color: rgba(0, 0, 0, 0.38);
 }
 
 .mui--text-black-12 {
@@ -2752,8 +2752,8 @@ th {
   color: rgba(255, 64, 129, 0.54);
 }
 
-.mui--text-accent-26 {
-  color: rgba(255, 64, 129, 0.26);
+.mui--text-accent-38 {
+  color: rgba(255, 64, 129, 0.38);
 }
 
 .mui--text-accent-12 {

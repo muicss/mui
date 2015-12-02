@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.2.7 - December 1, 2015
+
+* Replaced .mui--text-black-26 with .mui--text-black-38 to bring CSS color
+  helpers in line with MD spec
+
 ## 0.2.6 - November 27, 2015
 
 * Improves floating label animation by using CSS transform
