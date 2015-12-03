@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.8 - December 3, 2015
+
+* Added .mui-textfield--invalid css helper
+
 ## 0.2.7 - December 1, 2015
 
 * Replaced .mui--text-black-26 with .mui--text-black-38 to bring CSS color

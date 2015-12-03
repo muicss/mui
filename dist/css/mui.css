@@ -2013,7 +2013,7 @@ h4, h5, h6 {
 
 /**
  * MUI Form styles
- * 
+ *
  */
 legend {
   display: block;
@@ -2392,7 +2392,17 @@ input[type="checkbox"]:disabled {
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty,
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,
 .mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
+.mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield--invalid > input:not(:focus):not(:required),
+.mui-textfield--invalid > input:not(:focus):required.mui--is-not-empty,
+.mui-textfield--invalid > input:not(:focus):required.mui--is-empty.mui--is-dirty,
+.mui-textfield--invalid > input:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield--invalid > input:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield--invalid > textarea:not(:focus):not(:required),
+.mui-textfield--invalid > textarea:not(:focus):required.mui--is-not-empty,
+.mui-textfield--invalid > textarea:not(:focus):required.mui--is-empty.mui--is-dirty,
+.mui-textfield--invalid > textarea:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield--invalid > textarea:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   border-color: #F44336;
   border-width: 2px;
 }
@@ -2401,7 +2411,12 @@ input[type="checkbox"]:disabled {
 .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty,
 .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,
 .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
+.mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield--invalid > input:not(:focus):not(:required),
+.mui-textfield--invalid > input:not(:focus):required.mui--is-not-empty,
+.mui-textfield--invalid > input:not(:focus):required.mui--is-empty.mui--is-dirty,
+.mui-textfield--invalid > input:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield--invalid > input:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   height: 33px;
   margin-bottom: -1px;
 }
@@ -2413,12 +2428,22 @@ input[type="checkbox"]:disabled {
 .mui-textfield > textarea:invalid:not(:focus):not(:required) ~ label,
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label,
 .mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
+.mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield--invalid > input:not(:focus):not(:required) ~ label,
+.mui-textfield--invalid > input:not(:focus):required.mui--is-not-empty ~ label,
+.mui-textfield--invalid > input:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield--invalid > input:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield--invalid > textarea:not(:focus):not(:required) ~ label,
+.mui-textfield--invalid > textarea:not(:focus):required.mui--is-not-empty ~ label,
+.mui-textfield--invalid > textarea:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield--invalid > textarea:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
   color: #F44336;
 }
 
 .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label {
+.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
+.mui-textfield--invalid:not(.mui-textfield--float-label) > input:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
+.mui-textfield--invalid:not(.mui-textfield--float-label) > textarea:not(:focus):required.mui--is-empty.mui--is-dirty ~ label {
   color: #F44336;
 }
 
