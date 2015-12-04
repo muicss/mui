@@ -9,21 +9,26 @@
   else win._muiReactLoaded = true;
 
   // load dependencies
-  var layout = require('./layout.jsx'),
+  var appbar = require('./appbar.jsx'),
+      layout = require('./layout.jsx'),
       forms = require('./forms.jsx'),
       buttons = require('./buttons.jsx'),
       dropdowns = require('./dropdowns.jsx'),
-      tabs = require('./tabs.jsx'),
-      doc = win.document;
+      tabs = require('./tabs.jsx');
 
   // export React classes
+  win.MUIAppbar = appbar.Appbar;
+
+  win.MUIButton = buttons.Button;
+
+  
   win.MUIContainer = layout.Container;
   win.MUIFluidContainer = layout.FluidContainer;
   win.MUIPanel = layout.Panel;
 
   win.MUITextfield = forms.Textfield;
 
-  win.MUIButton = buttons.Button;
+
 
   win.MUIDropdown = dropdowns.Dropdown;
   win.MUIDropdownItem = dropdowns.DropdownItem;
