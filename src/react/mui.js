@@ -10,11 +10,12 @@
 
   // load dependencies
   var appbar = require('./appbar.jsx'),
+      buttons = require('./buttons.jsx'),
       caret = require('./caret.jsx'),
       container = require('./container.jsx'),
       divider = require('./divider.jsx'),
       forms = require('./forms.jsx'),
-      buttons = require('./buttons.jsx'),
+      grid = require('./grid.jsx'),
       dropdowns = require('./dropdowns.jsx'),
       tabs = require('./tabs.jsx');
 
@@ -27,7 +28,8 @@
 
   win.MUITextfield = forms.Textfield;
 
-
+  win.MUIRow = grid.Row;
+  win.MUICol = grid.Col;
 
   win.MUIDropdown = dropdowns.Dropdown;
   win.MUIDropdownItem = dropdowns.DropdownItem;
