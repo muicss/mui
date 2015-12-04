@@ -10,7 +10,8 @@
 
   // load dependencies
   var appbar = require('./appbar.jsx'),
-      layout = require('./layout.jsx'),
+      caret = require('./caret.jsx'),
+      container = require('./container.jsx'),
       forms = require('./forms.jsx'),
       buttons = require('./buttons.jsx'),
       dropdowns = require('./dropdowns.jsx'),
@@ -18,13 +19,9 @@
 
   // export React classes
   win.MUIAppbar = appbar.Appbar;
-
   win.MUIButton = buttons.Button;
-
-  
-  win.MUIContainer = layout.Container;
-  win.MUIFluidContainer = layout.FluidContainer;
-  win.MUIPanel = layout.Panel;
+  win.MUICaret = caret.Caret;
+  win.MUIContainer = container.Container;
 
   win.MUITextfield = forms.Textfield;
 
