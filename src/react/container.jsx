@@ -1,6 +1,6 @@
 /**
- * MUI React layout module
- * @module react/layout
+ * MUI React container module
+ * @module react/container
  */
 
 'use strict';

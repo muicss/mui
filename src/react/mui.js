@@ -12,6 +12,7 @@
   var appbar = require('./appbar.jsx'),
       caret = require('./caret.jsx'),
       container = require('./container.jsx'),
+      divider = require('./divider.jsx'),
       forms = require('./forms.jsx'),
       buttons = require('./buttons.jsx'),
       dropdowns = require('./dropdowns.jsx'),
@@ -22,6 +23,7 @@
   win.MUIButton = buttons.Button;
   win.MUICaret = caret.Caret;
   win.MUIContainer = container.Container;
+  win.MUIDivider = divider.Divider;
 
   win.MUITextfield = forms.Textfield;
 
