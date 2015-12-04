@@ -1,0 +1,57 @@
+// Overrides bootstrap functions to add prfx support
+mui-make-grid-columns($i = 1, $list = ".mui-col-xs-"+$i", .mui-col-sm-" + $i + ", .mui-col-md-" + $i + ", .mui-col-lg-" + $i)
+    for $i in (1 + 1)..($mui-grid-columns)
+        $list = $list + ", .mui-col-xs-"+$i", .mui-col-sm-"+$i", .mui-col-md-"+$i", .mui-col-lg-"+$i
+
+    {$list}
+        // Prevent columns from collapsing when empty
+        min-height: 1px
+        
+        // Inner gutter via padding
+        padding-left: ($mui-grid-gutter-width / 2)
+        padding-right: ($mui-grid-gutter-width / 2)
+        
+mui-float-grid-columns($class, $i = 1, $list = ".mui-col-" + $class + "-"+$i)
+    for $i in (1 + 1)..($mui-grid-columns)
+        $list = $list", .mui-col-" + $class + "-"+$i
+    {$list}
+        float: left
+mui-calc-grid-column($i, $class, $type)
+    if $type == "width" and $i > 0
+        .mui-col-{$class}-{$i}
+            width: percentage($i / $mui-grid-columns)
+            
+    if $type == "push" and $i > 0
+        .mui-col-{$class}-push-{$i}
+            left: percentage($i / $mui-grid-columns)
+
+    if $type == "push" and $i == 0
+        .mui-col-{$class}-push-0
+            left: auto
+
+    if $type == "pull" and $i > 0
+        .mui-col-{$class}-pull-{$i}
+            right: percentage($i / $mui-grid-columns)
+
+    if $type == "pull" and $i > 0
+        .mui-col-{$class}-pull-{$i}
+            right: percentage($i / $mui-grid-columns)
+
+    if $type == "pull" and $i == 0
+        .mui-col-{$class}-pull-0
+            right: auto
+
+    if $type == "offset"
+        .mui-col-{$class}-offset-{$i}
+            margin-left: percentage($i / $mui-grid-columns)
+    
+mui-loop-grid-columns($columns, $class, $type)
+    for $i in (0)..($columns)
+        mui-calc-grid-column($i, $class, $type)
+
+mui-make-grid($class)
+    mui-float-grid-columns($class)
+    mui-loop-grid-columns($mui-grid-columns, $class, "width")
+    mui-loop-grid-columns($mui-grid-columns, $class, "pull")
+    mui-loop-grid-columns($mui-grid-columns, $class, "push")
+    mui-loop-grid-columns($mui-grid-columns, $class, "offset")

@@ -1,0 +1,331 @@
+/**
+ * MUI Form styles
+ * 
+ */
+$xFormLabelLineHeight = floor($mui-label-font-size * 1.25)
+// ============================================================================
+// NORMALIZATIONS
+// ============================================================================
+legend
+  display: block
+  width: 100%
+  padding: 0
+  margin-bottom: ($mui-base-line-height-computed / 2)
+  font-size: $mui-legend-font-size
+  color: $mui-legend-font-color
+  line-height: inherit
+  border: 0
+// override content-box in normalize.css
+input[type="search"]
+  box-sizing: border-box
+  -webkit-appearance: none
+  // Search inputs in iOS
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus
+  // Focus for file, radio, and checkbox
+  mui-tab-focus()
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled
+  cursor: $mui-cursor-disabled
+// ============================================================================
+// TEXTFIELD
+// ============================================================================
+.mui-textfield
+  display: block
+  padding-top: $xFormLabelLineHeight
+  margin-bottom: $mui-form-group-margin-bottom
+  position: relative
+  > label
+    // Positioning
+    position: absolute
+    top: 0
+    // Display
+    display: block
+    width: 100%
+    // Other
+    color: $mui-label-font-color
+    font-size: $mui-label-font-size
+    font-weight: 400
+    line-height: $xFormLabelLineHeight
+    overflow-x: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+  > textarea
+    padding-top: 5px
+    min-height: $mui-textarea-height
+  > input,
+  > textarea
+    display: block
+    &:focus ~ label
+      color: $mui-input-border-color-focus
+.mui-textfield--float-label
+  > label
+    // Layout
+    position: absolute
+    top: $xFormLabelLineHeight
+    // Typography
+    font-size: $mui-input-font-size
+    line-height: $mui-input-height
+    color: $mui-input-placeholder-color
+    // Overflow policy
+    text-overflow: clip
+    // Cursor
+    cursor: text
+    // for ie10
+    pointer-events: none
+  > input,
+  > textarea
+    &:focus ~ label
+      top: 0px
+      font-size: $mui-label-font-size
+      line-height: $xFormLabelLineHeight
+      text-overflow: ellipsis
+    &:not(:focus)
+      &.mui--is-not-empty,
+      &[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+      &:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)
+        ~ label
+          color: $mui-label-font-color
+          font-size: $mui-label-font-size
+          line-height: $xFormLabelLineHeight
+          top: 0px
+          text-overflow: ellipsis
+.mui-textfield--wrap-label
+  display: table
+  width: 100%
+  padding-top: 0px
+  &:not(.mui-textfield--float-label) > label
+    display: table-header-group
+    position: static
+    white-space: normal
+    overflow-x: visible
+.mui-textfield > input,
+.mui-textfield > textarea
+  mui-node-inserted()
+  display: block
+  background-color: $mui-input-bg-color
+  color: $mui-input-font-color
+  border: none
+  border-bottom: 1px solid $mui-input-border-color
+  outline: none
+  height: $mui-input-height
+  width: 100%
+  font-size: $mui-input-font-size
+  padding: 0
+  box-shadow: none
+  border-radius: 0px
+  // Bugfix for firefox-android
+  background-image: none
+  &:focus
+    border-color: $mui-input-border-color-focus
+    border-width: 2px
+  &:disabled,
+  &:read-only
+    cursor: $mui-cursor-disabled
+    background-color: $mui-input-bg-color-disabled
+    opacity: 1
+    // iOS fix for unreadable disabled content
+  &::placeholder
+    color: $mui-input-placeholder-color
+    opacity: 1
+    // Normalize firefox
+.mui-textfield > textarea
+  height: auto
+  // Reset height for <textarea>s
+.mui-textfield > input:focus
+  // Compensate for height change on focus
+  height: ($mui-input-height + 1px)
+  margin-bottom: -1px
+// ============================================================================
+// CHECKBOXES-AND-RADIOS
+// ============================================================================
+.mui-radio,
+.mui-checkbox
+  position: relative
+  display: block
+  margin-top: 10px
+  margin-bottom: 10px
+  > label
+    min-height: $mui-base-line-height-computed
+    padding-left: 20px
+    margin-bottom: 0
+    font-weight: normal
+    cursor: pointer
+.mui-radio > label > input[type="radio"],
+.mui-radio--inline > label > input[type="radio"],
+.mui-checkbox > label > input[type="checkbox"],
+.mui-checkbox--inline > label > input[type="checkbox"]
+  position: absolute
+  margin-left: -20px
+  margin-top: 4px
+.mui-radio + .mui-radio,
+.mui-checkbox + .mui-checkbox
+  // Move up sibling radios or checkboxes for tighter spacing
+  margin-top: -5px
+.mui-radio--inline,
+.mui-checkbox--inline
+  // Radios and checkboxes on same line
+  display: inline-block
+  padding-left: 20px
+  margin-bottom: 0
+  vertical-align: middle
+  font-weight: normal
+  cursor: pointer
+  > input[type="radio"],
+  > input[type="checkbox"],
+  > label > input[type="radio"],
+  > label > input[type="checkbox"]
+    margin: 4px 0 0
+    line-height: normal
+.mui-radio--inline + .mui-radio--inline,
+.mui-checkbox--inline + .mui-checkbox--inline
+  // Space out consecutive inline controls
+  margin-top: 0
+  margin-left: 10px
+// ============================================================================
+// SELECT-COMPONENT
+// ============================================================================
+.mui-select
+  display: block
+  padding-top: $xFormLabelLineHeight
+  margin-bottom: $mui-form-group-margin-bottom
+  position: relative
+  &:focus
+    outline: 0
+    > select
+      height: ($mui-input-height + 1px)
+      margin-bottom: -1px
+      border-color: $mui-input-border-color-focus
+      border-width: 2px
+  > select
+    mui-node-inserted()
+    // Layout
+    display: block
+    height: $mui-input-height
+    width: 100%
+    // Look and feel
+    appearance: none
+    -webkit-appearance: none
+    -moz-appearance: none
+    outline: none
+    border: none
+    border-bottom: 1px solid $mui-input-border-color
+    border-radius: 0px
+    box-shadow: none
+    background-color: $mui-input-bg-color
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==")
+    background-repeat: no-repeat
+    background-position: right center
+    cursor: pointer
+    // Typography
+    color: $mui-input-font-color
+    font-size: $mui-input-font-size
+    padding: 0 25px 0 0
+    &::-ms-expand
+      display: none
+      // For IE
+    &:focus
+      outline: 0
+      height: ($mui-input-height + 1px)
+      margin-bottom: -1px
+      border-color: $mui-input-border-color-focus
+      border-width: 2px
+    &:disabled
+      color: mui-color("black-alpha-26")
+      cursor: $mui-cursor-disabled
+      background-color: $mui-input-bg-color-disabled
+      opacity: 1
+      // iOS fix for unreadable disabled content
+.mui-select__menu
+  @extend .mui--z1
+  // Positioning
+  position: absolute
+  z-index: 1
+  // Display
+  min-width: 100%
+  overflow-y: auto
+  padding: 8px 0
+  // Other
+  background-color: mui-color("white")
+  font-size: $mui-input-font-size
+  // IE10+ bugfix
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active)
+    border-left: 1px solid mui-color("black-alpha-12")
+    border-top: 1px solid mui-color("black-alpha-12")
+  > div
+    padding: 0 22px
+    height: ($mui-input-font-size + 26px)
+    line-height: ($mui-input-font-size + 26px)
+    cursor: pointer
+    white-space: nowrap
+    &:hover
+      background-color: mui-color("grey", "300")
+    &[selected]
+      background-color: mui-color("grey", "200")
+// ============================================================================
+// INLINE-FORMS
+// ============================================================================
+.mui-form--inline
+  @media (min-width: $mui-screen-sm-min)
+    > .mui-textfield
+      display: inline-block
+      margin-bottom: 0
+    > .mui-radio,
+    > .mui-checkbox
+      display: inline-block
+      margin-top: 0
+      margin-bottom: 0
+      vertical-align: middle
+      > label
+        padding-left: 0
+    > .mui-radio > label > input[type="radio"],
+    > .mui-checkbox > label > input[type="checkbox"]
+      position: relative
+      margin-left: 0
+    > .mui-select
+      display: inline-block
+    > .mui-btn
+      margin-bottom: 0
+      margin-top: 0
+      vertical-align: bottom
+// ============================================================================
+// FORM-VALIDATION
+// ============================================================================
+.mui-textfield > input,
+.mui-textfield > textarea
+  // Use thick colored border for invalid fields
+  &:invalid:not(:focus)
+    &:not(:required),
+    &:required.mui--is-not-empty,
+    &:required.mui--is-empty.mui--is-dirty,
+    &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+    &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)
+      border-color: $mui-danger-color
+      border-width: 2px
+// Treat <input>'s different from <textarea>'s
+.mui-textfield > input:invalid:not(:focus)
+  &:not(:required),
+  &:required.mui--is-not-empty,
+  &:required.mui--is-empty.mui--is-dirty,
+  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+  &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)
+    height: ($mui-input-height + 1px)
+    margin-bottom: -1px
+.mui-textfield > input,
+.mui-textfield > textarea
+  &:invalid:not(:focus)
+    // Set label color to danger color
+    &:not(:required),
+    &:required.mui--is-not-empty,
+    &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+    &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)
+      ~ label
+        color: $mui-danger-color
+.mui-textfield:not(.mui-textfield--float-label)
+  > input,
+  > textarea
+    &:invalid:not(:focus)
+      // Set label color to danger color for dirty, empty fields
+      &:required.mui--is-empty.mui--is-dirty ~ label
+        color: $mui-danger-color

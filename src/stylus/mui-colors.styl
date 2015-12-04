@@ -1,0 +1,26 @@
+@import 'mui/_colors'
+
+for $key1 in $mui-colors
+    $mapVal1 = $mui-colors[$key1]
+    if typeof($mapVal1) == 'object' 
+        for $key2 in $mapVal1
+            $mapVal2 = $mapVal1[$key2]
+            .mui--color-{$key1}-{$key2} 
+                color: $mapVal2 !important;
+
+            .mui--bg-color-{$key1}-{$key2} 
+                background-color: $mapVal2 !important;
+
+            if $key2 == '500' 
+                .mui--color-{$key1} 
+                    color: $mapVal2 !important;
+
+                .mui--bg-color-{$key1} 
+                    background-color: $mapVal2 !important;
+
+    else
+        .mui--color-{$key1}
+            color: $mapVal1 !important;
+
+        .mui--bg-color-{$key1} 
+            background-color: $mapVal1 !important;
