@@ -14,9 +14,10 @@
       caret = require('./caret.jsx'),
       container = require('./container.jsx'),
       divider = require('./divider.jsx'),
+      dropdowns = require('./dropdowns.jsx'),
       forms = require('./forms.jsx'),
       grid = require('./grid.jsx'),
-      dropdowns = require('./dropdowns.jsx'),
+      panel = require('./panel.jsx'),
       tabs = require('./tabs.jsx');
 
   // export React classes
@@ -25,16 +26,13 @@
   win.MUICaret = caret.Caret;
   win.MUIContainer = container.Container;
   win.MUIDivider = divider.Divider;
-
-  win.MUITextfield = forms.Textfield;
-
-  win.MUIRow = grid.Row;
-  win.MUICol = grid.Col;
-
   win.MUIDropdown = dropdowns.Dropdown;
   win.MUIDropdownItem = dropdowns.DropdownItem;
- 
+  win.MUIRow = grid.Row;
+  win.MUICol = grid.Col;
+  win.MUIPanel = panel.Panel;
   win.MUITab = tabs.Tab;
   win.MUITabs = tabs.Tabs;
-  
+
+  win.MUITextfield = forms.Textfield;   
 })(window);
