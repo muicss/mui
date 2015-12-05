@@ -1,15 +1,16 @@
 /**
- * MUI React buttons module
- * @module react/buttons
+ * MUI React button module
+ * @module react/button
  */
 
 'use strict';
 
 var util = require('../js/lib/util.js'),
-    Ripple = require('./ripple.jsx');
+    Ripple = require('./ripple.jsx'),
+    PropTypes = React.PropTypes;
 
 var btnClass = 'mui-btn',
-    btnAttrs = {style: 1, color: 1, size: 1};
+    btnAttrs = {color: 1, variant: 1, size: 1};
 
 
 /**
@@ -18,12 +19,20 @@ var btnClass = 'mui-btn',
  */
 var Button = React.createClass({
   mixins: [Ripple],
+  propTypes: {
+    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+    size: PropTypes.oneOf(['default', 'small', 'large']),
+    onClick: PropTypes.func,
+    isDisabled: PropTypes.bool
+  },
   getDefaultProps: function() {
     return {
-      style: 'default', // default|flat|raised|fab
-      color: 'default', // default|primary|danger|dark|accent
-      size: 'default', // default|small|large
-      disabled: false
+      color: 'default',
+      variant: 'default',
+      size: 'default',
+      onClick: null,
+      isDisabled: false
     };
   },
   render: function() {
@@ -39,7 +48,7 @@ var Button = React.createClass({
     return (
       <button
         className={ cls }
-        disabled={ this.props.disabled }
+        disabled={ this.props.isDisabled }
         onMouseDown={ this.ripple }
         onTouchStart={ this.ripple }
         onClick={ this.props.onClick }

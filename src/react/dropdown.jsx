@@ -9,11 +9,11 @@
 
 var util = require('../js/lib/util'),
     jqLite = require('../js/lib/jqLite'),
-    buttons = require('./buttons.jsx'),
-    Button = buttons.Button;
+    Button = require('./button.jsx').Button,
+    Caret = require('./caret.jsx').Caret,
+    PropTypes = React.PropTypes;
 
 var dropdownClass = 'mui-dropdown',
-    caretClass = 'mui-caret',
     menuClass = 'mui-dropdown__menu',
     openClass = 'mui--is-open',
     rightClass = 'mui-dropdown__menu--right';
@@ -24,14 +24,24 @@ var dropdownClass = 'mui-dropdown',
  * @class
  */
 var Dropdown = React.createClass({
+  propTypes: {
+    color: Button.propTypes.color,
+    variant: Button.propTypes.variant,
+    size: Button.propTypes.size,
+    label: PropTypes.string,
+    alignMenu: PropTypes.oneOf(['left', 'right']),
+    onClick: PropTypes.func,
+    isDisabled: PropTypes.bool
+  },
   getDefaultProps: function() {
     return {
-      style: 'default',
       color: 'default',
+      variant: 'default',
       size: 'default',
       label: '',
-      right: false,
-      disabled: false
+      alignMenu: 'left',
+      onClick: null,
+      isDisabled: false
     };
   },
   getInitialState: function() {
@@ -53,13 +63,13 @@ var Dropdown = React.createClass({
         <Button
           ref="button"
           onClick={ this._click }
-          style={ this.props.style }
           color={ this.props.color }
+          variant={ this.props.variant }
           size={ this.props.size }
-          disabled={ this.props.disabled }
+          isDisabled={ this.props.isDisabled }
         >
           { this.props.label }
-          <span className={ caretClass } />
+          <Caret />
         </Button>
     );
 
@@ -67,7 +77,7 @@ var Dropdown = React.createClass({
 
     cs[menuClass] = true;
     cs[openClass] = this.state.opened;
-    cs[rightClass] = this.props.right;
+    cs[rightClass] = (this.props.alignMenu === 'right');
     cs = util.classNames(cs);
 
     return (
@@ -90,7 +100,7 @@ var Dropdown = React.createClass({
     if (ev.button !== 0) return;
 
     // exit if toggle button is disabled
-    if (this.props.disabled) return;
+    if (this.props.isDisabled) return;
 
     setTimeout(function() {
       if (!ev.defaultPrevented) this._toggle();
@@ -136,6 +146,16 @@ var Dropdown = React.createClass({
  * @class
  */
 var DropdownItem = React.createClass({
+  propTypes: {
+    link: PropTypes.string,
+    onClick: PropTypes.func
+  },
+  getDefaultProps: function() {
+    return {
+      link: null,
+      onClick: null
+    };
+  },
   render: function() {
     return (
       <li>

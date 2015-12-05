@@ -25,37 +25,37 @@
           return (
             <div className="buttons">
               <MUIButton
-                style={ this.props.style }
+                variant={ this.props.variant }
                 size={ this.props.size }
-                disabled={ this.props.disabled }>
+                isIsDisabled={ this.props.isIsDisabled }>
                 Button
               </MUIButton>
               <MUIButton
                 color="primary"
-                style={ this.props.style }
+                variant={ this.props.variant }
                 size={ this.props.size }
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 Button
               </MUIButton>
               <MUIButton 
                 color="danger"
-                style={ this.props.style }
+                variant={ this.props.variant }
                 size={ this.props.size }
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 Button
               </MUIButton>
               <MUIButton 
                 color="dark"
-                style={ this.props.style }
+                variant={ this.props.variant }
                 size={ this.props.size }
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 Button
               </MUIButton>
               <MUIButton
                 color="accent"
-                style={ this.props.style }
+                variant={ this.props.variant }
                 size={ this.props.size }
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 Button
               </MUIButton>
             </div>
@@ -75,19 +75,19 @@
               </MUIButton>
               <MUIButton
                 color="primary"
-                style="flat"
+                variant="flat"
                 size={ this.props.size }>
                 Button
               </MUIButton>
               <MUIButton
                 color="primary"
-                style="raised"
+                variant="raised"
                 size={ this.props.size }>
                 Button
               </MUIButton>
               <MUIButton
                 color="primary"
-                style="fab"
+                variant="fab"
                 size={ this.props.size }>
                 +
               </MUIButton>
@@ -102,32 +102,32 @@
           return (
             <div>
               <MUIButton
-                style="fab"
-                disabled={ this.props.disabled }>
+                variant="fab"
+                isDisabled={ this.props.isDisabled }>
                 +
               </MUIButton>
               <MUIButton
-                style="fab"
+                variant="fab"
                 color="primary"
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 +
               </MUIButton>
               <MUIButton
-                style="fab"
+                variant="fab"
                 color="danger"
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 +
               </MUIButton>
               <MUIButton
-                style="fab"
+                variant="fab"
                 color="dark"
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 +
               </MUIButton>
               <MUIButton
-                style="fab"
+                variant="fab"
                 color="accent"
-                disabled={ this.props.disabled }>
+                isDisabled={ this.props.isDisabled }>
                 +
               </MUIButton>
             </div>
@@ -139,23 +139,23 @@
       ReactDOM.render(<div className="mui-panel">
                         <h3>Default buttons</h3>
                         <Buttons />
-                        <Buttons disabled={ true } />
+                        <Buttons isDisabled={ true } />
                       </div>,
                       document.getElementById('default-buttons'));
 
 
       ReactDOM.render(<div className="mui-panel">
                         <h3>Flat buttons</h3>
-                        <Buttons style="flat" />
-                        <Buttons style="flat" disabled={ true } />
+                        <Buttons variant="flat" />
+                        <Buttons variant="flat" isDisabled={ true } />
                       </div>,
                       document.getElementById('flat-buttons'));
 
 
       ReactDOM.render(<div className="mui-panel">
                         <h3>Raised buttons</h3>
-                        <Buttons style="raised" />
-                        <Buttons style="raised" disabled={ true } />
+                        <Buttons variant="raised" />
+                        <Buttons variant="raised" isDisabled={ true } />
                       </div>,
                       document.getElementById('raised-buttons'));
 
@@ -163,7 +163,7 @@
       ReactDOM.render(<div className="mui-panel">
                         <h3>Floating Action Buttons</h3>
                         <FABButtons />
-                        <FABButtons disabled={ true } />
+                        <FABButtons isDisabled={ true } />
                       </div>,
                       document.getElementById('floating-buttons'));
 

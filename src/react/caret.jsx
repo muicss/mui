@@ -12,7 +12,7 @@
 var Caret = React.createClass({
   render: function() {
     return (
-      <div className="mui-caret"></div>
+      <span className="mui-caret"></span>
     );
   }
 });
