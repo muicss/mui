@@ -7,7 +7,8 @@
 
 'use strict';
 
-var util = require('../js/lib/util.js');
+var util = require('../js/lib/util.js'),
+    PropTypes = React.PropTypes;
 
 var tabsBarClass = 'mui-tabs__bar',
     tabsBarJustifiedClass = 'mui-tabs__bar--justified',
@@ -20,16 +21,21 @@ var tabsBarClass = 'mui-tabs__bar',
  * @class
  */
 var Tabs = React.createClass({
+  propTypes: {
+    initialSelectedIndex: PropTypes.number,
+    isJustified: PropTypes.bool,
+    onChange: PropTypes.func
+  },
   getDefaultProps: function() {
     return {
-      justified: false,
-      onChange: null,
-      initialSelectedIndex: 0
+      initialSelectedIndex: 0,
+      isJustified: false,
+      onChange: null
     };
   },
   getInitialState: function() {
     return {
-      currentSelectedIndex: parseInt(this.props.initialSelectedIndex)
+      currentSelectedIndex: this.props.initialSelectedIndex
     };
   },
   render: function() {
@@ -73,7 +79,7 @@ var Tabs = React.createClass({
     }
 
     cls = tabsBarClass;
-    if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+    if (this.props.isJustified) cls += ' ' + tabsBarJustifiedClass;
     
     return (
       <div>
@@ -105,6 +111,11 @@ var Tabs = React.createClass({
  * @class
  */
 var Tab = React.createClass({
+  propTypes: {
+    value: PropTypes.any,
+    label: PropTypes.string,
+    onActive: PropTypes.func
+  },
   getDefaultProps: function() {
     return {
       value: null,

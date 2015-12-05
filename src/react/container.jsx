@@ -11,6 +11,9 @@
  * @class
  */
 var Container = React.createClass({
+  propTypes: {
+    isFluid: React.PropTypes.bool
+  },
   getDefaultProps: function() {
     return {
       isFluid: false

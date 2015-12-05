@@ -23,7 +23,9 @@
       var Example1 = React.createClass({
         render: function() {
           return (
-            <MUITabs onChange={ this._handleChange } initialSelectedIndex="1">
+            <MUITabs
+                onChange={ this._handleChange }
+                initialSelectedIndex={ 1 }>
               <MUITab
                   value="pane-1"
                   label="Tab 1"
