@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->   
+    <script src="../../assets/vendor/react/0.14.3/react.js"></script>
+    <script src="../../assets/vendor/react/0.14.3/react-dom.js"></script>
+    <script src="../../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../../assets/mui/css/mui.css"/>
+    <script src="../../assets/mui/react/mui-react.js"></script>
+  </head>
+  <body>
+    <h1>Checkbox</h1>
+    <div class="mui-panel">
+      <div id="example1"></div>
+      <div id="example2"></div>
+    </div>
+    <script type="text/babel">
+      ReactDOM.render(
+        (
+          <MUICheckbox label="Option one" value="opt1" />
+        ),
+        document.getElementById('example1')
+      );
+
+      ReactDOM.render(
+        (
+          <MUICheckbox label="Option two" value="opt2" isDisabled={ true } />
+        ),
+        document.getElementById('example2')
+      );
+    </script>
+  </body>
+</html>

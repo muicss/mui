@@ -8,31 +8,51 @@
   if (win._muiReactLoaded) return;
   else win._muiReactLoaded = true;
 
-  // load dependencies
-  var appbar = require('./appbar.jsx'),
-      button = require('./button.jsx'),
-      caret = require('./caret.jsx'),
-      container = require('./container.jsx'),
-      divider = require('./divider.jsx'),
-      dropdown = require('./dropdown.jsx'),
-      forms = require('./forms.jsx'),
-      grid = require('./grid.jsx'),
-      panel = require('./panel.jsx'),
-      tabs = require('./tabs.jsx');
+  var lib;
 
-  // export React classes
-  win.MUIAppbar = appbar.Appbar;
-  win.MUIButton = button.Button;
-  win.MUICaret = caret.Caret;
-  win.MUIContainer = container.Container;
-  win.MUIDivider = divider.Divider;
-  win.MUIDropdown = dropdown.Dropdown;
-  win.MUIDropdownItem = dropdown.DropdownItem;
-  win.MUIRow = grid.Row;
-  win.MUICol = grid.Col;
-  win.MUIPanel = panel.Panel;
-  win.MUITab = tabs.Tab;
-  win.MUITabs = tabs.Tabs;
+  // appbar
+  win.MUIAppbar = require('./appbar.jsx').Appbar;
 
-  win.MUITextfield = forms.Textfield;   
+  // buttons
+  win.MUIButton = require('./button.jsx').Button;
+
+  // caret
+  win.MUICaret = require('./caret.jsx').Caret;
+
+  // container
+  win.MUIContainer = require('./container.jsx').Container;
+
+  // dividers
+  win.MUIDivider = require('./divider.jsx').Divider;
+
+  // dropdowns
+  lib = require('./dropdown.jsx');
+  win.MUIDropdown = lib.Dropdown;
+  win.MUIDropdownItem = lib.DropdownItem;
+
+  // grid
+  lib = require('./grid.jsx');
+  win.MUIRow = lib.Row;
+  win.MUICol = lib.Col;
+
+  // forms
+  win.MUICheckbox = require('./forms/checkbox.jsx').Checkbox;
+  win.MUIForm = require('./forms/form.jsx').Form;
+  win.MUIRadio = require('./forms/radio.jsx').Radio;
+
+  lib = require('./forms/select.jsx')
+  win.MUISelect = lib.Select;
+  win.MUISelectItem = lib.SelectItem;
+
+  lib = require('./forms/textinput.jsx');
+  win.MUITextInput = lib.TextInput
+  win.MUITextareaInput = lib.TextareaInput
+
+  // panels
+  win.MUIPanel = require('./panel.jsx').Panel;
+
+  // tabs
+  lib = require('./tabs.jsx');
+  win.MUITab = lib.Tab;
+  win.MUITabs = lib.Tabs;
 })(window);
