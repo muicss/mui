@@ -10,7 +10,7 @@
     "email": "contact@muicss.com"
   },
   "license": "MIT",
-  "main": "js/mui.min.js",
+  "main": "dist/js/mui.min.js",
   "jspm": {
     "directories": {
       "lib": "dist"
