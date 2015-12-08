@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.2.9 - December 7, 2015
+
+* Fixed path to js file for `muicss` npm package
+
 ## 0.2.8 - December 3, 2015
 
 * Added .mui-textfield--invalid css helper

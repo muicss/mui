@@ -1,6 +1,6 @@
 {
   "name": "muicss",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Lightweight CSS framework based on Google's Material Design guidelines",
   "repository": "https://github.com/muicss/mui",
   "keywords": ["MUI", "CSS", "CSS Framework", "Material Design", "React"],
