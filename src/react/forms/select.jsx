@@ -84,9 +84,9 @@ var Select = React.createClass({
   /**
    * Handle focus event on select element.
    */
-  onFocus: function() {
-    console.log(this.props.name);
+  onFocus: function(ev) {
     console.log('onFocus');
+    console.log(ev.target);
 
     // check flag
     if (this.props.useDefault === true) return;
@@ -101,14 +101,14 @@ var Select = React.createClass({
     jqLite.on(doc, 'keydown', keydownFn);
 
     // disable tabfocus once
-    selectEl.tabIndex = -1;
+    //selectEl.tabIndex = -1;
     jqLite.one(wrapperEl, 'blur', function() {
-      selectEl.tabIndex = origIndex;
+      //selectEl.tabIndex = origIndex;
       jqLite.off(doc, 'keydown', keydownFn);
     });
 
     // defer focus to wrapper
-    wrapperEl.focus();
+    //wrapperEl.focus();
   },
 
   /**
@@ -140,7 +140,13 @@ var Select = React.createClass({
    * Render custom select menu.
    */
   renderMenu: function() {
-    console.log('render select menu');
+    console.log('render menu');
+
+    var doc = document,
+        el = doc.createElement('div');
+
+    doc.body.appendChild(el);
+    ReactDOM.render(<Menu selectInst={ this } />, el);
   }
 });
 
@@ -165,6 +171,49 @@ var SelectItem = React.createClass({
       <option value={ this.props.value }>
         { this.props.label }
       </option>
+    );
+  }
+});
+
+
+/**
+ * Menu constructor
+ * @class
+ */
+var Menu = React.createClass({
+  propTypes: {
+    selectInst: PropTypes.element
+  },
+  getDefaultProps: function() {
+    return {
+      selectInst: null
+    };
+  },
+  render: function() {
+    var optionEl, itemEl, i;
+
+    var menuItems = [],
+        optionList = this.props.selectInst.refs.selectEl.children,
+        m = optionList.length,
+        selectedPos = 0;
+
+    // define menu items
+    for (i=0; i < m; i++) {
+      optionEl = optionList[i];
+      
+      itemEl = document.createElement('div');
+      itemEl.textContent = optionEl.textContent;
+      itemEl._muiPos = i;
+
+      if (optionEl.selected) selectedPos = i;
+
+      menuItems.push(itemEl);
+    }
+
+    return (
+      <div className="mui-select__menu">
+        { menuItems }  
+      </div>
     );
   }
 });
