@@ -22,11 +22,21 @@
         <div id="example1"></div>
         <h3>Form with fixed labels</h3>
         <div id="example2"></div>
+        <h3>Form with fixed labels and placeholders</h3>
+        <div id="example3"></div>
+        <h3>Form with floating labels</h3>
+        <div id="example4"></div>
       </div>
+
       <h2>TextareaInput</h2>
       <div class="mui-panel">
-        <div id="example3"></div>
-        <div id="example4"></div>
+        <div id="exampleA"></div>
+        <div id="exampleB"></div>
+      </div>
+
+      <h2>Form Validation</h2>
+      <div class="mui-panel">
+        <div id="example-validation"></div>
       </div>
     </div>
     <script type="text/babel">
@@ -40,6 +50,108 @@
           </MUIForm>
         ),
         document.getElementById('example1')
+      );
+
+      // form with fixed labels
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextInput label="Label 1" />
+            <MUITextInput label="Label 2" />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('example2')
+      );
+
+      // form with fixed labels and placeholders
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextInput label="Label 1" hint="Placeholder 1" />
+            <MUITextInput label="Label 2" hint="Placeholder 2" />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('example3')
+      );
+
+      // form with floating labels
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextInput label="Label 1" isLabelFloating={ true } />
+            <MUITextInput label="Label 2" isLabelFloating={ true } />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('example4')
+      );
+
+      // form with textarea
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextareaInput label="Label 1" />
+            <MUITextareaInput label="Label 2" rows={ 5 } />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('exampleA')
+      );
+
+      // form with textarea and placeholders
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextareaInput
+              label="Label 1"
+              hint="Placeholder 1"
+            />
+            <MUITextareaInput
+              label="Label 2"
+              hint="Placeholder 2" 
+              rows={ 5 }
+            />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('exampleB')
+      );
+
+      // form with validators
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextInput
+              type="email"
+              label="Email address (should be red on invalid input)"
+            />
+            <MUITextInput
+              type="email"
+              label="Email address (should be red on load)"
+              value="err"
+            />
+            <MUITextInput
+              type="text"
+              label="Required text (should be red after focus)"
+              isRequired={ true }
+            />
+            <MUITextInput
+              type="text"
+              label="Required text (should be red after deletion)"
+              value="val"
+              isRequired={ true }
+            />
+            <MUITextInput
+              type="text"
+              label="Is invalid (should be red on load)"
+              isInvalid={ true }
+            />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('example-validation')
       );
     </script>
   </body>
