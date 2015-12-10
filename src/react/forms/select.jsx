@@ -7,7 +7,13 @@
 
 var jqLite = require('../../js/lib/jqlite.js'),
     util = require('../../js/lib/util.js'),
-    PropTypes = React.PropTypes;
+    PropTypes = React.PropTypes,
+    wrapperPadding = 15,  // from CSS
+    inputHeight = 32,  // from CSS
+    optionHeight = 42,  // from CSS
+    menuPadding = 8,  // from CSS
+    doc = document,
+    win = window;
 
 
 /**
@@ -35,11 +41,27 @@ var Select = React.createClass({
       onChange: null
     };
   },
+  getInitialState: function() {
+    return {
+      showMenu: false
+    };
+  },
   componentDidMount: function() {
     // make wrapper element focusable
     this.refs.wrapperEl.tabIndex = -1;
   },
   render: function() {
+    var menuElem;
+
+    if (this.state.showMenu) {
+      menuElem = (
+        <Menu
+          selectEl={ this.refs.selectEl }
+          wrapperEl={ this.refs.wrapperEl }
+        />
+      );
+    }
+
     return (
       <div
         ref="wrapperEl"
@@ -53,12 +75,13 @@ var Select = React.createClass({
           disabled={ this.props.isDisabled }
           multiple={ this.props.isMultiple }
           required={ this.props.isRequired }
-          onMousedown={ this.onMousedown }
+          onMouseDown={ this.onMousedown }
           onClick={ this.onClick }
           onFocus={ this.onFocus }
         >
           { this.props.children }
         </select>
+        { menuElem }
       </div>
     );
   },
@@ -91,8 +114,7 @@ var Select = React.createClass({
     // check flag
     if (this.props.useDefault === true) return;
 
-    var doc = document,
-        selectEl = this.refs.selectEl,
+    var selectEl = this.refs.selectEl,
         wrapperEl = this.refs.wrapperEl,
         origIndex = selectEl.tabIndex,
         keydownFn = util.callback(this, 'onKeydown');
@@ -141,12 +163,7 @@ var Select = React.createClass({
    */
   renderMenu: function() {
     console.log('render menu');
-
-    var doc = document,
-        el = doc.createElement('div');
-
-    doc.body.appendChild(el);
-    ReactDOM.render(<Menu selectInst={ this } />, el);
+    this.setState({showMenu: true});
   }
 });
 
@@ -181,33 +198,85 @@ var SelectItem = React.createClass({
  * @class
  */
 var Menu = React.createClass({
-  propTypes: {
-    selectInst: PropTypes.element
-  },
   getDefaultProps: function() {
     return {
-      selectInst: null
+      selectEl: null,
+      wrapperEl: null
     };
   },
-  render: function() {
-    var optionEl, itemEl, i;
-
-    var menuItems = [],
-        optionList = this.props.selectInst.refs.selectEl.children,
+  getInitialState: function() {
+    return {
+      selectedPos: 0
+    };
+  },
+  componentWillMount: function() {
+    var optionList = this.props.selectEl.children,
         m = optionList.length,
-        selectedPos = 0;
+        selectedPos = i,
+        i;
+
+    // get current selected position
+    for (i=m - 1; i > -1; i--) if (optionList[i].selected) selectedPos = i;
+    this.setState({selectedPos: selectedPos});
+
+    // blur active element (IE10 bugfix)
+    setTimeout(function() {
+      if (doc.activeElement.nodeName.toLowerCase() !== "body") {
+        doc.activeElement.blur();
+      }
+    }, 0);
+  },
+  componentDidMount: function() {
+    var initTop, minTop, maxTop, top;
+
+    var menuEl = ReactDOM.findDOMNode(this),
+        viewHeight = doc.documentElement.clientHeight,
+        m = this.props.selectEl.children.length;
+
+    // set height (use viewport height as maximum)
+    var height = m * optionHeight + 2 * menuPadding,
+        isOverflow = height > viewHeight;
+
+    height = Math.min(height, viewHeight);
+    jqLite.css(menuEl, 'height', height + 'px');
+
+    // ideal position
+    initTop = (menuPadding + optionHeight) - (wrapperPadding + inputHeight);
+    initTop -= this.state.selectedPos * optionHeight;
+
+    // minimum position
+    minTop = -1 * this.props.wrapperEl.getBoundingClientRect().top;
+
+    // maximum position
+    maxTop = (viewHeight - height) + minTop;
+
+    // prevent overflowy-y
+    top = Math.max(initTop, minTop);
+    top = Math.min(top, maxTop);
+
+    jqLite.css(menuEl, 'top', top + 'px');
+    
+    // set menu scroll position
+    if (isOverflow) {
+      var scrollIdeal, scrollMax;
+
+      scrollIdeal = (menuPadding + (selectedPos + 1) * optionHeight) -
+        (-1 * top + wrapperPadding + inputHeight);
+      
+      scrollMax = m * optionHeight + 2 * menuPadding - height;
+      
+      jqLite.scrollTop(menuEl, Math.min(scrollIdeal, scrollMax) + 'px');
+    }
+  },
+  render: function() {
+    var menuItems = [],
+        optionList = this.props.selectEl.children,
+        m = optionList.length,
+        i;
 
     // define menu items
     for (i=0; i < m; i++) {
-      optionEl = optionList[i];
-      
-      itemEl = document.createElement('div');
-      itemEl.textContent = optionEl.textContent;
-      itemEl._muiPos = i;
-
-      if (optionEl.selected) selectedPos = i;
-
-      menuItems.push(itemEl);
+      menuItems.push(<div key={ i }>{ optionList[i].textContent }</div>);
     }
 
     return (
