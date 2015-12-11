@@ -73,7 +73,7 @@ input[type="checkbox"]:disabled {
 
   > textarea {
     padding-top: 5px;
-    min-height: $mui-textarea-height;
+    //min-height: $mui-textarea-height;
   }
 
   > input,
@@ -153,7 +153,6 @@ input[type="checkbox"]:disabled {
   border: none;
   border-bottom: 1px solid $mui-input-border-color;
   outline: none;
-  height: $mui-input-height;
   width: 100%;
   font-size: $mui-input-font-size;
   padding: 0;
@@ -181,8 +180,24 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.mui-textfield > input {
+  height: $mui-input-height;
+
+  // Compensate for height change on focus
+  &:focus {
+    height: $mui-input-height + 1px;
+    margin-bottom: -1px;
+  }
+}
+
 .mui-textfield > textarea {
-  height: auto;  // Reset height for <textarea>s
+  //height: auto;  // Reset height for <textarea>s
+  min-height: $mui-textarea-height;
+
+  // Compensate for height change on focus
+  &[rows]:not([rows="2"]):focus {
+    margin-bottom: -1px;
+  }
 }
 
 .mui-textfield > input:focus {
