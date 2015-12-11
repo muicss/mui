@@ -30,8 +30,14 @@
 
       <h2>TextareaInput</h2>
       <div class="mui-panel">
+        <h3>Form with placeholders</h3>
         <div id="exampleA"></div>
+        <h3>Form with fixed labels</h3>
         <div id="exampleB"></div>
+        <h3>Form with fixed labels and placeholders</h3>
+        <div id="exampleC"></div>
+        <h3>Form with floating labels</h3>
+        <div id="exampleD"></div>
       </div>
 
       <h2>Form Validation</h2>
@@ -88,7 +94,19 @@
         document.getElementById('example4')
       );
 
-      // form with textarea
+      // form with textarea and placeholders
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextareaInput hint="Placeholder 1" />
+            <MUITextareaInput hint="Placeholder 2" rows={ 5 } />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('exampleA')
+      );
+
+      // form with textarea and fixed labels
       ReactDOM.render(
         (
           <MUIForm>
@@ -97,10 +115,10 @@
             <MUIButton variant="raised">Submit</MUIButton>
           </MUIForm>
         ),
-        document.getElementById('exampleA')
+        document.getElementById('exampleB')
       );
 
-      // form with textarea and placeholders
+      // form with textarea fixed labels and placeholders
       ReactDOM.render(
         (
           <MUIForm>
@@ -116,7 +134,26 @@
             <MUIButton variant="raised">Submit</MUIButton>
           </MUIForm>
         ),
-        document.getElementById('exampleB')
+        document.getElementById('exampleC')
+      );
+
+      // form with textarea and floating labels
+      ReactDOM.render(
+        (
+          <MUIForm>
+            <MUITextareaInput
+              label="Label 1"
+              isLabelFloating={ true }
+            />
+            <MUITextareaInput
+              label="Label 2"
+              isLabelFloating={ true }
+              rows={ 5 }
+            />
+            <MUIButton variant="raised">Submit</MUIButton>
+          </MUIForm>
+        ),
+        document.getElementById('exampleD')
       );
 
       // form with validators

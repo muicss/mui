@@ -46,6 +46,7 @@ var Input = React.createClass({
     cls['mui--is-empty'] = !isNotEmpty;
     cls['mui--is-not-empty'] = isNotEmpty;
     cls['mui--is-dirty'] = this.state.isDirty;
+    cls['mui--is-invalid'] = this.props.isInvalid;
 
     cls = util.classNames(cls);
 
@@ -60,6 +61,7 @@ var Input = React.createClass({
           autoFocus={ this.props.isAutofocus }
           onChange={ this._handleChange }
           onFocus={ this._handleFocus }
+          required={ this.props.isRequired }
         />
       );
     } else {
@@ -68,11 +70,12 @@ var Input = React.createClass({
           ref="input"
           className={ cls }
           type={ this.props.type }
-          value={ this.state.value }
+          defaultValue={ this.state.value }
           placeholder={ this.props.hint }
           autoFocus={ this.props.autofocus }
           onChange={ this._handleChange }
           onFocus={ this._handleFocus }
+          required={ this.props.isRequired }
         />
       );
     }
