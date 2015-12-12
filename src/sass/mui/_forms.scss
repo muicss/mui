@@ -374,7 +374,7 @@ input[type="checkbox"]:disabled {
       background-color: mui-color('grey', '300');
     }
 
-    &[selected] {
+    &.mui--is-selected {
       background-color: mui-color('grey', '200');
     }
   }

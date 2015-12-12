@@ -11,6 +11,7 @@ var jqLite = require('../lib/jqLite.js'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
+    selectedClass = 'mui--is-selected',
     wrapperPadding = 15,  // from CSS
     inputHeight = 32,  // from CSS
     optionHeight = 42,  // from CSS
@@ -205,13 +206,13 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
     itemEl.textContent = optionEl.textContent;
     itemEl._muiPos = i;
 
-    if (optionEl.selected) selectedPos = i;
+    if (optionEl.selected) {
+      itemEl.setAttribute('class', selectedClass);
+      selectedPos = i;
+    }
 
     menuEl.appendChild(itemEl);
   }
-
-  // add selected attribute
-  menuEl.children[selectedPos].setAttribute('selected', true);
 
   // save indices
   this.origIndex = selectedPos;
@@ -317,9 +318,11 @@ Menu.prototype.clickHandler = function(ev) {
 Menu.prototype.increment = function() {
   if (this.currentIndex === this.menuEl.children.length - 1) return;
 
-  this.menuEl.children[this.currentIndex].removeAttribute('selected');
+  var optionEls = this.menuEl.children;
+  
+  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex += 1;
-  this.menuEl.children[this.currentIndex].setAttribute('selected', true);
+  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
 
@@ -329,9 +332,11 @@ Menu.prototype.increment = function() {
 Menu.prototype.decrement = function() {
   if (this.currentIndex === 0) return;
 
-  this.menuEl.children[this.currentIndex].removeAttribute('selected');
+  var optionEls = this.menuEl.children;
+
+  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex -= 1;
-  this.menuEl.children[this.currentIndex].setAttribute('selected', true);
+  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
 
@@ -340,8 +345,9 @@ Menu.prototype.decrement = function() {
  */
 Menu.prototype.selectCurrent = function() {
   if (this.currentIndex !== this.origIndex) {
-    this.selectEl.children[this.origIndex].selected = false;
-    this.selectEl.children[this.currentIndex].selected = true;
+    var optionEls = this.selectEl.children;
+    optionEls[this.origIndex].selected = false;
+    optionEls[this.currentIndex].selected = true;
 
     // trigger change event
     util.dispatchEvent(this.selectEl, 'change');
