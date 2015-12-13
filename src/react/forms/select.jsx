@@ -7,11 +7,8 @@
 
 var jqLite = require('../../js/lib/jqlite.js'),
     util = require('../../js/lib/util.js'),
+    formlib = require('../../js/lib/forms.js'),
     PropTypes = React.PropTypes,
-    wrapperPadding = 15,  // from CSS
-    inputHeight = 32,  // from CSS
-    optionHeight = 42,  // from CSS
-    menuPadding = 8,  // from CSS
     doc = document,
     win = window;
 
@@ -47,7 +44,7 @@ var Select = React.createClass({
     };
   },
   componentDidMount: function() {
-    // make wrapper element focusable
+    // make wrapper element focusable (to enable Firefox bugfix)
     this.refs.wrapperEl.tabIndex = -1;
   },
   onMousedown: function(ev) {
@@ -58,16 +55,41 @@ var Select = React.createClass({
     if (ev.button !== 0) return;  // only left clicks
     this.showMenu();
   },
-  onFocus: function(ev) {
+  onInnerFocus: function(ev) {
+    // ignore 2nd inner focus (react artifact?)
+    if (ev.target.tabIndex === -1) return;
+
     // check flag
     if (this.props.useDefault === true) return;
+
+    // defer focus to parent
+    this.refs.wrapperEl.focus();
+  },
+  onOuterFocus: function(ev) {
+    // ignore focus on inner element (react artifact)
+    if (ev.target !== this.refs.wrapperEl) return;
+
+    // disable tabfocus on inner element
+    var selectEl = this.refs.selectEl;
+    selectEl._muiOrigIndex = selectEl.tabIndex;
+    selectEl.tabIndex = -1;
+
+    // firefox bugfix
+    if (selectEl.disabled) return this.refs.wrapperEl.blur();
 
     // attach keydown handler
     jqLite.on(doc, 'keydown', this.onKeydown);
   },
-  onBlur: function(ev) {
+  onOuterBlur: function(ev) {
+    // ignore blur on inner element
+    if (ev.target !== this.refs.wrapperEl) return;
+
+    // restore tab focus on inner element
+    var selectEl = this.refs.selectEl;
+    selectEl.tabIndex = selectEl._muiOrigIndex;
+
     // remove keydown handler
-    jqLite.off(doc, 'keydown', this.onKeydown);
+    jqLite.off(doc, 'keydown', this.onKeydown);    
   },
   onKeydown: function(ev) {
     // spacebar, down, up
@@ -79,6 +101,9 @@ var Select = React.createClass({
     }
   },
   showMenu: function() {
+    // add scroll lock
+    util.enableScrollLock();
+
     // add event listeners
     jqLite.on(win, 'resize', this.hideMenu);
     jqLite.on(doc, 'click', this.hideMenu);
@@ -87,12 +112,18 @@ var Select = React.createClass({
     this.setState({showMenu: true});
   },
   hideMenu: function() {
+    // remove scroll lock
+    util.disableScrollLock();
+
     // remove event listeners
     jqLite.off(win, 'resize', this.hideMenu);
     jqLite.off(doc, 'click', this.hideMenu);
     
     // re-draw
     this.setState({showMenu: false});
+
+    // refocus
+    this.refs.selectEl.focus();
   },
   render: function() {
     var menuElem;
@@ -111,6 +142,8 @@ var Select = React.createClass({
       <div
         ref="wrapperEl"
         className="mui-select"
+        onFocus={ this.onOuterFocus }
+        onBlur={ this.onOuterBlur }
       >
         <select
           ref="selectEl"
@@ -121,8 +154,7 @@ var Select = React.createClass({
           required={ this.props.isRequired }
           onMouseDown={ this.onMousedown }
           onClick={ this.onClick }
-          onFocus={ this.onFocus }
-          onBlur={ this.onBlur }
+          onFocus={ this.onInnerFocus }
         >
           { this.props.children }
         </select>
@@ -195,13 +227,15 @@ var Menu = React.createClass({
   },
   componentDidMount: function() {
     // set position
-    var cssProps = getMenuPositionalCSS(
+    var props = formlib.getMenuPositionalCSS(
       this.props.wrapperEl,
       this.props.selectEl.children.length,
       this.state.currentIndex
     );
 
-    jqLite.css(ReactDOM.findDOMNode(this), cssProps);
+    var el = ReactDOM.findDOMNode(this);
+    jqLite.css(el, props);
+    jqLite.scrollTop(el, props.scrollTop);
 
     // attach keydown handler
     jqLite.on(doc, 'keydown', this.onKeydown);
@@ -295,49 +329,6 @@ var Menu = React.createClass({
     );
   }
 });
-
-
-/**
- * Menu position/size/scroll helper.
- * @function
- * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
- */
-function getMenuPositionalCSS(wrapperEl, numOptions, currentIndex) {
-  var viewHeight = doc.documentElement.clientHeight;
-
-  // determine 'height'
-  var h = numOptions * optionHeight + 2 * menuPadding,
-      height = Math.min(h, viewHeight);
-
-  // determine 'top'
-  var top, initTop, minTop, maxTop;
-
-  initTop = (menuPadding + optionHeight) - (wrapperPadding + inputHeight);
-  initTop -= currentIndex * optionHeight;
-
-  minTop = -1 * wrapperEl.getBoundingClientRect().top;
-  maxTop = (viewHeight - height) + minTop;
-
-  top = Math.min(Math.max(initTop, minTop), maxTop);
-
-  // determine 'scrollTop'
-  var scrollTop = 0,
-      scrollIdeal,
-      scrollMax;
-
-  if (h > viewHeight) {
-    scrollIdeal = (menuPadding + (currentIndex + 1) * optionHeight) -
-      (-1 * top + wrapperPadding + inputHeight);
-    scrollMax = numOptions * optionHeight + 2 * menuPadding - height;
-    scrollTop = Math.min(scrollIdeal, scrollMax);
-  }
-
-  return {
-    'height': height + 'px',
-    'top': top + 'px',
-    'scrollTop': scrollTop + 'px'
-  };
-}
 
 
 /** Define module API */
