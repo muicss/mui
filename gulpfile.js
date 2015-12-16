@@ -234,7 +234,7 @@ gulp.task('react-combined', ['clean', 'cssmin'], function() {
   return gulp.src('src/react/mui-combined.js')
     .pipe(browserify({
       transform: [
-        reactify,
+        babelify,
         stringify(['.css'])
       ],
       paths: [dirName + '/css']
@@ -321,7 +321,7 @@ gulp.task('build-e2e-tests', function() {
   return stream.done()
     .pipe(concat('tests.js'))
     .pipe(browserify({
-      transform: [reactify]
+      transform: [babelify]
     }))
     .pipe(gulp.dest('e2e-tests'));
 });
