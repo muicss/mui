@@ -2,8 +2,17 @@
   "name": "muicss",
   "version": "0.2.9",
   "description": "Lightweight CSS framework based on Google's Material Design guidelines",
-  "repository": "https://github.com/muicss/mui",
-  "keywords": ["MUI", "CSS", "CSS Framework", "Material Design", "React"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muicss/mui.git"
+  },
+  "keywords": [
+    "MUI",
+    "CSS",
+    "CSS Framework",
+    "Material Design",
+    "React"
+  ],
   "homepage": "https://www.muicss.com",
   "bugs": {
     "url": "https://github.com/muicss/mui/issues",
@@ -16,11 +25,10 @@
       "lib": "dist"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/muicss/mui.git"
-  },
   "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
     "browserify": "^11.0.0",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
@@ -37,7 +45,6 @@
     "jsdom": "3.1.2",
     "mocha": "^2.2.4",
     "mocha-jsdom": "^1.0.0",
-    "reactify": "^1.1.0",
     "streamqueue": "^1.1.0",
     "stringify": "^3.1.0",
     "synthetic-dom-events": "^0.3.0",

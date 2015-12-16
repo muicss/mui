@@ -13,12 +13,12 @@ var del = require('del'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
-    reactify = require('reactify'),
     stringify = require('stringify'),
     injectSource = require('gulp-inline-source'),
     inlineCss = require('gulp-inline-css'),
     source = require('vinyl-source-stream'),
-    Browserify = require('browserify');
+    Browserify = require('browserify'),
+    babelify = require('babelify');
 
 
 
@@ -106,7 +106,7 @@ gulp.task('uglify', ['js'], function() {
 gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
-      transform: [reactify]
+      transform: [babelify]
     }))
     .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));
