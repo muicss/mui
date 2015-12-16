@@ -25,9 +25,10 @@ var dropdownClass = 'mui-dropdown',
  */
 var Dropdown = React.createClass({
   propTypes: {
-    color: Button.propTypes.color,
-    variant: Button.propTypes.variant,
-    size: Button.propTypes.size,
+    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark',
+          'accent']),
+    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+    size: PropTypes.oneOf(['default', 'small', 'large']),
     label: PropTypes.string,
     alignMenu: PropTypes.oneOf(['left', 'right']),
     onClick: PropTypes.func,

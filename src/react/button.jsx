@@ -17,16 +17,19 @@ var btnClass = 'mui-btn',
  * Button constructor
  * @class
  */
-var Button = React.createClass({
-  mixins: [Ripple],
-  propTypes: {
+//var Button = React.createClass({
+class Button extends React.Component {
+  static mixins = [Ripple]
+
+  static propTypes = {
     color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+    'variant': PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
     size: PropTypes.oneOf(['default', 'small', 'large']),
     onClick: PropTypes.func,
     isDisabled: PropTypes.bool
-  },
-  getDefaultProps: function() {
+  }
+
+  static defaultProps() {
     return {
       color: 'default',
       variant: 'default',
@@ -34,8 +37,9 @@ var Button = React.createClass({
       onClick: null,
       isDisabled: false
     };
-  },
-  render: function() {
+  }
+
+  render() {
     var cls = btnClass,
         k,
         v;
@@ -58,7 +62,7 @@ var Button = React.createClass({
       </button>
     );
   }
-});
+}//);
 
 
 /** Define module API */
