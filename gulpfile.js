@@ -2,24 +2,25 @@
  * MUI gulp file
  */
 
-var del = require('del'),
-    streamqueue = require('streamqueue'),
-    gulp = require('gulp'),
-    libSass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssmin = require('gulp-cssmin'),
-    jshint = require('gulp-jshint'),
+var autoprefixer = require('gulp-autoprefixer'),
+    babelify = require('babelify'),
+    babelCore = require('babel-core'),
     browserify = require('gulp-browserify'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
-    concat = require('gulp-concat'),
-    stringify = require('stringify'),
-    injectSource = require('gulp-inline-source'),
-    inlineCss = require('gulp-inline-css'),
-    source = require('vinyl-source-stream'),
     Browserify = require('browserify'),
-    babelify = require('babelify');
-
+    cssmin = require('gulp-cssmin'),
+    concat = require('gulp-concat'),
+    del = require('del'),
+    gulp = require('gulp'),
+    injectSource = require('gulp-inline-source'),
+    injectString = require('gulp-inject-string'),
+    inlineCss = require('gulp-inline-css'),
+    jshint = require('gulp-jshint'),
+    libSass = require('gulp-sass'),
+    rename = require('gulp-rename'),
+    source = require('vinyl-source-stream'),
+    streamqueue = require('streamqueue'),
+    stringify = require('stringify'),
+    uglify = require('gulp-uglify');
 
 
 
@@ -108,6 +109,15 @@ gulp.task('react', ['clean'], function() {
     .pipe(browserify({
       transform: [babelify]
     }))
+    .pipe(injectString.prepend(babelCore.buildExternalHelpers(
+      [
+        'inherits',
+        'createClass',
+        'classCallCheck',
+        'possibleConstructorReturn'
+      ],
+      'global'
+    )))
     .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));
 });
