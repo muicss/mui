@@ -5,12 +5,12 @@
 
 'use strict';
 
-var util = require('../js/lib/util.js'),
+let util = require('../js/lib/util.js'),
     Ripple = require('./ripple.jsx'),
     PropTypes = React.PropTypes;
 
-var btnClass = 'mui-btn',
-    btnAttrs = {color: 1, variant: 1, size: 1};
+const btnClass = 'mui-btn',
+      btnAttrs = {color: 1, variant: 1, size: 1};
 
 
 /**
@@ -19,28 +19,30 @@ var btnClass = 'mui-btn',
  */
 //var Button = React.createClass({
 class Button extends React.Component {
-  static mixins = [Ripple]
+  //static mixins = [Ripple]
 
   static propTypes = {
     color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-    'variant': PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
     size: PropTypes.oneOf(['default', 'small', 'large']),
     onClick: PropTypes.func,
     isDisabled: PropTypes.bool
   }
 
-  static defaultProps() {
-    return {
-      color: 'default',
-      variant: 'default',
-      size: 'default',
-      onClick: null,
-      isDisabled: false
-    };
+  static defaultProps = {
+    color: 'default',
+    variant: 'default',
+    size: 'default',
+    onClick: null,
+    isDisabled: false
+  }
+
+  state = {
+    ripples: true
   }
 
   render() {
-    var cls = btnClass,
+    let cls = btnClass,
         k,
         v;
     
@@ -48,6 +50,7 @@ class Button extends React.Component {
       v = this.props[k];
       if (v !== 'default') cls += ' ' + btnClass + '--' + v;
     }
+    //{ this.state.ripples && this.renderRipples() }
 
     return (
       <button
@@ -58,7 +61,6 @@ class Button extends React.Component {
         onClick={ this.props.onClick }
       >
         { this.props.children }
-        { this.state.ripples && this.renderRipples() }
       </button>
     );
   }

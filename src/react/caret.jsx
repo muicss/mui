@@ -5,20 +5,19 @@
 
 'use strict';
 
+
 /**
  * Caret constructor
  * @class
  */
-var Caret = React.createClass({
-  render: function() {
+class Caret extends React.Component {
+  render() {
     return (
       <span className="mui-caret"></span>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Caret: Caret
-};
+export default Caret;

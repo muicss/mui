@@ -5,22 +5,21 @@
 
 'use strict';
 
+
 /**
  * Appbar constructor
  * @class
  */
-var Appbar = React.createClass({
-  render: function() {
+class Appbar extends React.Component {
+  render() {
     return (
       <div className="mui-appbar">
         { this.props.children }
       </div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Appbar: Appbar
-};
+export default Appbar;

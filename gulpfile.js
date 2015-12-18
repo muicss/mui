@@ -2,24 +2,25 @@
  * MUI gulp file
  */
 
-var del = require('del'),
-    streamqueue = require('streamqueue'),
-    gulp = require('gulp'),
-    libSass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssmin = require('gulp-cssmin'),
-    jshint = require('gulp-jshint'),
+var autoprefixer = require('gulp-autoprefixer'),
+    babelify = require('babelify'),
+    babelCore = require('babel-core'),
     browserify = require('gulp-browserify'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
+    Browserify = require('browserify'),
+    cssmin = require('gulp-cssmin'),
     concat = require('gulp-concat'),
-    reactify = require('reactify'),
-    stringify = require('stringify'),
+    del = require('del'),
+    gulp = require('gulp'),
     injectSource = require('gulp-inline-source'),
+    injectString = require('gulp-inject-string'),
     inlineCss = require('gulp-inline-css'),
+    jshint = require('gulp-jshint'),
+    libSass = require('gulp-sass'),
+    rename = require('gulp-rename'),
     source = require('vinyl-source-stream'),
-    Browserify = require('browserify');
-
+    streamqueue = require('streamqueue'),
+    stringify = require('stringify'),
+    uglify = require('gulp-uglify');
 
 
 
@@ -106,8 +107,17 @@ gulp.task('uglify', ['js'], function() {
 gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
-      transform: [reactify]
+      transform: [babelify]
     }))
+    .pipe(injectString.prepend(babelCore.buildExternalHelpers(
+      [
+        'inherits',
+        'createClass',
+        'classCallCheck',
+        'possibleConstructorReturn'
+      ],
+      'global'
+    )))
     .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));
 });
@@ -234,7 +244,7 @@ gulp.task('react-combined', ['clean', 'cssmin'], function() {
   return gulp.src('src/react/mui-combined.js')
     .pipe(browserify({
       transform: [
-        reactify,
+        babelify,
         stringify(['.css'])
       ],
       paths: [dirName + '/css']
@@ -321,7 +331,7 @@ gulp.task('build-e2e-tests', function() {
   return stream.done()
     .pipe(concat('tests.js'))
     .pipe(browserify({
-      transform: [reactify]
+      transform: [babelify]
     }))
     .pipe(gulp.dest('e2e-tests'));
 });
