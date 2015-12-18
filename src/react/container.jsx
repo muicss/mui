@@ -10,16 +10,16 @@
  * Container constructor
  * @class
  */
-var Container = React.createClass({
-  propTypes: {
+class Container extends React.Component {
+  static propTypes = {
     isFluid: React.PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      isFluid: false
-    };
-  },
-  render: function() {
+  }
+
+  static defaultProps = {
+    isFluid: false
+  }
+
+  render() {
     var cls = 'mui-container';
 
     // fluid containers
@@ -31,10 +31,8 @@ var Container = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Container: Container
-};
+export {Container};

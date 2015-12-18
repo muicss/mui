@@ -10,16 +10,14 @@
  * Divider constructor
  * @class
  */
-var Divider = React.createClass({
-  render: function() {
+class Divider extends React.Component {
+  render() {
     return (
       <div className='mui-divider'></div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Divider: Divider
-};
+export {Divider};

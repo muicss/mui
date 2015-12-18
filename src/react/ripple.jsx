@@ -5,27 +5,27 @@
 
 'use strict';
 
-var jqLite = require('../js/lib/jqLite.js');
+let jqLite = require('../js/lib/jqLite.js');
 
-var rippleClass = 'mui-ripple-effect';
+const rippleClass = 'mui-ripple-effect';
 
 
 /**
  * Ripple singleton
  */
-var Ripple = {
-  getInitialState: function() {
+let Ripple = {
+  getInitialState() {
     return {
       touchFlag: false,
       ripples: []
     };
   },
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       rippleClass: rippleClass
     };
   },
-  ripple: function (ev) {
+  ripple(ev) {
     // only left clicks
     if (ev.button !== 0) return;
 
@@ -78,17 +78,17 @@ var Ripple = {
       ripples: ripples
     });
   },
-  _removeRipple: function () {
+  _removeRipple() {
     this.state.ripples.shift();
     this.setState({
       ripples: this.state.ripples
     });
   },
-  renderRipples: function () {
+  renderRipples() {
     if (this.state.ripples.length === 0) return;
 
     var i = 0;
-    return this.state.ripples.map(function (ripple) {
+    return this.state.ripples.map(function(ripple) {
       i++;
       return (
         <div
@@ -100,7 +100,6 @@ var Ripple = {
     }.bind(this));
   }
 };
-
 
 /** Define module API */
 module.exports = Ripple;

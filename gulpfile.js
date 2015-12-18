@@ -114,7 +114,8 @@ gulp.task('react', ['clean'], function() {
         'inherits',
         'createClass',
         'classCallCheck',
-        'possibleConstructorReturn'
+        'possibleConstructorReturn',
+        'interopRequireDefault'
       ],
       'global'
     )))

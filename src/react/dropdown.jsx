@@ -7,24 +7,25 @@
 
 'use strict';
 
-var util = require('../js/lib/util'),
+import Caret from './caret.jsx';
+
+let util = require('../js/lib/util'),
     jqLite = require('../js/lib/jqLite'),
     Button = require('./button.jsx').Button,
-    Caret = require('./caret.jsx').Caret,
     PropTypes = React.PropTypes;
 
-var dropdownClass = 'mui-dropdown',
-    menuClass = 'mui-dropdown__menu',
-    openClass = 'mui--is-open',
-    rightClass = 'mui-dropdown__menu--right';
+const dropdownClass = 'mui-dropdown',
+      menuClass = 'mui-dropdown__menu',
+      openClass = 'mui--is-open',
+      rightClass = 'mui-dropdown__menu--right';
 
 
 /**
  * Dropdown constructor
  * @class
  */
-var Dropdown = React.createClass({
-  propTypes: {
+class Dropdown extends React.Component {
+  static propTypes = {
     color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark',
           'accent']),
     variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
@@ -33,70 +34,32 @@ var Dropdown = React.createClass({
     alignMenu: PropTypes.oneOf(['left', 'right']),
     onClick: PropTypes.func,
     isDisabled: PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      color: 'default',
-      variant: 'default',
-      size: 'default',
-      label: '',
-      alignMenu: 'left',
-      onClick: null,
-      isDisabled: false
-    };
-  },
-  getInitialState: function() {
-    return {
-      opened: false,
-      menuTop: 0
-    };
-  },
-  componentWillMount: function() {
-    document.addEventListener('click', this._outsideClick);
-  },
-  componentWillUnmount: function() {
-    document.removeEventListener('click', this._outsideClick);
-  },
-  render: function() {
-    var button;
+  }
 
-    button = (
-        <Button
-          ref="button"
-          onClick={ this._click }
-          color={ this.props.color }
-          variant={ this.props.variant }
-          size={ this.props.size }
-          isDisabled={ this.props.isDisabled }
-        >
-          { this.props.label }
-          <Caret />
-        </Button>
-    );
+  static defaultProps = {
+    color: 'default',
+    variant: 'default',
+    size: 'default',
+    label: '',
+    alignMenu: 'left',
+    onClick: null,
+    isDisabled: false
+  }
 
-    var cs = {};
+  state = {
+    opened: false,
+    menuTop: 0
+  }
+  
+  componentWillMount() {
+    document.addEventListener('click', this._outsideClick.bind(this));
+  }
 
-    cs[menuClass] = true;
-    cs[openClass] = this.state.opened;
-    cs[rightClass] = (this.props.alignMenu === 'right');
-    cs = util.classNames(cs);
+  componentWillUnmount() {
+    document.removeEventListener('click', this._outsideClick.bind(this));
+  }
 
-    return (
-      <div className={ dropdownClass }>
-        { button }
-        { this.state.opened && (
-            <ul
-              className={ cs }
-              style={ {top: this.state.menuTop } }
-              onClick={ this._select }
-            >
-              { this.props.children }
-            </ul>)
-        }
-      </div>
-    );
-  },
-  _click: function(ev) {
+  _click(ev) {
     // only left clicks
     if (ev.button !== 0) return;
 
@@ -106,8 +69,9 @@ var Dropdown = React.createClass({
     setTimeout(function() {
       if (!ev.defaultPrevented) this._toggle();
     }.bind(this), 0);
-  },
-  _toggle: function() {
+  }
+
+  _toggle() {
     // exit if no menu element
     if (!this.props.children) {
       return util.raiseError('Dropdown menu element not found');
@@ -115,10 +79,11 @@ var Dropdown = React.createClass({
 
     if (this.state.opened) this._close();
     else this._open();
-  },
-  _open: function() {
+  }
+
+  _open() {
     // position menu element below toggle button
-    var wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect(),
+    let wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect(),
         toggleRect;
 
     toggleRect = ReactDOM.findDOMNode(this.refs.button).getBoundingClientRect();
@@ -127,53 +92,99 @@ var Dropdown = React.createClass({
       opened: true,
       menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
     });
-  },
-  _close: function() {
+  }
+
+  _close() {
     this.setState({opened: false});
-  },
-  _select: function(ev) {
+  }
+
+  _select() {
     if (this.props.onClick) this.props.onClick(this, ev);
-  },
-  _outsideClick: function(ev) {
-    var isClickInside = ReactDOM.findDOMNode(this).contains(ev.target);
+  }
+
+  _outsideClick(ev) {
+    let isClickInside = ReactDOM.findDOMNode(this).contains(ev.target);
 
     if (!isClickInside) this._close();
   }
-});
+
+  render() {
+    let buttonEl,
+        menuEl
+
+    buttonEl = (
+      <Button
+        ref="button"
+        onClick={ this._click.bind(this) }
+        color={ this.props.color }
+        variant={ this.props.variant }
+        size={ this.props.size }
+        isDisabled={ this.props.isDisabled }
+      >
+        { this.props.label }
+        <Caret />
+      </Button>
+    );
+
+    if (this.state.opened) {
+      let cs = {};
+
+      cs[menuClass] = true;
+      cs[openClass] = this.state.opened;
+      cs[rightClass] = (this.props.alignMenu === 'right');
+      cs = util.classNames(cs);
+
+      menuEl = (
+        <ul
+          className={ cs }
+          style={ {top: this.state.menuTop } }
+          onClick={ this._select }
+        >
+          { this.props.children }
+        </ul>
+      );
+    }
+
+    return (
+      <div className={ dropdownClass }>
+        { buttonEl }
+        { menuEl }
+      </div>
+    );
+  }
+}
 
 
 /**
  * DropdownItem constructor
  * @class
  */
-var DropdownItem = React.createClass({
-  propTypes: {
+class DropdownItem extends React.Component {
+  static propTypes =  {
     link: PropTypes.string,
     onClick: PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      link: null,
-      onClick: null
-    };
-  },
-  render: function() {
+  }
+
+  static defaultProps = {
+    link: null,
+    onClick: null
+  }
+
+  _click(ev) {
+    if (this.props.onClick) this.props.onClick(this, ev);
+  }
+
+  render() {
     return (
       <li>
-        <a href={ this.props.link } onClick={ this._click }>
+        <a href={ this.props.link } onClick={ this._click.bind(this) }>
           { this.props.children }
         </a>
       </li>
     );
-  },
-  _click: function(ev) {
-    if (this.props.onClick) this.props.onClick(this, ev);
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Dropdown: Dropdown,
-  DropdownItem: DropdownItem
-};
+export {Dropdown, DropdownItem};
