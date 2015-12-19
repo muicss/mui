@@ -7,11 +7,11 @@
 
 'use strict';
 
+import * as util from '../js/lib/util.js';
+import * as jqLite from '../js/lib/jqLite.js';
 import Caret from './caret.jsx';
 
-let util = require('../js/lib/util'),
-    jqLite = require('../js/lib/jqLite'),
-    Button = require('./button.jsx').Button,
+let Button = require('./button.jsx').Button,
     PropTypes = React.PropTypes;
 
 const dropdownClass = 'mui-dropdown',
@@ -25,6 +25,19 @@ const dropdownClass = 'mui-dropdown',
  * @class
  */
 class Dropdown extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      opened: false,
+      menuTop: 0
+    }
+  
+    let cb = util.callback;
+    this.onClickCB = cb(this, 'onClick');
+    this.onOutsideClickCB = cb(this, 'onOutsideClick');
+  }
+
   static propTypes = {
     color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark',
           'accent']),
@@ -46,42 +59,37 @@ class Dropdown extends React.Component {
     isDisabled: false
   }
 
-  state = {
-    opened: false,
-    menuTop: 0
-  }
-  
   componentWillMount() {
-    document.addEventListener('click', this._outsideClick.bind(this));
+    document.addEventListener('click', this.onOutsideClickCB);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this._outsideClick.bind(this));
+    document.removeEventListener('click', this.onOutsideClickCB);
   }
 
-  _click(ev) {
+  onClick(ev) {
     // only left clicks
     if (ev.button !== 0) return;
 
     // exit if toggle button is disabled
     if (this.props.isDisabled) return;
 
-    setTimeout(function() {
-      if (!ev.defaultPrevented) this._toggle();
-    }.bind(this), 0);
+    setTimeout(() => {
+      if (!ev.defaultPrevented) this.toggle();
+    }, 0);
   }
 
-  _toggle() {
+  toggle() {
     // exit if no menu element
     if (!this.props.children) {
       return util.raiseError('Dropdown menu element not found');
     }
 
-    if (this.state.opened) this._close();
-    else this._open();
+    if (this.state.opened) this.close();
+    else this.open();
   }
 
-  _open() {
+  open() {
     // position menu element below toggle button
     let wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect(),
         toggleRect;
@@ -94,18 +102,18 @@ class Dropdown extends React.Component {
     });
   }
 
-  _close() {
+  close() {
     this.setState({opened: false});
   }
 
-  _select() {
+  select() {
     if (this.props.onClick) this.props.onClick(this, ev);
   }
 
-  _outsideClick(ev) {
+  onOutsideClick(ev) {
     let isClickInside = ReactDOM.findDOMNode(this).contains(ev.target);
 
-    if (!isClickInside) this._close();
+    if (!isClickInside) this.close();
   }
 
   render() {
@@ -115,7 +123,7 @@ class Dropdown extends React.Component {
     buttonEl = (
       <Button
         ref="button"
-        onClick={ this._click.bind(this) }
+        onClick={ this.onClickCB }
         color={ this.props.color }
         variant={ this.props.variant }
         size={ this.props.size }
@@ -138,7 +146,7 @@ class Dropdown extends React.Component {
         <ul
           className={ cs }
           style={ {top: this.state.menuTop } }
-          onClick={ this._select }
+          onClick={ this.selectCB }
         >
           { this.props.children }
         </ul>
@@ -160,6 +168,12 @@ class Dropdown extends React.Component {
  * @class
  */
 class DropdownItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onClickCB = util.callback(this, 'onClick');
+  }
+
   static propTypes =  {
     link: PropTypes.string,
     onClick: PropTypes.func
@@ -170,14 +184,14 @@ class DropdownItem extends React.Component {
     onClick: null
   }
 
-  _click(ev) {
+  onClick(ev) {
     if (this.props.onClick) this.props.onClick(this, ev);
   }
 
   render() {
     return (
       <li>
-        <a href={ this.props.link } onClick={ this._click.bind(this) }>
+        <a href={ this.props.link } onClick={ this.onClickCB }>
           { this.props.children }
         </a>
       </li>

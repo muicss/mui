@@ -29,7 +29,7 @@ let Ripple = {
     // only left clicks
     if (ev.button !== 0) return;
 
-    var buttonEl = ReactDOM.findDOMNode(this);
+    let buttonEl = ReactDOM.findDOMNode(this);
 
     // exit if button is disabled
     if (this.props.disabled === true) return;
@@ -39,12 +39,12 @@ let Ripple = {
       return;
     } else {
       this.setState({ touchFlag: true });
-      setTimeout(function() {
+      setTimeout(() => {
         this.setState({ touchFlag: false });
-      }.bind(this), 100);
+      }, 100);
     }
 
-    var offset = jqLite.offset(buttonEl),
+    let offset = jqLite.offset(buttonEl),
       xPos = ev.pageX - offset.left,
       yPos = ev.pageY - offset.top,
       diameter,
@@ -59,36 +59,31 @@ let Ripple = {
 
     radius = diameter / 2;
 
-    var style = {
+    let style = {
       height: diameter,
       width: diameter,
       top: yPos - radius,
       left: xPos - radius
     };
 
-    var ripples = this.state.ripples || [];
+    let ripples = this.state.ripples || [];
       
-    window.setTimeout(function() {
-      this._removeRipple();
-    }.bind(this), 2000);
+    window.setTimeout(() => {
+      this.removeRipple();
+    }, 2000);
 
-    ripples.push({ style: style });
-
-    this.setState({
-      ripples: ripples
-    });
+    ripples.push({style});
+    this.setState({ripples});
   },
-  _removeRipple() {
+  removeRipple() {
     this.state.ripples.shift();
-    this.setState({
-      ripples: this.state.ripples
-    });
+    this.setState({ripples: this.state.ripples});
   },
   renderRipples() {
     if (this.state.ripples.length === 0) return;
 
-    var i = 0;
-    return this.state.ripples.map(function(ripple) {
+    let i = 0;
+    return this.state.ripples.map(ripple => {
       i++;
       return (
         <div
@@ -97,7 +92,7 @@ let Ripple = {
           style={ ripple.style }
         />
       );
-    }.bind(this));
+    });
   }
 };
 
