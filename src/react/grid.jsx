@@ -31,7 +31,7 @@ class Row extends React.Component {
  */
 class Col extends React.Component {
   defaultProps() {
-    var props = {},
+    let props = {},
         i,
         v;
 
@@ -46,11 +46,11 @@ class Col extends React.Component {
   }
 
   render() {
-    var cls = {},
-        i,
-        bk,
-        val,
-        baseCls;
+    class cls = {},
+          i,
+          bk,
+          val,
+          baseCls;
 
     // add mui-col classes
     for (i=breakpoints.length - 1; i > -1; i--) {

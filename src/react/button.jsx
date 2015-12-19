@@ -62,6 +62,4 @@ var Button = React.createClass({
 
 
 /** Define module API */
-module.exports = {
-  Button: Button
-};
+export {Button};
