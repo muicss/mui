@@ -40,13 +40,13 @@
   win.MUIForm = require('./forms/form.jsx').Form;
   win.MUIRadio = require('./forms/radio.jsx').Radio;
 
-  lib = require('./forms/select.jsx')
+  lib = require('./forms/select.jsx');
   win.MUISelect = lib.Select;
   win.MUISelectItem = lib.SelectItem;
 
   lib = require('./forms/textinput.jsx');
-  win.MUITextInput = lib.TextInput
-  win.MUITextareaInput = lib.TextareaInput
+  win.MUITextInput = lib.TextInput;
+  win.MUITextareaInput = lib.TextareaInput;
 
   // panels
   win.MUIPanel = require('./panel.jsx').Panel;

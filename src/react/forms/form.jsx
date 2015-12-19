@@ -10,17 +10,17 @@
  * Form constructor
  * @class
  */
-var Form = React.createClass({
-  propTypes: {
+class Form extends React.Component {
+  static propTypes = {
     isInline: React.PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      isInline: false
-    };
-  },
-  render: function() {
-    var cls;
+  }
+
+  static defaultProps = {
+    isInline: false
+  }
+
+  render() {
+    let cls;
 
     // inline form
     if (this.props.isInline) cls = 'mui-form--inline';
@@ -31,10 +31,8 @@ var Form = React.createClass({
       </form>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Form: Form
-};
+export {Form};

@@ -5,31 +5,31 @@
 
 'use strict';
 
-var PropTypes = React.PropTypes;
+let PropTypes = React.PropTypes;
 
 
 /**
  * Radio constructor
  * @class
  */
-var Radio = React.createClass({
-  propTypes: {
+class Radio extends React.Component {
+  static propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.string,
     isChecked: PropTypes.bool,
     isDisabled: PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      name: null,
-      label: null,
-      value: null,
-      isChecked: false,
-      isDisabled: false
-    };
-  },
-  render: function() {
+  }
+
+  static defaultProps = {
+    name: null,
+    label: null,
+    value: null,
+    isChecked: false,
+    isDisabled: false
+  }
+
+  render() {
     return (
       <div className="mui-radio">
         <label>
@@ -45,10 +45,8 @@ var Radio = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Radio: Radio
-};
+export {Radio};

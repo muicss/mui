@@ -5,10 +5,11 @@
 
 'use strict';
 
-var jqLite = require('../../js/lib/jqlite.js'),
-    util = require('../../js/lib/util.js'),
-    formlib = require('../../js/lib/forms.js'),
-    PropTypes = React.PropTypes,
+import * as jqLite from '../../js/lib/jqlite.js';
+import * as util from '../../js/lib/util.js';
+import * as formlib from '../../js/lib/forms.js';
+
+let PropTypes = React.PropTypes,
     doc = document,
     win = window;
 
@@ -17,8 +18,24 @@ var jqLite = require('../../js/lib/jqlite.js'),
  * Select constructor
  * @class
  */
-var Select = React.createClass({
-  propTypes: {
+class Select extends React.Component {
+  constructor(props) {
+    super(props);
+
+    let cb = util.callback;
+    this.hideMenuFn = cb(this, 'hideMenu');
+    this.onOuterFocusFn = cb(this, 'onOuterFocus');
+    this.onOuterBlurFn = cb(this, 'onOuterBlur');
+    this.onMouseDownFn = cb(this, 'onMouseDown');
+    this.onClickFn = cb(this, 'onClick');
+    this.onInnterFocusFn = cb(this, 'onInnerFocus');
+  }
+
+  state = {
+    showMenu: false
+  }
+
+  static propTypes = {
     name: PropTypes.string,
     isAutofocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
@@ -26,36 +43,34 @@ var Select = React.createClass({
     isRequired: PropTypes.bool,
     useDefault: PropTypes.bool,
     onChange: PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      name: null,
-      isAutofocus: false,
-      isDisabled: false,
-      isMultiple: false,
-      isRequired: false,
-      useDefault: false,
-      onChange: null
-    };
-  },
-  getInitialState: function() {
-    return {
-      showMenu: false
-    };
-  },
-  componentDidMount: function() {
+  }
+
+  static defaultProps = {
+    name: null,
+    isAutofocus: false,
+    isDisabled: false,
+    isMultiple: false,
+    isRequired: false,
+    useDefault: false,
+    onChange: null
+  }
+
+  componentDidMount() {
     // make wrapper element focusable (to enable Firefox bugfix)
     this.refs.wrapperEl.tabIndex = -1;
-  },
-  onMousedown: function(ev) {
+  }
+
+  onMouseDown(ev) {
     if (ev.button !== 0 || this.props.useDefault === true) return;
     ev.preventDefault();
-  },
-  onClick: function(ev) {
+  }
+
+  onClick(ev) {
     if (ev.button !== 0) return;  // only left clicks
     this.showMenu();
-  },
-  onInnerFocus: function(ev) {
+  }
+
+  onInnerFocus(ev) {
     // ignore 2nd inner focus (react artifact?)
     if (ev.target.tabIndex === -1) return;
 
@@ -64,8 +79,9 @@ var Select = React.createClass({
 
     // defer focus to parent
     this.refs.wrapperEl.focus();
-  },
-  onOuterFocus: function(ev) {
+  }
+
+  onOuterFocus(ev) {
     // ignore focus on inner element (react artifact)
     if (ev.target !== this.refs.wrapperEl) return;
 
@@ -79,19 +95,21 @@ var Select = React.createClass({
 
     // attach keydown handler
     jqLite.on(doc, 'keydown', this.onKeydown);
-  },
-  onOuterBlur: function(ev) {
+  }
+
+  onOuterBlur(ev) {
     // ignore blur on inner element
     if (ev.target !== this.refs.wrapperEl) return;
 
     // restore tab focus on inner element
-    var selectEl = this.refs.selectEl;
+    let selectEl = this.refs.selectEl;
     selectEl.tabIndex = selectEl._muiOrigIndex;
 
     // remove keydown handler
     jqLite.off(doc, 'keydown', this.onKeydown);    
-  },
-  onKeydown: function(ev) {
+  }
+
+  onKeydown(ev) {
     // spacebar, down, up
     if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
       // prevent win scroll
@@ -99,41 +117,44 @@ var Select = React.createClass({
 
       if (this.refs.selectEl.disabled !== true) this.showMenu();
     }
-  },
-  showMenu: function() {
+  }
+
+  showMenu() {
     // add scroll lock
     util.enableScrollLock();
 
     // add event listeners
-    jqLite.on(win, 'resize', this.hideMenu);
-    jqLite.on(doc, 'click', this.hideMenu);
+    jqLite.on(win, 'resize', this.hideMenuFn);
+    jqLite.on(doc, 'click', this.hideMenuFn);
 
     // re-draw
     this.setState({showMenu: true});
-  },
-  hideMenu: function() {
+  }
+
+  hideMenu() {
     // remove scroll lock
     util.disableScrollLock();
 
     // remove event listeners
-    jqLite.off(win, 'resize', this.hideMenu);
-    jqLite.off(doc, 'click', this.hideMenu);
+    jqLite.off(win, 'resize', this.hideMenuFn);
+    jqLite.off(doc, 'click', this.hideMenuFn);
     
     // re-draw
     this.setState({showMenu: false});
 
     // refocus
     this.refs.selectEl.focus();
-  },
-  render: function() {
-    var menuElem;
+  }
+
+  render() {
+    let menuElem;
 
     if (this.state.showMenu) {
       menuElem = (
         <Menu
           selectEl={ this.refs.selectEl }
           wrapperEl={ this.refs.wrapperEl }
-          teardownFn={ this.hideMenu }
+          teardownFn={ this.hideMenuFn }
         />
       );
     }
@@ -142,8 +163,8 @@ var Select = React.createClass({
       <div
         ref="wrapperEl"
         className="mui-select"
-        onFocus={ this.onOuterFocus }
-        onBlur={ this.onOuterBlur }
+        onFocus={ this.onOuterFocusFn }
+        onBlur={ this.onOuterBlurFn }
       >
         <select
           ref="selectEl"
@@ -152,9 +173,9 @@ var Select = React.createClass({
           disabled={ this.props.isDisabled }
           multiple={ this.props.isMultiple }
           required={ this.props.isRequired }
-          onMouseDown={ this.onMousedown }
-          onClick={ this.onClick }
-          onFocus={ this.onInnerFocus }
+          onMouseDown={ this.onMouseDownFn }
+          onClick={ this.onClickFn }
+          onFocus={ this.onInnerFocusFn }
         >
           { this.props.children }
         </select>
@@ -162,54 +183,58 @@ var Select = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 /**
  * SelectItem constructor
  * @class
  */
-var SelectItem = React.createClass({
-  propTypes: {
+class SelectItem extends React.Component {
+  static propTypes = {
     value: PropTypes.string,
     label: PropTypes.string
-  },
-  getDefaultProps: function() {
-    return {
-      value: null,
-      label: null
-    };
-  },
-  render: function() {
+  }
+
+  static defaultProps = {
+    value: null,
+    label: null
+  }
+
+  render() {
     return (
       <option value={ this.props.value }>
         { this.props.label }
       </option>
     );
   }
-});
+}
 
 
 /**
  * Menu constructor
  * @class
  */
-var Menu = React.createClass({
-  getDefaultProps: function() {
-    return {
-      selectEl: null,
-      wrapperEl: null,
-      teardownFn: null
-    };
-  },
-  getInitialState: function() {
-    return {
-      origIndex: null,
-      currentIndex: null
-    };
-  },
-  componentWillMount: function() {
-    var optionList = this.props.selectEl.children,
+class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.onKeydownFn = util.callback(this, 'onKeydown');
+  }
+
+  state = {
+    origIndex: null,
+    currentIndex: null
+  }
+
+  static defaultProps = {
+    selectEl: null,
+    wrapperEl: null,
+    teardownFn: null
+  }
+
+  componentWillMount() {
+    let optionList = this.props.selectEl.children,
         m = optionList.length,
         selectedPos = 0,
         i;
@@ -224,27 +249,30 @@ var Menu = React.createClass({
         doc.activeElement.blur();
       }
     }, 0);
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     // set position
-    var props = formlib.getMenuPositionalCSS(
+    let props = formlib.getMenuPositionalCSS(
       this.props.wrapperEl,
       this.props.selectEl.children.length,
       this.state.currentIndex
     );
 
-    var el = ReactDOM.findDOMNode(this);
+    let el = ReactDOM.findDOMNode(this);
     jqLite.css(el, props);
     jqLite.scrollTop(el, props.scrollTop);
 
     // attach keydown handler
-    jqLite.on(doc, 'keydown', this.onKeydown);
-  },
-  componentWillUnmount: function() {
+    jqLite.on(doc, 'keydown', this.onKeydownFn);
+  }
+
+  componentWillUnmount() {
     // remove keydown handler
-    jqLite.off(doc, 'keydown', this.onKeydown);
-  },
-  onClick: function(pos, ev) {
+    jqLite.off(doc, 'keydown', this.onKeydownFn);
+  }
+
+  onClick(pos, ev) {
     // don't allow events to bubble
     ev.stopPropagation();
     
@@ -253,9 +281,10 @@ var Menu = React.createClass({
 
     // destroy menu
     this.destroy();
-  },
-  onKeydown: function(ev) {
-    var keyCode = ev.keyCode;
+  }
+
+  onKeydown(ev) {
+    let keyCode = ev.keyCode;
 
     // tab
     if (keyCode === 9) return this.destroy();
@@ -275,33 +304,38 @@ var Menu = React.createClass({
       this.selectCurrent();
       this.destroy();
     }
-  },
-  increment: function() {
+  }
+
+  increment() {
     if (this.state.currentIndex === this.props.selectEl.children.length - 1) {
       return;
     }
 
     this.setState({currentIndex: this.state.currentIndex + 1});
-  },
-  decrement: function() {
+  }
+
+  decrement() {
     if (this.state.currentIndex === 0) return;
     this.setState({currentIndex: this.state.currentIndex - 1});
-  },
-  selectCurrent: function(pos) {
-    var state = this.state,
+  }
+
+  selectCurrent(pos) {
+    let state = this.state,
         currentIndex = (pos === undefined) ? state.currentIndex : pos;
     
     if (currentIndex !== state.origIndex) {
-      var optionEls = this.props.selectEl.children;
+      let optionEls = this.props.selectEl.children;
       optionEls[state.origIndex].selected = false;
       optionEls[currentIndex].selected = true;
     }
-  },
-  destroy: function() {
+  }
+
+  destroy() {
     this.props.teardownFn();
-  },
-  render: function() {
-    var menuItems = [],
+  }
+
+  render() {
+    let menuItems = [],
         optionList = this.props.selectEl.children,
         m = optionList.length,
         cls,
@@ -328,11 +362,8 @@ var Menu = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Select: Select,
-  SelectItem: SelectItem
-};
+export {Select, SelectItem};

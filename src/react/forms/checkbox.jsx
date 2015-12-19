@@ -5,27 +5,27 @@
 
 'use strict';
 
-var PropTypes = React.PropTypes;
+let PropTypes = React.PropTypes;
 
 
 /**
  * Checkbox constructor
  * @class
  */
-var Checkbox = React.createClass({
-  propTypes: {
+class Checkbox extends React.Component {
+  static propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
     isDisabled: PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      label: null,
-      value: null,
-      isDisabled: false
-    };
-  },
-  render: function() {
+  }
+
+  static defaultProps = {
+    label: null,
+    value: null,
+    isDisabled: false
+  }
+
+  render() {
     return (
       <div className="mui-checkbox">
         <label>
@@ -39,10 +39,8 @@ var Checkbox = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Checkbox: Checkbox
-};
+export {Checkbox};

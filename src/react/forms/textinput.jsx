@@ -5,41 +5,57 @@
 
 'use strict';
 
-var util = require('../../js/lib/util.js'),
-    PropTypes = React.PropTypes;
+import * as util from '../../js/lib/util.js';
+
+let PropTypes = React.PropTypes;
 
 
 /**
  * Input constructor
  * @class
  */
-var Input = React.createClass({
-  propTypes: {
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+
+    let v = props.value;
+    this.state = {
+      value: v,
+      isDirty: Boolean(v.length)
+    };
+
+    let cb = util.callback;
+    this.onChangeFn = cb(this, 'onChange');
+    this.onFocusFn = cb(this, 'onFocus');
+  }
+
+  static propTypes = {
     type: PropTypes.string,
     value: PropTypes.string,
     hint: PropTypes.string,
     isAutofocus: PropTypes.bool,
     onChange: PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      type: null,
-      value: '',
-      hint: null,
-      isAutofocus: false,
-      onChange: null
-    };
-  },
-  getInitialState: function() {
-    var v = this.props.value;
+  }
 
-    return {
-      value: v,
-      isDirty: Boolean(v.length)
-    };
-  },
-  render: function() {
-    var cls = {},
+  static defaultProps = {
+    type: null,
+    value: '',
+    hint: null,
+    isAutofocus: false,
+    onChange: null
+  }
+
+  onChange(ev) {
+    this.setState({value: ev.target.value});
+    if (this.props.onChange) this.props.onChange(ev);
+  }
+
+  onFocus(ev) {
+    this.setState({isDirty: true});
+  }
+
+  render() {
+    let cls = {},
         isNotEmpty = Boolean(this.state.value),
         inputEl;
 
@@ -59,8 +75,8 @@ var Input = React.createClass({
           placeholder={ this.props.hint }
           defaultValue={ this.props.value }
           autoFocus={ this.props.isAutofocus }
-          onChange={ this._handleChange }
-          onFocus={ this._handleFocus }
+          onChange={ this.onChangeFn }
+          onFocus={ this.onFocusFn }
           required={ this.props.isRequired }
         />
       );
@@ -73,45 +89,36 @@ var Input = React.createClass({
           defaultValue={ this.state.value }
           placeholder={ this.props.hint }
           autoFocus={ this.props.autofocus }
-          onChange={ this._handleChange }
-          onFocus={ this._handleFocus }
+          onChange={ this.onChangeFn }
+          onFocus={ this.onFocusFn }
           required={ this.props.isRequired }
         />
       );
     }
 
     return inputEl;
-  },
-  _handleChange: function(ev) {
-    this.setState({value: ev.target.value});
-    if (this.props.onChange) this.props.onChange(ev);
-  },
-  _handleFocus: function(ev) {
-    this.setState({isDirty: true});
   }
-});
+}
 
 
 /**
  * Label constructor
  * @class
  */
-var Label = React.createClass({
-  getDefaultProps: function() {
-    return {
-      text: '',
-      onClick: null
-    };
-  },
-  getInitialState: function() {
-    return {
-      style: {}
-    };
-  },
-  componentDidMount: function() {
-    setTimeout(function() {
-      var s = '.15s ease-out',
-          style;
+class Label extends React.Component {
+  state = {
+    style: {}
+  }
+
+  static defaultProps = {
+    text: '',
+    onClick: null
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      const s = '.15s ease-out';
+      let style;
 
       style = {
         transition: s,
@@ -121,12 +128,11 @@ var Label = React.createClass({
         msTransform: s
       };
 
-      this.setState({
-        style: style
-      });
-    }.bind(this), 150);
-  },
-  render: function() {
+      this.setState({style});
+    }, 150);
+  }
+
+  render() {
     return (
       <label
         refs="label"
@@ -137,33 +143,47 @@ var Label = React.createClass({
       </label>
     );
   }
-});
+}
 
 
 /**
  * TextField constructor
  * @class
  */
-var TextField = React.createClass({
-  propTypes: {
+class TextField extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.focusFn = util.callback(this, 'focus');
+  }
+
+  static propTypes = {
     label: PropTypes.string,
     isLabelFloating: PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      label: '',
-      isLabelFloating: false
-    };
-  },
-  render: function() {
-    var cls = {},
+  }
+
+  static defaultProps = {
+    label: '',
+    isLabelFloating: false
+  }
+
+  focus(ev) {
+    // pointer-events shim
+    if (util.supportsPointerEvents() === false) {
+      ev.target.style.cursor = 'text';
+      ReactDOM.findDOMNode(this.refs.input).focus();
+    }
+  }
+
+  render() {
+    let cls = {},
         labelEl;
 
     if (this.props.label.length) {
       labelEl = (
         <Label
           text={ this.props.label }
-          onClick={ this._focus }
+          onClick={ this.focusFn }
         />
       );
     }
@@ -178,58 +198,48 @@ var TextField = React.createClass({
         { labelEl }
       </div>
     );
-  },
-  _focus: function(e) {
-    // pointer-events shim
-    if (util.supportsPointerEvents() === false) {
-      e.target.style.cursor = 'text';
-      ReactDOM.findDOMNode(this.refs.input).focus();
-    }
   }
-});
+}
 
 
 /**
  * TextInput constructor
  * @class
  */
-var TextInput = React.createClass({
-  propTypes: {
+class TextInput extends React.Component {
+  static propTypes = {
     type: PropTypes.oneOf(['text', 'email', 'password'])
-  },
-  getDefaultProps: function() {
-    return {
-      type: 'text'
-    };
-  },
-  render: function() {
+  }
+
+  static defaultProps = {
+    type: 'text'
+  }
+
+  render() {
     return (<TextField { ...this.props } />);
   }
-});
+}
 
 
 /**
  * TextareaInput constructor
  * @class
  */
-var TextareaInput = React.createClass({
-  propTypes: {
+class TextareaInput extends React.Component {
+  static propTypes = {
     rows: PropTypes.number
-  },
-  getDefaultProps: function() {
-    return {
-      type: 'textarea',
-      rows: 2
-    };
-  },
-  render: function() {
+  }
+
+  static defaultProps = {
+    type: 'textarea',
+    rows: 2
+  }
+
+  render() {
     return (<TextField { ...this.props } />);
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  TextInput: TextInput,
-  TextareaInput: TextareaInput
-};
+export {TextInput, TextareaInput};
