@@ -10,18 +10,16 @@
  * Panel constructor
  * @class
  */
-var Panel = React.createClass({
-  render: function() {
+class Panel extends React.Component {
+  render() {
     return (
       <div className='mui-panel'>
         { this.props.children }
       </div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Panel: Panel
-};
+export {Panel};

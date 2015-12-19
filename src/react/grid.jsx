@@ -5,31 +5,32 @@
 
 'use strict';
 
-var util = require('../js/lib/util.js'),
-    breakpoints = ['xs', 'sm', 'md', 'lg'];
+import * as util from '../js/lib/util.js';
+
+const breakpoints = ['xs', 'sm', 'md', 'lg'];
 
 
 /**
  * Row constructor
  * @class
  */
-var Row = React.createClass({
-  render: function() {
+class Row extends React.Component {
+  render() {
     return (
-      <div className='mui-row'>
+      <div className="mui-row">
         { this.props.children }
       </div>
     );
   }
-});
+}
 
 
 /**
  * Col constructor
  * @class
  */
-var Col = React.createClass({
-  getDefaultProps: function() {
+class Col extends React.Component {
+  defaultProps() {
     var props = {},
         i,
         v;
@@ -42,8 +43,9 @@ var Col = React.createClass({
     }
 
     return props;
-  },
-  render: function() {
+  }
+
+  render() {
     var cls = {},
         i,
         bk,
@@ -72,11 +74,8 @@ var Col = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 /** Define module API */
-module.exports = {
-  Row: Row,
-  Col: Col
-};
+export {Row, Col};
