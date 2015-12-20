@@ -13,7 +13,7 @@ describe('react/button.jsx', () => {
 
   
   before(() => {
-    Appbar = require('../../src/react/appbar.jsx').Appbar;
+    //Appbar = require('../../src/react/appbar.jsx').Appbar;
   });
 
 
