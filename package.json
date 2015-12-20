@@ -36,6 +36,7 @@
     "babel-register": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
+    "contextify": "^0.1.15",
     "del": "^2.2.0",
     "each-async": "^1.1.1",
     "gulp": "^3.9.0",
@@ -50,7 +51,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
     "gulp-uglify": "^1.5.1",
-    "jsdom": "3.1.2",
+    "jsdom": "^7.2.1",
     "jshint": "^2.9.1-rc1",
     "mocha": "^2.3.4",
     "mocha-jsdom": "^1.0.0",
@@ -60,7 +61,8 @@
     "streamqueue": "^1.1.1",
     "stringify": "^3.2.0",
     "synthetic-dom-events": "^0.3.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {},
   "scripts": {
