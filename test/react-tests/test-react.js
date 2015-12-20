@@ -1,6 +1,6 @@
-describe('Button', () => {
-  var React = require('react');
+import React from 'react';
 
+describe('Button', () => {
   it('works', () => {
     var el = <div>hi</div>;
   });

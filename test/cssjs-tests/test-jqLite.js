@@ -1,19 +1,19 @@
 /**
  * jqLite Tests
- * @module test/test-jqLite
+ * @module test/cssjs-tests/test-jqLite
  */
 
 
 describe('js/lib/jqLite.js', function() {
 
   var assert = require('assert'),
-      helpers = require('./helpers.js'),
+      helpers = require('../lib/helpers.js'),
       jqLite;
 
   helpers.initDOM();
 
   before(function() {
-    jqLite = require('../src/js/lib/jqLite.js');
+    jqLite = require('../../src/js/lib/jqLite.js');
   });
 
 
