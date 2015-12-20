@@ -116,7 +116,8 @@ gulp.task('react', ['clean'], function() {
         'classCallCheck',
         'possibleConstructorReturn',
         'interopRequireDefault',
-        'interopRequireWildcard'
+        'interopRequireWildcard',
+        'extends'
       ],
       'global'
     )))

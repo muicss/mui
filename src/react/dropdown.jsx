@@ -9,7 +9,7 @@
 
 import * as util from '../js/lib/util.js';
 import * as jqLite from '../js/lib/jqLite.js';
-import Caret from './caret.jsx';
+import { Caret } from './caret.jsx';
 
 let Button = require('./button.jsx').Button,
     PropTypes = React.PropTypes;
@@ -18,6 +18,7 @@ const dropdownClass = 'mui-dropdown',
       menuClass = 'mui-dropdown__menu',
       openClass = 'mui--is-open',
       rightClass = 'mui-dropdown__menu--right';
+
 
 
 /**
@@ -39,8 +40,7 @@ class Dropdown extends React.Component {
   }
 
   static propTypes = {
-    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark',
-          'accent']),
+    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
     variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
     size: PropTypes.oneOf(['default', 'small', 'large']),
     label: PropTypes.string,

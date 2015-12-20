@@ -54,6 +54,11 @@ class Input extends React.Component {
     this.setState({isDirty: true});
   }
 
+  triggerFocus() {
+    // hack to enable IE10 pointer-events shim
+    ReactDOM.findDOMNode(this.refs.inputEl).focus();
+  }
+
   render() {
     let cls = {},
         isNotEmpty = Boolean(this.state.value),
@@ -69,7 +74,7 @@ class Input extends React.Component {
     if (this.props.type === 'textarea') {
       inputEl = (
         <textarea
-          ref="input"
+          ref="inputEl"
           className={ cls }
           rows={ this.props.rows }
           placeholder={ this.props.hint }
@@ -83,7 +88,7 @@ class Input extends React.Component {
     } else {
       inputEl = (
         <input
-          ref="input"
+          ref="inputEl"
           className={ cls }
           type={ this.props.type }
           defaultValue={ this.state.value }
@@ -135,7 +140,6 @@ class Label extends React.Component {
   render() {
     return (
       <label
-        refs="label"
         style={ this.state.style }
         onClick={ this.props.onClick }
       >
@@ -154,7 +158,7 @@ class TextField extends React.Component {
   constructor(props) {
     super(props);
 
-    this.focusFn = util.callback(this, 'focus');
+    this.onClickCB = util.callback(this, 'onClick');
   }
 
   static propTypes = {
@@ -167,11 +171,11 @@ class TextField extends React.Component {
     isLabelFloating: false
   }
 
-  focus(ev) {
+  onClick(ev) {
     // pointer-events shim
     if (util.supportsPointerEvents() === false) {
       ev.target.style.cursor = 'text';
-      ReactDOM.findDOMNode(this.refs.input).focus();
+      this.refs.inputEl.triggerFocus();
     }
   }
 
@@ -183,7 +187,7 @@ class TextField extends React.Component {
       labelEl = (
         <Label
           text={ this.props.label }
-          onClick={ this.focusFn }
+          onClick={ this.onClickCB }
         />
       );
     }
@@ -194,7 +198,7 @@ class TextField extends React.Component {
 
     return (
       <div className={ cls }>
-        <Input { ...this.props } />
+        <Input ref="inputEl" { ...this.props } />
         { labelEl }
       </div>
     );

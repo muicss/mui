@@ -46,11 +46,11 @@ class Col extends React.Component {
   }
 
   render() {
-    class cls = {},
-          i,
-          bk,
-          val,
-          baseCls;
+    let cls = {},
+        i,
+        bk,
+        val,
+        baseCls;
 
     // add mui-col classes
     for (i=breakpoints.length - 1; i > -1; i--) {

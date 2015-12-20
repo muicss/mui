@@ -28,7 +28,7 @@ class Select extends React.Component {
     this.onOuterBlurFn = cb(this, 'onOuterBlur');
     this.onMouseDownFn = cb(this, 'onMouseDown');
     this.onClickFn = cb(this, 'onClick');
-    this.onInnterFocusFn = cb(this, 'onInnerFocus');
+    this.onInnerFocusFn = cb(this, 'onInnerFocus');
   }
 
   state = {
@@ -71,9 +71,6 @@ class Select extends React.Component {
   }
 
   onInnerFocus(ev) {
-    // ignore 2nd inner focus (react artifact?)
-    if (ev.target.tabIndex === -1) return;
-
     // check flag
     if (this.props.useDefault === true) return;
 
@@ -219,7 +216,7 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
     
-    this.onKeydownFn = util.callback(this, 'onKeydown');
+    this.onKeydownCB = util.callback(this, 'onKeydown');
   }
 
   state = {
@@ -242,16 +239,16 @@ class Menu extends React.Component {
     // get current selected position
     for (i=m - 1; i > -1; i--) if (optionList[i].selected) selectedPos = i;
     this.setState({origIndex: selectedPos, currentIndex: selectedPos});
+  }
 
+  componentDidMount() {
     // blur active element (IE10 bugfix)
     setTimeout(function() {
       if (doc.activeElement.nodeName.toLowerCase() !== 'body') {
         doc.activeElement.blur();
       }
     }, 0);
-  }
 
-  componentDidMount() {
     // set position
     let props = formlib.getMenuPositionalCSS(
       this.props.wrapperEl,
@@ -264,12 +261,12 @@ class Menu extends React.Component {
     jqLite.scrollTop(el, props.scrollTop);
 
     // attach keydown handler
-    jqLite.on(doc, 'keydown', this.onKeydownFn);
+    jqLite.on(doc, 'keydown', this.onKeydownCB);
   }
 
   componentWillUnmount() {
     // remove keydown handler
-    jqLite.off(doc, 'keydown', this.onKeydownFn);
+    jqLite.off(doc, 'keydown', this.onKeydownCB);
   }
 
   onClick(pos, ev) {
@@ -349,7 +346,7 @@ class Menu extends React.Component {
         <div
           key={ i }
           className={ cls }
-          onClick={ this.onClick.bind(null, i) }
+          onClick={ this.onClick.bind(this, i) }
         >
           { optionList[i].textContent }
         </div>

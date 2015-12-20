@@ -17,7 +17,7 @@
       <div id="dropdowns"></div>
     </div>
     <script type="text/babel">
-      var Dropdown = React.createClass({
+      var DropdownExample1 = React.createClass({
         render: function() {
           return (
             <MUIDropdown
@@ -31,14 +31,14 @@
               <MUIDropdownItem 
                   onClick={ function (ref, ev){alert("Option 4 selected");} }
               >
-                Option     4
+                Option 4
               </MUIDropdownItem>
             </MUIDropdown>
           );
         }
       });
 
-      var DropdownRight = React.createClass({
+      var DropdownExample2 = React.createClass({
         render: function() {
           return (
             <MUIDropdown 
@@ -54,12 +54,14 @@
         }
       });
 
-      ReactDOM.render(<div className="mui-panel">
-                        <h2>React</h2>
-                        <Dropdown />
-                        <DropdownRight />
-                      </div>,
-                      document.getElementById('dropdowns'));
+      ReactDOM.render(
+        <div className="mui-panel">
+          <h2>React</h2>
+          <DropdownExample1 />
+          <DropdownExample2 />
+        </div>,
+        document.getElementById('dropdowns')
+      );
     </script>
   </body>
 </html>

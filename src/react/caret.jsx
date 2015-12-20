@@ -20,4 +20,4 @@ class Caret extends React.Component {
 
 
 /** Define module API */
-export default Caret;
+export {Caret};
