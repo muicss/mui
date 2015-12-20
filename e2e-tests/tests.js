@@ -361,31 +361,6 @@ var objectKeys = Object.keys || function (obj) {
 };
 
 },{"util/":5}],2:[function(require,module,exports){
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
-  }
-}
-
-},{}],3:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -449,6 +424,31 @@ process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
+
+},{}],3:[function(require,module,exports){
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
 
 },{}],4:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
@@ -1046,8 +1046,8 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,require("AZ6VBm"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":4,"AZ6VBm":3,"inherits":2}],6:[function(require,module,exports){
+}).call(this,require("cbNU+6"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":4,"cbNU+6":2,"inherits":3}],6:[function(require,module,exports){
 /*
  * A noop version in case your tests are browserified (eg, when using
  * testling).
@@ -1922,19 +1922,19 @@ module.exports = {
 
 /**
  * jqLite Tests
- * @module test/test-jqLite
+ * @module test/cssjs-tests/test-jqLite
  */
 
 describe('js/lib/jqLite.js', function () {
 
   var assert = require('assert'),
-      helpers = require('./helpers.js'),
+      helpers = require('../lib/helpers.js'),
       jqLite;
 
   helpers.initDOM();
 
   before(function () {
-    jqLite = require('../src/js/lib/jqLite.js');
+    jqLite = require('../../src/js/lib/jqLite.js');
   });
 
   // --------------------------------------------------------------------------
@@ -2154,14 +2154,14 @@ describe('js/lib/jqLite.js', function () {
 
 describe('js/lib/util.js', function () {
   var assert = require('assert'),
-      helpers = require('./helpers.js'),
+      helpers = require('../lib/helpers.js'),
       util,
       el;
 
   helpers.initDOM();
 
   before(function () {
-    util = require('../src/js/lib/util.js');
+    util = require('../../src/js/lib/util.js');
   });
 
   beforeEach(function () {
@@ -2188,7 +2188,7 @@ describe('js/lib/util.js', function () {
   });
 });
 
-},{"../src/js/lib/jqLite.js":11,"../src/js/lib/util.js":12,"./helpers.js":14,"assert":1,"synthetic-dom-events":7}],14:[function(require,module,exports){
+},{"../../src/js/lib/jqLite.js":11,"../../src/js/lib/util.js":12,"../lib/helpers.js":14,"assert":1,"synthetic-dom-events":7}],14:[function(require,module,exports){
 "use strict";
 
 /**

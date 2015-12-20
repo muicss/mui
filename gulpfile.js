@@ -47,8 +47,8 @@ if (taskName === 'build-dist') {
 // RECIPES
 // ============================================================================
 
-gulp.task('clean', function(callback) {
-  del([dirName], callback);
+gulp.task('clean', function() {
+  return del([dirName]);
 });
 
 
@@ -179,8 +179,8 @@ gulp.task('build-email-styletag', function() {
 });
 
 
-gulp.task('clean-email-inlined', function(callback) {
-  del(['examples/email-inlined'], callback)
+gulp.task('clean-email-inlined', function() {
+  return del(['examples/email-inlined'])
 });
 
 
@@ -320,9 +320,8 @@ gulp.task('build-e2e-tests', function() {
       files;
   
   files = [
-    'test-jqlite.js',
-    'test-util.js',
-    'react/test-forms.js'
+    'cssjs-tests/test-jqlite.js',
+    'cssjs-tests/test-util.js'
   ];
 
   // build streams

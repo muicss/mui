@@ -2100,6 +2100,14 @@ input[type="checkbox"]:disabled {
   border-width: 2px;
 }
 
+.mui-textfield > input:disabled, .mui-textfield > input:-moz-read-only,
+.mui-textfield > textarea:disabled,
+.mui-textfield > textarea:-moz-read-only {
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1;
+}
+
 .mui-textfield > input:disabled, .mui-textfield > input:read-only,
 .mui-textfield > textarea:disabled,
 .mui-textfield > textarea:read-only {

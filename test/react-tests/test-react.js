@@ -1,4 +1,5 @@
-import React from 'react';
+var React = require('react');
+
 
 describe('Button', () => {
   it('works', () => {
