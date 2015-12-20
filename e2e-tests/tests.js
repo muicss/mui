@@ -1296,6 +1296,8 @@ module.exports={
 }
 
 },{}],10:[function(require,module,exports){
+"use strict";
+
 /**
  * MUI config module
  * @module config
@@ -1307,7 +1309,6 @@ module.exports = {
   debug: true
 };
 
-
 },{}],11:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
@@ -1317,10 +1318,10 @@ module.exports = {
 'use strict';
 
 // Global vars
+
 var gDoc = document,
     gDocEl = gDoc.documentElement,
     gWin = window;
-
 
 /**
  * Add a class to an element.
@@ -1334,16 +1335,15 @@ function jqLiteAddClass(element, cssClasses) {
       splitClasses = cssClasses.split(' '),
       cssClass;
 
-  for (var i=0; i < splitClasses.length; i++) {
+  for (var i = 0; i < splitClasses.length; i++) {
     cssClass = splitClasses[i].trim();
     if (existingClasses.indexOf(' ' + cssClass + ' ') === -1) {
       existingClasses += cssClass + ' ';
     }
   }
-  
+
   element.setAttribute('class', existingClasses.trim());
 }
-
 
 /**
  * Get or set CSS properties.
@@ -1361,8 +1361,9 @@ function jqLiteCss(element, name, value) {
 
   // Set multiple values
   if (nameType === 'object') {
-    for (var key in name) element.style[_camelCase(key)] = name[key];
-    return;
+    for (var key in name) {
+      element.style[_camelCase(key)] = name[key];
+    }return;
   }
 
   // Set a single value
@@ -1371,7 +1372,7 @@ function jqLiteCss(element, name, value) {
   }
 
   var styleObj = getComputedStyle(element),
-      isArray = (jqLiteType(name) === 'array');
+      isArray = jqLiteType(name) === 'array';
 
   // Read single value
   if (!isArray) return _getCurrCssProp(element, name, styleObj);
@@ -1380,14 +1381,13 @@ function jqLiteCss(element, name, value) {
   var outObj = {},
       key;
 
-  for (var i=0; i < name.length; i++) {
+  for (var i = 0; i < name.length; i++) {
     key = name[i];
     outObj[key] = _getCurrCssProp(element, key, styleObj);
   }
 
   return outObj;
 }
-
 
 /**
  * Check if element has class.
@@ -1396,9 +1396,8 @@ function jqLiteCss(element, name, value) {
  */
 function jqLiteHasClass(element, cls) {
   if (!cls || !element.getAttribute) return false;
-  return (_getExistingClasses(element).indexOf(' ' + cls + ' ') > -1);
+  return _getExistingClasses(element).indexOf(' ' + cls + ' ') > -1;
 }
-
 
 /**
  * Return the type of a variable.
@@ -1414,9 +1413,8 @@ function jqLiteType(somevar) {
     return typeStr.slice(8, -1).toLowerCase();
   } else {
     throw new Error("MUI: Could not understand type: " + typeStr);
-  }    
+  }
 }
-
 
 /**
  * Attach an event handler to a DOM element
@@ -1426,7 +1424,7 @@ function jqLiteType(somevar) {
  * @param {Boolean} useCapture - Use capture flag.
  */
 function jqLiteOn(element, type, callback, useCapture) {
-  useCapture = (useCapture === undefined) ? false : useCapture;
+  useCapture = useCapture === undefined ? false : useCapture;
 
   // add to DOM
   element.addEventListener(type, callback, useCapture);
@@ -1437,7 +1435,6 @@ function jqLiteOn(element, type, callback, useCapture) {
   cache[type].push([callback, useCapture]);
 }
 
-
 /**
  * Remove an event handler from a DOM element
  * @param {Element} element - The DOM element.
@@ -1446,7 +1443,7 @@ function jqLiteOn(element, type, callback, useCapture) {
  * @param {Boolean} useCapture - Use capture flag.
  */
 function jqLiteOff(element, type, callback, useCapture) {
-  useCapture = (useCapture === undefined) ? false : useCapture;
+  useCapture = useCapture === undefined ? false : useCapture;
 
   // remove from cache
   var cache = element._muiEventCache = element._muiEventCache || {},
@@ -1459,18 +1456,16 @@ function jqLiteOff(element, type, callback, useCapture) {
     args = argsList[i];
 
     // remove all events if callback is undefined
-    if (callback === undefined ||
-        (args[0] === callback && args[1] === useCapture)) {
+    if (callback === undefined || args[0] === callback && args[1] === useCapture) {
 
       // remove from cache
       argsList.splice(i, 1);
-      
+
       // remove from DOM
       element.removeEventListener(type, args[0], args[1]);
     }
   }
 }
-
 
 /**
  * Attach an event hander which will only execute once
@@ -1489,7 +1484,6 @@ function jqLiteOne(element, type, callback, useCapture) {
   }, useCapture);
 }
 
-
 /**
  * Get or set horizontal scroll position
  * @param {Element} element - The DOM element
@@ -1499,7 +1493,7 @@ function jqLiteScrollLeft(element, value) {
   // get
   if (value === undefined) {
     if (element === gWin) {
-      var t = (gWin.pageXOffset || gDocEl.scrollLeft)
+      var t = gWin.pageXOffset || gDocEl.scrollLeft;
       return t - (gDocEl.clientLeft || 0);
     } else {
       return element.scrollLeft;
@@ -1507,10 +1501,8 @@ function jqLiteScrollLeft(element, value) {
   }
 
   // set
-  if (element === gWin) gWin.scrollTo(value, jqLiteScrollTop(gWin));
-  else element.scrollLeft = value;
+  if (element === gWin) gWin.scrollTo(value, jqLiteScrollTop(gWin));else element.scrollLeft = value;
 }
-
 
 /**
  * Get or set vertical scroll position
@@ -1528,10 +1520,8 @@ function jqLiteScrollTop(element, value) {
   }
 
   // set
-  if (element === gWin) gWin.scrollTo(jqLiteScrollLeft(gWin), value);
-  else element.scrollTop = value;
+  if (element === gWin) gWin.scrollTo(jqLiteScrollLeft(gWin), value);else element.scrollTop = value;
 }
-
 
 /**
  * Return object representing top/left offset and element height/width.
@@ -1550,7 +1540,6 @@ function jqLiteOffset(element) {
   };
 }
 
-
 /**
  * Attach a callback to the DOM ready event listener
  * @param {Function} fn - The callback function.
@@ -1565,7 +1554,7 @@ function jqLiteReady(fn) {
       rem = doc.addEventListener ? 'removeEventListener' : 'detachEvent',
       pre = doc.addEventListener ? '' : 'on';
 
-  var init = function(e) {
+  var init = function init(e) {
     if (e.type == 'readystatechange' && doc.readyState != 'complete') {
       return;
     }
@@ -1574,8 +1563,12 @@ function jqLiteReady(fn) {
     if (!done && (done = true)) fn.call(win, e.type || e);
   };
 
-  var poll = function() {
-    try { root.doScroll('left'); } catch(e) { setTimeout(poll, 50); return; }
+  var poll = function poll() {
+    try {
+      root.doScroll('left');
+    } catch (e) {
+      setTimeout(poll, 50);return;
+    }
     init('poll');
   };
 
@@ -1583,7 +1576,9 @@ function jqLiteReady(fn) {
     fn.call(win, 'lazy');
   } else {
     if (doc.createEventObject && root.doScroll) {
-      try { top = !win.frameElement; } catch(e) { }
+      try {
+        top = !win.frameElement;
+      } catch (e) {}
       if (top) poll();
     }
     doc[add](pre + 'DOMContentLoaded', init, false);
@@ -1591,7 +1586,6 @@ function jqLiteReady(fn) {
     win[add](pre + 'load', init, false);
   }
 }
-
 
 /**
  * Remove classes from a DOM element
@@ -1604,8 +1598,8 @@ function jqLiteRemoveClass(element, cssClasses) {
   var existingClasses = _getExistingClasses(element),
       splitClasses = cssClasses.split(' '),
       cssClass;
-  
-  for (var i=0; i < splitClasses.length; i++) {
+
+  for (var i = 0; i < splitClasses.length; i++) {
     cssClass = splitClasses[i].trim();
     while (existingClasses.indexOf(' ' + cssClass + ' ') >= 0) {
       existingClasses = existingClasses.replace(' ' + cssClass + ' ', ' ');
@@ -1615,7 +1609,6 @@ function jqLiteRemoveClass(element, cssClasses) {
   element.setAttribute('class', existingClasses.trim());
 }
 
-
 // ------------------------------
 // Utilities
 // ------------------------------
@@ -1623,7 +1616,6 @@ var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
     ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g,
     BOOLEAN_ATTRS;
-
 
 BOOLEAN_ATTRS = {
   multiple: true,
@@ -1633,28 +1625,22 @@ BOOLEAN_ATTRS = {
   readonly: true,
   required: true,
   open: true
-}
-
+};
 
 function _getExistingClasses(element) {
   var classes = (element.getAttribute('class') || '').replace(/[\n\t]/g, '');
   return ' ' + classes + ' ';
 }
 
-
 function _camelCase(name) {
-  return name.
-    replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
-      return offset ? letter.toUpperCase() : letter;
-    }).
-    replace(MOZ_HACK_REGEXP, 'Moz$1');
+  return name.replace(SPECIAL_CHARS_REGEXP, function (_, separator, letter, offset) {
+    return offset ? letter.toUpperCase() : letter;
+  }).replace(MOZ_HACK_REGEXP, 'Moz$1');
 }
-
 
 function _escapeRegExp(string) {
   return string.replace(ESCAPE_REGEXP, "\\$1");
 }
-
 
 function _getCurrCssProp(elem, name, computed) {
   var ret;
@@ -1667,7 +1653,6 @@ function _getCurrCssProp(elem, name, computed) {
 
   return ret;
 }
-
 
 /**
  * Module API
@@ -1710,7 +1695,6 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-
 },{}],12:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
@@ -1718,7 +1702,6 @@ module.exports = {
  */
 
 'use strict';
-
 
 var config = require('../config.js'),
     jqLite = require('./jqLite.js'),
@@ -1732,7 +1715,6 @@ var config = require('../config.js'),
     _supportsPointerEvents;
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
-
 
 /**
  * Logging function
@@ -1748,7 +1730,6 @@ function logFn() {
   }
 }
 
-
 /**
  * Load CSS text in new stylesheet
  * @param {string} cssText - The css text.
@@ -1756,16 +1737,14 @@ function logFn() {
 function loadStyleFn(cssText) {
   var e = doc.createElement('style');
   e.type = 'text/css';
-    
-  if (e.styleSheet) e.styleSheet.cssText = cssText;
-  else e.appendChild(doc.createTextNode(cssText));
-  
+
+  if (e.styleSheet) e.styleSheet.cssText = cssText;else e.appendChild(doc.createTextNode(cssText));
+
   // add to document
   head.insertBefore(e, head.firstChild);
 
   return e;
 }
-
 
 /**
  * Raise an error
@@ -1774,7 +1753,6 @@ function loadStyleFn(cssText) {
 function raiseErrorFn(msg) {
   throw new Error("MUI: " + msg);
 }
-
 
 /**
  * Register callbacks on muiNodeInserted event
@@ -1793,7 +1771,6 @@ function onNodeInsertedFn(callbackFn) {
   }
 }
 
-
 /**
  * Execute muiNodeInserted callbacks
  * @param {Event} ev - The DOM event.
@@ -1805,11 +1782,10 @@ function animationHandlerFn(ev) {
   var el = ev.target;
 
   // iterate through callbacks
-  for (var i=nodeInsertedCallbacks.length - 1; i >= 0; i--) {
+  for (var i = nodeInsertedCallbacks.length - 1; i >= 0; i--) {
     nodeInsertedCallbacks[i](el);
   }
 }
-
 
 /**
  * Convert Classname object, with class as key and true/false as value, to an
@@ -1820,11 +1796,10 @@ function animationHandlerFn(ev) {
 function classNamesFn(classes) {
   var cs = '';
   for (var i in classes) {
-    cs += (classes[i]) ? i + ' ' : '';
+    cs += classes[i] ? i + ' ' : '';
   }
   return cs.trim();
 }
-
 
 /**
  * Check if client supports pointer events.
@@ -1832,13 +1807,12 @@ function classNamesFn(classes) {
 function supportsPointerEventsFn() {
   // check cache
   if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-  
+
   var element = document.createElement('x');
   element.style.cssText = 'pointer-events:auto';
-  _supportsPointerEvents = (element.style.pointerEvents === 'auto');
+  _supportsPointerEvents = element.style.pointerEvents === 'auto';
   return _supportsPointerEvents;
 }
-
 
 /**
  * Create callback closure.
@@ -1846,9 +1820,10 @@ function supportsPointerEventsFn() {
  * @param {String} funcName - The name of the callback function.
  */
 function callbackFn(instance, funcName) {
-  return function() {instance[funcName].apply(instance, arguments);};
+  return function () {
+    instance[funcName].apply(instance, arguments);
+  };
 }
-
 
 /**
  * Dispatch event.
@@ -1860,37 +1835,35 @@ function callbackFn(instance, funcName) {
  */
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
-      bubbles = (bubbles !== undefined) ? bubbles : true,
-      cancelable = (cancelable !== undefined) ? cancelable : true,
+      bubbles = bubbles !== undefined ? bubbles : true,
+      cancelable = cancelable !== undefined ? cancelable : true,
       k;
-  
+
   ev.initEvent(eventType, bubbles, cancelable);
 
   // add data to event object
-  if (data) for (k in data) ev[k] = data[k];
-
-  // dispatch
+  if (data) for (k in data) {
+    ev[k] = data[k];
+  } // dispatch
   if (element) element.dispatchEvent(ev);
 
   return ev;
 }
-
 
 /**
  * Turn on window scroll lock.
  */
 function enableScrollLockFn() {
   // increment counter
-  scrollLock += 1
+  scrollLock += 1;
 
   // add lock
   if (scrollLock === 1) {
-    scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
+    scrollLockPos = { left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win) };
     jqLite.addClass(doc.body, scrollLockCls);
     win.scrollTo(scrollLockPos.left, scrollLockPos.top);
   }
 }
-
 
 /**
  * Turn off window scroll lock.
@@ -1900,15 +1873,14 @@ function disableScrollLockFn() {
   if (scrollLock === 0) return;
 
   // decrement counter
-  scrollLock -= 1
+  scrollLock -= 1;
 
-  // remove lock 
+  // remove lock
   if (scrollLock === 0) {
     jqLite.removeClass(doc.body, scrollLockCls);
     win.scrollTo(scrollLockPos.left, scrollLockPos.top);
   }
 }
-
 
 /**
  * Define the module API
@@ -1916,7 +1888,7 @@ function disableScrollLockFn() {
 module.exports = {
   /** Create callback closures */
   callback: callbackFn,
-  
+
   /** Classnames object to string */
   classNames: classNamesFn,
 
@@ -1925,7 +1897,7 @@ module.exports = {
 
   /** Dispatch event */
   dispatchEvent: dispatchEventFn,
-  
+
   /** Enable scroll lock */
   enableScrollLock: enableScrollLockFn,
 
@@ -1945,15 +1917,15 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-
 },{"../config.js":10,"./jqLite.js":11}],13:[function(require,module,exports){
+'use strict';
+
 /**
  * jqLite Tests
  * @module test/test-jqLite
  */
 
-
-describe('js/lib/jqLite.js', function() {
+describe('js/lib/jqLite.js', function () {
 
   var assert = require('assert'),
       helpers = require('./helpers.js'),
@@ -1961,100 +1933,89 @@ describe('js/lib/jqLite.js', function() {
 
   helpers.initDOM();
 
-  before(function() {
+  before(function () {
     jqLite = require('../src/js/lib/jqLite.js');
   });
 
-
-  
   // --------------------------------------------------------------------------
   // CLASS METHODS
   // --------------------------------------------------------------------------
 
-  describe('class methods', function() {
+  describe('class methods', function () {
     var el;
 
-
-    beforeEach(function() {
+    beforeEach(function () {
       el = document.createElement('div');
     });
 
-    
-    it('should add a class', function() {
+    it('should add a class', function () {
       jqLite.addClass(el, 'my-class');
       assert.equal(jqLite.hasClass(el, 'my-class'), true);
     });
 
-
-    it('should remove a class', function() {
+    it('should remove a class', function () {
       jqLite.addClass(el, 'my-class');
       jqLite.removeClass(el, 'my-class');
       assert.equal(jqLite.hasClass(el, 'my-class'), false);
     });
 
-
-    it('should only add one class', function() {
+    it('should only add one class', function () {
       jqLite.addClass(el, 'my-class');
       jqLite.addClass(el, 'my-class');
       assert.equal(el.className, 'my-class');
     });
 
-
-    it('should remove all classes', function() {
+    it('should remove all classes', function () {
       el.className = 'my-class my-class';
       jqLite.removeClass(el, 'my-class');
       assert.equal(jqLite.hasClass(el, 'my-class'), false);
     });
   });
 
-  
-
   // --------------------------------------------------------------------------
   // EVENT HANDLERS
   // --------------------------------------------------------------------------
 
-  describe('event handlers', function() {
+  describe('event handlers', function () {
     var event, el;
 
-
-    before(function() {
+    before(function () {
       event = require('synthetic-dom-events');
     });
 
-    
-    beforeEach(function() {
+    beforeEach(function () {
       el = document.createElement('button');
-      document.body.appendChild(el);  // for IE10
+      document.body.appendChild(el); // for IE10
     });
 
-
-    afterEach(function() {
+    afterEach(function () {
       el.parentNode.removeChild(el);
     });
 
-
-    
-    it('should attach a listener', function() {
+    it('should attach a listener', function () {
       var isClicked = false;
-      jqLite.on(el, 'click', function() {
+      jqLite.on(el, 'click', function () {
         isClicked = true;
       });
       el.dispatchEvent(event('click'));
       assert.equal(isClicked, true);
     });
 
-
-    it('should remove a listener', function() {
+    it('should remove a listener', function () {
       var trigger1 = false,
           trigger2 = false;
 
-      function fn1() {trigger1 = true;};
-      function fn2() {trigger2 = true;};
-      
+      function fn1() {
+        trigger1 = true;
+      };
+      function fn2() {
+        trigger2 = true;
+      };
+
       // add both
       jqLite.on(el, 'click', fn1);
       jqLite.on(el, 'click', fn2);
-      
+
       // remove one
       jqLite.off(el, 'click', fn2);
 
@@ -2064,18 +2025,21 @@ describe('js/lib/jqLite.js', function() {
       assert.equal(trigger2, false);
     });
 
-
-    it('should remove all listeners', function() {
+    it('should remove all listeners', function () {
       var trigger1 = false,
           trigger2 = false;
 
-      function fn1() {trigger1 = true;};
-      function fn2() {trigger2 = true;};
-      
+      function fn1() {
+        trigger1 = true;
+      };
+      function fn2() {
+        trigger2 = true;
+      };
+
       // add both
       jqLite.on(el, 'click', fn1);
       jqLite.on(el, 'click', fn2);
-      
+
       // remove one
       jqLite.off(el, 'click');
 
@@ -2085,11 +2049,12 @@ describe('js/lib/jqLite.js', function() {
       assert.equal(trigger2, false);
     });
 
-
-    it('should only trigger once', function() {
+    it('should only trigger once', function () {
       var t = 0;
-      function fn() {t += 1;};
-      
+      function fn() {
+        t += 1;
+      };
+
       jqLite.one(el, 'click', fn);
 
       // trigger once
@@ -2102,34 +2067,28 @@ describe('js/lib/jqLite.js', function() {
     });
   });
 
-
-  
   // --------------------------------------------------------------------------
   // CSS HELPER
   // --------------------------------------------------------------------------
 
-  describe('css helpers', function() {
+  describe('css helpers', function () {
     var el;
 
-
-    beforeEach(function() {
+    beforeEach(function () {
       el = document.createElement('button');
       document.body.appendChild(el);
     });
 
-
-    afterEach(function() {
+    afterEach(function () {
       el.parentNode.removeChild(el);
     });
 
-
-    it('should set individual values', function() {
+    it('should set individual values', function () {
       jqLite.css(el, 'background-color', 'red');
-      assert.equal(el.style.backgroundColor, 'red')
+      assert.equal(el.style.backgroundColor, 'red');
     });
 
-
-    it('should set multiple values', function() {
+    it('should set multiple values', function () {
       jqLite.css(el, {
         'background-color': 'red',
         'color': 'blue'
@@ -2138,8 +2097,7 @@ describe('js/lib/jqLite.js', function() {
       assert.equal(el.style.color, 'blue');
     });
 
-
-    it('should get individual classes', function() {
+    it('should get individual classes', function () {
       jqLite.css(el, 'background-color', 'rgb(255, 0, 0)');
       assert.equal(jqLite.css(el, 'background-color'), 'rgb(255, 0, 0)');
     });
@@ -2147,27 +2105,22 @@ describe('js/lib/jqLite.js', function() {
     // TODO: specify missing values API
   });
 
-
-
   // --------------------------------------------------------------------------
   // SCROLL METHODS
   // --------------------------------------------------------------------------
-  describe('scroll methods', function() {
+  describe('scroll methods', function () {
     var el;
 
-
-    beforeEach(function() {
+    beforeEach(function () {
       el = document.createElement('div');
       document.body.appendChild(el);
     });
-    
 
-    afterEach(function() {
+    afterEach(function () {
       el.parentNode.removeChild(el);
     });
 
-
-    it('should set scroll position', function() {
+    it('should set scroll position', function () {
       var innerEl = document.createElement('div');
       el.appendChild(innerEl);
 
@@ -2199,8 +2152,7 @@ describe('js/lib/jqLite.js', function() {
  * @module test/test-util
  */
 
-
-describe('js/lib/util.js', function() {
+describe('js/lib/util.js', function () {
   var assert = require('assert'),
       helpers = require('./helpers.js'),
       util,
@@ -2208,28 +2160,24 @@ describe('js/lib/util.js', function() {
 
   helpers.initDOM();
 
-  
-  before(function() {
+  before(function () {
     util = require('../src/js/lib/util.js');
   });
 
-
-  beforeEach(function() {
+  beforeEach(function () {
     el = document.createElement('div');
     document.body.appendChild(el);
   });
 
-
-  afterEach(function() {
+  afterEach(function () {
     el.parentNode.removeChild(el);
   });
-
 
   // --------------------------------------------------------------------------
   // LOADSTYLE
   // --------------------------------------------------------------------------
 
-  it('should load styles dynamically', function() {
+  it('should load styles dynamically', function () {
     var s = '.my-class {color: rgb(255, 0, 0);}';
     util.loadStyle(s);
 
@@ -2240,21 +2188,20 @@ describe('js/lib/util.js', function() {
   });
 });
 
-
 },{"../src/js/lib/jqLite.js":11,"../src/js/lib/util.js":12,"./helpers.js":14,"assert":1,"synthetic-dom-events":7}],14:[function(require,module,exports){
+"use strict";
+
 /**
  * Test helpers
  * @module test/helpers
  */
 
-
 /** Define module API */
 module.exports = {
-  initDOM: function() {
+  initDOM: function initDOM() {
     // initialize jsdom if document is undefined
-    if (typeof (document) === "undefined") require('mocha-jsdom')();
+    if (typeof document === "undefined") require('mocha-jsdom')();
   }
-}
-
+};
 
 },{"mocha-jsdom":6}]},{},[13])
