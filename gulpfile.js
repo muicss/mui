@@ -321,7 +321,8 @@ gulp.task('build-e2e-tests', function() {
   
   files = [
     'cssjs-tests/test-jqlite.js',
-    'cssjs-tests/test-util.js'
+    'cssjs-tests/test-util.js',
+    'react-tests/test-appbar.js'
   ];
 
   // build streams

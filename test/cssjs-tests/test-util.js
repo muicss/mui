@@ -1,6 +1,6 @@
 /**
  * MUI Test Util library
- * @module test/test-util
+ * @module test/cssjs-tests/test-util
  */
 
 
