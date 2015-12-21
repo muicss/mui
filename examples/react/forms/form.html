@@ -22,22 +22,18 @@
     </div>
     <script type="text/babel">
       ReactDOM.render(
-        (
-          <MUIForm>
-            <div className="mui-textfield"><input type="text" /></div>
-            <button className="mui-btn">Button</button>
-          </MUIForm>
-        ),
+        <MUIForm>
+          <div className="mui-textfield"><input type="text" /></div>
+          <button className="mui-btn">Button</button>
+        </MUIForm>,
         document.getElementById('example1')
       );
 
       ReactDOM.render(
-        (
-          <MUIForm isInline={ true }>
-            <div className="mui-textfield"><input type="text" /></div>
-            <button className="mui-btn">Button</button>
-          </MUIForm>
-        ),
+        <MUIForm isInline={ true }>
+          <div className="mui-textfield"><input type="text" /></div>
+          <button className="mui-btn">Button</button>
+        </MUIForm>,
         document.getElementById('example2')
       );
     </script>

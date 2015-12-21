@@ -20,16 +20,24 @@
     </div>
     <script type="text/babel">
       // default tabs
-      var Example1 = React.createClass({
-        render: function() {
+      class Example1 extends React.Component {
+        onChange(i, value, tab, ev) {
+          console.log(arguments)
+        }
+
+        onActive(tab) {
+          console.log(arguments);
+        }
+
+        render() {
           return (
             <MUITabs
-                onChange={ this._handleChange }
+                onChange={ this.onChange }
                 initialSelectedIndex={ 1 }>
               <MUITab
                   value="pane-1"
                   label="Tab 1"
-                  onActive={ this._handleActive }
+                  onActive={ this.onActive }
               >
                 Content 1
               </MUITab>
@@ -38,14 +46,8 @@
               </MUITab>
             </MUITabs>
           );
-        },
-        _handleChange: function(i, value, tab, ev) {
-          console.log(arguments)
-        },
-        _handleActive: function(tab) {
-          console.log(arguments);
         }
-      });
+      }
 
       ReactDOM.render(<Example1/>, document.getElementById('tabs-example1'));
     </script>

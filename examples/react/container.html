@@ -21,20 +21,16 @@
     <div id="container-example2"></div>
     <script type="text/babel">
       ReactDOM.render(
-        (
-          <MUIContainer>
-            <div className="mui-panel"></div>
-          </MUIContainer>
-        ),
+        <MUIContainer>
+          <div className="mui-panel"></div>
+        </MUIContainer>,
         document.getElementById('container-example1')
       );
 
       ReactDOM.render(
-        (
-          <MUIContainer isFluid={ true }>
-            <div className="mui-panel"></div>
-          </MUIContainer>
-        ),
+        <MUIContainer isFluid={ true }>
+          <div className="mui-panel"></div>
+        </MUIContainer>,
         document.getElementById('container-example2')
       );      
     </script>

@@ -20,8 +20,8 @@
       <div id="floating-buttons"></div>
     </div>
     <script type="text/babel">
-      var Buttons = React.createClass({
-        render: function() {
+      class Buttons extends React.Component {
+        render() {
           return (
             <div className="buttons">
               <MUIButton
@@ -61,11 +61,11 @@
             </div>
           );
         }
-      });
+      }
 
 
-      var ButtonSizes = React.createClass({
-        render: function() {
+      class ButtonSizes extends React.Component {
+        render() {
           return (
             <div>
               <MUIButton
@@ -94,11 +94,11 @@
             </div>
           );
         }
-      });
+      }
       
             
-      var FABButtons = React.createClass({
-        render: function() {
+      class FABButtons extends React.Component {
+        render() {
           return (
             <div>
               <MUIButton
@@ -133,48 +133,58 @@
             </div>
           );
         }
-      });
+      }
 
       
-      ReactDOM.render(<div className="mui-panel">
-                        <h3>Default buttons</h3>
-                        <Buttons />
-                        <Buttons isDisabled={ true } />
-                      </div>,
-                      document.getElementById('default-buttons'));
+      ReactDOM.render(
+        <div className="mui-panel">
+          <h3>Default buttons</h3>
+          <Buttons />
+          <Buttons isDisabled={ true } />
+        </div>,
+        document.getElementById('default-buttons')
+      );
 
 
-      ReactDOM.render(<div className="mui-panel">
-                        <h3>Flat buttons</h3>
-                        <Buttons variant="flat" />
-                        <Buttons variant="flat" isDisabled={ true } />
-                      </div>,
-                      document.getElementById('flat-buttons'));
+      ReactDOM.render(
+        <div className="mui-panel">
+          <h3>Flat buttons</h3>
+          <Buttons variant="flat" />
+          <Buttons variant="flat" isDisabled={ true } />
+        </div>,
+        document.getElementById('flat-buttons')
+      );
 
 
-      ReactDOM.render(<div className="mui-panel">
-                        <h3>Raised buttons</h3>
-                        <Buttons variant="raised" />
-                        <Buttons variant="raised" isDisabled={ true } />
-                      </div>,
-                      document.getElementById('raised-buttons'));
+      ReactDOM.render(
+        <div className="mui-panel">
+          <h3>Raised buttons</h3>
+          <Buttons variant="raised" />
+          <Buttons variant="raised" isDisabled={ true } />
+        </div>,
+        document.getElementById('raised-buttons')
+      );
 
 
-      ReactDOM.render(<div className="mui-panel">
-                        <h3>Floating Action Buttons</h3>
-                        <FABButtons />
-                        <FABButtons isDisabled={ true } />
-                      </div>,
-                      document.getElementById('floating-buttons'));
+      ReactDOM.render(
+        <div className="mui-panel">
+          <h3>Floating Action Buttons</h3>
+          <FABButtons />
+          <FABButtons isDisabled={ true } />
+        </div>,
+        document.getElementById('floating-buttons')
+      );
 
 
-      ReactDOM.render(<div className="mui-panel">
-                        <h3>Button sizes</h3>
-                        <ButtonSizes size="small" />
-                        <ButtonSizes />
-                        <ButtonSizes size="large" />
-                      </div>,
-                      document.getElementById('button-sizes'));
+      ReactDOM.render(
+        <div className="mui-panel">
+          <h3>Button sizes</h3>
+          <ButtonSizes size="small" />
+          <ButtonSizes />
+          <ButtonSizes size="large" />
+        </div>,
+        document.getElementById('button-sizes')
+      );
     </script>
   </body>
 </html>

@@ -21,27 +21,25 @@
     </div>
     <script type="text/babel">
       ReactDOM.render(
-        (
-          <form>
-            <MUIRadio
-                name="radioopts"
-                label="Option one"
-                value="opt1"
-                isChecked={ true }
-            />
-            <MUIRadio
-                name="radioopts"
-                label="Option two"
-                value="opt2"
-             />
-            <MUIRadio
-                name="radioopts"
-                label="Option three is disabled"
-                value="opt3"
-                isDisabled={ true }
-            />
-          </form>
-        ),
+        <form>
+          <MUIRadio
+              name="radioopts"
+              label="Option one"
+              value="opt1"
+              isChecked={ true }
+          />
+          <MUIRadio
+              name="radioopts"
+              label="Option two"
+              value="opt2"
+          />
+          <MUIRadio
+              name="radioopts"
+              label="Option three is disabled"
+              value="opt3"
+              isDisabled={ true }
+          />
+        </form>,
         document.getElementById('example1')
       );
     </script>
