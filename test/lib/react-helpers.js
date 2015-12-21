@@ -1,6 +1,6 @@
 /**
  * React Test helpers
- * @module test/react-tests/helpers
+ * @module test/react-tests/react-helpers
  */
 
 import {createRenderer} from 'react-addons-test-utils';

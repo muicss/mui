@@ -8,7 +8,7 @@ import expect from 'expect';
 import expectJSX from 'expect-jsx';
 expect.extend(expectJSX);
 
-import * as helpers from './helpers.js';
+import * as helpers from '../lib/react-helpers.js';
 
 import {Divider} from '../../src/react/divider.jsx';
 

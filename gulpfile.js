@@ -328,27 +328,12 @@ gulp.task('build-examples', ['clean'], function() {
 
 
 gulp.task('build-e2e-tests', function() {
-  var stream = streamqueue({objectMode: true}),
-      files;
-  
-  files = [
-    'cssjs-tests/test-jqlite.js',
-    'cssjs-tests/test-util.js',
-    'react-tests/test-appbar.js'
-  ];
-
-  // build streams
-  for (var i=0; i < files.length; i++) {
-    stream.queue(gulp.src('test/' + files[i]));
-  }
-
-  // concat streams
-  return stream.done()
-    .pipe(concat('tests.js'))
+  return gulp.src('test/e2e-tests.js')
     .pipe(browserify({
       transform: [babelify]
     }))
     .pipe(injectString.prepend(babelHelpersJS))
+    .pipe(rename('tests.js'))
     .pipe(gulp.dest('e2e-tests'));
 });
 

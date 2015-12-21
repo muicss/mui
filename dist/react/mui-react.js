@@ -1279,14 +1279,19 @@ exports.Button = Button;
 
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Caret = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
 /**
  * Caret constructor
  * @class
  */
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var Caret = (function (_React$Component) {
   babelHelpers.inherits(Caret, _React$Component);
@@ -1297,13 +1302,13 @@ var Caret = (function (_React$Component) {
   }
 
   babelHelpers.createClass(Caret, [{
-    key: "render",
+    key: 'render',
     value: function render() {
-      return React.createElement("span", { className: "mui-caret" });
+      return _react2.default.createElement('span', { className: 'mui-caret' });
     }
   }]);
   return Caret;
-})(React.Component);
+})(_react2.default.Component);
 
 /** Define module API */
 
@@ -1317,14 +1322,19 @@ exports.Caret = Caret;
 
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Container = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
 /**
  * Container constructor
  * @class
  */
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var Container = (function (_React$Component) {
   babelHelpers.inherits(Container, _React$Component);
@@ -1342,7 +1352,7 @@ var Container = (function (_React$Component) {
       // fluid containers
       if (this.props.isFluid) cls += '-fluid';
 
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: cls },
         this.props.children
@@ -1350,12 +1360,12 @@ var Container = (function (_React$Component) {
     }
   }]);
   return Container;
-})(React.Component);
+})(_react2.default.Component);
 
 /** Define module API */
 
 Container.propTypes = {
-  isFluid: React.PropTypes.bool
+  isFluid: _react2.default.PropTypes.bool
 };
 Container.defaultProps = {
   isFluid: false
@@ -1370,14 +1380,19 @@ exports.Container = Container;
 
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Divider = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
 /**
  * Divider constructor
  * @class
  */
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var Divider = (function (_React$Component) {
   babelHelpers.inherits(Divider, _React$Component);
@@ -1390,11 +1405,11 @@ var Divider = (function (_React$Component) {
   babelHelpers.createClass(Divider, [{
     key: 'render',
     value: function render() {
-      return React.createElement('div', { className: 'mui-divider' });
+      return _react2.default.createElement('div', { className: 'mui-divider' });
     }
   }]);
   return Divider;
-})(React.Component);
+})(_react2.default.Component);
 
 /** Define module API */
 
@@ -2746,14 +2761,19 @@ exports.Col = Col;
 
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Panel = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
 /**
  * Panel constructor
  * @class
  */
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var Panel = (function (_React$Component) {
   babelHelpers.inherits(Panel, _React$Component);
@@ -2766,7 +2786,7 @@ var Panel = (function (_React$Component) {
   babelHelpers.createClass(Panel, [{
     key: 'render',
     value: function render() {
-      return React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'mui-panel' },
         this.props.children
@@ -2774,7 +2794,7 @@ var Panel = (function (_React$Component) {
     }
   }]);
   return Panel;
-})(React.Component);
+})(_react2.default.Component);
 
 /** Define module API */
 

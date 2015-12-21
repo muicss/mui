@@ -7,7 +7,7 @@
 describe('js/lib/jqLite.js', function() {
 
   var assert = require('assert'),
-      helpers = require('./helpers.js'),
+      helpers = require('../lib/helpers.js'),
       jqLite;
 
   helpers.initDOM();

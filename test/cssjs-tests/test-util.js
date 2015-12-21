@@ -6,7 +6,7 @@
 
 describe('js/lib/util.js', function() {
   var assert = require('assert'),
-      helpers = require('./helpers.js'),
+      helpers = require('../lib/helpers.js'),
       util,
       el;
 
