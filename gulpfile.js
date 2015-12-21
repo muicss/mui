@@ -18,6 +18,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     jshint = require('gulp-jshint'),
     libSass = require('gulp-sass'),
     rename = require('gulp-rename'),
+    replace = require('gulp-replace'),
     source = require('vinyl-source-stream'),
     streamqueue = require('streamqueue'),
     stringify = require('stringify'),
@@ -130,6 +131,7 @@ gulp.task('react', ['clean'], function() {
       transform: [babelify],
       external: ['react']
     }))
+    .pipe(replace("require('react')", "window.React"))
     .pipe(injectString.prepend(babelHelpersJS))
     .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));

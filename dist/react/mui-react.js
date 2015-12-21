@@ -1167,7 +1167,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Appbar = undefined;
 
-var _react = require('react');
+var _react = window.React;
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
@@ -1201,7 +1201,7 @@ var Appbar = (function (_React$Component) {
 
 exports.Appbar = Appbar;
 
-},{}],7:[function(require,module,exports){
+},{"react":"nakDgH"}],7:[function(require,module,exports){
 /**
  * MUI React button module
  * @module react/button
@@ -1284,7 +1284,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Caret = undefined;
 
-var _react = require('react');
+var _react = window.React;
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
@@ -1314,7 +1314,7 @@ var Caret = (function (_React$Component) {
 
 exports.Caret = Caret;
 
-},{}],9:[function(require,module,exports){
+},{"react":"nakDgH"}],9:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
@@ -1327,7 +1327,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Container = undefined;
 
-var _react = require('react');
+var _react = window.React;
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
@@ -1372,7 +1372,7 @@ Container.defaultProps = {
 };
 exports.Container = Container;
 
-},{}],10:[function(require,module,exports){
+},{"react":"nakDgH"}],10:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -1385,7 +1385,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Divider = undefined;
 
-var _react = require('react');
+var _react = window.React;
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
@@ -1415,7 +1415,7 @@ var Divider = (function (_React$Component) {
 
 exports.Divider = Divider;
 
-},{}],11:[function(require,module,exports){
+},{"react":"nakDgH"}],11:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -2766,7 +2766,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Panel = undefined;
 
-var _react = require('react');
+var _react = window.React;
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
@@ -2800,7 +2800,7 @@ var Panel = (function (_React$Component) {
 
 exports.Panel = Panel;
 
-},{}],20:[function(require,module,exports){
+},{"react":"nakDgH"}],20:[function(require,module,exports){
 /**
  * MUI React ripple module
  * @module react/ripple
