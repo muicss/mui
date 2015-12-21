@@ -1472,7 +1472,7 @@ for (var alias in aliases) {
   Expectation.prototype[alias] = Expectation.prototype[aliases[alias]];
 }exports['default'] = Expectation;
 module.exports = exports['default'];
-},{"./SpyUtils":9,"./TestUtils":10,"./assert":11,"is-equal":49,"is-regex":55}],9:[function(require,module,exports){
+},{"./SpyUtils":9,"./TestUtils":10,"./assert":11,"is-equal":49,"is-regex":54}],9:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1675,7 +1675,7 @@ function isA(object, value) {
 
   return typeof object === value;
 }
-},{"is-equal":49,"is-regex":55}],11:[function(require,module,exports){
+},{"is-equal":49,"is-regex":54}],11:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3219,7 +3219,7 @@ module.exports = function getSymbolIterator() {
 	return symbolIterator;
 };
 
-},{"is-symbol":58}],49:[function(require,module,exports){
+},{"is-symbol":57}],49:[function(require,module,exports){
 'use strict';
 
 var ObjectPrototype = Object.prototype;
@@ -3449,7 +3449,7 @@ module.exports = function isEqual(value, other) {
 	return false;
 };
 
-},{"./getCollectionsForEach":47,"./getSymbolIterator":48,"has":42,"is-arrow-function":43,"is-boolean-object":44,"is-callable":45,"is-date-object":46,"is-generator-function":50,"is-number-object":51,"is-regex":55,"is-string":57,"is-symbol":58}],50:[function(require,module,exports){
+},{"./getCollectionsForEach":47,"./getSymbolIterator":48,"has":42,"is-arrow-function":43,"is-boolean-object":44,"is-callable":45,"is-date-object":46,"is-generator-function":50,"is-number-object":51,"is-regex":54,"is-string":56,"is-symbol":57}],50:[function(require,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -3533,22 +3533,7 @@ module.exports = function isPlainObject(o) {
   return true;
 };
 
-},{"isobject":54}],54:[function(require,module,exports){
-/*!
- * isobject <https://github.com/jonschlinkert/isobject>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-'use strict';
-
-module.exports = function isObject(val) {
-  return val != null && typeof val === 'object'
-    && !Array.isArray(val);
-};
-
-},{}],55:[function(require,module,exports){
+},{"isobject":58}],54:[function(require,module,exports){
 'use strict';
 
 var regexExec = RegExp.prototype.exec;
@@ -3569,13 +3554,13 @@ module.exports = function isRegex(value) {
 	return hasToStringTag ? tryRegexExec(value) : toStr.call(value) === regexClass;
 };
 
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 'use strict';
 module.exports = function (re) {
 	return Object.prototype.toString.call(re) === '[object RegExp]';
 };
 
-},{}],57:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 'use strict';
 
 var strValue = String.prototype.valueOf;
@@ -3597,7 +3582,7 @@ module.exports = function isString(value) {
 	return hasToStringTag ? tryStringObject(value) : toStr.call(value) === strClass;
 };
 
-},{}],58:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -3625,6 +3610,21 @@ if (hasSymbols) {
 		return false;
 	};
 }
+
+},{}],58:[function(require,module,exports){
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+'use strict';
+
+module.exports = function isObject(val) {
+  return val != null && typeof val === 'object'
+    && !Array.isArray(val);
+};
 
 },{}],59:[function(require,module,exports){
 var baseFill = require('../internal/baseFill'),
@@ -22527,7 +22527,7 @@ module.exports = function (val, opts, pad) {
 	})(val, opts, pad);
 };
 
-},{"is-plain-obj":52,"is-regexp":56}],204:[function(require,module,exports){
+},{"is-plain-obj":52,"is-regexp":55}],204:[function(require,module,exports){
 (function (global){
 // Guard against document not being defined in non-browser environments.
 if (typeof global.document === 'undefined') {

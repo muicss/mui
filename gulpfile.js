@@ -128,7 +128,7 @@ gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
       transform: [babelify],
-      exclude: ['react']
+      external: ['react']
     }))
     .pipe(injectString.prepend(babelHelpersJS))
     .pipe(rename(pkgName + '-react.js'))
