@@ -4,15 +4,15 @@
  */
 
 
-describe('js/lib/jqLite.js', () => {
+describe('js/lib/jqLite.js', function() {
 
-  let assert = require('assert'),
-      helpers = require('../lib/helpers.js'),
+  var assert = require('assert'),
+      helpers = require('./helpers.js'),
       jqLite;
 
   helpers.initDOM();
 
-  before(() => {
+  before(function() {
     jqLite = require('../../src/js/lib/jqLite.js');
   });
 
@@ -22,36 +22,36 @@ describe('js/lib/jqLite.js', () => {
   // CLASS METHODS
   // --------------------------------------------------------------------------
 
-  describe('class methods', () => {
-    let el;
+  describe('class methods', function() {
+    var el;
 
 
-    beforeEach(() => {
+    beforeEach(function() {
       el = document.createElement('div');
     });
 
     
-    it('should add a class', () => {
+    it('should add a class', function() {
       jqLite.addClass(el, 'my-class');
       assert.equal(jqLite.hasClass(el, 'my-class'), true);
     });
 
 
-    it('should remove a class', () => {
+    it('should remove a class', function() {
       jqLite.addClass(el, 'my-class');
       jqLite.removeClass(el, 'my-class');
       assert.equal(jqLite.hasClass(el, 'my-class'), false);
     });
 
 
-    it('should only add one class', () => {
+    it('should only add one class', function() {
       jqLite.addClass(el, 'my-class');
       jqLite.addClass(el, 'my-class');
       assert.equal(el.className, 'my-class');
     });
 
 
-    it('should remove all classes', () => {
+    it('should remove all classes', function() {
       el.className = 'my-class my-class';
       jqLite.removeClass(el, 'my-class');
       assert.equal(jqLite.hasClass(el, 'my-class'), false);
@@ -64,30 +64,30 @@ describe('js/lib/jqLite.js', () => {
   // EVENT HANDLERS
   // --------------------------------------------------------------------------
 
-  describe('event handlers', () => {
-    let event, el;
+  describe('event handlers', function() {
+    var event, el;
 
 
-    before(() => {
+    before(function() {
       event = require('synthetic-dom-events');
     });
 
     
-    beforeEach(() => {
+    beforeEach(function() {
       el = document.createElement('button');
       document.body.appendChild(el);  // for IE10
     });
 
 
-    afterEach(() => {
+    afterEach(function() {
       el.parentNode.removeChild(el);
     });
 
 
     
-    it('should attach a listener', () => {
-      let isClicked = false;
-      jqLite.on(el, 'click', () => {
+    it('should attach a listener', function() {
+      var isClicked = false;
+      jqLite.on(el, 'click', function() {
         isClicked = true;
       });
       el.dispatchEvent(event('click'));
@@ -95,12 +95,12 @@ describe('js/lib/jqLite.js', () => {
     });
 
 
-    it('should remove a listener', () => {
-      let trigger1 = false,
+    it('should remove a listener', function() {
+      var trigger1 = false,
           trigger2 = false;
 
-      let fn1 = () => {trigger1 = true;};
-      let fn2 = () => {trigger2 = true;};
+      var fn1 = function() {trigger1 = true;};
+      var fn2 = function() {trigger2 = true;};
       
       // add both
       jqLite.on(el, 'click', fn1);
@@ -116,12 +116,12 @@ describe('js/lib/jqLite.js', () => {
     });
 
 
-    it('should remove all listeners', () => {
-      let trigger1 = false,
+    it('should remove all listeners', function() {
+      var trigger1 = false,
           trigger2 = false;
 
-      let fn1 = () => {trigger1 = true;};
-      let fn2 = () => {trigger2 = true;};
+      var fn1 = function() {trigger1 = true;};
+      var fn2 = function() {trigger2 = true;};
       
       // add both
       jqLite.on(el, 'click', fn1);
@@ -137,9 +137,9 @@ describe('js/lib/jqLite.js', () => {
     });
 
 
-    it('should only trigger once', () => {
-      let t = 0,
-          fn = () => {t += 1;};
+    it('should only trigger once', function() {
+      var t = 0,
+          fn = function() {t += 1;};
       
       jqLite.one(el, 'click', fn);
 
@@ -159,28 +159,28 @@ describe('js/lib/jqLite.js', () => {
   // CSS HELPER
   // --------------------------------------------------------------------------
 
-  describe('css helpers', () => {
-    let el;
+  describe('css helpers', function() {
+    var el;
 
 
-    beforeEach(() => {
+    beforeEach(function() {
       el = document.createElement('button');
       document.body.appendChild(el);
     });
 
 
-    afterEach(() => {
+    afterEach(function() {
       el.parentNode.removeChild(el);
     });
 
 
-    it('should set individual values', () => {
+    it('should set individual values', function() {
       jqLite.css(el, 'background-color', 'red');
       assert.equal(el.style.backgroundColor, 'red')
     });
 
 
-    it('should set multiple values', () => {
+    it('should set multiple values', function() {
       jqLite.css(el, {
         'background-color': 'red',
         'color': 'blue'
@@ -190,7 +190,7 @@ describe('js/lib/jqLite.js', () => {
     });
 
 
-    it('should get individual classes', () => {
+    it('should get individual classes', function() {
       jqLite.css(el, 'background-color', 'rgb(255, 0, 0)');
       assert.equal(jqLite.css(el, 'background-color'), 'rgb(255, 0, 0)');
     });
@@ -203,23 +203,23 @@ describe('js/lib/jqLite.js', () => {
   // --------------------------------------------------------------------------
   // SCROLL METHODS
   // --------------------------------------------------------------------------
-  describe('scroll methods', () => {
-    let el;
+  describe('scroll methods', function() {
+    var el;
 
 
-    beforeEach(() => {
+    beforeEach(function() {
       el = document.createElement('div');
       document.body.appendChild(el);
     });
     
 
-    afterEach(() => {
+    afterEach(function() {
       el.parentNode.removeChild(el);
     });
 
 
-    it('should set scroll position', () => {
-      let innerEl = document.createElement('div');
+    it('should set scroll position', function() {
+      var innerEl = document.createElement('div');
       el.appendChild(innerEl);
 
       // add overflow

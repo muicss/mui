@@ -39,6 +39,8 @@
     "contextify": "^0.1.15",
     "del": "^2.2.0",
     "each-async": "^1.1.1",
+    "expect": "^1.13.4",
+    "expect-jsx": "^2.2.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-browserify": "^0.5.1",

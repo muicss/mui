@@ -1162,14 +1162,19 @@ module.exports = {
 
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Appbar = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
 /**
  * Appbar constructor
  * @class
  */
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var Appbar = (function (_React$Component) {
   babelHelpers.inherits(Appbar, _React$Component);
@@ -1180,17 +1185,17 @@ var Appbar = (function (_React$Component) {
   }
 
   babelHelpers.createClass(Appbar, [{
-    key: "render",
+    key: 'render',
     value: function render() {
-      return React.createElement(
-        "div",
-        { className: "mui-appbar" },
+      return _react2.default.createElement(
+        'div',
+        { className: 'mui-appbar' },
         this.props.children
       );
     }
   }]);
   return Appbar;
-})(React.Component);
+})(_react2.default.Component);
 
 /** Define module API */
 

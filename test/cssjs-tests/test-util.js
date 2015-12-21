@@ -4,27 +4,27 @@
  */
 
 
-describe('js/lib/util.js', () => {
-  let assert = require('assert'),
-      helpers = require('../lib/helpers.js'),
+describe('js/lib/util.js', function() {
+  var assert = require('assert'),
+      helpers = require('./helpers.js'),
       util,
       el;
 
   helpers.initDOM();
 
   
-  before(() => {
+  before(function() {
     util = require('../../src/js/lib/util.js');
   });
 
 
-  beforeEach(() => {
+  beforeEach(function() {
     el = document.createElement('div');
     document.body.appendChild(el);
   });
 
 
-  afterEach(() => {
+  afterEach(function() {
     el.parentNode.removeChild(el);
   });
 
@@ -33,13 +33,13 @@ describe('js/lib/util.js', () => {
   // LOADSTYLE
   // --------------------------------------------------------------------------
 
-  it('should load styles dynamically', () => {
-    const s = '.my-class {color: rgb(255, 0, 0);}';
+  it('should load styles dynamically', function() {
+    var s = '.my-class {color: rgb(255, 0, 0);}';
     util.loadStyle(s);
 
     el.className = 'my-class';
 
-    let css = getComputedStyle(el);
+    var css = getComputedStyle(el);
     assert.equal(css.getPropertyValue('color'), 'rgb(255, 0, 0)');
   });
 });

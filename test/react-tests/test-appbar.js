@@ -3,25 +3,20 @@
  * @module test/react-tests/test-appbar
  */
 
+import React from 'react';
+import expect from 'expect';
+import expectJSX from 'expect-jsx';
+expect.extend(expectJSX);
 
-describe('react/button.jsx', () => {
-  let assert = require('assert'),
-      helpers = require('../lib/helpers.js'),
-      Appbar;
+import * as helpers from './helpers.js';
 
-  helpers.initDOM();
-
-  
-  before(() => {
-    //Appbar = require('../../src/react/appbar.jsx').Appbar;
-  });
+import {Appbar} from '../../src/react/appbar.jsx';
 
 
-  // --------------------------------------------------------------------------
-  // TEST APPBAR
-  // --------------------------------------------------------------------------
-
-  it('works', () => {
-    assert.equal(true, true);
+describe('react/appbar.jsx', () => {
+  it('handles children', () => {
+    let actualEl = helpers.renderReactEl(<Appbar>test</Appbar>);
+    let expectedEl = <div className="mui-appbar">test</div>;
+    expect(actualEl).toEqualJSX(expectedEl);
   });
 });

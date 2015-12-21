@@ -1,4 +1,91 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global) {
+  var babelHelpers = global.babelHelpers = {};
+
+  babelHelpers.classCallCheck = function (instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  };
+
+  babelHelpers.createClass = (function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  })();
+
+  babelHelpers.extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  babelHelpers.inherits = function (subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  };
+
+  babelHelpers.interopRequireDefault = function (obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  };
+
+  babelHelpers.interopRequireWildcard = function (obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    } else {
+      var newObj = {};
+
+      if (obj != null) {
+        for (var key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+        }
+      }
+
+      newObj.default = obj;
+      return newObj;
+    }
+  };
+
+  babelHelpers.possibleConstructorReturn = function (self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  };
+})(typeof global === "undefined" ? self : global);(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
 //
 // THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
@@ -1918,6 +2005,69 @@ module.exports = {
 };
 
 },{"../config.js":10,"./jqLite.js":11}],13:[function(require,module,exports){
+/**
+ * MUI React Appbar Module
+ * @module react/appbar
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Appbar = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+/**
+ * Appbar constructor
+ * @class
+ */
+
+var Appbar = (function (_React$Component) {
+  babelHelpers.inherits(Appbar, _React$Component);
+
+  function Appbar() {
+    babelHelpers.classCallCheck(this, Appbar);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Appbar).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Appbar, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'mui-appbar' },
+        this.props.children
+      );
+    }
+  }]);
+  return Appbar;
+})(_react2.default.Component);
+
+/** Define module API */
+
+exports.Appbar = Appbar;
+
+},{}],14:[function(require,module,exports){
+"use strict";
+
+/**
+ * Test helpers
+ * @module test/helpers
+ */
+
+/** Define module API */
+module.exports = {
+  initDOM: function initDOM() {
+    // initialize jsdom if document is undefined
+    if (typeof document === "undefined") require('mocha-jsdom')();
+  }
+};
+
+},{"mocha-jsdom":6}],15:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1929,7 +2079,7 @@ describe('js/lib/jqLite.js', function () {
 
   var assert = require('assert'),
       helpers = require('../lib/helpers.js'),
-      jqLite = undefined;
+      jqLite;
 
   helpers.initDOM();
 
@@ -1942,7 +2092,7 @@ describe('js/lib/jqLite.js', function () {
   // --------------------------------------------------------------------------
 
   describe('class methods', function () {
-    var el = undefined;
+    var el;
 
     beforeEach(function () {
       el = document.createElement('div');
@@ -1977,8 +2127,7 @@ describe('js/lib/jqLite.js', function () {
   // --------------------------------------------------------------------------
 
   describe('event handlers', function () {
-    var event = undefined,
-        el = undefined;
+    var event, el;
 
     before(function () {
       event = require('synthetic-dom-events');
@@ -2006,10 +2155,10 @@ describe('js/lib/jqLite.js', function () {
       var trigger1 = false,
           trigger2 = false;
 
-      function fn1() {
+      var fn1 = function fn1() {
         trigger1 = true;
       };
-      function fn2() {
+      var fn2 = function fn2() {
         trigger2 = true;
       };
 
@@ -2030,10 +2179,10 @@ describe('js/lib/jqLite.js', function () {
       var trigger1 = false,
           trigger2 = false;
 
-      function fn1() {
+      var fn1 = function fn1() {
         trigger1 = true;
       };
-      function fn2() {
+      var fn2 = function fn2() {
         trigger2 = true;
       };
 
@@ -2051,8 +2200,8 @@ describe('js/lib/jqLite.js', function () {
     });
 
     it('should only trigger once', function () {
-      var t = 0;
-      function fn() {
+      var t = 0,
+          fn = function fn() {
         t += 1;
       };
 
@@ -2073,7 +2222,7 @@ describe('js/lib/jqLite.js', function () {
   // --------------------------------------------------------------------------
 
   describe('css helpers', function () {
-    var el = undefined;
+    var el;
 
     beforeEach(function () {
       el = document.createElement('button');
@@ -2110,7 +2259,7 @@ describe('js/lib/jqLite.js', function () {
   // SCROLL METHODS
   // --------------------------------------------------------------------------
   describe('scroll methods', function () {
-    var el = undefined;
+    var el;
 
     beforeEach(function () {
       el = document.createElement('div');
@@ -2156,8 +2305,8 @@ describe('js/lib/jqLite.js', function () {
 describe('js/lib/util.js', function () {
   var assert = require('assert'),
       helpers = require('../lib/helpers.js'),
-      util = undefined,
-      el = undefined;
+      util,
+      el;
 
   helpers.initDOM();
 
@@ -2197,12 +2346,12 @@ describe('js/lib/util.js', function () {
 describe('react/button.jsx', function () {
   var assert = require('assert'),
       helpers = require('../lib/helpers.js'),
-      Appbar = undefined;
+      Appbar;
 
   helpers.initDOM();
 
   before(function () {
-    //Appbar = require('../../src/react/appbar.jsx').Appbar;
+    Appbar = require('../../src/react/appbar.jsx').Appbar;
   });
 
   // --------------------------------------------------------------------------
@@ -2214,20 +2363,4 @@ describe('react/button.jsx', function () {
   });
 });
 
-},{"../../src/js/lib/jqLite.js":11,"../../src/js/lib/util.js":12,"../lib/helpers.js":14,"assert":1,"synthetic-dom-events":7}],14:[function(require,module,exports){
-"use strict";
-
-/**
- * Test helpers
- * @module test/helpers
- */
-
-/** Define module API */
-module.exports = {
-  initDOM: function initDOM() {
-    // initialize jsdom if document is undefined
-    if (typeof document === "undefined") require('mocha-jsdom')();
-  }
-};
-
-},{"mocha-jsdom":6}]},{},[13])
+},{"../../src/js/lib/jqLite.js":11,"../../src/js/lib/util.js":12,"../../src/react/appbar.jsx":13,"../lib/helpers.js":14,"assert":1,"synthetic-dom-events":7}]},{},[15])

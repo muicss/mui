@@ -10,6 +10,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     cssmin = require('gulp-cssmin'),
     concat = require('gulp-concat'),
     del = require('del'),
+    fs = require('fs'),
     gulp = require('gulp'),
     injectSource = require('gulp-inline-source'),
     injectString = require('gulp-inject-string'),
@@ -21,6 +22,25 @@ var autoprefixer = require('gulp-autoprefixer'),
     streamqueue = require('streamqueue'),
     stringify = require('stringify'),
     uglify = require('gulp-uglify');
+
+
+babelify = babelify.configure({
+  plugins: ['external-helpers-2']
+})
+
+
+var babelHelpersJS = babelCore.buildExternalHelpers(
+  [
+    'inherits',
+    'createClass',
+    'classCallCheck',
+    'possibleConstructorReturn',
+    'interopRequireDefault',
+    'interopRequireWildcard',
+    'extends'
+  ],
+  'global'
+);
 
 
 
@@ -107,20 +127,10 @@ gulp.task('uglify', ['js'], function() {
 gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
-      transform: [babelify]
+      transform: [babelify],
+      exclude: ['react']
     }))
-    .pipe(injectString.prepend(babelCore.buildExternalHelpers(
-      [
-        'inherits',
-        'createClass',
-        'classCallCheck',
-        'possibleConstructorReturn',
-        'interopRequireDefault',
-        'interopRequireWildcard',
-        'extends'
-      ],
-      'global'
-    )))
+    .pipe(injectString.prepend(babelHelpersJS))
     .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));
 });
@@ -250,8 +260,10 @@ gulp.task('react-combined', ['clean', 'cssmin'], function() {
         babelify,
         stringify(['.css'])
       ],
-      paths: [dirName + '/css']
+      paths: [dirName + '/css'],
+      exclude: ['react']
     }))
+    .pipe(injectString.prepend(babelHelpersJS))
     .pipe(uglify())
     .pipe(rename(pkgName + '-react-combined.js'))
     .pipe(gulp.dest(dirName + '/extra'));
@@ -336,6 +348,7 @@ gulp.task('build-e2e-tests', function() {
     .pipe(browserify({
       transform: [babelify]
     }))
+    .pipe(injectString.prepend(babelHelpersJS))
     .pipe(gulp.dest('e2e-tests'));
 });
 

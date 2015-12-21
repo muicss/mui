@@ -5,6 +5,8 @@
 
 'use strict';
 
+import React from 'react';
+
 
 /**
  * Appbar constructor
