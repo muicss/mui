@@ -328,7 +328,7 @@ gulp.task('build-examples', ['clean'], function() {
 
 
 gulp.task('build-e2e-tests', function() {
-  return gulp.src('test/e2e-tests.js')
+  return gulp.src('e2e-tests/_tests.js')
     .pipe(browserify({
       transform: [babelify]
     }))
