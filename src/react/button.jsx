@@ -7,10 +7,11 @@
 
 import React from 'react';
 
+import * as jqLite from '../js/lib/jqlite.js';
 import * as util from '../js/lib/util.js';
 
-
-let PropTypes = React.PropTypes;
+let PropTypes = React.PropTypes,
+    rippleIter = 0;
 
 const btnClass = 'mui-btn',
       rippleClass = 'mui-ripple-effect',
@@ -23,7 +24,7 @@ const btnClass = 'mui-btn',
  */
 class Button extends React.Component {
   state = {
-    rippleEls: []
+    rippleElems: []
   }
 
   static propTypes = {
@@ -42,6 +43,35 @@ class Button extends React.Component {
     isDisabled: false
   }
 
+  onClick(ev) {
+    let onClickFn = this.props.onClick;
+    onClickFn && onClickFn(ev);
+  }
+
+  onMouseDown(ev) {
+    console.log(ev);
+
+    // add ripple
+    let rippleElems = this.state.rippleElems;
+
+    let teardownFn = () => {
+      rippleElems.shift();
+      this.setState({rippleElems: rippleElems})
+    }
+
+    let elem = (
+      <Ripple
+        key={ rippleIter++ }
+        buttonElem={ this.refs.buttonElem }
+        triggerEv={ ev }
+        teardownFn={ teardownFn }
+      />
+    );
+
+    rippleElems.push(elem);
+    this.setState({rippleElems: rippleElems});
+  }
+
   render() {
     let cls = btnClass,
         k,
@@ -56,13 +86,15 @@ class Button extends React.Component {
     
     return (
       <button
+        ref="buttonElem"
         className={ cls }
         disabled={ this.props.isDisabled }
-        onMouseDown={ this.ripple }
-        onTouchStart={ this.ripple }
-        onClick={ this.props.onClick }
+        onMouseDown={ this.onMouseDown.bind(this) }
+        onTouchStart={ this.onMouseDown.bind(this) }
+        onClick={ this.onClick.bind(this) }
       >
         { this.props.children }
+        { this.state.rippleElems }
       </button>
     );
   }
@@ -75,20 +107,19 @@ class Button extends React.Component {
  */
 class Ripple extends React.Component {
   static propTypes = {
-    buttonEl: PropTypes.elem,
-    triggerEv: PropTypes.object
+    buttonElem: PropTypes.object,
+    triggerEv: PropTypes.object,
+    teardownFn: PropTypes.func
   }
 
   static defaultProps = {
-    buttonEl: null,
-    triggerEv
+    buttonElem: null,
+    triggerEv: null,
+    teardownFn: null
   }
 
   componentDidMount() {
-  }
-
-  render() {
-    let buttonEl = ReactDOM.findDOMNOde(this.props.buttonEl),
+    let buttonEl = ReactDOM.findDOMNode(this.props.buttonElem),
         offset = jqLite.offset(buttonEl),
         ev = this.props.triggerEv,
         xPos = ev.pageX - offset.left,
@@ -97,8 +128,10 @@ class Ripple extends React.Component {
         radius,
         style;
 
+    console.log(ev);
+
     // get height
-    if (this.props.buttonEl.props.variant === 'fab') {
+    if (jqLite.hasClass(buttonEl, 'mui-button--fab')) {
       diameter = offset.height / 2;
     } else {
       diameter = offset.height;
@@ -113,9 +146,19 @@ class Ripple extends React.Component {
       left: xPos - radius
     };
 
-    return (
-      <div className={ rippleClass } style=
-    );
+    var el = ReactDOM.findDOMNode(this.refs.rippleEl);
+    jqLite.css(el, style);
+    console.log(style);
+    console.log(el);
+
+    // trigger teardown in 2 sec
+    setTimeout(() => {
+      //this.props.teardownFn();
+    }, 2000);
+  }
+
+  render() {
+    return <div ref="rippleEl" className={ rippleClass }></div>;
   }
 }
 
