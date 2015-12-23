@@ -43,14 +43,18 @@ class Button extends React.Component {
     isDisabled: false
   }
 
+  componentDidMount() {
+    var el = ReactDOM.findDOMNode(this.refs.buttonEl);
+    jqLite.on(el, 'mousedown', util.callback(this, 'onMouseDown'));
+    jqLite.on(el, 'touchstart', util.callback(this, 'onTouchStart'));
+  }
+
   onClick(ev) {
     let onClickFn = this.props.onClick;
     onClickFn && onClickFn(ev);
   }
 
   onMouseDown(ev) {
-    console.log(ev);
-
     // add ripple
     let rippleElems = this.state.rippleElems;
 
@@ -62,7 +66,7 @@ class Button extends React.Component {
     let elem = (
       <Ripple
         key={ rippleIter++ }
-        buttonElem={ this.refs.buttonElem }
+        buttonEl={ ReactDOM.findDOMNode(this.refs.buttonEl) }
         triggerEv={ ev }
         teardownFn={ teardownFn }
       />
@@ -70,6 +74,10 @@ class Button extends React.Component {
 
     rippleElems.push(elem);
     this.setState({rippleElems: rippleElems});
+  }
+
+  onTouchStart(ev) {
+    
   }
 
   render() {
@@ -86,11 +94,9 @@ class Button extends React.Component {
     
     return (
       <button
-        ref="buttonElem"
+        ref="buttonEl"
         className={ cls }
         disabled={ this.props.isDisabled }
-        onMouseDown={ this.onMouseDown.bind(this) }
-        onTouchStart={ this.onMouseDown.bind(this) }
         onClick={ this.onClick.bind(this) }
       >
         { this.props.children }
@@ -106,20 +112,24 @@ class Button extends React.Component {
  * @class
  */
 class Ripple extends React.Component {
+  state = {
+    style: null
+  }
+
   static propTypes = {
-    buttonElem: PropTypes.object,
+    buttonEl: PropTypes.object,
     triggerEv: PropTypes.object,
     teardownFn: PropTypes.func
   }
 
   static defaultProps = {
-    buttonElem: null,
+    buttonEl: null,
     triggerEv: null,
     teardownFn: null
   }
 
-  componentDidMount() {
-    let buttonEl = ReactDOM.findDOMNode(this.props.buttonElem),
+  componentWillMount() {
+    let buttonEl = this.props.buttonEl,
         offset = jqLite.offset(buttonEl),
         ev = this.props.triggerEv,
         xPos = ev.pageX - offset.left,
@@ -127,8 +137,6 @@ class Ripple extends React.Component {
         diameter,
         radius,
         style;
-
-    console.log(ev);
 
     // get height
     if (jqLite.hasClass(buttonEl, 'mui-button--fab')) {
@@ -146,19 +154,23 @@ class Ripple extends React.Component {
       left: xPos - radius
     };
 
-    var el = ReactDOM.findDOMNode(this.refs.rippleEl);
-    jqLite.css(el, style);
-    console.log(style);
-    console.log(el);
+    this.setState({style});
+  }
 
+  componentDidMount() {
     // trigger teardown in 2 sec
-    setTimeout(() => {
-      //this.props.teardownFn();
-    }, 2000);
+    setTimeout(() => {this.props.teardownFn();}, 2000);
   }
 
   render() {
-    return <div ref="rippleEl" className={ rippleClass }></div>;
+    return (
+      <div
+        ref="rippleEl"
+        className={ rippleClass }
+        style={ this.state.style }
+      >
+      </div>
+    );
   }
 }
 
