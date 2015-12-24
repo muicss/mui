@@ -25,7 +25,7 @@ const PropTypes = React.PropTypes,
  */
 class Button extends React.Component {
   state = {
-    rippleElems: []
+    ripples: {}
   }
 
   static propTypes = {
@@ -46,9 +46,20 @@ class Button extends React.Component {
   }
 
   componentDidMount() {
-    let el = ReactDOM.findDOMNode(this.refs.buttonEl);
-    jqLite.on(el, 'mousedown', util.callback(this, 'onMouseDown'));
-    jqLite.on(el, 'touchstart', util.callback(this, 'onTouchStart'));
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState);
+
+    // look for new ripples
+    const prevRipples = prevState.ripples;
+
+    let currRipples = this.state.ripples,
+        k;
+
+    for (k in currRipples) {
+      if (!(k in prevRipples)) console.log(k);
+    }
   }
 
   onClick(ev) {
@@ -57,29 +68,53 @@ class Button extends React.Component {
   }
 
   onMouseDown(ev) {
-    // add ripple
-    let rippleElems = this.state.rippleElems;
+    console.log('onMouseDown');
 
-    let teardownFn = () => {
-      rippleElems.shift();
-      this.setState({rippleElems: rippleElems})
-    }
+    // get (x, y) position of click
+    let buttonEl = ReactDOM.findDOMNode(this.refs.buttonEl);
+    let offset = jqLite.offset(buttonEl);
 
-    let elem = (
-      <Ripple
-        key={ rippleIter++ }
-        buttonEl={ ReactDOM.findDOMNode(this.refs.buttonEl) }
-        triggerEv={ ev }
-        teardownFn={ teardownFn }
-      />
-    );
+    // choose diameter
+    let diameter = offset.height;
+    if (this.props.variant === 'fab') diameter = diameter / 2;
 
-    rippleElems.push(elem);
-    this.setState({rippleElems: rippleElems});
+    // add ripple to state
+    let ripples = this.state.ripples;
+
+    ripples[new Date().toString()] = {
+      xPos: ev.pageX - offset.left,
+      yPos: ev.pageY - offset.top,
+      diameter: diameter
+    };
+
+    this.setState({ ripples });
   }
 
   onTouchStart(ev) {
     
+  }
+
+  renderRippleElems() {
+    let rippleElems = [],
+        ripples = this.state.ripples,
+        k,
+        v;
+
+    for (k in ripples) {
+      v = ripples[k];
+
+      // use mousedown timestamp as key
+      rippleElems.push(
+        <Ripple
+          key={ k }
+          xPos={ v.xPos }
+          yPos={ v.yPos }
+          diameter={ v.diameter }
+        />        
+      );
+    }
+
+    return rippleElems;
   }
 
   render() {
@@ -87,6 +122,7 @@ class Button extends React.Component {
         k,
         v;
     
+    // button attributes
     for (k in btnAttrs) {
       v = this.props[k];
       if (v !== 'default') cls += ' ' + btnClass + '--' + v;
@@ -98,9 +134,10 @@ class Button extends React.Component {
         className={ cls }
         disabled={ this.props.isDisabled }
         onClick={ this.onClick.bind(this) }
+        onMouseDown={ this.onMouseDown.bind(this) }
       >
         { this.props.children }
-        { this.state.rippleElems }
+        { this.renderRippleElems() }
       </button>
     );
   }
@@ -117,41 +154,28 @@ class Ripple extends React.Component {
   }
 
   static propTypes = {
-    buttonEl: PropTypes.object,
-    triggerEv: PropTypes.object,
+    xPos: PropTypes.number,
+    yPos: PropTypes.number,
+    diameter: PropTypes.number,
     teardownFn: PropTypes.func
   }
 
   static defaultProps = {
-    buttonEl: null,
-    triggerEv: null,
+    xPos: 0,
+    yPos: 0,
+    diameter: 0,
     teardownFn: null
   }
 
   componentWillMount() {
-    let buttonEl = this.props.buttonEl,
-        offset = jqLite.offset(buttonEl),
-        ev = this.props.triggerEv,
-        xPos = ev.pageX - offset.left,
-        yPos = ev.pageY - offset.top,
-        diameter,
-        radius,
-        style;
+    let diameter = this.props.diameter,
+        radius = diameter / 2;
 
-    // get height
-    if (jqLite.hasClass(buttonEl, 'mui-btn--fab')) {
-      diameter = offset.height / 2;
-    } else {
-      diameter = offset.height;
-    }
-
-    radius = diameter / 2;
-
-    style = {
+    let style = {
       height: diameter,
       width: diameter,
-      top: yPos - radius,
-      left: xPos - radius
+      top: this.props.yPos - radius,
+      left: this.props.xPos - radius
     };
 
     this.setState({style});
@@ -163,14 +187,7 @@ class Ripple extends React.Component {
   }
 
   render() {
-    return (
-      <div
-        ref="rippleEl"
-        className={ rippleClass }
-        style={ this.state.style }
-      >
-      </div>
-    );
+    return <div className={ rippleClass } style={ this.state.style } />;
   }
 }
 

@@ -5,6 +5,7 @@
 
 import assert from 'assert';
 import React from 'react';
+import ReactUtils from 'react-addons-test-utils';
 
 import { Button } from '../../src/react/button.jsx';
 
@@ -47,9 +48,24 @@ describe('react/button', () => {
     let fn = () => {
       done();
     }
-    
-    let node = <Button onClick={ fn }>test</Button>;
-    assert.equal(node.props.onClick, fn);
-    node.props.onClick();
+
+    let elem = <Button onClick={ fn }>test</Button>;
+    let node = ReactUtils.renderIntoDocument(elem);
+
+    // click on button
+    ReactUtils.Simulate.click(node.refs.buttonEl);    
+  });
+
+
+  it('renders ripples on click', () => {
+    let elem = <Button>test</Button>;
+    let node = ReactUtils.renderIntoDocument(elem);
+
+    console.log(elem);
+
+    // click on button
+    //ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
+
+    //console.log(elem);
   });
 });
