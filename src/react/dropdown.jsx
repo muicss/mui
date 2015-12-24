@@ -10,10 +10,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as util from '../js/lib/util';
-import * as jqLite from '../js/lib/jqLite';
-import { Caret } from './caret';
-import { Button } from './button';
+import { Button } from './button.jsx';
+import { Caret } from './caret.jsx';
+import * as jqLite from '../js/lib/jqLite.js';
+import * as util from '../js/lib/util.js';
 
 const PropTypes = React.PropTypes,
       dropdownClass = 'mui-dropdown',

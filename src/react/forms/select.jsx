@@ -8,9 +8,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as jqLite from '../../js/lib/jqlite';
-import * as util from '../../js/lib/util';
-import * as formlib from '../../js/lib/forms';
+import * as formlib from '../../js/lib/forms.js';
+import * as jqLite from '../../js/lib/jqlite.js';
+import * as util from '../../js/lib/util.js';
 
 
 const PropTypes = React.PropTypes;

@@ -8,7 +8,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as util from '../../js/lib/util';
+import * as util from '../../js/lib/util.js';
 
 
 const PropTypes = React.PropTypes;
