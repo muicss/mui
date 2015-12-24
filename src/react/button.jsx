@@ -8,8 +8,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as jqLite from '../js/lib/jqlite.js';
-import * as util from '../js/lib/util.js';
+import * as jqLite from '../js/lib/jqLite';
+import * as util from '../js/lib/util';
 
 let rippleIter = 0;
 
