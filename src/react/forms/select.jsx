@@ -8,8 +8,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as formlib from '../../js/lib/forms.js';
-import * as jqLite from '../../js/lib/jqlite.js';
+import * as formlib from '../../js/lib/forms';
+import * as jqLite from '../../js/lib/jqLite';
 import * as util from '../../js/lib/util';
 
 
