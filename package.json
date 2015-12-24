@@ -60,6 +60,8 @@
     "mocha": "^2.3.4",
     "mocha-jsdom": "^1.0.0",
     "react": "^0.14.3",
+    "react-addons-test-utils": "^0.14.3",
+    "react-dom": "^0.14.3",
     "reactify": "^1.1.1",
     "readable-wrap": "^1.0.0",
     "streamqueue": "^1.1.1",

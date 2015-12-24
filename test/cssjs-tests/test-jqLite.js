@@ -3,21 +3,13 @@
  * @module test/cssjs-tests/test-jqLite
  */
 
+var assert = require('assert');
+  
+var jqLite = require('../../src/js/lib/jqLite.js');
+
 
 describe('js/lib/jqLite.js', function() {
 
-  var assert = require('assert'),
-      helpers = require('../lib/helpers.js'),
-      jqLite;
-
-  helpers.initDOM();
-
-  before(function() {
-    jqLite = require('../../src/js/lib/jqLite.js');
-  });
-
-
-  
   // --------------------------------------------------------------------------
   // CLASS METHODS
   // --------------------------------------------------------------------------

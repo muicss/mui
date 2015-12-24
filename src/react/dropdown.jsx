@@ -7,6 +7,9 @@
 
 'use strict';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import * as util from '../js/lib/util.js';
 import * as jqLite from '../js/lib/jqLite.js';
 import { Caret } from './caret.jsx';

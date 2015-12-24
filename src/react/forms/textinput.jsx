@@ -5,6 +5,9 @@
 
 'use strict';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import * as util from '../../js/lib/util.js';
 
 let PropTypes = React.PropTypes;

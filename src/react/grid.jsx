@@ -5,7 +5,10 @@
 
 'use strict';
 
+import React from 'react';
+
 import * as util from '../js/lib/util.js';
+
 
 const breakpoints = ['xs', 'sm', 'md', 'lg'];
 

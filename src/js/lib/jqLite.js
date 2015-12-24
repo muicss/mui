@@ -5,11 +5,6 @@
 
 'use strict';
 
-// Global vars
-var gDoc = document,
-    gDocEl = gDoc.documentElement,
-    gWin = window;
-
 
 /**
  * Add a class to an element.
@@ -185,18 +180,20 @@ function jqLiteOne(element, type, callback, useCapture) {
  * @param {number} [value] - The scroll position
  */
 function jqLiteScrollLeft(element, value) {
+  var win = window;
+
   // get
   if (value === undefined) {
-    if (element === gWin) {
-      var t = (gWin.pageXOffset || gDocEl.scrollLeft)
-      return t - (gDocEl.clientLeft || 0);
+    if (element === win) {
+      var docEl = document.documentElement;
+      return (win.pageXOffset || docEl.scrollLeft) - (docEl.clientLeft || 0);
     } else {
       return element.scrollLeft;
     }
   }
 
   // set
-  if (element === gWin) gWin.scrollTo(value, jqLiteScrollTop(gWin));
+  if (element === win) win.scrollTo(value, jqLiteScrollTop(win));
   else element.scrollLeft = value;
 }
 
@@ -207,17 +204,20 @@ function jqLiteScrollLeft(element, value) {
  * @param {number} value - The scroll position
  */
 function jqLiteScrollTop(element, value) {
+  var win = window;
+
   // get
   if (value === undefined) {
-    if (element === gWin) {
-      return (gWin.pageYOffset || gDocEl.scrollTop) - (gDocEl.clientTop || 0);
+    if (element === win) {
+      var docEl = document.documentElement;
+      return (win.pageYOffset || docEl.scrollTop) - (docEl.clientTop || 0);
     } else {
       return element.scrollTop;
     }
   }
 
   // set
-  if (element === gWin) gWin.scrollTo(jqLiteScrollLeft(gWin), value);
+  if (element === win) win.scrollTo(jqLiteScrollLeft(win), value);
   else element.scrollTop = value;
 }
 
@@ -227,9 +227,10 @@ function jqLiteScrollTop(element, value) {
  * @param {Element} element - The DOM element.
  */
 function jqLiteOffset(element) {
-  var rect = element.getBoundingClientRect(),
-      scrollTop = jqLiteScrollTop(gWin),
-      scrollLeft = jqLiteScrollLeft(gWin);
+  var win = window,
+      rect = element.getBoundingClientRect(),
+      scrollTop = jqLiteScrollTop(win),
+      scrollLeft = jqLiteScrollLeft(win);
 
   return {
     top: rect.top + scrollTop,

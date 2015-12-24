@@ -5,6 +5,9 @@
 
 'use strict';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import * as jqLite from '../../js/lib/jqlite.js';
 import * as util from '../../js/lib/util.js';
 import * as formlib from '../../js/lib/forms.js';

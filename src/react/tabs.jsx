@@ -7,7 +7,10 @@
 
 'use strict';
 
+import React from 'react';
+
 import * as util from '../js/lib/util.js';
+
 
 let PropTypes = React.PropTypes;
 

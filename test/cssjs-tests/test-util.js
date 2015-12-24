@@ -3,19 +3,13 @@
  * @module test/cssjs-tests/test-util
  */
 
+var assert = require('assert');
+
+var util = require('../../src/js/lib/util.js');
+
 
 describe('js/lib/util.js', function() {
-  var assert = require('assert'),
-      helpers = require('../lib/helpers.js'),
-      util,
-      el;
-
-  helpers.initDOM();
-
-  
-  before(function() {
-    util = require('../../src/js/lib/util.js');
-  });
+  var el;
 
 
   beforeEach(function() {

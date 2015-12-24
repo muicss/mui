@@ -6,6 +6,7 @@
 'use strict';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import * as jqLite from '../js/lib/jqlite.js';
 import * as util from '../js/lib/util.js';
@@ -44,7 +45,7 @@ class Button extends React.Component {
   }
 
   componentDidMount() {
-    var el = ReactDOM.findDOMNode(this.refs.buttonEl);
+    let el = ReactDOM.findDOMNode(this.refs.buttonEl);
     jqLite.on(el, 'mousedown', util.callback(this, 'onMouseDown'));
     jqLite.on(el, 'touchstart', util.callback(this, 'onTouchStart'));
   }

@@ -5,6 +5,9 @@
 
 'use strict';
 
+import React from 'react';
+
+
 let PropTypes = React.PropTypes;
 
 

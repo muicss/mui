@@ -8,22 +8,19 @@
 
 var config = require('../config.js'),
     jqLite = require('./jqLite.js'),
-    win = window,
-    doc = document,
     nodeInsertedCallbacks = [],
     scrollLock = 0,
     scrollLockCls = 'mui-body--scroll-lock',
     scrollLockPos,
-    head,
     _supportsPointerEvents;
-
-head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
 
 /**
  * Logging function
  */
 function logFn() {
+  var win = window;
+
   if (config.debug && typeof win.console !== "undefined") {
     try {
       win.console.log.apply(win.console, arguments);
@@ -40,6 +37,14 @@ function logFn() {
  * @param {string} cssText - The css text.
  */
 function loadStyleFn(cssText) {
+  var doc = document,
+      head;
+
+  // copied from jQuery 
+  head = doc.head ||
+    doc.getElementsByTagName('head')[0] ||
+    doc.documentElement;
+  
   var e = doc.createElement('style');
   e.type = 'text/css';
     
@@ -71,6 +76,8 @@ function onNodeInsertedFn(callbackFn) {
 
   // initalize listeners
   if (nodeInsertedCallbacks._initialized === undefined) {
+    var doc = document;
+
     jqLite.on(doc, 'animationstart', animationHandlerFn);
     jqLite.on(doc, 'mozAnimationStart', animationHandlerFn);
     jqLite.on(doc, 'webkitAnimationStart', animationHandlerFn);
@@ -171,6 +178,9 @@ function enableScrollLockFn() {
 
   // add lock
   if (scrollLock === 1) {
+    var win = window,
+        doc = document;
+
     scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
     jqLite.addClass(doc.body, scrollLockCls);
     win.scrollTo(scrollLockPos.left, scrollLockPos.top);
@@ -190,6 +200,9 @@ function disableScrollLockFn() {
 
   // remove lock 
   if (scrollLock === 0) {
+    var win = window,
+        doc = document;
+
     jqLite.removeClass(doc.body, scrollLockCls);
     win.scrollTo(scrollLockPos.left, scrollLockPos.top);
   }
