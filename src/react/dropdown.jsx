@@ -10,14 +10,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as util from '../js/lib/util.js';
-import * as jqLite from '../js/lib/jqLite.js';
-import { Caret } from './caret.jsx';
+import * as util from '../js/lib/util';
+import * as jqLite from '../js/lib/jqLite';
+import { Caret } from './caret';
+import { Button } from './button';
 
-let Button = require('./button.jsx').Button,
-    PropTypes = React.PropTypes;
-
-const dropdownClass = 'mui-dropdown',
+const PropTypes = React.PropTypes,
+      dropdownClass = 'mui-dropdown',
       menuClass = 'mui-dropdown__menu',
       openClass = 'mui--is-open',
       rightClass = 'mui-dropdown__menu--right';
@@ -205,4 +204,4 @@ class DropdownItem extends React.Component {
 
 
 /** Define module API */
-export {Dropdown, DropdownItem};
+export { Dropdown, DropdownItem };

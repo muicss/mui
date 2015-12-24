@@ -37,4 +37,4 @@ class Container extends React.Component {
 
 
 /** Define module API */
-export {Container};
+export { Container };

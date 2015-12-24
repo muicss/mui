@@ -8,13 +8,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as jqLite from '../js/lib/jqlite.js';
-import * as util from '../js/lib/util.js';
+import * as jqLite from '../js/lib/jqlite';
+import * as util from '../js/lib/util';
 
-let PropTypes = React.PropTypes,
-    rippleIter = 0;
+let rippleIter = 0;
 
-const btnClass = 'mui-btn',
+const PropTypes = React.PropTypes,
+      btnClass = 'mui-btn',
       rippleClass = 'mui-ripple-effect',
       btnAttrs = {color: 1, variant: 1, size: 1};
 

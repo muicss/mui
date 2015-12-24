@@ -24,4 +24,4 @@ class Appbar extends React.Component {
 
 
 /** Define module API */
-export {Appbar};
+export { Appbar };

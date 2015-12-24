@@ -8,13 +8,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as jqLite from '../../js/lib/jqlite.js';
-import * as util from '../../js/lib/util.js';
-import * as formlib from '../../js/lib/forms.js';
+import * as jqLite from '../../js/lib/jqlite';
+import * as util from '../../js/lib/util';
+import * as formlib from '../../js/lib/forms';
 
-let PropTypes = React.PropTypes,
-    doc = document,
-    win = window;
+
+const PropTypes = React.PropTypes;
 
 
 /**
@@ -94,7 +93,7 @@ class Select extends React.Component {
     if (selectEl.disabled) return this.refs.wrapperEl.blur();
 
     // attach keydown handler
-    jqLite.on(doc, 'keydown', this.onKeydown);
+    jqLite.on(document, 'keydown', this.onKeydown);
   }
 
   onOuterBlur(ev) {
@@ -106,7 +105,7 @@ class Select extends React.Component {
     selectEl.tabIndex = selectEl._muiOrigIndex;
 
     // remove keydown handler
-    jqLite.off(doc, 'keydown', this.onKeydown);    
+    jqLite.off(document, 'keydown', this.onKeydown);    
   }
 
   onKeydown(ev) {
@@ -124,8 +123,8 @@ class Select extends React.Component {
     util.enableScrollLock();
 
     // add event listeners
-    jqLite.on(win, 'resize', this.hideMenuFn);
-    jqLite.on(doc, 'click', this.hideMenuFn);
+    jqLite.on(window, 'resize', this.hideMenuFn);
+    jqLite.on(document, 'click', this.hideMenuFn);
 
     // re-draw
     this.setState({showMenu: true});
@@ -136,8 +135,8 @@ class Select extends React.Component {
     util.disableScrollLock();
 
     // remove event listeners
-    jqLite.off(win, 'resize', this.hideMenuFn);
-    jqLite.off(doc, 'click', this.hideMenuFn);
+    jqLite.off(window, 'resize', this.hideMenuFn);
+    jqLite.off(documenet, 'click', this.hideMenuFn);
     
     // re-draw
     this.setState({showMenu: false});
@@ -247,9 +246,8 @@ class Menu extends React.Component {
   componentDidMount() {
     // blur active element (IE10 bugfix)
     setTimeout(function() {
-      if (doc.activeElement.nodeName.toLowerCase() !== 'body') {
-        doc.activeElement.blur();
-      }
+      let el = document.activeElement;
+      if (el.nodeName.toLowerCase() !== 'body') el.activeElement.blur();
     }, 0);
 
     // set position
@@ -264,12 +262,12 @@ class Menu extends React.Component {
     jqLite.scrollTop(el, props.scrollTop);
 
     // attach keydown handler
-    jqLite.on(doc, 'keydown', this.onKeydownCB);
+    jqLite.on(document, 'keydown', this.onKeydownCB);
   }
 
   componentWillUnmount() {
     // remove keydown handler
-    jqLite.off(doc, 'keydown', this.onKeydownCB);
+    jqLite.off(document, 'keydown', this.onKeydownCB);
   }
 
   onClick(pos, ev) {

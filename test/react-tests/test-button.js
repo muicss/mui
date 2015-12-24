@@ -3,49 +3,42 @@
  * @module test/react-tests/test-appbar
  */
 
-import expect from 'expect';
+import assert from 'assert';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactUtils from 'react-addons-test-utils';
 
-import * as util from '../../src/js/lib/util.js';
-import {Button} from '../../src/react/button.jsx';
+import { Button } from '../../src/react/button.jsx';
 
-import * as helpers from '../lib/react-helpers.js';
+import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/button.jsx', () => {
-  it('handles children', () => {
-    let domNode = helpers.renderReactEl(<Button>test</Button>);
-    expect(domNode.type).toBe('button');
-    expect(domNode.props.children).toEqual(['test', []]);
+describe('react/button', () => {
+  it('renders properly', () => {
+    let node = getShallowRendererOutput(<Button>test</Button>);
+    assert.equal(node.type, 'button');
+    assert.equal(node.props.className, 'mui-btn');
+    assert.equal(node.props.children[0], 'test');
   });
 
   
   it('supports colors', () => {
-    let reactNode = <Button color="primary">test</Button>;
-    expect(reactNode.props.color).toBe('primary');
-
-    let domNode = helpers.renderReactEl(reactNode);
-    expect(/mui-btn--primary/.test(domNode.props.className)).toBe(true);
+    let node = getShallowRendererOutput(<Button color="primary">test</Button>);
+    assert.equal(/mui-btn--primary/.test(node.props.className), true);
   });
 
 
   it('supports variants', () => {
-    let reactNode = <Button variant="raised">test</Button>;
-    expect(reactNode.props.variant).toBe('raised');
-
-    let domNode = helpers.renderReactEl(reactNode);
-    expect(/mui-btn--raised/.test(domNode.props.className)).toBe(true);
+    let node = getShallowRendererOutput(
+      <Button variant="raised">
+        test
+      </Button>
+    );
+    assert.equal(/mui-btn--raised/.test(node.props.className), true);
   });
 
 
   it('supports sizes', () => {
-    let reactNode = <Button size="large">test</Button>;
-    expect(reactNode.props.size).toBe('large');
-
-    let domNode = helpers.renderReactEl(reactNode);
-    expect(/mui-btn--large/.test(domNode.props.className)).toBe(true);
+    let node = getShallowRendererOutput(<Button size="large">test</Button>);
+    assert.equal(/mui-btn--large/.test(node.props.className), true);
   });
   
 
@@ -55,9 +48,8 @@ describe('react/button.jsx', () => {
       done();
     }
     
-    let reactNode = <Button onClick={ fn }>test</Button>;
-    
-    expect(reactNode.props.onClick).toBe(fn);
-    reactNode.props.onClick();
+    let node = <Button onClick={ fn }>test</Button>;
+    assert.equal(node.props.onClick, fn);
+    node.props.onClick();
   });
 });

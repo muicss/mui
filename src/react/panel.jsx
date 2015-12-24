@@ -24,4 +24,4 @@ class Panel extends React.Component {
 
 
 /** Define module API */
-export {Panel};
+export { Panel };

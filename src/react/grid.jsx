@@ -7,7 +7,7 @@
 
 import React from 'react';
 
-import * as util from '../js/lib/util.js';
+import * as util from '../js/lib/util';
 
 
 const breakpoints = ['xs', 'sm', 'md', 'lg'];
@@ -81,4 +81,4 @@ class Col extends React.Component {
 
 
 /** Define module API */
-export {Row, Col};
+export { Row, Col };

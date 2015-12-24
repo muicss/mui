@@ -3,27 +3,24 @@
  * @module test/react-tests/test-appbar
  */
 
-import expect from 'expect';
+import assert from 'assert';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactUtils from 'react-addons-test-utils';
 
-import * as util from '../../src/js/lib/util.js';
-import {Dropdown, DropdownItem} from '../../src/react/dropdown.jsx';
+import { Dropdown, DropdownItem } from '../../src/react/dropdown.jsx';
 
-import * as helpers from '../lib/react-helpers.js';
+import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/dropdown.jsx', () => {
+describe('react/dropdown', () => {
   it('renders button component', () => {
-    let reactNode = (
+    let node = getShallowRendererOutput(
       <Dropdown>
         <DropdownItem>Option 1</DropdownItem>
         <DropdownItem>Option 2</DropdownItem>
         <DropdownItem>Option 3</DropdownItem>
       </Dropdown>
     );
-
-    let domNode = helpers.renderReactEl(reactNode);
   });
 });

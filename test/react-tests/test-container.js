@@ -3,31 +3,31 @@
  * @module test/react-tests/test-container
  */
 
+import assert from 'assert';
 import React from 'react';
-import expect from 'expect';
-import expectJSX from 'expect-jsx';
-expect.extend(expectJSX);
 
-import * as helpers from '../lib/react-helpers.js';
+import { Container } from '../../src/react/container.jsx';
 
-import {Container} from '../../src/react/container.jsx';
+import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/container.jsx', () => {
-  it('defaults to standard container', () => {
-    let actualEl = helpers.renderReactEl(<Container>test</Container>);
-    let expectedEl = <div className="mui-container">test</div>;
-    expect(actualEl).toEqualJSX(expectedEl);
+describe('react/container', () => {
+  it('renders default properly', () => {
+    let node = getShallowRendererOutput(<Container>test</Container>);
+
+    assert.equal(node.type, 'div');
+    assert.equal(node.props.className, 'mui-container');
+    assert.equal(node.props.children, 'test');
   });
 
 
-  it('handles isFluid option', () => {
-    let actualEl = helpers.renderReactEl(
-        <Container isFluid={ true }>
-          test
-        </Container>
+  it('rendes fluid properly', () => {
+    let node = getShallowRendererOutput(
+      <Container isFluid={ true }>test</Container>
     );
-    let expectedEl = <div className="mui-container-fluid">test</div>;
-    expect(actualEl).toEqualJSX(expectedEl);
+
+    assert.equal(node.type, 'div');
+    assert.equal(node.props.className, 'mui-container-fluid');
+    assert.equal(node.props.children, 'test');
   });
 });

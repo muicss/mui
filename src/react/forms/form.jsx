@@ -37,4 +37,4 @@ class Form extends React.Component {
 
 
 /** Define module API */
-export {Form};
+export { Form };

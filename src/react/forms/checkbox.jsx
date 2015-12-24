@@ -7,7 +7,8 @@
 
 import React from 'react';
 
-let PropTypes = React.PropTypes;
+
+const PropTypes = React.PropTypes;
 
 
 /**
@@ -45,4 +46,4 @@ class Checkbox extends React.Component {
 
 
 /** Define module API */
-export {Checkbox};
+export { Checkbox };

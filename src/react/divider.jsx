@@ -22,4 +22,4 @@ class Divider extends React.Component {
 
 
 /** Define module API */
-export {Divider};
+export { Divider };

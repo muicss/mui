@@ -3,20 +3,20 @@
  * @module test/react-tests/test-caret
  */
 
+import assert from 'assert';
 import React from 'react';
-import expect from 'expect';
-import expectJSX from 'expect-jsx';
-expect.extend(expectJSX);
 
-import * as helpers from '../lib/react-helpers.js';
+import { Caret } from '../../src/react/caret.jsx';
 
-import {Caret} from '../../src/react/caret.jsx';
+import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/caret.jsx', () => {
-  it('ignores children', () => {
-    let actualEl = helpers.renderReactEl(<Caret>test</Caret>);
-    let expectedEl = <span className="mui-caret"></span>;
-    expect(actualEl).toEqualJSX(expectedEl);
+describe('react/caret', () => {
+  it('renders properly', () => {
+    let node = getShallowRendererOutput(<Caret>test</Caret>);
+
+    assert.equal(node.type, 'span');
+    assert.equal(node.props.className, 'mui-caret');
+    assert.equal(node.props.children, undefined);
   });
 });

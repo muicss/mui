@@ -8,7 +8,7 @@
 import React from 'react';
 
 
-let PropTypes = React.PropTypes;
+const PropTypes = React.PropTypes;
 
 
 /**
@@ -52,4 +52,4 @@ class Radio extends React.Component {
 
 
 /** Define module API */
-export {Radio};
+export { Radio };

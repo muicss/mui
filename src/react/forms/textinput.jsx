@@ -8,9 +8,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as util from '../../js/lib/util.js';
+import * as util from '../../js/lib/util';
 
-let PropTypes = React.PropTypes;
+
+const PropTypes = React.PropTypes;
 
 
 /**
@@ -249,4 +250,4 @@ class TextareaInput extends React.Component {
 
 
 /** Define module API */
-export {TextInput, TextareaInput};
+export { TextInput, TextareaInput };

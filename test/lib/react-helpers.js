@@ -3,15 +3,11 @@
  * @module test/react-tests/react-helpers
  */
 
-import {createRenderer} from 'react-addons-test-utils';
+import { createRenderer } from 'react-addons-test-utils';
 
 
-function renderReactEl(jsx) {
-  let r = createRenderer();
-  r.render(jsx);
-  
-  return r.getRenderOutput();
+export function getShallowRendererOutput(reactElem) {
+  const shallowRenderer = createRenderer();
+  shallowRenderer.render(reactElem);
+  return shallowRenderer.getRenderOutput();
 }
-
-
-export {renderReactEl};

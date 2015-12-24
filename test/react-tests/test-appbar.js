@@ -3,20 +3,20 @@
  * @module test/react-tests/test-appbar
  */
 
+import assert from 'assert';
 import React from 'react';
-import expect from 'expect';
-import expectJSX from 'expect-jsx';
-expect.extend(expectJSX);
 
-import * as helpers from '../lib/react-helpers.js';
+import { Appbar } from '../../src/react/appbar.jsx';
 
-import {Appbar} from '../../src/react/appbar.jsx';
+import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/appbar.jsx', () => {
-  it('handles children', () => {
-    let actualEl = helpers.renderReactEl(<Appbar>test</Appbar>);
-    let expectedEl = <div className="mui-appbar">test</div>;
-    expect(actualEl).toEqualJSX(expectedEl);
+describe('react/appbar', () => {
+  it('renders properly', () => {
+    let node = getShallowRendererOutput(<Appbar>test</Appbar>);
+
+    assert.equal(node.type, 'div');
+    assert.equal(node.props.className, 'mui-appbar')
+    assert.equal(node.props.children, 'test');
   });
 });

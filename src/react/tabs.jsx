@@ -9,12 +9,11 @@
 
 import React from 'react';
 
-import * as util from '../js/lib/util.js';
+import * as util from '../js/lib/util';
 
 
-let PropTypes = React.PropTypes;
-
-const tabsBarClass = 'mui-tabs__bar',
+const PropTypes = React.PropTypes,
+      tabsBarClass = 'mui-tabs__bar',
       tabsBarJustifiedClass = 'mui-tabs__bar--justified',
       tabsPaneClass = 'mui-tabs__pane',
       isActiveClass = 'mui--is-active';
@@ -134,4 +133,4 @@ class Tab extends React.Component {
 
 
 /** Define module API */
-export {Tab, Tabs};
+export { Tab, Tabs };

@@ -3,20 +3,20 @@
  * @module test/react-tests/test-panel
  */
 
+import assert from 'assert';
 import React from 'react';
-import expect from 'expect';
-import expectJSX from 'expect-jsx';
-expect.extend(expectJSX);
 
-import * as helpers from '../lib/react-helpers.js';
+import { Panel } from '../../src/react/panel.jsx';
 
-import {Panel} from '../../src/react/panel.jsx';
+import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/panel.jsx', () => {
-  it('handles children', () => {
-    let actualEl = helpers.renderReactEl(<Panel>test</Panel>);
-    let expectedEl = <div className="mui-panel">test</div>;
-    expect(actualEl).toEqualJSX(expectedEl);
+describe('react/panel', () => {
+  it('renders properly', () => {
+    let node = getShallowRendererOutput(<Panel>test</Panel>);
+
+    assert.equal(node.type, 'div');
+    assert.equal(node.props.className, 'mui-panel');
+    assert.equal(node.props.children, 'test');
   });
 });

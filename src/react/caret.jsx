@@ -22,4 +22,4 @@ class Caret extends React.Component {
 
 
 /** Define module API */
-export {Caret};
+export { Caret };
