@@ -25,7 +25,8 @@ const PropTypes = React.PropTypes,
  */
 class Button extends React.Component {
   state = {
-    ripples: {}
+    ripples: {},
+    buttonElDOMNode: null
   }
 
   static propTypes = {
@@ -46,20 +47,8 @@ class Button extends React.Component {
   }
 
   componentDidMount() {
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log(prevState);
-
-    // look for new ripples
-    const prevRipples = prevState.ripples;
-
-    let currRipples = this.state.ripples,
-        k;
-
-    for (k in currRipples) {
-      if (!(k in prevRipples)) console.log(k);
-    }
+    // cache reference to button DOM node
+    this.setState({buttonElDOMNode: ReactDOM.findDOMNode(this.refs.buttonEl)});
   }
 
   onClick(ev) {
@@ -68,11 +57,8 @@ class Button extends React.Component {
   }
 
   onMouseDown(ev) {
-    console.log('onMouseDown');
-
     // get (x, y) position of click
-    let buttonEl = ReactDOM.findDOMNode(this.refs.buttonEl);
-    let offset = jqLite.offset(buttonEl);
+    let offset = jqLite.offset(this.state.buttonElDOMNode);
 
     // choose diameter
     let diameter = offset.height;
@@ -80,11 +66,13 @@ class Button extends React.Component {
 
     // add ripple to state
     let ripples = this.state.ripples;
+    let key = Date.now();
 
-    ripples[new Date().toString()] = {
+    ripples[key] = {
       xPos: ev.pageX - offset.left,
       yPos: ev.pageY - offset.top,
-      diameter: diameter
+      diameter: diameter,
+      teardownFn: this.teardownRipple.bind(this, key)
     };
 
     this.setState({ ripples });
@@ -94,27 +82,11 @@ class Button extends React.Component {
     
   }
 
-  renderRippleElems() {
-    let rippleElems = [],
-        ripples = this.state.ripples,
-        k,
-        v;
-
-    for (k in ripples) {
-      v = ripples[k];
-
-      // use mousedown timestamp as key
-      rippleElems.push(
-        <Ripple
-          key={ k }
-          xPos={ v.xPos }
-          yPos={ v.yPos }
-          diameter={ v.diameter }
-        />        
-      );
-    }
-
-    return rippleElems;
+  teardownRipple(key) {
+    // delete ripple
+    let ripples = this.state.ripples;
+    delete ripples[key];
+    this.setState({ ripples });
   }
 
   render() {
@@ -122,6 +94,8 @@ class Button extends React.Component {
         k,
         v;
     
+    const ripples = this.state.ripples;
+
     // button attributes
     for (k in btnAttrs) {
       v = this.props[k];
@@ -137,7 +111,21 @@ class Button extends React.Component {
         onMouseDown={ this.onMouseDown.bind(this) }
       >
         { this.props.children }
-        { this.renderRippleElems() }
+        { 
+          Object.keys(ripples).map((k, i) => {
+            let v = ripples[k];
+
+            return (
+              <Ripple
+                key={ k }
+                xPos={ v.xPos }
+                yPos={ v.yPos }
+                diameter={ v.diameter }
+                onTeardown={ v.teardownFn }
+              />
+            );
+          })
+        }
       </button>
     );
   }
@@ -149,25 +137,29 @@ class Button extends React.Component {
  * @class
  */
 class Ripple extends React.Component {
-  state = {
-    style: null
-  }
-
   static propTypes = {
     xPos: PropTypes.number,
     yPos: PropTypes.number,
     diameter: PropTypes.number,
-    teardownFn: PropTypes.func
+    onTeardown: PropTypes.func
   }
 
   static defaultProps = {
     xPos: 0,
     yPos: 0,
     diameter: 0,
-    teardownFn: null
+    onTeardown: null
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    // trigger teardown in 2 sec
+    setTimeout(() => {
+      let fn = this.props.onTeardown;
+      fn && fn();
+    }, 2000);
+  }
+
+  render() {
     let diameter = this.props.diameter,
         radius = diameter / 2;
 
@@ -177,17 +169,8 @@ class Ripple extends React.Component {
       top: this.props.yPos - radius,
       left: this.props.xPos - radius
     };
-
-    this.setState({style});
-  }
-
-  componentDidMount() {
-    // trigger teardown in 2 sec
-    setTimeout(() => {this.props.teardownFn();}, 2000);
-  }
-
-  render() {
-    return <div className={ rippleClass } style={ this.state.style } />;
+    
+    return <div className={ rippleClass } style={ style } />;
   }
 }
 

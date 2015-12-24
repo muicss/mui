@@ -61,8 +61,6 @@ describe('react/button', () => {
     let elem = <Button>test</Button>;
     let node = ReactUtils.renderIntoDocument(elem);
 
-    console.log(elem);
-
     // click on button
     //ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
 
