@@ -29,7 +29,8 @@ class Button extends React.Component {
   }
 
   static propTypes = {
-    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark',
+      'accent']),
     variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
     size: PropTypes.oneOf(['default', 'small', 'large']),
     onClick: PropTypes.func,
