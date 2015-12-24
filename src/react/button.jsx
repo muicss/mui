@@ -19,7 +19,7 @@ const btnClass = 'mui-btn',
 
 
 /**
- * Button constructor
+ * Button element
  * @class
  */
 class Button extends React.Component {
@@ -90,8 +90,6 @@ class Button extends React.Component {
       if (v !== 'default') cls += ' ' + btnClass + '--' + v;
     }
 
-    /*{ this.state.ripples && this.renderRipples() }*/
-    
     return (
       <button
         ref="buttonEl"
@@ -108,7 +106,7 @@ class Button extends React.Component {
 
 
 /**
- * Ripple constructor
+ * Ripple component
  * @class
  */
 class Ripple extends React.Component {
@@ -139,7 +137,7 @@ class Ripple extends React.Component {
         style;
 
     // get height
-    if (jqLite.hasClass(buttonEl, 'mui-button--fab')) {
+    if (jqLite.hasClass(buttonEl, 'mui-btn--fab')) {
       diameter = offset.height / 2;
     } else {
       diameter = offset.height;
