@@ -1,6 +1,6 @@
 /**
  * MUI React radio module
- * @module react/forms/radio
+ * @module react/radio
  */
 
 'use strict';

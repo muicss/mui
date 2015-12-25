@@ -1,15 +1,15 @@
 /**
  * MUI React select module
- * @module react/forms/select
+ * @module react/select
  */
 
 'use strict';
 
 import React from 'react';
 
-import * as formlib from '../../js/lib/forms';
-import * as jqLite from '../../js/lib/jqLite';
-import * as util from '../../js/lib/util';
+import * as formlib from '../js/lib/forms';
+import * as jqLite from '../js/lib/jqLite';
+import * as util from '../js/lib/util';
 
 
 const PropTypes = React.PropTypes;

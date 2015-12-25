@@ -1143,12 +1143,14 @@ function hasOwnProperty(obj, prop) {
   require('../test/react-tests/test-appbar.js');
   require('../test/react-tests/test-button.js');
   require('../test/react-tests/test-caret.js');
+  require('../test/react-tests/test-checkbox.js');
   require('../test/react-tests/test-container.js');
   require('../test/react-tests/test-divider.js');
+  require('../test/react-tests/test-dropdown.js');
   require('../test/react-tests/test-panel.js');
 })();
 
-},{"../test/cssjs-tests/test-jqlite.js":178,"../test/cssjs-tests/test-util.js":179,"../test/react-tests/test-appbar.js":181,"../test/react-tests/test-button.js":182,"../test/react-tests/test-caret.js":183,"../test/react-tests/test-container.js":184,"../test/react-tests/test-divider.js":185,"../test/react-tests/test-panel.js":186}],7:[function(require,module,exports){
+},{"../test/cssjs-tests/test-jqlite.js":180,"../test/cssjs-tests/test-util.js":181,"../test/react-tests/test-appbar.js":183,"../test/react-tests/test-button.js":184,"../test/react-tests/test-caret.js":185,"../test/react-tests/test-checkbox.js":186,"../test/react-tests/test-container.js":187,"../test/react-tests/test-divider.js":188,"../test/react-tests/test-dropdown.js":189,"../test/react-tests/test-panel.js":190}],7:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21729,6 +21731,74 @@ exports.Caret = Caret;
 
 },{"react":165}],175:[function(require,module,exports){
 /**
+ * MUI React checkbox module
+ * @module react/checkbox
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Checkbox = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Checkbox constructor
+ * @class
+ */
+
+var Checkbox = (function (_React$Component) {
+  babelHelpers.inherits(Checkbox, _React$Component);
+
+  function Checkbox() {
+    babelHelpers.classCallCheck(this, Checkbox);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Checkbox).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Checkbox, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'mui-checkbox' },
+        _react2.default.createElement(
+          'label',
+          null,
+          _react2.default.createElement('input', {
+            type: 'checkbox',
+            value: this.props.value,
+            disabled: this.props.isDisabled
+          }),
+          this.props.label
+        )
+      );
+    }
+  }]);
+  return Checkbox;
+})(_react2.default.Component);
+
+/** Define module API */
+
+Checkbox.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string,
+  isDisabled: PropTypes.bool
+};
+Checkbox.defaultProps = {
+  label: null,
+  value: null,
+  isDisabled: false
+};
+exports.Checkbox = Checkbox;
+
+},{"react":165}],176:[function(require,module,exports){
+/**
  * MUI React container module
  * @module react/container
  */
@@ -21785,7 +21855,7 @@ Container.defaultProps = {
 };
 exports.Container = Container;
 
-},{"react":165}],176:[function(require,module,exports){
+},{"react":165}],177:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -21828,7 +21898,251 @@ var Divider = (function (_React$Component) {
 
 exports.Divider = Divider;
 
-},{"react":165}],177:[function(require,module,exports){
+},{"react":165}],178:[function(require,module,exports){
+/**
+ * MUI React dropdowns module
+ * @module react/dropdowns
+ */
+/* jshint quotmark:false */
+// jscs:disable validateQuoteMarks
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DropdownItem = exports.Dropdown = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _button = require('./button.jsx');
+
+var _caret = require('./caret.jsx');
+
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes,
+    dropdownClass = 'mui-dropdown',
+    menuClass = 'mui-dropdown__menu',
+    openClass = 'mui--is-open',
+    rightClass = 'mui-dropdown__menu--right';
+
+/**
+ * Dropdown constructor
+ * @class
+ */
+
+var Dropdown = (function (_React$Component) {
+  babelHelpers.inherits(Dropdown, _React$Component);
+
+  function Dropdown(props) {
+    babelHelpers.classCallCheck(this, Dropdown);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Dropdown).call(this, props));
+
+    _this.state = {
+      opened: false,
+      menuTop: 0
+    };
+
+    var cb = util.callback;
+    _this.onClickCB = cb(_this, 'onClick');
+    _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
+    return _this;
+  }
+
+  babelHelpers.createClass(Dropdown, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      document.addEventListener('click', this.onOutsideClickCB);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      document.removeEventListener('click', this.onOutsideClickCB);
+    }
+  }, {
+    key: 'onClick',
+    value: function onClick(ev) {
+      // only left clicks
+      if (ev.button !== 0) return;
+
+      // exit if toggle button is disabled
+      if (this.props.isDisabled) return;
+
+      if (!ev.defaultPrevented) this.toggle();
+    }
+  }, {
+    key: 'toggle',
+    value: function toggle() {
+      // exit if no menu element
+      if (!this.props.children) {
+        return util.raiseError('Dropdown menu element not found');
+      }
+
+      if (this.state.opened) this.close();else this.open();
+    }
+  }, {
+    key: 'open',
+    value: function open() {
+      // position menu element below toggle button
+      var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
+          toggleRect = undefined;
+
+      toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
+
+      this.setState({
+        opened: true,
+        menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+      });
+    }
+  }, {
+    key: 'close',
+    value: function close() {
+      this.setState({ opened: false });
+    }
+  }, {
+    key: 'select',
+    value: function select() {
+      if (this.props.onClick) this.props.onClick(this, ev);
+    }
+  }, {
+    key: 'onOutsideClick',
+    value: function onOutsideClick(ev) {
+      var isClickInside = this.refs.wrapperEl.contains(ev.target);
+      if (!isClickInside) this.close();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var buttonEl = undefined,
+          menuEl = undefined;
+
+      buttonEl = _react2.default.createElement(
+        _button.Button,
+        {
+          ref: 'button',
+          onClick: this.onClickCB,
+          color: this.props.color,
+          variant: this.props.variant,
+          size: this.props.size,
+          isDisabled: this.props.isDisabled
+        },
+        this.props.label,
+        _react2.default.createElement(_caret.Caret, null)
+      );
+
+      if (this.state.opened) {
+        var cs = {};
+
+        cs[menuClass] = true;
+        cs[openClass] = this.state.opened;
+        cs[rightClass] = this.props.alignMenu === 'right';
+        cs = util.classNames(cs);
+
+        menuEl = _react2.default.createElement(
+          'ul',
+          {
+            ref: 'menuEl',
+            className: cs,
+            style: { top: this.state.menuTop },
+            onClick: this.selectCB
+          },
+          this.props.children
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        { ref: 'wrapperEl', className: dropdownClass },
+        buttonEl,
+        menuEl
+      );
+    }
+  }]);
+  return Dropdown;
+})(_react2.default.Component);
+
+/**
+ * DropdownItem constructor
+ * @class
+ */
+
+Dropdown.propTypes = {
+  color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  size: PropTypes.oneOf(['default', 'small', 'large']),
+  label: PropTypes.string,
+  alignMenu: PropTypes.oneOf(['left', 'right']),
+  onClick: PropTypes.func,
+  isDisabled: PropTypes.bool
+};
+Dropdown.defaultProps = {
+  color: 'default',
+  variant: 'default',
+  size: 'default',
+  label: '',
+  alignMenu: 'left',
+  onClick: null,
+  isDisabled: false
+};
+
+var DropdownItem = (function (_React$Component2) {
+  babelHelpers.inherits(DropdownItem, _React$Component2);
+
+  function DropdownItem(props) {
+    babelHelpers.classCallCheck(this, DropdownItem);
+
+    var _this2 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).call(this, props));
+
+    _this2.onClickCB = util.callback(_this2, 'onClick');
+    return _this2;
+  }
+
+  babelHelpers.createClass(DropdownItem, [{
+    key: 'onClick',
+    value: function onClick(ev) {
+      if (this.props.onClick) this.props.onClick(this, ev);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          'a',
+          { href: this.props.link, onClick: this.onClickCB },
+          this.props.children
+        )
+      );
+    }
+  }]);
+  return DropdownItem;
+})(_react2.default.Component);
+
+/** Define module API */
+
+DropdownItem.propTypes = {
+  link: PropTypes.string,
+  onClick: PropTypes.func
+};
+DropdownItem.defaultProps = {
+  link: null,
+  onClick: null
+};
+exports.Dropdown = Dropdown;
+exports.DropdownItem = DropdownItem;
+
+},{"../js/lib/jqLite":170,"../js/lib/util":171,"./button.jsx":173,"./caret.jsx":174,"react":165}],179:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -21875,7 +22189,7 @@ var Panel = (function (_React$Component) {
 
 exports.Panel = Panel;
 
-},{"react":165}],178:[function(require,module,exports){
+},{"react":165}],180:[function(require,module,exports){
 'use strict';
 
 /**
@@ -22099,7 +22413,7 @@ describe('js/lib/jqLite.js', function () {
   });
 });
 
-},{"../../src/js/lib/jqLite.js":170,"assert":1,"synthetic-dom-events":166}],179:[function(require,module,exports){
+},{"../../src/js/lib/jqLite.js":170,"assert":1,"synthetic-dom-events":166}],181:[function(require,module,exports){
 'use strict';
 
 /**
@@ -22138,7 +22452,7 @@ describe('js/lib/util.js', function () {
   });
 });
 
-},{"../../src/js/lib/util.js":171,"assert":1}],180:[function(require,module,exports){
+},{"../../src/js/lib/util.js":171,"assert":1}],182:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22157,7 +22471,7 @@ function getShallowRendererOutput(reactElem) {
    * @module test/react-tests/react-helpers
    */
 
-},{"react-addons-test-utils":34}],181:[function(require,module,exports){
+},{"react-addons-test-utils":34}],183:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22179,19 +22493,19 @@ var _reactHelpers = require('../lib/react-helpers');
 
 describe('react/appbar', function () {
   it('renders properly', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _appbar.Appbar,
       null,
       'test'
     ));
 
-    _assert2.default.equal(node.type, 'div');
-    _assert2.default.equal(node.props.className, 'mui-appbar');
-    _assert2.default.equal(node.props.children, 'test');
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-appbar');
+    _assert2.default.equal(result.props.children, 'test');
   });
 });
 
-},{"../../src/react/appbar.jsx":172,"../lib/react-helpers":180,"assert":1,"react":165}],182:[function(require,module,exports){
+},{"../../src/react/appbar.jsx":172,"../lib/react-helpers":182,"assert":1,"react":165}],184:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22221,41 +22535,41 @@ var _reactHelpers = require('../lib/react-helpers');
 
 describe('react/button', function () {
   it('renders properly', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _button.Button,
       null,
       'test'
     ));
-    _assert2.default.equal(node.type, 'button');
-    _assert2.default.equal(node.props.className, 'mui-btn');
-    _assert2.default.equal(node.props.children[0], 'test');
+    _assert2.default.equal(result.type, 'button');
+    _assert2.default.equal(result.props.className, 'mui-btn');
+    _assert2.default.equal(result.props.children[0], 'test');
   });
 
   it('supports colors', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _button.Button,
       { color: 'primary' },
       'test'
     ));
-    _assert2.default.equal(/mui-btn--primary/.test(node.props.className), true);
+    _assert2.default.equal(/mui-btn--primary/.test(result.props.className), true);
   });
 
   it('supports variants', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _button.Button,
       { variant: 'raised' },
       'test'
     ));
-    _assert2.default.equal(/mui-btn--raised/.test(node.props.className), true);
+    _assert2.default.equal(/mui-btn--raised/.test(result.props.className), true);
   });
 
   it('supports sizes', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _button.Button,
       { size: 'large' },
       'test'
     ));
-    _assert2.default.equal(/mui-btn--large/.test(node.props.className), true);
+    _assert2.default.equal(/mui-btn--large/.test(result.props.className), true);
   });
 
   it('supports click callbacks', function (done) {
@@ -22264,39 +22578,39 @@ describe('react/button', function () {
       done();
     };
 
-    var elem = _react2.default.createElement(
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
       _button.Button,
       { onClick: fn },
       'test'
-    );
-    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    ));
 
     // click on button
     _reactAddonsTestUtils2.default.Simulate.click(node.refs.buttonEl);
   });
 
   it('renders ripples on click', function () {
-    var elem = _react2.default.createElement(
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
       _button.Button,
       null,
       'test'
-    );
-    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    ));
+    var buttonEl = node.refs.buttonEl;
 
-    // check that mousedown adds a ripple state
+    // check state before ripple
     _assert2.default.equal(Object.keys(node.state.ripples).length, 0);
-    _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
-    _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
+    _assert2.default.equal(buttonEl.children.length, 1);
 
-    // mousedown again and check ripple state
+    // trigger ripple
+    _reactAddonsTestUtils2.default.Simulate.mouseDown(buttonEl);
+
+    // check state after ripple
+    _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
+    _assert2.default.equal(buttonEl.children.length, 2);
+    _assert2.default.equal(buttonEl.children[1].className, 'mui-ripple-effect');
+
+    // add another ripple
     _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
     _assert2.default.equal(Object.keys(node.state.ripples).length, 2);
-
-    /*
-    let x = ReactDOM.findDOMNode(node);
-    console.log(x.children.length);
-    console.log(x.children[2].tagName);
-     console.log(node.children);*/
   });
 
   it('removes ripples after two seconds', function (done) {
@@ -22307,6 +22621,7 @@ describe('react/button', function () {
       null,
       'test'
     ));
+
     _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
     _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
 
@@ -22323,7 +22638,7 @@ describe('react/button', function () {
   });
 });
 
-},{"../../src/react/button.jsx":173,"../lib/react-helpers":180,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],183:[function(require,module,exports){
+},{"../../src/react/button.jsx":173,"../lib/react-helpers":182,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],185:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22345,19 +22660,79 @@ var _reactHelpers = require('../lib/react-helpers');
 
 describe('react/caret', function () {
   it('renders properly', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _caret.Caret,
       null,
       'test'
     ));
 
-    _assert2.default.equal(node.type, 'span');
-    _assert2.default.equal(node.props.className, 'mui-caret');
-    _assert2.default.equal(node.props.children, undefined);
+    _assert2.default.equal(result.type, 'span');
+    _assert2.default.equal(result.props.className, 'mui-caret');
+    _assert2.default.equal(result.props.children, undefined);
   });
 });
 
-},{"../../src/react/caret.jsx":174,"../lib/react-helpers":180,"assert":1,"react":165}],184:[function(require,module,exports){
+},{"../../src/react/caret.jsx":174,"../lib/react-helpers":182,"assert":1,"react":165}],186:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = babelHelpers.interopRequireDefault(_reactDom);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _checkbox = require('../../src/react/checkbox.jsx');
+
+var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react checkbox library
+ * @module test/react-tests/test-checkbox
+ */
+
+describe('react/forms/checkbox', function () {
+  var elem = undefined;
+
+  beforeEach(function () {
+    elem = _react2.default.createElement(
+      _checkbox.Checkbox,
+      null,
+      'My Label'
+    );
+  });
+
+  it('renders wrapper properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
+
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-checkbox');
+  });
+
+  it('renders content properly', function () {
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = _reactDom2.default.findDOMNode(node);
+
+    _assert2.default.equal(wrapperEl.children.length, 1);
+
+    var labelEl = wrapperEl.children[0];
+    _assert2.default.equal(labelEl.tagName, 'LABEL');
+
+    var inputEl = labelEl.children[0];
+    _assert2.default.equal(inputEl.tagName, 'INPUT');
+  });
+});
+
+},{"../../src/react/checkbox.jsx":175,"../lib/react-helpers":182,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],187:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22379,31 +22754,31 @@ var _reactHelpers = require('../lib/react-helpers');
 
 describe('react/container', function () {
   it('renders default properly', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _container.Container,
       null,
       'test'
     ));
 
-    _assert2.default.equal(node.type, 'div');
-    _assert2.default.equal(node.props.className, 'mui-container');
-    _assert2.default.equal(node.props.children, 'test');
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-container');
+    _assert2.default.equal(result.props.children, 'test');
   });
 
   it('rendes fluid properly', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _container.Container,
       { isFluid: true },
       'test'
     ));
 
-    _assert2.default.equal(node.type, 'div');
-    _assert2.default.equal(node.props.className, 'mui-container-fluid');
-    _assert2.default.equal(node.props.children, 'test');
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-container-fluid');
+    _assert2.default.equal(result.props.children, 'test');
   });
 });
 
-},{"../../src/react/container.jsx":175,"../lib/react-helpers":180,"assert":1,"react":165}],185:[function(require,module,exports){
+},{"../../src/react/container.jsx":176,"../lib/react-helpers":182,"assert":1,"react":165}],188:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22425,19 +22800,110 @@ var _reactHelpers = require('../lib/react-helpers');
 
 describe('react/divider', function () {
   it('renders properly', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _divider.Divider,
       null,
       'test'
     ));
 
-    _assert2.default.equal(node.type, 'div');
-    _assert2.default.equal(node.props.className, 'mui-divider');
-    _assert2.default.equal(node.props.children, undefined);
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-divider');
+    _assert2.default.equal(result.props.children, undefined);
   });
 });
 
-},{"../../src/react/divider.jsx":176,"../lib/react-helpers":180,"assert":1,"react":165}],186:[function(require,module,exports){
+},{"../../src/react/divider.jsx":177,"../lib/react-helpers":182,"assert":1,"react":165}],189:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _dropdown = require('../../src/react/dropdown.jsx');
+
+var _reactHelpers = require('../lib/react-helpers');
+
+describe('react/dropdown', function () {
+  var elem = undefined;
+
+  beforeEach(function () {
+    elem = _react2.default.createElement(
+      _dropdown.Dropdown,
+      null,
+      _react2.default.createElement(
+        _dropdown.DropdownItem,
+        null,
+        'Option 1'
+      ),
+      _react2.default.createElement(
+        _dropdown.DropdownItem,
+        null,
+        'Option 2'
+      ),
+      _react2.default.createElement(
+        _dropdown.DropdownItem,
+        null,
+        'Option 3'
+      )
+    );
+  });
+
+  it('renders wrapper properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-dropdown');
+  });
+
+  it('renders menu on click', function () {
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var buttonEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'button');
+
+    // check menu is hidden
+    _assert2.default.equal(node.refs.menuEl, undefined);
+
+    // click to render menu
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+    var cls = 'mui-dropdown__menu mui--is-open';
+    _assert2.default.equal(node.refs.menuEl.className, cls);
+
+    // click again to hide
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+    _assert2.default.equal(node.refs.menuEl, undefined);
+  });
+
+  it('renders options into menu', function () {
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+
+    // render menu
+    var buttonEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'button');
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+
+    // check menu
+    var menuEl = node.refs.menuEl;
+    _assert2.default.equal(menuEl.children.length, 3);
+
+    // check content
+    var el = undefined;
+    for (var i = 0; i < menuEl.children.length; i++) {
+      el = menuEl.children[i];
+      _assert2.default.equal(el.tagName, 'LI');
+      _assert2.default.equal(el.textContent, 'Option ' + (i + 1));
+    }
+  });
+}); /**
+     * MUI test react appbar library
+     * @module test/react-tests/test-appbar
+     */
+
+},{"../../src/react/dropdown.jsx":178,"../lib/react-helpers":182,"assert":1,"react":165,"react-addons-test-utils":34}],190:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22459,16 +22925,16 @@ var _reactHelpers = require('../lib/react-helpers');
 
 describe('react/panel', function () {
   it('renders properly', function () {
-    var node = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _panel.Panel,
       null,
       'test'
     ));
 
-    _assert2.default.equal(node.type, 'div');
-    _assert2.default.equal(node.props.className, 'mui-panel');
-    _assert2.default.equal(node.props.children, 'test');
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-panel');
+    _assert2.default.equal(result.props.children, 'test');
   });
 });
 
-},{"../../src/react/panel.jsx":177,"../lib/react-helpers":180,"assert":1,"react":165}]},{},[6])
+},{"../../src/react/panel.jsx":179,"../lib/react-helpers":182,"assert":1,"react":165}]},{},[6])

@@ -1,6 +1,6 @@
 /**
  * MUI React form module
- * @module react/forms/form
+ * @module react/form
  */
 
 'use strict';

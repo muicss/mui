@@ -13,10 +13,10 @@ import { getShallowRendererOutput } from '../lib/react-helpers';
 
 describe('react/panel', function() {
   it('renders properly', function() {
-    let node = getShallowRendererOutput(<Panel>test</Panel>);
+    let result = getShallowRendererOutput(<Panel>test</Panel>);
 
-    assert.equal(node.type, 'div');
-    assert.equal(node.props.className, 'mui-panel');
-    assert.equal(node.props.children, 'test');
+    assert.equal(result.type, 'div');
+    assert.equal(result.props.className, 'mui-panel');
+    assert.equal(result.props.children, 'test');
   });
 });

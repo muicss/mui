@@ -1,6 +1,6 @@
 /**
  * MUI React checkbox module
- * @module react/forms/checkbox
+ * @module react/checkbox
  */
 
 'use strict';

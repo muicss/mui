@@ -1,6 +1,6 @@
 /**
  * MUI React textinput module
- * @module react/forms/textinput
+ * @module react/textinput
  */
 
 'use strict';
