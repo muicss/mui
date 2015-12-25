@@ -12,33 +12,63 @@ import { Dropdown, DropdownItem } from '../../src/react/dropdown.jsx';
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/dropdown', () => {
-  it('renders button component', () => {
-    let node = getShallowRendererOutput(
+describe('react/dropdown', function() {
+  let elem;
+
+
+  beforeEach(function() {
+    elem = (
       <Dropdown>
         <DropdownItem>Option 1</DropdownItem>
         <DropdownItem>Option 2</DropdownItem>
         <DropdownItem>Option 3</DropdownItem>
       </Dropdown>
     );
+  });
 
-    assert.equal(node.type, 'div');
-    assert.equal(node.props.className, 'mui-dropdown');
 
-    // check that button is first child
-    let a = (
-      <Dropdown>
-        <DropdownItem>Option 1</DropdownItem>
-        <DropdownItem>Option 2</DropdownItem>
-        <DropdownItem>Option 3</DropdownItem>
-      </Dropdown>
-    );
+  it('renders wrapper properly', function() {
+    let result = getShallowRendererOutput(elem);
+    assert.equal(result.type, 'div');
+    assert.equal(result.props.className, 'mui-dropdown');
+  });
 
-    //ReactUtils.renderIntoDocument(a);
-    /*
-    let c = new Dropdown({});
-    console.log(c);
-    let b = ReactUtils.findRenderedDOMComponentWithClass(c, 'button');
-    console.log(b);*/
+
+  it('renders menu on click', function() {
+    let node = ReactUtils.renderIntoDocument(elem);
+    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+
+    // check menu is hidden
+    assert.equal(node.refs.menuEl, undefined);
+    
+    // click to render menu
+    ReactUtils.Simulate.click(buttonEl, {button: 0});
+    let cls = 'mui-dropdown__menu mui--is-open';
+    assert.equal(node.refs.menuEl.className, cls);
+
+    // click again to hide
+    ReactUtils.Simulate.click(buttonEl, {button: 0});
+    assert.equal(node.refs.menuEl, undefined);
+  });
+
+
+  it('renders options into menu', function() {
+    let node = ReactUtils.renderIntoDocument(elem);
+
+    // render menu
+    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    ReactUtils.Simulate.click(buttonEl, {button: 0});
+
+    // check menu
+    let menuEl = node.refs.menuEl;
+    assert.equal(menuEl.children.length, 3);
+
+    // check content
+    let el;
+    for (let i=0; i < menuEl.children.length; i++) {
+      el = menuEl.children[i];
+      assert.equal(el.tagName, 'LI');
+      assert.equal(el.textContent, 'Option ' + (i + 1));
+    }
   });
 });

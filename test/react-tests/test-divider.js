@@ -11,12 +11,12 @@ import { Divider } from '../../src/react/divider.jsx';
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/divider', () => {
-  it('renders properly', () => {
-    let node = getShallowRendererOutput(<Divider>test</Divider>);
+describe('react/divider', function() {
+  it('renders properly', function() {
+    let result = getShallowRendererOutput(<Divider>test</Divider>);
     
-    assert.equal(node.type, 'div');
-    assert.equal(node.props.className, 'mui-divider');
-    assert.equal(node.props.children, undefined);
+    assert.equal(result.type, 'div');
+    assert.equal(result.props.className, 'mui-divider');
+    assert.equal(result.props.children, undefined);
   });
 });

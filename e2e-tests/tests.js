@@ -21489,10 +21489,6 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
-
-var _reactDom2 = babelHelpers.interopRequireDefault(_reactDom);
-
 var _jqLite = require('../js/lib/jqLite');
 
 var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
@@ -21528,18 +21524,11 @@ var Button = (function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Button)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      ripples: {},
-      buttonElDOMNode: null
+      ripples: {}
     }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
   }
 
   babelHelpers.createClass(Button, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // cache reference to button DOM node
-      this.setState({ buttonElDOMNode: _reactDom2.default.findDOMNode(this.refs.buttonEl) });
-    }
-  }, {
     key: 'onClick',
     value: function onClick(ev) {
       var onClickFn = this.props.onClick;
@@ -21549,7 +21538,7 @@ var Button = (function (_React$Component) {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
       // get (x, y) position of click
-      var offset = jqLite.offset(this.state.buttonElDOMNode);
+      var offset = jqLite.offset(this.refs.buttonEl);
 
       // choose diameter
       var diameter = offset.height;
@@ -21695,7 +21684,7 @@ Ripple.defaultProps = {
 };
 exports.Button = Button;
 
-},{"../js/lib/jqLite":170,"../js/lib/util":171,"react":165,"react-dom":35}],174:[function(require,module,exports){
+},{"../js/lib/jqLite":170,"../js/lib/util":171,"react":165}],174:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
@@ -22217,9 +22206,18 @@ var _reactAddonsTestUtils = require('react-addons-test-utils');
 
 var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = babelHelpers.interopRequireDefault(_reactDom);
+
 var _button = require('../../src/react/button.jsx');
 
 var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react appbar library
+ * @module test/react-tests/test-appbar
+ */
 
 describe('react/button', function () {
   it('renders properly', function () {
@@ -22285,14 +22283,20 @@ describe('react/button', function () {
     );
     var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
 
-    // check that mousedown adds a ripple
+    // check that mousedown adds a ripple state
     _assert2.default.equal(Object.keys(node.state.ripples).length, 0);
     _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
     _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
 
-    // mousedown again and check ripples
+    // mousedown again and check ripple state
     _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
     _assert2.default.equal(Object.keys(node.state.ripples).length, 2);
+
+    /*
+    let x = ReactDOM.findDOMNode(node);
+    console.log(x.children.length);
+    console.log(x.children[2].tagName);
+     console.log(node.children);*/
   });
 
   it('removes ripples after two seconds', function (done) {
@@ -22317,12 +22321,9 @@ describe('react/button', function () {
       done();
     }, 2001);
   });
-}); /**
-     * MUI test react appbar library
-     * @module test/react-tests/test-appbar
-     */
+});
 
-},{"../../src/react/button.jsx":173,"../lib/react-helpers":180,"assert":1,"react":165,"react-addons-test-utils":34}],183:[function(require,module,exports){
+},{"../../src/react/button.jsx":173,"../lib/react-helpers":180,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],183:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');

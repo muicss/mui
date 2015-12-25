@@ -11,8 +11,8 @@ import { Panel } from '../../src/react/panel.jsx';
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/panel', () => {
-  it('renders properly', () => {
+describe('react/panel', function() {
+  it('renders properly', function() {
     let node = getShallowRendererOutput(<Panel>test</Panel>);
 
     assert.equal(node.type, 'div');

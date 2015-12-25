@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import * as formlib from '../../js/lib/forms';
 import * as jqLite from '../../js/lib/jqLite';
@@ -136,7 +135,7 @@ class Select extends React.Component {
 
     // remove event listeners
     jqLite.off(window, 'resize', this.hideMenuFn);
-    jqLite.off(documenet, 'click', this.hideMenuFn);
+    jqLite.off(document, 'click', this.hideMenuFn);
     
     // re-draw
     this.setState({showMenu: false});
@@ -247,7 +246,7 @@ class Menu extends React.Component {
     // blur active element (IE10 bugfix)
     setTimeout(function() {
       let el = document.activeElement;
-      if (el.nodeName.toLowerCase() !== 'body') el.activeElement.blur();
+      if (el.nodeName.toLowerCase() !== 'body') el.blur();
     }, 0);
 
     // set position
@@ -257,7 +256,7 @@ class Menu extends React.Component {
       this.state.currentIndex
     );
 
-    let el = ReactDOM.findDOMNode(this);
+    let el = this.refs.wrapperEl;
     jqLite.css(el, props);
     jqLite.scrollTop(el, props.scrollTop);
 
@@ -355,7 +354,7 @@ class Menu extends React.Component {
     }
 
     return (
-      <div className="mui-select__menu">
+      <div ref="wrapperEl" className="mui-select__menu">
         { menuItems }  
       </div>
     );
@@ -364,4 +363,4 @@ class Menu extends React.Component {
 
 
 /** Define module API */
-export {Select, SelectItem};
+export { Select, SelectItem };

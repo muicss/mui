@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import * as util from '../../js/lib/util';
 
@@ -60,7 +59,7 @@ class Input extends React.Component {
 
   triggerFocus() {
     // hack to enable IE10 pointer-events shim
-    ReactDOM.findDOMNode(this.refs.inputEl).focus();
+    this.refs.inputEl.focus();
   }
 
   render() {

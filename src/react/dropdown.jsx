@@ -8,7 +8,6 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import { Button } from './button.jsx';
 import { Caret } from './caret.jsx';
@@ -77,9 +76,7 @@ class Dropdown extends React.Component {
     // exit if toggle button is disabled
     if (this.props.isDisabled) return;
 
-    setTimeout(() => {
-      if (!ev.defaultPrevented) this.toggle();
-    }, 0);
+    if (!ev.defaultPrevented) this.toggle();
   }
 
   toggle() {
@@ -94,10 +91,10 @@ class Dropdown extends React.Component {
 
   open() {
     // position menu element below toggle button
-    let wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect(),
+    let wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
         toggleRect;
 
-    toggleRect = ReactDOM.findDOMNode(this.refs.button).getBoundingClientRect();
+    toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
 
     this.setState({
       opened: true,
@@ -114,8 +111,7 @@ class Dropdown extends React.Component {
   }
 
   onOutsideClick(ev) {
-    let isClickInside = ReactDOM.findDOMNode(this).contains(ev.target);
-
+    let isClickInside = this.refs.wrapperEl.contains(ev.target);
     if (!isClickInside) this.close();
   }
 
@@ -147,6 +143,7 @@ class Dropdown extends React.Component {
 
       menuEl = (
         <ul
+          ref="menuEl"
           className={ cs }
           style={ {top: this.state.menuTop } }
           onClick={ this.selectCB }
@@ -157,7 +154,7 @@ class Dropdown extends React.Component {
     }
 
     return (
-      <div className={ dropdownClass }>
+      <div ref="wrapperEl" className={ dropdownClass }>
         { buttonEl }
         { menuEl }
       </div>

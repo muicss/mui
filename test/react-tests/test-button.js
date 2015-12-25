@@ -6,67 +6,76 @@
 import assert from 'assert';
 import React from 'react';
 import ReactUtils from 'react-addons-test-utils';
+import ReactDOM from 'react-dom';
 
 import { Button } from '../../src/react/button.jsx';
 
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/button', () => {
-  it('renders properly', () => {
-    let node = getShallowRendererOutput(<Button>test</Button>);
-    assert.equal(node.type, 'button');
-    assert.equal(node.props.className, 'mui-btn');
-    assert.equal(node.props.children[0], 'test');
+describe('react/button', function() {
+  it('renders properly', function() {
+    let result = getShallowRendererOutput(<Button>test</Button>);
+    assert.equal(result.type, 'button');
+    assert.equal(result.props.className, 'mui-btn');
+    assert.equal(result.props.children[0], 'test');
   });
 
   
-  it('supports colors', () => {
-    let node = getShallowRendererOutput(<Button color="primary">test</Button>);
-    assert.equal(/mui-btn--primary/.test(node.props.className), true);
-  });
-
-
-  it('supports variants', () => {
-    let node = getShallowRendererOutput(
-      <Button variant="raised">
-        test
-      </Button>
+  it('supports colors', function() {
+    let result = getShallowRendererOutput(
+      <Button color="primary">test</Button>
     );
-    assert.equal(/mui-btn--raised/.test(node.props.className), true);
+    assert.equal(/mui-btn--primary/.test(result.props.className), true);
   });
 
 
-  it('supports sizes', () => {
-    let node = getShallowRendererOutput(<Button size="large">test</Button>);
-    assert.equal(/mui-btn--large/.test(node.props.className), true);
+  it('supports variants', function() {
+    let result = getShallowRendererOutput(
+      <Button variant="raised">test</Button>
+    );
+    assert.equal(/mui-btn--raised/.test(result.props.className), true);
+  });
+
+
+  it('supports sizes', function() {
+    let result = getShallowRendererOutput(<Button size="large">test</Button>);
+    assert.equal(/mui-btn--large/.test(result.props.className), true);
   });
   
 
   it('supports click callbacks', done => {
     // define callback
-    let fn = () => {
+    let fn = function() {
       done();
     }
 
-    let elem = <Button onClick={ fn }>test</Button>;
-    let node = ReactUtils.renderIntoDocument(elem);
+    let node = ReactUtils.renderIntoDocument(
+      <Button onClick={ fn }>test</Button>
+    );
 
     // click on button
     ReactUtils.Simulate.click(node.refs.buttonEl);    
   });
 
 
-  it('renders ripples on click', () => {
-    let elem = <Button>test</Button>;
-    let node = ReactUtils.renderIntoDocument(elem);
-
-    // check that mousedown adds a ripple
+  it('renders ripples on click', function() {
+    let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
+    let buttonEl = node.refs.buttonEl;
+    
+    // check state before ripple
     assert.equal(Object.keys(node.state.ripples).length, 0);
-    ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
-    assert.equal(Object.keys(node.state.ripples).length, 1);
+    assert.equal(buttonEl.children.length, 1);
 
-    // mousedown again and check ripples
+    // trigger ripple
+    ReactUtils.Simulate.mouseDown(buttonEl);
+
+    // check state after ripple
+    assert.equal(Object.keys(node.state.ripples).length, 1);
+    assert.equal(buttonEl.children.length, 2);
+    assert.equal(buttonEl.children[1].className, 'mui-ripple-effect');
+
+    // add another ripple
     ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
     assert.equal(Object.keys(node.state.ripples).length, 2);
   });
@@ -76,15 +85,16 @@ describe('react/button', () => {
     this.timeout(2050);
 
     let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
+
     ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
     assert.equal(Object.keys(node.state.ripples).length, 1);
 
-    setTimeout(() => {
+    setTimeout(function() {
       // check that ripple is still there
       assert.equal(Object.keys(node.state.ripples).length, 1);
     }, 1000);
 
-    setTimeout(() => {
+    setTimeout(function() {
       // check that ripple has been removed
       assert.equal(Object.keys(node.state.ripples).length, 0);
       done();

@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
@@ -25,8 +24,7 @@ const PropTypes = React.PropTypes,
  */
 class Button extends React.Component {
   state = {
-    ripples: {},
-    buttonElDOMNode: null
+    ripples: {}
   }
 
   static propTypes = {
@@ -46,11 +44,6 @@ class Button extends React.Component {
     isDisabled: false
   }
 
-  componentDidMount() {
-    // cache reference to button DOM node
-    this.setState({buttonElDOMNode: ReactDOM.findDOMNode(this.refs.buttonEl)});
-  }
-
   onClick(ev) {
     let onClickFn = this.props.onClick;
     onClickFn && onClickFn(ev);
@@ -58,7 +51,7 @@ class Button extends React.Component {
 
   onMouseDown(ev) {
     // get (x, y) position of click
-    let offset = jqLite.offset(this.state.buttonElDOMNode);
+    let offset = jqLite.offset(this.refs.buttonEl);
 
     // choose diameter
     let diameter = offset.height;

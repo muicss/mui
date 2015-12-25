@@ -11,23 +11,23 @@ import { Container } from '../../src/react/container.jsx';
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/container', () => {
-  it('renders default properly', () => {
-    let node = getShallowRendererOutput(<Container>test</Container>);
+describe('react/container', function() {
+  it('renders default properly', function() {
+    let result = getShallowRendererOutput(<Container>test</Container>);
 
-    assert.equal(node.type, 'div');
-    assert.equal(node.props.className, 'mui-container');
-    assert.equal(node.props.children, 'test');
+    assert.equal(result.type, 'div');
+    assert.equal(result.props.className, 'mui-container');
+    assert.equal(result.props.children, 'test');
   });
 
 
-  it('rendes fluid properly', () => {
-    let node = getShallowRendererOutput(
+  it('rendes fluid properly', function() {
+    let result = getShallowRendererOutput(
       <Container isFluid={ true }>test</Container>
     );
 
-    assert.equal(node.type, 'div');
-    assert.equal(node.props.className, 'mui-container-fluid');
-    assert.equal(node.props.children, 'test');
+    assert.equal(result.type, 'div');
+    assert.equal(result.props.className, 'mui-container-fluid');
+    assert.equal(result.props.children, 'test');
   });
 });

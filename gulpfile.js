@@ -129,9 +129,10 @@ gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
       transform: [babelify],
-      external: ['react']
+      external: ['react', 'react-dom']
     }))
     .pipe(replace("require('react')", "window.React"))
+    .pipe(replace("require('react-dom')", "window.ReactDOM"))
     .pipe(injectString.prepend(babelHelpersJS))
     .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));
@@ -263,8 +264,10 @@ gulp.task('react-combined', ['clean', 'cssmin'], function() {
         stringify(['.css'])
       ],
       paths: [dirName + '/css'],
-      exclude: ['react']
+      external: ['react', 'react-dom']
     }))
+    .pipe(replace("require('react')", "window.React"))
+    .pipe(replace("require('react-dom')", "window.ReactDOM"))
     .pipe(injectString.prepend(babelHelpersJS))
     .pipe(uglify())
     .pipe(rename(pkgName + '-react-combined.js'))
