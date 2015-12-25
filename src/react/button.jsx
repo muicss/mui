@@ -160,16 +160,16 @@ class Ripple extends React.Component {
   }
 
   render() {
-    let diameter = this.props.diameter,
-        radius = diameter / 2;
+    const diameter = this.props.diameter,
+          radius = diameter / 2;
 
-    let style = {
+    const style = {
       height: diameter,
       width: diameter,
-      top: this.props.yPos - radius,
-      left: this.props.xPos - radius
+      top: this.props.yPos - radius || 0,
+      left: this.props.xPos - radius || 0
     };
-    
+
     return <div className={ rippleClass } style={ style } />;
   }
 }

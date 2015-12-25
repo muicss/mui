@@ -21528,16 +21528,16 @@ var Button = (function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Button)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      rippleElems: []
+      ripples: {},
+      buttonElDOMNode: null
     }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
   }
 
   babelHelpers.createClass(Button, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var el = _reactDom2.default.findDOMNode(this.refs.buttonEl);
-      jqLite.on(el, 'mousedown', util.callback(this, 'onMouseDown'));
-      jqLite.on(el, 'touchstart', util.callback(this, 'onTouchStart'));
+      // cache reference to button DOM node
+      this.setState({ buttonElDOMNode: _reactDom2.default.findDOMNode(this.refs.buttonEl) });
     }
   }, {
     key: 'onClick',
@@ -21548,29 +21548,37 @@ var Button = (function (_React$Component) {
   }, {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
-      var _this2 = this;
+      // get (x, y) position of click
+      var offset = jqLite.offset(this.state.buttonElDOMNode);
 
-      // add ripple
-      var rippleElems = this.state.rippleElems;
+      // choose diameter
+      var diameter = offset.height;
+      if (this.props.variant === 'fab') diameter = diameter / 2;
 
-      var teardownFn = function teardownFn() {
-        rippleElems.shift();
-        _this2.setState({ rippleElems: rippleElems });
+      // add ripple to state
+      var ripples = this.state.ripples;
+      var key = Date.now();
+
+      ripples[key] = {
+        xPos: ev.pageX - offset.left,
+        yPos: ev.pageY - offset.top,
+        diameter: diameter,
+        teardownFn: this.teardownRipple.bind(this, key)
       };
 
-      var elem = _react2.default.createElement(Ripple, {
-        key: rippleIter++,
-        buttonEl: _reactDom2.default.findDOMNode(this.refs.buttonEl),
-        triggerEv: ev,
-        teardownFn: teardownFn
-      });
-
-      rippleElems.push(elem);
-      this.setState({ rippleElems: rippleElems });
+      this.setState({ ripples: ripples });
     }
   }, {
     key: 'onTouchStart',
     value: function onTouchStart(ev) {}
+  }, {
+    key: 'teardownRipple',
+    value: function teardownRipple(key) {
+      // delete ripple
+      var ripples = this.state.ripples;
+      delete ripples[key];
+      this.setState({ ripples: ripples });
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -21578,6 +21586,9 @@ var Button = (function (_React$Component) {
           k = undefined,
           v = undefined;
 
+      var ripples = this.state.ripples;
+
+      // button attributes
       for (k in btnAttrs) {
         v = this.props[k];
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
@@ -21589,10 +21600,21 @@ var Button = (function (_React$Component) {
           ref: 'buttonEl',
           className: cls,
           disabled: this.props.isDisabled,
-          onClick: this.onClick.bind(this)
+          onClick: this.onClick.bind(this),
+          onMouseDown: this.onMouseDown.bind(this)
         },
         this.props.children,
-        this.state.rippleElems
+        Object.keys(ripples).map(function (k, i) {
+          var v = ripples[k];
+
+          return _react2.default.createElement(Ripple, {
+            key: k,
+            xPos: v.xPos,
+            yPos: v.yPos,
+            diameter: v.diameter,
+            onTeardown: v.teardownFn
+          });
+        })
       );
     }
   }]);
@@ -21623,69 +21645,35 @@ var Ripple = (function (_React$Component2) {
   babelHelpers.inherits(Ripple, _React$Component2);
 
   function Ripple() {
-    var _Object$getPrototypeO2;
-
-    var _temp2, _this3, _ret2;
-
     babelHelpers.classCallCheck(this, Ripple);
-
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    return _ret2 = (_temp2 = (_this3 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO2 = Object.getPrototypeOf(Ripple)).call.apply(_Object$getPrototypeO2, [this].concat(args))), _this3), _this3.state = {
-      style: null
-    }, _temp2), babelHelpers.possibleConstructorReturn(_this3, _ret2);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
   }
 
   babelHelpers.createClass(Ripple, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var buttonEl = this.props.buttonEl,
-          offset = jqLite.offset(buttonEl),
-          ev = this.props.triggerEv,
-          xPos = ev.pageX - offset.left,
-          yPos = ev.pageY - offset.top,
-          diameter = undefined,
-          radius = undefined,
-          style = undefined;
-
-      // get height
-      if (jqLite.hasClass(buttonEl, 'mui-btn--fab')) {
-        diameter = offset.height / 2;
-      } else {
-        diameter = offset.height;
-      }
-
-      radius = diameter / 2;
-
-      style = {
-        height: diameter,
-        width: diameter,
-        top: yPos - radius,
-        left: xPos - radius
-      };
-
-      this.setState({ style: style });
-    }
-  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this4 = this;
+      var _this3 = this;
 
       // trigger teardown in 2 sec
       setTimeout(function () {
-        _this4.props.teardownFn();
+        var fn = _this3.props.onTeardown;
+        fn && fn();
       }, 2000);
     }
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', {
-        ref: 'rippleEl',
-        className: rippleClass,
-        style: this.state.style
-      });
+      var diameter = this.props.diameter,
+          radius = diameter / 2;
+
+      var style = {
+        height: diameter,
+        width: diameter,
+        top: this.props.yPos - radius || 0,
+        left: this.props.xPos - radius || 0
+      };
+
+      return _react2.default.createElement('div', { className: rippleClass, style: style });
     }
   }]);
   return Ripple;
@@ -21694,14 +21682,16 @@ var Ripple = (function (_React$Component2) {
 /** Define module API */
 
 Ripple.propTypes = {
-  buttonEl: PropTypes.object,
-  triggerEv: PropTypes.object,
-  teardownFn: PropTypes.func
+  xPos: PropTypes.number,
+  yPos: PropTypes.number,
+  diameter: PropTypes.number,
+  onTeardown: PropTypes.func
 };
 Ripple.defaultProps = {
-  buttonEl: null,
-  triggerEv: null,
-  teardownFn: null
+  xPos: 0,
+  yPos: 0,
+  diameter: 0,
+  onTeardown: null
 };
 exports.Button = Button;
 
@@ -22223,14 +22213,13 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
 var _button = require('../../src/react/button.jsx');
 
 var _reactHelpers = require('../lib/react-helpers');
-
-/**
- * MUI test react appbar library
- * @module test/react-tests/test-appbar
- */
 
 describe('react/button', function () {
   it('renders properly', function () {
@@ -22277,17 +22266,63 @@ describe('react/button', function () {
       done();
     };
 
-    var node = _react2.default.createElement(
+    var elem = _react2.default.createElement(
       _button.Button,
       { onClick: fn },
       'test'
     );
-    _assert2.default.equal(node.props.onClick, fn);
-    node.props.onClick();
-  });
-});
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
 
-},{"../../src/react/button.jsx":173,"../lib/react-helpers":180,"assert":1,"react":165}],183:[function(require,module,exports){
+    // click on button
+    _reactAddonsTestUtils2.default.Simulate.click(node.refs.buttonEl);
+  });
+
+  it('renders ripples on click', function () {
+    var elem = _react2.default.createElement(
+      _button.Button,
+      null,
+      'test'
+    );
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+
+    // check that mousedown adds a ripple
+    _assert2.default.equal(Object.keys(node.state.ripples).length, 0);
+    _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
+    _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
+
+    // mousedown again and check ripples
+    _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
+    _assert2.default.equal(Object.keys(node.state.ripples).length, 2);
+  });
+
+  it('removes ripples after two seconds', function (done) {
+    this.timeout(2050);
+
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _button.Button,
+      null,
+      'test'
+    ));
+    _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
+    _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
+
+    setTimeout(function () {
+      // check that ripple is still there
+      _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
+    }, 1000);
+
+    setTimeout(function () {
+      // check that ripple has been removed
+      _assert2.default.equal(Object.keys(node.state.ripples).length, 0);
+      done();
+    }, 2001);
+  });
+}); /**
+     * MUI test react appbar library
+     * @module test/react-tests/test-appbar
+     */
+
+},{"../../src/react/button.jsx":173,"../lib/react-helpers":180,"assert":1,"react":165,"react-addons-test-utils":34}],183:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
