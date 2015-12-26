@@ -7,7 +7,7 @@
 
 import React from 'react';
 
-import * as util from '../../js/lib/util';
+import * as util from '../js/lib/util';
 
 
 const PropTypes = React.PropTypes;
