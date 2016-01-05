@@ -57,6 +57,8 @@ if (taskName === 'build-dist') {
   dirName = 'dist';
 } else if (taskName === 'build-examples' || taskName === 'watch') {
   dirName = 'examples/assets/' + pkgName;
+} else if (taskName === 'build-pkg') {
+  dirName = 'pkg/lib';
 } else if (taskName !== 'build-e2e-tests') {
   throw 'Did not understand task "' + taskName + '"';
 }
@@ -276,6 +278,22 @@ gulp.task('react-combined', ['clean', 'cssmin'], function() {
 
 
 
+// ----------------------------------------------------------------------------
+// PKG
+// ----------------------------------------------------------------------------
+
+gulp.task('pkg-js', ['clean'], function() {
+  // copy js files
+  return gulp.src('src/js/**/*.js')
+    .pipe(gulp.dest(dirName + '/js'));
+});
+
+
+gulp.task('pkg-react', ['clean'], function() {
+  
+});
+
+
 
 // ============================================================================
 // UTILITY METHODS
@@ -329,6 +347,14 @@ gulp.task('build-dist', ['clean'], function() {
 
 gulp.task('build-examples', ['clean'], function() {
   build({emailInlined: true});
+});
+
+
+gulp.task('build-pkg', ['clean'], function() {
+  gulp.start([
+    'pkg-js',
+    'pkg-react'
+  ]);
 });
 
 
