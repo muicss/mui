@@ -5,5 +5,5 @@
 
 /** Define module API */
 module.exports = {
-  overlay: require('lib/js/overlay')
+  overlay: require('./lib/js/overlay')
 }

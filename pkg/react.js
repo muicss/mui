@@ -5,5 +5,5 @@
 
 /** Define module API */
 module.exports = {
-  Button: require('lib/react/button').Button
+  Button: require('./lib/react/button').Button
 }

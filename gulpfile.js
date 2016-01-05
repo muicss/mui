@@ -3,6 +3,7 @@
  */
 
 var autoprefixer = require('gulp-autoprefixer'),
+    babel = require('gulp-babel'),
     babelify = require('babelify'),
     babelCore = require('babel-core'),
     browserify = require('gulp-browserify'),
@@ -283,6 +284,7 @@ gulp.task('react-combined', ['clean', 'cssmin'], function() {
 // ----------------------------------------------------------------------------
 
 gulp.task('pkg-js', ['clean'], function() {
+  // TODO: fix relative file imports
   // copy js files
   return gulp.src('src/js/**/*.js')
     .pipe(gulp.dest(dirName + '/js'));
@@ -290,7 +292,9 @@ gulp.task('pkg-js', ['clean'], function() {
 
 
 gulp.task('pkg-react', ['clean'], function() {
-  
+  return gulp.src('src/react/**/*.jsx')
+    .pipe(babel())
+    .pipe(gulp.dest(dirName + '/react'));  
 });
 
 
