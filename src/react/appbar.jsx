@@ -14,8 +14,15 @@ import React from 'react';
  */
 class Appbar extends React.Component {
   render() {
+
+    const className = !this.props.className
+      ? 'mui-appbar'
+      : 'mui-appbar ' + this.props.className
+
+    const style = {...this.props.style}
+
     return (
-      <div className="mui-appbar">
+      <div className={className} style={style}>
         { this.props.children }
       </div>
     );

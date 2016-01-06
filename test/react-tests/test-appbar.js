@@ -19,4 +19,14 @@ describe('react/appbar', function() {
     assert.equal(result.props.className, 'mui-appbar')
     assert.equal(result.props.children, 'test');
   });
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Appbar className="additional">test</Appbar>);
+
+    assert.equal(result.props.className, 'mui-appbar additional');
+  });
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Appbar style={{additonal: 'style'}}>test</Appbar>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
 });
