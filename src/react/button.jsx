@@ -72,7 +72,7 @@ class Button extends React.Component {
   }
 
   onTouchStart(ev) {
-    
+
   }
 
   teardownRipple(key) {
@@ -86,7 +86,7 @@ class Button extends React.Component {
     let cls = btnClass,
         k,
         v;
-    
+
     const ripples = this.state.ripples;
 
     // button attributes
@@ -95,6 +95,12 @@ class Button extends React.Component {
       if (v !== 'default') cls += ' ' + btnClass + '--' + v;
     }
 
+    cls = !this.props.className
+      ? cls
+      : cls + ' ' + this.props.className;
+
+    const style = {...this.props.style}
+
     return (
       <button
         ref="buttonEl"
@@ -102,9 +108,10 @@ class Button extends React.Component {
         disabled={ this.props.isDisabled }
         onClick={ this.onClick.bind(this) }
         onMouseDown={ this.onMouseDown.bind(this) }
+        style={style}
       >
         { this.props.children }
-        { 
+        {
           Object.keys(ripples).map((k, i) => {
             let v = ripples[k];
 

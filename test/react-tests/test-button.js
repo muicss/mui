@@ -21,7 +21,17 @@ describe('react/button', function() {
     assert.equal(result.props.children[0], 'test');
   });
 
-  
+  it('renders properly with addtional classNames', function () {
+    let result = getShallowRendererOutput(<Button className="additional">test</Button>);
+    assert.equal(result.props.className, 'mui-btn additional')
+  })
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Button style={{additonal: 'style'}}>test</Button>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
+
   it('supports colors', function() {
     let result = getShallowRendererOutput(
       <Button color="primary">test</Button>
@@ -42,7 +52,7 @@ describe('react/button', function() {
     let result = getShallowRendererOutput(<Button size="large">test</Button>);
     assert.equal(/mui-btn--large/.test(result.props.className), true);
   });
-  
+
 
   it('supports click callbacks', done => {
     // define callback
@@ -55,14 +65,14 @@ describe('react/button', function() {
     );
 
     // click on button
-    ReactUtils.Simulate.click(node.refs.buttonEl);    
+    ReactUtils.Simulate.click(node.refs.buttonEl);
   });
 
 
   it('renders ripples on click', function() {
     let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
     let buttonEl = node.refs.buttonEl;
-    
+
     // check state before ripple
     assert.equal(Object.keys(node.state.ripples).length, 0);
     assert.equal(buttonEl.children.length, 1);
