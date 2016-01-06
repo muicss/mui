@@ -27,8 +27,14 @@ class Container extends React.Component {
     // fluid containers
     if (this.props.isFluid) cls += '-fluid';
 
+    const className = !this.props.className
+      ? cls
+      : `${cls} ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
-      <div className={ cls }>
+      <div className={ className } style={ style }>
         { this.props.children }
       </div>
     );

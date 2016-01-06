@@ -20,6 +20,18 @@ describe('react/container', function() {
     assert.equal(result.props.children, 'test');
   });
 
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Container className="additional">test</Container>);
+
+    assert.equal(result.props.className, 'mui-container additional');
+  });
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Container style={{additonal: 'style'}}>test</Container>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
+
 
   it('rendes fluid properly', function() {
     let result = getShallowRendererOutput(
