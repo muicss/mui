@@ -19,8 +19,14 @@ const breakpoints = ['xs', 'sm', 'md', 'lg'];
  */
 class Row extends React.Component {
   render() {
+
+    const className = !this.props.className
+      ? 'mui-row'
+      : `mui-row ${this.props.className}`;
+
+    const style = {...this.props.style};
     return (
-      <div className="mui-row">
+      <div className={ className } style={ style }>
         { this.props.children }
       </div>
     );
@@ -71,8 +77,14 @@ class Col extends React.Component {
 
     cls = util.classNames(cls);
 
+    const className = !this.props.className
+      ? cls
+      : `${cls} ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
-      <div className={ cls }>
+      <div className={ className } style={ style }>
         { this.props.children}
       </div>
     );
