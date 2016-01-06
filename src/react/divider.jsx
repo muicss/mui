@@ -14,8 +14,15 @@ import React from 'react';
  */
 class Divider extends React.Component {
   render() {
+
+    const className = !this.props.className
+      ? 'mui-divider'
+      : `mui-divider ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
-      <div className='mui-divider'></div>
+      <div className={ className } style={ style }></div>
     );
   }
 }
