@@ -104,7 +104,7 @@ class Select extends React.Component {
     selectEl.tabIndex = selectEl._muiOrigIndex;
 
     // remove keydown handler
-    jqLite.off(document, 'keydown', this.onKeydown);    
+    jqLite.off(document, 'keydown', this.onKeydown);
   }
 
   onKeydown(ev) {
@@ -136,7 +136,7 @@ class Select extends React.Component {
     // remove event listeners
     jqLite.off(window, 'resize', this.hideMenuFn);
     jqLite.off(document, 'click', this.hideMenuFn);
-    
+
     // re-draw
     this.setState({showMenu: false});
 
@@ -157,10 +157,17 @@ class Select extends React.Component {
       );
     }
 
+    const className = !this.props.className
+      ? 'mui-select'
+      : `mui-select ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
       <div
         ref="wrapperEl"
-        className="mui-select"
+        className={ className }
+        style={ style }
         onFocus={ this.onOuterFocusFn }
         onBlur={ this.onOuterBlurFn }
       >
@@ -216,7 +223,7 @@ class SelectItem extends React.Component {
 class Menu extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.onKeydownCB = util.callback(this, 'onKeydown');
   }
 
@@ -272,7 +279,7 @@ class Menu extends React.Component {
   onClick(pos, ev) {
     // don't allow events to bubble
     ev.stopPropagation();
-    
+
     // select option
     this.selectCurrent(pos);
 
@@ -319,7 +326,7 @@ class Menu extends React.Component {
   selectCurrent(pos) {
     let state = this.state,
         currentIndex = (pos === undefined) ? state.currentIndex : pos;
-    
+
     if (currentIndex !== state.origIndex) {
       let optionEls = this.props.selectEl.children;
       optionEls[state.origIndex].selected = false;
@@ -355,7 +362,7 @@ class Menu extends React.Component {
 
     return (
       <div ref="wrapperEl" className="mui-select__menu">
-        { menuItems }  
+        { menuItems }
       </div>
     );
   }

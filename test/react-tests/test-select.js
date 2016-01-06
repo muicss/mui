@@ -34,17 +34,17 @@ describe('react/select', function() {
     assert.equal(result.props.className, 'mui-select');
   });
 
-  
+
   it('renders native select element', function() {
     let node = ReactUtils.renderIntoDocument(elem);
     let wrapperEl = node.refs.wrapperEl;
-    
+
     // check that select element is only child
     assert.equal(wrapperEl.children.length, 1);
     assert.equal(wrapperEl.children[0].tagName, 'SELECT');
   });
 
-  
+
   it('shows menu on click', function() {
     let node = ReactUtils.renderIntoDocument(elem);
     let wrapperEl = node.refs.wrapperEl;
@@ -55,4 +55,17 @@ describe('react/select', function() {
     ReactUtils.Simulate.click(selectEl, {button: 0});
     assert.equal(wrapperEl.children.length, 2);
   });
+
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Select className="additional">test</Select>);
+
+    assert.equal(result.props.className, 'mui-select additional');
+  });
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Select style={{additonal: 'style'}}>test</Select>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
+
 });
