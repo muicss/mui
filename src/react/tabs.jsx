@@ -96,9 +96,12 @@ class Tabs extends React.Component {
 
     cls = tabsBarClass;
     if (this.props.isJustified) cls += ' ' + tabsBarJustifiedClass;
-    
+
+    const className = this.props.className;
+
+    const style = {...this.props.style};
     return (
-      <div>
+      <div className={ className } style={ style }>
         <ul className={ cls }>
           { tabEls }
         </ul>
