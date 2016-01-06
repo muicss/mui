@@ -19,4 +19,17 @@ describe('react/panel', function() {
     assert.equal(result.props.className, 'mui-panel');
     assert.equal(result.props.children, 'test');
   });
+
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Panel className="additional">test</Panel>);
+
+    assert.equal(result.props.className, 'mui-panel additional');
+  });
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Panel style={{additonal: 'style'}}>test</Panel>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
+
 });
