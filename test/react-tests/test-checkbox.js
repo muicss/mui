@@ -24,10 +24,23 @@ describe('react/checkbox', function() {
 
   it('renders wrapper properly', function() {
     let result = getShallowRendererOutput(elem);
-    
+
     assert.equal(result.type, 'div');
     assert.equal(result.props.className, 'mui-checkbox');
   });
+
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Checkbox className="additional">test</Checkbox>);
+
+    assert.equal(result.props.className, 'mui-checkbox additional');
+  });
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Checkbox style={{additonal: 'style'}}>test</Checkbox>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
+
 
 
   it('renders content properly', function() {

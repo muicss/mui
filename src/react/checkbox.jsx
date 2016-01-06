@@ -29,8 +29,15 @@ class Checkbox extends React.Component {
   }
 
   render() {
+
+    const className = !this.props.className
+      ? 'mui-checkbox'
+      : `mui-checkbox ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
-      <div className="mui-checkbox">
+      <div className={className} style={style}>
         <label>
           <input
               type="checkbox"
