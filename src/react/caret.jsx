@@ -14,8 +14,15 @@ import React from 'react';
  */
 class Caret extends React.Component {
   render() {
+
+    const className = !this.props.className
+      ? 'mui-caret'
+      : `mui-caret ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
-      <span className="mui-caret"></span>
+      <span className={className} style={style}></span>
     );
   }
 }

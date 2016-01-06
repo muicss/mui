@@ -19,4 +19,17 @@ describe('react/caret', function() {
     assert.equal(result.props.className, 'mui-caret');
     assert.equal(result.props.children, undefined);
   });
+
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Caret className="additional">test</Caret>);
+
+    assert.equal(result.props.className, 'mui-caret additional');
+  });
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Caret style={{additonal: 'style'}}>test</Caret>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
+
 });
