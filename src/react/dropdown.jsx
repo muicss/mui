@@ -34,7 +34,7 @@ class Dropdown extends React.Component {
       opened: false,
       menuTop: 0
     }
-  
+
     let cb = util.callback;
     this.onClickCB = cb(this, 'onClick');
     this.onOutsideClickCB = cb(this, 'onOutsideClick');
@@ -153,8 +153,14 @@ class Dropdown extends React.Component {
       );
     }
 
+    const className = !this.props.className
+      ? dropdownClass
+      : `${dropdownClass} ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
-      <div ref="wrapperEl" className={ dropdownClass }>
+      <div ref="wrapperEl" className={ className } style={ style }>
         { buttonEl }
         { menuEl }
       </div>

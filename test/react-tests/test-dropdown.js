@@ -33,6 +33,17 @@ describe('react/dropdown', function() {
     assert.equal(result.props.className, 'mui-dropdown');
   });
 
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Dropdown className="additional">test</Dropdown>);
+
+    assert.equal(result.props.className, 'mui-dropdown additional');
+  });
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Dropdown style={{additonal: 'style'}}>test</Dropdown>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
 
   it('renders menu on click', function() {
     let node = ReactUtils.renderIntoDocument(elem);
@@ -40,7 +51,7 @@ describe('react/dropdown', function() {
 
     // check menu is hidden
     assert.equal(node.refs.menuEl, undefined);
-    
+
     // click to render menu
     ReactUtils.Simulate.click(buttonEl, {button: 0});
     let cls = 'mui-dropdown__menu mui--is-open';
