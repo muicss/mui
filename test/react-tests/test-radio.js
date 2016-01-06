@@ -24,7 +24,7 @@ describe('react/radio', function() {
 
   it('renders wrapper properly', function() {
     let result = getShallowRendererOutput(elem);
-    
+
     assert.equal(result.type, 'div');
     assert.equal(result.props.className, 'mui-radio');
   });
@@ -42,4 +42,17 @@ describe('react/radio', function() {
     let inputEl = labelEl.children[0];
     assert.equal(inputEl.tagName, 'INPUT');
   });
+
+  it('renders properly with additional classNames', function() {
+    let result = getShallowRendererOutput(<Radio className="additional">test</Radio>);
+
+    assert.equal(result.props.className, 'mui-radio additional');
+  });
+
+  it('renders properly with additional styles', function() {
+    let result = getShallowRendererOutput(<Radio style={{additonal: 'style'}}>test</Radio>);
+
+    assert.equal(result.props.style.additonal, 'style');
+  });
+
 });

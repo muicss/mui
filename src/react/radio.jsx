@@ -33,8 +33,15 @@ class Radio extends React.Component {
   }
 
   render() {
+
+    const className = !this.props.className
+      ? 'mui-radio'
+      : `mui-radio ${this.props.className}`;
+
+    const style = {...this.props.style};
+
     return (
-      <div className="mui-radio">
+      <div className={ className } style={ style }>
         <label>
           <input
               type="radio"
