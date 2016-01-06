@@ -8,27 +8,51 @@
   if (win._muiReactLoaded) return;
   else win._muiReactLoaded = true;
 
-  // load dependencies
-  var layout = require('./layout.jsx'),
-      forms = require('./forms.jsx'),
-      buttons = require('./buttons.jsx'),
-      dropdowns = require('./dropdowns.jsx'),
-      tabs = require('./tabs.jsx'),
-      doc = win.document;
+  var lib;
 
-  // export React classes
-  win.MUIContainer = layout.Container;
-  win.MUIFluidContainer = layout.FluidContainer;
-  win.MUIPanel = layout.Panel;
+  // appbar
+  win.MUIAppbar = require('./appbar.jsx').Appbar;
 
-  win.MUITextfield = forms.Textfield;
+  // buttons
+  win.MUIButton = require('./button.jsx').Button;
 
-  win.MUIButton = buttons.Button;
+  // caret
+  win.MUICaret = require('./caret.jsx').Caret;
 
-  win.MUIDropdown = dropdowns.Dropdown;
-  win.MUIDropdownItem = dropdowns.DropdownItem;
- 
-  win.MUITab = tabs.Tab;
-  win.MUITabs = tabs.Tabs;
-  
+  // container
+  win.MUIContainer = require('./container.jsx').Container;
+
+  // dividers
+  win.MUIDivider = require('./divider.jsx').Divider;
+
+  // dropdowns
+  lib = require('./dropdown.jsx');
+  win.MUIDropdown = lib.Dropdown;
+  win.MUIDropdownItem = lib.DropdownItem;
+
+  // grid
+  lib = require('./grid.jsx');
+  win.MUIRow = lib.Row;
+  win.MUICol = lib.Col;
+
+  // forms
+  win.MUICheckbox = require('./checkbox.jsx').Checkbox;
+  win.MUIForm = require('./form.jsx').Form;
+  win.MUIRadio = require('./radio.jsx').Radio;
+
+  lib = require('./select.jsx');
+  win.MUISelect = lib.Select;
+  win.MUISelectItem = lib.SelectItem;
+
+  lib = require('./textinput.jsx');
+  win.MUITextInput = lib.TextInput;
+  win.MUITextareaInput = lib.TextareaInput;
+
+  // panels
+  win.MUIPanel = require('./panel.jsx').Panel;
+
+  // tabs
+  lib = require('./tabs.jsx');
+  win.MUITab = lib.Tab;
+  win.MUITabs = lib.Tabs;
 })(window);

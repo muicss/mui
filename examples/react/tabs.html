@@ -1,10 +1,14 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- for example only -->   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="../assets/vendor/react/0.14.3/react.js"></script>
+    <script src="../assets/vendor/react/0.14.3/react-dom.js"></script>
+    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
     <!-- end -->
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,14 +24,24 @@
     </div>
     <script type="text/babel">
       // default tabs
-      var Example1 = React.createClass({
-        render: function() {
+      class Example1 extends React.Component {
+        onChange(i, value, tab, ev) {
+          console.log(arguments)
+        }
+
+        onActive(tab) {
+          console.log(arguments);
+        }
+
+        render() {
           return (
-            <MUITabs onChange={ this._handleChange } initialSelectedIndex="1">
+            <MUITabs
+                onChange={ this.onChange }
+                initialSelectedIndex={ 1 }>
               <MUITab
                   value="pane-1"
                   label="Tab 1"
-                  onActive={ this._handleActive }
+                  onActive={ this.onActive }
               >
                 Content 1
               </MUITab>
@@ -36,14 +50,8 @@
               </MUITab>
             </MUITabs>
           );
-        },
-        _handleChange: function(i, value, tab, ev) {
-          console.log(arguments)
-        },
-        _handleActive: function(tab) {
-          console.log(arguments);
         }
-      });
+      }
 
       ReactDOM.render(<Example1/>, document.getElementById('tabs-example1'));
     </script>

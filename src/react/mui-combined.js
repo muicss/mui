@@ -7,7 +7,7 @@
   if (win._muiReactCombinedLoaded) return;
   else win._muiReactCombinedLoaded = true;
 
-  var util = require('../js/lib/util.js');
+  var util = require('../js/lib/util');
 
   // load css
   util.loadStyle(require('mui.min.css'));

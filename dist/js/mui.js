@@ -124,7 +124,7 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite.js":5,"./lib/util.js":6}],3:[function(require,module,exports){
+},{"./lib/jqLite.js":6,"./lib/util.js":7}],3:[function(require,module,exports){
 /**
  * MUI CSS/JS select module
  * @module forms/select
@@ -135,13 +135,11 @@ module.exports = {
 
 var jqLite = require('../lib/jqLite.js'),
     util = require('../lib/util.js'),
+    formlib = require('../lib/forms.js'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
-    wrapperPadding = 15,  // from CSS
-    inputHeight = 32,  // from CSS
-    optionHeight = 42,  // from CSS
-    menuPadding = 8,  // from CSS
+    selectedClass = 'mui--is-selected',
     doc = document,
     win = window;
 
@@ -313,76 +311,45 @@ function Menu(wrapperEl, selectEl) {
  * @param {Element} selectEl - The select element
  */
 Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
-  var optionEl, itemEl, i, minTop, maxTop, top;
-
   var menuEl = doc.createElement('div'),
-      optionList = selectEl.children,
-      m = optionList.length,
+      optionEls = selectEl.children,
+      numOptions = optionEls.length,
       selectedPos = 0,
-      initTop = (menuPadding + optionHeight) - (wrapperPadding + inputHeight);
+      optionEl,
+      itemEl,
+      i;
 
-  // create element
   menuEl.className = menuClass;
 
   // add options
-  for (i=0; i < m; i++) {
-    optionEl = optionList[i];
+  for (i=0; i < numOptions; i++) {
+    optionEl = optionEls[i];
 
     itemEl = doc.createElement('div');
     itemEl.textContent = optionEl.textContent;
     itemEl._muiPos = i;
 
-    if (optionEl.selected) selectedPos = i;
+    if (optionEl.selected) {
+      itemEl.setAttribute('class', selectedClass);
+      selectedPos = i;
+    }
 
     menuEl.appendChild(itemEl);
   }
-
-  // add selected attribute
-  menuEl.children[selectedPos].setAttribute('selected', true);
 
   // save indices
   this.origIndex = selectedPos;
   this.currentIndex = selectedPos;
 
-  var viewHeight = doc.documentElement.clientHeight;
+  // set position
+  var props = formlib.getMenuPositionalCSS(
+    wrapperEl,
+    numOptions,
+    selectedPos
+  );
 
-  // set height (use viewport as maximum height)
-  var height = m * optionHeight + 2 * menuPadding,
-      isOverflow = height > viewHeight;
-
-  height = Math.min(height, viewHeight);
-  jqLite.css(menuEl, 'height', height + 'px');
-
-  // ideal position
-  initTop -= selectedPos * optionHeight;
-
-  // minimum position
-  minTop = -1 * wrapperEl.getBoundingClientRect().top;
-
-  // maximium position
-  maxTop = (viewHeight - height) + minTop;
-
-  // prevent overflow-y
-  top = Math.max(initTop, minTop);
-  top = Math.min(top, maxTop);
-
-  jqLite.css(menuEl, 'top', top + 'px');
-
-  // set menu scroll position
-  if (isOverflow) {
-    var scrollIdeal, scrollMax;
-
-    scrollIdeal = (menuPadding + (selectedPos + 1) * optionHeight) - 
-      (-1 * top + wrapperPadding + inputHeight);
-
-    scrollMax = m * optionHeight + 2 * menuPadding - height;
-
-    menuEl._muiHasOverflow = true;
-    menuEl._muiScrollTop = Math.min(scrollIdeal, scrollMax);
-  } else {
-    menuEl._muiHasOverflow = false;
-    menuEl._muiScrollTop = 0;
-  }
+  jqLite.css(menuEl, props);
+  menuEl._muiScrollTop = props.scrollTop;
 
   return menuEl;
 }
@@ -444,9 +411,11 @@ Menu.prototype.clickHandler = function(ev) {
 Menu.prototype.increment = function() {
   if (this.currentIndex === this.menuEl.children.length - 1) return;
 
-  this.menuEl.children[this.currentIndex].removeAttribute('selected');
+  var optionEls = this.menuEl.children;
+  
+  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex += 1;
-  this.menuEl.children[this.currentIndex].setAttribute('selected', true);
+  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
 
@@ -456,9 +425,11 @@ Menu.prototype.increment = function() {
 Menu.prototype.decrement = function() {
   if (this.currentIndex === 0) return;
 
-  this.menuEl.children[this.currentIndex].removeAttribute('selected');
+  var optionEls = this.menuEl.children;
+
+  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex -= 1;
-  this.menuEl.children[this.currentIndex].setAttribute('selected', true);
+  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
 
@@ -467,8 +438,9 @@ Menu.prototype.decrement = function() {
  */
 Menu.prototype.selectCurrent = function() {
   if (this.currentIndex !== this.origIndex) {
-    this.selectEl.children[this.origIndex].selected = false;
-    this.selectEl.children[this.currentIndex].selected = true;
+    var optionEls = this.selectEl.children;
+    optionEls[this.origIndex].selected = false;
+    optionEls[this.currentIndex].selected = true;
 
     // trigger change event
     util.dispatchEvent(this.selectEl, 'change');
@@ -513,7 +485,7 @@ module.exports = {
   }
 };
 
-},{"../lib/jqLite.js":5,"../lib/util.js":6}],4:[function(require,module,exports){
+},{"../lib/forms.js":5,"../lib/jqLite.js":6,"../lib/util.js":7}],4:[function(require,module,exports){
 /**
  * MUI CSS/JS form-control module
  * @module forms/form-control
@@ -614,7 +586,68 @@ module.exports = {
   }
 };
 
-},{"../lib/jqLite.js":5,"../lib/util.js":6}],5:[function(require,module,exports){
+},{"../lib/jqLite.js":6,"../lib/util.js":7}],5:[function(require,module,exports){
+/**
+ * MUI CSS/JS form helpers module
+ * @module lib/forms.py
+ */
+
+'use strict';
+
+var wrapperPadding = 15,  // from CSS
+    inputHeight = 32,  // from CSS
+    optionHeight = 42,  // from CSS
+    menuPadding = 8;  // from CSS
+
+
+/**
+ * Menu position/size/scroll helper
+ * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
+ */
+function getMenuPositionalCSSFn(wrapperEl, numOptions, currentIndex) {
+  var viewHeight = document.documentElement.clientHeight;
+
+  // determine 'height'
+  var h = numOptions * optionHeight + 2 * menuPadding,
+      height = Math.min(h, viewHeight);
+
+  // determine 'top'
+  var top, initTop, minTop, maxTop;
+
+  initTop = (menuPadding + optionHeight) - (wrapperPadding + inputHeight);
+  initTop -= currentIndex * optionHeight;
+
+  minTop = -1 * wrapperEl.getBoundingClientRect().top;
+  maxTop = (viewHeight - height) + minTop;
+
+  top = Math.min(Math.max(initTop, minTop), maxTop);
+
+  // determine 'scrollTop'
+  var scrollTop = 0,
+      scrollIdeal,
+      scrollMax;
+
+  if (h > viewHeight) {
+    scrollIdeal = (menuPadding + (currentIndex + 1) * optionHeight) -
+      (-1 * top + wrapperPadding + inputHeight);
+    scrollMax = numOptions * optionHeight + 2 * menuPadding - height;
+    scrollTop = Math.min(scrollIdeal, scrollMax);
+  }
+
+  return {
+    'height': height + 'px',
+    'top': top + 'px',
+    'scrollTop': scrollTop
+  };
+}
+
+
+/** Define module API */
+module.exports = {
+  getMenuPositionalCSS: getMenuPositionalCSSFn
+};
+
+},{}],6:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -1016,7 +1049,7 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -1250,7 +1283,7 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config.js":1,"./jqLite.js":5}],7:[function(require,module,exports){
+},{"../config.js":1,"./jqLite.js":6}],8:[function(require,module,exports){
 /**
  * MUI CSS/JS main module
  * @module main
@@ -1289,7 +1322,7 @@ module.exports = {
   });
 })(window);
 
-},{"./dropdowns.js":2,"./forms/select.js":3,"./forms/textfield.js":4,"./lib/jqLite.js":5,"./lib/util.js":6,"./overlay.js":8,"./ripple.js":9,"./tabs.js":10}],8:[function(require,module,exports){
+},{"./dropdowns.js":2,"./forms/select.js":3,"./forms/textfield.js":4,"./lib/jqLite.js":6,"./lib/util.js":7,"./overlay.js":9,"./ripple.js":10,"./tabs.js":11}],9:[function(require,module,exports){
 /**
  * MUI CSS/JS overlay module
  * @module overlay
@@ -1481,7 +1514,7 @@ function onClick(ev) {
 /** Define module API */
 module.exports = overlayFn;
 
-},{"./lib/jqLite.js":5,"./lib/util.js":6}],9:[function(require,module,exports){
+},{"./lib/jqLite.js":6,"./lib/util.js":7}],10:[function(require,module,exports){
 /**
  * MUI CSS/JS ripple module
  * @module ripple
@@ -1586,7 +1619,7 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite.js":5,"./lib/util.js":6}],10:[function(require,module,exports){
+},{"./lib/jqLite.js":6,"./lib/util.js":7}],11:[function(require,module,exports){
 /**
  * MUI CSS/JS tabs module
  * @module tabs
@@ -1747,4 +1780,4 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite.js":5,"./lib/util.js":6}]},{},[7]);
+},{"./lib/jqLite.js":6,"./lib/util.js":7}]},{},[8]);

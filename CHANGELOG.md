@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.3.0-rc1 (IN PROGRESS)
+
+* Replaced .mui-textfield--invalid with .mui--is-invalid
+
 ## 0.2.9 - December 7, 2015
 
 * Fixed path to js file for `muicss` npm package

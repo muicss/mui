@@ -73,7 +73,7 @@ input[type="checkbox"]:disabled {
 
   > textarea {
     padding-top: 5px;
-    min-height: $mui-textarea-height;
+    //min-height: $mui-textarea-height;
   }
 
   > input,
@@ -153,7 +153,6 @@ input[type="checkbox"]:disabled {
   border: none;
   border-bottom: 1px solid $mui-input-border-color;
   outline: none;
-  height: $mui-input-height;
   width: 100%;
   font-size: $mui-input-font-size;
   padding: 0;
@@ -181,8 +180,24 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.mui-textfield > input {
+  height: $mui-input-height;
+
+  // Compensate for height change on focus
+  &:focus {
+    height: $mui-input-height + 1px;
+    margin-bottom: -1px;
+  }
+}
+
 .mui-textfield > textarea {
-  height: auto;  // Reset height for <textarea>s
+  //height: auto;  // Reset height for <textarea>s
+  min-height: $mui-textarea-height;
+
+  // Compensate for height change on focus
+  &[rows]:not([rows="2"]):focus {
+    margin-bottom: -1px;
+  }
 }
 
 .mui-textfield > input:focus {
@@ -359,7 +374,7 @@ input[type="checkbox"]:disabled {
       background-color: mui-color('grey', '300');
     }
 
-    &[selected] {
+    &.mui--is-selected {
       background-color: mui-color('grey', '200');
     }
   }
@@ -416,8 +431,8 @@ input[type="checkbox"]:disabled {
 
 .mui-textfield > input:invalid:not(:focus),
 .mui-textfield > textarea:invalid:not(:focus),
-.mui-textfield--invalid > input:not(:focus),
-.mui-textfield--invalid > textarea:not(:focus) {
+.mui-textfield > input:not(:focus).mui--is-invalid,
+.mui-textfield > textarea:not(:focus).mui--is-invalid {
   &:not(:required),
   &:required.mui--is-not-empty,
   &:required.mui--is-empty.mui--is-dirty,
@@ -430,7 +445,7 @@ input[type="checkbox"]:disabled {
 
 // Treat <input>'s different from <textarea>'s
 .mui-textfield > input:invalid:not(:focus),
-.mui-textfield--invalid > input:not(:focus) {
+.mui-textfield > input:not(:focus).mui--is-invalid {
   &:not(:required),
   &:required.mui--is-not-empty,
   &:required.mui--is-empty.mui--is-dirty,
@@ -443,8 +458,8 @@ input[type="checkbox"]:disabled {
 
 .mui-textfield > input:invalid:not(:focus),
 .mui-textfield > textarea:invalid:not(:focus),
-.mui-textfield--invalid > input:not(:focus),
-.mui-textfield--invalid > textarea:not(:focus) {
+.mui-textfield > input:not(:focus).mui--is-invalid,
+.mui-textfield > textarea:not(:focus).mui--is-invalid {
   // Set label color to danger color
   &:not(:required),
   &:required.mui--is-not-empty,
@@ -458,8 +473,8 @@ input[type="checkbox"]:disabled {
 
 .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus),
 .mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus),
-.mui-textfield--invalid:not(.mui-textfield--float-label) > input:not(:focus),
-.mui-textfield--invalid:not(.mui-textfield--float-label) > textarea:not(:focus) {
+.mui-textfield:not(.mui-textfield--float-label) > input:not(:focus).mui--is-invalid,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:not(:focus).mui--is-invalid {
   // Set label color to danger color for dirty, empty fields
   &:required.mui--is-empty.mui--is-dirty ~ label {
     color: $mui-danger-color;

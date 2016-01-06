@@ -97,10 +97,10 @@ MUI is tested and works in:
 
 ### Unit tests
 
-To run the unit tests from the command line, run 'mocha':
+To run the unit tests from the command line, run 'npm test':
 
 ```bash
-$ ./node_modules/.bin/mocha
+$ npm test
 ```
 
 ### E2E tests

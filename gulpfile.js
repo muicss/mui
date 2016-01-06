@@ -2,24 +2,47 @@
  * MUI gulp file
  */
 
-var del = require('del'),
-    streamqueue = require('streamqueue'),
-    gulp = require('gulp'),
-    libSass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssmin = require('gulp-cssmin'),
-    jshint = require('gulp-jshint'),
+var autoprefixer = require('gulp-autoprefixer'),
+    babel = require('gulp-babel'),
+    babelify = require('babelify'),
+    babelCore = require('babel-core'),
     browserify = require('gulp-browserify'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
+    Browserify = require('browserify'),
+    cssmin = require('gulp-cssmin'),
     concat = require('gulp-concat'),
-    reactify = require('reactify'),
-    stringify = require('stringify'),
+    del = require('del'),
+    fs = require('fs'),
+    gulp = require('gulp'),
     injectSource = require('gulp-inline-source'),
+    injectString = require('gulp-inject-string'),
     inlineCss = require('gulp-inline-css'),
+    jshint = require('gulp-jshint'),
+    libSass = require('gulp-sass'),
+    rename = require('gulp-rename'),
+    replace = require('gulp-replace'),
     source = require('vinyl-source-stream'),
-    Browserify = require('browserify');
+    streamqueue = require('streamqueue'),
+    stringify = require('stringify'),
+    uglify = require('gulp-uglify');
 
+
+babelify = babelify.configure({
+  plugins: ['external-helpers-2']
+})
+
+
+var babelHelpersJS = babelCore.buildExternalHelpers(
+  [
+    'inherits',
+    'createClass',
+    'classCallCheck',
+    'possibleConstructorReturn',
+    'interopRequireDefault',
+    'interopRequireWildcard',
+    'extends'
+  ],
+  'global'
+);
 
 
 
@@ -35,6 +58,8 @@ if (taskName === 'build-dist') {
   dirName = 'dist';
 } else if (taskName === 'build-examples' || taskName === 'watch') {
   dirName = 'examples/assets/' + pkgName;
+} else if (taskName === 'build-pkg') {
+  dirName = 'pkg/lib';
 } else if (taskName !== 'build-e2e-tests') {
   throw 'Did not understand task "' + taskName + '"';
 }
@@ -46,8 +71,8 @@ if (taskName === 'build-dist') {
 // RECIPES
 // ============================================================================
 
-gulp.task('clean', function(callback) {
-  del([dirName], callback);
+gulp.task('clean', function() {
+  return del([dirName]);
 });
 
 
@@ -106,8 +131,12 @@ gulp.task('uglify', ['js'], function() {
 gulp.task('react', ['clean'], function() {
   return gulp.src('src/react/mui.js')
     .pipe(browserify({
-      transform: [reactify]
+      transform: [babelify],
+      external: ['react', 'react-dom']
     }))
+    .pipe(replace("require('react')", "window.React"))
+    .pipe(replace("require('react-dom')", "window.ReactDOM"))
+    .pipe(injectString.prepend(babelHelpersJS))
     .pipe(rename(pkgName + '-react.js'))
     .pipe(gulp.dest(dirName + '/react'));
 });
@@ -166,8 +195,8 @@ gulp.task('build-email-styletag', function() {
 });
 
 
-gulp.task('clean-email-inlined', function(callback) {
-  del(['examples/email-inlined'], callback)
+gulp.task('clean-email-inlined', function() {
+  return del(['examples/email-inlined'])
 });
 
 
@@ -234,16 +263,39 @@ gulp.task('react-combined', ['clean', 'cssmin'], function() {
   return gulp.src('src/react/mui-combined.js')
     .pipe(browserify({
       transform: [
-        reactify,
+        babelify,
         stringify(['.css'])
       ],
-      paths: [dirName + '/css']
+      paths: [dirName + '/css'],
+      external: ['react', 'react-dom']
     }))
+    .pipe(replace("require('react')", "window.React"))
+    .pipe(replace("require('react-dom')", "window.ReactDOM"))
+    .pipe(injectString.prepend(babelHelpersJS))
     .pipe(uglify())
     .pipe(rename(pkgName + '-react-combined.js'))
     .pipe(gulp.dest(dirName + '/extra'));
 });
 
+
+
+// ----------------------------------------------------------------------------
+// PKG
+// ----------------------------------------------------------------------------
+
+gulp.task('pkg-js', ['clean'], function() {
+  // TODO: fix relative file imports
+  // copy js files
+  return gulp.src('src/js/**/*.js')
+    .pipe(gulp.dest(dirName + '/js'));
+});
+
+
+gulp.task('pkg-react', ['clean'], function() {
+  return gulp.src('src/react/**/*.jsx')
+    .pipe(babel())
+    .pipe(gulp.dest(dirName + '/react'));  
+});
 
 
 
@@ -302,27 +354,21 @@ gulp.task('build-examples', ['clean'], function() {
 });
 
 
+gulp.task('build-pkg', ['clean'], function() {
+  gulp.start([
+    'pkg-js',
+    'pkg-react'
+  ]);
+});
+
+
 gulp.task('build-e2e-tests', function() {
-  var stream = streamqueue({objectMode: true}),
-      files;
-  
-  files = [
-    'test-jqlite.js',
-    'test-util.js',
-    'react/test-forms.js'
-  ];
-
-  // build streams
-  for (var i=0; i < files.length; i++) {
-    stream.queue(gulp.src('test/' + files[i]));
-  }
-
-  // concat streams
-  return stream.done()
-    .pipe(concat('tests.js'))
+  return gulp.src('e2e-tests/_tests.js')
     .pipe(browserify({
-      transform: [reactify]
+      transform: [babelify]
     }))
+    .pipe(injectString.prepend(babelHelpersJS))
+    .pipe(rename('tests.js'))
     .pipe(gulp.dest('e2e-tests'));
 });
 

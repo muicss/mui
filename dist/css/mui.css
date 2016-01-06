@@ -262,7 +262,8 @@ select {
  *    `input` and others.
  */
 button,
-html input[type="button"], input[type="reset"],
+html input[type="button"],
+input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
@@ -435,8 +436,7 @@ a {
   text-decoration: none;
 }
 
-a:hover,
-a:focus {
+a:hover, a:focus {
   color: #1976D2;
   text-decoration: underline;
 }
@@ -483,8 +483,7 @@ hr {
   padding-right: 15px;
 }
 
-.mui-container:before,
-.mui-container:after {
+.mui-container:before, .mui-container:after {
   content: " ";
   display: table;
 }
@@ -518,8 +517,7 @@ hr {
   padding-right: 15px;
 }
 
-.mui-container-fluid:before,
-.mui-container-fluid:after {
+.mui-container-fluid:before, .mui-container-fluid:after {
   content: " ";
   display: table;
 }
@@ -536,8 +534,7 @@ hr {
   margin-right: -15px;
 }
 
-.mui-row:before,
-.mui-row:after {
+.mui-row:before, .mui-row:after {
   content: " ";
   display: table;
 }
@@ -1480,8 +1477,7 @@ hr {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
 }
 
-.mui-panel:before,
-.mui-panel:after {
+.mui-panel:before, .mui-panel:after {
   content: " ";
   display: table;
 }
@@ -1536,16 +1532,12 @@ hr {
   overflow: hidden;
 }
 
-.mui-btn:hover,
-.mui-btn:focus,
-.mui-btn:active {
+.mui-btn:hover, .mui-btn:focus, .mui-btn:active {
   color: rgba(0, 0, 0, 0.87);
   background-color: white;
 }
 
-.mui-btn[disabled]:hover,
-.mui-btn[disabled]:focus,
-.mui-btn[disabled]:active {
+.mui-btn[disabled]:hover, .mui-btn[disabled]:focus, .mui-btn[disabled]:active {
   color: rgba(0, 0, 0, 0.87);
   background-color: #FFF;
 }
@@ -1555,36 +1547,28 @@ hr {
   background-color: transparent;
 }
 
-.mui-btn.mui-btn--flat:hover,
-.mui-btn.mui-btn--flat:focus,
-.mui-btn.mui-btn--flat:active {
+.mui-btn.mui-btn--flat:hover, .mui-btn.mui-btn--flat:focus, .mui-btn.mui-btn--flat:active {
   color: rgba(0, 0, 0, 0.87);
   background-color: #f2f2f2;
 }
 
-.mui-btn.mui-btn--flat[disabled]:hover,
-.mui-btn.mui-btn--flat[disabled]:focus,
-.mui-btn.mui-btn--flat[disabled]:active {
+.mui-btn.mui-btn--flat[disabled]:hover, .mui-btn.mui-btn--flat[disabled]:focus, .mui-btn.mui-btn--flat[disabled]:active {
   color: rgba(0, 0, 0, 0.87);
   background-color: transparent;
 }
 
-.mui-btn:hover,
-.mui-btn:focus,
-.mui-btn:active {
+.mui-btn:hover, .mui-btn:focus, .mui-btn:active {
   outline: 0;
   text-decoration: none;
   color: rgba(0, 0, 0, 0.87);
 }
 
-.mui-btn:hover,
-.mui-btn:focus {
+.mui-btn:hover, .mui-btn:focus {
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .mui-btn:hover,
-  .mui-btn:focus {
+  .mui-btn:hover, .mui-btn:focus {
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
   }
 }
@@ -1599,8 +1583,7 @@ hr {
   }
 }
 
-.mui-btn:disabled,
-.mui-btn.mui--is-disabled {
+.mui-btn:disabled, .mui-btn.mui--is-disabled {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.60;
@@ -1615,9 +1598,7 @@ hr {
   background-color: transparent;
 }
 
-.mui-btn--flat:hover,
-.mui-btn--flat:focus,
-.mui-btn--flat:active {
+.mui-btn--flat:hover, .mui-btn--flat:focus, .mui-btn--flat:active {
   box-shadow: none;
   background-color: #f2f2f2;
 }
@@ -1657,16 +1638,12 @@ hr {
   background-color: #2196F3;
 }
 
-.mui-btn--primary:hover,
-.mui-btn--primary:focus,
-.mui-btn--primary:active {
+.mui-btn--primary:hover, .mui-btn--primary:focus, .mui-btn--primary:active {
   color: #FFF;
   background-color: #39a1f4;
 }
 
-.mui-btn--primary[disabled]:hover,
-.mui-btn--primary[disabled]:focus,
-.mui-btn--primary[disabled]:active {
+.mui-btn--primary[disabled]:hover, .mui-btn--primary[disabled]:focus, .mui-btn--primary[disabled]:active {
   color: #FFF;
   background-color: #2196F3;
 }
@@ -1676,16 +1653,12 @@ hr {
   background-color: transparent;
 }
 
-.mui-btn--primary.mui-btn--flat:hover,
-.mui-btn--primary.mui-btn--flat:focus,
-.mui-btn--primary.mui-btn--flat:active {
+.mui-btn--primary.mui-btn--flat:hover, .mui-btn--primary.mui-btn--flat:focus, .mui-btn--primary.mui-btn--flat:active {
   color: #2196F3;
   background-color: #f2f2f2;
 }
 
-.mui-btn--primary.mui-btn--flat[disabled]:hover,
-.mui-btn--primary.mui-btn--flat[disabled]:focus,
-.mui-btn--primary.mui-btn--flat[disabled]:active {
+.mui-btn--primary.mui-btn--flat[disabled]:hover, .mui-btn--primary.mui-btn--flat[disabled]:focus, .mui-btn--primary.mui-btn--flat[disabled]:active {
   color: #2196F3;
   background-color: transparent;
 }
@@ -1695,16 +1668,12 @@ hr {
   background-color: #424242;
 }
 
-.mui-btn--dark:hover,
-.mui-btn--dark:focus,
-.mui-btn--dark:active {
+.mui-btn--dark:hover, .mui-btn--dark:focus, .mui-btn--dark:active {
   color: #FFF;
   background-color: #4f4f4f;
 }
 
-.mui-btn--dark[disabled]:hover,
-.mui-btn--dark[disabled]:focus,
-.mui-btn--dark[disabled]:active {
+.mui-btn--dark[disabled]:hover, .mui-btn--dark[disabled]:focus, .mui-btn--dark[disabled]:active {
   color: #FFF;
   background-color: #424242;
 }
@@ -1714,16 +1683,12 @@ hr {
   background-color: transparent;
 }
 
-.mui-btn--dark.mui-btn--flat:hover,
-.mui-btn--dark.mui-btn--flat:focus,
-.mui-btn--dark.mui-btn--flat:active {
+.mui-btn--dark.mui-btn--flat:hover, .mui-btn--dark.mui-btn--flat:focus, .mui-btn--dark.mui-btn--flat:active {
   color: #424242;
   background-color: #f2f2f2;
 }
 
-.mui-btn--dark.mui-btn--flat[disabled]:hover,
-.mui-btn--dark.mui-btn--flat[disabled]:focus,
-.mui-btn--dark.mui-btn--flat[disabled]:active {
+.mui-btn--dark.mui-btn--flat[disabled]:hover, .mui-btn--dark.mui-btn--flat[disabled]:focus, .mui-btn--dark.mui-btn--flat[disabled]:active {
   color: #424242;
   background-color: transparent;
 }
@@ -1733,16 +1698,12 @@ hr {
   background-color: #F44336;
 }
 
-.mui-btn--danger:hover,
-.mui-btn--danger:focus,
-.mui-btn--danger:active {
+.mui-btn--danger:hover, .mui-btn--danger:focus, .mui-btn--danger:active {
   color: #FFF;
   background-color: #f55a4e;
 }
 
-.mui-btn--danger[disabled]:hover,
-.mui-btn--danger[disabled]:focus,
-.mui-btn--danger[disabled]:active {
+.mui-btn--danger[disabled]:hover, .mui-btn--danger[disabled]:focus, .mui-btn--danger[disabled]:active {
   color: #FFF;
   background-color: #F44336;
 }
@@ -1752,16 +1713,12 @@ hr {
   background-color: transparent;
 }
 
-.mui-btn--danger.mui-btn--flat:hover,
-.mui-btn--danger.mui-btn--flat:focus,
-.mui-btn--danger.mui-btn--flat:active {
+.mui-btn--danger.mui-btn--flat:hover, .mui-btn--danger.mui-btn--flat:focus, .mui-btn--danger.mui-btn--flat:active {
   color: #F44336;
   background-color: #f2f2f2;
 }
 
-.mui-btn--danger.mui-btn--flat[disabled]:hover,
-.mui-btn--danger.mui-btn--flat[disabled]:focus,
-.mui-btn--danger.mui-btn--flat[disabled]:active {
+.mui-btn--danger.mui-btn--flat[disabled]:hover, .mui-btn--danger.mui-btn--flat[disabled]:focus, .mui-btn--danger.mui-btn--flat[disabled]:active {
   color: #F44336;
   background-color: transparent;
 }
@@ -1771,16 +1728,12 @@ hr {
   background-color: #FF4081;
 }
 
-.mui-btn--accent:hover,
-.mui-btn--accent:focus,
-.mui-btn--accent:active {
+.mui-btn--accent:hover, .mui-btn--accent:focus, .mui-btn--accent:active {
   color: #FFF;
   background-color: #ff5a92;
 }
 
-.mui-btn--accent[disabled]:hover,
-.mui-btn--accent[disabled]:focus,
-.mui-btn--accent[disabled]:active {
+.mui-btn--accent[disabled]:hover, .mui-btn--accent[disabled]:focus, .mui-btn--accent[disabled]:active {
   color: #FFF;
   background-color: #FF4081;
 }
@@ -1790,16 +1743,12 @@ hr {
   background-color: transparent;
 }
 
-.mui-btn--accent.mui-btn--flat:hover,
-.mui-btn--accent.mui-btn--flat:focus,
-.mui-btn--accent.mui-btn--flat:active {
+.mui-btn--accent.mui-btn--flat:hover, .mui-btn--accent.mui-btn--flat:focus, .mui-btn--accent.mui-btn--flat:active {
   color: #FF4081;
   background-color: #f2f2f2;
 }
 
-.mui-btn--accent.mui-btn--flat[disabled]:hover,
-.mui-btn--accent.mui-btn--flat[disabled]:focus,
-.mui-btn--accent.mui-btn--flat[disabled]:active {
+.mui-btn--accent.mui-btn--flat[disabled]:hover, .mui-btn--accent.mui-btn--flat[disabled]:focus, .mui-btn--accent.mui-btn--flat[disabled]:active {
   color: #FF4081;
   background-color: transparent;
 }
@@ -2067,7 +2016,6 @@ input[type="checkbox"]:disabled {
 
 .mui-textfield > textarea {
   padding-top: 5px;
-  min-height: 64px;
 }
 
 .mui-textfield > input,
@@ -2101,9 +2049,7 @@ input[type="checkbox"]:disabled {
   text-overflow: ellipsis;
 }
 
-.mui-textfield--float-label > input:not(:focus).mui--is-not-empty ~ label,
-.mui-textfield--float-label > input:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield--float-label > input:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield--float-label > input:not(:focus).mui--is-not-empty ~ label, .mui-textfield--float-label > input:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label, .mui-textfield--float-label > input:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
 .mui-textfield--float-label > textarea:not(:focus).mui--is-not-empty ~ label,
 .mui-textfield--float-label > textarea:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
 .mui-textfield--float-label > textarea:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
@@ -2140,7 +2086,6 @@ input[type="checkbox"]:disabled {
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.26);
   outline: none;
-  height: 32px;
   width: 100%;
   font-size: 16px;
   padding: 0;
@@ -2155,8 +2100,15 @@ input[type="checkbox"]:disabled {
   border-width: 2px;
 }
 
-.mui-textfield > input:disabled,
-.mui-textfield > input:read-only,
+.mui-textfield > input:disabled, .mui-textfield > input:-moz-read-only,
+.mui-textfield > textarea:disabled,
+.mui-textfield > textarea:-moz-read-only {
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1;
+}
+
+.mui-textfield > input:disabled, .mui-textfield > input:read-only,
 .mui-textfield > textarea:disabled,
 .mui-textfield > textarea:read-only {
   cursor: not-allowed;
@@ -2188,8 +2140,21 @@ input[type="checkbox"]:disabled {
   opacity: 1;
 }
 
+.mui-textfield > input {
+  height: 32px;
+}
+
+.mui-textfield > input:focus {
+  height: 33px;
+  margin-bottom: -1px;
+}
+
 .mui-textfield > textarea {
-  height: auto;
+  min-height: 64px;
+}
+
+.mui-textfield > textarea[rows]:not([rows="2"]):focus {
+  margin-bottom: -1px;
 }
 
 .mui-textfield > input:focus {
@@ -2348,7 +2313,7 @@ input[type="checkbox"]:disabled {
   background-color: #E0E0E0;
 }
 
-.mui-select__menu > div[selected] {
+.mui-select__menu > div.mui--is-selected {
   background-color: #EEEEEE;
 }
 
@@ -2383,67 +2348,56 @@ input[type="checkbox"]:disabled {
   }
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required),
-.mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty,
-.mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,
-.mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:invalid:not(:focus):not(:required),
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty,
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,
 .mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield--invalid > input:not(:focus):not(:required),
-.mui-textfield--invalid > input:not(:focus):required.mui--is-not-empty,
-.mui-textfield--invalid > input:not(:focus):required.mui--is-empty.mui--is-dirty,
-.mui-textfield--invalid > input:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield--invalid > input:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield--invalid > textarea:not(:focus):not(:required),
-.mui-textfield--invalid > textarea:not(:focus):required.mui--is-not-empty,
-.mui-textfield--invalid > textarea:not(:focus):required.mui--is-empty.mui--is-dirty,
-.mui-textfield--invalid > textarea:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield--invalid > textarea:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
+.mui-textfield > input:not(:focus).mui--is-invalid:not(:required),
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > textarea:not(:focus).mui--is-invalid:not(:required),
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   border-color: #F44336;
   border-width: 2px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required),
-.mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty,
-.mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,
-.mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield--invalid > input:not(:focus):not(:required),
-.mui-textfield--invalid > input:not(:focus):required.mui--is-not-empty,
-.mui-textfield--invalid > input:not(:focus):required.mui--is-empty.mui--is-dirty,
-.mui-textfield--invalid > input:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-.mui-textfield--invalid > input:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
+.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:not(:focus).mui--is-invalid:not(:required),
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   height: 33px;
   margin-bottom: -1px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required) ~ label,
-.mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty ~ label,
-.mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield > input:invalid:not(:focus):not(:required) ~ label, .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty ~ label, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label, .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
 .mui-textfield > textarea:invalid:not(:focus):not(:required) ~ label,
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label,
 .mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
 .mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield--invalid > input:not(:focus):not(:required) ~ label,
-.mui-textfield--invalid > input:not(:focus):required.mui--is-not-empty ~ label,
-.mui-textfield--invalid > input:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield--invalid > input:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield--invalid > textarea:not(:focus):not(:required) ~ label,
-.mui-textfield--invalid > textarea:not(:focus):required.mui--is-not-empty ~ label,
-.mui-textfield--invalid > textarea:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield--invalid > textarea:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
+.mui-textfield > input:not(:focus).mui--is-invalid:not(:required) ~ label,
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty ~ label,
+.mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:not(:required) ~ label,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty ~ label,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
   color: #F44336;
 }
 
 .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
 .mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield--invalid:not(.mui-textfield--float-label) > input:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield--invalid:not(.mui-textfield--float-label) > textarea:not(:focus):required.mui--is-empty.mui--is-dirty ~ label {
+.mui-textfield:not(.mui-textfield--float-label) > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty ~ label,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty ~ label {
   color: #F44336;
 }
 
@@ -2530,21 +2484,17 @@ th {
   white-space: nowrap;
 }
 
-.mui-dropdown__menu > li > a:hover,
-.mui-dropdown__menu > li > a:focus {
+.mui-dropdown__menu > li > a:hover, .mui-dropdown__menu > li > a:focus {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.87);
   background-color: #EEEEEE;
 }
 
-.mui-dropdown__menu > .mui--is-disabled > a,
-.mui-dropdown__menu > .mui--is-disabled > a:hover,
-.mui-dropdown__menu > .mui--is-disabled > a:focus {
+.mui-dropdown__menu > .mui--is-disabled > a, .mui-dropdown__menu > .mui--is-disabled > a:hover, .mui-dropdown__menu > .mui--is-disabled > a:focus {
   color: #EEEEEE;
 }
 
-.mui-dropdown__menu > .mui--is-disabled > a:hover,
-.mui-dropdown__menu > .mui--is-disabled > a:focus {
+.mui-dropdown__menu > .mui--is-disabled > a:hover, .mui-dropdown__menu > .mui--is-disabled > a:focus {
   text-decoration: none;
   background-color: transparent;
   background-image: none;
@@ -2822,8 +2772,7 @@ th {
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
-.mui--clearfix:before,
-.mui--clearfix:after {
+.mui--clearfix:before, .mui--clearfix:after {
   content: " ";
   display: table;
 }
