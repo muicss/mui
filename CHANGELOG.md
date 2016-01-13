@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.2.10 - January 12, 2015
+
+* Fixed bug causing mui.overlay('off') to throw error when called before
+  turning on overlay
+
 ## 0.2.9 - December 7, 2015
 
 * Fixed path to js file for `muicss` npm package

@@ -1415,13 +1415,15 @@ function overlayOff() {
 
     // callback reference
     callbackFn = overlayEl.muiOptions.onclose;
+
+    // remove click handler
+    removeClickHandler(overlayEl);
   }
 
   util.disableScrollLock();
 
-  // remove option handlers
+  // remove keyup handler
   removeKeyupHandler();
-  removeClickHandler(overlayEl);
 
   // execute callback
   if (callbackFn) callbackFn();
