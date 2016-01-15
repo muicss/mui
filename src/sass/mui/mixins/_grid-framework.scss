@@ -46,11 +46,6 @@
       right: percentage(($i / $mui-grid-columns));
     }
   }
-  @if ($type == 'pull') and ($i > 0) {
-    .mui-col-#{$class}-pull-#{$i} {
-      right: percentage(($i / $mui-grid-columns));
-    }
-  }
   @if ($type == 'pull') and ($i == 0) {
     .mui-col-#{$class}-pull-0 {
       right: auto;
