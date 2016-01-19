@@ -123,10 +123,10 @@ Then visit http://localhost:3000/e2e-tests
 $ ./node_modules/.bin/gulp cdn:build
 ```
 
-The build will be located in the `packages/cdn/dist` directory:
+The build will be located in the `packages/cdn` directory:
 
 <pre>
-dist/
+cdn/
 ├── css
 │   ├── mui.css
 │   ├── mui.min.css

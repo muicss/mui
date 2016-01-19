@@ -101,13 +101,13 @@ function buildCdn(dirname) {
     buildCdnReact(dirname + '/react'),
     buildCdnEmailInline(dirname + '/email'),
     buildCdnEmailStyletag(dirname + '/email'),
-    buildCdnColors(dirname + '/extras')
+    buildCdnColors(dirname + '/extra')
   );
 
   var t2 = gulp.parallel(
     buildCdnWebcomponents(dirname + '/webcomponents', cssDir),
-    buildCdnJsCombined(dirname + '/extras', cssDir),
-    buildCdnReactCombined(dirname + '/extras', cssDir)
+    buildCdnJsCombined(dirname + '/extra', cssDir),
+    buildCdnReactCombined(dirname + '/extra', cssDir)
   );
 
   return gulp.series(t1, t2);
