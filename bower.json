@@ -27,11 +27,13 @@
   },
   "ignore": [
     "**/.*",
+    "build-targets",
     "e2e-tests",
     "examples",
     "gulpfile.js",
     "node_modules",
     "package.json",
+    "packages",
     "test"
   ]
 }

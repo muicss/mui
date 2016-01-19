@@ -1,0 +1,75 @@
+/**
+ * MUI Tabs module
+ */
+
+.mui-tabs__bar {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow-x: auto;
+  
+  > li {
+    display: inline-block;
+
+    > a {
+      display: block;
+      white-space: nowrap;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 14px;
+      color: $mui-tab-font-color;
+      cursor: default;
+      height: 48px;
+      line-height: 48px;
+      padding-left: 24px;
+      padding-right: 24px;
+      user-select: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &.mui--is-active {
+      border-bottom: 2px solid $mui-tab-border-color-active;
+
+      > a {
+        @if $mui-tab-font-color-active == null {
+          color: $mui-tab-font-color;
+        } @else {
+          color: $mui-tab-font-color-active;
+        }
+      }
+    }
+  }
+
+  &.mui-tabs__bar--justified {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+
+    > li {
+      display: table-cell;
+
+      > a {
+        text-align: center;
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+    }
+  }
+}
+
+.mui-tabs__pane {
+  display: none;
+
+  &.mui--is-active {
+    display: block;
+  }
+}
+
+[data-mui-toggle="tab"] {
+  @include mui-node-inserted();
+}

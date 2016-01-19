@@ -6,8 +6,8 @@
 'use strict';
 
 
-var config = require('../js/config.js'),
-    jqLite = require('../js/lib/jqLite.js'),
+var config = require('../js/config'),
+    jqLite = require('../js/lib/jqLite'),
     btnClass = 'mui-btn',
     btnTagName = btnClass,
     btnAttrs = {style: 1, color: 1, size: 1};

@@ -1,4 +1,13 @@
+env:
+  - CXX=g++-4.8
 language: node_js
 node_js:
-  - "0.12"
-  
+  - "5.3.0"
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+script: npm test

@@ -6,8 +6,8 @@
 'use strict';
 
 
-var jqLite = require('../js/lib/jqLite.js'),
-    muiTextfield = require('../js/forms/textfield.js'),
+var jqLite = require('../js/lib/jqLite'),
+    muiTextfield = require('../js/forms/textfield'),
     textfieldClass = 'mui-textfield',
     floatingMod = '--float-label',
     textfieldTagName = textfieldClass;

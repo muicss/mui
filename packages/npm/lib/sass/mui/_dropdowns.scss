@@ -1,0 +1,90 @@
+/**
+ * MUI Dropdown module
+ */
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+.mui-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+// Toggle element
+[data-mui-toggle="dropdown"] {
+  @include mui-node-inserted();
+
+  outline: 0;
+}
+
+
+
+
+// ============================================================================
+// MENU ELEMENT
+// ============================================================================
+.mui-dropdown__menu {
+  @extend .mui--z1;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;  // override default ul
+  list-style: none;
+  font-size: $mui-base-font-size;
+  text-align: left;
+  background-color: $mui-dropdown-bg-color;
+  border-radius: $mui-dropdown-border-radius;
+  z-index: 1;
+  background-clip: padding-box;
+
+  // open state
+  &.mui--is-open {
+    display: block;
+  }
+  
+  // links within the dropdown menu
+  > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: $mui-base-line-height;
+    color: $mui-dropdown-link-font-color;
+    white-space: nowrap; 
+                         
+    // hover & focus state
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: $mui-dropdown-link-font-color-hover;
+      background-color: $mui-dropdown-link-bg-color-hover;
+    }
+  }
+
+  > .mui--is-disabled > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $mui-dropdown-link-font-color-disabled;
+    }
+    
+    // nuke hover & focus effects
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: transparent;
+      background-image: none;
+      cursor: $mui-cursor-disabled;
+    }
+  }
+}
+
+// right align
+.mui-dropdown__menu--right {
+  left: auto;
+  right: 0;
+}

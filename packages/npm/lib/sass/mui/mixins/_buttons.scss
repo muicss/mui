@@ -1,0 +1,52 @@
+@mixin button-variant($font-color, $bg-color) {
+  color: $font-color;
+  background-color: $bg-color;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $font-color;
+    background-color: lighten($bg-color, 5%);
+  }
+
+  &[disabled] {
+    &:hover,
+    &:focus,
+    &:active {
+      color: $font-color;
+      background-color: $bg-color;
+    }
+  }
+}
+
+@mixin button-flat-variant($font-color, $bg-color-hover) {
+  &.mui-btn--flat {
+    color: $font-color;
+    background-color: transparent;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $font-color;
+      background-color: $bg-color-hover;
+    }
+
+    &[disabled] {
+      &:hover,
+      &:focus,
+      &:active {
+        color: $font-color;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// Button sizes
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size,
+                   $line-height, $border-radius) {
+  padding: ($padding-vertical + 1px) ($padding-horizontal + 1px);
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+}

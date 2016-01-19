@@ -1,10 +1,14 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- for example only -->   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="../assets/vendor/react/0.14.3/react.js"></script>
+    <script src="../assets/vendor/react/0.14.3/react-dom.js"></script>
+    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
     <!-- end -->
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,33 +23,42 @@
       </div>
     </div>
     <script type="text/babel">
+      let Tab = mui.react.Tab,
+          Tabs = mui.react.Tabs;
+
+
       // default tabs
-      var Example1 = React.createClass({
-        render: function() {
-          return (
-            <MUITabs onChange={ this._handleChange } initialSelectedIndex="1">
-              <MUITab
-                  value="pane-1"
-                  label="Tab 1"
-                  onActive={ this._handleActive }
-              >
-                Content 1
-              </MUITab>
-              <MUITab value="pane-2" label="Tab 2">
-                Content 2
-              </MUITab>
-            </MUITabs>
-          );
-        },
-        _handleChange: function(i, value, tab, ev) {
+      class Example1 extends React.Component {
+        onChange(i, value, tab, ev) {
           console.log(arguments)
-        },
-        _handleActive: function(tab) {
+        }
+
+        onActive(tab) {
           console.log(arguments);
         }
-      });
 
-      ReactDOM.render(<Example1/>, document.getElementById('tabs-example1'));
+        render() {
+          return (
+            <Tabs
+              onChange={ this.onChange }
+              initialSelectedIndex={ 1 }>
+              <Tab
+                value="pane-1"
+                label="Tab 1"
+                onActive={ this.onActive }
+              >
+                Content 1
+              </Tab>
+              <Tab value="pane-2" label="Tab 2">
+                Content 2
+              </Tab>
+            </Tabs>
+          );
+        }
+      }
+
+
+      ReactDOM.render(<Example1 />, document.getElementById('tabs-example1'));
     </script>
   </body>
 </html>

@@ -1,0 +1,78 @@
+// **************************
+// Typography
+// **************************
+@mixin mui-text($mui-name) {
+  $mui-styles: map-get($mui-mui-text-styles, $mui-name);
+
+  font-weight: map-get($mui-styles, "font-weight");
+  font-size: map-get($mui-styles, "font-size");
+  line-height: map-get($mui-styles, "line-height");
+
+  @if $mui-name == "button" {
+    text-transform: uppercase;
+  }
+}
+
+
+$mui-mui-text-styles: (
+  "display4": (
+    "font-weight": 300,
+    "font-size": 112px,
+    "line-height": 112px
+  ),
+  "display3": (
+    "font-weight": 400,
+    "font-size": 56px,
+    "line-height": 56px
+  ),
+  "display2": (
+    "font-weight": 400,
+    "font-size": 45px,
+    "line-height": 48px
+  ),
+  "display1": (
+    "font-weight": 400,
+    "font-size": 34px,
+    "line-height": 40px
+  ),
+  "headline": (
+    "font-weight": 400,
+    "font-size": 24px,
+    "line-height": 32px
+  ),
+  "title": (
+    "font-weight": 400,
+    "font-size": 20px,
+    "line-height": 28px
+  ),
+  "subhead": (
+    "font-weight": 400,
+    "font-size": 16px,
+    "line-height": 24px
+  ),
+  "body2": (
+    "font-weight": 500,
+    "font-size": 14px,
+    "line-height": 24px
+  ),
+  "body1": (
+    "font-weight": 400,
+    "font-size": 14px,
+    "line-height": 20px
+  ),
+  "caption": (
+    "font-weight": 400,
+    "font-size": 12px,
+    "line-height": 16px
+  ),
+  "menu": (
+    "font-weight": 500,
+    "font-size": 13px,
+    "line-height": 17px
+  ),
+  "button": (
+    "font-weight": 500,
+    "font-size": 14px,
+    "line-height": 18px
+  )
+);

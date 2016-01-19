@@ -6,8 +6,8 @@
 'use strict';
 
 
-var jqLite = require('./lib/jqLite.js'),
-    util = require('./lib/util.js'),
+var jqLite = require('./lib/jqLite'),
+    util = require('./lib/util'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',

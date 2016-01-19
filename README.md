@@ -23,6 +23,14 @@ Or for development you can use the latest:
 <script src="//cdn.muicss.com/mui-latest/js/mui.min.js"></script>
 ```
 
+**Install with NPM:**
+
+```shell
+$ npm install --save-dev muicss
+```
+
+Read more: https://www.npmjs.com/package/muicss
+
 **Install with Bower:**
 
 ```shell
@@ -75,7 +83,7 @@ MUI is tested and works in:
 1. Build examples
 
    ```bash
-   $ ./node_modules/.bin/gulp build-examples
+   $ ./node_modules/.bin/gulp examples:build
    ```
 
    To view the examples you can use any static file server. To use the nodejs `http-server` module:
@@ -87,20 +95,14 @@ MUI is tested and works in:
 
    Then visit http://localhost:3000/examples
 
-1. Watch changes and re-build
-
-   ```bash
-   $ ./node_modules/.bin/gulp watch
-   ```
-
 ## Run tests
 
 ### Unit tests
 
-To run the unit tests from the command line, run 'mocha':
+To run the unit tests from the command line, run 'npm test':
 
 ```bash
-$ ./node_modules/.bin/mocha
+$ npm test
 ```
 
 ### E2E tests
@@ -108,20 +110,20 @@ $ ./node_modules/.bin/mocha
 To run the E2E tests first compile the unit test files into a version that runs in the browser:
 
 ```bash
-$ ./node_modules/.bin/gulp build-e2e-tests
+$ ./node_modules/.bin/gulp e2e-tests:build
 ```
 
 Then visit http://localhost:3000/e2e-tests
 
-## Create a production build
+## Build Packages
 
-To create a production build of the app, run `gulp build-dist`:
+### CDN
 
 ```bash
-$ ./node_modules/.bin/gulp build-dist
+$ ./node_modules/.bin/gulp cdn:build
 ```
 
-The build will be located in the `dist` directory:
+The build will be located in the `packages/cdn/dist` directory:
 
 <pre>
 dist/
@@ -145,3 +147,19 @@ dist/
     ├── mui-combined.js
     └── mui-react-combined.js
 </pre>
+
+### NPM
+
+```bash
+$ ./node_modules/.bin/gulp npm:build
+```
+
+The NPM package is located in the `packages/npm` directory.
+
+### Meteor
+
+```bash
+$ ./node_modules/.bin/gulp meteor:build
+```
+
+The Meteor package is located in the `packages/meteor` directory.

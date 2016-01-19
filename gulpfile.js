@@ -1,289 +1,12 @@
-/**
- * MUI gulp file
- */
+'use strict';
 
-var del = require('del'),
-    streamqueue = require('streamqueue'),
+
+var fs = require('fs');
+
+var babelCore = require('babel-core'),
     gulp = require('gulp'),
-    libSass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssmin = require('gulp-cssmin'),
-    jshint = require('gulp-jshint'),
-    browserify = require('gulp-browserify'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
-    concat = require('gulp-concat'),
-    reactify = require('reactify'),
-    stringify = require('stringify'),
-    injectSource = require('gulp-inline-source'),
-    inlineCss = require('gulp-inline-css'),
-    source = require('vinyl-source-stream'),
-    Browserify = require('browserify');
-
-
-
-
-// ============================================================================
-// CONFIG
-// ============================================================================
-
-var taskName = process.argv[process.argv.length - 1],
-    pkgName = 'mui',
-    dirName = null;
-
-if (taskName === 'build-dist') {
-  dirName = 'dist';
-} else if (taskName === 'build-examples' || taskName === 'watch') {
-  dirName = 'examples/assets/' + pkgName;
-} else if (taskName !== 'build-e2e-tests') {
-  throw 'Did not understand task "' + taskName + '"';
-}
-
-
-
-
-// ============================================================================
-// RECIPES
-// ============================================================================
-
-gulp.task('clean', function(callback) {
-  del([dirName], callback);
-});
-
-
-
-// ----------------------------------------------------------------------------
-// CSS
-// ----------------------------------------------------------------------------
-
-gulp.task('sass', function() {
-  return gulp.src('src/sass/mui.scss')
-    .pipe(sass())
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
-    .on('error', function(err) {console.log(err.message);})
-    .pipe(rename(pkgName + '.css'))
-    .pipe(gulp.dest(dirName + '/css'));
-});
-
-
-gulp.task('cssmin', ['sass'], function() {
-  return gulp.src(dirName + '/css/' + pkgName + '.css')
-    .pipe(cssmin({advanced: false}))
-    .pipe(rename(pkgName + '.min.css'))
-    .pipe(gulp.dest(dirName + '/css'));
-});
-
-
-
-// ----------------------------------------------------------------------------
-// JS
-// ----------------------------------------------------------------------------
-
-gulp.task('js', function() {
-  return Browserify('./src/js/mui.js')
-    .bundle()
-    .pipe(source(pkgName + '.js'))
-    .pipe(gulp.dest(dirName + '/js'));
-});
-
-
-gulp.task('uglify', ['js'], function() {
-  return gulp.src(dirName + '/js/' + pkgName + '.js')
-    .pipe(uglify())
-    .pipe(rename(pkgName + '.min.js'))
-    .pipe(gulp.dest(dirName + '/js'));  
-});
-
-
-
-// ----------------------------------------------------------------------------
-// REACT
-// ----------------------------------------------------------------------------
-
-gulp.task('react', ['clean'], function() {
-  return gulp.src('src/react/mui.js')
-    .pipe(browserify({
-      transform: [reactify]
-    }))
-    .pipe(rename(pkgName + '-react.js'))
-    .pipe(gulp.dest(dirName + '/react'));
-});
-
-
-gulp.task('react-uglify', ['react'], function() {
-  return gulp.src(dirName + '/react/' + pkgName + '-react.js')
-    .pipe(uglify())
-    .pipe(rename(pkgName + '-react.min.js'))
-    .pipe(gulp.dest(dirName + '/react'));  
-});
-
-
-
-// ----------------------------------------------------------------------------
-// WEB COMPONENTS
-// ----------------------------------------------------------------------------
-
-gulp.task('webcomponents', ['clean', 'cssmin'], function() {
-  return gulp.src('src/webcomponents/main.js')
-    .pipe(browserify({
-      transform: [stringify(['.css'])],
-      paths: [dirName + '/css']
-    }))
-    .pipe(rename(pkgName + '-webcomponents.js'))
-    .pipe(gulp.dest(dirName + '/webcomponents'));
-});
-
-
-gulp.task('webcomponents-uglify', ['webcomponents'], function() {
-  return gulp.src(dirName + '/webcomponents/' + pkgName + '-webcomponents.js')
-    .pipe(uglify())
-    .pipe(rename(pkgName + '-webcomponents.min.js'))
-    .pipe(gulp.dest(dirName + '/webcomponents'));
-});
-
-
-
-// ----------------------------------------------------------------------------
-// EMAIL
-// ----------------------------------------------------------------------------
-
-gulp.task('build-email-inline', function() {
-  return gulp.src('src/email/mui-email-inline.scss')
-    .pipe(sass())
-    .pipe(rename(pkgName + '-email-inline.css'))
-    .pipe(gulp.dest(dirName + '/email'));
-});
-
-
-gulp.task('build-email-styletag', function() {
-  return gulp.src('src/email/mui-email-styletag.scss')
-    .pipe(sass())
-    .pipe(rename(pkgName + '-email-styletag.css'))
-    .pipe(gulp.dest(dirName + '/email'));
-});
-
-
-gulp.task('clean-email-inlined', function(callback) {
-  del(['examples/email-inlined'], callback)
-});
-
-
-gulp.task('copy-example-emails', ['clean-email-inlined'], function() {
-  return gulp.src('examples/email/*.html')
-    .pipe(gulp.dest('examples/email-inlined/'));
-});
-
-
-gulp.task(
-  'process-inlined-emails-1',
-  ['copy-example-emails', 'build-email-styletag'],
-  function() {
-    // inject contents of mui-email-styletag.css in to <head>
-    return gulp.src('examples/email-inlined/*.html')
-      .pipe(injectSource())
-      .pipe(gulp.dest('examples/email-inlined/'));
-  }
-);
-
-
-gulp.task(
-  'process-inlined-emails-2',
-  ['process-inlined-emails-1', 'build-email-styletag'],
-  function() {
-    // inline contents of mui-email-inline.css into <body>
-    return gulp.src('examples/email-inlined/*.html')
-      .pipe(inlineCss({
-        applyStyleTags: false,
-        removeStyleTags: false
-      }))
-      .pipe(gulp.dest('examples/email-inlined/'));
-  }
-);
-
-
-
-// ----------------------------------------------------------------------------
-// EXTRA
-// ----------------------------------------------------------------------------
-
-gulp.task('colors', function() {
-  return gulp.src('src/sass/mui-colors.scss')
-    .pipe(sass())
-    .pipe(cssmin())
-    .pipe(rename(pkgName + '-colors.css'))
-    .pipe(gulp.dest(dirName + '/extra'));
-});
-
-
-gulp.task('cssjs-combined', ['clean', 'cssmin'], function() {
-  return gulp.src('src/js/mui-combined.js')
-    .pipe(browserify({
-      transform: [stringify(['.css'])],
-      paths: [dirName + '/css']
-    }))
-    .pipe(uglify())
-    .pipe(rename(pkgName + '-combined.js'))
-    .pipe(gulp.dest(dirName + '/extra'));
-});
-
-
-gulp.task('react-combined', ['clean', 'cssmin'], function() {
-  return gulp.src('src/react/mui-combined.js')
-    .pipe(browserify({
-      transform: [
-        reactify,
-        stringify(['.css'])
-      ],
-      paths: [dirName + '/css']
-    }))
-    .pipe(uglify())
-    .pipe(rename(pkgName + '-react-combined.js'))
-    .pipe(gulp.dest(dirName + '/extra'));
-});
-
-
-
-
-// ============================================================================
-// UTILITY METHODS
-// ============================================================================
-
-function sass() {
-  return libSass({
-    'outputStyle': 'expanded'
-  });
-}
-
-
-function build(options) {
-  options = options || {};
-  
-  var tasks = [
-    'sass',
-    'cssmin',
-    'js',
-    'uglify',
-    'react',
-    'react-uglify',
-    'webcomponents',
-    'webcomponents-uglify',
-    'build-email-inline',
-    'build-email-styletag',
-    'colors',
-    'cssjs-combined',
-    'react-combined'
-  ];
-
-  if (options.emailInlined) {
-    tasks.push('process-inlined-emails-1');
-    tasks.push('process-inlined-emails-2');
-  }
-  
-  gulp.start(tasks);
-}
+    plugins = require('gulp-load-plugins')(),
+    stringify = require('stringify');
 
 
 
@@ -292,70 +15,359 @@ function build(options) {
 // PUBLIC TASKS
 // ============================================================================
 
-gulp.task('build-dist', ['clean'], function() {
-  build();
-});
+gulp.task('cdn:build', gulp.series(
+  clean('./packages/cdn'),
+  buildCdn('./packages/cdn')
+));
 
 
-gulp.task('build-examples', ['clean'], function() {
-  build({emailInlined: true});
-});
+gulp.task('e2e-tests:build', gulp.series(
+  clean('./e2e-tests/tests.js'),
+  buildE2eTests
+));
 
 
-gulp.task('build-e2e-tests', function() {
-  var stream = streamqueue({objectMode: true}),
-      files;
+gulp.task('examples:build', gulp.series(
+  clean('./examples/assets/mui'),
+  clean('./examples/email-inlined'),
+  buildExamples()
+));
+
+
+gulp.task('meteor:build', gulp.series(
+  clean('./packages/meteor/lib'),
+  buildMeteor()
+));
+
+
+gulp.task('npm:build', gulp.series(
+  clean('./packages/npm/lib'),
+  buildNpm()
+));
+
+
+gulp.task('build-packages', gulp.parallel(
+  'cdn:build',
+  'meteor:build',
+  'npm:build'
+));
+
+
+
+
+// ============================================================================
+// PRIVATE TASKS
+// ============================================================================
+
+var del = require('del'),
+    babelify = require('babelify');
+
+
+var babelHelpersList = [
+  'inherits',
+  'createClass',
+  'classCallCheck',
+  'possibleConstructorReturn',
+  'interopRequireDefault',
+  'interopRequireWildcard',
+  'extends'
+];
+
+
+function makeTask(displayName, fn) {
+  if (displayName) fn.displayName = displayName;
+  return fn;
+}
+
+
+function clean(dirname) {
+  return makeTask('clean: ' + dirname, function(done) {
+    return del(dirname, done);
+  });
+}
+
+
+
+// ----------------------------------------------------------------------------
+// CDN TASKS
+// ----------------------------------------------------------------------------
+
+function buildCdn(dirname) {
+  var cssDir = dirname + '/css';
+
+  var t1 = gulp.parallel(
+    buildCdnCss(cssDir),
+    buildCdnJs(dirname + '/js'),
+    buildCdnReact(dirname + '/react'),
+    buildCdnEmailInline(dirname + '/email'),
+    buildCdnEmailStyletag(dirname + '/email'),
+    buildCdnColors(dirname + '/extras')
+  );
+
+  var t2 = gulp.parallel(
+    buildCdnWebcomponents(dirname + '/webcomponents', cssDir),
+    buildCdnJsCombined(dirname + '/extras', cssDir),
+    buildCdnReactCombined(dirname + '/extras', cssDir)
+  );
+
+  return gulp.series(t1, t2);
+}
+
+
+function buildCdnCss(dirname) {
+  return makeTask('build-cdn-css: ' + dirname, function() {
+    return gulp.src('./src/sass/mui.scss')
+      .pipe(plugins.sass({outputStyle: 'expanded'}))
+      .pipe(plugins.autoprefixer({
+        browsers: ['last 2 versions'],
+        cascade: false
+      }))
+      .on('error', function(err) {console.log(err.message);})
+      .pipe(plugins.rename('mui.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.cssmin({advanced: false}))
+      .pipe(plugins.rename('mui.min.css'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnJs(dirname) {
+  return makeTask('build-cdn-js: ' + dirname, function() {
+    return gulp.src('./build-targets/cdn-js.js')
+      .pipe(plugins.browserify({
+        paths: ['./']
+      }))
+      .pipe(plugins.rename('mui.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui.min.js'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnReact(dirname) {
+  var s = babelCore.buildExternalHelpers(babelHelpersList, 'global');
   
-  files = [
-    'test-jqlite.js',
-    'test-util.js',
-    'react/test-forms.js'
-  ];
+  return makeTask('build-cdn-react: ' + dirname, function() {
+    return gulp.src('./build-targets/cdn-react.js')
+      .pipe(plugins.browserify({
+        transform: [babelify.configure({plugins: ['external-helpers-2']})],
+        paths: ['./', './node_modules'],
+        external: ['react'],
+        extensions: ['.jsx']
+      }))
+      .pipe(plugins.replace("require('react')", "window.React"))
+      .pipe(plugins.injectString.prepend(s))
+      .pipe(plugins.rename('mui-react.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-react.min.js'))
+      .pipe(gulp.dest(dirname));
+  });
+}
 
-  // build streams
-  for (var i=0; i < files.length; i++) {
-    stream.queue(gulp.src('test/' + files[i]));
-  }
 
-  // concat streams
-  return stream.done()
-    .pipe(concat('tests.js'))
-    .pipe(browserify({
-      transform: [reactify]
+function buildCdnEmailInline(dirname) {
+  return makeTask('build-cdn-email-inline: ' + dirname, function() {
+    return gulp.src('./src/email/mui-email-inline.scss')
+      .pipe(plugins.sass({outputStyle: 'expanded'}))
+      .pipe(plugins.rename('mui-email-inline.css'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnEmailStyletag(dirname) {
+  return makeTask('build-cdn-email-styletag: ' + dirname, function() {
+    return gulp.src('./src/email/mui-email-styletag.scss')
+      .pipe(plugins.sass({outputStyle: 'expanded'}))
+      .pipe(plugins.rename('mui-email-styletag.css'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnWebcomponents(dirname, cssdir) {
+  return makeTask('build-cdn-webcomponents: ' + dirname, function() {
+    return gulp.src('./build-targets/cdn-webcomponents.js')
+      .pipe(plugins.browserify({
+        transform: [stringify(['.css'])],
+        paths: ['./', cssdir]
+      }))
+      .pipe(plugins.rename('mui-webcomponents.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-webcomponents.min.js'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnColors(dirname) {
+  return makeTask('build-cdn-colors: ' + dirname, function() {
+    return gulp.src('./src/sass/mui-colors.scss')
+      .pipe(plugins.sass({outputStyle: 'expanded'}))
+      .pipe(plugins.cssmin())
+      .pipe(plugins.rename('mui-colors.css'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnJsCombined(dirname, cssDir) {
+  return makeTask('build-cdn-js-combined: ' + dirname, function() {
+    return gulp.src('./build-targets/cdn-js-combined.js')
+      .pipe(plugins.browserify({
+        transform: [stringify(['.css'])],
+        paths: ['./', cssDir]
+      }))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-combined.js'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnReactCombined(dirname, cssDir) {
+  var s = babelCore.buildExternalHelpers(babelHelpersList, 'global');
+
+  return makeTask('build-cdn-react-combined: ' + dirname, function(done) {
+    return gulp.src('./build-targets/cdn-react-combined.js')
+      .pipe(plugins.browserify({
+        transform: [
+          babelify.configure({plugins: ['external-helpers-2']}),
+          stringify(['.css'])
+        ],
+        paths: ['./', cssDir, './node_modules'],
+        external: ['react'],
+        extensions: ['.jsx']
+      }))
+      .pipe(plugins.replace("require('react')", "window.React"))
+      .pipe(plugins.injectString.prepend(s))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-react-combined.js'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+
+// ----------------------------------------------------------------------------
+// E2E-TESTS TASKS
+// ----------------------------------------------------------------------------
+
+function buildE2eTests() {
+  var s = babelCore.buildExternalHelpers(babelHelpersList, 'global');
+
+  return gulp.src('./build-targets/e2e-tests.js')
+    .pipe(plugins.browserify({
+      transform: [babelify.configure({plugins: ['external-helpers-2']})],
+      extensions: ['.jsx']
     }))
-    .pipe(gulp.dest('e2e-tests'));
-});
+    .pipe(plugins.injectString.prepend(s))
+    .pipe(plugins.rename('tests.js'))
+    .pipe(gulp.dest('./e2e-tests'));
+}
 
 
-gulp.task('watch', function() {
-  // sass
-  gulp.watch('src/sass/**/*.scss',
-             {interval: 1500},
-             ['sass', 'cssmin', 'email']);
 
-  // js
-  gulp.watch('src/js/**/*.js',
-             {interval: 1500},
-             ['js',
-              'uglify',
-              'react',
-              'react-uglify',
-              'webcomponents',
-              'webcomponents-uglify',
-              'build-e2e-tests']);
+// ----------------------------------------------------------------------------
+// EXAMPLES TASKS
+// ----------------------------------------------------------------------------
 
-  // react
-  gulp.watch(['src/react/**/*.jsx', 'src/react/**/*.js'],
-             {interval: 1500},
-             ['react', 'react-uglify']);
+function buildExamples() {
+  return gulp.series(
+    buildCdn('./examples/assets/mui'),
+    buildExamplesEmail
+  );
+}
 
-  // webcomponents
-  gulp.watch(['src/webcomponents/**/*.jsx', 'src/webcomponents/**/*.js'],
-             {interval: 1500},
-             ['webcomponents', 'webcomponents-uglify']);
 
-  // test files
-  gulp.watch('test/**/.js',
-             {interval: 1500},
-             ['build-e2e-tests']);
-});
+function buildExamplesEmail() {
+  return gulp.src('./examples/email/*.html')
+    .pipe(plugins.inlineSource())
+    .pipe(plugins.inlineCss({
+      applyStyleTags: false,
+      removeStyleTags: false
+    }))
+    .pipe(gulp.dest('./examples/email-inlined'));
+}
+
+
+
+// ----------------------------------------------------------------------------
+// METEOR TASKS
+// ----------------------------------------------------------------------------
+
+function buildMeteor() {
+  return gulp.parallel(
+    buildCdnCss('./packages/meteor/lib/css'),
+    buildCdnJs('./packages/meteor/lib/js')
+  );
+}
+
+
+// ----------------------------------------------------------------------------
+// NPM TASKS
+// ----------------------------------------------------------------------------
+
+function buildNpm() {
+  var t1 = gulp.parallel(
+    buildCdnCss('./packages/npm/lib/css'),
+    buildNpmSass(),
+    buildNpmJs(),
+    buildNpmReact()
+  );
+
+  return gulp.series(
+    t1,
+    buildNpmReactBabelHelpers()
+  );
+}
+
+
+function buildNpmSass() {
+  return makeTask('build-npm-sass', function() {
+    return gulp.src('./src/sass/**/*')
+      .pipe(plugins.copy('./packages/npm/lib/sass', {prefix: 2}));
+  });
+}
+
+
+function buildNpmJs() {
+  return makeTask('build-npm-js', function() {
+    return gulp.src([
+      './src/js/config.js',
+      './src/js/overlay.js',
+      './src/js/lib/util.js',
+      './src/js/lib/jqLite.js'
+    ])
+      .pipe(plugins.copy('./packages/npm/lib/js', {prefix: 2}));
+  });
+}
+
+
+function buildNpmReact() {
+  return makeTask('build-npm-react', function() {
+    var s = "var babelHelpers = require('./babel-helpers.js');\n";
+    
+    return gulp.src('./src/react/**/*.jsx')
+      .pipe(plugins.babel({
+        plugins: ['external-helpers-2']
+      }))
+      .pipe(plugins.injectString.prepend(s))
+      .pipe(gulp.dest('./packages/npm/lib/react'));
+  });
+}
+
+
+function buildNpmReactBabelHelpers() {
+  return makeTask('build-npm-react-babel-helpers', function(done) {
+    var s = babelCore.buildExternalHelpers(babelHelpersList, 'umd');
+    fs.writeFileSync('./packages/npm/lib/react/babel-helpers.js', s);
+    
+    done();
+  });
+}

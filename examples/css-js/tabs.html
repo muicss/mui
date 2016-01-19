@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/js/mui.js"></script>
+    <script>
+      // print all tab events to the console
+      window.addEventListener('load', function() {
+        var events = ['showstart', 'showend', 'hidestart', 'hideend'],
+            parentEls = document.getElementsByClassName('mui-tabs'),
+            tabEls,
+            tabEl,
+            i,
+            j,
+            k;
+
+        for (i=0; i < parentEls.length; i++) {
+          tabEls = parentEls[i].children;
+
+          for (j=0; j < tabEls.length; j++) {
+            tabEl = tabEls[j];
+
+            for (k=0; k < events.length; k++) {
+              tabEl.addEventListener('mui.tabs.' + events[k], function(ev) {
+                console.log(ev.type);
+                console.log(ev.target);
+                console.log(ev.paneId);
+                console.log(ev.relatedPaneId);
+              });
+            }
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Tabs</h1>
+
+      <div class="mui-panel">
+        <ul class="mui-tabs__bar">
+          <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="home">Home</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="profile">Profile</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="messages">Messages</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="settings">Settings</a></li>
+        </ul>
+        <div>
+          <div class="mui-tabs__pane mui--is-active" id="home">Home</div>
+          <div class="mui-tabs__pane" id="profile">Profile</div>
+          <div class="mui-tabs__pane" id="messages">Messages</div>
+          <div class="mui-tabs__pane" id="settings">Settings</div>
+        </div>
+
+        <h2>mui-tabs-justified</h2>
+        <ul class="mui-tabs__bar mui-tabs__bar--justified">
+          <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="home2">Home</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="profile2">Profile</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="messages2">Messages</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="settings2">Settings</a></li>
+        </ul>
+        <div>
+          <div class="mui-tabs__pane mui--is-active" id="home2">Home</div>
+          <div class="mui-tabs__pane" id="profile2">Profile</div>
+          <div class="mui-tabs__pane" id="messages2">Messages</div>
+          <div class="mui-tabs__pane" id="settings2">Settings</div>
+        </div>
+        
+      </div>
+    </div>
+  </body>
+</html>
