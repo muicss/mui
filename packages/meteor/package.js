@@ -15,6 +15,8 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'lib/css/mui.css',
-    'ilb/js/mui.js'
+    'lib/css/mui.min.css',
+    'lib/js/mui.js',
+    'lib/js/mui.min.js'
   ], 'client');
 });
