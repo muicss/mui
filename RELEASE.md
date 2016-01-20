@@ -38,6 +38,6 @@
 1. Update package on Meteor repository
 
   ```bash
-  $ cd packages/npm
+  $ cd packages/meteor
   $ meteor publish
   ```
