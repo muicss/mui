@@ -33,7 +33,8 @@ class Button extends React.Component {
     variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
     size: PropTypes.oneOf(['default', 'small', 'large']),
     onClick: PropTypes.func,
-    isDisabled: PropTypes.bool
+    isDisabled: PropTypes.bool,
+    type: PropTypes.oneOf(['submit', 'button'])
   };
 
   static defaultProps = {
@@ -42,7 +43,8 @@ class Button extends React.Component {
     variant: 'default',
     size: 'default',
     onClick: null,
-    isDisabled: false
+    isDisabled: false,
+    type: null
   };
 
   onClick(ev) {
@@ -99,6 +101,7 @@ class Button extends React.Component {
     return (
       <button
         ref="buttonEl"
+        type={this.props.type}
         className={cls + ' ' + this.props.className}
         disabled={this.props.isDisabled}
         onClick={this.onClick.bind(this)}

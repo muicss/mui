@@ -1,6 +1,6 @@
 # MUI Changelog
 
-## 0.3.0-rc1 (IN PROGRESS)
+## 0.3.0-rc1
 
 * Replaced .mui-textfield--invalid with .mui--is-invalid
 * Replaced .mui--text-black-{XX}, .mui--text-white-{XX} color helpers with:
@@ -13,7 +13,7 @@
   * .mui--text-accent
   * .mui--text-accent-secondary
   * .mui--text-accent-hint
-* Major modifications to React library
+* Major non-backwards compatible modifications to React library
 
 ## 0.2.10 - January 12, 2015
 

@@ -65,7 +65,23 @@ describe('react/button', function() {
   });
 
 
-  it('supports click callbacks', done => {
+  it('supports type attribute', function() {
+    // check default
+    let result = getShallowRendererOutput(<Button>test</Button>);
+    assert.equal(result.props.type, null);
+
+    // check 'button' type
+    result = getShallowRendererOutput(
+      <Button type="button">
+        test
+      </Button>
+    );
+
+    assert.equal(result.props.type, 'button');
+  });
+
+
+  it('supports click callbacks', function(done) {
     // define callback
     let fn = function() {
       done();

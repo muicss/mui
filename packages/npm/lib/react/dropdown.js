@@ -133,6 +133,7 @@ var Dropdown = function (_React$Component) {
         _button2.default,
         {
           ref: 'button',
+          type: 'button',
           onClick: this.onClickCB,
           color: this.props.color,
           variant: this.props.variant,

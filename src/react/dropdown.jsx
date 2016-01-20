@@ -123,6 +123,7 @@ class Dropdown extends React.Component {
     buttonEl = (
       <Button
         ref="button"
+        type="button"
         onClick={this.onClickCB}
         color={this.props.color}
         variant={this.props.variant}
