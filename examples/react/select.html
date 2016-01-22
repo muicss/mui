@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->   
+    <script src="../assets/vendor/react/0.14.6/react.js"></script>
+    <script src="../assets/vendor/react/0.14.6/react-dom.js"></script>
+    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/react/mui-react.js"></script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Select</h1>
+      <div class="mui-panel">
+        <div id="example1"></div>
+        <br>
+        <br>
+        <br>
+        <div id="example2"></div>
+      </div>
+    </div>
+    <script type="text/babel">
+      let Select = mui.react.Select,
+          SelectItem = mui.react.SelectItem;
+
+      ReactDOM.render(
+        <Select name="example1">
+          <SelectItem label="Option 1" value="opt1" />
+          <SelectItem
+            label="Option 2"
+            value="opt2"
+            isSelected={true}
+          />
+          <SelectItem label="Option 3" value="opt3" />
+          <SelectItem label="Option 4" value="opt4" />
+          <SelectItem label="Option 5" value="opt5" />
+          <SelectItem label="Option 6" value="opt6" />
+          <SelectItem label="Option 7" value="opt7" />
+          <SelectItem label="Option 8" value="opt8" />
+        </Select>,
+        document.getElementById('example1')
+      );
+
+      ReactDOM.render(
+        <Select name="example2">
+          <SelectItem label="Option 1" value="opt1" />
+          <SelectItem
+            label="Option 2"
+            value="opt2"
+            isSelected={true}
+          />
+          <SelectItem label="Option 3" value="opt3" />
+          <SelectItem label="Option 4" value="opt4" />
+          <SelectItem label="Option 5" value="opt5" />
+          <SelectItem label="Option 6" value="opt6" />
+          <SelectItem label="Option 7" value="opt7" />
+          <SelectItem label="Option 8" value="opt8" />
+        </Select>,
+        document.getElementById('example2')
+      );
+    </script>
+  </body>
+</html>

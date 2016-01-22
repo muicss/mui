@@ -1,0 +1,55 @@
+/**
+ * MUI Ripple module
+ */
+
+// ============================================================================
+// RIPPLE
+// ============================================================================
+.mui-ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: mui-ripple-animation 2s;
+}
+
+@keyframes mui-ripple-animation {
+  from {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(100);
+    opacity: 0;
+  }
+}
+
+
+
+
+// ============================================================================
+// BUTTON-SPECIFIC STYLES
+// ============================================================================
+.mui-btn > .mui-ripple-effect {
+  background-color: $mui-btn-default-ripple-color;
+}
+
+.mui-btn--primary > .mui-ripple-effect {
+  background-color: $mui-btn-primary-ripple-color;
+}
+
+.mui-btn--dark > .mui-ripple-effect {
+  background-color: $mui-btn-dark-ripple-color;
+}
+
+.mui-btn--danger > .mui-ripple-effect {
+  background-color: $mui-btn-danger-ripple-color;
+}
+
+.mui-btn--accent > .mui-ripple-effect {
+  background-color: $mui-btn-accent-ripple-color;
+}
+
+.mui-btn--flat > .mui-ripple-effect {
+  background-color: $mui-btn-flat-ripple-color;
+}

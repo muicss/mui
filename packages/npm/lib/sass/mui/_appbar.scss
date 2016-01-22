@@ -1,0 +1,72 @@
+/**
+ * MUI Appbar
+ */
+
+// ============================================================================
+// HELPER CLASSES
+// ============================================================================
+
+.mui--appbar-height {
+  height: $mui-appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
+    height: $mui-appbar-height-xs-landscape;
+  }
+  
+  @media (min-width: $mui-screen-xs) {
+    height: $mui-appbar-height;
+  }
+}
+
+.mui--appbar-min-height {
+  min-height: $mui-appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
+    min-height: $mui-appbar-height-xs-landscape;
+  }
+
+  @media (min-width: $mui-screen-xs) {
+    min-height: $mui-appbar-height;
+  }
+}
+
+.mui--appbar-line-height {
+  line-height: $mui-appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
+    line-height: $mui-appbar-height-xs-landscape;
+  }
+
+  @media (min-width: $mui-screen-xs) {
+    line-height: $mui-appbar-height;
+  }
+}
+
+.mui--appbar-top {
+  top: $mui-appbar-height-xs-portrait;
+
+  // mobile landscape
+  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
+    top: $mui-appbar-height-xs-landscape;
+  }
+
+  @media (min-width: $mui-screen-xs) {
+    top: $mui-appbar-height;
+  }
+}
+
+
+
+
+// ============================================================================
+// APPBAR
+// ============================================================================
+.mui-appbar {
+  @extend .mui--appbar-min-height;
+
+  background-color: $mui-appbar-bg-color;
+  color: $mui-appbar-font-color;
+}

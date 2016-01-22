@@ -1,0 +1,14 @@
+/**
+ * MUI Overlay module
+ */
+
+#mui-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999999;
+  background-color: $mui-overlay-bg-color;
+  overflow: auto;
+}

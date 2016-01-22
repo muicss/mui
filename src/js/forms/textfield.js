@@ -6,8 +6,8 @@
 'use strict';
 
 
-var jqLite = require('../lib/jqLite.js'),
-    util = require('../lib/util.js'),
+var jqLite = require('../lib/jqLite'),
+    util = require('../lib/util'),
     cssSelector = '.mui-textfield > input, .mui-textfield > textarea',
     emptyClass = 'mui--is-empty',
     notEmptyClass = 'mui--is-not-empty',

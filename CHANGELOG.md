@@ -1,5 +1,20 @@
 # MUI Changelog
 
+## 0.3.0-rc1
+
+* Replaced .mui-textfield--invalid with .mui--is-invalid
+* Replaced .mui--text-black-{XX}, .mui--text-white-{XX} color helpers with:
+  * .mui--text-dark
+  * .mui--text-dark-secondary
+  * .mui--text-dark-hint
+  * .mui--text-light
+  * .mui--text-light-secondary
+  * .mui--text-light-hint
+  * .mui--text-accent
+  * .mui--text-accent-secondary
+  * .mui--text-accent-hint
+* Major non-backwards compatible modifications to React library
+
 ## 0.2.10 - January 12, 2015
 
 * Fixed bug causing mui.overlay('off') to throw error when called before

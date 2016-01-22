@@ -2,89 +2,50 @@
  * MUI Email Typography
  */
 
-// ============================================================================
-// MIXINS
-// ============================================================================
-
-@mixin mui-email-color($mui-name) {
-  color: $mui-base-font-color;
-  
-  &.mui--text-black {
-    color: lighten(mui-color('black'), 13%);
-  }
-
-  &.mui--text-white {
-    color: mui-color('white');
-  }
-
-  &.mui--text-accent {
-    color: lighten($mui-accent-color, 13%);
-  }
-}
-
-
-
-
-// ============================================================================
-// TEXT STYLES
-// ============================================================================
-
 .mui--text-display4 {
   @include mui-text("display4");
-  @include mui-email-color("display4");
 }
 
 .mui--text-display3 {
   @include mui-text("display3");
-  @include mui-email-color("display3");
 }
 
 .mui--text-display2 {
   @include mui-text("display2");
-  @include mui-email-color("display2");
 }
 
 .mui--text-display1 {
   @include mui-text("display1");
-  @include mui-email-color("display1");
 }
 
 .mui--text-headline {
   @include mui-text("headline");
-  @include mui-email-color("headline");
 }
 
 .mui--text-title {
   @include mui-text("title");
-  @include mui-email-color("title");
 }
 
 .mui--text-subhead {
   @include mui-text("subhead");
-  @include mui-email-color("subhead");
 }
 
 .mui--text-body2 {
   @include mui-text("body2");
-  @include mui-email-color("body2");
 }
 
 .mui--text-body1 {
   @include mui-text("body1");
-  @include mui-email-color("body1");
 }
 
 .mui--text-caption {
   @include mui-text("caption");
-  @include mui-email-color("caption");
 }
 
 .mui--text-menu {
   @include mui-text("menu");
-  @include mui-email-color("menu");
 }
 
 .mui--text-button {
   @include mui-text("button");
-  @include mui-email-color("button");
 }

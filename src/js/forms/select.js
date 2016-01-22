@@ -6,15 +6,13 @@
 'use strict';
 
 
-var jqLite = require('../lib/jqLite.js'),
-    util = require('../lib/util.js'),
+var jqLite = require('../lib/jqLite'),
+    util = require('../lib/util'),
+    formlib = require('../lib/forms'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
-    wrapperPadding = 15,  // from CSS
-    inputHeight = 32,  // from CSS
-    optionHeight = 42,  // from CSS
-    menuPadding = 8,  // from CSS
+    selectedClass = 'mui--is-selected',
     doc = document,
     win = window;
 
@@ -186,76 +184,45 @@ function Menu(wrapperEl, selectEl) {
  * @param {Element} selectEl - The select element
  */
 Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
-  var optionEl, itemEl, i, minTop, maxTop, top;
-
   var menuEl = doc.createElement('div'),
-      optionList = selectEl.children,
-      m = optionList.length,
+      optionEls = selectEl.children,
+      numOptions = optionEls.length,
       selectedPos = 0,
-      initTop = (menuPadding + optionHeight) - (wrapperPadding + inputHeight);
+      optionEl,
+      itemEl,
+      i;
 
-  // create element
   menuEl.className = menuClass;
 
   // add options
-  for (i=0; i < m; i++) {
-    optionEl = optionList[i];
+  for (i=0; i < numOptions; i++) {
+    optionEl = optionEls[i];
 
     itemEl = doc.createElement('div');
     itemEl.textContent = optionEl.textContent;
     itemEl._muiPos = i;
 
-    if (optionEl.selected) selectedPos = i;
+    if (optionEl.selected) {
+      itemEl.setAttribute('class', selectedClass);
+      selectedPos = i;
+    }
 
     menuEl.appendChild(itemEl);
   }
-
-  // add selected attribute
-  menuEl.children[selectedPos].setAttribute('selected', true);
 
   // save indices
   this.origIndex = selectedPos;
   this.currentIndex = selectedPos;
 
-  var viewHeight = doc.documentElement.clientHeight;
+  // set position
+  var props = formlib.getMenuPositionalCSS(
+    wrapperEl,
+    numOptions,
+    selectedPos
+  );
 
-  // set height (use viewport as maximum height)
-  var height = m * optionHeight + 2 * menuPadding,
-      isOverflow = height > viewHeight;
-
-  height = Math.min(height, viewHeight);
-  jqLite.css(menuEl, 'height', height + 'px');
-
-  // ideal position
-  initTop -= selectedPos * optionHeight;
-
-  // minimum position
-  minTop = -1 * wrapperEl.getBoundingClientRect().top;
-
-  // maximium position
-  maxTop = (viewHeight - height) + minTop;
-
-  // prevent overflow-y
-  top = Math.max(initTop, minTop);
-  top = Math.min(top, maxTop);
-
-  jqLite.css(menuEl, 'top', top + 'px');
-
-  // set menu scroll position
-  if (isOverflow) {
-    var scrollIdeal, scrollMax;
-
-    scrollIdeal = (menuPadding + (selectedPos + 1) * optionHeight) - 
-      (-1 * top + wrapperPadding + inputHeight);
-
-    scrollMax = m * optionHeight + 2 * menuPadding - height;
-
-    menuEl._muiHasOverflow = true;
-    menuEl._muiScrollTop = Math.min(scrollIdeal, scrollMax);
-  } else {
-    menuEl._muiHasOverflow = false;
-    menuEl._muiScrollTop = 0;
-  }
+  jqLite.css(menuEl, props);
+  menuEl._muiScrollTop = props.scrollTop;
 
   return menuEl;
 }
@@ -317,9 +284,11 @@ Menu.prototype.clickHandler = function(ev) {
 Menu.prototype.increment = function() {
   if (this.currentIndex === this.menuEl.children.length - 1) return;
 
-  this.menuEl.children[this.currentIndex].removeAttribute('selected');
+  var optionEls = this.menuEl.children;
+  
+  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex += 1;
-  this.menuEl.children[this.currentIndex].setAttribute('selected', true);
+  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
 
@@ -329,9 +298,11 @@ Menu.prototype.increment = function() {
 Menu.prototype.decrement = function() {
   if (this.currentIndex === 0) return;
 
-  this.menuEl.children[this.currentIndex].removeAttribute('selected');
+  var optionEls = this.menuEl.children;
+
+  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex -= 1;
-  this.menuEl.children[this.currentIndex].setAttribute('selected', true);
+  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
 
@@ -340,8 +311,9 @@ Menu.prototype.decrement = function() {
  */
 Menu.prototype.selectCurrent = function() {
   if (this.currentIndex !== this.origIndex) {
-    this.selectEl.children[this.origIndex].selected = false;
-    this.selectEl.children[this.currentIndex].selected = true;
+    var optionEls = this.selectEl.children;
+    optionEls[this.origIndex].selected = false;
+    optionEls[this.currentIndex].selected = true;
 
     // trigger change event
     util.dispatchEvent(this.selectEl, 'change');

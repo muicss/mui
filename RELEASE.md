@@ -1,9 +1,9 @@
 # Release Instructions
 
-1. Build distribution
+1. Build packages
 
   ```bash
-  $ ./node_modules/.bin/gulp build-dist
+  $ ./node_modules/.bin/gulp build-packages
   ```
 
 1. Add release notes to CHANGELOG.md
@@ -12,9 +12,11 @@
 
 1. Change version number in bower.json
 
-1. Change version number in package.js
-
 1. Change version number in README.md
+
+1. Change version number in packages/meteor/package.js
+
+1. Change version number in packages/npm/package.json
 
 1. Commit changes and tag code
 
@@ -29,11 +31,13 @@
 1. Push changes to NPM
 
   ```bash
+  $ cd packages/npm
   $ npm publish
   ```
 
 1. Update package on Meteor repository
 
   ```bash
+  $ cd packages/meteor
   $ meteor publish
   ```

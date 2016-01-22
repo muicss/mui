@@ -6,8 +6,8 @@
 'use strict';
 
 
-var jqLite = require('./lib/jqLite.js'),
-    util = require('./lib/util.js'),
+var jqLite = require('./lib/jqLite'),
+    util = require('./lib/util'),
     btnClass = 'mui-btn',
     btnFABClass = 'mui-btn--fab',
     rippleClass = 'mui-ripple-effect',

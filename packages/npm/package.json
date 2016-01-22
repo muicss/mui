@@ -1,0 +1,28 @@
+{
+  "name": "muicss",
+  "version": "0.3.0-rc1",
+  "license": "MIT",
+  "description": "Lightweight CSS framework based on Google's Material Design guidelines",
+  "keywords": [
+    "MUI",
+    "CSS",
+    "CSS Framework",
+    "Material Design",
+    "React"
+  ],
+  "homepage": "https://www.muicss.com",
+  "bugs": {
+    "url": "https://github.com/muicss/mui/issues",
+    "email": "contact@muicss.com"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muicss/mui.git"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "react": "^0.14.3"
+  },
+  "dependencies": {}
+}

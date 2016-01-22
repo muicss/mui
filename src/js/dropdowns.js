@@ -6,8 +6,8 @@
 'use strict';
 
 
-var jqLite = require('./lib/jqLite.js'),
-    util = require('./lib/util.js'),
+var jqLite = require('./lib/jqLite'),
+    util = require('./lib/util'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[data-mui-toggle="dropdown"]',
     openClass = 'mui--is-open',
