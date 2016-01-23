@@ -41,6 +41,7 @@
     "gulp-inline-source": "^2.1.0",
     "gulp-jshint": "^1.10.0",
     "gulp-load-plugins": "^1.2.0",
+    "gulp-ngmin": "^0.3.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.1.1",

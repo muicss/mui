@@ -45,17 +45,17 @@
   &.mui--is-open {
     display: block;
   }
-  
+
   // links within the dropdown menu
-  > li > a {
+  li > a {
     display: block;
     padding: 3px 20px;
     clear: both;
     font-weight: normal;
     line-height: $mui-base-line-height;
     color: $mui-dropdown-link-font-color;
-    white-space: nowrap; 
-                         
+    white-space: nowrap;
+
     // hover & focus state
     &:hover,
     &:focus {
@@ -71,7 +71,7 @@
     &:focus {
       color: $mui-dropdown-link-font-color-disabled;
     }
-    
+
     // nuke hover & focus effects
     &:hover,
     &:focus {
