@@ -14,6 +14,9 @@
   @media (min-width: $mui-screen-lg-min) {
     width: $mui-container-lg;
   }
+  @media (min-width: $mui-screen-xl-min) {
+    width: $mui-container-xl;
+  }
 }
 
 .mui-container-fluid {

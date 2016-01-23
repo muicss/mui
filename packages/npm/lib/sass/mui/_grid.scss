@@ -30,3 +30,8 @@
 @media (min-width: $mui-screen-lg-min) {
   @include mui-make-grid('lg');
 }
+
+// extra-large grid
+@media (min-width: $mui-screen-xl-min) {
+  @include mui-make-grid('xl');
+}

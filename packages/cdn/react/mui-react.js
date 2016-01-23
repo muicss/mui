@@ -1154,6 +1154,12 @@ var Input = function (_React$Component) {
   }
 
   babelHelpers.createClass(Input, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      this.refs.inputEl._muiTextfield = true;
+    }
+  }, {
     key: 'onChange',
     value: function onChange(ev) {
       this.setState({ value: ev.target.value });
@@ -1418,6 +1424,14 @@ var Button = function (_React$Component) {
   }
 
   babelHelpers.createClass(Button, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      var el = this.refs.buttonEl;
+      el._muiDropdown = true;
+      el._muiRipple = true;
+    }
+  }, {
     key: 'onClick',
     value: function onClick(ev) {
       var onClickFn = this.props.onClick;
@@ -2681,6 +2695,9 @@ var Select = function (_React$Component) {
   babelHelpers.createClass(Select, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      // disable MUI js
+      this.refs.selectEl._muiSelect = true;
+
       // make wrapper element focusable (to enable Firefox bugfix)
       this.refs.wrapperEl.tabIndex = -1;
     }

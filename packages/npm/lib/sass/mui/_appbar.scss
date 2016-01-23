@@ -2,60 +2,32 @@
  * MUI Appbar
  */
 
+$x-mobile-breakpoint: 480px;
+
 // ============================================================================
 // HELPER CLASSES
 // ============================================================================
 
-.mui--appbar-height {
-  height: $mui-appbar-height-xs-portrait;
+// mobile portrait
+.mui--appbar-height      { height: $mui-appbar-height-xs-portrait; }
+.mui--appbar-min-height  { min-height: $mui-appbar-height-xs-portrait; }
+.mui--appbar-line-height { line-height: $mui-appbar-height-xs-portrait; }
+.mui--appbar-top         { top: $mui-appbar-height-xs-portrait; }
 
-  // mobile landscape
-  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
-    height: $mui-appbar-height-xs-landscape;
-  }
-  
-  @media (min-width: $mui-screen-xs) {
-    height: $mui-appbar-height;
-  }
+// mobile landscape
+@media (orientation: landscape) and (max-height: $x-mobile-breakpoint) {
+  .mui--appbar-height      { height: $mui-appbar-height-xs-landscape; }
+  .mui--appbar-min-height  { min-height: $mui-appbar-height-xs-landscape; }
+  .mui--appbar-line-height { line-height: $mui-appbar-height-xs-landscape; }
+  .mui--appbar-top         { top: $mui-appbar-height-xs-landscape; }
 }
 
-.mui--appbar-min-height {
-  min-height: $mui-appbar-height-xs-portrait;
-
-  // mobile landscape
-  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
-    min-height: $mui-appbar-height-xs-landscape;
-  }
-
-  @media (min-width: $mui-screen-xs) {
-    min-height: $mui-appbar-height;
-  }
-}
-
-.mui--appbar-line-height {
-  line-height: $mui-appbar-height-xs-portrait;
-
-  // mobile landscape
-  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
-    line-height: $mui-appbar-height-xs-landscape;
-  }
-
-  @media (min-width: $mui-screen-xs) {
-    line-height: $mui-appbar-height;
-  }
-}
-
-.mui--appbar-top {
-  top: $mui-appbar-height-xs-portrait;
-
-  // mobile landscape
-  @media (orientation: landscape) and (max-height: $mui-screen-xs) {
-    top: $mui-appbar-height-xs-landscape;
-  }
-
-  @media (min-width: $mui-screen-xs) {
-    top: $mui-appbar-height;
-  }
+// all other screen sizes
+@media (min-width: $x-mobile-breakpoint) {
+  .mui--appbar-height      { height: $mui-appbar-height; }
+  .mui--appbar-min-height  { min-height: $mui-appbar-height; }
+  .mui--appbar-line-height { line-height: $mui-appbar-height; }
+  .mui--appbar-top         { top: $mui-appbar-height; }  
 }
 
 

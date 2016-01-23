@@ -54,6 +54,14 @@ var Button = function (_React$Component) {
   }
 
   babelHelpers.createClass(Button, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      var el = this.refs.buttonEl;
+      el._muiDropdown = true;
+      el._muiRipple = true;
+    }
+  }, {
     key: 'onClick',
     value: function onClick(ev) {
       var onClickFn = this.props.onClick;

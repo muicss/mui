@@ -47,6 +47,12 @@ var Input = function (_React$Component) {
   }
 
   babelHelpers.createClass(Input, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      this.refs.inputEl._muiTextfield = true;
+    }
+  }, {
     key: 'onChange',
     value: function onChange(ev) {
       this.setState({ value: ev.target.value });

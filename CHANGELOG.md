@@ -15,6 +15,7 @@
   * .mui--text-accent-hint
 * Major non-backwards compatible modifications to React library
 * Added .mui--text-black and .mui--text-white
+* Added 'xs' screen size and changed default widths for 'sm', 'md' and 'lg' breakpoints
 
 ## 0.2.10 - January 12, 2015
 

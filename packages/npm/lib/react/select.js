@@ -58,6 +58,9 @@ var Select = function (_React$Component) {
   babelHelpers.createClass(Select, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      // disable MUI js
+      this.refs.selectEl._muiSelect = true;
+
       // make wrapper element focusable (to enable Firefox bugfix)
       this.refs.wrapperEl.tabIndex = -1;
     }

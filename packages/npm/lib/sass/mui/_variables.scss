@@ -19,10 +19,10 @@ $mui-danger-color:             mui-color('red', '500') !default;
 // MEDIA QUERY BREAKPOINTS
 // ============================================================================
 
-$mui-screen-xs:     480px !default;
-$mui-screen-sm-min: 768px !default;
-$mui-screen-md-min: 992px !default;
-$mui-screen-lg-min: 1200px !default;
+$mui-screen-sm-min: 544px !default;
+$mui-screen-md-min: 768px !default;
+$mui-screen-lg-min: 992px !default;
+$mui-screen-xl-min: 1200px !default;
 
 
 
@@ -43,8 +43,9 @@ $mui-grid-float-breakpoint:      $mui-screen-sm-min !default;
 // ============================================================================
 
 $mui-container-sm:               ($mui-screen-sm-min - 18px) !default;
-$mui-container-md:               (940px + $mui-grid-gutter-width) !default;
-$mui-container-lg:               (1140px + $mui-grid-gutter-width) !default;
+$mui-container-md:               (720px + $mui-grid-gutter-width) !default;
+$mui-container-lg:               (940px + $mui-grid-gutter-width) !default;
+$mui-container-xl:               (1140px + $mui-grid-gutter-width) !default;
 
 
 
@@ -289,4 +290,4 @@ $mui-base-line-height-computed: floor(($mui-base-font-size * $mui-base-line-heig
 $mui-screen-xs-max: ($mui-screen-sm-min - 1);
 $mui-screen-sm-max: ($mui-screen-md-min - 1);
 $mui-screen-md-max: ($mui-screen-lg-min - 1);
-
+$mui-screen-lg-max: ($mui-screen-xl-min - 1);

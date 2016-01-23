@@ -48,6 +48,11 @@ class Input extends React.Component {
     onChange: null
   };
 
+  componentDidMount() {
+    // disable MUI js
+    this.refs.inputEl._muiTextfield = true;
+  }
+
   onChange(ev) {
     this.setState({value: ev.target.value});
     if (this.props.onChange) this.props.onChange(ev);

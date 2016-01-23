@@ -47,6 +47,13 @@ class Button extends React.Component {
     type: null
   };
 
+  componentDidMount() {
+    // disable MUI js
+    let el = this.refs.buttonEl;
+    el._muiDropdown = true;
+    el._muiRipple = true;
+  }
+
   onClick(ev) {
     let onClickFn = this.props.onClick;
     onClickFn && onClickFn(ev);

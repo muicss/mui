@@ -58,6 +58,9 @@ class Select extends React.Component {
   };
 
   componentDidMount() {
+    // disable MUI js
+    this.refs.selectEl._muiSelect = true;
+
     // make wrapper element focusable (to enable Firefox bugfix)
     this.refs.wrapperEl.tabIndex = -1;
   }
