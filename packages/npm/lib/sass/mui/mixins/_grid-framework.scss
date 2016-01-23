@@ -31,31 +31,6 @@
       width: percentage(($i / $mui-grid-columns));
     }
   }
-  @if ($type == 'push') and ($i > 0) {
-    .mui-col-#{$class}-push-#{$i} {
-      left: percentage(($i / $mui-grid-columns));
-    }
-  }
-  @if ($type == 'push') and ($i == 0) {
-    .mui-col-#{$class}-push-0 {
-      left: auto;
-    }
-  }
-  @if ($type == 'pull') and ($i > 0) {
-    .mui-col-#{$class}-pull-#{$i} {
-      right: percentage(($i / $mui-grid-columns));
-    }
-  }
-  @if ($type == 'pull') and ($i > 0) {
-    .mui-col-#{$class}-pull-#{$i} {
-      right: percentage(($i / $mui-grid-columns));
-    }
-  }
-  @if ($type == 'pull') and ($i == 0) {
-    .mui-col-#{$class}-pull-0 {
-      right: auto;
-    }
-  }
   @if ($type == 'offset') {
     .mui-col-#{$class}-offset-#{$i} {
       margin-left: percentage(($i / $mui-grid-columns));
@@ -72,7 +47,5 @@
 @mixin mui-make-grid($class) {
   @include mui-float-grid-columns($class);
   @include mui-loop-grid-columns($mui-grid-columns, $class, 'width');
-  @include mui-loop-grid-columns($mui-grid-columns, $class, 'pull');
-  @include mui-loop-grid-columns($mui-grid-columns, $class, 'push');
   @include mui-loop-grid-columns($mui-grid-columns, $class, 'offset');
 }

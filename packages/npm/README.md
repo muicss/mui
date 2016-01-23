@@ -377,16 +377,15 @@ Read more: https://www.muicss.com/docs/v1/react/tabs
 <div className="mui--text-dark"></div>
 <div className="mui--text-dark-secondary"></div>
 <div className="mui--text-dark-hint"></div>
-
 <div className="mui--text-light"></div>
 <div className="mui--text-light-secondary"></div>
 <div className="mui--text-light-hint"></div>
-
 <div className="mui--text-accent"></div>
 <div className="mui--text-accent-secondary"></div>
 <div className="mui--text-accent-hint"></div>
-
 <div className="mui--text-danger"></div>
+<div className="mui--text-black"></div>
+<div className="mui--text-white"></div>
 
 <!-- user select -->
 <div className="mui--no-user-select"></div>

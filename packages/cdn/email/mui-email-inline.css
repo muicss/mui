@@ -673,6 +673,14 @@ table.mui-btn--large > tbody > tr > td > a {
   color: #ffa6c4;
 }
 
+.mui--text-black {
+  color: #000;
+}
+
+.mui--text-white {
+  color: #FFF;
+}
+
 .mui--text-danger {
   color: #F44336;
 }

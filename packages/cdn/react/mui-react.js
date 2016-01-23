@@ -3197,7 +3197,7 @@ var TextInput = function (_React$Component) {
 }(_react2.default.Component);
 
 TextInput.propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'password'])
+  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
 };
 TextInput.defaultProps = {
   type: 'text'

@@ -29,16 +29,18 @@
 // TEXT COLOR HELPERS
 // ============================================================================
 
-.mui--text-dark            { color: $mui-text-dark; }
-.mui--text-dark-secondary  { color: $mui-text-dark-secondary; }
-.mui--text-dark-hint       { color: $mui-text-dark-hint; }
+.mui--text-dark             { color: $mui-text-dark; }
+.mui--text-dark-secondary   { color: $mui-text-dark-secondary; }
+.mui--text-dark-hint        { color: $mui-text-dark-hint; }
 
-.mui--text-light           { color: $mui-text-light; }
-.mui--text-light-secondary { color: $mui-text-light-secondary; }
-.mui--text-light-hint      { color: $mui-text-light-hint; }
+.mui--text-light            { color: $mui-text-light; }
+.mui--text-light-secondary  { color: $mui-text-light-secondary; }
+.mui--text-light-hint       { color: $mui-text-light-hint; }
 
 .mui--text-accent           { color: $mui-text-accent; }
 .mui--text-accent-secondary { color: $mui-text-accent-secondary; }
 .mui--text-accent-hint      { color: $mui-text-accent-hint; }
 
-.mui--text-danger          { color: $mui-text-danger; }
+.mui--text-black            { color: mui-color('black'); }
+.mui--text-white            { color: mui-color('white'); }
+.mui--text-danger           { color: $mui-text-danger; }

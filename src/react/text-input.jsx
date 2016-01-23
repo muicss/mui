@@ -19,7 +19,7 @@ const PropTypes = React.PropTypes;
  */
 class TextInput extends React.Component {
   static propTypes = {
-    type: PropTypes.oneOf(['text', 'email', 'password'])
+    type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
   };
 
   static defaultProps = {
