@@ -341,8 +341,9 @@ function buildNpmJs() {
     return gulp.src([
       './src/js/config.js',
       './src/js/overlay.js',
-      './src/js/lib/util.js',
-      './src/js/lib/jqLite.js'
+      './src/js/lib/forms.js',
+      './src/js/lib/jqLite.js',
+      './src/js/lib/util.js'
     ])
       .pipe(plugins.copy('./packages/npm/lib/js', {prefix: 2}));
   });

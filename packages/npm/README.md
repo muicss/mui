@@ -404,7 +404,7 @@ Read more: https://www.muicss.com/docs/v1/react/tabs
 ## Directory Tree
 
 <pre>
-npm
+muicss
 ├── index.js
 ├── lib
 │   ├── css
