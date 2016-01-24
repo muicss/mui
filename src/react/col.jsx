@@ -10,7 +10,7 @@ import React from 'react';
 import * as util from '../js/lib/util';
 
 
-const breakpoints = ['xs', 'sm', 'md', 'lg'];
+const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 
 /**
