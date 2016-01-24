@@ -59,7 +59,7 @@ $mui-text-dark-hint:        lighten(mui-color('black'), 62%) !default;
 
 $mui-text-light:            mui-color('white') !default;
 $mui-text-light-secondary:  darken(mui-color('white'), 30%) !default;
-$mui-text-light-hint:       darken(mui-color('white'), 70%) !default;
+$mui-text-light-hint:       darken(mui-color('white'), 50%) !default;
 
 $mui-text-accent:           $mui-accent-color !default;
 $mui-text-accent-secondary: lighten($mui-accent-color, 13%) !default;

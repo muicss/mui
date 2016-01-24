@@ -494,25 +494,25 @@ hr {
 
 @media (min-width: 544px) {
   .mui-container {
-    width: 526px;
+    max-width: 570px;
   }
 }
 
 @media (min-width: 768px) {
   .mui-container {
-    width: 750px;
+    max-width: 740px;
   }
 }
 
 @media (min-width: 992px) {
   .mui-container {
-    width: 970px;
+    max-width: 960px;
   }
 }
 
 @media (min-width: 1200px) {
   .mui-container {
-    width: 1170px;
+    max-width: 1170px;
   }
 }
 

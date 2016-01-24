@@ -42,10 +42,10 @@ $mui-grid-float-breakpoint:      $mui-screen-sm-min !default;
 // CONTAINER SIZES
 // ============================================================================
 
-$mui-container-sm:               ($mui-screen-sm-min - 18px) !default;
-$mui-container-md:               (720px + $mui-grid-gutter-width) !default;
-$mui-container-lg:               (940px + $mui-grid-gutter-width) !default;
-$mui-container-xl:               (1140px + $mui-grid-gutter-width) !default;
+$mui-container-sm:               570px !default;
+$mui-container-md:               740px !default;
+$mui-container-lg:               960px !default;
+$mui-container-xl:               1170px !default;
 
 
 

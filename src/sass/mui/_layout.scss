@@ -6,16 +6,16 @@
   @include mui-container-fixed();
 
   @media (min-width: $mui-screen-sm-min) {
-    width: $mui-container-sm;
+    max-width: $mui-container-sm;
   }
   @media (min-width: $mui-screen-md-min) {
-    width: $mui-container-md;
+    max-width: $mui-container-md;
   }
   @media (min-width: $mui-screen-lg-min) {
-    width: $mui-container-lg;
+    max-width: $mui-container-lg;
   }
   @media (min-width: $mui-screen-xl-min) {
-    width: $mui-container-xl;
+    max-width: $mui-container-xl;
   }
 }
 
