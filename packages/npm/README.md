@@ -60,24 +60,6 @@ class App extends React.Component {
 
 ## API Documentation
 
-### JavaScript Library
-
-All of the MUI JavaScript modules can be accessed as top-level attributes of the `muicss` package. In addition, they can be accessed individually at `muicss/lib/js/{module}`.
-
-#### Overlay
-
-```javascript
-import overlay from 'muicss/lib/js/overlay';
-
-// turn on overlay
-overlay('on'[, <options>[, <childEl>]]);
-
-// turn off overlay
-overlay('off');
-```
-
-Read more: https://www.muicss.com/docs/v1/css-js/overlay
-
 ### React Library
 
 All of the MUI React components can be accessed as top-level attributes of the `muicss/react` package. In addition, they can be accessed individually at `muicss/lib/react/{component}`.
@@ -104,17 +86,7 @@ import Button from 'muicss/lib/react/button';
   * {Boolean} isDisabled=false|true
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/button
-
-#### Caret
-
-```jsx
-import Caret from 'muicss/lib/react/caret';
-
-<Caret />
-```
-
-Read more: https://www.muicss.com/docs/v1/react/caret
+Read more: https://www.muicss.com/docs/v1/react/buttons
 
 #### Checkbox
 
@@ -128,7 +100,7 @@ import Checkbox from 'muicss/lib/react/checkbox';
   * {Boolean} isDisabled=false|true
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/checkbox
+Read more: https://www.muicss.com/docs/v1/react/forms
 
 #### Container
 
@@ -149,7 +121,7 @@ import Divider from 'muicss/lib/react/divider';
 <Divider />
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/divider
+Read more: https://www.muicss.com/docs/v1/react/dividers
 
 #### Dropdown Component
 
@@ -168,7 +140,7 @@ import Dropdown from 'muicss/lib/react/dropdown';
   * {Boolean} isDisabled
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/dropdown
+Read more: https://www.muicss.com/docs/v1/react/dropdowns
 
 ##### DropdownItem
 
@@ -180,7 +152,7 @@ import DropdownItem 'muicss/lib/react/dropdown-item';
   * {Function} onClick
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/dropdown-item
+Read more: https://www.muicss.com/docs/v1/react/dropdowns
 
 #### Form
 
@@ -191,7 +163,7 @@ import Form from 'muicss/lib/react/form';
   * {Boolean} isInline=false|true
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/form
+Read more: https://www.muicss.com/docs/v1/react/forms
 
 #### Grid Elements
 
@@ -231,7 +203,7 @@ import Panel from 'muicss/lib/react/panel';
 <Panel />
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/panel
+Read more: https://www.muicss.com/docs/v1/react/panels
 
 #### Radio
 
@@ -245,7 +217,7 @@ import Radio from 'muicss/lib/react/panel';
   * {Boolean} isDisabled=false|true
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/radio
+Read more: https://www.muicss.com/docs/v1/react/forms
 
 #### Select Component
 
@@ -264,7 +236,7 @@ import Select from 'muicss/lib/react/select';
   * {Function} onChange
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/select
+Read more: https://www.muicss.com/docs/v1/react/forms
 
 ##### SelectItem
 
@@ -276,7 +248,7 @@ import SelectItem from 'muicss/lib/react/select-item';
   * {String} label
 ```
 
-Read more: https://www.muicss.com/docs/v1/react/select
+Read more: https://www.muicss.com/docs/v1/react/forms
 
 #### Tabs Component
 
