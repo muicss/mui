@@ -16,14 +16,12 @@ The MUI NPM package makes it easy to import MUI into a project and create a cust
 The simplest way to use MUI is via the top level imports `muicss` and `muicss/react`:
 
 ```javascript
-import { overlay } from 'muicss';
 import { Appbar, Button, Panel } from 'muicss/react';
 ```
 
 You can also optimize your builds by importing modules one-by-one from the lower level API:
 
 ```javascript
-import overlay from 'muicss/lib/js/overlay';
 import Appbar from 'muicss/lib/react/appbar';
 import Button from 'muicss/lib/react/button';
 import Container from 'muicss/lib/react/container';
@@ -33,12 +31,10 @@ Here's an example of how to use MUI in a React app:
 
 ```javascript
 import React from 'react';
-
-import { overlay } from 'muicss';
+import ReactDOM from 'react-dom';
 import { Appbar, Button, Panel } from 'muicss/react';
 
-
-class App extends React.Component {
+class Example extends React.Component {
   onClick() {
     overlay('on');
   }
@@ -56,6 +52,8 @@ class App extends React.Component {
     );
   }
 }
+
+ReactDOM.render(<Example />, document.getElementById('example'));
 ```
 
 ## API Documentation
@@ -385,10 +383,10 @@ muicss
 │   │   └── mui.min.css
 │   ├── js
 │   │   ├── config.js
-│   │   ├── lib
-│   │   │   ├── jqLite.js
-│   │   │   └── util.js
-│   │   └── overlay.js
+│   │   └── lib
+│   │       ├── forms.js
+│   │       ├── jqLite.js
+│   │       └── util.js
 │   ├── react
 │   │   ├── appbar.js
 │   │   ├── babel-helpers.js

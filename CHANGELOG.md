@@ -1,6 +1,6 @@
 # MUI Changelog
 
-## 0.3.0-rc2
+## 0.3.0-rc3
 
 * Replaced .mui-textfield--invalid with .mui--is-invalid
 * Replaced .mui--text-black-{XX}, .mui--text-white-{XX} color helpers with:
@@ -15,7 +15,7 @@
   * .mui--text-accent-hint
 * Major non-backwards compatible modifications to React library
 * Added .mui--text-black and .mui--text-white
-* Added 'xs' screen size and changed default widths for 'sm', 'md' and 'lg' breakpoints
+* Added 'xl' screen size and changed default widths for 'sm', 'md' and 'lg' breakpoints
 
 ## 0.2.10 - January 12, 2015
 
