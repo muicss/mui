@@ -191,6 +191,8 @@ import Col from 'muicss/lib/react/col';
   * {Integer} md-offset
   * {Integer} lg
   * {Integer} lg-offset
+  * {Integer} xl
+  * {Integer} xl-offset
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/grid
