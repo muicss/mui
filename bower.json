@@ -11,7 +11,11 @@
     "src/sass/mui.scss",
     "src/sass/mui/_colors.scss",
     "src/email/mui-email-inline.scss",
-    "src/email/mui-email-styletag.scss"
+    "src/email/mui-email-styletag.scss",
+    "packages/cdn/css/mui.css",
+    "packages/cdn/css/mui.min.css",
+    "packages/cdn/js/mui.js",
+    "packages/cdn/js/mui.min.js"
   ],
   "repository": {
     "type": "git",
@@ -33,7 +37,6 @@
     "gulpfile.js",
     "node_modules",
     "package.json",
-    "packages",
     "test"
   ]
 }
