@@ -1,6 +1,6 @@
 # MUI Changelog
 
-## 0.3.0-rc3
+## 0.3.0
 
 * Replaced .mui-textfield--invalid with .mui--is-invalid
 * Replaced .mui--text-black-{XX}, .mui--text-white-{XX} color helpers with:

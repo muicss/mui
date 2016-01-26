@@ -21,7 +21,7 @@
 1. Commit changes and tag code
 
   ```bash
-  $ git add .
+  $ git add . --all
   $ git commit -a -m "bumped version number"
   $ git push origin master
   $ git tag <version-number>

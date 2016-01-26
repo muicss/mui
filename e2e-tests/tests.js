@@ -21544,6 +21544,14 @@ var Button = function (_React$Component) {
   }
 
   babelHelpers.createClass(Button, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      var el = this.refs.buttonEl;
+      el._muiDropdown = true;
+      el._muiRipple = true;
+    }
+  }, {
     key: 'onClick',
     value: function onClick(ev) {
       var onClickFn = this.props.onClick;
@@ -21602,6 +21610,7 @@ var Button = function (_React$Component) {
         'button',
         {
           ref: 'buttonEl',
+          type: this.props.type,
           className: cls + ' ' + this.props.className,
           disabled: this.props.isDisabled,
           onClick: this.onClick.bind(this),
@@ -21636,7 +21645,8 @@ Button.propTypes = {
   variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
   size: PropTypes.oneOf(['default', 'small', 'large']),
   onClick: PropTypes.func,
-  isDisabled: PropTypes.bool
+  isDisabled: PropTypes.bool,
+  type: PropTypes.oneOf(['submit', 'button'])
 };
 Button.defaultProps = {
   className: '',
@@ -21644,7 +21654,8 @@ Button.defaultProps = {
   variant: 'default',
   size: 'default',
   onClick: null,
-  isDisabled: false
+  isDisabled: false,
+  type: null
 };
 
 var Ripple = function (_React$Component2) {
@@ -22145,6 +22156,7 @@ var Dropdown = function (_React$Component) {
         _button2.default,
         {
           ref: 'button',
+          type: 'button',
           onClick: this.onClickCB,
           color: this.props.color,
           variant: this.props.variant,
@@ -22691,6 +22703,25 @@ describe('react/button', function () {
       'test'
     ));
     _assert2.default.equal(/mui-btn--large/.test(result.props.className), true);
+  });
+
+  it('supports type attribute', function () {
+    // check default
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _button2.default,
+      null,
+      'test'
+    ));
+    _assert2.default.equal(result.props.type, null);
+
+    // check 'button' type
+    result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _button2.default,
+      { type: 'button' },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.type, 'button');
   });
 
   it('supports click callbacks', function (done) {

@@ -1,6 +1,6 @@
 {
   "name": "muicss",
-  "version": "0.3.0-rc3",
+  "version": "0.3.0",
   "license": "MIT",
   "description": "Lightweight CSS framework based on Google's Material Design guidelines",
   "keywords": [
