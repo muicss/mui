@@ -5,16 +5,30 @@
 
 import assert from 'assert';
 
+var helpers = require('./test-helper');
+var ngModule = helpers.module;
+var inject = helpers.inject;
+require('../../src/angular/appbar.js');
+
+var compile, scope, directiveElem;
 
 describe('angular/appbar', function() {
-
-  before(function() {
-    require('../../src/angular/appbar.js');
-    angular.module('mui.appbar');
+  beforeEach(function() {
+    ngModule('mui.appbar');
+    inject(function($compile, $rootScope){
+      compile = $compile;
+      scope = $rootScope.$new();
+    });
   });
 
+  afterEach(function () {
+    scope.$destroy();
+  });
 
-  it('test1', function() {
-    assert(true, true);
+  it('renders properly', function() {
+    //appbar directive with attribute ```replace: true```.
+    var compiled = compile('<mui-appbar></mui-appbar>')(scope);
+
+    assert.equal(!!~compiled.attr('class').indexOf('mui-appbar'), true);
   });
 });
