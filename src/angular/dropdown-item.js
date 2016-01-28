@@ -1,4 +1,4 @@
-angular.module('mui.dropdown-item', [])
+module.exports = angular.module('mui.dropdown-item', [])
   .directive('muiDropdownItem', function() {
      return {
         restrict : "AE",

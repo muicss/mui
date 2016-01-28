@@ -1,4 +1,4 @@
-angular.module('mui.divider', [])
+module.exports = angular.module('mui.divider', [])
   .directive("muiDivider", function() {
     return {
       restrict: "AE",

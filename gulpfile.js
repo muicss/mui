@@ -171,7 +171,10 @@ function buildCdnReact(dirname) {
 
 function buildCdnAngular(dirname) {
   return makeTask('build-cdn-angular: ' + dirname, function() {
-    return gulp.src('./src/angular/**/*.js')
+    return gulp.src('./build-targets/cdn-angular.js')
+      .pipe(plugins.browserify({
+        paths: ['./']
+      }))
       .pipe(plugins.concat('mui-angular.js'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.ngmin())

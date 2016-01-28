@@ -1,4 +1,4 @@
-angular.module("mui.appbar",[])
+module.exports = angular.module("mui.appbar",[])
   .directive('muiAppbar', function(){
     return{
       restrict : "AE",

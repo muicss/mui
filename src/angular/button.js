@@ -1,4 +1,4 @@
-angular.module('mui.button', [])
+module.exports = angular.module('mui.button', [])
   .directive('muiButton', function() {
     return {
       restrict: "AE",

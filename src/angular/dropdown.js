@@ -1,4 +1,4 @@
-angular.module('mui.dropdown', [])
+module.exports = angular.module('mui.dropdown', [])
   .directive('muiDropdown', function($timeout, $compile) {
     return {
       restrict: "AE",

@@ -1,4 +1,4 @@
-angular.module('mui.form',[])
+module.exports = angular.module('mui.form',[])
   .directive('muiTextfield', function() {
     return {
 

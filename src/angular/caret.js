@@ -1,4 +1,4 @@
-angular.module('mui.caret',[])
+module.exports = angular.module('mui.caret',[])
   .directive('muiCaret', function() {
       return {
         restrict : 'AE',

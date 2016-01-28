@@ -1,4 +1,4 @@
-angular.module('mui.panel',[])
+module.exports = angular.module('mui.panel',[])
   .directive('muiPanel', function() {
     return {
       restrict : 'AE',

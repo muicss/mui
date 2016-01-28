@@ -1,4 +1,4 @@
-angular.module('mui.container', [])
+module.exports = angular.module('mui.container', [])
   .directive('muiContainer', function() {
     return {
       restrict: 'AE',
