@@ -3,6 +3,7 @@ module.exports = angular.module("mui.appbar",[])
     return{
       restrict : "AE",
       transclude : true,
+      replace: true,
       template : "<div class='mui-appbar' ng-transclude></div>"
     };
   });

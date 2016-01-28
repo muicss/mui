@@ -2,6 +2,7 @@ module.exports = angular.module('mui.dropdown-item', [])
   .directive('muiDropdownItem', function() {
      return {
         restrict : "AE",
+        replace: true,
         scope : {
             link : "@"
         },
