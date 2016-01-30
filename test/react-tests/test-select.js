@@ -78,4 +78,57 @@ describe('react/select', function() {
 
     assert.equal(result.props.style.additonal, 'style');
   });
+
+
+  it('handles default value', function() {
+    let testElem = (
+      <Select>
+        <SelectItem value="value1">Option 1</SelectItem>
+        <SelectItem value="value2">Option 2</SelectItem>
+        <SelectItem value="value3">Option 3</SelectItem>
+      </Select>
+    );
+
+    let node = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = node.refs.selectEl;
+
+    assert.equal(selectEl.value, 'value1');
+  });
+
+
+  it('handles defaultValue for uncontrolled component', function() {
+    let testElem = (
+      <Select defaultValue="value2">
+        <SelectItem value="value1">Option 1</SelectItem>
+        <SelectItem value="value2">Option 2</SelectItem>
+        <SelectItem value="value3">Option 3</SelectItem>
+      </Select>
+    );
+
+    let node = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = node.refs.selectEl;
+
+    assert.equal(selectEl.value, 'value2');
+  });
+
+
+  it('handles value for controlled component', function() {
+    let testElem = (
+      <Select value="value2">
+        <SelectItem value="value1">Option 1</SelectItem>
+        <SelectItem value="value2">Option 2</SelectItem>
+        <SelectItem value="value3">Option 3</SelectItem>
+      </Select>
+    );
+
+    let node = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = node.refs.selectEl;
+
+    // test default value
+    assert.equal(selectEl.value, 'value2');    
+
+    // change state and test again
+    node.setState({value: 'value3'});
+    assert.equal(selectEl.value, 'value3');
+  });
 });
