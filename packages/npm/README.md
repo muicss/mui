@@ -228,6 +228,7 @@ import Select from 'muicss/lib/react/select';
 
 <Select />
   * {String} name
+  * {String} value
   * {Boolean} isAutofocus=false|true
   * {Boolean} isDisabled=false|true
   * {Boolean} isMultiple=false|true

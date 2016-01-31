@@ -65,15 +65,15 @@
           if (info.done) {
             resolve(value);
           } else {
-            Promise.resolve(value).then(function (value) {
-              step("next", value);
+            return Promise.resolve(value).then(function (value) {
+              return step("next", value);
             }, function (err) {
-              step("throw", err);
+              return step("throw", err);
             });
           }
         }
 
-        step("next");
+        return step("next");
       });
     };
   };
@@ -2819,6 +2819,7 @@ var Select = function (_React$Component) {
           {
             ref: 'selectEl',
             name: this.props.name,
+            value: this.props.value,
             autofocus: this.props.isAutofocus,
             disabled: this.props.isDisabled,
             multiple: this.props.isMultiple,
@@ -2843,6 +2844,7 @@ var Select = function (_React$Component) {
 
 Select.propTypes = {
   name: PropTypes.string,
+  value: PropTypes.string,
   isAutofocus: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isMultiple: PropTypes.bool,
@@ -2853,6 +2855,7 @@ Select.propTypes = {
 Select.defaultProps = {
   className: '',
   name: null,
+  value: null,
   isAutofocus: false,
   isDisabled: false,
   isMultiple: false,

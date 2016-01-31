@@ -38,6 +38,7 @@ class Select extends React.Component {
 
   static propTypes = {
     name: PropTypes.string,
+    value: PropTypes.string,
     isAutofocus: PropTypes.bool,
     isDisabled: PropTypes.bool,
     isMultiple: PropTypes.bool,
@@ -49,6 +50,7 @@ class Select extends React.Component {
   static defaultProps = {
     className: '',
     name: null,
+    value: null,
     isAutofocus: false,
     isDisabled: false,
     isMultiple: false,
@@ -172,6 +174,7 @@ class Select extends React.Component {
         <select
           ref="selectEl"
           name={this.props.name}
+          value={this.props.value}
           autofocus={this.props.isAutofocus}
           disabled={this.props.isDisabled}
           multiple={this.props.isMultiple}
