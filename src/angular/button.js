@@ -3,9 +3,10 @@ module.exports = angular.module('mui.button', [])
     return {
       restrict: "AE",
       scope: {
-        disable: '='
+        disable: '=',
+        type : '@'
       },
-      template: "<button class='mui-btn' ng-disabled = 'disable' ripple ng-transclude></button>",
+      template: "<button type={{type}} class='mui-btn' ng-disabled = 'disable' ripple ng-transclude></button>",
       transclude: true,
       link: function(scope, element, attrs) {
         var $button = angular.element(element[0].querySelector('.mui-btn')),
@@ -15,6 +16,8 @@ module.exports = angular.module('mui.button', [])
             color: 1, //['default', 'primary', 'danger', 'dark','accent']
             size: 1 //['default', 'small', 'large']
           };
+
+        scope.type = scope.type || "button";
 
         /**
          * change btn-style by attrs
