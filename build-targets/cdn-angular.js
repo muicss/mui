@@ -21,6 +21,8 @@
   angular.DropdownItem = require('src/angular/dropdown-item'),
   angular.Panel = require('src/angular/panel');
   angular.Input = require('src/angular/input');
+  angular.Row = require('src/angular/row');
+  angular.Col = require('src/angular/col');
 
   win.angular.module("mui", [
                               angular.Appbar.name,
@@ -31,6 +33,8 @@
                               angular.Dropdown.name,
                               angular.DropdownItem.name,
                               angular.Panel.name,
-                              angular.Input.name
+                              angular.Input.name,
+                              angular.Row.name,
+                              angular.Col.name
                            ]);
 })(window);
