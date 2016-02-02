@@ -24,6 +24,7 @@
   angular.Row = require('src/angular/row');
   angular.Col = require('src/angular/col');
   angular.Tabs = require('src/angular/tabs');
+  angular.Radio = require('src/angular/radio');
 
   win.angular.module("mui", [
                               angular.Appbar.name,
@@ -37,6 +38,7 @@
                               angular.Input.name,
                               angular.Row.name,
                               angular.Col.name,
-                              angular.Tabs.name
+                              angular.Tabs.name,
+                              angular.Radio.name
                            ]);
 })(window);

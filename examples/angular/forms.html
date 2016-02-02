@@ -46,6 +46,17 @@
             <mui-button >submit</mui-button>
           </form>
 
+          <h3>Checkboxes and radio buttons</h3>
+          <form>
+            <mui-radio ng-model="color.name"  value="red" label="radio1"></mui-radio>
+            <mui-radio on-select="alerts(color)" ng-model="color.name" value="green"  label="radio2"></mui-radio>
+            <mui-radio ng-model="color.name"   value="blue" label="radio3"></mui-radio>
+            <p>
+              value: {{color.name}}
+            </p>
+
+          </form>
+
           <h3>Form Validation</h3>
           <form name="myform5" ng-submit="submitForm5(myform5.$valid)">
             <mui-input ng-model='form5.input1' name="input5-1" required hint="Text*"></mui-input>
@@ -66,6 +77,12 @@
       $scope.submitForm5 = function(isValid) {
         alert(isValid);
       };
+      $scope.color = {
+        name: 'green'
+      };
+      $scope.alerts = function(color) {
+        console.log($scope.color);
+      }
     })
     ;
   </script>
