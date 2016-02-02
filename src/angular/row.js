@@ -4,7 +4,12 @@ module.exports = angular.module('mui.row', [])
     restrict : 'AE',
     scope : true,
     replace: true,
-    template : "<div class='mui-row' ng-transclude></div>",
-    transclude : true
+    template : "<div class='mui-row'></div>",
+    transclude : true,
+    link: function(scope, element, attr, controller, linker) {
+      linker(scope, function(clone) {
+        element.append(clone);
+      });
+    }
   }
 })

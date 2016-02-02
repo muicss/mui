@@ -2,7 +2,7 @@ module.exports = angular.module('mui.container', [])
   .directive('muiContainer', function() {
     return {
       restrict: 'AE',
-      template: '<div class="mui-container transclude"></div>',
+      template: '<div class="mui-container"></div>',
       transclude: true,
       scope : true,
       replace: true,

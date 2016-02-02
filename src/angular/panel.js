@@ -1,9 +1,15 @@
-module.exports = angular.module('mui.panel',[])
+module.exports = angular.module('mui.panel', [])
   .directive('muiPanel', function() {
     return {
-      restrict : 'AE',
+      restrict: 'AE',
       replace: true,
-      template : "<div class='mui-panel' ng-transclude></div>",
-      transclude : true
+      scope : true,
+      template: "<div class='mui-panel'></div>",
+      transclude: true,
+      link: function(scope, element, attr, controller, linker) {
+        linker(scope, function(clone) {
+          element.append(clone);
+        });
+      }
     };
   });

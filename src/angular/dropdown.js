@@ -3,6 +3,7 @@ module.exports = angular.module('mui.dropdown', [])
     return {
       restrict: "AE",
       transclude: true,
+      replace : true,
       scope: {
         variant: '@', //['default', 'flat', 'raised', 'fab']
         color: '@', //['default', 'primary', 'danger', 'dark','accent']
@@ -11,9 +12,10 @@ module.exports = angular.module('mui.dropdown', [])
         disable: '='
       },
       template: "<div class='mui-dropdown'>" +
-        "<mui-button variant='{{variant}}' disable='disable' color='{{color}}' size='{{size}}'></mui-button>" +
-        "<ul class='mui-dropdown__menu' ng-transclude></ul></div>",
-
+                  "<mui-button variant='{{variant}}' disable='disable' color='{{color}}' "+
+                  "size='{{size}}'></mui-button>" +
+                  "<ul class='mui-dropdown__menu' ng-transclude></ul>"+
+                "</div>",
       link: function(scope, element, attrs) {
         var dropdownClass = 'mui-dropdown',
           menuClass = 'mui-dropdown__menu',
@@ -36,13 +38,16 @@ module.exports = angular.module('mui.dropdown', [])
          * enable html type label
          */
         attrs.$observe('label', function() {
-          var $muiButton = element.find('mui-button');
+          var $muiButton = angular.element(element[0].querySelector('.mui-btn'));
+          $muiButton.find('span').remove();
+          $muiButtonText = $muiButton.append('<span></span>').find('span');
           if (!angular.isUndefined(attrs.nocaret)) {
-            $muiButton.html(attrs.label);
+            $muiButtonText.html(attrs.label);
           } else {
-            $muiButton.html(attrs.label + ' <mui-caret></mui-caret>');
+            $muiButtonText.html(attrs.label + ' <mui-caret></mui-caret>');
           }
-          $compile($muiButton)(scope);
+          console.log($muiButtonText[0]);
+          $compile($muiButtonText.children())(scope);
         });
 
         scope.$watch('open', function() {

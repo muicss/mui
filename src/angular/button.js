@@ -3,14 +3,13 @@ module.exports = angular.module('mui.button', [])
     return {
       restrict: "AE",
       scope: {
-        disable: '=',
-        type : '@'
+        disable: '='
       },
-      template: "<button type={{type}} class='mui-btn' ng-disabled = 'disable' ripple ng-transclude></button>",
+      replace: true,
+      template: "<button class='mui-btn' ng-disabled = 'disable' ripple ng-transclude></button>",
       transclude: true,
       link: function(scope, element, attrs) {
-        var $button = angular.element(element[0].querySelector('.mui-btn')),
-          btnClass = "mui-btn",
+        var btnClass = "mui-btn",
           styles = {
             variant: 1, //['default', 'flat', 'raised', 'fab']
             color: 1, //['default', 'primary', 'danger', 'dark','accent']
@@ -23,9 +22,9 @@ module.exports = angular.module('mui.button', [])
          * change btn-style by attrs
          */
         var _renderBtn = function() {
-          $button.removeAttr('class').addClass(btnClass);
+          element.removeAttr('class').addClass(btnClass);
           angular.forEach(styles, function(value, style) {
-            $button.addClass(attrs[style] ? 'mui-btn--' + attrs[style] : '');
+            element.addClass(attrs[style] ? 'mui-btn--' + attrs[style] : '');
           });
         };
 
@@ -45,7 +44,6 @@ module.exports = angular.module('mui.button', [])
   .directive('ripple', function($timeout, jqLite) {
     return {
       restrict: 'A',
-      scope: {},
       link: function(scope, element, attrs) {
         var rippleClass = 'mui-ripple-effect';
 

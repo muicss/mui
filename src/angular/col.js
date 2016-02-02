@@ -4,9 +4,12 @@ module.exports = angular.module('mui.col', [])
       restrict: 'AE',
       scope: true,
       replace: true,
-      template: "<div ng-transclude></div>",
+      template: "<div></div>",
       transclude: true,
-      link: function(scope, element, attrs) {
+      link: function(scope, element, attrs, controller, linker) {
+        linker(scope, function(clone) {
+          element.append(clone);
+        });
         var breakpoints = {
           'xs': 'mui-col-xs-',
           'sm': 'mui-col-sm-',
