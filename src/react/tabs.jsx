@@ -32,14 +32,14 @@ class Tabs extends React.Component {
 
   static propTypes = {
     initialSelectedIndex: PropTypes.number,
-    isJustified: PropTypes.bool,
+    justified: PropTypes.bool,
     onChange: PropTypes.func
   };
 
   static defaultProps = {
     className: '',
     initialSelectedIndex: 0,
-    isJustified: false,
+    justified: false,
     onChange: null
   };
 
@@ -97,7 +97,7 @@ class Tabs extends React.Component {
     }
 
     cls = tabsBarClass;
-    if (this.props.isJustified) cls += ' ' + tabsBarJustifiedClass;
+    if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
 
     return (
       <div className={this.props.className} style={this.props.style}>

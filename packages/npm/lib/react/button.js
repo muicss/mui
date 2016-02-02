@@ -122,7 +122,7 @@ var Button = function (_React$Component) {
           ref: 'buttonEl',
           type: this.props.type,
           className: cls + ' ' + this.props.className,
-          disabled: this.props.isDisabled,
+          disabled: this.props.disabled,
           onClick: this.onClick.bind(this),
           onMouseDown: this.onMouseDown.bind(this),
           style: this.props.style
@@ -152,20 +152,20 @@ var Button = function (_React$Component) {
 
 Button.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  disabled: PropTypes.bool,
   size: PropTypes.oneOf(['default', 'small', 'large']),
-  onClick: PropTypes.func,
-  isDisabled: PropTypes.bool,
-  type: PropTypes.oneOf(['submit', 'button'])
+  type: PropTypes.oneOf(['submit', 'button']),
+  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  onClick: PropTypes.func
 };
 Button.defaultProps = {
   className: '',
   color: 'default',
-  variant: 'default',
+  disabled: false,
   size: 'default',
-  onClick: null,
-  isDisabled: false,
-  type: null
+  type: null,
+  variant: 'default',
+  onClick: null
 };
 
 var Ripple = function (_React$Component2) {
@@ -182,10 +182,18 @@ var Ripple = function (_React$Component2) {
       var _this3 = this;
 
       // trigger teardown in 2 sec
-      setTimeout(function () {
+      var teardownTimer = setTimeout(function () {
         var fn = _this3.props.onTeardown;
         fn && fn();
       }, 2000);
+
+      this.setState({ teardownTimer: teardownTimer });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear timeout
+      clearTimeout(this.state.teardownTimer);
     }
   }, {
     key: 'render',

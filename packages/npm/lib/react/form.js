@@ -33,7 +33,7 @@ var Form = function (_React$Component) {
       var cls = '';
 
       // inline form
-      if (this.props.isInline) cls = 'mui-form--inline';
+      if (this.props.inline) cls = 'mui-form--inline';
 
       return _react2.default.createElement(
         'form',
@@ -51,11 +51,11 @@ var Form = function (_React$Component) {
 /** Define module API */
 
 Form.propTypes = {
-  isInline: _react2.default.PropTypes.bool
+  inline: _react2.default.PropTypes.bool
 };
 Form.defaultProps = {
   className: '',
-  isInline: false
+  inline: false
 };
 exports.default = Form;
 module.exports = exports['default'];

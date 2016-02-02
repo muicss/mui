@@ -21,30 +21,31 @@ class Input extends React.Component {
   constructor(props) {
     super(props);
 
-    let v = props.value;
-    this.state = {
-      value: v,
-      isDirty: Boolean(v.length)
+    let value = props.value;
+
+    this.state = { 
+      value: value,
+      isDirty: Boolean(value)
     };
 
     let cb = util.callback;
-    this.onChangeFn = cb(this, 'onChange');
-    this.onFocusFn = cb(this, 'onFocus');
+    this.onChangeCB = cb(this, 'onChange');
+    this.onFocusCB = cb(this, 'onFocus');
   }
 
   static propTypes = {
-    type: PropTypes.string,
-    value: PropTypes.string,
     hint: PropTypes.string,
-    isAutofocus: PropTypes.bool,
+    value: PropTypes.string,
+    type: PropTypes.string,
+    autoFocus: PropTypes.bool,
     onChange: PropTypes.func
   };
 
   static defaultProps = {
-    type: null,
-    value: '',
     hint: null,
-    isAutofocus: false,
+    type: null,
+    value: null,
+    autoFocus: false,
     onChange: null
   };
 
@@ -75,7 +76,7 @@ class Input extends React.Component {
     cls['mui--is-empty'] = !isNotEmpty;
     cls['mui--is-not-empty'] = isNotEmpty;
     cls['mui--is-dirty'] = this.state.isDirty;
-    cls['mui--is-invalid'] = this.props.isInvalid;
+    cls['mui--is-invalid'] = this.props.invalid;
 
     cls = util.classNames(cls);
 
@@ -86,11 +87,11 @@ class Input extends React.Component {
           className={cls}
           rows={this.props.rows}
           placeholder={this.props.hint}
-          defaultValue={this.props.value}
-          autoFocus={this.props.isAutofocus}
-          onChange={this.onChangeFn}
-          onFocus={this.onFocusFn}
-          required={this.props.isRequired}
+          value={this.state.value}
+          autoFocus={this.props.autoFocus}
+          onChange={this.onChangeCB}
+          onFocus={this.onFocusCB}
+          required={this.props.required}
         />
       );
     } else {
@@ -99,12 +100,12 @@ class Input extends React.Component {
           ref="inputEl"
           className={cls}
           type={this.props.type}
-          defaultValue={this.state.value}
+          value={this.state.value}
           placeholder={this.props.hint}
           autoFocus={this.props.autofocus}
-          onChange={this.onChangeFn}
-          onFocus={this.onFocusFn}
-          required={this.props.isRequired}
+          onChange={this.onChangeCB}
+          onFocus={this.onFocusCB}
+          required={this.props.required}
         />
       );
     }
@@ -171,12 +172,12 @@ class TextField extends React.Component {
 
   static propTypes = {
     label: PropTypes.string,
-    isLabelFloating: PropTypes.bool
+    floatingLabel: PropTypes.bool
   };
 
   static defaultProps = {
     label: '',
-    isLabelFloating: false
+    floatingLabel: false
   };
 
   onClick(ev) {
@@ -201,7 +202,7 @@ class TextField extends React.Component {
     }
 
     cls['mui-textfield'] = true;
-    cls['mui-textfield--float-label'] = this.props.isLabelFloating;
+    cls['mui-textfield--float-label'] = this.props.floatingLabel;
     cls = util.classNames(cls);
 
     return (

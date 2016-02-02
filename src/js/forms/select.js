@@ -326,7 +326,9 @@ Menu.prototype.selectCurrent = function() {
  */
 Menu.prototype.destroy = function() {
   // remove element and focus element
-  this.menuEl.parentNode.removeChild(this.menuEl);
+  var parentNode = this.menuEl.parentNode;
+  if (parentNode) parentNode.removeChild(this.menuEl);
+
   this.selectEl.focus();
 
   // remove scroll lock

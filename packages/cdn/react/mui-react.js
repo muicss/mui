@@ -65,15 +65,15 @@
           if (info.done) {
             resolve(value);
           } else {
-            Promise.resolve(value).then(function (value) {
-              step("next", value);
+            return Promise.resolve(value).then(function (value) {
+              return step("next", value);
             }, function (err) {
-              step("throw", err);
+              return step("throw", err);
             });
           }
         }
 
-        step("next");
+        return step("next");
       });
     };
   };
@@ -1141,15 +1141,16 @@ var Input = function (_React$Component) {
 
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
-    var v = props.value;
+    var value = props.value;
+
     _this.state = {
-      value: v,
-      isDirty: Boolean(v.length)
+      value: value,
+      isDirty: Boolean(value)
     };
 
     var cb = util.callback;
-    _this.onChangeFn = cb(_this, 'onChange');
-    _this.onFocusFn = cb(_this, 'onFocus');
+    _this.onChangeCB = cb(_this, 'onChange');
+    _this.onFocusCB = cb(_this, 'onFocus');
     return _this;
   }
 
@@ -1186,7 +1187,7 @@ var Input = function (_React$Component) {
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
       cls['mui--is-dirty'] = this.state.isDirty;
-      cls['mui--is-invalid'] = this.props.isInvalid;
+      cls['mui--is-invalid'] = this.props.invalid;
 
       cls = util.classNames(cls);
 
@@ -1196,23 +1197,23 @@ var Input = function (_React$Component) {
           className: cls,
           rows: this.props.rows,
           placeholder: this.props.hint,
-          defaultValue: this.props.value,
-          autoFocus: this.props.isAutofocus,
-          onChange: this.onChangeFn,
-          onFocus: this.onFocusFn,
-          required: this.props.isRequired
+          value: this.state.value,
+          autoFocus: this.props.autoFocus,
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
         });
       } else {
         inputEl = _react2.default.createElement('input', {
           ref: 'inputEl',
           className: cls,
           type: this.props.type,
-          defaultValue: this.state.value,
+          value: this.state.value,
           placeholder: this.props.hint,
           autoFocus: this.props.autofocus,
-          onChange: this.onChangeFn,
-          onFocus: this.onFocusFn,
-          required: this.props.isRequired
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
         });
       }
 
@@ -1228,17 +1229,17 @@ var Input = function (_React$Component) {
  */
 
 Input.propTypes = {
-  type: PropTypes.string,
-  value: PropTypes.string,
   hint: PropTypes.string,
-  isAutofocus: PropTypes.bool,
+  value: PropTypes.string,
+  type: PropTypes.string,
+  autoFocus: PropTypes.bool,
   onChange: PropTypes.func
 };
 Input.defaultProps = {
-  type: null,
-  value: '',
   hint: null,
-  isAutofocus: false,
+  type: null,
+  value: null,
+  autoFocus: false,
   onChange: null
 };
 
@@ -1342,7 +1343,7 @@ var TextField = function (_React$Component3) {
       }
 
       cls['mui-textfield'] = true;
-      cls['mui-textfield--float-label'] = this.props.isLabelFloating;
+      cls['mui-textfield--float-label'] = this.props.floatingLabel;
       cls = util.classNames(cls);
 
       return _react2.default.createElement(
@@ -1360,11 +1361,11 @@ var TextField = function (_React$Component3) {
 
 TextField.propTypes = {
   label: PropTypes.string,
-  isLabelFloating: PropTypes.bool
+  floatingLabel: PropTypes.bool
 };
 TextField.defaultProps = {
   label: '',
-  isLabelFloating: false
+  floatingLabel: false
 };
 exports.TextField = TextField;
 
@@ -1492,7 +1493,7 @@ var Button = function (_React$Component) {
           ref: 'buttonEl',
           type: this.props.type,
           className: cls + ' ' + this.props.className,
-          disabled: this.props.isDisabled,
+          disabled: this.props.disabled,
           onClick: this.onClick.bind(this),
           onMouseDown: this.onMouseDown.bind(this),
           style: this.props.style
@@ -1522,20 +1523,20 @@ var Button = function (_React$Component) {
 
 Button.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  disabled: PropTypes.bool,
   size: PropTypes.oneOf(['default', 'small', 'large']),
-  onClick: PropTypes.func,
-  isDisabled: PropTypes.bool,
-  type: PropTypes.oneOf(['submit', 'button'])
+  type: PropTypes.oneOf(['submit', 'button']),
+  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  onClick: PropTypes.func
 };
 Button.defaultProps = {
   className: '',
   color: 'default',
-  variant: 'default',
+  disabled: false,
   size: 'default',
-  onClick: null,
-  isDisabled: false,
-  type: null
+  type: null,
+  variant: 'default',
+  onClick: null
 };
 
 var Ripple = function (_React$Component2) {
@@ -1552,10 +1553,18 @@ var Ripple = function (_React$Component2) {
       var _this3 = this;
 
       // trigger teardown in 2 sec
-      setTimeout(function () {
+      var teardownTimer = setTimeout(function () {
         var fn = _this3.props.onTeardown;
         fn && fn();
       }, 2000);
+
+      this.setState({ teardownTimer: teardownTimer });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear timeout
+      clearTimeout(this.state.teardownTimer);
     }
   }, {
     key: 'render',
@@ -1802,7 +1811,9 @@ var Checkbox = function (_React$Component) {
           _react2.default.createElement('input', {
             type: 'checkbox',
             value: this.props.value,
-            disabled: this.props.isDisabled
+            checked: this.props.checked,
+            defaultChecked: this.props.defaultChecked,
+            disabled: this.props.disabled
           }),
           this.props.label
         )
@@ -1817,13 +1828,17 @@ var Checkbox = function (_React$Component) {
 Checkbox.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-  isDisabled: PropTypes.bool
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 Checkbox.defaultProps = {
   className: '',
   label: null,
   value: null,
-  isDisabled: false
+  checked: null,
+  defaultChecked: null,
+  disabled: false
 };
 exports.default = Checkbox;
 module.exports = exports['default'];
@@ -1957,7 +1972,7 @@ var Container = function (_React$Component) {
       var cls = 'mui-container';
 
       // fluid containers
-      if (this.props.isFluid) cls += '-fluid';
+      if (this.props.fluid) cls += '-fluid';
 
       return _react2.default.createElement(
         'div',
@@ -1975,11 +1990,11 @@ var Container = function (_React$Component) {
 /** Define module API */
 
 Container.propTypes = {
-  isFluid: _react2.default.PropTypes.bool
+  fluid: _react2.default.PropTypes.bool
 };
 Container.defaultProps = {
   className: '',
-  isFluid: false
+  fluid: false
 };
 exports.default = Container;
 module.exports = exports['default'];
@@ -2190,7 +2205,7 @@ var Dropdown = function (_React$Component) {
       if (ev.button !== 0) return;
 
       // exit if toggle button is disabled
-      if (this.props.isDisabled) return;
+      if (this.props.disabled) return;
 
       if (!ev.defaultPrevented) this.toggle();
     }
@@ -2249,7 +2264,7 @@ var Dropdown = function (_React$Component) {
           color: this.props.color,
           variant: this.props.variant,
           size: this.props.size,
-          isDisabled: this.props.isDisabled
+          disabled: this.props.disabled
         },
         this.props.label,
         _react2.default.createElement(_caret2.default, null)
@@ -2299,7 +2314,7 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   alignMenu: PropTypes.oneOf(['left', 'right']),
   onClick: PropTypes.func,
-  isDisabled: PropTypes.bool
+  disabled: PropTypes.bool
 };
 Dropdown.defaultProps = {
   className: '',
@@ -2309,7 +2324,7 @@ Dropdown.defaultProps = {
   label: '',
   alignMenu: 'left',
   onClick: null,
-  isDisabled: false
+  disabled: false
 };
 exports.default = Dropdown;
 module.exports = exports['default'];
@@ -2349,7 +2364,7 @@ var Form = function (_React$Component) {
       var cls = '';
 
       // inline form
-      if (this.props.isInline) cls = 'mui-form--inline';
+      if (this.props.inline) cls = 'mui-form--inline';
 
       return _react2.default.createElement(
         'form',
@@ -2367,11 +2382,11 @@ var Form = function (_React$Component) {
 /** Define module API */
 
 Form.propTypes = {
-  isInline: _react2.default.PropTypes.bool
+  inline: _react2.default.PropTypes.bool
 };
 Form.defaultProps = {
   className: '',
-  isInline: false
+  inline: false
 };
 exports.default = Form;
 module.exports = exports['default'];
@@ -2476,8 +2491,9 @@ var Radio = function (_React$Component) {
             type: 'radio',
             name: this.props.name,
             value: this.props.value,
-            defaultChecked: this.props.isChecked,
-            disabled: this.props.isDisabled
+            checked: this.props.checked,
+            defaultChecked: this.props.defaultChecked,
+            disabled: this.props.disabled
           }),
           this.props.label
         )
@@ -2493,16 +2509,18 @@ Radio.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
-  isChecked: PropTypes.bool,
-  isDisabled: PropTypes.bool
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 Radio.defaultProps = {
   className: '',
   name: null,
   label: null,
   value: null,
-  isChecked: false,
-  isDisabled: false
+  checked: null,
+  defaultChecked: null,
+  disabled: false
 };
 exports.default = Radio;
 module.exports = exports['default'];
@@ -2676,19 +2694,31 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
+    // default value
+
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
-      showMenu: false
+      readOnly: false,
+      showMenu: false,
+      value: null
     };
+    _this.state.readOnly = props.readOnly;
+    _this.state.value = props.value;
 
+    // bind callback function
     var cb = util.callback;
-    _this.hideMenuFn = cb(_this, 'hideMenu');
-    _this.onOuterFocusFn = cb(_this, 'onOuterFocus');
-    _this.onOuterBlurFn = cb(_this, 'onOuterBlur');
-    _this.onMouseDownFn = cb(_this, 'onMouseDown');
-    _this.onClickFn = cb(_this, 'onClick');
-    _this.onInnerFocusFn = cb(_this, 'onInnerFocus');
+    _this.hideMenuCB = cb(_this, 'hideMenu');
+    _this.onInnerClickCB = cb(_this, 'onInnerClick');
+    _this.onInnerFocusCB = cb(_this, 'onInnerFocus');
+    _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
+    _this.onKeydownCB = cb(_this, 'onKeydown');
+    _this.onMenuChangeCB = cb(_this, 'onMenuChange');
+    _this.onOuterFocusCB = cb(_this, 'onOuterFocus');
+    _this.onOuterBlurCB = cb(_this, 'onOuterBlur');
+
+    // only define inner onChange if outer onChange is defined
+    if (props.onChange) _this.onInnerChangeCB = cb(_this, 'onInnerChange');else _this.state.readOnly = true;
     return _this;
   }
 
@@ -2700,27 +2730,46 @@ var Select = function (_React$Component) {
 
       // make wrapper element focusable (to enable Firefox bugfix)
       this.refs.wrapperEl.tabIndex = -1;
+
+      // handle autofocus
+      if (this.props.autoFocus) this.refs.wrapperEl.focus();
     }
   }, {
-    key: 'onMouseDown',
-    value: function onMouseDown(ev) {
+    key: 'onInnerMouseDown',
+    value: function onInnerMouseDown(ev) {
       if (ev.button !== 0 || this.props.useDefault === true) return;
       ev.preventDefault();
     }
   }, {
-    key: 'onClick',
-    value: function onClick(ev) {
+    key: 'onInnerChange',
+    value: function onInnerChange(ev) {
+      if (this.state.readOnly) return;
+
+      var value = ev.target.value;
+      this.setState({ value: value });
+
+      // execute onChange method
+      var fn = this.props.onChange;
+      if (fn) fn(value);
+    }
+  }, {
+    key: 'onInnerClick',
+    value: function onInnerClick(ev) {
       if (ev.button !== 0) return; // only left clicks
       this.showMenu();
     }
   }, {
     key: 'onInnerFocus',
     value: function onInnerFocus(ev) {
+      var _this2 = this;
+
       // check flag
       if (this.props.useDefault === true) return;
 
       // defer focus to parent
-      this.refs.wrapperEl.focus();
+      setTimeout(function () {
+        _this2.refs.wrapperEl.focus();
+      }, 0);
     }
   }, {
     key: 'onOuterFocus',
@@ -2737,7 +2786,7 @@ var Select = function (_React$Component) {
       if (selectEl.disabled) return this.refs.wrapperEl.blur();
 
       // attach keydown handler
-      jqLite.on(document, 'keydown', this.onKeydown);
+      jqLite.on(document, 'keydown', this.onKeydownCB);
     }
   }, {
     key: 'onOuterBlur',
@@ -2750,7 +2799,7 @@ var Select = function (_React$Component) {
       selectEl.tabIndex = selectEl._muiOrigIndex;
 
       // remove keydown handler
-      jqLite.off(document, 'keydown', this.onKeydown);
+      jqLite.off(document, 'keydown', this.onKeydownCB);
     }
   }, {
     key: 'onKeydown',
@@ -2766,12 +2815,15 @@ var Select = function (_React$Component) {
   }, {
     key: 'showMenu',
     value: function showMenu() {
+      // check useDefault flag
+      if (this.props.useDefault === true) return;
+
       // add scroll lock
       util.enableScrollLock();
 
       // add event listeners
-      jqLite.on(window, 'resize', this.hideMenuFn);
-      jqLite.on(document, 'click', this.hideMenuFn);
+      jqLite.on(window, 'resize', this.hideMenuCB);
+      jqLite.on(document, 'click', this.hideMenuCB);
 
       // re-draw
       this.setState({ showMenu: true });
@@ -2783,8 +2835,8 @@ var Select = function (_React$Component) {
       util.disableScrollLock();
 
       // remove event listeners
-      jqLite.off(window, 'resize', this.hideMenuFn);
-      jqLite.off(document, 'click', this.hideMenuFn);
+      jqLite.off(window, 'resize', this.hideMenuCB);
+      jqLite.off(document, 'click', this.hideMenuCB);
 
       // re-draw
       this.setState({ showMenu: false });
@@ -2793,15 +2845,27 @@ var Select = function (_React$Component) {
       this.refs.selectEl.focus();
     }
   }, {
+    key: 'onMenuChange',
+    value: function onMenuChange(value) {
+      if (this.state.readOnly) return;
+
+      this.setState({ value: value });
+
+      // execute onChange method
+      var fn = this.props.onChange;
+      if (fn) fn(value);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var menuElem = undefined;
 
       if (this.state.showMenu) {
         menuElem = _react2.default.createElement(Menu, {
-          selectEl: this.refs.selectEl,
+          optionEls: this.refs.selectEl.children,
           wrapperEl: this.refs.wrapperEl,
-          teardownFn: this.hideMenuFn
+          onChange: this.onMenuChangeCB,
+          onClose: this.hideMenuCB
         });
       }
 
@@ -2811,21 +2875,24 @@ var Select = function (_React$Component) {
           ref: 'wrapperEl',
           className: 'mui-select ' + this.props.className,
           style: this.props.style,
-          onFocus: this.onOuterFocusFn,
-          onBlur: this.onOuterBlurFn
+          onFocus: this.onOuterFocusCB,
+          onBlur: this.onOuterBlurCB
         },
         _react2.default.createElement(
           'select',
           {
             ref: 'selectEl',
             name: this.props.name,
-            autofocus: this.props.isAutofocus,
-            disabled: this.props.isDisabled,
-            multiple: this.props.isMultiple,
-            required: this.props.isRequired,
-            onMouseDown: this.onMouseDownFn,
-            onClick: this.onClickFn,
-            onFocus: this.onInnerFocusFn
+            value: this.state.value,
+            defaultValue: this.props.defaultValue,
+            disabled: this.props.disabled,
+            multiple: this.props.multiple,
+            readOnly: this.props.readOnly,
+            required: this.props.required,
+            onChange: this.onInnerChangeCB,
+            onMouseDown: this.onInnerMouseDownCB,
+            onClick: this.onInnerClickCB,
+            onFocus: this.onInnerFocusCB
           },
           this.props.children
         ),
@@ -2843,20 +2910,26 @@ var Select = function (_React$Component) {
 
 Select.propTypes = {
   name: PropTypes.string,
-  isAutofocus: PropTypes.bool,
-  isDisabled: PropTypes.bool,
-  isMultiple: PropTypes.bool,
-  isRequired: PropTypes.bool,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  disabled: PropTypes.bool,
+  multiple: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  required: PropTypes.bool,
   useDefault: PropTypes.bool,
   onChange: PropTypes.func
 };
 Select.defaultProps = {
   className: '',
   name: null,
-  isAutofocus: false,
-  isDisabled: false,
-  isMultiple: false,
-  isRequired: false,
+  value: null,
+  defaultValue: null,
+  autoFocus: false,
+  disabled: false,
+  multiple: false,
+  readOnly: false,
+  required: false,
   useDefault: false,
   onChange: null
 };
@@ -2867,28 +2940,28 @@ var Menu = function (_React$Component2) {
   function Menu(props) {
     babelHelpers.classCallCheck(this, Menu);
 
-    var _this2 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props));
+    var _this3 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props));
 
-    _this2.state = {
+    _this3.state = {
       origIndex: null,
       currentIndex: null
     };
 
-    _this2.onKeydownCB = util.callback(_this2, 'onKeydown');
-    return _this2;
+    _this3.onKeydownCB = util.callback(_this3, 'onKeydown');
+    return _this3;
   }
 
   babelHelpers.createClass(Menu, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var optionList = this.props.selectEl.children,
-          m = optionList.length,
+      var optionEls = this.props.optionEls,
+          m = optionEls.length,
           selectedPos = 0,
           i = undefined;
 
       // get current selected position
       for (i = m - 1; i > -1; i--) {
-        if (optionList[i].selected) selectedPos = i;
+        if (optionEls[i].selected) selectedPos = i;
       }this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
     }
   }, {
@@ -2901,7 +2974,7 @@ var Menu = function (_React$Component2) {
       }, 0);
 
       // set position
-      var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.selectEl.children.length, this.state.currentIndex);
+      var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.optionEls.length, this.state.currentIndex);
 
       var el = this.refs.wrapperEl;
       jqLite.css(el, props);
@@ -2921,12 +2994,7 @@ var Menu = function (_React$Component2) {
     value: function onClick(pos, ev) {
       // don't allow events to bubble
       ev.stopPropagation();
-
-      // select option
-      this.selectCurrent(pos);
-
-      // destroy menu
-      this.destroy();
+      this.selectAndDestroy(pos);
     }
   }, {
     key: 'onKeydown',
@@ -2941,21 +3009,12 @@ var Menu = function (_React$Component2) {
         ev.preventDefault();
       }
 
-      if (keyCode === 27) {
-        this.destroy();
-      } else if (keyCode === 40) {
-        this.increment();
-      } else if (keyCode === 38) {
-        this.decrement();
-      } else if (keyCode === 13) {
-        this.selectCurrent();
-        this.destroy();
-      }
+      if (keyCode === 27) this.destroy();else if (keyCode === 40) this.increment();else if (keyCode === 38) this.decrement();else if (keyCode === 13) this.selectAndDestroy();
     }
   }, {
     key: 'increment',
     value: function increment() {
-      if (this.state.currentIndex === this.props.selectEl.children.length - 1) {
+      if (this.state.currentIndex === this.props.optionEls.length - 1) {
         return;
       }
 
@@ -2968,28 +3027,30 @@ var Menu = function (_React$Component2) {
       this.setState({ currentIndex: this.state.currentIndex - 1 });
     }
   }, {
-    key: 'selectCurrent',
-    value: function selectCurrent(pos) {
-      var state = this.state,
-          currentIndex = pos === undefined ? state.currentIndex : pos;
+    key: 'selectAndDestroy',
+    value: function selectAndDestroy(pos) {
+      pos = pos === undefined ? this.state.currentIndex : pos;
 
-      if (currentIndex !== state.origIndex) {
-        var optionEls = this.props.selectEl.children;
-        optionEls[state.origIndex].selected = false;
-        optionEls[currentIndex].selected = true;
+      // handle onChange
+      if (pos !== this.state.origIndex) {
+        this.props.onChange(this.props.optionEls[pos].value);
       }
+
+      // close menu
+      this.destroy();
     }
   }, {
     key: 'destroy',
     value: function destroy() {
-      this.props.teardownFn();
+      this.props.onClose();
     }
   }, {
     key: 'render',
     value: function render() {
       var menuItems = [],
-          optionList = this.props.selectEl.children,
-          m = optionList.length,
+          optionEls = this.props.optionEls,
+          m = optionEls.length,
+          optionEl = undefined,
           cls = undefined,
           i = undefined;
 
@@ -3004,7 +3065,7 @@ var Menu = function (_React$Component2) {
             className: cls,
             onClick: this.onClick.bind(this, i)
           },
-          optionList[i].textContent
+          optionEls[i].textContent
         ));
       }
 
@@ -3021,9 +3082,10 @@ var Menu = function (_React$Component2) {
 /** Define module API */
 
 Menu.defaultProps = {
-  selectEl: null,
+  optionEls: [],
   wrapperEl: null,
-  teardownFn: null
+  onChange: null,
+  onClose: null
 };
 exports.default = Select;
 module.exports = exports['default'];
@@ -3138,7 +3200,7 @@ var Tabs = function (_React$Component) {
       }
 
       cls = tabsBarClass;
-      if (this.props.isJustified) cls += ' ' + tabsBarJustifiedClass;
+      if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
 
       return _react2.default.createElement(
         'div',
@@ -3159,13 +3221,13 @@ var Tabs = function (_React$Component) {
 
 Tabs.propTypes = {
   initialSelectedIndex: PropTypes.number,
-  isJustified: PropTypes.bool,
+  justified: PropTypes.bool,
   onChange: PropTypes.func
 };
 Tabs.defaultProps = {
   className: '',
   initialSelectedIndex: 0,
-  isJustified: false,
+  justified: false,
   onChange: null
 };
 exports.default = Tabs;

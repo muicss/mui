@@ -1202,7 +1202,9 @@ Menu.prototype.selectCurrent = function() {
  */
 Menu.prototype.destroy = function() {
   // remove element and focus element
-  this.menuEl.parentNode.removeChild(this.menuEl);
+  var parentNode = this.menuEl.parentNode;
+  if (parentNode) parentNode.removeChild(this.menuEl);
+
   this.selectEl.focus();
 
   // remove scroll lock
@@ -1614,7 +1616,8 @@ function eventHandler(ev) {
   buttonEl.appendChild(rippleEl);
   
   window.setTimeout(function() {
-    buttonEl.removeChild(rippleEl);
+    var parentNode = rippleEl.parentNode;
+    if (parentNode) parentNode.removeChild(rippleEl);
   }, 2000);
 }
 

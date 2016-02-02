@@ -1,5 +1,22 @@
 # MUI Changelog
 
+## 0.4.0
+
+* Made CSS/JS ripple node removal more robust
+* Added value, defaultValue, onChange support to React Select component
+* Changed boolean properties to use React built-in names:
+  * isAutofocus -> autoFocus
+  * isChecked -> checked
+  * isDisabled -> disabled
+  * isRequired -> required
+* Changed other boolean properties to use React-like names:
+  * isFluid -> fluid
+  * isInline -> inline
+  * isInvalid -> invalid
+  * isJustified -> justified
+  * isLabelFloating -> floatingLabel
+* Added support for defaultChecked to React Checkbox and Radio components
+
 ## 0.3.0
 
 * Replaced .mui-textfield--invalid with .mui--is-invalid

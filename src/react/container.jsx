@@ -14,19 +14,19 @@ import React from 'react';
  */
 class Container extends React.Component {
   static propTypes = {
-    isFluid: React.PropTypes.bool
+    fluid: React.PropTypes.bool
   };
 
   static defaultProps = {
     className: '',
-    isFluid: false
+    fluid: false
   };
 
   render() {
     var cls = 'mui-container';
 
     // fluid containers
-    if (this.props.isFluid) cls += '-fluid';
+    if (this.props.fluid) cls += '-fluid';
 
     return (
       <div

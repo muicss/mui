@@ -43,7 +43,7 @@ describe('react/form', function() {
 
 
   it('handles inline option', function() {
-    let result = getShallowRendererOutput(<Form isInline={ true }></Form>);
+    let result = getShallowRendererOutput(<Form inline={ true }></Form>);
 
     assert.equal(result.type, 'form');
     assert.equal(result.props.className, 'mui-form--inline ')

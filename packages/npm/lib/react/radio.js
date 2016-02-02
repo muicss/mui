@@ -45,8 +45,9 @@ var Radio = function (_React$Component) {
             type: 'radio',
             name: this.props.name,
             value: this.props.value,
-            defaultChecked: this.props.isChecked,
-            disabled: this.props.isDisabled
+            checked: this.props.checked,
+            defaultChecked: this.props.defaultChecked,
+            disabled: this.props.disabled
           }),
           this.props.label
         )
@@ -62,16 +63,18 @@ Radio.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
-  isChecked: PropTypes.bool,
-  isDisabled: PropTypes.bool
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 Radio.defaultProps = {
   className: '',
   name: null,
   label: null,
   value: null,
-  isChecked: false,
-  isDisabled: false
+  checked: null,
+  defaultChecked: null,
+  disabled: false
 };
 exports.default = Radio;
 module.exports = exports['default'];

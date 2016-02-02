@@ -39,19 +39,31 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
+    // default value
+
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
-      showMenu: false
+      readOnly: false,
+      showMenu: false,
+      value: null
     };
+    _this.state.readOnly = props.readOnly;
+    _this.state.value = props.value;
 
+    // bind callback function
     var cb = util.callback;
-    _this.hideMenuFn = cb(_this, 'hideMenu');
-    _this.onOuterFocusFn = cb(_this, 'onOuterFocus');
-    _this.onOuterBlurFn = cb(_this, 'onOuterBlur');
-    _this.onMouseDownFn = cb(_this, 'onMouseDown');
-    _this.onClickFn = cb(_this, 'onClick');
-    _this.onInnerFocusFn = cb(_this, 'onInnerFocus');
+    _this.hideMenuCB = cb(_this, 'hideMenu');
+    _this.onInnerClickCB = cb(_this, 'onInnerClick');
+    _this.onInnerFocusCB = cb(_this, 'onInnerFocus');
+    _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
+    _this.onKeydownCB = cb(_this, 'onKeydown');
+    _this.onMenuChangeCB = cb(_this, 'onMenuChange');
+    _this.onOuterFocusCB = cb(_this, 'onOuterFocus');
+    _this.onOuterBlurCB = cb(_this, 'onOuterBlur');
+
+    // only define inner onChange if outer onChange is defined
+    if (props.onChange) _this.onInnerChangeCB = cb(_this, 'onInnerChange');else _this.state.readOnly = true;
     return _this;
   }
 
@@ -63,27 +75,46 @@ var Select = function (_React$Component) {
 
       // make wrapper element focusable (to enable Firefox bugfix)
       this.refs.wrapperEl.tabIndex = -1;
+
+      // handle autofocus
+      if (this.props.autoFocus) this.refs.wrapperEl.focus();
     }
   }, {
-    key: 'onMouseDown',
-    value: function onMouseDown(ev) {
+    key: 'onInnerMouseDown',
+    value: function onInnerMouseDown(ev) {
       if (ev.button !== 0 || this.props.useDefault === true) return;
       ev.preventDefault();
     }
   }, {
-    key: 'onClick',
-    value: function onClick(ev) {
+    key: 'onInnerChange',
+    value: function onInnerChange(ev) {
+      if (this.state.readOnly) return;
+
+      var value = ev.target.value;
+      this.setState({ value: value });
+
+      // execute onChange method
+      var fn = this.props.onChange;
+      if (fn) fn(value);
+    }
+  }, {
+    key: 'onInnerClick',
+    value: function onInnerClick(ev) {
       if (ev.button !== 0) return; // only left clicks
       this.showMenu();
     }
   }, {
     key: 'onInnerFocus',
     value: function onInnerFocus(ev) {
+      var _this2 = this;
+
       // check flag
       if (this.props.useDefault === true) return;
 
       // defer focus to parent
-      this.refs.wrapperEl.focus();
+      setTimeout(function () {
+        _this2.refs.wrapperEl.focus();
+      }, 0);
     }
   }, {
     key: 'onOuterFocus',
@@ -100,7 +131,7 @@ var Select = function (_React$Component) {
       if (selectEl.disabled) return this.refs.wrapperEl.blur();
 
       // attach keydown handler
-      jqLite.on(document, 'keydown', this.onKeydown);
+      jqLite.on(document, 'keydown', this.onKeydownCB);
     }
   }, {
     key: 'onOuterBlur',
@@ -113,7 +144,7 @@ var Select = function (_React$Component) {
       selectEl.tabIndex = selectEl._muiOrigIndex;
 
       // remove keydown handler
-      jqLite.off(document, 'keydown', this.onKeydown);
+      jqLite.off(document, 'keydown', this.onKeydownCB);
     }
   }, {
     key: 'onKeydown',
@@ -129,12 +160,15 @@ var Select = function (_React$Component) {
   }, {
     key: 'showMenu',
     value: function showMenu() {
+      // check useDefault flag
+      if (this.props.useDefault === true) return;
+
       // add scroll lock
       util.enableScrollLock();
 
       // add event listeners
-      jqLite.on(window, 'resize', this.hideMenuFn);
-      jqLite.on(document, 'click', this.hideMenuFn);
+      jqLite.on(window, 'resize', this.hideMenuCB);
+      jqLite.on(document, 'click', this.hideMenuCB);
 
       // re-draw
       this.setState({ showMenu: true });
@@ -146,8 +180,8 @@ var Select = function (_React$Component) {
       util.disableScrollLock();
 
       // remove event listeners
-      jqLite.off(window, 'resize', this.hideMenuFn);
-      jqLite.off(document, 'click', this.hideMenuFn);
+      jqLite.off(window, 'resize', this.hideMenuCB);
+      jqLite.off(document, 'click', this.hideMenuCB);
 
       // re-draw
       this.setState({ showMenu: false });
@@ -156,15 +190,27 @@ var Select = function (_React$Component) {
       this.refs.selectEl.focus();
     }
   }, {
+    key: 'onMenuChange',
+    value: function onMenuChange(value) {
+      if (this.state.readOnly) return;
+
+      this.setState({ value: value });
+
+      // execute onChange method
+      var fn = this.props.onChange;
+      if (fn) fn(value);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var menuElem = undefined;
 
       if (this.state.showMenu) {
         menuElem = _react2.default.createElement(Menu, {
-          selectEl: this.refs.selectEl,
+          optionEls: this.refs.selectEl.children,
           wrapperEl: this.refs.wrapperEl,
-          teardownFn: this.hideMenuFn
+          onChange: this.onMenuChangeCB,
+          onClose: this.hideMenuCB
         });
       }
 
@@ -174,21 +220,24 @@ var Select = function (_React$Component) {
           ref: 'wrapperEl',
           className: 'mui-select ' + this.props.className,
           style: this.props.style,
-          onFocus: this.onOuterFocusFn,
-          onBlur: this.onOuterBlurFn
+          onFocus: this.onOuterFocusCB,
+          onBlur: this.onOuterBlurCB
         },
         _react2.default.createElement(
           'select',
           {
             ref: 'selectEl',
             name: this.props.name,
-            autofocus: this.props.isAutofocus,
-            disabled: this.props.isDisabled,
-            multiple: this.props.isMultiple,
-            required: this.props.isRequired,
-            onMouseDown: this.onMouseDownFn,
-            onClick: this.onClickFn,
-            onFocus: this.onInnerFocusFn
+            value: this.state.value,
+            defaultValue: this.props.defaultValue,
+            disabled: this.props.disabled,
+            multiple: this.props.multiple,
+            readOnly: this.props.readOnly,
+            required: this.props.required,
+            onChange: this.onInnerChangeCB,
+            onMouseDown: this.onInnerMouseDownCB,
+            onClick: this.onInnerClickCB,
+            onFocus: this.onInnerFocusCB
           },
           this.props.children
         ),
@@ -206,20 +255,26 @@ var Select = function (_React$Component) {
 
 Select.propTypes = {
   name: PropTypes.string,
-  isAutofocus: PropTypes.bool,
-  isDisabled: PropTypes.bool,
-  isMultiple: PropTypes.bool,
-  isRequired: PropTypes.bool,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  disabled: PropTypes.bool,
+  multiple: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  required: PropTypes.bool,
   useDefault: PropTypes.bool,
   onChange: PropTypes.func
 };
 Select.defaultProps = {
   className: '',
   name: null,
-  isAutofocus: false,
-  isDisabled: false,
-  isMultiple: false,
-  isRequired: false,
+  value: null,
+  defaultValue: null,
+  autoFocus: false,
+  disabled: false,
+  multiple: false,
+  readOnly: false,
+  required: false,
   useDefault: false,
   onChange: null
 };
@@ -230,28 +285,28 @@ var Menu = function (_React$Component2) {
   function Menu(props) {
     babelHelpers.classCallCheck(this, Menu);
 
-    var _this2 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props));
+    var _this3 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props));
 
-    _this2.state = {
+    _this3.state = {
       origIndex: null,
       currentIndex: null
     };
 
-    _this2.onKeydownCB = util.callback(_this2, 'onKeydown');
-    return _this2;
+    _this3.onKeydownCB = util.callback(_this3, 'onKeydown');
+    return _this3;
   }
 
   babelHelpers.createClass(Menu, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var optionList = this.props.selectEl.children,
-          m = optionList.length,
+      var optionEls = this.props.optionEls,
+          m = optionEls.length,
           selectedPos = 0,
           i = undefined;
 
       // get current selected position
       for (i = m - 1; i > -1; i--) {
-        if (optionList[i].selected) selectedPos = i;
+        if (optionEls[i].selected) selectedPos = i;
       }this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
     }
   }, {
@@ -264,7 +319,7 @@ var Menu = function (_React$Component2) {
       }, 0);
 
       // set position
-      var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.selectEl.children.length, this.state.currentIndex);
+      var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.optionEls.length, this.state.currentIndex);
 
       var el = this.refs.wrapperEl;
       jqLite.css(el, props);
@@ -284,12 +339,7 @@ var Menu = function (_React$Component2) {
     value: function onClick(pos, ev) {
       // don't allow events to bubble
       ev.stopPropagation();
-
-      // select option
-      this.selectCurrent(pos);
-
-      // destroy menu
-      this.destroy();
+      this.selectAndDestroy(pos);
     }
   }, {
     key: 'onKeydown',
@@ -304,21 +354,12 @@ var Menu = function (_React$Component2) {
         ev.preventDefault();
       }
 
-      if (keyCode === 27) {
-        this.destroy();
-      } else if (keyCode === 40) {
-        this.increment();
-      } else if (keyCode === 38) {
-        this.decrement();
-      } else if (keyCode === 13) {
-        this.selectCurrent();
-        this.destroy();
-      }
+      if (keyCode === 27) this.destroy();else if (keyCode === 40) this.increment();else if (keyCode === 38) this.decrement();else if (keyCode === 13) this.selectAndDestroy();
     }
   }, {
     key: 'increment',
     value: function increment() {
-      if (this.state.currentIndex === this.props.selectEl.children.length - 1) {
+      if (this.state.currentIndex === this.props.optionEls.length - 1) {
         return;
       }
 
@@ -331,28 +372,30 @@ var Menu = function (_React$Component2) {
       this.setState({ currentIndex: this.state.currentIndex - 1 });
     }
   }, {
-    key: 'selectCurrent',
-    value: function selectCurrent(pos) {
-      var state = this.state,
-          currentIndex = pos === undefined ? state.currentIndex : pos;
+    key: 'selectAndDestroy',
+    value: function selectAndDestroy(pos) {
+      pos = pos === undefined ? this.state.currentIndex : pos;
 
-      if (currentIndex !== state.origIndex) {
-        var optionEls = this.props.selectEl.children;
-        optionEls[state.origIndex].selected = false;
-        optionEls[currentIndex].selected = true;
+      // handle onChange
+      if (pos !== this.state.origIndex) {
+        this.props.onChange(this.props.optionEls[pos].value);
       }
+
+      // close menu
+      this.destroy();
     }
   }, {
     key: 'destroy',
     value: function destroy() {
-      this.props.teardownFn();
+      this.props.onClose();
     }
   }, {
     key: 'render',
     value: function render() {
       var menuItems = [],
-          optionList = this.props.selectEl.children,
-          m = optionList.length,
+          optionEls = this.props.optionEls,
+          m = optionEls.length,
+          optionEl = undefined,
           cls = undefined,
           i = undefined;
 
@@ -367,7 +410,7 @@ var Menu = function (_React$Component2) {
             className: cls,
             onClick: this.onClick.bind(this, i)
           },
-          optionList[i].textContent
+          optionEls[i].textContent
         ));
       }
 
@@ -384,9 +427,10 @@ var Menu = function (_React$Component2) {
 /** Define module API */
 
 Menu.defaultProps = {
-  selectEl: null,
+  optionEls: [],
   wrapperEl: null,
-  teardownFn: null
+  onChange: null,
+  onClose: null
 };
 exports.default = Select;
 module.exports = exports['default'];

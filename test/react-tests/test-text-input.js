@@ -14,10 +14,10 @@ import TextareaInput from '../../src/react/textarea-input';
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/textinput', function() {
+describe('react/text-input', function() {
   it('renders wrapper properly', function() {
-    let node = ReactUtils.renderIntoDocument(<TextInput></TextInput>);
-    let wrapperEl = ReactDOM.findDOMNode(node);
+    let instance = ReactUtils.renderIntoDocument(<TextInput></TextInput>);
+    let wrapperEl = ReactDOM.findDOMNode(instance);
 
     assert.equal(wrapperEl.tagName, 'DIV');
     assert.equal(wrapperEl.className, 'mui-textfield');
@@ -26,16 +26,18 @@ describe('react/textinput', function() {
   
   it('renders native input element', function() {
     let elem = <TextInput value="my input"></TextInput>;
-    let node = ReactUtils.renderIntoDocument(elem);
-    let inputEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'input');
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let inputEl = ReactUtils
+      .findRenderedDOMComponentWithTag(instance, 'input');
 
     assert.equal(inputEl.value, 'my input');
   });
 
   
   it('adds dirty class on focus', function() {
-    let node = ReactUtils.renderIntoDocument(<TextInput></TextInput>);
-    let inputEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'input');
+    let instance = ReactUtils.renderIntoDocument(<TextInput></TextInput>);
+    let inputEl = ReactUtils
+      .findRenderedDOMComponentWithTag(instance, 'input');
     
     // starts with empty class
     assert.equal(inputEl.className, 'mui--is-empty');
@@ -52,7 +54,7 @@ describe('react/textinput', function() {
 });
 
 
-describe('react/textareainput', function() {
+describe('react/textarea-input', function() {
   let elem;
 
 
@@ -62,8 +64,8 @@ describe('react/textareainput', function() {
 
 
   it('renders wrapper properly', function() {
-    let node = ReactUtils.renderIntoDocument(elem);
-    let wrapperEl = ReactDOM.findDOMNode(node);
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let wrapperEl = ReactDOM.findDOMNode(instance);
 
     assert.equal(wrapperEl.tagName, 'DIV');
     assert.equal(wrapperEl.className, 'mui-textfield');
@@ -71,10 +73,10 @@ describe('react/textareainput', function() {
 
 
   it('renders native textarea element', function() {
-    let node = ReactUtils.renderIntoDocument(elem);
+    let instance = ReactUtils.renderIntoDocument(elem);
 
     let fn = ReactUtils.findRenderedDOMComponentWithTag;
-    let textareaEl = fn(node, 'textarea');
+    let textareaEl = fn(instance, 'textarea');
 
     assert.equal(textareaEl.textContent, 'my input');
   });

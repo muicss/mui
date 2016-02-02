@@ -80,7 +80,8 @@ function eventHandler(ev) {
   buttonEl.appendChild(rippleEl);
   
   window.setTimeout(function() {
-    buttonEl.removeChild(rippleEl);
+    var parentNode = rippleEl.parentNode;
+    if (parentNode) parentNode.removeChild(rippleEl);
   }, 2000);
 }
 

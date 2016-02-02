@@ -33,7 +33,7 @@ var Container = function (_React$Component) {
       var cls = 'mui-container';
 
       // fluid containers
-      if (this.props.isFluid) cls += '-fluid';
+      if (this.props.fluid) cls += '-fluid';
 
       return _react2.default.createElement(
         'div',
@@ -51,11 +51,11 @@ var Container = function (_React$Component) {
 /** Define module API */
 
 Container.propTypes = {
-  isFluid: _react2.default.PropTypes.bool
+  fluid: _react2.default.PropTypes.bool
 };
 Container.defaultProps = {
   className: '',
-  isFluid: false
+  fluid: false
 };
 exports.default = Container;
 module.exports = exports['default'];

@@ -48,7 +48,7 @@ class Dropdown extends React.Component {
     label: PropTypes.string,
     alignMenu: PropTypes.oneOf(['left', 'right']),
     onClick: PropTypes.func,
-    isDisabled: PropTypes.bool
+    disabled: PropTypes.bool
   };
 
   static defaultProps = {
@@ -59,7 +59,7 @@ class Dropdown extends React.Component {
     label: '',
     alignMenu: 'left',
     onClick: null,
-    isDisabled: false
+    disabled: false
   };
 
   componentWillMount() {
@@ -75,7 +75,7 @@ class Dropdown extends React.Component {
     if (ev.button !== 0) return;
 
     // exit if toggle button is disabled
-    if (this.props.isDisabled) return;
+    if (this.props.disabled) return;
 
     if (!ev.defaultPrevented) this.toggle();
   }
@@ -118,7 +118,7 @@ class Dropdown extends React.Component {
 
   render() {
     let buttonEl,
-        menuEl
+        menuEl;
 
     buttonEl = (
       <Button
@@ -128,7 +128,7 @@ class Dropdown extends React.Component {
         color={this.props.color}
         variant={this.props.variant}
         size={this.props.size}
-        isDisabled={this.props.isDisabled}
+        disabled={this.props.disabled}
       >
         {this.props.label}
         <Caret />

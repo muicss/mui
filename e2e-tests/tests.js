@@ -1144,13 +1144,20 @@ function hasOwnProperty(obj, prop) {
   require('../test/react-tests/test-button');
   require('../test/react-tests/test-caret');
   require('../test/react-tests/test-checkbox');
+  require('../test/react-tests/test-col');
   require('../test/react-tests/test-container');
   require('../test/react-tests/test-divider');
   require('../test/react-tests/test-dropdown');
+  require('../test/react-tests/test-form');
   require('../test/react-tests/test-panel');
+  require('../test/react-tests/test-radio');
+  require('../test/react-tests/test-row');
+  require('../test/react-tests/test-select');
+  require('../test/react-tests/test-tabs');
+  require('../test/react-tests/test-text-input');
 })();
 
-},{"../test/cssjs-tests/test-jqlite":181,"../test/cssjs-tests/test-util":182,"../test/react-tests/test-appbar":184,"../test/react-tests/test-button":185,"../test/react-tests/test-caret":186,"../test/react-tests/test-checkbox":187,"../test/react-tests/test-container":188,"../test/react-tests/test-divider":189,"../test/react-tests/test-dropdown":190,"../test/react-tests/test-panel":191}],7:[function(require,module,exports){
+},{"../test/cssjs-tests/test-jqlite":193,"../test/cssjs-tests/test-util":194,"../test/react-tests/test-appbar":196,"../test/react-tests/test-button":197,"../test/react-tests/test-caret":198,"../test/react-tests/test-checkbox":199,"../test/react-tests/test-col":200,"../test/react-tests/test-container":201,"../test/react-tests/test-divider":202,"../test/react-tests/test-dropdown":203,"../test/react-tests/test-form":204,"../test/react-tests/test-panel":205,"../test/react-tests/test-radio":206,"../test/react-tests/test-row":207,"../test/react-tests/test-select":208,"../test/react-tests/test-tabs":209,"../test/react-tests/test-text-input":210}],7:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10180,7 +10187,10 @@ var ReactDOMOption = {
       }
     });
 
-    nativeProps.children = content;
+    if (content) {
+      nativeProps.children = content;
+    }
+
     return nativeProps;
   }
 
@@ -16193,10 +16203,14 @@ ReactShallowRenderer.prototype.render = function (element, context) {
   if (!context) {
     context = emptyObject;
   }
-  var transaction = ReactUpdates.ReactReconcileTransaction.getPooled(false);
-  this._render(element, transaction, context);
-  ReactUpdates.ReactReconcileTransaction.release(transaction);
+  ReactUpdates.batchedUpdates(_batchedRender, this, element, context);
 };
+
+function _batchedRender(renderer, element, context) {
+  var transaction = ReactUpdates.ReactReconcileTransaction.getPooled(false);
+  renderer._render(element, transaction, context);
+  ReactUpdates.ReactReconcileTransaction.release(transaction);
+}
 
 ReactShallowRenderer.prototype.unmount = function () {
   if (this._instance) {
@@ -16825,7 +16839,7 @@ module.exports = ReactUpdates;
 
 'use strict';
 
-module.exports = '0.14.6';
+module.exports = '0.14.7';
 },{}],121:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17920,6 +17934,7 @@ var warning = require('fbjs/lib/warning');
  */
 var EventInterface = {
   type: null,
+  target: null,
   // currentTarget is set when dispatching; no use in copying it here
   currentTarget: emptyFunction.thatReturnsNull,
   eventPhase: null,
@@ -17953,8 +17968,6 @@ function SyntheticEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEvent
   this.dispatchConfig = dispatchConfig;
   this.dispatchMarker = dispatchMarker;
   this.nativeEvent = nativeEvent;
-  this.target = nativeEventTarget;
-  this.currentTarget = nativeEventTarget;
 
   var Interface = this.constructor.Interface;
   for (var propName in Interface) {
@@ -17965,7 +17978,11 @@ function SyntheticEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEvent
     if (normalize) {
       this[propName] = normalize(nativeEvent);
     } else {
-      this[propName] = nativeEvent[propName];
+      if (propName === 'target') {
+        this.target = nativeEventTarget;
+      } else {
+        this[propName] = nativeEvent[propName];
+      }
     }
   }
 
@@ -20817,6 +20834,67 @@ module.exports = {
 
 },{}],170:[function(require,module,exports){
 /**
+ * MUI CSS/JS form helpers module
+ * @module lib/forms.py
+ */
+
+'use strict';
+
+var wrapperPadding = 15,
+    // from CSS
+inputHeight = 32,
+    // from CSS
+optionHeight = 42,
+    // from CSS
+menuPadding = 8; // from CSS
+
+/**
+ * Menu position/size/scroll helper
+ * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
+ */
+function getMenuPositionalCSSFn(wrapperEl, numOptions, currentIndex) {
+  var viewHeight = document.documentElement.clientHeight;
+
+  // determine 'height'
+  var h = numOptions * optionHeight + 2 * menuPadding,
+      height = Math.min(h, viewHeight);
+
+  // determine 'top'
+  var top, initTop, minTop, maxTop;
+
+  initTop = menuPadding + optionHeight - (wrapperPadding + inputHeight);
+  initTop -= currentIndex * optionHeight;
+
+  minTop = -1 * wrapperEl.getBoundingClientRect().top;
+  maxTop = viewHeight - height + minTop;
+
+  top = Math.min(Math.max(initTop, minTop), maxTop);
+
+  // determine 'scrollTop'
+  var scrollTop = 0,
+      scrollIdeal,
+      scrollMax;
+
+  if (h > viewHeight) {
+    scrollIdeal = menuPadding + (currentIndex + 1) * optionHeight - (-1 * top + wrapperPadding + inputHeight);
+    scrollMax = numOptions * optionHeight + 2 * menuPadding - height;
+    scrollTop = Math.min(scrollIdeal, scrollMax);
+  }
+
+  return {
+    'height': height + 'px',
+    'top': top + 'px',
+    'scrollTop': scrollTop
+  };
+}
+
+/** Define module API */
+module.exports = {
+  getMenuPositionalCSS: getMenuPositionalCSSFn
+};
+
+},{}],171:[function(require,module,exports){
+/**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
  */
@@ -21202,7 +21280,7 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-},{}],171:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -21435,7 +21513,271 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config":169,"./jqLite":170}],172:[function(require,module,exports){
+},{"../config":169,"./jqLite":171}],173:[function(require,module,exports){
+/**
+ * MUI React TextInput Component
+ * @module react/text-input
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TextField = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Input constructor
+ * @class
+ */
+
+var Input = function (_React$Component) {
+  babelHelpers.inherits(Input, _React$Component);
+
+  function Input(props) {
+    babelHelpers.classCallCheck(this, Input);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+
+    var value = props.value;
+
+    _this.state = {
+      value: value,
+      isDirty: Boolean(value)
+    };
+
+    var cb = util.callback;
+    _this.onChangeCB = cb(_this, 'onChange');
+    _this.onFocusCB = cb(_this, 'onFocus');
+    return _this;
+  }
+
+  babelHelpers.createClass(Input, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      this.refs.inputEl._muiTextfield = true;
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(ev) {
+      this.setState({ value: ev.target.value });
+      if (this.props.onChange) this.props.onChange(ev);
+    }
+  }, {
+    key: 'onFocus',
+    value: function onFocus(ev) {
+      this.setState({ isDirty: true });
+    }
+  }, {
+    key: 'triggerFocus',
+    value: function triggerFocus() {
+      // hack to enable IE10 pointer-events shim
+      this.refs.inputEl.focus();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var cls = {},
+          isNotEmpty = Boolean(this.state.value),
+          inputEl = undefined;
+
+      cls['mui--is-empty'] = !isNotEmpty;
+      cls['mui--is-not-empty'] = isNotEmpty;
+      cls['mui--is-dirty'] = this.state.isDirty;
+      cls['mui--is-invalid'] = this.props.invalid;
+
+      cls = util.classNames(cls);
+
+      if (this.props.type === 'textarea') {
+        inputEl = _react2.default.createElement('textarea', {
+          ref: 'inputEl',
+          className: cls,
+          rows: this.props.rows,
+          placeholder: this.props.hint,
+          value: this.state.value,
+          autoFocus: this.props.autoFocus,
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
+        });
+      } else {
+        inputEl = _react2.default.createElement('input', {
+          ref: 'inputEl',
+          className: cls,
+          type: this.props.type,
+          value: this.state.value,
+          placeholder: this.props.hint,
+          autoFocus: this.props.autofocus,
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
+        });
+      }
+
+      return inputEl;
+    }
+  }]);
+  return Input;
+}(_react2.default.Component);
+
+/**
+ * Label constructor
+ * @class
+ */
+
+Input.propTypes = {
+  hint: PropTypes.string,
+  value: PropTypes.string,
+  type: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  onChange: PropTypes.func
+};
+Input.defaultProps = {
+  hint: null,
+  type: null,
+  value: null,
+  autoFocus: false,
+  onChange: null
+};
+
+var Label = function (_React$Component2) {
+  babelHelpers.inherits(Label, _React$Component2);
+
+  function Label() {
+    var _Object$getPrototypeO;
+
+    var _temp, _this2, _ret;
+
+    babelHelpers.classCallCheck(this, Label);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Label)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this2), _this2.state = {
+      style: {}
+    }, _temp), babelHelpers.possibleConstructorReturn(_this2, _ret);
+  }
+
+  babelHelpers.createClass(Label, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      setTimeout(function () {
+        var s = '.15s ease-out';
+        var style = undefined;
+
+        style = {
+          transition: s,
+          WebkitTransition: s,
+          MozTransition: s,
+          OTransition: s,
+          msTransform: s
+        };
+
+        _this3.setState({ style: style });
+      }, 150);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'label',
+        {
+          style: this.state.style,
+          onClick: this.props.onClick
+        },
+        this.props.text
+      );
+    }
+  }]);
+  return Label;
+}(_react2.default.Component);
+
+/**
+ * TextField constructor
+ * @class
+ */
+
+Label.defaultProps = {
+  text: '',
+  onClick: null
+};
+
+var TextField = function (_React$Component3) {
+  babelHelpers.inherits(TextField, _React$Component3);
+
+  function TextField(props) {
+    babelHelpers.classCallCheck(this, TextField);
+
+    var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextField).call(this, props));
+
+    _this4.onClickCB = util.callback(_this4, 'onClick');
+    return _this4;
+  }
+
+  babelHelpers.createClass(TextField, [{
+    key: 'onClick',
+    value: function onClick(ev) {
+      // pointer-events shim
+      if (util.supportsPointerEvents() === false) {
+        ev.target.style.cursor = 'text';
+        this.refs.inputEl.triggerFocus();
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var cls = {},
+          labelEl = undefined;
+
+      if (this.props.label.length) {
+        labelEl = _react2.default.createElement(Label, {
+          text: this.props.label,
+          onClick: this.onClickCB
+        });
+      }
+
+      cls['mui-textfield'] = true;
+      cls['mui-textfield--float-label'] = this.props.floatingLabel;
+      cls = util.classNames(cls);
+
+      return _react2.default.createElement(
+        'div',
+        { className: cls },
+        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, this.props)),
+        labelEl
+      );
+    }
+  }]);
+  return TextField;
+}(_react2.default.Component);
+
+/** Define module API */
+
+TextField.propTypes = {
+  label: PropTypes.string,
+  floatingLabel: PropTypes.bool
+};
+TextField.defaultProps = {
+  label: '',
+  floatingLabel: false
+};
+exports.TextField = TextField;
+
+},{"../js/lib/util":172,"react":165}],174:[function(require,module,exports){
 /**
  * MUI React Appbar Module
  * @module react/appbar
@@ -21488,7 +21830,7 @@ Appbar.defaultProps = {
 exports.default = Appbar;
 module.exports = exports['default'];
 
-},{"react":165}],173:[function(require,module,exports){
+},{"react":165}],175:[function(require,module,exports){
 /**
  * MUI React button module
  * @module react/button
@@ -21612,7 +21954,7 @@ var Button = function (_React$Component) {
           ref: 'buttonEl',
           type: this.props.type,
           className: cls + ' ' + this.props.className,
-          disabled: this.props.isDisabled,
+          disabled: this.props.disabled,
           onClick: this.onClick.bind(this),
           onMouseDown: this.onMouseDown.bind(this),
           style: this.props.style
@@ -21642,20 +21984,20 @@ var Button = function (_React$Component) {
 
 Button.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  disabled: PropTypes.bool,
   size: PropTypes.oneOf(['default', 'small', 'large']),
-  onClick: PropTypes.func,
-  isDisabled: PropTypes.bool,
-  type: PropTypes.oneOf(['submit', 'button'])
+  type: PropTypes.oneOf(['submit', 'button']),
+  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  onClick: PropTypes.func
 };
 Button.defaultProps = {
   className: '',
   color: 'default',
-  variant: 'default',
+  disabled: false,
   size: 'default',
-  onClick: null,
-  isDisabled: false,
-  type: null
+  type: null,
+  variant: 'default',
+  onClick: null
 };
 
 var Ripple = function (_React$Component2) {
@@ -21672,10 +22014,18 @@ var Ripple = function (_React$Component2) {
       var _this3 = this;
 
       // trigger teardown in 2 sec
-      setTimeout(function () {
+      var teardownTimer = setTimeout(function () {
         var fn = _this3.props.onTeardown;
         fn && fn();
       }, 2000);
+
+      this.setState({ teardownTimer: teardownTimer });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear timeout
+      clearTimeout(this.state.teardownTimer);
     }
   }, {
     key: 'render',
@@ -21713,7 +22063,7 @@ Ripple.defaultProps = {
 exports.default = Button;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":170,"../js/lib/util":171,"react":165}],174:[function(require,module,exports){
+},{"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],176:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
@@ -21762,7 +22112,7 @@ Caret.defaultProps = {
 exports.default = Caret;
 module.exports = exports['default'];
 
-},{"react":165}],175:[function(require,module,exports){
+},{"react":165}],177:[function(require,module,exports){
 /**
  * MUI React checkbox module
  * @module react/checkbox
@@ -21808,7 +22158,9 @@ var Checkbox = function (_React$Component) {
           _react2.default.createElement('input', {
             type: 'checkbox',
             value: this.props.value,
-            disabled: this.props.isDisabled
+            checked: this.props.checked,
+            defaultChecked: this.props.defaultChecked,
+            disabled: this.props.disabled
           }),
           this.props.label
         )
@@ -21823,18 +22175,116 @@ var Checkbox = function (_React$Component) {
 Checkbox.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-  isDisabled: PropTypes.bool
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 Checkbox.defaultProps = {
   className: '',
   label: null,
   value: null,
-  isDisabled: false
+  checked: null,
+  defaultChecked: null,
+  disabled: false
 };
 exports.default = Checkbox;
 module.exports = exports['default'];
 
-},{"react":165}],176:[function(require,module,exports){
+},{"react":165}],178:[function(require,module,exports){
+/**
+ * MUI React Col Component
+ * @module react/col
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
+
+/**
+ * Col constructor
+ * @class
+ */
+
+var Col = function (_React$Component) {
+  babelHelpers.inherits(Col, _React$Component);
+
+  function Col() {
+    babelHelpers.classCallCheck(this, Col);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Col).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Col, [{
+    key: 'defaultProps',
+    value: function defaultProps() {
+      var props = { className: '' },
+          i = undefined,
+          v = undefined;
+
+      // add {breakpoint}, {breakpoint}-offset to props
+      for (i = breakpoints.length - 1; i > -1; i--) {
+        v = breakpoints[i];
+        props[v] = null;
+        props[v + '-offset'] = null;
+      }
+
+      return props;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var cls = {},
+          i = undefined,
+          bk = undefined,
+          val = undefined,
+          baseCls = undefined;
+
+      // add mui-col classes
+      for (i = breakpoints.length - 1; i > -1; i--) {
+        bk = breakpoints[i];
+        baseCls = 'mui-col-' + bk;
+
+        // add mui-col-{bk}-{val}
+        val = this.props[bk];
+        if (val) cls[baseCls + '-' + val] = true;
+
+        // add mui-col-{bk}-offset-{val}
+        val = this.props[bk + '-offset'];
+        if (val) cls[baseCls + '-offset-' + val] = true;
+      }
+
+      cls = util.classNames(cls);
+
+      return _react2.default.createElement(
+        'div',
+        {
+          className: cls + ' ' + this.props.className,
+          style: this.props.style
+        },
+        this.props.children
+      );
+    }
+  }]);
+  return Col;
+}(_react2.default.Component);
+
+/** Define module API */
+
+exports.default = Col;
+module.exports = exports['default'];
+
+},{"../js/lib/util":172,"react":165}],179:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
@@ -21869,7 +22319,7 @@ var Container = function (_React$Component) {
       var cls = 'mui-container';
 
       // fluid containers
-      if (this.props.isFluid) cls += '-fluid';
+      if (this.props.fluid) cls += '-fluid';
 
       return _react2.default.createElement(
         'div',
@@ -21887,16 +22337,16 @@ var Container = function (_React$Component) {
 /** Define module API */
 
 Container.propTypes = {
-  isFluid: _react2.default.PropTypes.bool
+  fluid: _react2.default.PropTypes.bool
 };
 Container.defaultProps = {
   className: '',
-  isFluid: false
+  fluid: false
 };
 exports.default = Container;
 module.exports = exports['default'];
 
-},{"react":165}],177:[function(require,module,exports){
+},{"react":165}],180:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -21945,7 +22395,7 @@ Divider.defaultProps = {
 exports.default = Divider;
 module.exports = exports['default'];
 
-},{"react":165}],178:[function(require,module,exports){
+},{"react":165}],181:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -22021,7 +22471,7 @@ DropdownItem.defaultProps = {
 exports.default = DropdownItem;
 module.exports = exports['default'];
 
-},{"../js/lib/util":171,"react":165}],179:[function(require,module,exports){
+},{"../js/lib/util":172,"react":165}],182:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -22102,7 +22552,7 @@ var Dropdown = function (_React$Component) {
       if (ev.button !== 0) return;
 
       // exit if toggle button is disabled
-      if (this.props.isDisabled) return;
+      if (this.props.disabled) return;
 
       if (!ev.defaultPrevented) this.toggle();
     }
@@ -22161,7 +22611,7 @@ var Dropdown = function (_React$Component) {
           color: this.props.color,
           variant: this.props.variant,
           size: this.props.size,
-          isDisabled: this.props.isDisabled
+          disabled: this.props.disabled
         },
         this.props.label,
         _react2.default.createElement(_caret2.default, null)
@@ -22211,7 +22661,7 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   alignMenu: PropTypes.oneOf(['left', 'right']),
   onClick: PropTypes.func,
-  isDisabled: PropTypes.bool
+  disabled: PropTypes.bool
 };
 Dropdown.defaultProps = {
   className: '',
@@ -22221,12 +22671,74 @@ Dropdown.defaultProps = {
   label: '',
   alignMenu: 'left',
   onClick: null,
-  isDisabled: false
+  disabled: false
 };
 exports.default = Dropdown;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":170,"../js/lib/util":171,"./button":173,"./caret":174,"react":165}],180:[function(require,module,exports){
+},{"../js/lib/jqLite":171,"../js/lib/util":172,"./button":175,"./caret":176,"react":165}],183:[function(require,module,exports){
+/**
+ * MUI React form module
+ * @module react/form
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+/**
+ * Form constructor
+ * @class
+ */
+
+var Form = function (_React$Component) {
+  babelHelpers.inherits(Form, _React$Component);
+
+  function Form() {
+    babelHelpers.classCallCheck(this, Form);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Form).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Form, [{
+    key: 'render',
+    value: function render() {
+      var cls = '';
+
+      // inline form
+      if (this.props.inline) cls = 'mui-form--inline';
+
+      return _react2.default.createElement(
+        'form',
+        {
+          className: cls + ' ' + this.props.className,
+          style: this.props.style
+        },
+        this.props.children
+      );
+    }
+  }]);
+  return Form;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Form.propTypes = {
+  inline: _react2.default.PropTypes.bool
+};
+Form.defaultProps = {
+  className: '',
+  inline: false
+};
+exports.default = Form;
+module.exports = exports['default'];
+
+},{"react":165}],184:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -22279,7 +22791,954 @@ Panel.defaultProps = {
 exports.default = Panel;
 module.exports = exports['default'];
 
-},{"react":165}],181:[function(require,module,exports){
+},{"react":165}],185:[function(require,module,exports){
+/**
+ * MUI React radio module
+ * @module react/radio
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Radio constructor
+ * @class
+ */
+
+var Radio = function (_React$Component) {
+  babelHelpers.inherits(Radio, _React$Component);
+
+  function Radio() {
+    babelHelpers.classCallCheck(this, Radio);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Radio).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Radio, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        {
+          className: 'mui-radio ' + this.props.className,
+          style: this.props.style
+        },
+        _react2.default.createElement(
+          'label',
+          null,
+          _react2.default.createElement('input', {
+            type: 'radio',
+            name: this.props.name,
+            value: this.props.value,
+            checked: this.props.checked,
+            defaultChecked: this.props.defaultChecked,
+            disabled: this.props.disabled
+          }),
+          this.props.label
+        )
+      );
+    }
+  }]);
+  return Radio;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Radio.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  disabled: PropTypes.bool
+};
+Radio.defaultProps = {
+  className: '',
+  name: null,
+  label: null,
+  value: null,
+  checked: null,
+  defaultChecked: null,
+  disabled: false
+};
+exports.default = Radio;
+module.exports = exports['default'];
+
+},{"react":165}],186:[function(require,module,exports){
+/**
+ * MUI React Row Component
+ * @module react/row
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var breakpoints = ['xs', 'sm', 'md', 'lg'];
+
+/**
+ * Row constructor
+ * @class
+ */
+
+var Row = function (_React$Component) {
+  babelHelpers.inherits(Row, _React$Component);
+
+  function Row() {
+    babelHelpers.classCallCheck(this, Row);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Row).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Row, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        {
+          className: 'mui-row ' + this.props.className,
+          style: this.props.style
+        },
+        this.props.children
+      );
+    }
+  }]);
+  return Row;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Row.defaultProps = {
+  className: ''
+};
+exports.default = Row;
+module.exports = exports['default'];
+
+},{"../js/lib/util":172,"react":165}],187:[function(require,module,exports){
+/**
+ * MUI React select module
+ * @module react/select
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _forms = require('../js/lib/forms');
+
+var formlib = babelHelpers.interopRequireWildcard(_forms);
+
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * SelectItem constructor
+ * @class
+ */
+
+var SelectItem = function (_React$Component) {
+  babelHelpers.inherits(SelectItem, _React$Component);
+
+  function SelectItem() {
+    babelHelpers.classCallCheck(this, SelectItem);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(SelectItem).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(SelectItem, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'option',
+        { value: this.props.value },
+        this.props.label
+      );
+    }
+  }]);
+  return SelectItem;
+}(_react2.default.Component);
+
+/** Define module API */
+
+SelectItem.propTypes = {
+  value: PropTypes.string,
+  label: PropTypes.string
+};
+SelectItem.defaultProps = {
+  value: null,
+  label: null
+};
+exports.default = SelectItem;
+module.exports = exports['default'];
+
+},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],188:[function(require,module,exports){
+/**
+ * MUI React select module
+ * @module react/select
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _forms = require('../js/lib/forms');
+
+var formlib = babelHelpers.interopRequireWildcard(_forms);
+
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Select constructor
+ * @class
+ */
+
+var Select = function (_React$Component) {
+  babelHelpers.inherits(Select, _React$Component);
+
+  function Select(props) {
+    babelHelpers.classCallCheck(this, Select);
+
+    // default value
+
+    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
+
+    _this.state = {
+      readOnly: false,
+      showMenu: false,
+      value: null
+    };
+    _this.state.readOnly = props.readOnly;
+    _this.state.value = props.value;
+
+    // bind callback function
+    var cb = util.callback;
+    _this.hideMenuCB = cb(_this, 'hideMenu');
+    _this.onInnerClickCB = cb(_this, 'onInnerClick');
+    _this.onInnerFocusCB = cb(_this, 'onInnerFocus');
+    _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
+    _this.onKeydownCB = cb(_this, 'onKeydown');
+    _this.onMenuChangeCB = cb(_this, 'onMenuChange');
+    _this.onOuterFocusCB = cb(_this, 'onOuterFocus');
+    _this.onOuterBlurCB = cb(_this, 'onOuterBlur');
+
+    // only define inner onChange if outer onChange is defined
+    if (props.onChange) _this.onInnerChangeCB = cb(_this, 'onInnerChange');else _this.state.readOnly = true;
+    return _this;
+  }
+
+  babelHelpers.createClass(Select, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      this.refs.selectEl._muiSelect = true;
+
+      // make wrapper element focusable (to enable Firefox bugfix)
+      this.refs.wrapperEl.tabIndex = -1;
+
+      // handle autofocus
+      if (this.props.autoFocus) this.refs.wrapperEl.focus();
+    }
+  }, {
+    key: 'onInnerMouseDown',
+    value: function onInnerMouseDown(ev) {
+      if (ev.button !== 0 || this.props.useDefault === true) return;
+      ev.preventDefault();
+    }
+  }, {
+    key: 'onInnerChange',
+    value: function onInnerChange(ev) {
+      if (this.state.readOnly) return;
+
+      var value = ev.target.value;
+      this.setState({ value: value });
+
+      // execute onChange method
+      var fn = this.props.onChange;
+      if (fn) fn(value);
+    }
+  }, {
+    key: 'onInnerClick',
+    value: function onInnerClick(ev) {
+      if (ev.button !== 0) return; // only left clicks
+      this.showMenu();
+    }
+  }, {
+    key: 'onInnerFocus',
+    value: function onInnerFocus(ev) {
+      var _this2 = this;
+
+      // check flag
+      if (this.props.useDefault === true) return;
+
+      // defer focus to parent
+      setTimeout(function () {
+        _this2.refs.wrapperEl.focus();
+      }, 0);
+    }
+  }, {
+    key: 'onOuterFocus',
+    value: function onOuterFocus(ev) {
+      // ignore focus on inner element (react artifact)
+      if (ev.target !== this.refs.wrapperEl) return;
+
+      // disable tabfocus on inner element
+      var selectEl = this.refs.selectEl;
+      selectEl._muiOrigIndex = selectEl.tabIndex;
+      selectEl.tabIndex = -1;
+
+      // firefox bugfix
+      if (selectEl.disabled) return this.refs.wrapperEl.blur();
+
+      // attach keydown handler
+      jqLite.on(document, 'keydown', this.onKeydownCB);
+    }
+  }, {
+    key: 'onOuterBlur',
+    value: function onOuterBlur(ev) {
+      // ignore blur on inner element
+      if (ev.target !== this.refs.wrapperEl) return;
+
+      // restore tab focus on inner element
+      var selectEl = this.refs.selectEl;
+      selectEl.tabIndex = selectEl._muiOrigIndex;
+
+      // remove keydown handler
+      jqLite.off(document, 'keydown', this.onKeydownCB);
+    }
+  }, {
+    key: 'onKeydown',
+    value: function onKeydown(ev) {
+      // spacebar, down, up
+      if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
+        // prevent win scroll
+        ev.preventDefault();
+
+        if (this.refs.selectEl.disabled !== true) this.showMenu();
+      }
+    }
+  }, {
+    key: 'showMenu',
+    value: function showMenu() {
+      // check useDefault flag
+      if (this.props.useDefault === true) return;
+
+      // add scroll lock
+      util.enableScrollLock();
+
+      // add event listeners
+      jqLite.on(window, 'resize', this.hideMenuCB);
+      jqLite.on(document, 'click', this.hideMenuCB);
+
+      // re-draw
+      this.setState({ showMenu: true });
+    }
+  }, {
+    key: 'hideMenu',
+    value: function hideMenu() {
+      // remove scroll lock
+      util.disableScrollLock();
+
+      // remove event listeners
+      jqLite.off(window, 'resize', this.hideMenuCB);
+      jqLite.off(document, 'click', this.hideMenuCB);
+
+      // re-draw
+      this.setState({ showMenu: false });
+
+      // refocus
+      this.refs.selectEl.focus();
+    }
+  }, {
+    key: 'onMenuChange',
+    value: function onMenuChange(value) {
+      if (this.state.readOnly) return;
+
+      this.setState({ value: value });
+
+      // execute onChange method
+      var fn = this.props.onChange;
+      if (fn) fn(value);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var menuElem = undefined;
+
+      if (this.state.showMenu) {
+        menuElem = _react2.default.createElement(Menu, {
+          optionEls: this.refs.selectEl.children,
+          wrapperEl: this.refs.wrapperEl,
+          onChange: this.onMenuChangeCB,
+          onClose: this.hideMenuCB
+        });
+      }
+
+      return _react2.default.createElement(
+        'div',
+        {
+          ref: 'wrapperEl',
+          className: 'mui-select ' + this.props.className,
+          style: this.props.style,
+          onFocus: this.onOuterFocusCB,
+          onBlur: this.onOuterBlurCB
+        },
+        _react2.default.createElement(
+          'select',
+          {
+            ref: 'selectEl',
+            name: this.props.name,
+            value: this.state.value,
+            defaultValue: this.props.defaultValue,
+            disabled: this.props.disabled,
+            multiple: this.props.multiple,
+            readOnly: this.props.readOnly,
+            required: this.props.required,
+            onChange: this.onInnerChangeCB,
+            onMouseDown: this.onInnerMouseDownCB,
+            onClick: this.onInnerClickCB,
+            onFocus: this.onInnerFocusCB
+          },
+          this.props.children
+        ),
+        menuElem
+      );
+    }
+  }]);
+  return Select;
+}(_react2.default.Component);
+
+/**
+ * Menu constructor
+ * @class
+ */
+
+Select.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  disabled: PropTypes.bool,
+  multiple: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  required: PropTypes.bool,
+  useDefault: PropTypes.bool,
+  onChange: PropTypes.func
+};
+Select.defaultProps = {
+  className: '',
+  name: null,
+  value: null,
+  defaultValue: null,
+  autoFocus: false,
+  disabled: false,
+  multiple: false,
+  readOnly: false,
+  required: false,
+  useDefault: false,
+  onChange: null
+};
+
+var Menu = function (_React$Component2) {
+  babelHelpers.inherits(Menu, _React$Component2);
+
+  function Menu(props) {
+    babelHelpers.classCallCheck(this, Menu);
+
+    var _this3 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props));
+
+    _this3.state = {
+      origIndex: null,
+      currentIndex: null
+    };
+
+    _this3.onKeydownCB = util.callback(_this3, 'onKeydown');
+    return _this3;
+  }
+
+  babelHelpers.createClass(Menu, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var optionEls = this.props.optionEls,
+          m = optionEls.length,
+          selectedPos = 0,
+          i = undefined;
+
+      // get current selected position
+      for (i = m - 1; i > -1; i--) {
+        if (optionEls[i].selected) selectedPos = i;
+      }this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // blur active element (IE10 bugfix)
+      setTimeout(function () {
+        var el = document.activeElement;
+        if (el.nodeName.toLowerCase() !== 'body') el.blur();
+      }, 0);
+
+      // set position
+      var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.optionEls.length, this.state.currentIndex);
+
+      var el = this.refs.wrapperEl;
+      jqLite.css(el, props);
+      jqLite.scrollTop(el, props.scrollTop);
+
+      // attach keydown handler
+      jqLite.on(document, 'keydown', this.onKeydownCB);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // remove keydown handler
+      jqLite.off(document, 'keydown', this.onKeydownCB);
+    }
+  }, {
+    key: 'onClick',
+    value: function onClick(pos, ev) {
+      // don't allow events to bubble
+      ev.stopPropagation();
+      this.selectAndDestroy(pos);
+    }
+  }, {
+    key: 'onKeydown',
+    value: function onKeydown(ev) {
+      var keyCode = ev.keyCode;
+
+      // tab
+      if (keyCode === 9) return this.destroy();
+
+      // escape | up | down | enter
+      if (keyCode === 27 || keyCode === 40 || keyCode === 38 || keyCode === 13) {
+        ev.preventDefault();
+      }
+
+      if (keyCode === 27) this.destroy();else if (keyCode === 40) this.increment();else if (keyCode === 38) this.decrement();else if (keyCode === 13) this.selectAndDestroy();
+    }
+  }, {
+    key: 'increment',
+    value: function increment() {
+      if (this.state.currentIndex === this.props.optionEls.length - 1) {
+        return;
+      }
+
+      this.setState({ currentIndex: this.state.currentIndex + 1 });
+    }
+  }, {
+    key: 'decrement',
+    value: function decrement() {
+      if (this.state.currentIndex === 0) return;
+      this.setState({ currentIndex: this.state.currentIndex - 1 });
+    }
+  }, {
+    key: 'selectAndDestroy',
+    value: function selectAndDestroy(pos) {
+      pos = pos === undefined ? this.state.currentIndex : pos;
+
+      // handle onChange
+      if (pos !== this.state.origIndex) {
+        this.props.onChange(this.props.optionEls[pos].value);
+      }
+
+      // close menu
+      this.destroy();
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this.props.onClose();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var menuItems = [],
+          optionEls = this.props.optionEls,
+          m = optionEls.length,
+          optionEl = undefined,
+          cls = undefined,
+          i = undefined;
+
+      // define menu items
+      for (i = 0; i < m; i++) {
+        cls = i === this.state.currentIndex ? 'mui--is-selected' : '';
+
+        menuItems.push(_react2.default.createElement(
+          'div',
+          {
+            key: i,
+            className: cls,
+            onClick: this.onClick.bind(this, i)
+          },
+          optionEls[i].textContent
+        ));
+      }
+
+      return _react2.default.createElement(
+        'div',
+        { ref: 'wrapperEl', className: 'mui-select__menu' },
+        menuItems
+      );
+    }
+  }]);
+  return Menu;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Menu.defaultProps = {
+  optionEls: [],
+  wrapperEl: null,
+  onChange: null,
+  onClose: null
+};
+exports.default = Select;
+module.exports = exports['default'];
+
+},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],189:[function(require,module,exports){
+/**
+ * MUI React tabs module
+ * @module react/tabs
+ */
+/* jshint quotmark:false */
+// jscs:disable validateQuoteMarks
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Tab constructor
+ * @class
+ */
+
+var Tab = function (_React$Component) {
+  babelHelpers.inherits(Tab, _React$Component);
+
+  function Tab() {
+    babelHelpers.classCallCheck(this, Tab);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tab).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Tab, [{
+    key: 'render',
+    value: function render() {
+      return null;
+    }
+  }]);
+  return Tab;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Tab.propTypes = {
+  value: PropTypes.any,
+  label: PropTypes.string,
+  onActive: PropTypes.func
+};
+Tab.defaultProps = {
+  value: null,
+  label: '',
+  onActive: null
+};
+exports.default = Tab;
+module.exports = exports['default'];
+
+},{"react":165}],190:[function(require,module,exports){
+/**
+ * MUI React tabs module
+ * @module react/tabs
+ */
+/* jshint quotmark:false */
+// jscs:disable validateQuoteMarks
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _tab = require('./tab');
+
+var _tab2 = babelHelpers.interopRequireDefault(_tab);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes,
+    tabsBarClass = 'mui-tabs__bar',
+    tabsBarJustifiedClass = 'mui-tabs__bar--justified',
+    tabsPaneClass = 'mui-tabs__pane',
+    isActiveClass = 'mui--is-active';
+
+/**
+ * Tabs constructor
+ * @class
+ */
+
+var Tabs = function (_React$Component) {
+  babelHelpers.inherits(Tabs, _React$Component);
+
+  function Tabs(props) {
+    babelHelpers.classCallCheck(this, Tabs);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tabs).call(this, props));
+
+    _this.state = { currentSelectedIndex: props.initialSelectedIndex };
+    return _this;
+  }
+
+  babelHelpers.createClass(Tabs, [{
+    key: 'onClick',
+    value: function onClick(i, tab, ev) {
+      if (i !== this.state.currentSelectedIndex) {
+        this.setState({ currentSelectedIndex: i });
+
+        // onActive callback
+        if (tab.props.onActive) tab.props.onActive(tab);
+
+        // onChange callback
+        if (this.props.onChange) {
+          this.props.onChange(i, tab.props.value, tab, ev);
+        }
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var tabEls = [],
+          paneEls = [],
+          children = this.props.children,
+          m = children.length,
+          selectedIndex = this.state.currentSelectedIndex % m,
+          isActive = undefined,
+          item = undefined,
+          cls = undefined,
+          i = undefined;
+
+      for (i = 0; i < m; i++) {
+        item = children[i];
+
+        // only accept MUITab elements
+        if (item.type !== _tab2.default) util.raiseError('Expecting MUITab React Element');
+
+        isActive = i === selectedIndex ? true : false;
+
+        // tab element
+        tabEls.push(_react2.default.createElement(
+          'li',
+          { key: i, className: isActive ? isActiveClass : '' },
+          _react2.default.createElement(
+            'a',
+            { onClick: this.onClick.bind(this, i, item) },
+            item.props.label
+          )
+        ));
+
+        // pane element
+        cls = tabsPaneClass + ' ';
+        if (isActive) cls += isActiveClass;
+
+        paneEls.push(_react2.default.createElement(
+          'div',
+          { key: i, className: cls },
+          item.props.children
+        ));
+      }
+
+      cls = tabsBarClass;
+      if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+
+      return _react2.default.createElement(
+        'div',
+        { className: this.props.className, style: this.props.style },
+        _react2.default.createElement(
+          'ul',
+          { className: cls },
+          tabEls
+        ),
+        paneEls
+      );
+    }
+  }]);
+  return Tabs;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Tabs.propTypes = {
+  initialSelectedIndex: PropTypes.number,
+  justified: PropTypes.bool,
+  onChange: PropTypes.func
+};
+Tabs.defaultProps = {
+  className: '',
+  initialSelectedIndex: 0,
+  justified: false,
+  onChange: null
+};
+exports.default = Tabs;
+module.exports = exports['default'];
+
+},{"../js/lib/util":172,"./tab":189,"react":165}],191:[function(require,module,exports){
+/**                                                                            
+ * MUI React TextareaInput Component
+ * @module react/textarea-input
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _input = require('./_input');
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * TextInput constructor
+ * @class
+ */
+
+var TextInput = function (_React$Component) {
+  babelHelpers.inherits(TextInput, _React$Component);
+
+  function TextInput() {
+    babelHelpers.classCallCheck(this, TextInput);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextInput).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(TextInput, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_input.TextField, this.props);
+    }
+  }]);
+  return TextInput;
+}(_react2.default.Component);
+
+TextInput.propTypes = {
+  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
+};
+TextInput.defaultProps = {
+  type: 'text'
+};
+exports.default = TextInput;
+module.exports = exports['default'];
+
+},{"./_input":173,"react":165}],192:[function(require,module,exports){
+/**
+ * MUI React TextareaInput Component
+ * @module react/textarea-input
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _input = require('./_input');
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * TextareaInput constructor
+ * @class
+ */
+
+var TextareaInput = function (_React$Component) {
+  babelHelpers.inherits(TextareaInput, _React$Component);
+
+  function TextareaInput() {
+    babelHelpers.classCallCheck(this, TextareaInput);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextareaInput).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(TextareaInput, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_input.TextField, this.props);
+    }
+  }]);
+  return TextareaInput;
+}(_react2.default.Component);
+
+TextareaInput.propTypes = {
+  rows: PropTypes.number
+};
+TextareaInput.defaultProps = {
+  type: 'textarea',
+  rows: 2
+};
+exports.default = TextareaInput;
+module.exports = exports['default'];
+
+},{"./_input":173,"react":165}],193:[function(require,module,exports){
 'use strict';
 
 /**
@@ -22503,7 +23962,7 @@ describe('js/lib/jqLite.js', function () {
   });
 });
 
-},{"../../src/js/lib/jqLite.js":170,"assert":1,"synthetic-dom-events":166}],182:[function(require,module,exports){
+},{"../../src/js/lib/jqLite.js":171,"assert":1,"synthetic-dom-events":166}],194:[function(require,module,exports){
 'use strict';
 
 /**
@@ -22542,7 +24001,7 @@ describe('js/lib/util.js', function () {
   });
 });
 
-},{"../../src/js/lib/util.js":171,"assert":1}],183:[function(require,module,exports){
+},{"../../src/js/lib/util.js":172,"assert":1}],195:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22561,7 +24020,7 @@ function getShallowRendererOutput(reactElem) {
    * @module test/react-tests/react-helpers
    */
 
-},{"react-addons-test-utils":34}],184:[function(require,module,exports){
+},{"react-addons-test-utils":34}],196:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22617,7 +24076,7 @@ describe('react/appbar', function () {
   });
 });
 
-},{"../../src/react/appbar":172,"../lib/react-helpers":183,"assert":1,"react":165}],185:[function(require,module,exports){
+},{"../../src/react/appbar":174,"../lib/react-helpers":195,"assert":1,"react":165}],197:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22655,7 +24114,7 @@ describe('react/button', function () {
       'test'
     ));
     _assert2.default.equal(result.type, 'button');
-    _assert2.default.equal(result.props.className, 'mui-btn ');
+    _assert2.default.equal(/\bmui-btn\b/.test(result.props.className), true);
     _assert2.default.equal(result.props.children[0], 'test');
   });
 
@@ -22665,7 +24124,7 @@ describe('react/button', function () {
       { className: 'additional' },
       'test'
     ));
-    _assert2.default.equal(result.props.className, 'mui-btn additional');
+    _assert2.default.equal(/\badditional\b/.test(result.props.className), true);
   });
 
   it('renders properly with additional styles', function () {
@@ -22790,7 +24249,7 @@ describe('react/button', function () {
   });
 });
 
-},{"../../src/react/button":173,"../lib/react-helpers":183,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],186:[function(require,module,exports){
+},{"../../src/react/button":175,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],198:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22846,7 +24305,7 @@ describe('react/caret', function () {
   });
 });
 
-},{"../../src/react/caret":174,"../lib/react-helpers":183,"assert":1,"react":165}],187:[function(require,module,exports){
+},{"../../src/react/caret":176,"../lib/react-helpers":195,"assert":1,"react":165}],199:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22928,7 +24387,82 @@ describe('react/checkbox', function () {
   });
 });
 
-},{"../../src/react/checkbox":175,"../lib/react-helpers":183,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],188:[function(require,module,exports){
+},{"../../src/react/checkbox":177,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],200:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _col = require('../../src/react/col');
+
+var _col2 = babelHelpers.interopRequireDefault(_col);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+describe('react/grid', function () {
+  it('col renders properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _col2.default,
+      {
+        xs: 1,
+        sm: 2,
+        md: 3,
+        lg: 4,
+        'xs-offset': 5,
+        'sm-offset': 6,
+        'md-offset': 7,
+        'lg-offset': 8
+      },
+      'My Content'
+    ));
+
+    _assert2.default.equal(result.type, 'div');
+
+    var className = result.props.className;
+    _assert2.default.equal(/mui-col-xs-1/.test(className), true);
+    _assert2.default.equal(/mui-col-sm-2/.test(className), true);
+    _assert2.default.equal(/mui-col-md-3/.test(className), true);
+    _assert2.default.equal(/mui-col-lg-4/.test(className), true);
+    _assert2.default.equal(/mui-col-xs-offset-5/.test(className), true);
+    _assert2.default.equal(/mui-col-sm-offset-6/.test(className), true);
+    _assert2.default.equal(/mui-col-md-offset-7/.test(className), true);
+    _assert2.default.equal(/mui-col-lg-offset-8/.test(className), true);
+  });
+
+  it('renders properly with additional classNames', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _col2.default,
+      { className: 'additional' },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.className, ' additional');
+  });
+
+  it('renders properly with additional styles', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _col2.default,
+      { style: { additonal: 'style' } },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+}); /**
+     * MUI React Col Component Tests
+     * @module test/react-tests/test-col
+     */
+
+},{"../../src/react/col":178,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],201:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -22986,7 +24520,7 @@ describe('react/container', function () {
   it('rendes fluid properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _container2.default,
-      { isFluid: true },
+      { fluid: true },
       'test'
     ));
 
@@ -22996,7 +24530,7 @@ describe('react/container', function () {
   });
 });
 
-},{"../../src/react/container":176,"../lib/react-helpers":183,"assert":1,"react":165}],189:[function(require,module,exports){
+},{"../../src/react/container":179,"../lib/react-helpers":195,"assert":1,"react":165}],202:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -23052,7 +24586,7 @@ describe('react/divider', function () {
   });
 });
 
-},{"../../src/react/divider":177,"../lib/react-helpers":183,"assert":1,"react":165}],190:[function(require,module,exports){
+},{"../../src/react/divider":180,"../lib/react-helpers":195,"assert":1,"react":165}],203:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -23171,7 +24705,65 @@ describe('react/dropdown', function () {
   });
 });
 
-},{"../../src/react/dropdown":179,"../../src/react/dropdown-item":178,"../lib/react-helpers":183,"assert":1,"react":165,"react-addons-test-utils":34}],191:[function(require,module,exports){
+},{"../../src/react/dropdown":182,"../../src/react/dropdown-item":181,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],204:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _form = require('../../src/react/form');
+
+var _form2 = babelHelpers.interopRequireDefault(_form);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react form component
+ * @module test/react-tests/test-form
+ */
+
+describe('react/form', function () {
+  it('renders wrapper properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_form2.default, null));
+
+    _assert2.default.equal(result.type, 'form');
+    _assert2.default.equal(result.props.className, ' ');
+  });
+
+  it('renders properly with additional classNames', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _form2.default,
+      { className: 'additional' },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.className, ' additional');
+  });
+
+  it('renders properly with additional styles', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _form2.default,
+      { style: { additonal: 'style' } },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+
+  it('handles inline option', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_form2.default, { inline: true }));
+
+    _assert2.default.equal(result.type, 'form');
+    _assert2.default.equal(result.props.className, 'mui-form--inline ');
+  });
+});
+
+},{"../../src/react/form":183,"../lib/react-helpers":195,"assert":1,"react":165}],205:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -23227,4 +24819,477 @@ describe('react/panel', function () {
   });
 });
 
-},{"../../src/react/panel":180,"../lib/react-helpers":183,"assert":1,"react":165}]},{},[6])
+},{"../../src/react/panel":184,"../lib/react-helpers":195,"assert":1,"react":165}],206:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = babelHelpers.interopRequireDefault(_reactDom);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _radio = require('../../src/react/radio');
+
+var _radio2 = babelHelpers.interopRequireDefault(_radio);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react radio library
+ * @module test/react-tests/test-radio
+ */
+
+describe('react/radio', function () {
+  var elem = undefined;
+
+  beforeEach(function () {
+    elem = _react2.default.createElement(
+      _radio2.default,
+      null,
+      'My Label'
+    );
+  });
+
+  it('renders wrapper properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
+
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-radio ');
+  });
+
+  it('renders content properly', function () {
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = _reactDom2.default.findDOMNode(node);
+
+    _assert2.default.equal(wrapperEl.children.length, 1);
+
+    var labelEl = wrapperEl.children[0];
+    _assert2.default.equal(labelEl.tagName, 'LABEL');
+
+    var inputEl = labelEl.children[0];
+    _assert2.default.equal(inputEl.tagName, 'INPUT');
+  });
+
+  it('renders properly with additional classNames', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _radio2.default,
+      { className: 'additional' },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.className, 'mui-radio additional');
+  });
+
+  it('renders properly with additional styles', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _radio2.default,
+      { style: { additonal: 'style' } },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+});
+
+},{"../../src/react/radio":185,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],207:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _row = require('../../src/react/row');
+
+var _row2 = babelHelpers.interopRequireDefault(_row);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+describe('react/grid', function () {
+  it('row renders properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_row2.default, null));
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-row ');
+  });
+
+  it('renders properly with additional classNames', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _row2.default,
+      { className: 'additional' },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.className, 'mui-row additional');
+  });
+
+  it('renders properly with additional styles', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _row2.default,
+      { style: { additonal: 'style' } },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+}); /**
+     * MUI React Row Component Tests
+     * @module test/react-tests/test-row
+     */
+
+},{"../../src/react/row":186,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],208:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _select = require('../../src/react/select');
+
+var _select2 = babelHelpers.interopRequireDefault(_select);
+
+var _selectItem = require('../../src/react/select-item');
+
+var _selectItem2 = babelHelpers.interopRequireDefault(_selectItem);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react select library
+ * @module test/react-tests/test-select
+ */
+
+describe('react/select', function () {
+  var elem = undefined;
+
+  beforeEach(function () {
+    elem = _react2.default.createElement(
+      _select2.default,
+      null,
+      _react2.default.createElement(_selectItem2.default, { label: 'Option 1' }),
+      _react2.default.createElement(_selectItem2.default, { label: 'Option 2' }),
+      _react2.default.createElement(_selectItem2.default, { label: 'Option 3' })
+    );
+  });
+
+  it('renders wrapper properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
+
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, 'mui-select ');
+  });
+
+  it('renders native select element', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = instance.refs.wrapperEl;
+
+    // check that select element is only child
+    _assert2.default.equal(wrapperEl.children.length, 1);
+    _assert2.default.equal(wrapperEl.children[0].tagName, 'SELECT');
+  });
+
+  it('shows menu on click', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = instance.refs.wrapperEl;
+    var selectEl = instance.refs.selectEl;
+
+    // check before and after click
+    _assert2.default.equal(wrapperEl.children.length, 1);
+    _reactAddonsTestUtils2.default.Simulate.click(selectEl, { button: 0 });
+    _assert2.default.equal(wrapperEl.children.length, 2);
+  });
+
+  it('renders properly with additional classNames', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _select2.default,
+      { className: 'additional' },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.className, 'mui-select additional');
+  });
+
+  it('renders properly with additional styles', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _select2.default,
+      { style: { additonal: 'style' } },
+      'test'
+    ));
+
+    _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+
+  it('handles default undefined value', function () {
+    var testElem = _react2.default.createElement(
+      _select2.default,
+      null,
+      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+    );
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
+    var selectEl = instance.refs.selectEl;
+
+    _assert2.default.equal(selectEl.value, 'value1');
+  });
+
+  it('handles defaultValue for uncontrolled component', function () {
+    var testElem = _react2.default.createElement(
+      _select2.default,
+      { defaultValue: 'value2' },
+      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+    );
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
+    var selectEl = instance.refs.selectEl;
+
+    _assert2.default.equal(selectEl.value, 'value2');
+  });
+
+  it('handles value for controlled component', function () {
+    var testElem = _react2.default.createElement(
+      _select2.default,
+      { value: 'value2', onChange: function onChange() {} },
+      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+    );
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
+    var selectEl = instance.refs.selectEl;
+
+    // test default value
+    _assert2.default.equal(selectEl.value, 'value2');
+  });
+
+  it('handles onChange event', function (done) {
+    var checkChangeFn = function checkChangeFn(value) {
+      _assert2.default.equal(value, "value2");
+      done();
+    };
+
+    var testElem = _react2.default.createElement(
+      _select2.default,
+      { defaultValue: 'value2', onChange: checkChangeFn },
+      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+    );
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
+    var selectEl = instance.refs.selectEl;
+
+    // trigger event and check callback
+    _reactAddonsTestUtils2.default.Simulate.change(selectEl, {});
+  });
+
+  it('handles readOnly property', function (done) {
+    var checkChangeFn = function checkChangeFn(value) {
+      _assert2.default.equal(true, false);
+    };
+
+    var testElem = _react2.default.createElement(
+      _select2.default,
+      { defaultValue: 'value2', onChange: checkChangeFn, readOnly: true },
+      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+    );
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
+    var selectEl = instance.refs.selectEl;
+
+    // trigger event and check callback
+    _reactAddonsTestUtils2.default.Simulate.change(selectEl, {});
+
+    // check that onChange isn't called
+    setTimeout(function () {
+      (0, _assert2.default)(true, true);
+      done();
+    }, 20);
+  });
+});
+
+},{"../../src/react/select":188,"../../src/react/select-item":187,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],209:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _tab = require('../../src/react/tab');
+
+var _tab2 = babelHelpers.interopRequireDefault(_tab);
+
+var _tabs = require('../../src/react/tabs');
+
+var _tabs2 = babelHelpers.interopRequireDefault(_tabs);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react select library
+ * @module test/react-tests/test-select
+ */
+
+describe('react/tabs', function () {
+  it('renders wrapper properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _tabs2.default,
+      null,
+      _react2.default.createElement(_tab2.default, null)
+    ));
+
+    _assert2.default.equal(result.type, 'div');
+    _assert2.default.equal(result.props.className, '');
+  });
+
+  it('renders properly with additional classNames', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _tabs2.default,
+      { className: 'additional' },
+      _react2.default.createElement(_tab2.default, null)
+    ));
+
+    _assert2.default.equal(result.props.className, 'additional');
+  });
+
+  it('renders properly with additional styles', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
+      _tabs2.default,
+      { style: { additonal: 'style' } },
+      _react2.default.createElement(_tab2.default, null)
+    ));
+
+    _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+});
+
+},{"../../src/react/tab":189,"../../src/react/tabs":190,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],210:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = babelHelpers.interopRequireDefault(_reactDom);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _textInput = require('../../src/react/text-input');
+
+var _textInput2 = babelHelpers.interopRequireDefault(_textInput);
+
+var _textareaInput = require('../../src/react/textarea-input');
+
+var _textareaInput2 = babelHelpers.interopRequireDefault(_textareaInput);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+describe('react/text-input', function () {
+  it('renders wrapper properly', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_textInput2.default, null));
+    var wrapperEl = _reactDom2.default.findDOMNode(instance);
+
+    _assert2.default.equal(wrapperEl.tagName, 'DIV');
+    _assert2.default.equal(wrapperEl.className, 'mui-textfield');
+  });
+
+  it('renders native input element', function () {
+    var elem = _react2.default.createElement(_textInput2.default, { defaultValue: 'my input' });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
+
+    _assert2.default.equal(inputEl.value, 'my input');
+  });
+
+  it('adds dirty class on focus', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_textInput2.default, null));
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
+
+    // starts with empty class
+    _assert2.default.equal(inputEl.className, 'mui--is-empty');
+
+    // adds dirty class on focus
+    _reactAddonsTestUtils2.default.Simulate.focus(inputEl);
+    _assert2.default.equal(/mui--is-dirty/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+
+    // modify input
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+  });
+}); /**
+     * MUI test react textinput library
+     * @module test/react-tests/test-textinput
+     */
+
+describe('react/textarea-input', function () {
+  var elem = undefined;
+
+  beforeEach(function () {
+    elem = _react2.default.createElement(_textareaInput2.default, { defaultValue: 'my input' });
+  });
+
+  it('renders wrapper properly', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = _reactDom2.default.findDOMNode(instance);
+
+    _assert2.default.equal(wrapperEl.tagName, 'DIV');
+    _assert2.default.equal(wrapperEl.className, 'mui-textfield');
+  });
+
+  it('renders native textarea element', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+
+    var fn = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag;
+    var textareaEl = fn(instance, 'textarea');
+
+    _assert2.default.equal(textareaEl.textContent, 'my input');
+  });
+});
+
+},{"../../src/react/text-input":191,"../../src/react/textarea-input":192,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}]},{},[6])

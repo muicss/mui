@@ -79,7 +79,7 @@ var Dropdown = function (_React$Component) {
       if (ev.button !== 0) return;
 
       // exit if toggle button is disabled
-      if (this.props.isDisabled) return;
+      if (this.props.disabled) return;
 
       if (!ev.defaultPrevented) this.toggle();
     }
@@ -138,7 +138,7 @@ var Dropdown = function (_React$Component) {
           color: this.props.color,
           variant: this.props.variant,
           size: this.props.size,
-          isDisabled: this.props.isDisabled
+          disabled: this.props.disabled
         },
         this.props.label,
         _react2.default.createElement(_caret2.default, null)
@@ -188,7 +188,7 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   alignMenu: PropTypes.oneOf(['left', 'right']),
   onClick: PropTypes.func,
-  isDisabled: PropTypes.bool
+  disabled: PropTypes.bool
 };
 Dropdown.defaultProps = {
   className: '',
@@ -198,7 +198,7 @@ Dropdown.defaultProps = {
   label: '',
   alignMenu: 'left',
   onClick: null,
-  isDisabled: false
+  disabled: false
 };
 exports.default = Dropdown;
 module.exports = exports['default'];

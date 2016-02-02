@@ -84,8 +84,8 @@
       // form with floating labels
       ReactDOM.render(
         <Form>
-          <TextInput label="Label 1" isLabelFloating={ true } />
-          <TextInput label="Label 2" isLabelFloating={ true } />
+          <TextInput label="Label 1" floatingLabel={true} />
+          <TextInput label="Label 2" floatingLabel={true} value="on load" />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('example4')
@@ -95,7 +95,7 @@
       ReactDOM.render(
         <Form>
           <TextareaInput hint="Placeholder 1" />
-          <TextareaInput hint="Placeholder 2" rows={ 5 } />
+          <TextareaInput hint="Placeholder 2" rows={5} />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('exampleA')
@@ -105,7 +105,7 @@
       ReactDOM.render(
         <Form>
           <TextareaInput label="Label 1" />
-          <TextareaInput label="Label 2" rows={ 5 } />
+          <TextareaInput label="Label 2" rows={5} />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('exampleB')
@@ -121,7 +121,7 @@
           <TextareaInput
               label="Label 2"
               hint="Placeholder 2" 
-              rows={ 5 }
+              rows={5}
           />
           <Button variant="raised">Submit</Button>
         </Form>,
@@ -133,12 +133,12 @@
         <Form>
           <TextareaInput
               label="Label 1"
-              isLabelFloating={ true }
+              floatingLabel={true}
           />
           <TextareaInput
               label="Label 2"
-              isLabelFloating={ true }
-              rows={ 5 }
+              floatingLabel={true}
+              rows={5}
           />
           <Button variant="raised">Submit</Button>
         </Form>,
@@ -155,23 +155,23 @@
           <TextInput
               type="email"
               label="Email address (should be red on load)"
-              value="err"
+              defaultValue="err"
           />
           <TextInput
               type="text"
               label="Required text (should be red after focus)"
-              isRequired={ true }
+              required={true}
           />
           <TextInput
               type="text"
               label="Required text (should be red after deletion)"
-              value="val"
-              isRequired={ true }
+              defaultValue="val"
+              required={true}
           />
           <TextInput
               type="text"
               label="Is invalid (should be red on load)"
-              isInvalid={ true }
+              invalid={true}
           />
           <Button variant="raised">Submit</Button>
         </Form>,

@@ -20,9 +20,9 @@ describe('react/select', function() {
   beforeEach(function() {
     elem = (
       <Select>
-        <SelectItem>Option 1</SelectItem>
-        <SelectItem>Option 2</SelectItem>
-        <SelectItem>Option 3</SelectItem>
+        <SelectItem label="Option 1" />
+        <SelectItem label="Option 2" />
+        <SelectItem label="Option 3" />
       </Select>
     );
   });
@@ -37,8 +37,8 @@ describe('react/select', function() {
 
 
   it('renders native select element', function() {
-    let node = ReactUtils.renderIntoDocument(elem);
-    let wrapperEl = node.refs.wrapperEl;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let wrapperEl = instance.refs.wrapperEl;
 
     // check that select element is only child
     assert.equal(wrapperEl.children.length, 1);
@@ -47,9 +47,9 @@ describe('react/select', function() {
 
 
   it('shows menu on click', function() {
-    let node = ReactUtils.renderIntoDocument(elem);
-    let wrapperEl = node.refs.wrapperEl;
-    let selectEl = node.refs.selectEl;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let wrapperEl = instance.refs.wrapperEl;
+    let selectEl = instance.refs.selectEl;
 
     // check before and after click
     assert.equal(wrapperEl.children.length, 1);
@@ -77,5 +77,103 @@ describe('react/select', function() {
     );
 
     assert.equal(result.props.style.additonal, 'style');
+  });
+
+
+  it('handles default undefined value', function() {
+    let testElem = (
+      <Select>
+        <SelectItem value="value1" label="Option 1" />
+        <SelectItem value="value2" label="Option 2" />
+        <SelectItem value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.refs.selectEl;
+
+    assert.equal(selectEl.value, 'value1');
+  });
+
+
+  it('handles defaultValue for uncontrolled component', function() {
+    let testElem = (
+      <Select defaultValue="value2">
+        <SelectItem value="value1" label="Option 1" />
+        <SelectItem value="value2" label="Option 2" />
+        <SelectItem value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.refs.selectEl;
+
+    assert.equal(selectEl.value, 'value2');
+  });
+
+  
+  it('handles value for controlled component', function() {
+    let testElem = (
+      <Select value="value2" onChange={function() {}}>
+        <SelectItem value="value1" label="Option 1" />
+        <SelectItem value="value2" label="Option 2" />
+        <SelectItem value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.refs.selectEl;
+
+    // test default value
+    assert.equal(selectEl.value, 'value2');    
+  });
+
+
+  it('handles onChange event', function(done) {
+    let checkChangeFn = function(value) {
+      assert.equal(value, "value2");
+      done();
+    }
+
+    let testElem = (
+      <Select defaultValue="value2" onChange={checkChangeFn}>
+        <SelectItem value="value1" label="Option 1" />
+        <SelectItem value="value2" label="Option 2" />
+        <SelectItem value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.refs.selectEl;
+
+    // trigger event and check callback
+    ReactUtils.Simulate.change(selectEl, {});
+  });
+
+
+  it('handles readOnly property', function(done) {
+    let checkChangeFn = function(value) {
+      assert.equal(true, false);
+    }
+
+    let testElem = (
+      <Select defaultValue="value2" onChange={checkChangeFn} readOnly={true}>
+        <SelectItem value="value1" label="Option 1" />
+        <SelectItem value="value2" label="Option 2" />
+        <SelectItem value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.refs.selectEl;
+
+    // trigger event and check callback
+    ReactUtils.Simulate.change(selectEl, {});
+
+    // check that onChange isn't called
+    setTimeout(function() {
+      assert(true, true);
+      done();
+    }, 20);
   });
 });

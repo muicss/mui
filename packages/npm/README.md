@@ -36,7 +36,7 @@ import { Appbar, Button, Panel } from 'muicss/react';
 
 class Example extends React.Component {
   onClick() {
-    overlay('on');
+    console.log('clicked on button');
   }
   
   render() {
@@ -79,9 +79,10 @@ import Button from 'muicss/lib/react/button';
 
 <Button />
   * {String} color=default|primary|danger|accent
-  * {String} variant=default|flat|raised|fab
   * {String} size=default|small|large
-  * {Boolean} isDisabled=false|true
+  * {String} type=submit|button
+  * {String} variant=default|flat|raised|fab
+  * {Boolean} disabled=false|true
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/buttons
@@ -92,10 +93,11 @@ Read more: https://www.muicss.com/docs/v1/react/buttons
 import Checkbox from 'muicss/lib/react/checkbox';
 
 <Checkbox />
-  * {String} value
   * {String} label
-  * {Boolean} isChecked=false|true
-  * {Boolean} isDisabled=false|true
+  * {String} value
+  * {Boolean} checked
+  * {Boolean} defaultChecked
+  * {Boolean} disabled=false|true
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/forms
@@ -106,7 +108,7 @@ Read more: https://www.muicss.com/docs/v1/react/forms
 import Container from 'muicss/lib/react/container';
 
 <Container />
-  * {Boolean} isFluid=false|true
+  * {Boolean} fluid=false|true
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/container
@@ -129,13 +131,14 @@ Read more: https://www.muicss.com/docs/v1/react/dividers
 import Dropdown from 'muicss/lib/react/dropdown';
 
 <Dropdown />
-  * {String} color=default|primary|danger|accent
-  * {String} variant=default|flat|raised|fab
-  * {String} size=default|small|large
   * {String} label
   * {String} alignMenu=left|right
+  * {String} color=default|primary|danger|accent
+  * {String} size=default|small|large
+  * {String} variant=default|flat|raised|fab
+  * {Boolean} disabled
   * {Function} onClick
-  * {Boolean} isDisabled
+
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/dropdowns
@@ -158,7 +161,7 @@ Read more: https://www.muicss.com/docs/v1/react/dropdowns
 import Form from 'muicss/lib/react/form';
 
 <Form />
-  * {Boolean} isInline=false|true
+  * {Boolean} inline=false|true
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/forms
@@ -213,8 +216,9 @@ import Radio from 'muicss/lib/react/panel';
 <Radio />
   * {String} name
   * {String} value
-  * {Boolean} isChecked=false|true
-  * {Boolean} isDisabled=false|true
+  * {Boolean} checked
+  * {Boolean} defaultChecked
+  * {Boolean} disabled=false|true
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/forms
@@ -227,11 +231,14 @@ Read more: https://www.muicss.com/docs/v1/react/forms
 import Select from 'muicss/lib/react/select';
 
 <Select />
+  * {String} defaultValue
   * {String} name
-  * {Boolean} isAutofocus=false|true
-  * {Boolean} isDisabled=false|true
-  * {Boolean} isMultiple=false|true
-  * {Boolean} isRequired=false|true
+  * {String} value
+  * {Boolean} autoFocus=false|true
+  * {Boolean} disabled=false|true
+  * {Boolean} multiple=false|true
+  * {Boolean} readOnly=false|true
+  * {Boolean} required=false|true
   * {Boolean} useDefault=false|true
   * {Function} onChange
 ```
@@ -259,7 +266,7 @@ import Tabs from 'muicss/lib/react/tabs';
 
 <Tabs />
   * {Integer} initialSelectedIndex=0
-  * {Boolean} isJustified=false|true
+  * {Boolean} justified=false|true
   * {Function} onChange
 ```
 
@@ -277,6 +284,32 @@ import Tab from 'muicss/lib/react/tab';
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/tabs
+
+#### TextInput
+
+```jsx
+import TextInput from 'muicss/lib/react/text-input';
+
+<TextInput />
+  * {String} hint
+  * {String} value
+  * {String} type=text|email|url|tel|password
+  * {Boolean} autoFocus
+  * {Function} onChange
+```
+
+#### TextareaInput
+
+```jsx
+import TextareaInput from 'muicss/lib/react/textarea-input';
+
+<TextareaInput />
+  * {String} hint
+  * {String} value
+  * {Integer} rows
+  * {Boolean} autoFocus
+  * {Function} onChange
+```
 
 ## CSS Helpers
 

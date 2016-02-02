@@ -18,52 +18,125 @@
     <div class="mui-container">
       <h1>Select</h1>
       <div class="mui-panel">
-        <div id="example1"></div>
-        <br>
-        <br>
-        <br>
-        <div id="example2"></div>
+        <form>
+          <div id="example1"></div>
+          <div id="example2"></div>
+          <div id="example3"></div>
+          <div id="example4"></div>
+          <button class="mui-btn mui-btn--raised">submit</button>
+        </form>
       </div>
     </div>
     <script type="text/babel">
       let Select = mui.react.Select,
           SelectItem = mui.react.SelectItem;
 
-      ReactDOM.render(
-        <Select name="example1">
-          <SelectItem label="Option 1" value="opt1" />
-          <SelectItem
-            label="Option 2"
-            value="opt2"
-            isSelected={true}
-          />
-          <SelectItem label="Option 3" value="opt3" />
-          <SelectItem label="Option 4" value="opt4" />
-          <SelectItem label="Option 5" value="opt5" />
-          <SelectItem label="Option 6" value="opt6" />
-          <SelectItem label="Option 7" value="opt7" />
-          <SelectItem label="Option 8" value="opt8" />
-        </Select>,
-        document.getElementById('example1')
-      );
 
-      ReactDOM.render(
-        <Select name="example2">
-          <SelectItem label="Option 1" value="opt1" />
-          <SelectItem
-            label="Option 2"
-            value="opt2"
-            isSelected={true}
-          />
-          <SelectItem label="Option 3" value="opt3" />
-          <SelectItem label="Option 4" value="opt4" />
-          <SelectItem label="Option 5" value="opt5" />
-          <SelectItem label="Option 6" value="opt6" />
-          <SelectItem label="Option 7" value="opt7" />
-          <SelectItem label="Option 8" value="opt8" />
-        </Select>,
-        document.getElementById('example2')
-      );
+      // Example 1
+      class Example1 extends React.Component {
+        onChange(value) {
+          console.log('[Example1] onchange: ' + value);
+        }
+
+        render() {
+          return (
+            <Select
+              name="example1"
+              defaultValue="opt2"
+              onChange={this.onChange}
+            >
+              <SelectItem label="Option 1" value="opt1" />
+              <SelectItem label="Option 2" value="opt2" />
+              <SelectItem label="Option 3" value="opt3" />
+              <SelectItem label="Option 4" value="opt4" />
+              <SelectItem label="Option 5" value="opt5" />
+              <SelectItem label="Option 6" value="opt6" />
+              <SelectItem label="Option 7" value="opt7" />
+              <SelectItem label="Option 8" value="opt8" />
+            </Select>
+          );
+        }
+      }
+
+     
+      // Example 2
+      class Example2 extends React.Component {
+        onChange(value) {
+          console.log('[Example2] onchange: ' + value);
+        }
+
+        render() {
+          return (
+            <Select
+              name="example2"
+              value="opt3"
+              onChange={this.onChange}
+              autoFocus={true}
+            >
+              <SelectItem label="Option 1" value="opt1" />
+              <SelectItem label="Option 2" value="opt2" />
+              <SelectItem label="Option 3" value="opt3" />
+              <SelectItem label="Option 4" value="opt4" />
+              <SelectItem label="Option 5" value="opt5" />
+              <SelectItem label="Option 6" value="opt6" />
+              <SelectItem label="Option 7" value="opt7" />
+              <SelectItem label="Option 8" value="opt8" />
+            </Select>
+          );
+        }
+      }
+
+
+      // Example 3
+      class Example3 extends React.Component {
+        onChange(value) {
+          console.log('[Example3] onchange: ' + value);
+        }
+
+        render() {
+          return (
+            <Select
+              name="example3"
+              value="opt4"
+              useDefault={true}
+              onChange={this.onChange}
+            >
+              <SelectItem label="Option 1" value="opt1" />
+              <SelectItem label="Option 2" value="opt2" />
+              <SelectItem label="Option 3" value="opt3" />
+              <SelectItem label="Option 4" value="opt4" />
+              <SelectItem label="Option 5" value="opt5" />
+              <SelectItem label="Option 6" value="opt6" />
+              <SelectItem label="Option 7" value="opt7" />
+              <SelectItem label="Option 8" value="opt8" />
+            </Select>
+          );
+        }
+      }
+
+
+      // Example4
+      class Example4 extends React.Component {
+        onChange(ev) {
+          console.log('[Example4] onchange: ' + ev.target.value);
+        }
+
+        render() {
+          return (
+            <select value="opt2" onChange={this.onChange}>
+              <option value="opt1">Option 1</option>
+              <option value="opt2">Option 2</option>
+              <option value="opt3">Option 3</option>
+            </select>
+          );
+        }
+      }
+
+      // Render examples
+      ReactDOM.render(<Example1 />, document.getElementById('example1'));
+      ReactDOM.render(<Example2 />, document.getElementById('example2'));
+      ReactDOM.render(<Example3 />, document.getElementById('example3'));
+      ReactDOM.render(<Example4 />, document.getElementById('example4'));
     </script>
   </body>
 </html>

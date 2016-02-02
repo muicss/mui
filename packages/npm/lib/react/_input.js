@@ -34,15 +34,16 @@ var Input = function (_React$Component) {
 
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
-    var v = props.value;
+    var value = props.value;
+
     _this.state = {
-      value: v,
-      isDirty: Boolean(v.length)
+      value: value,
+      isDirty: Boolean(value)
     };
 
     var cb = util.callback;
-    _this.onChangeFn = cb(_this, 'onChange');
-    _this.onFocusFn = cb(_this, 'onFocus');
+    _this.onChangeCB = cb(_this, 'onChange');
+    _this.onFocusCB = cb(_this, 'onFocus');
     return _this;
   }
 
@@ -79,7 +80,7 @@ var Input = function (_React$Component) {
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
       cls['mui--is-dirty'] = this.state.isDirty;
-      cls['mui--is-invalid'] = this.props.isInvalid;
+      cls['mui--is-invalid'] = this.props.invalid;
 
       cls = util.classNames(cls);
 
@@ -89,23 +90,23 @@ var Input = function (_React$Component) {
           className: cls,
           rows: this.props.rows,
           placeholder: this.props.hint,
-          defaultValue: this.props.value,
-          autoFocus: this.props.isAutofocus,
-          onChange: this.onChangeFn,
-          onFocus: this.onFocusFn,
-          required: this.props.isRequired
+          value: this.state.value,
+          autoFocus: this.props.autoFocus,
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
         });
       } else {
         inputEl = _react2.default.createElement('input', {
           ref: 'inputEl',
           className: cls,
           type: this.props.type,
-          defaultValue: this.state.value,
+          value: this.state.value,
           placeholder: this.props.hint,
           autoFocus: this.props.autofocus,
-          onChange: this.onChangeFn,
-          onFocus: this.onFocusFn,
-          required: this.props.isRequired
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
         });
       }
 
@@ -121,17 +122,17 @@ var Input = function (_React$Component) {
  */
 
 Input.propTypes = {
-  type: PropTypes.string,
-  value: PropTypes.string,
   hint: PropTypes.string,
-  isAutofocus: PropTypes.bool,
+  value: PropTypes.string,
+  type: PropTypes.string,
+  autoFocus: PropTypes.bool,
   onChange: PropTypes.func
 };
 Input.defaultProps = {
-  type: null,
-  value: '',
   hint: null,
-  isAutofocus: false,
+  type: null,
+  value: null,
+  autoFocus: false,
   onChange: null
 };
 
@@ -235,7 +236,7 @@ var TextField = function (_React$Component3) {
       }
 
       cls['mui-textfield'] = true;
-      cls['mui-textfield--float-label'] = this.props.isLabelFloating;
+      cls['mui-textfield--float-label'] = this.props.floatingLabel;
       cls = util.classNames(cls);
 
       return _react2.default.createElement(
@@ -253,10 +254,10 @@ var TextField = function (_React$Component3) {
 
 TextField.propTypes = {
   label: PropTypes.string,
-  isLabelFloating: PropTypes.bool
+  floatingLabel: PropTypes.bool
 };
 TextField.defaultProps = {
   label: '',
-  isLabelFloating: false
+  floatingLabel: false
 };
 exports.TextField = TextField;

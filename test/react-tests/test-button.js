@@ -17,7 +17,7 @@ describe('react/button', function() {
   it('renders properly', function() {
     let result = getShallowRendererOutput(<Button>test</Button>);
     assert.equal(result.type, 'button');
-    assert.equal(result.props.className, 'mui-btn ');
+    assert.equal(/\bmui-btn\b/.test(result.props.className), true);
     assert.equal(result.props.children[0], 'test');
   });
 
@@ -28,7 +28,7 @@ describe('react/button', function() {
         test
       </Button>
     );
-    assert.equal(result.props.className, 'mui-btn additional')
+    assert.equal(/\badditional\b/.test(result.props.className), true)
   })
 
 

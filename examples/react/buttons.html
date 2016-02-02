@@ -31,37 +31,37 @@
           return (
             <div className="buttons">
               <Button
-                variant={ this.props.variant }
-                size={ this.props.size }
-                isIsDisabled={ this.props.isIsDisabled }>
+                variant={this.props.variant}
+                size={this.props.size}
+                disabled={this.props.disabled}>
                 Button
               </Button>
               <Button
                 color="primary"
-                variant={ this.props.variant }
-                size={ this.props.size }
-                isDisabled={ this.props.isDisabled }>
+                variant={this.props.variant}
+                size={this.props.size}
+                disabled={this.props.disabled}>
                 Button
               </Button>
               <Button 
                 color="danger"
-                variant={ this.props.variant }
-                size={ this.props.size }
-                isDisabled={ this.props.isDisabled }>
+                variant={this.props.variant}
+                size={this.props.size}
+                disabled={this.props.disabled}>
                 Button
               </Button>
               <Button 
                 color="dark"
-                variant={ this.props.variant }
-                size={ this.props.size }
-                isDisabled={ this.props.isDisabled }>
+                variant={this.props.variant}
+                size={this.props.size}
+                disabled={this.props.disabled}>
                 Button
               </Button>
               <Button
                 color="accent"
-                variant={ this.props.variant }
-                size={ this.props.size }
-                isDisabled={ this.props.isDisabled }>
+                variant={this.props.variant}
+                size={this.props.size}
+                disabled={this.props.disabled}>
                 Button
               </Button>
             </div>
@@ -76,25 +76,25 @@
             <div>
               <Button
                 color="primary"
-                size={ this.props.size }>
+                size={this.props.size}>
                 Button
               </Button>
               <Button
                 color="primary"
                 variant="flat"
-                size={ this.props.size }>
+                size={this.props.size}>
                 Button
               </Button>
               <Button
                 color="primary"
                 variant="raised"
-                size={ this.props.size }>
+                size={this.props.size}>
                 Button
               </Button>
               <Button
                 color="primary"
                 variant="fab"
-                size={ this.props.size }>
+                size={this.props.size}>
                 +
               </Button>
             </div>
@@ -109,31 +109,31 @@
             <div>
               <Button
                 variant="fab"
-                isDisabled={ this.props.isDisabled }>
+                disabled={this.props.disabled}>
                 +
               </Button>
               <Button
                 variant="fab"
                 color="primary"
-                isDisabled={ this.props.isDisabled }>
+                disabled={this.props.disabled}>
                 +
               </Button>
               <Button
                 variant="fab"
                 color="danger"
-                isDisabled={ this.props.isDisabled }>
+                disabled={this.props.disabled}>
                 +
               </Button>
               <Button
                 variant="fab"
                 color="dark"
-                isDisabled={ this.props.isDisabled }>
+                disabled={this.props.disabled}>
                 +
               </Button>
               <Button
                 variant="fab"
                 color="accent"
-                isDisabled={ this.props.isDisabled }>
+                disabled={this.props.disabled}>
                 +
               </Button>
             </div>
@@ -146,7 +146,7 @@
         <div className="mui-panel">
           <h3>Default buttons</h3>
           <Buttons />
-          <Buttons isDisabled={ true } />
+          <Buttons disabled={true} />
         </div>,
         document.getElementById('default-buttons')
       );
@@ -156,7 +156,7 @@
         <div className="mui-panel">
           <h3>Flat buttons</h3>
           <Buttons variant="flat" />
-          <Buttons variant="flat" isDisabled={ true } />
+          <Buttons variant="flat" disabled={true} />
         </div>,
         document.getElementById('flat-buttons')
       );
@@ -166,7 +166,7 @@
         <div className="mui-panel">
           <h3>Raised buttons</h3>
           <Buttons variant="raised" />
-          <Buttons variant="raised" isDisabled={ true } />
+          <Buttons variant="raised" disabled={true} />
         </div>,
         document.getElementById('raised-buttons')
       );
@@ -176,7 +176,7 @@
         <div className="mui-panel">
           <h3>Floating Action Buttons</h3>
           <FABButtons />
-          <FABButtons isDisabled={ true } />
+          <FABButtons disabled={true} />
         </div>,
         document.getElementById('floating-buttons')
       );

@@ -19,14 +19,18 @@ class Checkbox extends React.Component {
   static propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
-    isDisabled: PropTypes.bool
+    checked: PropTypes.bool,
+    defaultChecked: PropTypes.bool,
+    disabled: PropTypes.bool
   };
 
   static defaultProps = {
     className: '',
     label: null,
     value: null,
-    isDisabled: false
+    checked: null,
+    defaultChecked: null,
+    disabled: false
   };
 
   render() {
@@ -39,7 +43,9 @@ class Checkbox extends React.Component {
           <input
               type="checkbox"
               value={this.props.value}
-              disabled={this.props.isDisabled}
+              checked={this.props.checked}
+              defaultChecked={this.props.defaultChecked}
+              disabled={this.props.disabled}
           />
           {this.props.label}
         </label>

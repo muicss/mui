@@ -45,7 +45,7 @@ describe('react/container', function() {
 
   it('rendes fluid properly', function() {
     let result = getShallowRendererOutput(
-      <Container isFluid={ true }>test</Container>
+      <Container fluid={true}>test</Container>
     );
 
     assert.equal(result.type, 'div');

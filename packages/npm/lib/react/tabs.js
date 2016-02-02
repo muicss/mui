@@ -106,7 +106,7 @@ var Tabs = function (_React$Component) {
       }
 
       cls = tabsBarClass;
-      if (this.props.isJustified) cls += ' ' + tabsBarJustifiedClass;
+      if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
 
       return _react2.default.createElement(
         'div',
@@ -127,13 +127,13 @@ var Tabs = function (_React$Component) {
 
 Tabs.propTypes = {
   initialSelectedIndex: PropTypes.number,
-  isJustified: PropTypes.bool,
+  justified: PropTypes.bool,
   onChange: PropTypes.func
 };
 Tabs.defaultProps = {
   className: '',
   initialSelectedIndex: 0,
-  isJustified: false,
+  justified: false,
   onChange: null
 };
 exports.default = Tabs;
