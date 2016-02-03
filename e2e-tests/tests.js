@@ -21338,8 +21338,12 @@ function loadStyleFn(cssText) {
  * Raise an error
  * @param {string} msg - The error message.
  */
-function raiseErrorFn(msg) {
-  throw new Error("MUI: " + msg);
+function raiseErrorFn(msg, useConsole) {
+  if (useConsole) {
+    if (typeof console !== 'undefined') console.error('MUI Warning: ' + msg);
+  } else {
+    throw new Error('MUI: ' + msg);
+  }
 }
 
 /**
@@ -21550,11 +21554,18 @@ var Input = function (_React$Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
     var value = props.value;
+    var innerValue = value || props.defaultValue;
 
     _this.state = {
-      value: value,
-      isDirty: Boolean(value)
+      innerValue: innerValue,
+      isDirty: Boolean(innerValue)
     };
+
+    // warn if value defined but onChange is not
+    if (value !== null && props.onChange === null) {
+      var s = 'You provided a `value` prop to a form field without an ' + '`OnChange` handler. Please see React documentation on ' + 'controlled components';
+      util.raiseError(s, true);
+    }
 
     var cb = util.callback;
     _this.onChangeCB = cb(_this, 'onChange');
@@ -21571,7 +21582,7 @@ var Input = function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(ev) {
-      this.setState({ value: ev.target.value });
+      this.setState({ innerValue: ev.target.value });
       if (this.props.onChange) this.props.onChange(ev);
     }
   }, {
@@ -21589,7 +21600,7 @@ var Input = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = {},
-          isNotEmpty = Boolean(this.state.value),
+          isNotEmpty = Boolean(this.state.innerValue),
           inputEl = undefined;
 
       cls['mui--is-empty'] = !isNotEmpty;
@@ -21605,7 +21616,8 @@ var Input = function (_React$Component) {
           className: cls,
           rows: this.props.rows,
           placeholder: this.props.hint,
-          value: this.state.value,
+          value: this.props.value,
+          defaultValue: this.props.defaultValue,
           autoFocus: this.props.autoFocus,
           onChange: this.onChangeCB,
           onFocus: this.onFocusCB,
@@ -21616,7 +21628,8 @@ var Input = function (_React$Component) {
           ref: 'inputEl',
           className: cls,
           type: this.props.type,
-          value: this.state.value,
+          value: this.props.value,
+          defaultValue: this.props.defaultValue,
           placeholder: this.props.hint,
           autoFocus: this.props.autofocus,
           onChange: this.onChangeCB,
@@ -25230,6 +25243,19 @@ var _textareaInput2 = babelHelpers.interopRequireDefault(_textareaInput);
 var _reactHelpers = require('../lib/react-helpers');
 
 describe('react/text-input', function () {
+  var errFn = undefined;
+
+  before(function () {
+    errFn = console.error;
+    console.error = function (msg) {
+      throw Error(msg);
+    };
+  });
+
+  after(function () {
+    console.error = errFn;
+  });
+
   it('renders wrapper properly', function () {
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_textInput2.default, null));
     var wrapperEl = _reactDom2.default.findDOMNode(instance);
@@ -25262,13 +25288,71 @@ describe('react/text-input', function () {
     // modify input
     _reactAddonsTestUtils2.default.Simulate.change(inputEl);
   });
+
+  it('does controlled component validation', function () {
+    // raises error when `value` defined and `onChange missing
+    _assert2.default.throws(function () {
+      var elem = _react2.default.createElement(_textInput2.default, { value: 'my value' });
+      var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    }, /MUI Warning/);
+  });
+
+  it('can be used as controlled component', function () {
+    var TestApp = _react2.default.createClass({
+      displayName: 'TestApp',
+
+      getInitialState: function getInitialState() {
+        return { value: this.props.value };
+      },
+      onChange: function onChange(ev) {
+        this.setState({ value: ev.target.value });
+      },
+      render: function render() {
+        return _react2.default.createElement(_textInput2.default, {
+          value: this.state.value,
+          defaultValue: 'ignored value',
+          onChange: this.onChange
+        });
+      }
+    });
+
+    var elem = _react2.default.createElement(TestApp, { value: 'test' });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var findComponent = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag;
+    var inputEl = findComponent(instance, 'input');
+
+    // check default value
+    _assert2.default.equal(inputEl.value, 'test');
+
+    // update TestApp and check inputEl value
+    instance.setState({ value: 'test2' });
+    _assert2.default.equal(inputEl.value, 'test2');
+
+    // update inputEl and check state
+    inputEl.value = 'test3';
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+    _assert2.default.equal(instance.state.value, 'test3');
+  });
 }); /**
      * MUI test react textinput library
      * @module test/react-tests/test-textinput
      */
 
 describe('react/textarea-input', function () {
-  var elem = undefined;
+  // capture console error messages
+  var errFn = undefined,
+      elem = undefined;
+
+  before(function () {
+    errFn = console.error;
+    console.error = function (msg) {
+      throw Error(msg);
+    };
+  });
+
+  after(function () {
+    console.error = errFn;
+  });
 
   beforeEach(function () {
     elem = _react2.default.createElement(_textareaInput2.default, { defaultValue: 'my input' });
@@ -25289,6 +25373,51 @@ describe('react/textarea-input', function () {
     var textareaEl = fn(instance, 'textarea');
 
     _assert2.default.equal(textareaEl.textContent, 'my input');
+  });
+
+  it('does controlled component validation', function () {
+    // raises error when `value` defined and `onChange missing
+    _assert2.default.throws(function () {
+      var elem = _react2.default.createElement(_textareaInput2.default, { value: 'my value' });
+      var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    }, /MUI Warning/);
+  });
+
+  it('can be used as controlled component', function () {
+    var TestApp = _react2.default.createClass({
+      displayName: 'TestApp',
+
+      getInitialState: function getInitialState() {
+        return { value: this.props.value };
+      },
+      onChange: function onChange(ev) {
+        this.setState({ value: ev.target.value });
+      },
+      render: function render() {
+        return _react2.default.createElement(_textareaInput2.default, {
+          value: this.state.value,
+          defaultValue: 'ignored value',
+          onChange: this.onChange
+        });
+      }
+    });
+
+    var elem = _react2.default.createElement(TestApp, { value: 'test' });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var findComponent = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag;
+    var inputEl = findComponent(instance, 'textarea');
+
+    // check default value
+    _assert2.default.equal(inputEl.value, 'test');
+
+    // update TestApp and check inputEl value
+    instance.setState({ value: 'test2' });
+    _assert2.default.equal(inputEl.value, 'test2');
+
+    // update inputEl and check state
+    inputEl.value = 'test3';
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+    _assert2.default.equal(instance.state.value, 'test3');
   });
 });
 

@@ -22,11 +22,20 @@ class Input extends React.Component {
     super(props);
 
     let value = props.value;
+    let innerValue = value || props.defaultValue;
 
     this.state = { 
-      value: value,
-      isDirty: Boolean(value)
+      innerValue: innerValue,
+      isDirty: Boolean(innerValue)
     };
+
+    // warn if value defined but onChange is not
+    if (value !== null && props.onChange === null) {
+      let s = 'You provided a `value` prop to a form field without an ' + 
+      '`OnChange` handler. Please see React documentation on ' +
+      'controlled components';
+      util.raiseError(s, true);
+    }
 
     let cb = util.callback;
     this.onChangeCB = cb(this, 'onChange');
@@ -55,7 +64,7 @@ class Input extends React.Component {
   }
 
   onChange(ev) {
-    this.setState({value: ev.target.value});
+    this.setState({innerValue: ev.target.value});
     if (this.props.onChange) this.props.onChange(ev);
   }
 
@@ -70,7 +79,7 @@ class Input extends React.Component {
 
   render() {
     let cls = {},
-        isNotEmpty = Boolean(this.state.value),
+        isNotEmpty = Boolean(this.state.innerValue),
         inputEl;
 
     cls['mui--is-empty'] = !isNotEmpty;
@@ -87,7 +96,8 @@ class Input extends React.Component {
           className={cls}
           rows={this.props.rows}
           placeholder={this.props.hint}
-          value={this.state.value}
+          value={this.props.value}
+          defaultValue={this.props.defaultValue}
           autoFocus={this.props.autoFocus}
           onChange={this.onChangeCB}
           onFocus={this.onFocusCB}
@@ -100,7 +110,8 @@ class Input extends React.Component {
           ref="inputEl"
           className={cls}
           type={this.props.type}
-          value={this.state.value}
+          value={this.props.value}
+          defaultValue={this.props.defaultValue}
           placeholder={this.props.hint}
           autoFocus={this.props.autofocus}
           onChange={this.onChangeCB}

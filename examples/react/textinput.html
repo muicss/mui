@@ -85,7 +85,11 @@
       ReactDOM.render(
         <Form>
           <TextInput label="Label 1" floatingLabel={true} />
-          <TextInput label="Label 2" floatingLabel={true} value="on load" />
+          <TextInput
+            label="Label 2"
+            floatingLabel={true}
+            defaultValue="on load"
+          />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('example4')
