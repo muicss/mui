@@ -1,6 +1,11 @@
 # MUI Changelog
 
-## 0.4.0
+## 0.4.1 - February 2, 2016
+
+* Added defaultValue and controlled component support to React TextInput and
+  TextareaInput
+
+## 0.4.0 - February 2, 2016
 
 * Made CSS/JS ripple node removal more robust
 * Added value, defaultValue, onChange support to React Select component
@@ -34,7 +39,7 @@
 * Added .mui--text-black and .mui--text-white
 * Added 'xl' screen size and changed default widths for 'sm', 'md' and 'lg' breakpoints
 
-## 0.2.10 - January 12, 2015
+## 0.2.10 - January 12, 2016
 
 * Fixed bug causing mui.overlay('off') to throw error when called before
   turning on overlay

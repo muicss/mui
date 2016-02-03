@@ -291,6 +291,7 @@ Read more: https://www.muicss.com/docs/v1/react/tabs
 import TextInput from 'muicss/lib/react/text-input';
 
 <TextInput />
+  * {String} defaultValue
   * {String} hint
   * {String} value
   * {String} type=text|email|url|tel|password
@@ -304,6 +305,7 @@ import TextInput from 'muicss/lib/react/text-input';
 import TextareaInput from 'muicss/lib/react/textarea-input';
 
 <TextareaInput />
+  * {String} defaultValue
   * {String} hint
   * {String} value
   * {Integer} rows

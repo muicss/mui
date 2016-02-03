@@ -35,11 +35,18 @@ var Input = function (_React$Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
     var value = props.value;
+    var innerValue = value || props.defaultValue;
 
     _this.state = {
-      value: value,
-      isDirty: Boolean(value)
+      innerValue: innerValue,
+      isDirty: Boolean(innerValue)
     };
+
+    // warn if value defined but onChange is not
+    if (value !== null && props.onChange === null) {
+      var s = 'You provided a `value` prop to a form field without an ' + '`OnChange` handler. Please see React documentation on ' + 'controlled components';
+      util.raiseError(s, true);
+    }
 
     var cb = util.callback;
     _this.onChangeCB = cb(_this, 'onChange');
@@ -56,7 +63,7 @@ var Input = function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(ev) {
-      this.setState({ value: ev.target.value });
+      this.setState({ innerValue: ev.target.value });
       if (this.props.onChange) this.props.onChange(ev);
     }
   }, {
@@ -74,7 +81,7 @@ var Input = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = {},
-          isNotEmpty = Boolean(this.state.value),
+          isNotEmpty = Boolean(this.state.innerValue),
           inputEl = undefined;
 
       cls['mui--is-empty'] = !isNotEmpty;
@@ -90,7 +97,8 @@ var Input = function (_React$Component) {
           className: cls,
           rows: this.props.rows,
           placeholder: this.props.hint,
-          value: this.state.value,
+          value: this.props.value,
+          defaultValue: this.props.defaultValue,
           autoFocus: this.props.autoFocus,
           onChange: this.onChangeCB,
           onFocus: this.onFocusCB,
@@ -101,7 +109,8 @@ var Input = function (_React$Component) {
           ref: 'inputEl',
           className: cls,
           type: this.props.type,
-          value: this.state.value,
+          value: this.props.value,
+          defaultValue: this.props.defaultValue,
           placeholder: this.props.hint,
           autoFocus: this.props.autofocus,
           onChange: this.onChangeCB,
