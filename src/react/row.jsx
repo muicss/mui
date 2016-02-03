@@ -18,20 +18,20 @@ const breakpoints = ['xs', 'sm', 'md', 'lg'];
  * @class
  */
 class Row extends React.Component {
-  static defaultProps = {
-    className: ''
-  };
+    static defaultProps = {
+        className: ''
+    };
 
-  render() {
-    return (
-      <div
-        className={'mui-row ' + this.props.className}
-        style={this.props.style}
-      >
-        {this.props.children}
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div
+                { ...this.props }
+                className={'mui-row ' + this.props.className}
+            >
+                {this.props.children}
+            </div>
+        );
+    }
 }
 
 
