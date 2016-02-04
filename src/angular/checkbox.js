@@ -1,5 +1,5 @@
-module.exports = angular.module('mui.radio', [])
-  .directive('muiRadio', function() {
+module.exports = angular.module('mui.checkbox', [])
+  .directive('muiCheckbox', function() {
     return {
       restrict: "AE",
       replace: true,
@@ -8,12 +8,12 @@ module.exports = angular.module('mui.radio', [])
         innerInput: '=?ngModel',
         label: '@',
         value: '@',
-        ngDisabled : '=',
+        ngDisabled: '=',
         select: '&?onSelect'
       },
-      template: '<div class="mui-radio">' +
+      template: '<div class="mui-checkbox">' +
         '<label>' +
-        '<input type="radio" ng-model="innerInput" ' +
+        '<input type="checkbox" ng-model="innerInput" ' +
         'value={{value}} ng-disabled="ngDisabled" ng-click="select()" ' +
         '>{{label}}</label> ' +
         '</div>'

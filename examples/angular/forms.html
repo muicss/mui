@@ -48,9 +48,24 @@
 
           <h3>Checkboxes and radio buttons</h3>
           <form>
+            <mui-checkbox ng-model="check.select1" value="select1" label="checkbox1"></mui-checkbox>
+            <mui-checkbox ng-model="check.select2" value="select2" label="checkbox2"></mui-checkbox>
+            <mui-checkbox on-select="alerts(check)" ng-model="check.select3" value="select3" label="checkbox3"></mui-checkbox>
+            <mui-checkbox ng-model="check.select4" ng-disabled="true" value="select4" label="checkbox4"></mui-checkbox>
+            <p>
+              checkbox1: {{check.select1}}
+            </p>
+              checkbox2: {{check.select2}}
+            </p>
+              checkbox3: {{check.select3}}
+            </p>
+              checkbox4: {{check.select4}}
+            </p>
+
             <mui-radio ng-model="color.name"  value="red" label="radio1"></mui-radio>
             <mui-radio on-select="alerts(color)" ng-model="color.name" value="green"  label="radio2"></mui-radio>
             <mui-radio ng-model="color.name"   value="blue" label="radio3"></mui-radio>
+            <mui-radio ng-model="color.name"  ng-disabled="true"  value="yellow" label="radio4"></mui-radio>
             <p>
               value: {{color.name}}
             </p>
@@ -80,8 +95,14 @@
       $scope.color = {
         name: 'green'
       };
+      $scope.check = {
+        select1 : true,
+        select2 : false,
+        select3 : true,
+        select4 : true
+      }
       $scope.alerts = function(color) {
-        console.log($scope.color);
+        console.log(color);
       }
     })
     ;
