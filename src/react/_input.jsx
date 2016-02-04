@@ -102,6 +102,7 @@ class Input extends React.Component {
           onChange={this.onChangeCB}
           onFocus={this.onFocusCB}
           required={this.props.required}
+          floatingLabel = {this.props.floatingLabel}
         />
       );
     } else {
@@ -117,6 +118,7 @@ class Input extends React.Component {
           onChange={this.onChangeCB}
           onFocus={this.onFocusCB}
           required={this.props.required}
+          floatingLabel = {this.props.floatingLabel}
         />
       );
     }
