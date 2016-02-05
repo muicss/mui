@@ -34,18 +34,20 @@ class Checkbox extends React.Component {
   };
 
   render() {
+    let { children, ...other } = this.props;
+
     return (
       <div
+        { ...other }
         className={'mui-checkbox ' + this.props.className}
-        style={this.props.style}
       >
         <label>
           <input
-              type="checkbox"
-              value={this.props.value}
-              checked={this.props.checked}
-              defaultChecked={this.props.defaultChecked}
-              disabled={this.props.disabled}
+            type="checkbox"
+            value={this.props.value}
+            checked={this.props.checked}
+            defaultChecked={this.props.defaultChecked}
+            disabled={this.props.disabled}
           />
           {this.props.label}
         </label>

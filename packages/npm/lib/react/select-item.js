@@ -44,9 +44,13 @@ var SelectItem = function (_React$Component) {
   babelHelpers.createClass(SelectItem, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       return _react2.default.createElement(
         'option',
-        { value: this.props.value },
+        babelHelpers.extends({}, other, { value: this.props.value }),
         this.props.label
       );
     }

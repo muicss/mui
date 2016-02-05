@@ -27,7 +27,7 @@ class TextInput extends React.Component {
   };
 
   render() {
-    return <TextField {...this.props} />;
+    return <TextField { ...this.props } />;
   }
 }
 

@@ -91,8 +91,12 @@ var Input = function (_React$Component) {
 
       cls = util.classNames(cls);
 
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       if (this.props.type === 'textarea') {
-        inputEl = _react2.default.createElement('textarea', {
+        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
           ref: 'inputEl',
           className: cls,
           rows: this.props.rows,
@@ -103,9 +107,9 @@ var Input = function (_React$Component) {
           onChange: this.onChangeCB,
           onFocus: this.onFocusCB,
           required: this.props.required
-        });
+        }));
       } else {
-        inputEl = _react2.default.createElement('input', {
+        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, other, {
           ref: 'inputEl',
           className: cls,
           type: this.props.type,
@@ -116,7 +120,7 @@ var Input = function (_React$Component) {
           onChange: this.onChangeCB,
           onFocus: this.onFocusCB,
           required: this.props.required
-        });
+        }));
       }
 
       return inputEl;

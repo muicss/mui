@@ -70,7 +70,8 @@ var babelHelpersList = [
   'possibleConstructorReturn',
   'interopRequireDefault',
   'interopRequireWildcard',
-  'extends'
+  'extends',
+  'objectWithoutProperties'
 ];
 
 

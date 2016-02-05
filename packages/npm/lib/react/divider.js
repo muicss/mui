@@ -30,10 +30,13 @@ var Divider = function (_React$Component) {
   babelHelpers.createClass(Divider, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', {
-        className: 'mui-divider ' + this.props.className,
-        style: this.props.style
-      });
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      return _react2.default.createElement('div', babelHelpers.extends({}, other, {
+        className: 'mui-divider ' + this.props.className
+      }));
     }
   }]);
   return Divider;

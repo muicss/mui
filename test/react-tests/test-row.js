@@ -5,6 +5,7 @@
 
 import assert from 'assert';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactUtils from 'react-addons-test-utils';
 
 import Row from '../../src/react/row';
@@ -39,5 +40,18 @@ describe('react/grid', function() {
     );
 
     assert.equal(result.props.style.additonal, 'style');
+  });
+
+
+  it('handles click events', function(done) {
+    function onClickFn() {
+      assert.equal(true, true);
+      done();
+    }
+
+    let instance = ReactUtils.renderIntoDocument(<Row onClick={onClickFn} />);
+    let wrapperEl = ReactDOM.findDOMNode(instance);
+    
+    ReactUtils.Simulate.click(wrapperEl);
   });
 });

@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.4.2 - February 3, 2016
+
+* Added support for other React attributes and events
+* Set default font-family to "Arial, Verdana, Tahoma" for better cross-browser
+  support out of the box
+
 ## 0.4.1 - February 2, 2016
 
 * Added defaultValue and controlled component support to React TextInput and

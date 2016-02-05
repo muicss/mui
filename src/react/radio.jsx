@@ -36,19 +36,21 @@ class Radio extends React.Component {
   };
 
   render() {
+    let { children, ...other } = this.props;
+
     return (
       <div
+        { ...other }
         className={'mui-radio ' + this.props.className}
-        style={this.props.style}
       >
         <label>
           <input
-              type="radio"
-              name={this.props.name}
-              value={this.props.value}
-              checked={this.props.checked}
-              defaultChecked={this.props.defaultChecked}
-              disabled={this.props.disabled}
+            type="radio"
+            name={this.props.name}
+            value={this.props.value}
+            checked={this.props.checked}
+            defaultChecked={this.props.defaultChecked}
+            disabled={this.props.disabled}
           />
           {this.props.label}
         </label>

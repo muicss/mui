@@ -65,9 +65,12 @@ var Tabs = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       var tabEls = [],
           paneEls = [],
-          children = this.props.children,
           m = children.length,
           selectedIndex = this.state.currentSelectedIndex % m,
           isActive = undefined,
@@ -110,7 +113,7 @@ var Tabs = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: this.props.className, style: this.props.style },
+        other,
         _react2.default.createElement(
           'ul',
           { className: cls },

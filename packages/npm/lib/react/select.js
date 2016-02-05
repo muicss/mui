@@ -214,15 +214,19 @@ var Select = function (_React$Component) {
         });
       }
 
+      var _props = this.props;
+      var children = _props.children;
+      var onChange = _props.onChange;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
+
       return _react2.default.createElement(
         'div',
-        {
+        babelHelpers.extends({}, other, {
           ref: 'wrapperEl',
           className: 'mui-select ' + this.props.className,
-          style: this.props.style,
           onFocus: this.onOuterFocusCB,
           onBlur: this.onOuterBlurCB
-        },
+        }),
         _react2.default.createElement(
           'select',
           {

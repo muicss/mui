@@ -208,11 +208,13 @@ class Select extends React.Component {
       );
     }
 
+    let { children, onChange, ...other } = this.props;
+
     return (
       <div
+        { ...other }
         ref="wrapperEl"
         className={'mui-select ' + this.props.className}
-        style={this.props.style}
         onFocus={this.onOuterFocusCB}
         onBlur={this.onOuterBlurCB}
       >

@@ -30,10 +30,13 @@ var Caret = function (_React$Component) {
   babelHelpers.createClass(Caret, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('span', {
-        className: 'mui-caret ' + this.props.className,
-        style: this.props.style
-      });
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      return _react2.default.createElement('span', babelHelpers.extends({}, other, {
+        className: 'mui-caret ' + this.props.className
+      }));
     }
   }]);
   return Caret;

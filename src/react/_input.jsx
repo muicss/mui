@@ -89,9 +89,12 @@ class Input extends React.Component {
 
     cls = util.classNames(cls);
 
+    let { children, ...other } = this.props;
+
     if (this.props.type === 'textarea') {
       inputEl = (
         <textarea
+          { ...other }
           ref="inputEl"
           className={cls}
           rows={this.props.rows}
@@ -107,6 +110,7 @@ class Input extends React.Component {
     } else {
       inputEl = (
         <input
+          { ...other }
           ref="inputEl"
           className={cls}
           type={this.props.type}

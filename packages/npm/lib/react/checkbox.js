@@ -32,12 +32,15 @@ var Checkbox = function (_React$Component) {
   babelHelpers.createClass(Checkbox, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       return _react2.default.createElement(
         'div',
-        {
-          className: 'mui-checkbox ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, other, {
+          className: 'mui-checkbox ' + this.props.className
+        }),
         _react2.default.createElement(
           'label',
           null,

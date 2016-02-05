@@ -118,15 +118,12 @@ var Button = function (_React$Component) {
 
       return _react2.default.createElement(
         'button',
-        {
+        babelHelpers.extends({}, this.props, {
           ref: 'buttonEl',
-          type: this.props.type,
           className: cls + ' ' + this.props.className,
-          disabled: this.props.disabled,
           onClick: this.onClick.bind(this),
-          onMouseDown: this.onMouseDown.bind(this),
-          style: this.props.style
-        },
+          onMouseDown: this.onMouseDown.bind(this)
+        }),
         this.props.children,
         Object.keys(ripples).map(function (k, i) {
           var v = ripples[k];

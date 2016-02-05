@@ -47,13 +47,17 @@ var DropdownItem = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       return _react2.default.createElement(
         'li',
-        null,
+        other,
         _react2.default.createElement(
           'a',
           { href: this.props.link, onClick: this.onClickCB },
-          this.props.children
+          children
         )
       );
     }

@@ -106,13 +106,11 @@ class Button extends React.Component {
 
     return (
       <button
+        { ...this.props }
         ref="buttonEl"
-        type={this.props.type}
         className={cls + ' ' + this.props.className}
-        disabled={this.props.disabled}
         onClick={this.onClick.bind(this)}
         onMouseDown={this.onMouseDown.bind(this)}
-        style={this.props.style}
       >
         {this.props.children}
         {

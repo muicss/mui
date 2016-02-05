@@ -164,13 +164,18 @@ var Dropdown = function (_React$Component) {
         );
       }
 
+      var _props = this.props;
+      var ref = _props.ref;
+      var className = _props.className;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children']);
+
       return _react2.default.createElement(
         'div',
-        {
+        babelHelpers.extends({}, other, {
           ref: 'wrapperEl',
-          className: dropdownClass + ' ' + this.props.className,
-          style: this.props.style
-        },
+          className: dropdownClass + ' ' + className
+        }),
         buttonEl,
         menuEl
       );

@@ -155,11 +155,13 @@ class Dropdown extends React.Component {
       );
     }
 
+    let { ref, className, children, ...other } = this.props;
+
     return (
       <div
+        { ...other }
         ref="wrapperEl"
-        className={dropdownClass + ' ' + this.props.className}
-        style={this.props.style}
+        className={dropdownClass + ' ' + className}
       >
         {buttonEl}
         {menuEl}

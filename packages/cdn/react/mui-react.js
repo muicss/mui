@@ -1202,8 +1202,12 @@ var Input = function (_React$Component) {
 
       cls = util.classNames(cls);
 
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       if (this.props.type === 'textarea') {
-        inputEl = _react2.default.createElement('textarea', {
+        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
           ref: 'inputEl',
           className: cls,
           rows: this.props.rows,
@@ -1214,9 +1218,9 @@ var Input = function (_React$Component) {
           onChange: this.onChangeCB,
           onFocus: this.onFocusCB,
           required: this.props.required
-        });
+        }));
       } else {
-        inputEl = _react2.default.createElement('input', {
+        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, other, {
           ref: 'inputEl',
           className: cls,
           type: this.props.type,
@@ -1227,7 +1231,7 @@ var Input = function (_React$Component) {
           onChange: this.onChangeCB,
           onFocus: this.onFocusCB,
           required: this.props.required
-        });
+        }));
       }
 
       return inputEl;
@@ -1502,15 +1506,12 @@ var Button = function (_React$Component) {
 
       return _react2.default.createElement(
         'button',
-        {
+        babelHelpers.extends({}, this.props, {
           ref: 'buttonEl',
-          type: this.props.type,
           className: cls + ' ' + this.props.className,
-          disabled: this.props.disabled,
           onClick: this.onClick.bind(this),
-          onMouseDown: this.onMouseDown.bind(this),
-          style: this.props.style
-        },
+          onMouseDown: this.onMouseDown.bind(this)
+        }),
         this.props.children,
         Object.keys(ripples).map(function (k, i) {
           var v = ripples[k];
@@ -1647,10 +1648,13 @@ var Caret = function (_React$Component) {
   babelHelpers.createClass(Caret, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('span', {
-        className: 'mui-caret ' + this.props.className,
-        style: this.props.style
-      });
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      return _react2.default.createElement('span', babelHelpers.extends({}, other, {
+        className: 'mui-caret ' + this.props.className
+      }));
     }
   }]);
   return Caret;
@@ -1755,10 +1759,9 @@ var Appbar = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        {
-          className: 'mui-appbar ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: 'mui-appbar ' + this.props.className
+        }),
         this.props.children
       );
     }
@@ -1812,12 +1815,15 @@ var Checkbox = function (_React$Component) {
   babelHelpers.createClass(Checkbox, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       return _react2.default.createElement(
         'div',
-        {
-          className: 'mui-checkbox ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, other, {
+          className: 'mui-checkbox ' + this.props.className
+        }),
         _react2.default.createElement(
           'label',
           null,
@@ -1934,10 +1940,9 @@ var Col = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        {
-          className: cls + ' ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: cls + ' ' + this.props.className
+        }),
         this.props.children
       );
     }
@@ -1989,10 +1994,9 @@ var Container = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        {
-          className: cls + ' ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: cls + ' ' + this.props.className
+        }),
         this.props.children
       );
     }
@@ -2044,10 +2048,13 @@ var Divider = function (_React$Component) {
   babelHelpers.createClass(Divider, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', {
-        className: 'mui-divider ' + this.props.className,
-        style: this.props.style
-      });
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      return _react2.default.createElement('div', babelHelpers.extends({}, other, {
+        className: 'mui-divider ' + this.props.className
+      }));
     }
   }]);
   return Divider;
@@ -2110,13 +2117,17 @@ var DropdownItem = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       return _react2.default.createElement(
         'li',
-        null,
+        other,
         _react2.default.createElement(
           'a',
           { href: this.props.link, onClick: this.onClickCB },
-          this.props.children
+          children
         )
       );
     }
@@ -2303,13 +2314,18 @@ var Dropdown = function (_React$Component) {
         );
       }
 
+      var _props = this.props;
+      var ref = _props.ref;
+      var className = _props.className;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children']);
+
       return _react2.default.createElement(
         'div',
-        {
+        babelHelpers.extends({}, other, {
           ref: 'wrapperEl',
-          className: dropdownClass + ' ' + this.props.className,
-          style: this.props.style
-        },
+          className: dropdownClass + ' ' + className
+        }),
         buttonEl,
         menuEl
       );
@@ -2381,10 +2397,9 @@ var Form = function (_React$Component) {
 
       return _react2.default.createElement(
         'form',
-        {
-          className: cls + ' ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: cls + ' ' + this.props.className
+        }),
         this.props.children
       );
     }
@@ -2438,10 +2453,9 @@ var Panel = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        {
-          className: 'mui-panel ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: 'mui-panel ' + this.props.className
+        }),
         this.props.children
       );
     }
@@ -2491,12 +2505,15 @@ var Radio = function (_React$Component) {
   babelHelpers.createClass(Radio, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       return _react2.default.createElement(
         'div',
-        {
-          className: 'mui-radio ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, other, {
+          className: 'mui-radio ' + this.props.className
+        }),
         _react2.default.createElement(
           'label',
           null,
@@ -2578,10 +2595,9 @@ var Row = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        {
-          className: 'mui-row ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: 'mui-row ' + this.props.className
+        }),
         this.props.children
       );
     }
@@ -2643,9 +2659,13 @@ var SelectItem = function (_React$Component) {
   babelHelpers.createClass(SelectItem, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       return _react2.default.createElement(
         'option',
-        { value: this.props.value },
+        babelHelpers.extends({}, other, { value: this.props.value }),
         this.props.label
       );
     }
@@ -2882,15 +2902,19 @@ var Select = function (_React$Component) {
         });
       }
 
+      var _props = this.props;
+      var children = _props.children;
+      var onChange = _props.onChange;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
+
       return _react2.default.createElement(
         'div',
-        {
+        babelHelpers.extends({}, other, {
           ref: 'wrapperEl',
           className: 'mui-select ' + this.props.className,
-          style: this.props.style,
           onFocus: this.onOuterFocusCB,
           onBlur: this.onOuterBlurCB
-        },
+        }),
         _react2.default.createElement(
           'select',
           {
@@ -3172,9 +3196,12 @@ var Tabs = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
       var tabEls = [],
           paneEls = [],
-          children = this.props.children,
           m = children.length,
           selectedIndex = this.state.currentSelectedIndex % m,
           isActive = undefined,
@@ -3217,7 +3244,7 @@ var Tabs = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: this.props.className, style: this.props.style },
+        other,
         _react2.default.createElement(
           'ul',
           { className: cls },

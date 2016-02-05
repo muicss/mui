@@ -31,7 +31,13 @@ class SelectItem extends React.Component {
   };
 
   render() {
-    return <option value={this.props.value}>{this.props.label}</option>;
+    let { children, ...other } = this.props;
+
+    return (
+      <option { ...other } value={this.props.value}>
+        {this.props.label}
+      </option>
+    );
   }
 }
 

@@ -37,10 +37,9 @@ var Container = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        {
-          className: cls + ' ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: cls + ' ' + this.props.className
+        }),
         this.props.children
       );
     }

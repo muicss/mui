@@ -23,15 +23,15 @@ class Container extends React.Component {
   };
 
   render() {
-    var cls = 'mui-container';
+    let cls = 'mui-container';
 
     // fluid containers
     if (this.props.fluid) cls += '-fluid';
 
     return (
       <div
+        { ...this.props }
         className={cls + ' ' + this.props.className}
-        style={this.props.style}
       >
         {this.props.children}
       </div>

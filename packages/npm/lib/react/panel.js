@@ -32,10 +32,9 @@ var Panel = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        {
-          className: 'mui-panel ' + this.props.className,
-          style: this.props.style
-        },
+        babelHelpers.extends({}, this.props, {
+          className: 'mui-panel ' + this.props.className
+        }),
         this.props.children
       );
     }

@@ -58,8 +58,8 @@ class Col extends React.Component {
 
     return (
       <div
+        { ...this.props }
         className={cls + ' ' + this.props.className }
-        style={this.props.style}
       >
         {this.props.children}
       </div>
