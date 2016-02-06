@@ -72,6 +72,16 @@
 
           </form>
 
+          <h3>select</h3>
+          <form>
+            <mui-select ng-model='data.selected'>
+              <mui-option ng-repeat="option in data.options" value="{{option.value}}" label={{option.label}}></mui-option>
+            </mui-select>
+            <p>
+              selected: {{data.selected}}
+            </p>
+          </form>
+
           <h3>Form Validation</h3>
           <form name="myform5" ng-submit="submitForm5(myform5.$valid)">
             <mui-input ng-model='form5.input1' name="input5-1" required hint="Text*"></mui-input>
@@ -100,6 +110,19 @@
         select2 : false,
         select3 : true,
         select4 : true
+      }
+
+      $scope.data ={
+        options : [{
+          label : 'option1',
+          value : '1'
+        },{
+          label : 'option2',
+          value : '2'
+        },{
+          label : 'option3',
+          value : '3'
+        }]
       }
       $scope.alerts = function(color) {
         console.log(color);
