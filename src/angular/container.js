@@ -19,7 +19,7 @@ module.exports = angular.module('mui.container', [])
          * if fluid
          */
         if(!angular.isUndefined(attr.fluid)){
-            element.removeClass("mui-container").addClass("mui-container-fluid");
+            element.removeClass('mui-container').addClass('mui-container-fluid');
         }
       }
     };

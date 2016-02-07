@@ -1,7 +1,7 @@
 module.exports = angular.module('mui.dropdown', [])
   .directive('muiDropdown', function($timeout, $compile) {
     return {
-      restrict: "AE",
+      restrict: 'AE',
       transclude: true,
       replace : true,
       scope: {
@@ -11,47 +11,41 @@ module.exports = angular.module('mui.dropdown', [])
         open: '=?', //open ?
         disable: '='
       },
-      template: "<div class='mui-dropdown'>" +
-                  "<mui-button variant='{{variant}}' disable='disable' color='{{color}}' "+
-                  "size='{{size}}'></mui-button>" +
-                  "<ul class='mui-dropdown__menu' ng-transclude></ul>"+
-                "</div>",
+      template: '<div class="mui-dropdown">' +
+                  '<mui-button variant="{{variant}}" disable="disable" color="{{color}}" '+
+                  'size="{{size}}"></mui-button>' +
+                  '<ul class="mui-dropdown__menu" ng-transclude></ul>'+
+                '</div>',
       link: function(scope, element, attrs) {
         var dropdownClass = 'mui-dropdown',
           menuClass = 'mui-dropdown__menu',
           openClass = 'mui--is-open',
-          rightClass = 'mui-dropdown__menu--right';
+          rightClass = 'mui-dropdown__menu--right',
+          $menu,$muiButton;
 
         scope.open = scope.open || false;
 
         var _findMenuNode = function() {
           return angular.element(element[0].querySelector('.' + menuClass));
         };
-        var $menu = _findMenuNode().css("margin-top", '-3px');
+        $menu = _findMenuNode().css('margin-top', '-3px');
 
-        /**
-         * menu right
-         */
+        //menu right
         !angular.isUndefined(attrs.right) && $menu.addClass(rightClass);
 
-        /**
-         * enable html type label
-         */
+        //html类型的 label
         attrs.$observe('label', function() {
-          var $muiButton = angular.element(element[0].querySelector('.mui-btn'));
-          $muiButton.find('span').remove();
-          $muiButtonText = $muiButton.append('<span></span>').find('span');
+          $muiButton = angular.element(element[0].querySelector('.mui-btn'));
           if (!angular.isUndefined(attrs.nocaret)) {
-            $muiButtonText.html(attrs.label);
+            $muiButton.html(attrs.label);
           } else {
-            $muiButtonText.html(attrs.label + ' <mui-caret></mui-caret>');
+            $muiButton.html(attrs.label + ' <mui-caret></mui-caret>');
           }
-          console.log($muiButtonText[0]);
-          $compile($muiButtonText.children())(scope);
+          $compile($muiButton.children())(scope);
         });
 
         scope.$watch('open', function() {
-          var $menu = _findMenuNode();
+          $menu = _findMenuNode();
           scope.open ? $menu.addClass(openClass) : $menu.removeClass(openClass);
         });
 

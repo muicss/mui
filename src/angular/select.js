@@ -7,12 +7,13 @@ module.exports = angular.module('mui.select', [])
       restrict: 'AE',
       require: ['?ngModel'],
       scope: {
+        disable : '=',
         innerInput: '=?ngModel'
       },
       replace: true,
       transclude: true,
       template: '<div class="mui-select">' +
-        '<select ng-model="innerInput" ng-transclude>' +
+        '<select ng-model="innerInput" ng-disabled="disable" ng-transclude>' +
         '</select>' +
         '<div ng-show="_menuIsShow" class="mui-select__menu">' +
           '<div ng-click="select($index)" ng-repeat="option in options track by $index" ng-class=\'{"mui--is-selected" : option.value == innerInput}\'>{{option.label}}</div>' +

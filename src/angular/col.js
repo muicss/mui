@@ -4,7 +4,7 @@ module.exports = angular.module('mui.col', [])
       restrict: 'AE',
       scope: true,
       replace: true,
-      template: "<div></div>",
+      template: '<div></div>',
       transclude: true,
       link: function(scope, element, attrs, controller, linker) {
         linker(scope, function(clone) {

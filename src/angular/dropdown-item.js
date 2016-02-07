@@ -1,12 +1,12 @@
 module.exports = angular.module('mui.dropdown-item', [])
   .directive('muiDropdownItem', function() {
      return {
-        restrict : "AE",
+        restrict : 'AE',
         replace: true,
         scope : {
-            link : "@"
+            link : '@'
         },
         transclude : true,
-        template : "<li><a href='{{link}}' ng-transclude></a></li>"
+        template : '<li><a href="{{link}}" ng-transclude></a></li>'
      };
   });

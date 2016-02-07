@@ -8,7 +8,7 @@ var inputFactory = function(isTextArea) {
     ngChange: '&'
   };
 
-  isTextArea && (scope.rows = "@");
+  isTextArea && (scope.rows = '@');
 
   /**
    * directive factory
@@ -19,10 +19,10 @@ var inputFactory = function(isTextArea) {
       require: ['?ngModel', '^?form'],
       scope: scope,
       replace: true,
-      template: "<div class='mui-textfield' ng-class=\"{'mui-textfield--float-label' : floating}\">" +
-        "<input ng-model='innerInput' ng-change='onChange()' placeholder={{hint}} type={{type}} />" +
-        "<label>{{label}}</label>" +
-        "</div>",
+      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floating}\'>' +
+        '<input ng-model="innerInput" ng-change="onChange()" placeholder={{hint}} type={{type}} />' +
+        '<label>{{label}}</label>' +
+        '</div>',
 
       link: function(scope, element, attrs, ctrls) {
 
@@ -43,8 +43,8 @@ var inputFactory = function(isTextArea) {
         scope.rows = scope.rows || 2;
         if (scope.type === 'textarea') {
           $input.remove();
-          $input = angular.element("<textarea ng-model='innerInput' ng-change='onChange()' " +
-            "placeholder={{hint}} rows={{rows}}></textarea>");
+          $input = angular.element('<textarea ng-model="innerInput" ng-change="onChange()" ' +
+            'placeholder={{hint}} rows={{rows}}></textarea>');
           element.prepend($compile($input)(scope));
         }
         autofocus && $input[0].focus();

@@ -1,40 +1,40 @@
 module.exports = angular.module('mui.divider', [])
-  .directive("muiDivider", function() {
+  .directive('muiDivider', function() {
     return {
-      restrict: "AE",
+      restrict: 'AE',
       replace: true,
       compile: function(tElement, tAttrs) {
         tElement.addClass('mui-divider');
       }
     }
   })
-  .directive("dividerTop", function() {
+  .directive('dividerTop', function() {
     return {
-      restrict: "A",
+      restrict: 'A',
       compile: function(tElement, tAttrs) {
         tElement.addClass('mui--divider-top');
       }
     }
   })
-  .directive("dividerBottom", function() {
+  .directive('dividerBottom', function() {
     return {
-      restrict: "A",
+      restrict: 'A',
       compile: function(tElement, tAttrs) {
         tElement.addClass('mui--divider-bottom');
       }
     }
   })
-  .directive("dividerLeft", function() {
+  .directive('dividerLeft', function() {
     return {
-      restrict: "A",
+      restrict: 'A',
       compile: function(tElement, tAttrs) {
         tElement.addClass('mui--divider-left');
       }
     }
   })
-  .directive("dividerRight", function() {
+  .directive('dividerRight', function() {
     return {
-      restrict: "A",
+      restrict: 'A',
       compile: function(tElement, tAttrs) {
         tElement.addClass('mui--divider-right');
       }

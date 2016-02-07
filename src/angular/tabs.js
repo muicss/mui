@@ -47,7 +47,7 @@ module.exports = angular.module('mui.tabs', [])
         title: '@'
       },
       replace: true,
-      template: "<div class='mui-tabs__pane' ng-class=\"{'mui--is-active' : selected}\" ng-transclude></div>",
+      template: '<div class="mui-tabs__pane" ng-class=\'{"mui--is-active" : selected}\' ng-transclude></div>',
       transclude: true,
       link: function(scope, element, attrs, tabsCtrl) {
         tabsCtrl.addPane(scope);

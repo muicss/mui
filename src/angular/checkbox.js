@@ -1,7 +1,7 @@
 module.exports = angular.module('mui.checkbox', [])
   .directive('muiCheckbox', function() {
     return {
-      restrict: "AE",
+      restrict: 'AE',
       replace: true,
       require: ['?ngModel'],
       scope: {

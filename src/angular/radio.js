@@ -1,7 +1,7 @@
 module.exports = angular.module('mui.radio', [])
   .directive('muiRadio', function() {
     return {
-      restrict: "AE",
+      restrict: 'AE',
       replace: true,
       require: ['?ngModel'],
       scope: {
