@@ -126,6 +126,12 @@ module.exports = angular.module('mui.select', [])
         jqLite.on(window, 'resize', revertAndHideMenu);
         jqLite.on(document, 'click', revertAndHideMenu);
 
+        scope.$on('$destroy',function() {
+          $select.off('mousedown', showMenuFn);
+          element.off('keydown', onKeydown);
+          jqLite.off(window, 'resize', revertAndHideMenu);
+          jqLite.off(document, 'click', revertAndHideMenu);
+        });
 
       },
       controller: function($scope) {
