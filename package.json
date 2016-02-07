@@ -1,5 +1,5 @@
 {
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "MIT",
   "description": "Source code for MUI",
   "homepage": "https://www.muicss.com",
@@ -15,6 +15,9 @@
     "test": "mocha"
   },
   "devDependencies": {
+    "angular": "^1.4.9",
+    "angular-mocks": "^1.4.9",
+    "array-equal": "^1.0.0",
     "autoprefixer-core": "^6.0.1",
     "babel-core": "^6.4.5",
     "babel-helpers": "^6.4.5",
@@ -41,6 +44,7 @@
     "gulp-inline-source": "^2.1.0",
     "gulp-jshint": "^2.0.0",
     "gulp-load-plugins": "^1.2.0",
+    "gulp-ngmin": "^0.3.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.1.1",
@@ -58,6 +62,7 @@
     "stringify": "^3.2.0",
     "synthetic-dom-events": "^0.3.0",
     "vinyl-source-stream": "^1.1.0",
+    "whatwg-url": "^1.0.0",
     "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {},

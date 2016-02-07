@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.4.8/angular.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/angular/mui-angular.js"></script>
+  </head>
+  <body ng-app="starter" ng-cloak>
+    <mui-container ng-controller="starterCtrl">
+      <h1>Dropdowns</h1>
+      <mui-panel>
+        <h3>Dropdown Left</h3>
+        <mui-dropdown  color="danger" open='isopen' label='dropdown <em>EM</em>' >
+            <mui-dropdown-item link="#/login">Login</mui-dropdown-item>
+            <mui-dropdown-item >Option 2</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
+            <li><a href="#/link">LINK</a></li>
+        </mui-dropdown>
+
+        <mui-dropdown color="danger" label='dropdown' disable="isDisable">
+            <mui-dropdown-item link="#">Option 1</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 2</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 4</mui-dropdown-item>
+        </mui-dropdown>
+
+        <mui-dropdown  variant="fab" size='large' color="primary" nocaret right label='R' >
+            <mui-dropdown-item link="#">Option 1</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 2</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 4</mui-dropdown-item>
+        </mui-dropdown>
+
+        <mui-dropdown  variant="fab" size='small' nocaret   label="<i class='fa fa-cogs'></i>" >
+            <mui-dropdown-item link="#">Option 1</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 2</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
+            <mui-dropdown-item link="#">Option 4</mui-dropdown-item>
+        </mui-dropdown>
+
+      </mui-panel>
+    </mui-container>
+  </body>
+  <script type="text/javascript">
+    angular.module("starter", ["mui"])
+      .controller("starterCtrl",function($scope) {
+          $scope.isDisable = true;
+          $scope.isopen = true;
+      });
+  </script>
+</html>

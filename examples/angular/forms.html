@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.4.8/angular.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/angular/mui-angular.js"></script>
+  </head>
+  <body ng-app="starter" ng-cloak>
+      <mui-container ng-controller='startCtrl'>
+        <h1>Form</h1>
+        <mui-panel>
+          <h3>Form with placeholders</h3>
+          <form name="myform1">
+            <mui-input ng-model='form1.input1' name="input1-1" hint="Placeholder1"></mui-input>
+            <mui-input ng-model='form1.input2' name="input1-2" hint="Placeholder2"></mui-input>
+            <mui-button variant="raised">submit</mui-button>
+          </form>
+
+          <h3>Form with fixed labels</h3>
+          <form name="myform2">
+            <mui-input ng-model='form2.input1' name="input2-1" label="Input 1"></mui-input>
+            <mui-input ng-model='form2.input2' name="input2-2" label="Input 2"></mui-input>
+            <mui-textarea ng-model='form2.input3' name="input2-3" label="Textarea"></mui-textarea>
+            <mui-button variant="raised">submit</mui-button>
+          </form>
+
+          <h3>Form with floating labels</h3>
+          <form name="myform3" ng-init="form3.input3='Value on load'">
+            <mui-input  ng-model='form3.input1' floating="true" name="input3-1" label="Input 1"></mui-input>
+            <mui-input autofocus ng-model='form3.input2' floating="true" name="input3-2" label="autofocus"></mui-input>
+            <mui-textarea ng-model='form3.input3' floating="true" name="input3-3" label="Textarea"></mui-textarea>
+            <mui-button variant="raised">submit</mui-button>
+          </form>
+
+          <h3>Inline Form</h3>
+          <form name="myform4" form-inline>
+            <mui-input ng-model='form4.input1' name="input4-1" hint="Placeholder1"></mui-input>
+            <mui-input ng-model='form4.input2' name="input4-2" label="fix"></mui-input>
+            <mui-button >submit</mui-button>
+          </form>
+
+          <h3>Checkboxes and radio buttons</h3>
+          <form>
+            <mui-checkbox ng-model="check.select1" value="select1" label="checkbox1"></mui-checkbox>
+            <mui-checkbox ng-model="check.select2" value="select2" label="checkbox2"></mui-checkbox>
+            <mui-checkbox on-select="alerts(check)" ng-model="check.select3" value="select3" label="checkbox3"></mui-checkbox>
+            <mui-checkbox ng-model="check.select4" ng-disabled="true" value="select4" label="checkbox4"></mui-checkbox>
+            <p>
+              checkbox1: {{check.select1}}
+            </p>
+              checkbox2: {{check.select2}}
+            </p>
+              checkbox3: {{check.select3}}
+            </p>
+              checkbox4: {{check.select4}}
+            </p>
+
+            <mui-radio ng-model="color.name"  value="red" label="radio1"></mui-radio>
+            <mui-radio on-select="alerts(color)" ng-model="color.name" value="green"  label="radio2"></mui-radio>
+            <mui-radio ng-model="color.name"   value="blue" label="radio3"></mui-radio>
+            <mui-radio ng-model="color.name"  ng-disabled="true"  value="yellow" label="radio4"></mui-radio>
+            <p>
+              value: {{color.name}}
+            </p>
+
+          </form>
+
+          <h3>select</h3>
+          <form>
+            <mui-select ng-model='data.selected'>
+              <mui-option ng-repeat="option in data.options" value="{{option.value}}" label={{option.label}}></mui-option>
+            </mui-select>
+            <p>
+              selected: {{data.selected}}
+            </p>
+          </form>
+
+          <h3>Form Validation</h3>
+          <form name="myform5" ng-submit="submitForm5(myform5.$valid)">
+            <mui-input ng-model='form5.input1' name="input5-1" required hint="Text*"></mui-input>
+            <mui-input ng-model='form5.input2' ng-pattern='/sss/' floating="true" name="input5-2" label="pattern/sss/"></mui-input>
+            <mui-input ng-model='form5.input3' type='email'   floating="true" name="input5-3" label="email"></mui-input>
+            <mui-textarea ng-model='form5.input4' name="input5-4" required label="Textarea*"></mui-textarea>
+            <mui-button type="submit">submit</mui-button>
+          </form>
+
+        </mui-panel>
+      </mui-container>
+
+
+  </body>
+  <script type="text/javascript">
+    angular.module("starter", ["mui"])
+    .controller("startCtrl",function($scope) {
+      $scope.submitForm5 = function(isValid) {
+        alert(isValid);
+      };
+      $scope.color = {
+        name: 'green'
+      };
+      $scope.check = {
+        select1 : true,
+        select2 : false,
+        select3 : true,
+        select4 : true
+      }
+
+      $scope.data ={
+        options : [{
+          label : 'option1',
+          value : '1'
+        },{
+          label : 'option2',
+          value : '2'
+        },{
+          label : 'option3',
+          value : '3'
+        }]
+      }
+      $scope.alerts = function(color) {
+        console.log(color);
+      }
+    })
+    ;
+  </script>
+</html>

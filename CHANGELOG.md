@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.4.3 - February 7, 2016
+
+* Added Angular library
+
 ## 0.4.2 - February 3, 2016
 
 * Added support for other React attributes and events
