@@ -5,7 +5,7 @@
 
 import assert from 'assert';
 
-var helpers = require('./test-helper');
+var helpers = require('./angular-helper');
 var ngModule = helpers.module;
 var inject = helpers.inject;
 require('../../src/angular/appbar.js');

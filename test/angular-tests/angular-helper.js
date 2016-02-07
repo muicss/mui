@@ -1,6 +1,7 @@
 global.window.mocha = {}; //angular-mocks.js line 2287.
 global.window.beforeEach = beforeEach;
 global.window.afterEach = afterEach;
+global.Node = window.Node; //angular need
 
 /*
  * Since angular and angular-mocks are both singletons created once with one window-object
