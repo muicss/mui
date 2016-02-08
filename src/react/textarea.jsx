@@ -1,23 +1,23 @@
 /**
- * MUI React TextareaInput Component
- * @module react/textarea-input
+ * MUI React Textarea Component
+ * @module react/textarea
  */
 
 'use strict';
 
 import React from 'react';
 
-import { TextField } from './_input';
+import { TextField } from './text-field';
 
 
 const PropTypes = React.PropTypes;
 
 
 /**
- * TextareaInput constructor
+ * Textarea constructor
  * @class
  */
-class TextareaInput extends React.Component {
+class Textarea extends React.Component {
   static propTypes = {
     rows: PropTypes.number
   };
@@ -33,4 +33,4 @@ class TextareaInput extends React.Component {
 }
 
 
-export default TextareaInput;
+export default Textarea;

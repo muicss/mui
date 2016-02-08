@@ -399,6 +399,7 @@
   react.Container = require('src/react/container');
   react.Divider = require('src/react/divider');
   react.Dropdown = require('src/react/dropdown'), react.DropdownItem = require('src/react/dropdown-item'), react.Form = require('src/react/form');
+  react.Input = require('src/react/input');
   react.Panel = require('src/react/panel');
   react.Radio = require('src/react/radio');
   react.Row = require('src/react/row');
@@ -406,11 +407,10 @@
   react.SelectItem = require('src/react/select-item');
   react.Tab = require('src/react/tab');
   react.Tabs = require('src/react/tabs');
-  react.TextInput = require('src/react/text-input');
-  react.TextareaInput = require('src/react/textarea-input');
+  react.Textarea = require('src/react/textarea');
 })(window);
 
-},{"src/react/appbar":10,"src/react/button":11,"src/react/caret":12,"src/react/checkbox":13,"src/react/col":14,"src/react/container":15,"src/react/divider":16,"src/react/dropdown":18,"src/react/dropdown-item":17,"src/react/form":19,"src/react/panel":20,"src/react/radio":21,"src/react/row":22,"src/react/select":24,"src/react/select-item":23,"src/react/tab":25,"src/react/tabs":26,"src/react/text-input":27,"src/react/textarea-input":28}],2:[function(require,module,exports){
+},{"src/react/appbar":10,"src/react/button":11,"src/react/caret":12,"src/react/checkbox":13,"src/react/col":14,"src/react/container":15,"src/react/divider":16,"src/react/dropdown":18,"src/react/dropdown-item":17,"src/react/form":19,"src/react/input":20,"src/react/panel":21,"src/react/radio":22,"src/react/row":23,"src/react/select":25,"src/react/select-item":24,"src/react/tab":26,"src/react/tabs":27,"src/react/textarea":28}],2:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1111,6 +1111,345 @@ module.exports = {
 
 },{"../config":2,"./jqLite":4}],6:[function(require,module,exports){
 /**
+ * MUI React button module
+ * @module react/button
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = window.React;
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var rippleIter = 0;
+
+var PropTypes = _react2.default.PropTypes,
+    btnClass = 'mui-btn',
+    rippleClass = 'mui-ripple-effect',
+    btnAttrs = { color: 1, variant: 1, size: 1 };
+
+/**
+ * Button element
+ * @class
+ */
+
+var Button = function (_React$Component) {
+  babelHelpers.inherits(Button, _React$Component);
+
+  function Button() {
+    var _Object$getPrototypeO;
+
+    var _temp, _this, _ret;
+
+    babelHelpers.classCallCheck(this, Button);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Button)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+      ripples: {}
+    }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
+  }
+
+  babelHelpers.createClass(Button, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      var el = this.refs.buttonEl;
+      el._muiDropdown = true;
+      el._muiRipple = true;
+    }
+  }, {
+    key: 'onClick',
+    value: function onClick(ev) {
+      var onClickFn = this.props.onClick;
+      onClickFn && onClickFn(ev);
+    }
+  }, {
+    key: 'onMouseDown',
+    value: function onMouseDown(ev) {
+      // get (x, y) position of click
+      var offset = jqLite.offset(this.refs.buttonEl);
+
+      // choose diameter
+      var diameter = offset.height;
+      if (this.props.variant === 'fab') diameter = diameter / 2;
+
+      // add ripple to state
+      var ripples = this.state.ripples;
+      var key = Date.now();
+
+      ripples[key] = {
+        xPos: ev.pageX - offset.left,
+        yPos: ev.pageY - offset.top,
+        diameter: diameter,
+        teardownFn: this.teardownRipple.bind(this, key)
+      };
+
+      this.setState({ ripples: ripples });
+    }
+  }, {
+    key: 'onTouchStart',
+    value: function onTouchStart(ev) {}
+  }, {
+    key: 'teardownRipple',
+    value: function teardownRipple(key) {
+      // delete ripple
+      var ripples = this.state.ripples;
+      delete ripples[key];
+      this.setState({ ripples: ripples });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var cls = btnClass,
+          k = undefined,
+          v = undefined;
+
+      var ripples = this.state.ripples;
+
+      // button attributes
+      for (k in btnAttrs) {
+        v = this.props[k];
+        if (v !== 'default') cls += ' ' + btnClass + '--' + v;
+      }
+
+      return _react2.default.createElement(
+        'button',
+        babelHelpers.extends({}, this.props, {
+          ref: 'buttonEl',
+          className: cls + ' ' + this.props.className,
+          onClick: this.onClick.bind(this),
+          onMouseDown: this.onMouseDown.bind(this)
+        }),
+        this.props.children,
+        Object.keys(ripples).map(function (k, i) {
+          var v = ripples[k];
+
+          return _react2.default.createElement(Ripple, {
+            key: k,
+            xPos: v.xPos,
+            yPos: v.yPos,
+            diameter: v.diameter,
+            onTeardown: v.teardownFn
+          });
+        })
+      );
+    }
+  }]);
+  return Button;
+}(_react2.default.Component);
+
+/**
+ * Ripple component
+ * @class
+ */
+
+Button.propTypes = {
+  color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+  disabled: PropTypes.bool,
+  size: PropTypes.oneOf(['default', 'small', 'large']),
+  type: PropTypes.oneOf(['submit', 'button']),
+  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+  onClick: PropTypes.func
+};
+Button.defaultProps = {
+  className: '',
+  color: 'default',
+  disabled: false,
+  size: 'default',
+  type: null,
+  variant: 'default',
+  onClick: null
+};
+
+var Ripple = function (_React$Component2) {
+  babelHelpers.inherits(Ripple, _React$Component2);
+
+  function Ripple() {
+    babelHelpers.classCallCheck(this, Ripple);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Ripple, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      // trigger teardown in 2 sec
+      var teardownTimer = setTimeout(function () {
+        var fn = _this3.props.onTeardown;
+        fn && fn();
+      }, 2000);
+
+      this.setState({ teardownTimer: teardownTimer });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear timeout
+      clearTimeout(this.state.teardownTimer);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var diameter = this.props.diameter,
+          radius = diameter / 2;
+
+      var style = {
+        height: diameter,
+        width: diameter,
+        top: this.props.yPos - radius || 0,
+        left: this.props.xPos - radius || 0
+      };
+
+      return _react2.default.createElement('div', { className: rippleClass, style: style });
+    }
+  }]);
+  return Ripple;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Ripple.propTypes = {
+  xPos: PropTypes.number,
+  yPos: PropTypes.number,
+  diameter: PropTypes.number,
+  onTeardown: PropTypes.func
+};
+Ripple.defaultProps = {
+  xPos: 0,
+  yPos: 0,
+  diameter: 0,
+  onTeardown: null
+};
+exports.default = Button;
+module.exports = exports['default'];
+
+},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],7:[function(require,module,exports){
+/**
+ * MUI React Caret Module
+ * @module react/caret
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = window.React;
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+/**
+ * Caret constructor
+ * @class
+ */
+
+var Caret = function (_React$Component) {
+  babelHelpers.inherits(Caret, _React$Component);
+
+  function Caret() {
+    babelHelpers.classCallCheck(this, Caret);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Caret).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Caret, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      return _react2.default.createElement('span', babelHelpers.extends({}, other, {
+        className: 'mui-caret ' + this.props.className
+      }));
+    }
+  }]);
+  return Caret;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Caret.defaultProps = {
+  className: ''
+};
+exports.default = Caret;
+module.exports = exports['default'];
+
+},{"react":"CwoHg3"}],8:[function(require,module,exports){
+/**
+ * MUI React tabs module
+ * @module react/tabs
+ */
+/* jshint quotmark:false */
+// jscs:disable validateQuoteMarks
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = window.React;
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Tab constructor
+ * @class
+ */
+
+var Tab = function (_React$Component) {
+  babelHelpers.inherits(Tab, _React$Component);
+
+  function Tab() {
+    babelHelpers.classCallCheck(this, Tab);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tab).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Tab, [{
+    key: 'render',
+    value: function render() {
+      return null;
+    }
+  }]);
+  return Tab;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Tab.propTypes = {
+  value: PropTypes.any,
+  label: PropTypes.string,
+  onActive: PropTypes.func
+};
+Tab.defaultProps = {
+  value: null,
+  label: '',
+  onActive: null
+};
+exports.default = Tab;
+module.exports = exports['default'];
+
+},{"react":"CwoHg3"}],9:[function(require,module,exports){
+/**
  * MUI React TextInput Component
  * @module react/text-input
  */
@@ -1386,346 +1725,7 @@ TextField.defaultProps = {
 };
 exports.TextField = TextField;
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],7:[function(require,module,exports){
-/**
- * MUI React button module
- * @module react/button
- */
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var rippleIter = 0;
-
-var PropTypes = _react2.default.PropTypes,
-    btnClass = 'mui-btn',
-    rippleClass = 'mui-ripple-effect',
-    btnAttrs = { color: 1, variant: 1, size: 1 };
-
-/**
- * Button element
- * @class
- */
-
-var Button = function (_React$Component) {
-  babelHelpers.inherits(Button, _React$Component);
-
-  function Button() {
-    var _Object$getPrototypeO;
-
-    var _temp, _this, _ret;
-
-    babelHelpers.classCallCheck(this, Button);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Button)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      ripples: {}
-    }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
-  }
-
-  babelHelpers.createClass(Button, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // disable MUI js
-      var el = this.refs.buttonEl;
-      el._muiDropdown = true;
-      el._muiRipple = true;
-    }
-  }, {
-    key: 'onClick',
-    value: function onClick(ev) {
-      var onClickFn = this.props.onClick;
-      onClickFn && onClickFn(ev);
-    }
-  }, {
-    key: 'onMouseDown',
-    value: function onMouseDown(ev) {
-      // get (x, y) position of click
-      var offset = jqLite.offset(this.refs.buttonEl);
-
-      // choose diameter
-      var diameter = offset.height;
-      if (this.props.variant === 'fab') diameter = diameter / 2;
-
-      // add ripple to state
-      var ripples = this.state.ripples;
-      var key = Date.now();
-
-      ripples[key] = {
-        xPos: ev.pageX - offset.left,
-        yPos: ev.pageY - offset.top,
-        diameter: diameter,
-        teardownFn: this.teardownRipple.bind(this, key)
-      };
-
-      this.setState({ ripples: ripples });
-    }
-  }, {
-    key: 'onTouchStart',
-    value: function onTouchStart(ev) {}
-  }, {
-    key: 'teardownRipple',
-    value: function teardownRipple(key) {
-      // delete ripple
-      var ripples = this.state.ripples;
-      delete ripples[key];
-      this.setState({ ripples: ripples });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var cls = btnClass,
-          k = undefined,
-          v = undefined;
-
-      var ripples = this.state.ripples;
-
-      // button attributes
-      for (k in btnAttrs) {
-        v = this.props[k];
-        if (v !== 'default') cls += ' ' + btnClass + '--' + v;
-      }
-
-      return _react2.default.createElement(
-        'button',
-        babelHelpers.extends({}, this.props, {
-          ref: 'buttonEl',
-          className: cls + ' ' + this.props.className,
-          onClick: this.onClick.bind(this),
-          onMouseDown: this.onMouseDown.bind(this)
-        }),
-        this.props.children,
-        Object.keys(ripples).map(function (k, i) {
-          var v = ripples[k];
-
-          return _react2.default.createElement(Ripple, {
-            key: k,
-            xPos: v.xPos,
-            yPos: v.yPos,
-            diameter: v.diameter,
-            onTeardown: v.teardownFn
-          });
-        })
-      );
-    }
-  }]);
-  return Button;
-}(_react2.default.Component);
-
-/**
- * Ripple component
- * @class
- */
-
-Button.propTypes = {
-  color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  disabled: PropTypes.bool,
-  size: PropTypes.oneOf(['default', 'small', 'large']),
-  type: PropTypes.oneOf(['submit', 'button']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-  onClick: PropTypes.func
-};
-Button.defaultProps = {
-  className: '',
-  color: 'default',
-  disabled: false,
-  size: 'default',
-  type: null,
-  variant: 'default',
-  onClick: null
-};
-
-var Ripple = function (_React$Component2) {
-  babelHelpers.inherits(Ripple, _React$Component2);
-
-  function Ripple() {
-    babelHelpers.classCallCheck(this, Ripple);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
-  }
-
-  babelHelpers.createClass(Ripple, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this3 = this;
-
-      // trigger teardown in 2 sec
-      var teardownTimer = setTimeout(function () {
-        var fn = _this3.props.onTeardown;
-        fn && fn();
-      }, 2000);
-
-      this.setState({ teardownTimer: teardownTimer });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // clear timeout
-      clearTimeout(this.state.teardownTimer);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var diameter = this.props.diameter,
-          radius = diameter / 2;
-
-      var style = {
-        height: diameter,
-        width: diameter,
-        top: this.props.yPos - radius || 0,
-        left: this.props.xPos - radius || 0
-      };
-
-      return _react2.default.createElement('div', { className: rippleClass, style: style });
-    }
-  }]);
-  return Ripple;
-}(_react2.default.Component);
-
-/** Define module API */
-
-Ripple.propTypes = {
-  xPos: PropTypes.number,
-  yPos: PropTypes.number,
-  diameter: PropTypes.number,
-  onTeardown: PropTypes.func
-};
-Ripple.defaultProps = {
-  xPos: 0,
-  yPos: 0,
-  diameter: 0,
-  onTeardown: null
-};
-exports.default = Button;
-module.exports = exports['default'];
-
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],8:[function(require,module,exports){
-/**
- * MUI React Caret Module
- * @module react/caret
- */
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-/**
- * Caret constructor
- * @class
- */
-
-var Caret = function (_React$Component) {
-  babelHelpers.inherits(Caret, _React$Component);
-
-  function Caret() {
-    babelHelpers.classCallCheck(this, Caret);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Caret).apply(this, arguments));
-  }
-
-  babelHelpers.createClass(Caret, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-      return _react2.default.createElement('span', babelHelpers.extends({}, other, {
-        className: 'mui-caret ' + this.props.className
-      }));
-    }
-  }]);
-  return Caret;
-}(_react2.default.Component);
-
-/** Define module API */
-
-Caret.defaultProps = {
-  className: ''
-};
-exports.default = Caret;
-module.exports = exports['default'];
-
-},{"react":"CwoHg3"}],9:[function(require,module,exports){
-/**
- * MUI React tabs module
- * @module react/tabs
- */
-/* jshint quotmark:false */
-// jscs:disable validateQuoteMarks
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var PropTypes = _react2.default.PropTypes;
-
-/**
- * Tab constructor
- * @class
- */
-
-var Tab = function (_React$Component) {
-  babelHelpers.inherits(Tab, _React$Component);
-
-  function Tab() {
-    babelHelpers.classCallCheck(this, Tab);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tab).apply(this, arguments));
-  }
-
-  babelHelpers.createClass(Tab, [{
-    key: 'render',
-    value: function render() {
-      return null;
-    }
-  }]);
-  return Tab;
-}(_react2.default.Component);
-
-/** Define module API */
-
-Tab.propTypes = {
-  value: PropTypes.any,
-  label: PropTypes.string,
-  onActive: PropTypes.func
-};
-Tab.defaultProps = {
-  value: null,
-  label: '',
-  onActive: null
-};
-exports.default = Tab;
-module.exports = exports['default'];
-
-},{"react":"CwoHg3"}],10:[function(require,module,exports){
+},{"../js/lib/util":5,"react":"CwoHg3"}],10:[function(require,module,exports){
 /**
  * MUI React Appbar Module
  * @module react/appbar
@@ -1778,9 +1778,9 @@ exports.default = Appbar;
 module.exports = exports['default'];
 
 },{"react":"CwoHg3"}],11:[function(require,module,exports){
-module.exports=require(7)
+module.exports=require(6)
 },{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],12:[function(require,module,exports){
-module.exports=require(8)
+module.exports=require(7)
 },{"react":"CwoHg3"}],13:[function(require,module,exports){
 /**
  * MUI React checkbox module
@@ -2358,7 +2358,7 @@ Dropdown.defaultProps = {
 exports.default = Dropdown;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"./button":7,"./caret":8,"react":"CwoHg3"}],19:[function(require,module,exports){
+},{"../js/lib/jqLite":4,"../js/lib/util":5,"./button":6,"./caret":7,"react":"CwoHg3"}],19:[function(require,module,exports){
 /**
  * MUI React form module
  * @module react/form
@@ -2420,6 +2420,57 @@ exports.default = Form;
 module.exports = exports['default'];
 
 },{"react":"CwoHg3"}],20:[function(require,module,exports){
+/**                                                                            
+ * MUI React Input Component
+ * @module react/input
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = window.React;
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _textField = require('./text-field');
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Input constructor
+ * @class
+ */
+
+var Input = function (_React$Component) {
+  babelHelpers.inherits(Input, _React$Component);
+
+  function Input() {
+    babelHelpers.classCallCheck(this, Input);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Input, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_textField.TextField, this.props);
+    }
+  }]);
+  return Input;
+}(_react2.default.Component);
+
+Input.propTypes = {
+  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
+};
+Input.defaultProps = {
+  type: 'text'
+};
+exports.default = Input;
+module.exports = exports['default'];
+
+},{"./text-field":9,"react":"CwoHg3"}],21:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -2471,7 +2522,7 @@ Panel.defaultProps = {
 exports.default = Panel;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],21:[function(require,module,exports){
+},{"react":"CwoHg3"}],22:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
@@ -2555,7 +2606,7 @@ Radio.defaultProps = {
 exports.default = Radio;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],22:[function(require,module,exports){
+},{"react":"CwoHg3"}],23:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
@@ -2613,7 +2664,7 @@ Row.defaultProps = {
 exports.default = Row;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],23:[function(require,module,exports){
+},{"../js/lib/util":5,"react":"CwoHg3"}],24:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
@@ -2686,7 +2737,7 @@ SelectItem.defaultProps = {
 exports.default = SelectItem;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],24:[function(require,module,exports){
+},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],25:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
@@ -3127,9 +3178,9 @@ Menu.defaultProps = {
 exports.default = Select;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],25:[function(require,module,exports){
-module.exports=require(9)
-},{"react":"CwoHg3"}],26:[function(require,module,exports){
+},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],26:[function(require,module,exports){
+module.exports=require(8)
+},{"react":"CwoHg3"}],27:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -3273,10 +3324,10 @@ Tabs.defaultProps = {
 exports.default = Tabs;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"./tab":9,"react":"CwoHg3"}],27:[function(require,module,exports){
-/**                                                                            
- * MUI React TextareaInput Component
- * @module react/textarea-input
+},{"../js/lib/util":5,"./tab":8,"react":"CwoHg3"}],28:[function(require,module,exports){
+/**
+ * MUI React Textarea Component
+ * @module react/textarea
  */
 
 'use strict';
@@ -3289,91 +3340,40 @@ var _react = window.React;
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
-var _input = require('./_input');
+var _textField = require('./text-field');
 
 var PropTypes = _react2.default.PropTypes;
 
 /**
- * TextInput constructor
+ * Textarea constructor
  * @class
  */
 
-var TextInput = function (_React$Component) {
-  babelHelpers.inherits(TextInput, _React$Component);
+var Textarea = function (_React$Component) {
+  babelHelpers.inherits(Textarea, _React$Component);
 
-  function TextInput() {
-    babelHelpers.classCallCheck(this, TextInput);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextInput).apply(this, arguments));
+  function Textarea() {
+    babelHelpers.classCallCheck(this, Textarea);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Textarea).apply(this, arguments));
   }
 
-  babelHelpers.createClass(TextInput, [{
+  babelHelpers.createClass(Textarea, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_input.TextField, this.props);
+      return _react2.default.createElement(_textField.TextField, this.props);
     }
   }]);
-  return TextInput;
+  return Textarea;
 }(_react2.default.Component);
 
-TextInput.propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
-};
-TextInput.defaultProps = {
-  type: 'text'
-};
-exports.default = TextInput;
-module.exports = exports['default'];
-
-},{"./_input":6,"react":"CwoHg3"}],28:[function(require,module,exports){
-/**
- * MUI React TextareaInput Component
- * @module react/textarea-input
- */
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _input = require('./_input');
-
-var PropTypes = _react2.default.PropTypes;
-
-/**
- * TextareaInput constructor
- * @class
- */
-
-var TextareaInput = function (_React$Component) {
-  babelHelpers.inherits(TextareaInput, _React$Component);
-
-  function TextareaInput() {
-    babelHelpers.classCallCheck(this, TextareaInput);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextareaInput).apply(this, arguments));
-  }
-
-  babelHelpers.createClass(TextareaInput, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(_input.TextField, this.props);
-    }
-  }]);
-  return TextareaInput;
-}(_react2.default.Component);
-
-TextareaInput.propTypes = {
+Textarea.propTypes = {
   rows: PropTypes.number
 };
-TextareaInput.defaultProps = {
+Textarea.defaultProps = {
   type: 'textarea',
   rows: 2
 };
-exports.default = TextareaInput;
+exports.default = Textarea;
 module.exports = exports['default'];
 
-},{"./_input":6,"react":"CwoHg3"}]},{},[1])
+},{"./text-field":9,"react":"CwoHg3"}]},{},[1])

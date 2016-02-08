@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="mui">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,8 +12,8 @@
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
   </head>
-  <body ng-app="starter" ng-cloak>
-    <mui-container ng-controller="starterCtrl">
+  <body>
+    <mui-container>
       <h1>Buttons</h1>
       <mui-panel>
         <h3>Default buttons</h3>
@@ -25,11 +25,11 @@
           <mui-button color="accent">Button</mui-button>
         </div>
         <div>
-          <mui-button disable="isDisable">Button</mui-button>
-          <mui-button disable="isDisable" color="primary">Button</mui-button>
-          <mui-button disable="isDisable" color="danger">Button</mui-button>
-          <mui-button disable="isDisable" color="dark">Button</mui-button>
-          <mui-button disable="isDisable" color="accent">Button</mui-button>
+          <mui-button disable="true">Button</mui-button>
+          <mui-button disable="true" color="primary">Button</mui-button>
+          <mui-button disable="true" color="danger">Button</mui-button>
+          <mui-button disable="true" color="dark">Button</mui-button>
+          <mui-button disable="true" color="accent">Button</mui-button>
         </div>
       </mui-panel>
 
@@ -43,11 +43,11 @@
           <mui-button variant="flat" color="accent">Button</mui-button>
         </div>
         <div>
-          <mui-button variant="flat" disable="isDisable">Button</mui-button>
-          <mui-button variant="flat" disable="isDisable" color="primary">Button</mui-button>
-          <mui-button variant="flat" disable="isDisable" color="danger">Button</mui-button>
-          <mui-button variant="flat" disable="isDisable" color="dark">Button</mui-button>
-          <mui-button variant="flat" disable="isDisable" color="accent">Button</mui-button>
+          <mui-button variant="flat" disable="true">Button</mui-button>
+          <mui-button variant="flat" disable="true" color="primary">Button</mui-button>
+          <mui-button variant="flat" disable="true" color="danger">Button</mui-button>
+          <mui-button variant="flat" disable="true" color="dark">Button</mui-button>
+          <mui-button variant="flat" disable="true" color="accent">Button</mui-button>
         </div>
       </mui-panel>
 
@@ -61,11 +61,11 @@
           <mui-button variant="raised" color="accent">Button</mui-button>
         </div>
         <div>
-          <mui-button variant="raised" disable="isDisable">Button</mui-button>
-          <mui-button variant="raised" disable="isDisable" color="primary">Button</mui-button>
-          <mui-button variant="raised" disable="isDisable" color="danger">Button</mui-button>
-          <mui-button variant="raised" disable="isDisable" color="dark">Button</mui-button>
-          <mui-button variant="raised" disable="isDisable" color="accent">Button</mui-button>
+          <mui-button variant="raised" disable="true">Button</mui-button>
+          <mui-button variant="raised" disable="true" color="primary">Button</mui-button>
+          <mui-button variant="raised" disable="true" color="danger">Button</mui-button>
+          <mui-button variant="raised" disable="true" color="dark">Button</mui-button>
+          <mui-button variant="raised" disable="true" color="accent">Button</mui-button>
         </div>
       </mui-panel>
 
@@ -79,11 +79,11 @@
           <mui-button variant="fab" color="accent">+</mui-button>
         </div>
         <div>
-          <mui-button variant="fab" disable="isDisable">+</mui-button>
-          <mui-button variant="fab" disable="isDisable" color="primary">+</mui-button>
-          <mui-button variant="fab" disable="isDisable" color="danger">+</mui-button>
-          <mui-button variant="fab" disable="isDisable" color="dark">+</mui-button>
-          <mui-button variant="fab" disable="isDisable" color="accent">+</mui-button>
+          <mui-button variant="fab" disable="true">+</mui-button>
+          <mui-button variant="fab" disable="true" color="primary">+</mui-button>
+          <mui-button variant="fab" disable="true" color="danger">+</mui-button>
+          <mui-button variant="fab" disable="true" color="dark">+</mui-button>
+          <mui-button variant="fab" disable="true" color="accent">+</mui-button>
         </div>
       </mui-panel>
 
@@ -112,10 +112,4 @@
 
     </mui-container>
   </body>
-  <script type="text/javascript">
-    angular.module("starter", ["mui"])
-      .controller("starterCtrl",function($scope) {
-          $scope.isDisable = true;
-      });
-  </script>
 </html>

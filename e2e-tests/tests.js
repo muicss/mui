@@ -1161,15 +1161,16 @@ function hasOwnProperty(obj, prop) {
   require('../test/react-tests/test-divider');
   require('../test/react-tests/test-dropdown');
   require('../test/react-tests/test-form');
+  require('../test/react-tests/test-input');
   require('../test/react-tests/test-panel');
   require('../test/react-tests/test-radio');
   require('../test/react-tests/test-row');
   require('../test/react-tests/test-select');
   require('../test/react-tests/test-tabs');
-  require('../test/react-tests/test-text-input');
+  require('../test/react-tests/test-textarea');
 })();
 
-},{"../test/cssjs-tests/test-jqlite":193,"../test/cssjs-tests/test-util":194,"../test/react-tests/test-appbar":196,"../test/react-tests/test-button":197,"../test/react-tests/test-caret":198,"../test/react-tests/test-checkbox":199,"../test/react-tests/test-col":200,"../test/react-tests/test-container":201,"../test/react-tests/test-divider":202,"../test/react-tests/test-dropdown":203,"../test/react-tests/test-form":204,"../test/react-tests/test-panel":205,"../test/react-tests/test-radio":206,"../test/react-tests/test-row":207,"../test/react-tests/test-select":208,"../test/react-tests/test-tabs":209,"../test/react-tests/test-text-input":210}],7:[function(require,module,exports){
+},{"../test/cssjs-tests/test-jqlite":193,"../test/cssjs-tests/test-util":194,"../test/react-tests/test-appbar":196,"../test/react-tests/test-button":197,"../test/react-tests/test-caret":198,"../test/react-tests/test-checkbox":199,"../test/react-tests/test-col":200,"../test/react-tests/test-container":201,"../test/react-tests/test-divider":202,"../test/react-tests/test-dropdown":203,"../test/react-tests/test-form":204,"../test/react-tests/test-input":205,"../test/react-tests/test-panel":206,"../test/react-tests/test-radio":207,"../test/react-tests/test-row":208,"../test/react-tests/test-select":209,"../test/react-tests/test-tabs":210,"../test/react-tests/test-textarea":211}],7:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21531,283 +21532,6 @@ module.exports = {
 
 },{"../config":169,"./jqLite":171}],173:[function(require,module,exports){
 /**
- * MUI React TextInput Component
- * @module react/text-input
- */
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.TextField = undefined;
-
-var _react = require('react');
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var PropTypes = _react2.default.PropTypes;
-
-/**
- * Input constructor
- * @class
- */
-
-var Input = function (_React$Component) {
-  babelHelpers.inherits(Input, _React$Component);
-
-  function Input(props) {
-    babelHelpers.classCallCheck(this, Input);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
-
-    var value = props.value;
-    var innerValue = value || props.defaultValue;
-
-    _this.state = {
-      innerValue: innerValue,
-      isDirty: Boolean(innerValue)
-    };
-
-    // warn if value defined but onChange is not
-    if (value !== null && props.onChange === null) {
-      var s = 'You provided a `value` prop to a form field without an ' + '`OnChange` handler. Please see React documentation on ' + 'controlled components';
-      util.raiseError(s, true);
-    }
-
-    var cb = util.callback;
-    _this.onChangeCB = cb(_this, 'onChange');
-    _this.onFocusCB = cb(_this, 'onFocus');
-    return _this;
-  }
-
-  babelHelpers.createClass(Input, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // disable MUI js
-      this.refs.inputEl._muiTextfield = true;
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(ev) {
-      this.setState({ innerValue: ev.target.value });
-      if (this.props.onChange) this.props.onChange(ev);
-    }
-  }, {
-    key: 'onFocus',
-    value: function onFocus(ev) {
-      this.setState({ isDirty: true });
-    }
-  }, {
-    key: 'triggerFocus',
-    value: function triggerFocus() {
-      // hack to enable IE10 pointer-events shim
-      this.refs.inputEl.focus();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var cls = {},
-          isNotEmpty = Boolean(this.state.innerValue),
-          inputEl = undefined;
-
-      cls['mui--is-empty'] = !isNotEmpty;
-      cls['mui--is-not-empty'] = isNotEmpty;
-      cls['mui--is-dirty'] = this.state.isDirty;
-      cls['mui--is-invalid'] = this.props.invalid;
-
-      cls = util.classNames(cls);
-
-      var _props = this.props;
-      var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-      if (this.props.type === 'textarea') {
-        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
-          ref: 'inputEl',
-          className: cls,
-          rows: this.props.rows,
-          placeholder: this.props.hint,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
-          autoFocus: this.props.autoFocus,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
-        }));
-      } else {
-        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, other, {
-          ref: 'inputEl',
-          className: cls,
-          type: this.props.type,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
-          placeholder: this.props.hint,
-          autoFocus: this.props.autofocus,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
-        }));
-      }
-
-      return inputEl;
-    }
-  }]);
-  return Input;
-}(_react2.default.Component);
-
-/**
- * Label constructor
- * @class
- */
-
-Input.propTypes = {
-  hint: PropTypes.string,
-  value: PropTypes.string,
-  type: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  onChange: PropTypes.func
-};
-Input.defaultProps = {
-  hint: null,
-  type: null,
-  value: null,
-  autoFocus: false,
-  onChange: null
-};
-
-var Label = function (_React$Component2) {
-  babelHelpers.inherits(Label, _React$Component2);
-
-  function Label() {
-    var _Object$getPrototypeO;
-
-    var _temp, _this2, _ret;
-
-    babelHelpers.classCallCheck(this, Label);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Label)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this2), _this2.state = {
-      style: {}
-    }, _temp), babelHelpers.possibleConstructorReturn(_this2, _ret);
-  }
-
-  babelHelpers.createClass(Label, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this3 = this;
-
-      setTimeout(function () {
-        var s = '.15s ease-out';
-        var style = undefined;
-
-        style = {
-          transition: s,
-          WebkitTransition: s,
-          MozTransition: s,
-          OTransition: s,
-          msTransform: s
-        };
-
-        _this3.setState({ style: style });
-      }, 150);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'label',
-        {
-          style: this.state.style,
-          onClick: this.props.onClick
-        },
-        this.props.text
-      );
-    }
-  }]);
-  return Label;
-}(_react2.default.Component);
-
-/**
- * TextField constructor
- * @class
- */
-
-Label.defaultProps = {
-  text: '',
-  onClick: null
-};
-
-var TextField = function (_React$Component3) {
-  babelHelpers.inherits(TextField, _React$Component3);
-
-  function TextField(props) {
-    babelHelpers.classCallCheck(this, TextField);
-
-    var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextField).call(this, props));
-
-    _this4.onClickCB = util.callback(_this4, 'onClick');
-    return _this4;
-  }
-
-  babelHelpers.createClass(TextField, [{
-    key: 'onClick',
-    value: function onClick(ev) {
-      // pointer-events shim
-      if (util.supportsPointerEvents() === false) {
-        ev.target.style.cursor = 'text';
-        this.refs.inputEl.triggerFocus();
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var cls = {},
-          labelEl = undefined;
-
-      if (this.props.label.length) {
-        labelEl = _react2.default.createElement(Label, {
-          text: this.props.label,
-          onClick: this.onClickCB
-        });
-      }
-
-      cls['mui-textfield'] = true;
-      cls['mui-textfield--float-label'] = this.props.floatingLabel;
-      cls = util.classNames(cls);
-
-      return _react2.default.createElement(
-        'div',
-        { className: cls },
-        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, this.props)),
-        labelEl
-      );
-    }
-  }]);
-  return TextField;
-}(_react2.default.Component);
-
-/** Define module API */
-
-TextField.propTypes = {
-  label: PropTypes.string,
-  floatingLabel: PropTypes.bool
-};
-TextField.defaultProps = {
-  label: '',
-  floatingLabel: false
-};
-exports.TextField = TextField;
-
-},{"../js/lib/util":172,"react":165}],174:[function(require,module,exports){
-/**
  * MUI React Appbar Module
  * @module react/appbar
  */
@@ -21858,7 +21582,7 @@ Appbar.defaultProps = {
 exports.default = Appbar;
 module.exports = exports['default'];
 
-},{"react":165}],175:[function(require,module,exports){
+},{"react":165}],174:[function(require,module,exports){
 /**
  * MUI React button module
  * @module react/button
@@ -22088,7 +21812,7 @@ Ripple.defaultProps = {
 exports.default = Button;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],176:[function(require,module,exports){
+},{"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],175:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
@@ -22140,7 +21864,7 @@ Caret.defaultProps = {
 exports.default = Caret;
 module.exports = exports['default'];
 
-},{"react":165}],177:[function(require,module,exports){
+},{"react":165}],176:[function(require,module,exports){
 /**
  * MUI React checkbox module
  * @module react/checkbox
@@ -22221,7 +21945,7 @@ Checkbox.defaultProps = {
 exports.default = Checkbox;
 module.exports = exports['default'];
 
-},{"react":165}],178:[function(require,module,exports){
+},{"react":165}],177:[function(require,module,exports){
 /**
  * MUI React Col Component
  * @module react/col
@@ -22314,7 +22038,7 @@ var Col = function (_React$Component) {
 exports.default = Col;
 module.exports = exports['default'];
 
-},{"../js/lib/util":172,"react":165}],179:[function(require,module,exports){
+},{"../js/lib/util":172,"react":165}],178:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
@@ -22375,7 +22099,7 @@ Container.defaultProps = {
 exports.default = Container;
 module.exports = exports['default'];
 
-},{"react":165}],180:[function(require,module,exports){
+},{"react":165}],179:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -22427,7 +22151,7 @@ Divider.defaultProps = {
 exports.default = Divider;
 module.exports = exports['default'];
 
-},{"react":165}],181:[function(require,module,exports){
+},{"react":165}],180:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -22507,7 +22231,7 @@ DropdownItem.defaultProps = {
 exports.default = DropdownItem;
 module.exports = exports['default'];
 
-},{"../js/lib/util":172,"react":165}],182:[function(require,module,exports){
+},{"../js/lib/util":172,"react":165}],181:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -22717,7 +22441,7 @@ Dropdown.defaultProps = {
 exports.default = Dropdown;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":171,"../js/lib/util":172,"./button":175,"./caret":176,"react":165}],183:[function(require,module,exports){
+},{"../js/lib/jqLite":171,"../js/lib/util":172,"./button":174,"./caret":175,"react":165}],182:[function(require,module,exports){
 /**
  * MUI React form module
  * @module react/form
@@ -22778,7 +22502,58 @@ Form.defaultProps = {
 exports.default = Form;
 module.exports = exports['default'];
 
-},{"react":165}],184:[function(require,module,exports){
+},{"react":165}],183:[function(require,module,exports){
+/**                                                                            
+ * MUI React Input Component
+ * @module react/input
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _textField = require('./text-field');
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Input constructor
+ * @class
+ */
+
+var Input = function (_React$Component) {
+  babelHelpers.inherits(Input, _React$Component);
+
+  function Input() {
+    babelHelpers.classCallCheck(this, Input);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Input, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_textField.TextField, this.props);
+    }
+  }]);
+  return Input;
+}(_react2.default.Component);
+
+Input.propTypes = {
+  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
+};
+Input.defaultProps = {
+  type: 'text'
+};
+exports.default = Input;
+module.exports = exports['default'];
+
+},{"./text-field":191,"react":165}],184:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -23688,9 +23463,286 @@ exports.default = Tabs;
 module.exports = exports['default'];
 
 },{"../js/lib/util":172,"./tab":189,"react":165}],191:[function(require,module,exports){
-/**                                                                            
- * MUI React TextareaInput Component
- * @module react/textarea-input
+/**
+ * MUI React TextInput Component
+ * @module react/text-input
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TextField = undefined;
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Input constructor
+ * @class
+ */
+
+var Input = function (_React$Component) {
+  babelHelpers.inherits(Input, _React$Component);
+
+  function Input(props) {
+    babelHelpers.classCallCheck(this, Input);
+
+    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+
+    var value = props.value;
+    var innerValue = value || props.defaultValue;
+
+    _this.state = {
+      innerValue: innerValue,
+      isDirty: Boolean(innerValue)
+    };
+
+    // warn if value defined but onChange is not
+    if (value !== null && props.onChange === null) {
+      var s = 'You provided a `value` prop to a form field without an ' + '`OnChange` handler. Please see React documentation on ' + 'controlled components';
+      util.raiseError(s, true);
+    }
+
+    var cb = util.callback;
+    _this.onChangeCB = cb(_this, 'onChange');
+    _this.onFocusCB = cb(_this, 'onFocus');
+    return _this;
+  }
+
+  babelHelpers.createClass(Input, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // disable MUI js
+      this.refs.inputEl._muiTextfield = true;
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(ev) {
+      this.setState({ innerValue: ev.target.value });
+      if (this.props.onChange) this.props.onChange(ev);
+    }
+  }, {
+    key: 'onFocus',
+    value: function onFocus(ev) {
+      this.setState({ isDirty: true });
+    }
+  }, {
+    key: 'triggerFocus',
+    value: function triggerFocus() {
+      // hack to enable IE10 pointer-events shim
+      this.refs.inputEl.focus();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var cls = {},
+          isNotEmpty = Boolean(this.state.innerValue),
+          inputEl = undefined;
+
+      cls['mui--is-empty'] = !isNotEmpty;
+      cls['mui--is-not-empty'] = isNotEmpty;
+      cls['mui--is-dirty'] = this.state.isDirty;
+      cls['mui--is-invalid'] = this.props.invalid;
+
+      cls = util.classNames(cls);
+
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      if (this.props.type === 'textarea') {
+        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
+          ref: 'inputEl',
+          className: cls,
+          rows: this.props.rows,
+          placeholder: this.props.hint,
+          value: this.props.value,
+          defaultValue: this.props.defaultValue,
+          autoFocus: this.props.autoFocus,
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
+        }));
+      } else {
+        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, other, {
+          ref: 'inputEl',
+          className: cls,
+          type: this.props.type,
+          value: this.props.value,
+          defaultValue: this.props.defaultValue,
+          placeholder: this.props.hint,
+          autoFocus: this.props.autofocus,
+          onChange: this.onChangeCB,
+          onFocus: this.onFocusCB,
+          required: this.props.required
+        }));
+      }
+
+      return inputEl;
+    }
+  }]);
+  return Input;
+}(_react2.default.Component);
+
+/**
+ * Label constructor
+ * @class
+ */
+
+Input.propTypes = {
+  hint: PropTypes.string,
+  value: PropTypes.string,
+  type: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  onChange: PropTypes.func
+};
+Input.defaultProps = {
+  hint: null,
+  type: null,
+  value: null,
+  autoFocus: false,
+  onChange: null
+};
+
+var Label = function (_React$Component2) {
+  babelHelpers.inherits(Label, _React$Component2);
+
+  function Label() {
+    var _Object$getPrototypeO;
+
+    var _temp, _this2, _ret;
+
+    babelHelpers.classCallCheck(this, Label);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Label)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this2), _this2.state = {
+      style: {}
+    }, _temp), babelHelpers.possibleConstructorReturn(_this2, _ret);
+  }
+
+  babelHelpers.createClass(Label, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      setTimeout(function () {
+        var s = '.15s ease-out';
+        var style = undefined;
+
+        style = {
+          transition: s,
+          WebkitTransition: s,
+          MozTransition: s,
+          OTransition: s,
+          msTransform: s
+        };
+
+        _this3.setState({ style: style });
+      }, 150);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'label',
+        {
+          style: this.state.style,
+          onClick: this.props.onClick
+        },
+        this.props.text
+      );
+    }
+  }]);
+  return Label;
+}(_react2.default.Component);
+
+/**
+ * TextField constructor
+ * @class
+ */
+
+Label.defaultProps = {
+  text: '',
+  onClick: null
+};
+
+var TextField = function (_React$Component3) {
+  babelHelpers.inherits(TextField, _React$Component3);
+
+  function TextField(props) {
+    babelHelpers.classCallCheck(this, TextField);
+
+    var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextField).call(this, props));
+
+    _this4.onClickCB = util.callback(_this4, 'onClick');
+    return _this4;
+  }
+
+  babelHelpers.createClass(TextField, [{
+    key: 'onClick',
+    value: function onClick(ev) {
+      // pointer-events shim
+      if (util.supportsPointerEvents() === false) {
+        ev.target.style.cursor = 'text';
+        this.refs.inputEl.triggerFocus();
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var cls = {},
+          labelEl = undefined;
+
+      if (this.props.label.length) {
+        labelEl = _react2.default.createElement(Label, {
+          text: this.props.label,
+          onClick: this.onClickCB
+        });
+      }
+
+      cls['mui-textfield'] = true;
+      cls['mui-textfield--float-label'] = this.props.floatingLabel;
+      cls = util.classNames(cls);
+
+      return _react2.default.createElement(
+        'div',
+        { className: cls },
+        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, this.props)),
+        labelEl
+      );
+    }
+  }]);
+  return TextField;
+}(_react2.default.Component);
+
+/** Define module API */
+
+TextField.propTypes = {
+  label: PropTypes.string,
+  floatingLabel: PropTypes.bool
+};
+TextField.defaultProps = {
+  label: '',
+  floatingLabel: false
+};
+exports.TextField = TextField;
+
+},{"../js/lib/util":172,"react":165}],192:[function(require,module,exports){
+/**
+ * MUI React Textarea Component
+ * @module react/textarea
  */
 
 'use strict';
@@ -23703,94 +23755,43 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
-var _input = require('./_input');
+var _textField = require('./text-field');
 
 var PropTypes = _react2.default.PropTypes;
 
 /**
- * TextInput constructor
+ * Textarea constructor
  * @class
  */
 
-var TextInput = function (_React$Component) {
-  babelHelpers.inherits(TextInput, _React$Component);
+var Textarea = function (_React$Component) {
+  babelHelpers.inherits(Textarea, _React$Component);
 
-  function TextInput() {
-    babelHelpers.classCallCheck(this, TextInput);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextInput).apply(this, arguments));
+  function Textarea() {
+    babelHelpers.classCallCheck(this, Textarea);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Textarea).apply(this, arguments));
   }
 
-  babelHelpers.createClass(TextInput, [{
+  babelHelpers.createClass(Textarea, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_input.TextField, this.props);
+      return _react2.default.createElement(_textField.TextField, this.props);
     }
   }]);
-  return TextInput;
+  return Textarea;
 }(_react2.default.Component);
 
-TextInput.propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
-};
-TextInput.defaultProps = {
-  type: 'text'
-};
-exports.default = TextInput;
-module.exports = exports['default'];
-
-},{"./_input":173,"react":165}],192:[function(require,module,exports){
-/**
- * MUI React TextareaInput Component
- * @module react/textarea-input
- */
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _input = require('./_input');
-
-var PropTypes = _react2.default.PropTypes;
-
-/**
- * TextareaInput constructor
- * @class
- */
-
-var TextareaInput = function (_React$Component) {
-  babelHelpers.inherits(TextareaInput, _React$Component);
-
-  function TextareaInput() {
-    babelHelpers.classCallCheck(this, TextareaInput);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextareaInput).apply(this, arguments));
-  }
-
-  babelHelpers.createClass(TextareaInput, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(_input.TextField, this.props);
-    }
-  }]);
-  return TextareaInput;
-}(_react2.default.Component);
-
-TextareaInput.propTypes = {
+Textarea.propTypes = {
   rows: PropTypes.number
 };
-TextareaInput.defaultProps = {
+Textarea.defaultProps = {
   type: 'textarea',
   rows: 2
 };
-exports.default = TextareaInput;
+exports.default = Textarea;
 module.exports = exports['default'];
 
-},{"./_input":173,"react":165}],193:[function(require,module,exports){
+},{"./text-field":191,"react":165}],193:[function(require,module,exports){
 'use strict';
 
 /**
@@ -24128,7 +24129,7 @@ describe('react/appbar', function () {
   });
 });
 
-},{"../../src/react/appbar":174,"../lib/react-helpers":195,"assert":1,"react":165}],197:[function(require,module,exports){
+},{"../../src/react/appbar":173,"../lib/react-helpers":195,"assert":1,"react":165}],197:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24301,7 +24302,7 @@ describe('react/button', function () {
   });
 });
 
-},{"../../src/react/button":175,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],198:[function(require,module,exports){
+},{"../../src/react/button":174,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],198:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24357,7 +24358,7 @@ describe('react/caret', function () {
   });
 });
 
-},{"../../src/react/caret":176,"../lib/react-helpers":195,"assert":1,"react":165}],199:[function(require,module,exports){
+},{"../../src/react/caret":175,"../lib/react-helpers":195,"assert":1,"react":165}],199:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24439,7 +24440,7 @@ describe('react/checkbox', function () {
   });
 });
 
-},{"../../src/react/checkbox":177,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],200:[function(require,module,exports){
+},{"../../src/react/checkbox":176,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],200:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24514,7 +24515,7 @@ describe('react/grid', function () {
      * @module test/react-tests/test-col
      */
 
-},{"../../src/react/col":178,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],201:[function(require,module,exports){
+},{"../../src/react/col":177,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],201:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24582,7 +24583,7 @@ describe('react/container', function () {
   });
 });
 
-},{"../../src/react/container":179,"../lib/react-helpers":195,"assert":1,"react":165}],202:[function(require,module,exports){
+},{"../../src/react/container":178,"../lib/react-helpers":195,"assert":1,"react":165}],202:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24638,7 +24639,7 @@ describe('react/divider', function () {
   });
 });
 
-},{"../../src/react/divider":180,"../lib/react-helpers":195,"assert":1,"react":165}],203:[function(require,module,exports){
+},{"../../src/react/divider":179,"../lib/react-helpers":195,"assert":1,"react":165}],203:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24757,7 +24758,7 @@ describe('react/dropdown', function () {
   });
 });
 
-},{"../../src/react/dropdown":182,"../../src/react/dropdown-item":181,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],204:[function(require,module,exports){
+},{"../../src/react/dropdown":181,"../../src/react/dropdown-item":180,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],204:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24815,7 +24816,130 @@ describe('react/form', function () {
   });
 });
 
-},{"../../src/react/form":183,"../lib/react-helpers":195,"assert":1,"react":165}],205:[function(require,module,exports){
+},{"../../src/react/form":182,"../lib/react-helpers":195,"assert":1,"react":165}],205:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = babelHelpers.interopRequireDefault(_reactDom);
+
+var _reactAddonsTestUtils = require('react-addons-test-utils');
+
+var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
+
+var _input = require('../../src/react/input');
+
+var _input2 = babelHelpers.interopRequireDefault(_input);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react input component
+ * @module test/react-tests/test-input
+ */
+
+describe('react/input', function () {
+  var errFn = undefined;
+
+  before(function () {
+    errFn = console.error;
+    console.error = function (msg) {
+      throw Error(msg);
+    };
+  });
+
+  after(function () {
+    console.error = errFn;
+  });
+
+  it('renders wrapper properly', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_input2.default, null));
+    var wrapperEl = _reactDom2.default.findDOMNode(instance);
+
+    _assert2.default.equal(wrapperEl.tagName, 'DIV');
+    _assert2.default.equal(wrapperEl.className, 'mui-textfield');
+  });
+
+  it('renders native input element', function () {
+    var elem = _react2.default.createElement(_input2.default, { defaultValue: 'my input' });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
+
+    _assert2.default.equal(inputEl.value, 'my input');
+  });
+
+  it('adds dirty class on focus', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_input2.default, null));
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
+
+    // starts with empty class
+    _assert2.default.equal(inputEl.className, 'mui--is-empty');
+
+    // adds dirty class on focus
+    _reactAddonsTestUtils2.default.Simulate.focus(inputEl);
+    _assert2.default.equal(/mui--is-dirty/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+
+    // modify input
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+  });
+
+  it('does controlled component validation', function () {
+    // raises error when `value` defined and `onChange missing
+    _assert2.default.throws(function () {
+      var elem = _react2.default.createElement(_input2.default, { value: 'my value' });
+      var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    }, /MUI Warning/);
+  });
+
+  it('can be used as controlled component', function () {
+    var TestApp = _react2.default.createClass({
+      displayName: 'TestApp',
+
+      getInitialState: function getInitialState() {
+        return { value: this.props.value };
+      },
+      onChange: function onChange(ev) {
+        this.setState({ value: ev.target.value });
+      },
+      render: function render() {
+        return _react2.default.createElement(_input2.default, {
+          value: this.state.value,
+          defaultValue: 'ignored value',
+          onChange: this.onChange
+        });
+      }
+    });
+
+    var elem = _react2.default.createElement(TestApp, { value: 'test' });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var findComponent = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag;
+    var inputEl = findComponent(instance, 'input');
+
+    // check default value
+    _assert2.default.equal(inputEl.value, 'test');
+
+    // update TestApp and check inputEl value
+    instance.setState({ value: 'test2' });
+    _assert2.default.equal(inputEl.value, 'test2');
+
+    // update inputEl and check state
+    inputEl.value = 'test3';
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+    _assert2.default.equal(instance.state.value, 'test3');
+  });
+});
+
+},{"../../src/react/input":183,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],206:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24871,7 +24995,7 @@ describe('react/panel', function () {
   });
 });
 
-},{"../../src/react/panel":184,"../lib/react-helpers":195,"assert":1,"react":165}],206:[function(require,module,exports){
+},{"../../src/react/panel":184,"../lib/react-helpers":195,"assert":1,"react":165}],207:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24953,7 +25077,7 @@ describe('react/radio', function () {
   });
 });
 
-},{"../../src/react/radio":185,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],207:[function(require,module,exports){
+},{"../../src/react/radio":185,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],208:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25023,7 +25147,7 @@ describe('react/grid', function () {
   });
 });
 
-},{"../../src/react/row":186,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],208:[function(require,module,exports){
+},{"../../src/react/row":186,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],209:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25207,7 +25331,7 @@ describe('react/select', function () {
   });
 });
 
-},{"../../src/react/select":188,"../../src/react/select-item":187,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],209:[function(require,module,exports){
+},{"../../src/react/select":188,"../../src/react/select-item":187,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],210:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25270,7 +25394,7 @@ describe('react/tabs', function () {
   });
 });
 
-},{"../../src/react/tab":189,"../../src/react/tabs":190,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],210:[function(require,module,exports){
+},{"../../src/react/tab":189,"../../src/react/tabs":190,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],211:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25289,113 +25413,18 @@ var _reactAddonsTestUtils = require('react-addons-test-utils');
 
 var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
 
-var _textInput = require('../../src/react/text-input');
+var _textarea = require('../../src/react/textarea');
 
-var _textInput2 = babelHelpers.interopRequireDefault(_textInput);
-
-var _textareaInput = require('../../src/react/textarea-input');
-
-var _textareaInput2 = babelHelpers.interopRequireDefault(_textareaInput);
+var _textarea2 = babelHelpers.interopRequireDefault(_textarea);
 
 var _reactHelpers = require('../lib/react-helpers');
 
-describe('react/text-input', function () {
-  var errFn = undefined;
+/**
+ * MUI test react textinput library
+ * @module test/react-tests/test-textinput
+ */
 
-  before(function () {
-    errFn = console.error;
-    console.error = function (msg) {
-      throw Error(msg);
-    };
-  });
-
-  after(function () {
-    console.error = errFn;
-  });
-
-  it('renders wrapper properly', function () {
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_textInput2.default, null));
-    var wrapperEl = _reactDom2.default.findDOMNode(instance);
-
-    _assert2.default.equal(wrapperEl.tagName, 'DIV');
-    _assert2.default.equal(wrapperEl.className, 'mui-textfield');
-  });
-
-  it('renders native input element', function () {
-    var elem = _react2.default.createElement(_textInput2.default, { defaultValue: 'my input' });
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
-    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
-
-    _assert2.default.equal(inputEl.value, 'my input');
-  });
-
-  it('adds dirty class on focus', function () {
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_textInput2.default, null));
-    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
-
-    // starts with empty class
-    _assert2.default.equal(inputEl.className, 'mui--is-empty');
-
-    // adds dirty class on focus
-    _reactAddonsTestUtils2.default.Simulate.focus(inputEl);
-    _assert2.default.equal(/mui--is-dirty/.test(inputEl.className), true);
-    _assert2.default.equal(/mui--is-empty/.test(inputEl.className), true);
-    _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
-
-    // modify input
-    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
-  });
-
-  it('does controlled component validation', function () {
-    // raises error when `value` defined and `onChange missing
-    _assert2.default.throws(function () {
-      var elem = _react2.default.createElement(_textInput2.default, { value: 'my value' });
-      var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
-    }, /MUI Warning/);
-  });
-
-  it('can be used as controlled component', function () {
-    var TestApp = _react2.default.createClass({
-      displayName: 'TestApp',
-
-      getInitialState: function getInitialState() {
-        return { value: this.props.value };
-      },
-      onChange: function onChange(ev) {
-        this.setState({ value: ev.target.value });
-      },
-      render: function render() {
-        return _react2.default.createElement(_textInput2.default, {
-          value: this.state.value,
-          defaultValue: 'ignored value',
-          onChange: this.onChange
-        });
-      }
-    });
-
-    var elem = _react2.default.createElement(TestApp, { value: 'test' });
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
-    var findComponent = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag;
-    var inputEl = findComponent(instance, 'input');
-
-    // check default value
-    _assert2.default.equal(inputEl.value, 'test');
-
-    // update TestApp and check inputEl value
-    instance.setState({ value: 'test2' });
-    _assert2.default.equal(inputEl.value, 'test2');
-
-    // update inputEl and check state
-    inputEl.value = 'test3';
-    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
-    _assert2.default.equal(instance.state.value, 'test3');
-  });
-}); /**
-     * MUI test react textinput library
-     * @module test/react-tests/test-textinput
-     */
-
-describe('react/textarea-input', function () {
+describe('react/textarea', function () {
   // capture console error messages
   var errFn = undefined,
       elem = undefined;
@@ -25412,7 +25441,7 @@ describe('react/textarea-input', function () {
   });
 
   beforeEach(function () {
-    elem = _react2.default.createElement(_textareaInput2.default, { defaultValue: 'my input' });
+    elem = _react2.default.createElement(_textarea2.default, { defaultValue: 'my input' });
   });
 
   it('renders wrapper properly', function () {
@@ -25435,7 +25464,7 @@ describe('react/textarea-input', function () {
   it('does controlled component validation', function () {
     // raises error when `value` defined and `onChange missing
     _assert2.default.throws(function () {
-      var elem = _react2.default.createElement(_textareaInput2.default, { value: 'my value' });
+      var elem = _react2.default.createElement(_textarea2.default, { value: 'my value' });
       var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
     }, /MUI Warning/);
   });
@@ -25451,7 +25480,7 @@ describe('react/textarea-input', function () {
         this.setState({ value: ev.target.value });
       },
       render: function render() {
-        return _react2.default.createElement(_textareaInput2.default, {
+        return _react2.default.createElement(_textarea2.default, {
           value: this.state.value,
           defaultValue: 'ignored value',
           onChange: this.onChange
@@ -25478,4 +25507,4 @@ describe('react/textarea-input', function () {
   });
 });
 
-},{"../../src/react/text-input":191,"../../src/react/textarea-input":192,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}]},{},[6])
+},{"../../src/react/textarea":192,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}]},{},[6])

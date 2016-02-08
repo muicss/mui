@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="mui">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,9 +12,9 @@
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
   </head>
-  <body ng-app="starter" ng-cloak>
-      <h1>Grid</h1>
-      <mui-container>
+  <body>
+    <h1>Grid</h1>
+    <mui-container>
       <mui-panel>
         <mui-row>
           <mui-col md=1>md-1</mui-col>
@@ -30,46 +30,43 @@
           <mui-col md=1>md-1</mui-col>
           <mui-col md=1>md-1</mui-col>
         </mui-row>
-
+        
         <mui-row>
           <mui-col md=8>md-8</mui-col>
           <mui-col md=4>md-4</mui-col>
         </mui-row>
-
+        
         <mui-row>
           <mui-col md=4>md-4</mui-col>
           <mui-col md=4>md-4</mui-col>
           <mui-col md=4>md-4</mui-col>
         </mui-row>
-
+        
         <mui-row>
           <mui-col md=6>md-6</mui-col>
           <mui-col md=6>md-6</mui-col>
         </mui-row>
-
+        
       </div>
-
-    </mui-panel>
-
-    <mui-panel>
-      <mui-row>
-        <mui-col md=4 >md-4</mui-col>
-        <mui-col md=4 md-offset=4>md-4 md-offset-4</mui-col>
-      </mui-row>
-      <mui-row>
-        <mui-col md=3 md-offset=3>md-3 md-offset-3</mui-col>
-        <mui-col md=3 md-offset=3>md-3 md-offset-3</mui-col>
-      </mui-row>
-      <mui-row>
-        <mui-col md=6 md-offset=3>md-6 md-offset-3</mui-col>
-      </mui-row>
-    </mui-panel>
-
+      
+      </mui-panel>
+      
+      <mui-panel>
+        <mui-row>
+          <mui-col md=4 >md-4</mui-col>
+          <mui-col md=4 md-offset=4>md-4 md-offset-4</mui-col>
+        </mui-row>
+        <mui-row>
+          <mui-col md=3 md-offset=3>md-3 md-offset-3</mui-col>
+          <mui-col md=3 md-offset=3>md-3 md-offset-3</mui-col>
+        </mui-row>
+        <mui-row>
+          <mui-col md=6 md-offset=3>md-6 md-offset-3</mui-col>
+        </mui-row>
+      </mui-panel>
+      
     </mui-container>
-
+    
 
   </body>
-  <script type="text/javascript">
-    angular.module("starter", ["mui"]);
-  </script>
 </html>

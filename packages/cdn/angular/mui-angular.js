@@ -1150,7 +1150,7 @@ var inputFactory = function(isTextArea) {
   /**
    * directive factory
    */
-  return function($compile,$timeout) {
+  return ['$compile', '$timeout', function($compile, $timeout) {
     return {
       restrict: 'AE',
       require: ['?ngModel', '^?form'],
@@ -1239,7 +1239,7 @@ var inputFactory = function(isTextArea) {
 
       }
     };
-  };
+  }];
 }
 module.exports = angular.module('mui.input', [])
   .directive('muiInput', inputFactory(false))

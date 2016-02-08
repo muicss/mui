@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.4.4 - February 8, 2016
+
+* Changed React input component names to Input and Textarea
+
 ## 0.4.3 - February 7, 2016
 
 * Added Angular library

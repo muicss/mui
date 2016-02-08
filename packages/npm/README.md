@@ -198,6 +198,20 @@ import Col from 'muicss/lib/react/col';
 
 Read more: https://www.muicss.com/docs/v1/react/grid
 
+#### Input
+
+```jsx
+import Input from 'muicss/lib/react/input';
+
+<Input />
+  * {String} defaultValue
+  * {String} hint
+  * {String} value
+  * {String} type=text|email|url|tel|password
+  * {Boolean} autoFocus
+  * {Function} onChange
+```
+
 #### Panel
 
 ```jsx
@@ -285,26 +299,12 @@ import Tab from 'muicss/lib/react/tab';
 
 Read more: https://www.muicss.com/docs/v1/react/tabs
 
-#### TextInput
+#### Textarea
 
 ```jsx
-import TextInput from 'muicss/lib/react/text-input';
+import Textarea from 'muicss/lib/react/textarea';
 
-<TextInput />
-  * {String} defaultValue
-  * {String} hint
-  * {String} value
-  * {String} type=text|email|url|tel|password
-  * {Boolean} autoFocus
-  * {Function} onChange
-```
-
-#### TextareaInput
-
-```jsx
-import TextareaInput from 'muicss/lib/react/textarea-input';
-
-<TextareaInput />
+<Textarea />
   * {String} defaultValue
   * {String} hint
   * {String} value

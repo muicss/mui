@@ -1,23 +1,23 @@
 /**                                                                            
- * MUI React TextareaInput Component
- * @module react/textarea-input
+ * MUI React Input Component
+ * @module react/input
  */
 
 'use strict';
 
 import React from 'react';
 
-import { TextField } from './_input';
+import { TextField } from './text-field';
 
 
 const PropTypes = React.PropTypes;
 
 
 /**
- * TextInput constructor
+ * Input constructor
  * @class
  */
-class TextInput extends React.Component {
+class Input extends React.Component {
   static propTypes = {
     type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
   };
@@ -32,4 +32,4 @@ class TextInput extends React.Component {
 }
 
 
-export default TextInput;
+export default Input;

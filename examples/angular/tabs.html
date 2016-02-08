@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="myapp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,11 +11,25 @@
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
+    <script>
+      angular.module("myapp", ["mui"])
+             .controller("exampleCtrl", function($scope, $interval) {
+               $scope.tab = {
+                 selected : 1
+               };
+               $scope.nextTab = function() {
+                 $scope.tab.selected += 1;
+               };
+               $scope.$watch("tab.selected", function(val1) {
+                 console.log(val1);
+               });
+             });
+    </script>
   </head>
-  <body ng-app="starter" ng-cloak >
+  <body ng-controller="exampleCtrl">
     <h1>Tabs</h1>
     <mui-container >
-
+      
       <mui-panel>
         <h3>Default tabs</h3>
         <mui-tabs>
@@ -34,7 +48,7 @@
         </mui-tabs>
       </mui-panel>
 
-      <mui-panel ng-controller="startCtrl">
+      <mui-panel>
         <h3>tabs and selected
           {{tab.selected}}</h3>
         <mui-tabs selected="tab.selected">
@@ -50,17 +64,4 @@
     </mui-container>
 
   </body>
-  <script type="text/javascript">
-    angular.module("starter", ["mui"]).controller("startCtrl", function($scope, $interval) {
-      $scope.tab = {
-        selected : 1
-      };
-      $scope.nextTab = function() {
-        $scope.tab.selected += 1;
-      };
-      $scope.$watch("tab.selected", function(val1) {
-        // console.log(val1);
-      });
-    });
-  </script>
 </html>

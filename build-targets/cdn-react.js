@@ -22,6 +22,7 @@
   react.Dropdown = require('src/react/dropdown'),
   react.DropdownItem = require('src/react/dropdown-item'),
   react.Form = require('src/react/form');
+  react.Input = require('src/react/input');
   react.Panel = require('src/react/panel');
   react.Radio = require('src/react/radio');
   react.Row = require('src/react/row');
@@ -29,6 +30,5 @@
   react.SelectItem = require('src/react/select-item');
   react.Tab = require('src/react/tab');
   react.Tabs = require('src/react/tabs');
-  react.TextInput = require('src/react/text-input');
-  react.TextareaInput = require('src/react/textarea-input');
+  react.Textarea = require('src/react/textarea');
 })(window);

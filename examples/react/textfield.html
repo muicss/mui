@@ -16,7 +16,7 @@
   </head>
   <body>
     <div class="mui-container">
-      <h2>TextInput</h2>
+      <h2>Input</h2>
       <div class="mui-panel">
         <h3>Form with placeholders</h3>
         <div id="example1"></div>
@@ -28,7 +28,7 @@
         <div id="example4"></div>
       </div>
 
-      <h2>TextareaInput</h2>
+      <h2>Textarea</h2>
       <div class="mui-panel">
         <h3>Form with placeholders</h3>
         <div id="exampleA"></div>
@@ -48,14 +48,14 @@
     <script type="text/babel">
       let Button = mui.react.Button,
           Form = mui.react.Form,
-          TextInput = mui.react.TextInput,
-          TextareaInput = mui.react.TextareaInput;
+          Input = mui.react.Input,
+          Textarea = mui.react.Textarea;
 
       // form with placeholders
       ReactDOM.render(
         <Form>
-          <TextInput hint="Placeholder 1" />
-          <TextInput hint="Placeholder 2" />
+          <Input hint="Placeholder 1" />
+          <Input hint="Placeholder 2" />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('example1')
@@ -64,8 +64,8 @@
       // form with fixed labels
       ReactDOM.render(
         <Form>
-          <TextInput label="Label 1" />
-          <TextInput label="Label 2" />
+          <Input label="Label 1" />
+          <Input label="Label 2" />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('example2')
@@ -74,8 +74,8 @@
       // form with fixed labels and placeholders
       ReactDOM.render(
         <Form>
-          <TextInput label="Label 1" hint="Placeholder 1" />
-          <TextInput label="Label 2" hint="Placeholder 2" />
+          <Input label="Label 1" hint="Placeholder 1" />
+          <Input label="Label 2" hint="Placeholder 2" />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('example3')
@@ -84,8 +84,8 @@
       // form with floating labels
       ReactDOM.render(
         <Form>
-          <TextInput label="Label 1" floatingLabel={true} />
-          <TextInput
+          <Input label="Label 1" floatingLabel={true} />
+          <Input
             label="Label 2"
             floatingLabel={true}
             defaultValue="on load"
@@ -98,8 +98,8 @@
       // form with textarea and placeholders
       ReactDOM.render(
         <Form>
-          <TextareaInput hint="Placeholder 1" />
-          <TextareaInput hint="Placeholder 2" rows={5} />
+          <Textarea hint="Placeholder 1" />
+          <Textarea hint="Placeholder 2" rows={5} />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('exampleA')
@@ -108,8 +108,8 @@
       // form with textarea and fixed labels
       ReactDOM.render(
         <Form>
-          <TextareaInput label="Label 1" />
-          <TextareaInput label="Label 2" rows={5} />
+          <Textarea label="Label 1" />
+          <Textarea label="Label 2" rows={5} />
           <Button variant="raised">Submit</Button>
         </Form>,
         document.getElementById('exampleB')
@@ -118,11 +118,11 @@
       // form with textarea fixed labels and placeholders
       ReactDOM.render(
         <Form>
-          <TextareaInput
+          <Textarea
               label="Label 1"
               hint="Placeholder 1"
           />
-          <TextareaInput
+          <Textarea
               label="Label 2"
               hint="Placeholder 2" 
               rows={5}
@@ -135,11 +135,11 @@
       // form with textarea and floating labels
       ReactDOM.render(
         <Form>
-          <TextareaInput
+          <Textarea
               label="Label 1"
               floatingLabel={true}
           />
-          <TextareaInput
+          <Textarea
               label="Label 2"
               floatingLabel={true}
               rows={5}
@@ -152,27 +152,27 @@
       // form with validators
       ReactDOM.render(
         <Form>
-          <TextInput
+          <Input
               type="email"
               label="Email address (should be red on invalid input)"
           />
-          <TextInput
+          <Input
               type="email"
               label="Email address (should be red on load)"
               defaultValue="err"
           />
-          <TextInput
+          <Input
               type="text"
               label="Required text (should be red after focus)"
               required={true}
           />
-          <TextInput
+          <Input
               type="text"
               label="Required text (should be red after deletion)"
               defaultValue="val"
               required={true}
           />
-          <TextInput
+          <Input
               type="text"
               label="Is invalid (should be red on load)"
               invalid={true}
