@@ -1,7 +1,7 @@
 var inputFactory = function(isTextArea) {
   var scope = {
     innerInput: '=?ngModel',
-    floating: '=?',
+    floatingLabel: '@',
     type: '@',
     hint: '@',
     label: '@',
@@ -19,9 +19,9 @@ var inputFactory = function(isTextArea) {
       require: ['?ngModel', '^?form'],
       scope: scope,
       replace: true,
-      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floating}\'>' +
+      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floatingLabel}\'>' +
         '<input ng-model="innerInput" ng-change="onChange()" placeholder={{hint}} type={{type}} />' +
-        '<label>{{label}}</label>' +
+        '<label>{{floatingLabel || label}}</label>' +
         '</div>',
 
       link: function(scope, element, attrs, ctrls) {
@@ -52,7 +52,7 @@ var inputFactory = function(isTextArea) {
         if (attrs.required) {
           $input.prop('required', true);
         }
-        if (scope.floating) {
+        if (scope.floatingLabel) {
           $timeout(function() {
             $label.css({
               'transition': '.15s ease-out',

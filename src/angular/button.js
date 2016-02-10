@@ -3,11 +3,9 @@ module.exports = angular.module('mui.button', [])
   .directive('muiButton', function() {
     return {
       restrict: 'AE',
-      scope: {
-        disable: '='
-      },
+      scope: {},
       replace: true,
-      template: '<button class="mui-btn" ng-disabled = "disable" ripple ng-transclude></button>',
+      template: '<button class="mui-btn" ripple ng-transclude></button>',
       transclude: true,
       link: function(scope, element, attrs) {
         var btnClass = 'mui-btn',
@@ -18,6 +16,11 @@ module.exports = angular.module('mui.button', [])
           };
 
         scope.type = scope.type || 'button';
+
+        //如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
+        if (!angular.isUndefined(attrs.disabled) && angular.isUndefined(attrs.ngDisabled)) {
+          element.prop('disabled', true);
+        }
 
         //change btn-style by attrs
         var _renderBtn = function() {

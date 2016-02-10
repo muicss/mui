@@ -9,10 +9,10 @@ module.exports = angular.module('mui.dropdown', [])
         color: '@', //['default', 'primary', 'danger', 'dark','accent']
         size: '@', //['default', 'small', 'large']
         open: '=?', //open ?
-        disable: '='
+        disable: '=ngDisabled'
       },
       template: '<div class="mui-dropdown">' +
-                  '<mui-button variant="{{variant}}" disable="disable" color="{{color}}" '+
+                  '<mui-button variant="{{variant}}" ng-disabled="disable" color="{{color}}" '+
                   'size="{{size}}"></mui-button>' +
                   '<ul class="mui-dropdown__menu" ng-transclude></ul>'+
                 '</div>',
@@ -24,6 +24,9 @@ module.exports = angular.module('mui.dropdown', [])
           $menu,$muiButton;
 
         scope.open = scope.open || false;
+        if (!angular.isUndefined(attrs.disabled) && angular.isUndefined(attrs.ngDisabled)) {
+          scope.disable = true;
+        }
 
         var _findMenuNode = function() {
           return angular.element(element[0].querySelector('.' + menuClass));
