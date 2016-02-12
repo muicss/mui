@@ -24,13 +24,10 @@ class Select extends React.Component {
   constructor(props) {
     super(props);
 
-    let value = props.value;
-    let innerValue = value || props.defaultValue;
-
-    this.state.innerValue = innerValue;
-
     // warn if value defined but onChange is not
-    if (value !== null && props.onChange === null) {
+    if (props.readOnly === false &&
+        props.value !== null &&
+        props.onChange === null) {
       util.raiseError(controlledMessage, true);
     }
 

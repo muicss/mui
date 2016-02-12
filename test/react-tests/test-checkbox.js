@@ -18,7 +18,7 @@ describe('react/checkbox', function() {
 
 
   beforeEach(function() {
-    elem = <Checkbox>My Label</Checkbox>;
+    elem = <Checkbox label="My Label"></Checkbox>;
   });
 
 
@@ -29,31 +29,28 @@ describe('react/checkbox', function() {
     assert.equal(result.props.className, 'mui-checkbox ');
   });
 
+
   it('renders properly with additional classNames', function() {
     let result = getShallowRendererOutput(
-      <Checkbox className="additional">
-        test
-      </Checkbox>
+      <Checkbox className="additional" label="test" />
     );
 
     assert.equal(result.props.className, 'mui-checkbox additional');
   });
 
+
   it('renders properly with additional styles', function() {
     let result = getShallowRendererOutput(
-      <Checkbox style={{additonal: 'style'}}>
-        test
-      </Checkbox>
+      <Checkbox style={{additonal: 'style'}} label="test" />
     );
 
     assert.equal(result.props.style.additonal, 'style');
   });
 
 
-
   it('renders content properly', function() {
-    let node = ReactUtils.renderIntoDocument(elem);
-    let wrapperEl = ReactDOM.findDOMNode(node);
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let wrapperEl = ReactDOM.findDOMNode(instance);
 
     assert.equal(wrapperEl.children.length, 1);
 
@@ -62,5 +59,43 @@ describe('react/checkbox', function() {
 
     let inputEl = labelEl.children[0];
     assert.equal(inputEl.tagName, 'INPUT');
+  });
+
+
+  it('can be used as a controlled component', function() {
+    var TestApp = React.createClass({
+      getInitialState: function() {
+        return {checked: this.props.checked};
+      },
+      onChange: function(ev) {
+        this.setState({checked: ev.target.checked});
+      },
+      render: function() {
+        return (
+          <Checkbox
+            ref="refEl"
+            checked={this.state.checked}
+            defaultChecked={true}
+            onChange={this.onChange}
+          />
+        );
+      }
+    });
+
+    let elem = <TestApp checked={false} />;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let inputEl = instance.refs.refEl.refs.inputEl
+
+    // check default value
+    assert.equal(inputEl.checked, false);
+
+    // update TestApp and check inputEl value
+    instance.setState({checked: true});
+    assert.equal(inputEl.checked, true);
+
+    // update inputEl and check state
+    inputEl.checked = false;
+    ReactUtils.Simulate.change(inputEl);
+    assert.equal(instance.state.checked, false);
   });
 });

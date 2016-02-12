@@ -7,6 +7,9 @@
 
 import React from 'react';
 
+import * as util from '../js/lib/util';
+import { controlledMessage } from './_helpers';
+
 
 const PropTypes = React.PropTypes;
 
@@ -17,20 +20,24 @@ const PropTypes = React.PropTypes;
  */
 class Checkbox extends React.Component {
   static propTypes = {
+    name: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.string,
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func
   };
 
   static defaultProps = {
     className: '',
+    name: null,
     label: null,
     value: null,
     checked: null,
     defaultChecked: null,
-    disabled: false
+    disabled: false,
+    onChange: null
   };
 
   render() {
@@ -43,11 +50,14 @@ class Checkbox extends React.Component {
       >
         <label>
           <input
+            ref="inputEl"
             type="checkbox"
+            name={this.props.name}
             value={this.props.value}
             checked={this.props.checked}
             defaultChecked={this.props.defaultChecked}
             disabled={this.props.disabled}
+            onChange={this.props.onChange}
           />
           {this.props.label}
         </label>
