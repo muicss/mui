@@ -7,8 +7,8 @@ import assert from 'assert';
 import React from 'react';
 import ReactUtils from 'react-addons-test-utils';
 
+import Option from '../../src/react/option';
 import Select from '../../src/react/select';
-import SelectItem from '../../src/react/select-item';
 
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
@@ -20,9 +20,9 @@ describe('react/select', function() {
   beforeEach(function() {
     elem = (
       <Select>
-        <SelectItem label="Option 1" />
-        <SelectItem label="Option 2" />
-        <SelectItem label="Option 3" />
+        <Option label="Option 1" />
+        <Option label="Option 2" />
+        <Option label="Option 3" />
       </Select>
     );
   });
@@ -83,9 +83,9 @@ describe('react/select', function() {
   it('handles default undefined value', function() {
     let testElem = (
       <Select>
-        <SelectItem value="value1" label="Option 1" />
-        <SelectItem value="value2" label="Option 2" />
-        <SelectItem value="value3" label="Option 3" />
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
       </Select>
     );
 
@@ -99,9 +99,9 @@ describe('react/select', function() {
   it('handles defaultValue for uncontrolled component', function() {
     let testElem = (
       <Select defaultValue="value2">
-        <SelectItem value="value1" label="Option 1" />
-        <SelectItem value="value2" label="Option 2" />
-        <SelectItem value="value3" label="Option 3" />
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
       </Select>
     );
 
@@ -115,9 +115,9 @@ describe('react/select', function() {
   it('handles value for controlled component', function() {
     let testElem = (
       <Select value="value2" onChange={function() {}}>
-        <SelectItem value="value1" label="Option 1" />
-        <SelectItem value="value2" label="Option 2" />
-        <SelectItem value="value3" label="Option 3" />
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
       </Select>
     );
 
@@ -137,9 +137,9 @@ describe('react/select', function() {
 
     let testElem = (
       <Select defaultValue="value2" onChange={checkChangeFn}>
-        <SelectItem value="value1" label="Option 1" />
-        <SelectItem value="value2" label="Option 2" />
-        <SelectItem value="value3" label="Option 3" />
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
       </Select>
     );
 
@@ -158,9 +158,9 @@ describe('react/select', function() {
 
     let testElem = (
       <Select defaultValue="value2" onChange={checkChangeFn} readOnly={true}>
-        <SelectItem value="value1" label="Option 1" />
-        <SelectItem value="value2" label="Option 2" />
-        <SelectItem value="value3" label="Option 3" />
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
       </Select>
     );
 

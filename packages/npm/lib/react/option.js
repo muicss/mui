@@ -1,7 +1,7 @@
 var babelHelpers = require('./babel-helpers.js');
 /**
- * MUI React select module
- * @module react/select
+ * MUI React options module
+ * @module react/option
  */
 
 'use strict';
@@ -29,19 +29,19 @@ var util = babelHelpers.interopRequireWildcard(_util);
 var PropTypes = _react2.default.PropTypes;
 
 /**
- * SelectItem constructor
+ * Option constructor
  * @class
  */
 
-var SelectItem = function (_React$Component) {
-  babelHelpers.inherits(SelectItem, _React$Component);
+var Option = function (_React$Component) {
+  babelHelpers.inherits(Option, _React$Component);
 
-  function SelectItem() {
-    babelHelpers.classCallCheck(this, SelectItem);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(SelectItem).apply(this, arguments));
+  function Option() {
+    babelHelpers.classCallCheck(this, Option);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Option).apply(this, arguments));
   }
 
-  babelHelpers.createClass(SelectItem, [{
+  babelHelpers.createClass(Option, [{
     key: 'render',
     value: function render() {
       var _props = this.props;
@@ -55,18 +55,18 @@ var SelectItem = function (_React$Component) {
       );
     }
   }]);
-  return SelectItem;
+  return Option;
 }(_react2.default.Component);
 
 /** Define module API */
 
-SelectItem.propTypes = {
+Option.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string
 };
-SelectItem.defaultProps = {
+Option.defaultProps = {
   value: null,
   label: null
 };
-exports.default = SelectItem;
+exports.default = Option;
 module.exports = exports['default'];

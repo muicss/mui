@@ -23,11 +23,11 @@
   react.DropdownItem = require('src/react/dropdown-item'),
   react.Form = require('src/react/form');
   react.Input = require('src/react/input');
+  react.Option = require('src/react/option');
   react.Panel = require('src/react/panel');
   react.Radio = require('src/react/radio');
   react.Row = require('src/react/row');
   react.Select = require('src/react/select');
-  react.SelectItem = require('src/react/select-item');
   react.Tab = require('src/react/tab');
   react.Tabs = require('src/react/tabs');
   react.Textarea = require('src/react/textarea');

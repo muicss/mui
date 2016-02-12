@@ -212,6 +212,8 @@ import Input from 'muicss/lib/react/input';
   * {Function} onChange
 ```
 
+Read more: https://www.muicss.com/docs/v1/react/forms
+
 #### Panel
 
 ```jsx
@@ -259,12 +261,12 @@ import Select from 'muicss/lib/react/select';
 
 Read more: https://www.muicss.com/docs/v1/react/forms
 
-##### SelectItem
+##### Option
 
 ```jsx
-import SelectItem from 'muicss/lib/react/select-item';
+import Option from 'muicss/lib/react/option';
 
-<SelectItem />
+<Option />
   * {String} value
   * {String} label
 ```
@@ -312,6 +314,8 @@ import Textarea from 'muicss/lib/react/textarea';
   * {Boolean} autoFocus
   * {Function} onChange
 ```
+
+Read more: https://www.muicss.com/docs/v1/react/forms
 
 ## CSS Helpers
 

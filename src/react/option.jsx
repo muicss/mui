@@ -1,6 +1,6 @@
 /**
- * MUI React select module
- * @module react/select
+ * MUI React options module
+ * @module react/option
  */
 
 'use strict';
@@ -16,10 +16,10 @@ const PropTypes = React.PropTypes;
 
 
 /**
- * SelectItem constructor
+ * Option constructor
  * @class
  */
-class SelectItem extends React.Component {
+class Option extends React.Component {
   static propTypes = {
     value: PropTypes.string,
     label: PropTypes.string
@@ -43,4 +43,4 @@ class SelectItem extends React.Component {
 
 
 /** Define module API */
-export default SelectItem;
+export default Option;

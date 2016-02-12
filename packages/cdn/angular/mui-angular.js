@@ -799,11 +799,9 @@ module.exports = angular.module('mui.button', [])
   .directive('muiButton', function() {
     return {
       restrict: 'AE',
-      scope: {
-        disable: '='
-      },
+      scope: {},
       replace: true,
-      template: '<button class="mui-btn" ng-disabled = "disable" ripple ng-transclude></button>',
+      template: '<button class="mui-btn" ripple ng-transclude></button>',
       transclude: true,
       link: function(scope, element, attrs) {
         var btnClass = 'mui-btn',
@@ -814,6 +812,11 @@ module.exports = angular.module('mui.button', [])
           };
 
         scope.type = scope.type || 'button';
+
+        //如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
+        if (!angular.isUndefined(attrs.disabled) && angular.isUndefined(attrs.ngDisabled)) {
+          element.prop('disabled', true);
+        }
 
         //change btn-style by attrs
         var _renderBtn = function() {
@@ -982,38 +985,6 @@ module.exports = angular.module('mui.divider', [])
         tElement.addClass('mui-divider');
       }
     }
-  })
-  .directive('dividerTop', function() {
-    return {
-      restrict: 'A',
-      compile: function(tElement, tAttrs) {
-        tElement.addClass('mui--divider-top');
-      }
-    }
-  })
-  .directive('dividerBottom', function() {
-    return {
-      restrict: 'A',
-      compile: function(tElement, tAttrs) {
-        tElement.addClass('mui--divider-bottom');
-      }
-    }
-  })
-  .directive('dividerLeft', function() {
-    return {
-      restrict: 'A',
-      compile: function(tElement, tAttrs) {
-        tElement.addClass('mui--divider-left');
-      }
-    }
-  })
-  .directive('dividerRight', function() {
-    return {
-      restrict: 'A',
-      compile: function(tElement, tAttrs) {
-        tElement.addClass('mui--divider-right');
-      }
-    }
   });
 
 },{}],13:[function(require,module,exports){
@@ -1042,10 +1013,10 @@ module.exports = angular.module('mui.dropdown', [])
         color: '@', //['default', 'primary', 'danger', 'dark','accent']
         size: '@', //['default', 'small', 'large']
         open: '=?', //open ?
-        disable: '='
+        disable: '=ngDisabled'
       },
       template: '<div class="mui-dropdown">' +
-                  '<mui-button variant="{{variant}}" disable="disable" color="{{color}}" '+
+                  '<mui-button variant="{{variant}}" ng-disabled="disable" color="{{color}}" '+
                   'size="{{size}}"></mui-button>' +
                   '<ul class="mui-dropdown__menu" ng-transclude></ul>'+
                 '</div>',
@@ -1057,6 +1028,9 @@ module.exports = angular.module('mui.dropdown', [])
           $menu,$muiButton;
 
         scope.open = scope.open || false;
+        if (!angular.isUndefined(attrs.disabled) && angular.isUndefined(attrs.ngDisabled)) {
+          scope.disable = true;
+        }
 
         var _findMenuNode = function() {
           return angular.element(element[0].querySelector('.' + menuClass));
@@ -1138,7 +1112,7 @@ module.exports = angular.module('mui.form', [])
 var inputFactory = function(isTextArea) {
   var scope = {
     innerInput: '=?ngModel',
-    floating: '=?',
+    floatingLabel: '@',
     type: '@',
     hint: '@',
     label: '@',
@@ -1156,9 +1130,9 @@ var inputFactory = function(isTextArea) {
       require: ['?ngModel', '^?form'],
       scope: scope,
       replace: true,
-      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floating}\'>' +
+      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floatingLabel}\'>' +
         '<input ng-model="innerInput" ng-change="onChange()" placeholder={{hint}} type={{type}} />' +
-        '<label>{{label}}</label>' +
+        '<label>{{floatingLabel || label}}</label>' +
         '</div>',
 
       link: function(scope, element, attrs, ctrls) {
@@ -1189,7 +1163,7 @@ var inputFactory = function(isTextArea) {
         if (attrs.required) {
           $input.prop('required', true);
         }
-        if (scope.floating) {
+        if (scope.floatingLabel) {
           $timeout(function() {
             $label.css({
               'transition': '.15s ease-out',

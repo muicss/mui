@@ -22555,6 +22555,79 @@ module.exports = exports['default'];
 
 },{"./text-field":191,"react":165}],184:[function(require,module,exports){
 /**
+ * MUI React options module
+ * @module react/option
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _forms = require('../js/lib/forms');
+
+var formlib = babelHelpers.interopRequireWildcard(_forms);
+
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Option constructor
+ * @class
+ */
+
+var Option = function (_React$Component) {
+  babelHelpers.inherits(Option, _React$Component);
+
+  function Option() {
+    babelHelpers.classCallCheck(this, Option);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Option).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Option, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      return _react2.default.createElement(
+        'option',
+        babelHelpers.extends({}, other, { value: this.props.value }),
+        this.props.label
+      );
+    }
+  }]);
+  return Option;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Option.propTypes = {
+  value: PropTypes.string,
+  label: PropTypes.string
+};
+Option.defaultProps = {
+  value: null,
+  label: null
+};
+exports.default = Option;
+module.exports = exports['default'];
+
+},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],185:[function(require,module,exports){
+/**
  * MUI React layout module
  * @module react/layout
  */
@@ -22605,7 +22678,7 @@ Panel.defaultProps = {
 exports.default = Panel;
 module.exports = exports['default'];
 
-},{"react":165}],185:[function(require,module,exports){
+},{"react":165}],186:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
@@ -22689,7 +22762,7 @@ Radio.defaultProps = {
 exports.default = Radio;
 module.exports = exports['default'];
 
-},{"react":165}],186:[function(require,module,exports){
+},{"react":165}],187:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
@@ -22747,80 +22820,7 @@ Row.defaultProps = {
 exports.default = Row;
 module.exports = exports['default'];
 
-},{"../js/lib/util":172,"react":165}],187:[function(require,module,exports){
-/**
- * MUI React select module
- * @module react/select
- */
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var PropTypes = _react2.default.PropTypes;
-
-/**
- * SelectItem constructor
- * @class
- */
-
-var SelectItem = function (_React$Component) {
-  babelHelpers.inherits(SelectItem, _React$Component);
-
-  function SelectItem() {
-    babelHelpers.classCallCheck(this, SelectItem);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(SelectItem).apply(this, arguments));
-  }
-
-  babelHelpers.createClass(SelectItem, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-      return _react2.default.createElement(
-        'option',
-        babelHelpers.extends({}, other, { value: this.props.value }),
-        this.props.label
-      );
-    }
-  }]);
-  return SelectItem;
-}(_react2.default.Component);
-
-/** Define module API */
-
-SelectItem.propTypes = {
-  value: PropTypes.string,
-  label: PropTypes.string
-};
-SelectItem.defaultProps = {
-  value: null,
-  label: null
-};
-exports.default = SelectItem;
-module.exports = exports['default'];
-
-},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],188:[function(require,module,exports){
+},{"../js/lib/util":172,"react":165}],188:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
@@ -24995,7 +24995,7 @@ describe('react/panel', function () {
   });
 });
 
-},{"../../src/react/panel":184,"../lib/react-helpers":195,"assert":1,"react":165}],207:[function(require,module,exports){
+},{"../../src/react/panel":185,"../lib/react-helpers":195,"assert":1,"react":165}],207:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25077,7 +25077,7 @@ describe('react/radio', function () {
   });
 });
 
-},{"../../src/react/radio":185,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],208:[function(require,module,exports){
+},{"../../src/react/radio":186,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],208:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25147,7 +25147,7 @@ describe('react/grid', function () {
   });
 });
 
-},{"../../src/react/row":186,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],209:[function(require,module,exports){
+},{"../../src/react/row":187,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],209:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25162,13 +25162,13 @@ var _reactAddonsTestUtils = require('react-addons-test-utils');
 
 var _reactAddonsTestUtils2 = babelHelpers.interopRequireDefault(_reactAddonsTestUtils);
 
+var _option = require('../../src/react/option');
+
+var _option2 = babelHelpers.interopRequireDefault(_option);
+
 var _select = require('../../src/react/select');
 
 var _select2 = babelHelpers.interopRequireDefault(_select);
-
-var _selectItem = require('../../src/react/select-item');
-
-var _selectItem2 = babelHelpers.interopRequireDefault(_selectItem);
 
 var _reactHelpers = require('../lib/react-helpers');
 
@@ -25184,9 +25184,9 @@ describe('react/select', function () {
     elem = _react2.default.createElement(
       _select2.default,
       null,
-      _react2.default.createElement(_selectItem2.default, { label: 'Option 1' }),
-      _react2.default.createElement(_selectItem2.default, { label: 'Option 2' }),
-      _react2.default.createElement(_selectItem2.default, { label: 'Option 3' })
+      _react2.default.createElement(_option2.default, { label: 'Option 1' }),
+      _react2.default.createElement(_option2.default, { label: 'Option 2' }),
+      _react2.default.createElement(_option2.default, { label: 'Option 3' })
     );
   });
 
@@ -25241,9 +25241,9 @@ describe('react/select', function () {
     var testElem = _react2.default.createElement(
       _select2.default,
       null,
-      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
     );
 
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
@@ -25256,9 +25256,9 @@ describe('react/select', function () {
     var testElem = _react2.default.createElement(
       _select2.default,
       { defaultValue: 'value2' },
-      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
     );
 
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
@@ -25271,9 +25271,9 @@ describe('react/select', function () {
     var testElem = _react2.default.createElement(
       _select2.default,
       { value: 'value2', onChange: function onChange() {} },
-      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
     );
 
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
@@ -25292,9 +25292,9 @@ describe('react/select', function () {
     var testElem = _react2.default.createElement(
       _select2.default,
       { defaultValue: 'value2', onChange: checkChangeFn },
-      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
     );
 
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
@@ -25312,9 +25312,9 @@ describe('react/select', function () {
     var testElem = _react2.default.createElement(
       _select2.default,
       { defaultValue: 'value2', onChange: checkChangeFn, readOnly: true },
-      _react2.default.createElement(_selectItem2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_selectItem2.default, { value: 'value3', label: 'Option 3' })
+      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
     );
 
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
@@ -25331,7 +25331,7 @@ describe('react/select', function () {
   });
 });
 
-},{"../../src/react/select":188,"../../src/react/select-item":187,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],210:[function(require,module,exports){
+},{"../../src/react/option":184,"../../src/react/select":188,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],210:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');

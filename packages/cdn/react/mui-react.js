@@ -400,17 +400,17 @@
   react.Divider = require('src/react/divider');
   react.Dropdown = require('src/react/dropdown'), react.DropdownItem = require('src/react/dropdown-item'), react.Form = require('src/react/form');
   react.Input = require('src/react/input');
+  react.Option = require('src/react/option');
   react.Panel = require('src/react/panel');
   react.Radio = require('src/react/radio');
   react.Row = require('src/react/row');
   react.Select = require('src/react/select');
-  react.SelectItem = require('src/react/select-item');
   react.Tab = require('src/react/tab');
   react.Tabs = require('src/react/tabs');
   react.Textarea = require('src/react/textarea');
 })(window);
 
-},{"src/react/appbar":10,"src/react/button":11,"src/react/caret":12,"src/react/checkbox":13,"src/react/col":14,"src/react/container":15,"src/react/divider":16,"src/react/dropdown":18,"src/react/dropdown-item":17,"src/react/form":19,"src/react/input":20,"src/react/panel":21,"src/react/radio":22,"src/react/row":23,"src/react/select":25,"src/react/select-item":24,"src/react/tab":26,"src/react/tabs":27,"src/react/textarea":28}],2:[function(require,module,exports){
+},{"src/react/appbar":10,"src/react/button":11,"src/react/caret":12,"src/react/checkbox":13,"src/react/col":14,"src/react/container":15,"src/react/divider":16,"src/react/dropdown":18,"src/react/dropdown-item":17,"src/react/form":19,"src/react/input":20,"src/react/option":21,"src/react/panel":22,"src/react/radio":23,"src/react/row":24,"src/react/select":25,"src/react/tab":26,"src/react/tabs":27,"src/react/textarea":28}],2:[function(require,module,exports){
 "use strict";
 
 /**
@@ -2472,6 +2472,79 @@ module.exports = exports['default'];
 
 },{"./text-field":9,"react":"CwoHg3"}],21:[function(require,module,exports){
 /**
+ * MUI React options module
+ * @module react/option
+ */
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = window.React;
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _forms = require('../js/lib/forms');
+
+var formlib = babelHelpers.interopRequireWildcard(_forms);
+
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var PropTypes = _react2.default.PropTypes;
+
+/**
+ * Option constructor
+ * @class
+ */
+
+var Option = function (_React$Component) {
+  babelHelpers.inherits(Option, _React$Component);
+
+  function Option() {
+    babelHelpers.classCallCheck(this, Option);
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Option).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(Option, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+      return _react2.default.createElement(
+        'option',
+        babelHelpers.extends({}, other, { value: this.props.value }),
+        this.props.label
+      );
+    }
+  }]);
+  return Option;
+}(_react2.default.Component);
+
+/** Define module API */
+
+Option.propTypes = {
+  value: PropTypes.string,
+  label: PropTypes.string
+};
+Option.defaultProps = {
+  value: null,
+  label: null
+};
+exports.default = Option;
+module.exports = exports['default'];
+
+},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],22:[function(require,module,exports){
+/**
  * MUI React layout module
  * @module react/layout
  */
@@ -2522,7 +2595,7 @@ Panel.defaultProps = {
 exports.default = Panel;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],22:[function(require,module,exports){
+},{"react":"CwoHg3"}],23:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
@@ -2606,7 +2679,7 @@ Radio.defaultProps = {
 exports.default = Radio;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],23:[function(require,module,exports){
+},{"react":"CwoHg3"}],24:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
@@ -2664,80 +2737,7 @@ Row.defaultProps = {
 exports.default = Row;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],24:[function(require,module,exports){
-/**
- * MUI React select module
- * @module react/select
- */
-
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var PropTypes = _react2.default.PropTypes;
-
-/**
- * SelectItem constructor
- * @class
- */
-
-var SelectItem = function (_React$Component) {
-  babelHelpers.inherits(SelectItem, _React$Component);
-
-  function SelectItem() {
-    babelHelpers.classCallCheck(this, SelectItem);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(SelectItem).apply(this, arguments));
-  }
-
-  babelHelpers.createClass(SelectItem, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-      return _react2.default.createElement(
-        'option',
-        babelHelpers.extends({}, other, { value: this.props.value }),
-        this.props.label
-      );
-    }
-  }]);
-  return SelectItem;
-}(_react2.default.Component);
-
-/** Define module API */
-
-SelectItem.propTypes = {
-  value: PropTypes.string,
-  label: PropTypes.string
-};
-SelectItem.defaultProps = {
-  value: null,
-  label: null
-};
-exports.default = SelectItem;
-module.exports = exports['default'];
-
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],25:[function(require,module,exports){
+},{"../js/lib/util":5,"react":"CwoHg3"}],25:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
