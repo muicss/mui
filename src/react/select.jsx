@@ -10,6 +10,7 @@ import React from 'react';
 import * as formlib from '../js/lib/forms';
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
+import { controlledMessage } from './_helpers';
 
 
 const PropTypes = React.PropTypes;
@@ -23,13 +24,20 @@ class Select extends React.Component {
   constructor(props) {
     super(props);
 
-    // default value
-    this.state.readOnly = props.readOnly;
-    this.state.value = props.value;
+    let value = props.value;
+    let innerValue = value || props.defaultValue;
+
+    this.state.innerValue = innerValue;
+
+    // warn if value defined but onChange is not
+    if (value !== null && props.onChange === null) {
+      util.raiseError(controlledMessage, true);
+    }
 
     // bind callback function
     let cb = util.callback;
     this.hideMenuCB = cb(this, 'hideMenu');
+    this.onInnerChangeCB = cb(this, 'onInnerChange');
     this.onInnerClickCB = cb(this, 'onInnerClick');
     this.onInnerFocusCB = cb(this, 'onInnerFocus');
     this.onInnerMouseDownCB = cb(this, 'onInnerMouseDown');
@@ -37,16 +45,10 @@ class Select extends React.Component {
     this.onMenuChangeCB = cb(this, 'onMenuChange');
     this.onOuterFocusCB = cb(this, 'onOuterFocus');
     this.onOuterBlurCB = cb(this, 'onOuterBlur');
-
-    // only define inner onChange if outer onChange is defined
-    if (props.onChange) this.onInnerChangeCB = cb(this, 'onInnerChange');
-    else this.state.readOnly = true;
   }
 
   state = {
-    readOnly: false,
-    showMenu: false,
-    value: null
+    showMenu: false
   };
 
   static propTypes = {
@@ -93,14 +95,8 @@ class Select extends React.Component {
   }
 
   onInnerChange(ev) {
-    if (this.state.readOnly) return;
-
-    let value = ev.target.value;
-    this.setState({ value });
-
-    // execute onChange method
     let fn = this.props.onChange;
-    if (fn) fn(value);
+    if (fn) fn(ev);
   }
 
   onInnerClick(ev) {
@@ -221,7 +217,7 @@ class Select extends React.Component {
         <select
           ref="selectEl"
           name={this.props.name}
-          value={this.state.value}
+          value={this.props.value}
           defaultValue={this.props.defaultValue}
           disabled={this.props.disabled}
           multiple={this.props.multiple}
