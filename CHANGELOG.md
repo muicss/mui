@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.4.5 - February 12, 2016
+
+* Changed React SelectItem component name to Option
+* Bugfixes to Angular library
+
 ## 0.4.4 - February 8, 2016
 
 * Changed React input component names to Input and Textarea
