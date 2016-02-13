@@ -98,6 +98,7 @@ var Input = function (_React$Component) {
       var children = _props.children;
       var other = babelHelpers.objectWithoutProperties(_props, ['children']);
 
+
       if (this.props.type === 'textarea') {
         inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
           ref: 'inputEl',
@@ -136,6 +137,7 @@ var Input = function (_React$Component) {
  * Label constructor
  * @class
  */
+
 
 Input.propTypes = {
   hint: PropTypes.string,
@@ -212,6 +214,7 @@ var Label = function (_React$Component2) {
  * @class
  */
 
+
 Label.defaultProps = {
   text: '',
   onClick: null
@@ -267,6 +270,7 @@ var TextField = function (_React$Component3) {
 }(_react2.default.Component);
 
 /** Define module API */
+
 
 TextField.propTypes = {
   label: PropTypes.string,

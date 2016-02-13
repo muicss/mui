@@ -41,6 +41,7 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
+
     // warn if value defined but onChange is not
 
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
@@ -223,6 +224,7 @@ var Select = function (_React$Component) {
       var onChange = _props.onChange;
       var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
 
+
       return _react2.default.createElement(
         'div',
         babelHelpers.extends({}, other, {
@@ -260,6 +262,7 @@ var Select = function (_React$Component) {
  * Menu constructor
  * @class
  */
+
 
 Select.propTypes = {
   name: PropTypes.string,
@@ -299,6 +302,7 @@ var Menu = function (_React$Component2) {
       origIndex: null,
       currentIndex: null
     };
+
 
     _this3.onKeydownCB = util.callback(_this3, 'onKeydown');
     return _this3;
@@ -433,6 +437,7 @@ var Menu = function (_React$Component2) {
 }(_react2.default.Component);
 
 /** Define module API */
+
 
 Menu.defaultProps = {
   optionEls: [],

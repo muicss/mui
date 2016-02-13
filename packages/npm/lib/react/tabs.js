@@ -24,6 +24,7 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+
 var PropTypes = _react2.default.PropTypes,
     tabsBarClass = 'mui-tabs__bar',
     tabsBarJustifiedClass = 'mui-tabs__bar--justified',
@@ -68,6 +69,7 @@ var Tabs = function (_React$Component) {
       var _props = this.props;
       var children = _props.children;
       var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+
 
       var tabEls = [],
           paneEls = [],
@@ -127,6 +129,7 @@ var Tabs = function (_React$Component) {
 }(_react2.default.Component);
 
 /** Define module API */
+
 
 Tabs.propTypes = {
   initialSelectedIndex: PropTypes.number,

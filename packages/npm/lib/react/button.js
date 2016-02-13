@@ -22,6 +22,7 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+
 var rippleIter = 0;
 
 var PropTypes = _react2.default.PropTypes,
@@ -147,6 +148,7 @@ var Button = function (_React$Component) {
  * @class
  */
 
+
 Button.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
   disabled: PropTypes.bool,
@@ -212,6 +214,7 @@ var Ripple = function (_React$Component2) {
 }(_react2.default.Component);
 
 /** Define module API */
+
 
 Ripple.propTypes = {
   xPos: PropTypes.number,

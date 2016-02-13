@@ -44,6 +44,7 @@ var Appbar = function (_React$Component) {
 
 /** Define module API */
 
+
 Appbar.defaultProps = {
   className: ''
 };
