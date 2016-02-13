@@ -410,7 +410,7 @@
   react.Textarea = require('src/react/textarea');
 })(window);
 
-},{"src/react/appbar":10,"src/react/button":11,"src/react/caret":12,"src/react/checkbox":13,"src/react/col":14,"src/react/container":15,"src/react/divider":16,"src/react/dropdown":18,"src/react/dropdown-item":17,"src/react/form":19,"src/react/input":20,"src/react/option":21,"src/react/panel":22,"src/react/radio":23,"src/react/row":24,"src/react/select":25,"src/react/tab":26,"src/react/tabs":27,"src/react/textarea":28}],2:[function(require,module,exports){
+},{"src/react/appbar":11,"src/react/button":12,"src/react/caret":13,"src/react/checkbox":14,"src/react/col":15,"src/react/container":16,"src/react/divider":17,"src/react/dropdown":19,"src/react/dropdown-item":18,"src/react/form":20,"src/react/input":21,"src/react/option":22,"src/react/panel":23,"src/react/radio":24,"src/react/row":25,"src/react/select":26,"src/react/tab":27,"src/react/tabs":28,"src/react/textarea":29}],2:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1111,6 +1111,18 @@ module.exports = {
 
 },{"../config":2,"./jqLite":4}],6:[function(require,module,exports){
 /**
+ * MUI React helpers
+ * @module react/_helpers
+ */
+
+'use strict';
+
+var controlledMessage = 'You provided a `value` prop to a form field ' + 'without an `OnChange` handler. Please see React documentation on ' + 'controlled components';
+
+module.exports = { controlledMessage: controlledMessage };
+
+},{}],7:[function(require,module,exports){
+/**
  * MUI React button module
  * @module react/button
  */
@@ -1339,7 +1351,7 @@ Ripple.defaultProps = {
 exports.default = Button;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],7:[function(require,module,exports){
+},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],8:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
@@ -1391,7 +1403,7 @@ Caret.defaultProps = {
 exports.default = Caret;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],8:[function(require,module,exports){
+},{"react":"CwoHg3"}],9:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -1448,7 +1460,7 @@ Tab.defaultProps = {
 exports.default = Tab;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],9:[function(require,module,exports){
+},{"react":"CwoHg3"}],10:[function(require,module,exports){
 /**
  * MUI React TextInput Component
  * @module react/text-input
@@ -1468,6 +1480,8 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
+
+var _helpers = require('./_helpers');
 
 var PropTypes = _react2.default.PropTypes;
 
@@ -1494,8 +1508,7 @@ var Input = function (_React$Component) {
 
     // warn if value defined but onChange is not
     if (value !== null && props.onChange === null) {
-      var s = 'You provided a `value` prop to a form field without an ' + '`OnChange` handler. Please see React documentation on ' + 'controlled components';
-      util.raiseError(s, true);
+      util.raiseError(_helpers.controlledMessage, true);
     }
 
     var cb = util.callback;
@@ -1514,7 +1527,9 @@ var Input = function (_React$Component) {
     key: 'onChange',
     value: function onChange(ev) {
       this.setState({ innerValue: ev.target.value });
-      if (this.props.onChange) this.props.onChange(ev);
+
+      var fn = this.props.onChange;
+      if (fn) fn(ev);
     }
   }, {
     key: 'onFocus',
@@ -1725,7 +1740,7 @@ TextField.defaultProps = {
 };
 exports.TextField = TextField;
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],10:[function(require,module,exports){
+},{"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],11:[function(require,module,exports){
 /**
  * MUI React Appbar Module
  * @module react/appbar
@@ -1777,11 +1792,11 @@ Appbar.defaultProps = {
 exports.default = Appbar;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],11:[function(require,module,exports){
-module.exports=require(6)
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],12:[function(require,module,exports){
+},{"react":"CwoHg3"}],12:[function(require,module,exports){
 module.exports=require(7)
-},{"react":"CwoHg3"}],13:[function(require,module,exports){
+},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],13:[function(require,module,exports){
+module.exports=require(8)
+},{"react":"CwoHg3"}],14:[function(require,module,exports){
 /**
  * MUI React checkbox module
  * @module react/checkbox
@@ -1796,6 +1811,12 @@ Object.defineProperty(exports, "__esModule", {
 var _react = window.React;
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var _helpers = require('./_helpers');
 
 var PropTypes = _react2.default.PropTypes;
 
@@ -1828,11 +1849,14 @@ var Checkbox = function (_React$Component) {
           'label',
           null,
           _react2.default.createElement('input', {
+            ref: 'inputEl',
             type: 'checkbox',
+            name: this.props.name,
             value: this.props.value,
             checked: this.props.checked,
             defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            onChange: this.props.onChange
           }),
           this.props.label
         )
@@ -1845,24 +1869,28 @@ var Checkbox = function (_React$Component) {
 /** Define module API */
 
 Checkbox.propTypes = {
+  name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func
 };
 Checkbox.defaultProps = {
   className: '',
+  name: null,
   label: null,
   value: null,
   checked: null,
   defaultChecked: null,
-  disabled: false
+  disabled: false,
+  onChange: null
 };
 exports.default = Checkbox;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],14:[function(require,module,exports){
+},{"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],15:[function(require,module,exports){
 /**
  * MUI React Col Component
  * @module react/col
@@ -1955,7 +1983,7 @@ var Col = function (_React$Component) {
 exports.default = Col;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],15:[function(require,module,exports){
+},{"../js/lib/util":5,"react":"CwoHg3"}],16:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
@@ -2016,7 +2044,7 @@ Container.defaultProps = {
 exports.default = Container;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],16:[function(require,module,exports){
+},{"react":"CwoHg3"}],17:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -2068,7 +2096,7 @@ Divider.defaultProps = {
 exports.default = Divider;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],17:[function(require,module,exports){
+},{"react":"CwoHg3"}],18:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -2148,7 +2176,7 @@ DropdownItem.defaultProps = {
 exports.default = DropdownItem;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],18:[function(require,module,exports){
+},{"../js/lib/util":5,"react":"CwoHg3"}],19:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -2358,7 +2386,7 @@ Dropdown.defaultProps = {
 exports.default = Dropdown;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"./button":6,"./caret":7,"react":"CwoHg3"}],19:[function(require,module,exports){
+},{"../js/lib/jqLite":4,"../js/lib/util":5,"./button":7,"./caret":8,"react":"CwoHg3"}],20:[function(require,module,exports){
 /**
  * MUI React form module
  * @module react/form
@@ -2419,7 +2447,7 @@ Form.defaultProps = {
 exports.default = Form;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],20:[function(require,module,exports){
+},{"react":"CwoHg3"}],21:[function(require,module,exports){
 /**                                                                            
  * MUI React Input Component
  * @module react/input
@@ -2470,7 +2498,7 @@ Input.defaultProps = {
 exports.default = Input;
 module.exports = exports['default'];
 
-},{"./text-field":9,"react":"CwoHg3"}],21:[function(require,module,exports){
+},{"./text-field":10,"react":"CwoHg3"}],22:[function(require,module,exports){
 /**
  * MUI React options module
  * @module react/option
@@ -2543,7 +2571,7 @@ Option.defaultProps = {
 exports.default = Option;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],22:[function(require,module,exports){
+},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],23:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -2595,7 +2623,7 @@ Panel.defaultProps = {
 exports.default = Panel;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],23:[function(require,module,exports){
+},{"react":"CwoHg3"}],24:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
@@ -2642,12 +2670,14 @@ var Radio = function (_React$Component) {
           'label',
           null,
           _react2.default.createElement('input', {
+            ref: 'inputEl',
             type: 'radio',
             name: this.props.name,
             value: this.props.value,
             checked: this.props.checked,
             defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            onChange: this.props.onChange
           }),
           this.props.label
         )
@@ -2665,7 +2695,8 @@ Radio.propTypes = {
   value: PropTypes.string,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func
 };
 Radio.defaultProps = {
   className: '',
@@ -2674,12 +2705,13 @@ Radio.defaultProps = {
   value: null,
   checked: null,
   defaultChecked: null,
-  disabled: false
+  disabled: false,
+  onChange: null
 };
 exports.default = Radio;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],24:[function(require,module,exports){
+},{"react":"CwoHg3"}],25:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
@@ -2737,7 +2769,7 @@ Row.defaultProps = {
 exports.default = Row;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],25:[function(require,module,exports){
+},{"../js/lib/util":5,"react":"CwoHg3"}],26:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
@@ -2765,6 +2797,8 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+var _helpers = require('./_helpers');
+
 var PropTypes = _react2.default.PropTypes;
 
 /**
@@ -2778,21 +2812,21 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
-    // default value
+    // warn if value defined but onChange is not
 
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
-      readOnly: false,
-      showMenu: false,
-      value: null
+      showMenu: false
     };
-    _this.state.readOnly = props.readOnly;
-    _this.state.value = props.value;
+    if (props.readOnly === false && props.value !== null && props.onChange === null) {
+      util.raiseError(_helpers.controlledMessage, true);
+    }
 
     // bind callback function
     var cb = util.callback;
     _this.hideMenuCB = cb(_this, 'hideMenu');
+    _this.onInnerChangeCB = cb(_this, 'onInnerChange');
     _this.onInnerClickCB = cb(_this, 'onInnerClick');
     _this.onInnerFocusCB = cb(_this, 'onInnerFocus');
     _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
@@ -2800,9 +2834,6 @@ var Select = function (_React$Component) {
     _this.onMenuChangeCB = cb(_this, 'onMenuChange');
     _this.onOuterFocusCB = cb(_this, 'onOuterFocus');
     _this.onOuterBlurCB = cb(_this, 'onOuterBlur');
-
-    // only define inner onChange if outer onChange is defined
-    if (props.onChange) _this.onInnerChangeCB = cb(_this, 'onInnerChange');else _this.state.readOnly = true;
     return _this;
   }
 
@@ -2827,14 +2858,8 @@ var Select = function (_React$Component) {
   }, {
     key: 'onInnerChange',
     value: function onInnerChange(ev) {
-      if (this.state.readOnly) return;
-
-      var value = ev.target.value;
-      this.setState({ value: value });
-
-      // execute onChange method
       var fn = this.props.onChange;
-      if (fn) fn(value);
+      if (fn) fn(ev);
     }
   }, {
     key: 'onInnerClick',
@@ -2971,7 +2996,7 @@ var Select = function (_React$Component) {
           {
             ref: 'selectEl',
             name: this.props.name,
-            value: this.state.value,
+            value: this.props.value,
             defaultValue: this.props.defaultValue,
             disabled: this.props.disabled,
             multiple: this.props.multiple,
@@ -3178,9 +3203,9 @@ Menu.defaultProps = {
 exports.default = Select;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],26:[function(require,module,exports){
-module.exports=require(8)
-},{"react":"CwoHg3"}],27:[function(require,module,exports){
+},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],27:[function(require,module,exports){
+module.exports=require(9)
+},{"react":"CwoHg3"}],28:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -3324,7 +3349,7 @@ Tabs.defaultProps = {
 exports.default = Tabs;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"./tab":8,"react":"CwoHg3"}],28:[function(require,module,exports){
+},{"../js/lib/util":5,"./tab":9,"react":"CwoHg3"}],29:[function(require,module,exports){
 /**
  * MUI React Textarea Component
  * @module react/textarea
@@ -3376,4 +3401,4 @@ Textarea.defaultProps = {
 exports.default = Textarea;
 module.exports = exports['default'];
 
-},{"./text-field":9,"react":"CwoHg3"}]},{},[1])
+},{"./text-field":10,"react":"CwoHg3"}]},{},[1])

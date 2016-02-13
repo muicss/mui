@@ -26,6 +26,8 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+var _helpers = require('./_helpers');
+
 var PropTypes = _react2.default.PropTypes;
 
 /**
@@ -39,21 +41,21 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
-    // default value
+    // warn if value defined but onChange is not
 
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
-      readOnly: false,
-      showMenu: false,
-      value: null
+      showMenu: false
     };
-    _this.state.readOnly = props.readOnly;
-    _this.state.value = props.value;
+    if (props.readOnly === false && props.value !== null && props.onChange === null) {
+      util.raiseError(_helpers.controlledMessage, true);
+    }
 
     // bind callback function
     var cb = util.callback;
     _this.hideMenuCB = cb(_this, 'hideMenu');
+    _this.onInnerChangeCB = cb(_this, 'onInnerChange');
     _this.onInnerClickCB = cb(_this, 'onInnerClick');
     _this.onInnerFocusCB = cb(_this, 'onInnerFocus');
     _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
@@ -61,9 +63,6 @@ var Select = function (_React$Component) {
     _this.onMenuChangeCB = cb(_this, 'onMenuChange');
     _this.onOuterFocusCB = cb(_this, 'onOuterFocus');
     _this.onOuterBlurCB = cb(_this, 'onOuterBlur');
-
-    // only define inner onChange if outer onChange is defined
-    if (props.onChange) _this.onInnerChangeCB = cb(_this, 'onInnerChange');else _this.state.readOnly = true;
     return _this;
   }
 
@@ -88,14 +87,8 @@ var Select = function (_React$Component) {
   }, {
     key: 'onInnerChange',
     value: function onInnerChange(ev) {
-      if (this.state.readOnly) return;
-
-      var value = ev.target.value;
-      this.setState({ value: value });
-
-      // execute onChange method
       var fn = this.props.onChange;
-      if (fn) fn(value);
+      if (fn) fn(ev);
     }
   }, {
     key: 'onInnerClick',
@@ -232,7 +225,7 @@ var Select = function (_React$Component) {
           {
             ref: 'selectEl',
             name: this.props.name,
-            value: this.state.value,
+            value: this.props.value,
             defaultValue: this.props.defaultValue,
             disabled: this.props.disabled,
             multiple: this.props.multiple,

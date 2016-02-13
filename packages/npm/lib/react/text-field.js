@@ -19,6 +19,8 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+var _helpers = require('./_helpers');
+
 var PropTypes = _react2.default.PropTypes;
 
 /**
@@ -44,8 +46,7 @@ var Input = function (_React$Component) {
 
     // warn if value defined but onChange is not
     if (value !== null && props.onChange === null) {
-      var s = 'You provided a `value` prop to a form field without an ' + '`OnChange` handler. Please see React documentation on ' + 'controlled components';
-      util.raiseError(s, true);
+      util.raiseError(_helpers.controlledMessage, true);
     }
 
     var cb = util.callback;
@@ -64,7 +65,9 @@ var Input = function (_React$Component) {
     key: 'onChange',
     value: function onChange(ev) {
       this.setState({ innerValue: ev.target.value });
-      if (this.props.onChange) this.props.onChange(ev);
+
+      var fn = this.props.onChange;
+      if (fn) fn(ev);
     }
   }, {
     key: 'onFocus',

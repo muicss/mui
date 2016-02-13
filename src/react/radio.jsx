@@ -22,7 +22,8 @@ class Radio extends React.Component {
     value: PropTypes.string,
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func
   };
 
   static defaultProps = {
@@ -32,7 +33,8 @@ class Radio extends React.Component {
     value: null,
     checked: null,
     defaultChecked: null,
-    disabled: false
+    disabled: false,
+    onChange: null
   };
 
   render() {
@@ -45,12 +47,14 @@ class Radio extends React.Component {
       >
         <label>
           <input
+            ref="inputEl"
             type="radio"
             name={this.props.name}
             value={this.props.value}
             checked={this.props.checked}
             defaultChecked={this.props.defaultChecked}
             disabled={this.props.disabled}
+            onChange={this.props.onChange}
           />
           {this.props.label}
         </label>

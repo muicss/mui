@@ -1170,7 +1170,7 @@ function hasOwnProperty(obj, prop) {
   require('../test/react-tests/test-textarea');
 })();
 
-},{"../test/cssjs-tests/test-jqlite":193,"../test/cssjs-tests/test-util":194,"../test/react-tests/test-appbar":196,"../test/react-tests/test-button":197,"../test/react-tests/test-caret":198,"../test/react-tests/test-checkbox":199,"../test/react-tests/test-col":200,"../test/react-tests/test-container":201,"../test/react-tests/test-divider":202,"../test/react-tests/test-dropdown":203,"../test/react-tests/test-form":204,"../test/react-tests/test-input":205,"../test/react-tests/test-panel":206,"../test/react-tests/test-radio":207,"../test/react-tests/test-row":208,"../test/react-tests/test-select":209,"../test/react-tests/test-tabs":210,"../test/react-tests/test-textarea":211}],7:[function(require,module,exports){
+},{"../test/cssjs-tests/test-jqlite":194,"../test/cssjs-tests/test-util":195,"../test/react-tests/test-appbar":197,"../test/react-tests/test-button":198,"../test/react-tests/test-caret":199,"../test/react-tests/test-checkbox":200,"../test/react-tests/test-col":201,"../test/react-tests/test-container":202,"../test/react-tests/test-divider":203,"../test/react-tests/test-dropdown":204,"../test/react-tests/test-form":205,"../test/react-tests/test-input":206,"../test/react-tests/test-panel":207,"../test/react-tests/test-radio":208,"../test/react-tests/test-row":209,"../test/react-tests/test-select":210,"../test/react-tests/test-tabs":211,"../test/react-tests/test-textarea":212}],7:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -21532,6 +21532,18 @@ module.exports = {
 
 },{"../config":169,"./jqLite":171}],173:[function(require,module,exports){
 /**
+ * MUI React helpers
+ * @module react/_helpers
+ */
+
+'use strict';
+
+var controlledMessage = 'You provided a `value` prop to a form field ' + 'without an `OnChange` handler. Please see React documentation on ' + 'controlled components';
+
+module.exports = { controlledMessage: controlledMessage };
+
+},{}],174:[function(require,module,exports){
+/**
  * MUI React Appbar Module
  * @module react/appbar
  */
@@ -21582,7 +21594,7 @@ Appbar.defaultProps = {
 exports.default = Appbar;
 module.exports = exports['default'];
 
-},{"react":165}],174:[function(require,module,exports){
+},{"react":165}],175:[function(require,module,exports){
 /**
  * MUI React button module
  * @module react/button
@@ -21812,7 +21824,7 @@ Ripple.defaultProps = {
 exports.default = Button;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],175:[function(require,module,exports){
+},{"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],176:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
@@ -21864,7 +21876,7 @@ Caret.defaultProps = {
 exports.default = Caret;
 module.exports = exports['default'];
 
-},{"react":165}],176:[function(require,module,exports){
+},{"react":165}],177:[function(require,module,exports){
 /**
  * MUI React checkbox module
  * @module react/checkbox
@@ -21879,6 +21891,12 @@ Object.defineProperty(exports, "__esModule", {
 var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var _helpers = require('./_helpers');
 
 var PropTypes = _react2.default.PropTypes;
 
@@ -21911,11 +21929,14 @@ var Checkbox = function (_React$Component) {
           'label',
           null,
           _react2.default.createElement('input', {
+            ref: 'inputEl',
             type: 'checkbox',
+            name: this.props.name,
             value: this.props.value,
             checked: this.props.checked,
             defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            onChange: this.props.onChange
           }),
           this.props.label
         )
@@ -21928,24 +21949,28 @@ var Checkbox = function (_React$Component) {
 /** Define module API */
 
 Checkbox.propTypes = {
+  name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func
 };
 Checkbox.defaultProps = {
   className: '',
+  name: null,
   label: null,
   value: null,
   checked: null,
   defaultChecked: null,
-  disabled: false
+  disabled: false,
+  onChange: null
 };
 exports.default = Checkbox;
 module.exports = exports['default'];
 
-},{"react":165}],177:[function(require,module,exports){
+},{"../js/lib/util":172,"./_helpers":173,"react":165}],178:[function(require,module,exports){
 /**
  * MUI React Col Component
  * @module react/col
@@ -22038,7 +22063,7 @@ var Col = function (_React$Component) {
 exports.default = Col;
 module.exports = exports['default'];
 
-},{"../js/lib/util":172,"react":165}],178:[function(require,module,exports){
+},{"../js/lib/util":172,"react":165}],179:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
@@ -22099,7 +22124,7 @@ Container.defaultProps = {
 exports.default = Container;
 module.exports = exports['default'];
 
-},{"react":165}],179:[function(require,module,exports){
+},{"react":165}],180:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -22151,7 +22176,7 @@ Divider.defaultProps = {
 exports.default = Divider;
 module.exports = exports['default'];
 
-},{"react":165}],180:[function(require,module,exports){
+},{"react":165}],181:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -22231,7 +22256,7 @@ DropdownItem.defaultProps = {
 exports.default = DropdownItem;
 module.exports = exports['default'];
 
-},{"../js/lib/util":172,"react":165}],181:[function(require,module,exports){
+},{"../js/lib/util":172,"react":165}],182:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -22441,7 +22466,7 @@ Dropdown.defaultProps = {
 exports.default = Dropdown;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":171,"../js/lib/util":172,"./button":174,"./caret":175,"react":165}],182:[function(require,module,exports){
+},{"../js/lib/jqLite":171,"../js/lib/util":172,"./button":175,"./caret":176,"react":165}],183:[function(require,module,exports){
 /**
  * MUI React form module
  * @module react/form
@@ -22502,7 +22527,7 @@ Form.defaultProps = {
 exports.default = Form;
 module.exports = exports['default'];
 
-},{"react":165}],183:[function(require,module,exports){
+},{"react":165}],184:[function(require,module,exports){
 /**                                                                            
  * MUI React Input Component
  * @module react/input
@@ -22553,7 +22578,7 @@ Input.defaultProps = {
 exports.default = Input;
 module.exports = exports['default'];
 
-},{"./text-field":191,"react":165}],184:[function(require,module,exports){
+},{"./text-field":192,"react":165}],185:[function(require,module,exports){
 /**
  * MUI React options module
  * @module react/option
@@ -22626,7 +22651,7 @@ Option.defaultProps = {
 exports.default = Option;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],185:[function(require,module,exports){
+},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],186:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -22678,7 +22703,7 @@ Panel.defaultProps = {
 exports.default = Panel;
 module.exports = exports['default'];
 
-},{"react":165}],186:[function(require,module,exports){
+},{"react":165}],187:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
@@ -22725,12 +22750,14 @@ var Radio = function (_React$Component) {
           'label',
           null,
           _react2.default.createElement('input', {
+            ref: 'inputEl',
             type: 'radio',
             name: this.props.name,
             value: this.props.value,
             checked: this.props.checked,
             defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            onChange: this.props.onChange
           }),
           this.props.label
         )
@@ -22748,7 +22775,8 @@ Radio.propTypes = {
   value: PropTypes.string,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func
 };
 Radio.defaultProps = {
   className: '',
@@ -22757,12 +22785,13 @@ Radio.defaultProps = {
   value: null,
   checked: null,
   defaultChecked: null,
-  disabled: false
+  disabled: false,
+  onChange: null
 };
 exports.default = Radio;
 module.exports = exports['default'];
 
-},{"react":165}],187:[function(require,module,exports){
+},{"react":165}],188:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
@@ -22820,7 +22849,7 @@ Row.defaultProps = {
 exports.default = Row;
 module.exports = exports['default'];
 
-},{"../js/lib/util":172,"react":165}],188:[function(require,module,exports){
+},{"../js/lib/util":172,"react":165}],189:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
@@ -22848,6 +22877,8 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+var _helpers = require('./_helpers');
+
 var PropTypes = _react2.default.PropTypes;
 
 /**
@@ -22861,21 +22892,21 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
-    // default value
+    // warn if value defined but onChange is not
 
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
-      readOnly: false,
-      showMenu: false,
-      value: null
+      showMenu: false
     };
-    _this.state.readOnly = props.readOnly;
-    _this.state.value = props.value;
+    if (props.readOnly === false && props.value !== null && props.onChange === null) {
+      util.raiseError(_helpers.controlledMessage, true);
+    }
 
     // bind callback function
     var cb = util.callback;
     _this.hideMenuCB = cb(_this, 'hideMenu');
+    _this.onInnerChangeCB = cb(_this, 'onInnerChange');
     _this.onInnerClickCB = cb(_this, 'onInnerClick');
     _this.onInnerFocusCB = cb(_this, 'onInnerFocus');
     _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
@@ -22883,9 +22914,6 @@ var Select = function (_React$Component) {
     _this.onMenuChangeCB = cb(_this, 'onMenuChange');
     _this.onOuterFocusCB = cb(_this, 'onOuterFocus');
     _this.onOuterBlurCB = cb(_this, 'onOuterBlur');
-
-    // only define inner onChange if outer onChange is defined
-    if (props.onChange) _this.onInnerChangeCB = cb(_this, 'onInnerChange');else _this.state.readOnly = true;
     return _this;
   }
 
@@ -22910,14 +22938,8 @@ var Select = function (_React$Component) {
   }, {
     key: 'onInnerChange',
     value: function onInnerChange(ev) {
-      if (this.state.readOnly) return;
-
-      var value = ev.target.value;
-      this.setState({ value: value });
-
-      // execute onChange method
       var fn = this.props.onChange;
-      if (fn) fn(value);
+      if (fn) fn(ev);
     }
   }, {
     key: 'onInnerClick',
@@ -23054,7 +23076,7 @@ var Select = function (_React$Component) {
           {
             ref: 'selectEl',
             name: this.props.name,
-            value: this.state.value,
+            value: this.props.value,
             defaultValue: this.props.defaultValue,
             disabled: this.props.disabled,
             multiple: this.props.multiple,
@@ -23261,7 +23283,7 @@ Menu.defaultProps = {
 exports.default = Select;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"react":165}],189:[function(require,module,exports){
+},{"../js/lib/forms":170,"../js/lib/jqLite":171,"../js/lib/util":172,"./_helpers":173,"react":165}],190:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -23318,7 +23340,7 @@ Tab.defaultProps = {
 exports.default = Tab;
 module.exports = exports['default'];
 
-},{"react":165}],190:[function(require,module,exports){
+},{"react":165}],191:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -23462,7 +23484,7 @@ Tabs.defaultProps = {
 exports.default = Tabs;
 module.exports = exports['default'];
 
-},{"../js/lib/util":172,"./tab":189,"react":165}],191:[function(require,module,exports){
+},{"../js/lib/util":172,"./tab":190,"react":165}],192:[function(require,module,exports){
 /**
  * MUI React TextInput Component
  * @module react/text-input
@@ -23482,6 +23504,8 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
+
+var _helpers = require('./_helpers');
 
 var PropTypes = _react2.default.PropTypes;
 
@@ -23508,8 +23532,7 @@ var Input = function (_React$Component) {
 
     // warn if value defined but onChange is not
     if (value !== null && props.onChange === null) {
-      var s = 'You provided a `value` prop to a form field without an ' + '`OnChange` handler. Please see React documentation on ' + 'controlled components';
-      util.raiseError(s, true);
+      util.raiseError(_helpers.controlledMessage, true);
     }
 
     var cb = util.callback;
@@ -23528,7 +23551,9 @@ var Input = function (_React$Component) {
     key: 'onChange',
     value: function onChange(ev) {
       this.setState({ innerValue: ev.target.value });
-      if (this.props.onChange) this.props.onChange(ev);
+
+      var fn = this.props.onChange;
+      if (fn) fn(ev);
     }
   }, {
     key: 'onFocus',
@@ -23739,7 +23764,7 @@ TextField.defaultProps = {
 };
 exports.TextField = TextField;
 
-},{"../js/lib/util":172,"react":165}],192:[function(require,module,exports){
+},{"../js/lib/util":172,"./_helpers":173,"react":165}],193:[function(require,module,exports){
 /**
  * MUI React Textarea Component
  * @module react/textarea
@@ -23791,7 +23816,7 @@ Textarea.defaultProps = {
 exports.default = Textarea;
 module.exports = exports['default'];
 
-},{"./text-field":191,"react":165}],193:[function(require,module,exports){
+},{"./text-field":192,"react":165}],194:[function(require,module,exports){
 'use strict';
 
 /**
@@ -24015,7 +24040,7 @@ describe('js/lib/jqLite.js', function () {
   });
 });
 
-},{"../../src/js/lib/jqLite.js":171,"assert":1,"synthetic-dom-events":166}],194:[function(require,module,exports){
+},{"../../src/js/lib/jqLite.js":171,"assert":1,"synthetic-dom-events":166}],195:[function(require,module,exports){
 'use strict';
 
 /**
@@ -24054,7 +24079,7 @@ describe('js/lib/util.js', function () {
   });
 });
 
-},{"../../src/js/lib/util.js":172,"assert":1}],195:[function(require,module,exports){
+},{"../../src/js/lib/util.js":172,"assert":1}],196:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24073,7 +24098,7 @@ function getShallowRendererOutput(reactElem) {
    * @module test/react-tests/react-helpers
    */
 
-},{"react-addons-test-utils":34}],196:[function(require,module,exports){
+},{"react-addons-test-utils":34}],197:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24129,7 +24154,7 @@ describe('react/appbar', function () {
   });
 });
 
-},{"../../src/react/appbar":173,"../lib/react-helpers":195,"assert":1,"react":165}],197:[function(require,module,exports){
+},{"../../src/react/appbar":174,"../lib/react-helpers":196,"assert":1,"react":165}],198:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24302,7 +24327,7 @@ describe('react/button', function () {
   });
 });
 
-},{"../../src/react/button":174,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],198:[function(require,module,exports){
+},{"../../src/react/button":175,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],199:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24358,7 +24383,7 @@ describe('react/caret', function () {
   });
 });
 
-},{"../../src/react/caret":175,"../lib/react-helpers":195,"assert":1,"react":165}],199:[function(require,module,exports){
+},{"../../src/react/caret":176,"../lib/react-helpers":196,"assert":1,"react":165}],200:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24392,11 +24417,7 @@ describe('react/checkbox', function () {
   var elem = undefined;
 
   beforeEach(function () {
-    elem = _react2.default.createElement(
-      _checkbox2.default,
-      null,
-      'My Label'
-    );
+    elem = _react2.default.createElement(_checkbox2.default, { label: 'My Label' });
   });
 
   it('renders wrapper properly', function () {
@@ -24407,28 +24428,20 @@ describe('react/checkbox', function () {
   });
 
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
-      _checkbox2.default,
-      { className: 'additional' },
-      'test'
-    ));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_checkbox2.default, { className: 'additional', label: 'test' }));
 
     _assert2.default.equal(result.props.className, 'mui-checkbox additional');
   });
 
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
-      _checkbox2.default,
-      { style: { additonal: 'style' } },
-      'test'
-    ));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_checkbox2.default, { style: { additonal: 'style' }, label: 'test' }));
 
     _assert2.default.equal(result.props.style.additonal, 'style');
   });
 
   it('renders content properly', function () {
-    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
-    var wrapperEl = _reactDom2.default.findDOMNode(node);
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = _reactDom2.default.findDOMNode(instance);
 
     _assert2.default.equal(wrapperEl.children.length, 1);
 
@@ -24438,9 +24451,46 @@ describe('react/checkbox', function () {
     var inputEl = labelEl.children[0];
     _assert2.default.equal(inputEl.tagName, 'INPUT');
   });
+
+  it('can be used as a controlled component', function () {
+    var TestApp = _react2.default.createClass({
+      displayName: 'TestApp',
+
+      getInitialState: function getInitialState() {
+        return { checked: this.props.checked };
+      },
+      onChange: function onChange(ev) {
+        this.setState({ checked: ev.target.checked });
+      },
+      render: function render() {
+        return _react2.default.createElement(_checkbox2.default, {
+          ref: 'refEl',
+          checked: this.state.checked,
+          defaultChecked: true,
+          onChange: this.onChange
+        });
+      }
+    });
+
+    var elem = _react2.default.createElement(TestApp, { checked: false });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var inputEl = instance.refs.refEl.refs.inputEl;
+
+    // check default value
+    _assert2.default.equal(inputEl.checked, false);
+
+    // update TestApp and check inputEl value
+    instance.setState({ checked: true });
+    _assert2.default.equal(inputEl.checked, true);
+
+    // update inputEl and check state
+    inputEl.checked = false;
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+    _assert2.default.equal(instance.state.checked, false);
+  });
 });
 
-},{"../../src/react/checkbox":176,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],200:[function(require,module,exports){
+},{"../../src/react/checkbox":177,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],201:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24515,7 +24565,7 @@ describe('react/grid', function () {
      * @module test/react-tests/test-col
      */
 
-},{"../../src/react/col":177,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],201:[function(require,module,exports){
+},{"../../src/react/col":178,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34}],202:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24583,7 +24633,7 @@ describe('react/container', function () {
   });
 });
 
-},{"../../src/react/container":178,"../lib/react-helpers":195,"assert":1,"react":165}],202:[function(require,module,exports){
+},{"../../src/react/container":179,"../lib/react-helpers":196,"assert":1,"react":165}],203:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24639,7 +24689,7 @@ describe('react/divider', function () {
   });
 });
 
-},{"../../src/react/divider":179,"../lib/react-helpers":195,"assert":1,"react":165}],203:[function(require,module,exports){
+},{"../../src/react/divider":180,"../lib/react-helpers":196,"assert":1,"react":165}],204:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24758,7 +24808,7 @@ describe('react/dropdown', function () {
   });
 });
 
-},{"../../src/react/dropdown":181,"../../src/react/dropdown-item":180,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],204:[function(require,module,exports){
+},{"../../src/react/dropdown":182,"../../src/react/dropdown-item":181,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34}],205:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24816,7 +24866,7 @@ describe('react/form', function () {
   });
 });
 
-},{"../../src/react/form":182,"../lib/react-helpers":195,"assert":1,"react":165}],205:[function(require,module,exports){
+},{"../../src/react/form":183,"../lib/react-helpers":196,"assert":1,"react":165}],206:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24939,7 +24989,7 @@ describe('react/input', function () {
   });
 });
 
-},{"../../src/react/input":183,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],206:[function(require,module,exports){
+},{"../../src/react/input":184,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],207:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -24995,7 +25045,7 @@ describe('react/panel', function () {
   });
 });
 
-},{"../../src/react/panel":185,"../lib/react-helpers":195,"assert":1,"react":165}],207:[function(require,module,exports){
+},{"../../src/react/panel":186,"../lib/react-helpers":196,"assert":1,"react":165}],208:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25075,9 +25125,46 @@ describe('react/radio', function () {
 
     _assert2.default.equal(result.props.style.additonal, 'style');
   });
+
+  it('can be used as a controlled component', function () {
+    var TestApp = _react2.default.createClass({
+      displayName: 'TestApp',
+
+      getInitialState: function getInitialState() {
+        return { checked: this.props.checked };
+      },
+      onChange: function onChange(ev) {
+        this.setState({ checked: ev.target.checked });
+      },
+      render: function render() {
+        return _react2.default.createElement(_radio2.default, {
+          ref: 'refEl',
+          checked: this.state.checked,
+          defaultChecked: true,
+          onChange: this.onChange
+        });
+      }
+    });
+
+    var elem = _react2.default.createElement(TestApp, { checked: false });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var inputEl = instance.refs.refEl.refs.inputEl;
+
+    // check default value
+    _assert2.default.equal(inputEl.checked, false);
+
+    // update TestApp and check inputEl value
+    instance.setState({ checked: true });
+    _assert2.default.equal(inputEl.checked, true);
+
+    // update inputEl and check state
+    inputEl.checked = false;
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+    _assert2.default.equal(instance.state.checked, false);
+  });
 });
 
-},{"../../src/react/radio":186,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],208:[function(require,module,exports){
+},{"../../src/react/radio":187,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],209:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25147,7 +25234,7 @@ describe('react/grid', function () {
   });
 });
 
-},{"../../src/react/row":187,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],209:[function(require,module,exports){
+},{"../../src/react/row":188,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],210:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25178,7 +25265,19 @@ var _reactHelpers = require('../lib/react-helpers');
  */
 
 describe('react/select', function () {
-  var elem = undefined;
+  var elem = undefined,
+      errFn = undefined;
+
+  before(function () {
+    errFn = console.error;
+    console.error = function (msg) {
+      throw Error(msg);
+    };
+  });
+
+  after(function () {
+    console.error = errFn;
+  });
 
   beforeEach(function () {
     elem = _react2.default.createElement(
@@ -25267,25 +25366,59 @@ describe('react/select', function () {
     _assert2.default.equal(selectEl.value, 'value2');
   });
 
-  it('handles value for controlled component', function () {
-    var testElem = _react2.default.createElement(
-      _select2.default,
-      { value: 'value2', onChange: function onChange() {} },
-      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
-    );
+  it('does controlled component validation', function () {
+    // raises error when `value` defined and `onChange missing
+    _assert2.default.throws(function () {
+      var elem = _react2.default.createElement(_select2.default, { value: 'my value' });
+      var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    }, /MUI Warning/);
+  });
 
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
-    var selectEl = instance.refs.selectEl;
+  it('can be used as a controlled component', function () {
+    var TestApp = _react2.default.createClass({
+      displayName: 'TestApp',
 
-    // test default value
-    _assert2.default.equal(selectEl.value, 'value2');
+      getInitialState: function getInitialState() {
+        return { value: this.props.value };
+      },
+      onChange: function onChange(ev) {
+        this.setState({ value: ev.target.value });
+      },
+      render: function render() {
+        return _react2.default.createElement(
+          _select2.default,
+          {
+            ref: 'refEl',
+            value: this.state.value,
+            defaultValue: 'ignored value',
+            onChange: this.onChange
+          },
+          _react2.default.createElement(_option2.default, { value: 'option-1' }),
+          _react2.default.createElement(_option2.default, { value: 'option-2' })
+        );
+      }
+    });
+
+    var elem = _react2.default.createElement(TestApp, { value: 'option-2' });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var selectEl = instance.refs.refEl.refs.selectEl;
+
+    // check default value
+    _assert2.default.equal(selectEl.value, 'option-2');
+
+    // update TestApp and check selectEl value
+    instance.setState({ value: 'option-1' });
+    _assert2.default.equal(selectEl.value, 'option-1');
+
+    // update selectEl and check state
+    selectEl.value = 'option-2';
+    _reactAddonsTestUtils2.default.Simulate.change(selectEl);
+    _assert2.default.equal(instance.state.value, 'option-2');
   });
 
   it('handles onChange event', function (done) {
-    var checkChangeFn = function checkChangeFn(value) {
-      _assert2.default.equal(value, "value2");
+    var checkChangeFn = function checkChangeFn(ev) {
+      _assert2.default.equal(ev.target.value, "value2");
       done();
     };
 
@@ -25303,35 +25436,9 @@ describe('react/select', function () {
     // trigger event and check callback
     _reactAddonsTestUtils2.default.Simulate.change(selectEl, {});
   });
-
-  it('handles readOnly property', function (done) {
-    var checkChangeFn = function checkChangeFn(value) {
-      _assert2.default.equal(true, false);
-    };
-
-    var testElem = _react2.default.createElement(
-      _select2.default,
-      { defaultValue: 'value2', onChange: checkChangeFn, readOnly: true },
-      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
-    );
-
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
-    var selectEl = instance.refs.selectEl;
-
-    // trigger event and check callback
-    _reactAddonsTestUtils2.default.Simulate.change(selectEl, {});
-
-    // check that onChange isn't called
-    setTimeout(function () {
-      (0, _assert2.default)(true, true);
-      done();
-    }, 20);
-  });
 });
 
-},{"../../src/react/option":184,"../../src/react/select":188,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],210:[function(require,module,exports){
+},{"../../src/react/option":185,"../../src/react/select":189,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34}],211:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25394,7 +25501,7 @@ describe('react/tabs', function () {
   });
 });
 
-},{"../../src/react/tab":189,"../../src/react/tabs":190,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34}],211:[function(require,module,exports){
+},{"../../src/react/tab":190,"../../src/react/tabs":191,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34}],212:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -25507,4 +25614,4 @@ describe('react/textarea', function () {
   });
 });
 
-},{"../../src/react/textarea":192,"../lib/react-helpers":195,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}]},{},[6])
+},{"../../src/react/textarea":193,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}]},{},[6])

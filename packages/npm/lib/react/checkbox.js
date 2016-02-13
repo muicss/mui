@@ -14,6 +14,12 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var _helpers = require('./_helpers');
+
 var PropTypes = _react2.default.PropTypes;
 
 /**
@@ -45,11 +51,14 @@ var Checkbox = function (_React$Component) {
           'label',
           null,
           _react2.default.createElement('input', {
+            ref: 'inputEl',
             type: 'checkbox',
+            name: this.props.name,
             value: this.props.value,
             checked: this.props.checked,
             defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            onChange: this.props.onChange
           }),
           this.props.label
         )
@@ -62,19 +71,23 @@ var Checkbox = function (_React$Component) {
 /** Define module API */
 
 Checkbox.propTypes = {
+  name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func
 };
 Checkbox.defaultProps = {
   className: '',
+  name: null,
   label: null,
   value: null,
   checked: null,
   defaultChecked: null,
-  disabled: false
+  disabled: false,
+  onChange: null
 };
 exports.default = Checkbox;
 module.exports = exports['default'];

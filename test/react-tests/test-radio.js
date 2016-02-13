@@ -64,4 +64,42 @@ describe('react/radio', function() {
 
     assert.equal(result.props.style.additonal, 'style');
   });
+
+
+  it('can be used as a controlled component', function() {
+    var TestApp = React.createClass({
+      getInitialState: function() {
+        return {checked: this.props.checked};
+      },
+      onChange: function(ev) {
+        this.setState({checked: ev.target.checked});
+      },
+      render: function() {
+        return (
+          <Radio
+            ref="refEl"
+            checked={this.state.checked}
+            defaultChecked={true}
+            onChange={this.onChange}
+          />
+        );
+      }
+    });
+
+    let elem = <TestApp checked={false} />;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let inputEl = instance.refs.refEl.refs.inputEl
+
+    // check default value
+    assert.equal(inputEl.checked, false);
+
+    // update TestApp and check inputEl value
+    instance.setState({checked: true});
+    assert.equal(inputEl.checked, true);
+
+    // update inputEl and check state
+    inputEl.checked = false;
+    ReactUtils.Simulate.change(inputEl);
+    assert.equal(instance.state.checked, false);
+  });
 });

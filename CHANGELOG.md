@@ -3,6 +3,7 @@
 ## 0.4.5 - February 12, 2016
 
 * Changed React SelectItem component name to Option
+* Added controlled controller support to React Select, Checkbox, Radio
 * Bugfixes to Angular library
 
 ## 0.4.4 - February 8, 2016

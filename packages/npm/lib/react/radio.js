@@ -45,12 +45,14 @@ var Radio = function (_React$Component) {
           'label',
           null,
           _react2.default.createElement('input', {
+            ref: 'inputEl',
             type: 'radio',
             name: this.props.name,
             value: this.props.value,
             checked: this.props.checked,
             defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            onChange: this.props.onChange
           }),
           this.props.label
         )
@@ -68,7 +70,8 @@ Radio.propTypes = {
   value: PropTypes.string,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func
 };
 Radio.defaultProps = {
   className: '',
@@ -77,7 +80,8 @@ Radio.defaultProps = {
   value: null,
   checked: null,
   defaultChecked: null,
-  disabled: false
+  disabled: false,
+  onChange: null
 };
 exports.default = Radio;
 module.exports = exports['default'];
