@@ -46,11 +46,14 @@ var Select = function (_React$Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
+      value: null,
       showMenu: false
     };
     if (props.readOnly === false && props.value !== null && props.onChange === null) {
       util.raiseError(_helpers.controlledMessage, true);
     }
+
+    _this.state.value = props.value;
 
     // bind callback function
     var cb = util.callback;
@@ -79,6 +82,11 @@ var Select = function (_React$Component) {
       if (this.props.autoFocus) this.refs.wrapperEl.focus();
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({ value: nextProps.value });
+    }
+  }, {
     key: 'onInnerMouseDown',
     value: function onInnerMouseDown(ev) {
       if (ev.button !== 0 || this.props.useDefault === true) return;
@@ -87,8 +95,11 @@ var Select = function (_React$Component) {
   }, {
     key: 'onInnerChange',
     value: function onInnerChange(ev) {
+      var value = ev.target.value;
+      this.setState({ value: value });
+
       var fn = this.props.onChange;
-      if (fn) fn(ev);
+      if (fn) fn(value);
     }
   }, {
     key: 'onInnerClick',
@@ -185,7 +196,7 @@ var Select = function (_React$Component) {
   }, {
     key: 'onMenuChange',
     value: function onMenuChange(value) {
-      if (this.state.readOnly) return;
+      if (this.props.readOnly === true) return;
 
       this.setState({ value: value });
 
@@ -225,7 +236,7 @@ var Select = function (_React$Component) {
           {
             ref: 'selectEl',
             name: this.props.name,
-            value: this.props.value,
+            value: this.state.value,
             defaultValue: this.props.defaultValue,
             disabled: this.props.disabled,
             multiple: this.props.multiple,

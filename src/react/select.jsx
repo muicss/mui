@@ -31,6 +31,8 @@ class Select extends React.Component {
       util.raiseError(controlledMessage, true);
     }
 
+    this.state.value = props.value;
+
     // bind callback function
     let cb = util.callback;
     this.hideMenuCB = cb(this, 'hideMenu');
@@ -45,6 +47,7 @@ class Select extends React.Component {
   }
 
   state = {
+    value: null,
     showMenu: false
   };
 
@@ -86,14 +89,21 @@ class Select extends React.Component {
     if (this.props.autoFocus) this.refs.wrapperEl.focus();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({value: nextProps.value});
+  }
+
   onInnerMouseDown(ev) {
     if (ev.button !== 0 || this.props.useDefault === true) return;
     ev.preventDefault();
   }
 
   onInnerChange(ev) {
+    let value = ev.target.value;
+    this.setState({ value });
+
     let fn = this.props.onChange;
-    if (fn) fn(ev);
+    if (fn) fn(value);
   }
 
   onInnerClick(ev) {
@@ -178,7 +188,7 @@ class Select extends React.Component {
   }
 
   onMenuChange(value) {
-    if (this.state.readOnly) return;
+    if (this.props.readOnly === true) return;
 
     this.setState({ value });
 
@@ -214,7 +224,7 @@ class Select extends React.Component {
         <select
           ref="selectEl"
           name={this.props.name}
-          value={this.props.value}
+          value={this.state.value}
           defaultValue={this.props.defaultValue}
           disabled={this.props.disabled}
           multiple={this.props.multiple}
