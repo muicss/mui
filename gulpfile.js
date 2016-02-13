@@ -370,7 +370,7 @@ function buildNpmReact() {
   return makeTask('build-npm-react', function() {
     var s = "var babelHelpers = require('./babel-helpers.js');\n";
 
-    return gulp.src('./src/react/**/*.jsx')
+    return gulp.src('./src/react/**/*')
       .pipe(plugins.babel({
         plugins: ['external-helpers-2']
       }))
