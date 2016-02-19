@@ -42,7 +42,6 @@ var Checkbox = function (_React$Component) {
       var children = _props.children;
       var other = babelHelpers.objectWithoutProperties(_props, ['children']);
 
-
       return _react2.default.createElement(
         'div',
         babelHelpers.extends({}, other, {
@@ -70,7 +69,6 @@ var Checkbox = function (_React$Component) {
 }(_react2.default.Component);
 
 /** Define module API */
-
 
 Checkbox.propTypes = {
   name: PropTypes.string,

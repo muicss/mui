@@ -49,7 +49,6 @@ var Container = function (_React$Component) {
 
 /** Define module API */
 
-
 Container.propTypes = {
   fluid: _react2.default.PropTypes.bool
 };

@@ -32,7 +32,6 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
-
 var PropTypes = _react2.default.PropTypes,
     dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
@@ -171,7 +170,6 @@ var Dropdown = function (_React$Component) {
       var children = _props.children;
       var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children']);
 
-
       return _react2.default.createElement(
         'div',
         babelHelpers.extends({}, other, {
@@ -187,7 +185,6 @@ var Dropdown = function (_React$Component) {
 }(_react2.default.Component);
 
 /** Define module API */
-
 
 Dropdown.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),

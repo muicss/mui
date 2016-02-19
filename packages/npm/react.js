@@ -15,6 +15,7 @@ module.exports = {
   Dropdown: require('./lib/react/dropdown'),
   DropdownItem: require('./lib/react/dropdown-item'),
   Form: require('./lib/react/form'),
+  Input: require('./lib/react/input'),
   Option: require('./lib/react/option'),
   Panel: require('./lib/react/panel'),
   Radio: require('./lib/react/radio'),
@@ -22,6 +23,5 @@ module.exports = {
   Select: require('./lib/react/select'),
   Tab: require('./lib/react/tab'),
   Tabs: require('./lib/react/tabs'),
-  TextInput: require('./lib/react/text-input'),
-  TextareaInput: require('./lib/react/textarea-input')
+  Textarea: require('./lib/react/textarea')
 };

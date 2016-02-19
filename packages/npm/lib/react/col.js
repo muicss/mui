@@ -18,7 +18,6 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
-
 var breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 /**
@@ -88,7 +87,6 @@ var Col = function (_React$Component) {
 }(_react2.default.Component);
 
 /** Define module API */
-
 
 exports.default = Col;
 module.exports = exports['default'];

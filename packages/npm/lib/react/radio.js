@@ -36,7 +36,6 @@ var Radio = function (_React$Component) {
       var children = _props.children;
       var other = babelHelpers.objectWithoutProperties(_props, ['children']);
 
-
       return _react2.default.createElement(
         'div',
         babelHelpers.extends({}, other, {
@@ -64,7 +63,6 @@ var Radio = function (_React$Component) {
 }(_react2.default.Component);
 
 /** Define module API */
-
 
 Radio.propTypes = {
   name: PropTypes.string,

@@ -44,7 +44,6 @@ var Panel = function (_React$Component) {
 
 /** Define module API */
 
-
 Panel.defaultProps = {
   className: ''
 };

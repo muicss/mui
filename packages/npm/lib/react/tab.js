@@ -42,7 +42,6 @@ var Tab = function (_React$Component) {
 
 /** Define module API */
 
-
 Tab.propTypes = {
   value: PropTypes.any,
   label: PropTypes.string,

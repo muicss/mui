@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.4.6 - February 18, 2016
+
+* Fixed component name errors in NPM react.js module
+
 ## 0.4.5 - February 12, 2016
 
 * Changed React SelectItem component name to Option
