@@ -28,6 +28,7 @@ function initialize(inputEl) {
   else jqLite.addClass(inputEl, emptyClass);
 
   jqLite.on(inputEl, 'input', inputHandler);
+  jqLite.on(inputEl, 'change', inputHandler);
 
   // add dirty class on focus
   jqLite.on(inputEl, 'focus', function(){jqLite.addClass(this, dirtyClass);});
