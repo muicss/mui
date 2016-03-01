@@ -18,6 +18,7 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+
 var breakpoints = ['xs', 'sm', 'md', 'lg'];
 
 /**
@@ -49,6 +50,7 @@ var Row = function (_React$Component) {
 }(_react2.default.Component);
 
 /** Define module API */
+
 
 Row.defaultProps = {
   className: ''
