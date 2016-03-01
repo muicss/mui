@@ -1,5 +1,6 @@
 // Normalizer
-@import "normalize-3.0.2";
+@import
+"normalize-3.0.3";
 
 // Core variables and mixins
 @import
@@ -7,21 +8,29 @@
 "mui/variables",
 "mui/mixins";
 
-// Core css
+// CSS Reboot
 @import
-"mui/scaffolding",
-"mui/layout",
-"mui/grid",
-"mui/typography",
-"mui/panel",
-"mui/buttons",
-"mui/ripple",
+"mui/reboot";
+
+// Components
+@import
 "mui/appbar",
-"mui/semantic-markup",
-"mui/dividers",
-"mui/forms",
-"mui/tables",
-"mui/dropdowns",
+"mui/buttons",
+"mui/checkbox-and-radio",
+"mui/containers",
+"mui/divider",
+"mui/dropdown",
+"mui/form",
+"mui/grid",
+"mui/panel",
+"mui/select",
+"mui/table",
 "mui/tabs",
+"mui/textfield";
+
+// Miscelaneous
+@import
+"mui/helpers",
 "mui/overlay",
-"mui/helpers";
+"mui/ripple",
+"mui/typography";

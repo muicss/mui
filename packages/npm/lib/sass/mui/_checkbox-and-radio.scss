@@ -1,0 +1,60 @@
+/**
+ * MUI Checkboxe and Radio Components
+ */
+
+.mui-radio,
+.mui-checkbox {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  > label {
+    min-height: $mui-base-line-height-computed;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+  }
+}
+
+.mui-radio > label > input[type="radio"],
+.mui-radio--inline > label > input[type="radio"],
+.mui-checkbox > label> input[type="checkbox"],
+.mui-checkbox--inline > label > input[type="checkbox"] {
+  position: absolute;
+  margin-left: -20px;
+  margin-top: 4px;
+}
+
+.mui-radio + .mui-radio,
+.mui-checkbox + .mui-checkbox {
+  // Move up sibling radios or checkboxes for tighter spacing
+  margin-top: -5px;
+}
+
+.mui-radio--inline,
+.mui-checkbox--inline {
+  // Radios and checkboxes on same line
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  vertical-align: middle;
+  font-weight: normal;
+  cursor: pointer;
+
+  > input[type="radio"],
+  > input[type="checkbox"],
+  > label > input[type="radio"],
+  > label > input[type="checkbox"] {
+    margin: 4px 0 0;
+    line-height: normal;
+  }
+}
+
+.mui-radio--inline + .mui-radio--inline,
+.mui-checkbox--inline + .mui-checkbox--inline {
+  // Space out consecutive inline controls
+  margin-top: 0;
+  margin-left: 10px;
+}

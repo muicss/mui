@@ -1,5 +1,5 @@
 /**
- * MUI Scaffolding module
+ * MUI Reboot
  */
 
 // ============================================================================
@@ -107,4 +107,76 @@ hr {
   border: 0;
   height: 1px;
   background-color: $mui-hr-color;
+}
+
+// Form legend
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: $mui-base-line-height-computed / 2;
+  font-size: $mui-legend-font-size;
+  color: $mui-legend-font-color;
+  line-height: inherit;
+  border: 0;
+}
+
+// override content-box in normalize.css
+input[type="search"] {
+  box-sizing: border-box;
+  -webkit-appearance: none;  // Search inputs in iOS
+}
+
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  // Focus for file, radio, and checkbox
+  @include mui-tab-focus();
+}
+
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled {
+  cursor: $mui-cursor-disabled;
+}
+
+// Strong
+strong {
+  font-weight: 700;
+}
+
+// Abbreviations
+abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted $mui-abbr-border-color;
+}
+
+// headers
+h1 {
+  @extend .mui--text-display1;
+}
+
+h2 {
+  @extend .mui--text-headline;
+}
+
+h3 {
+  @extend .mui--text-title;
+}
+
+h4 {
+  @extend .mui--text-subhead;
+}
+
+h5 {
+  @extend .mui--text-body2;
+}
+
+h1, h2, h3 {
+  margin-top: $mui-base-line-height-computed;
+  margin-bottom: ($mui-base-line-height-computed / 2);
+}
+
+h4, h5, h6 {
+  margin-top: ($mui-base-line-height-computed / 2);
+  margin-bottom: ($mui-base-line-height-computed / 2);
 }

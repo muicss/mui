@@ -1,0 +1,40 @@
+/**
+ * MUI Form Component
+ */
+
+.mui-form--inline {
+  @media (min-width: $mui-screen-sm-min) {
+    > .mui-textfield {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+
+    > .mui-radio,
+    > .mui-checkbox {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 0;
+      vertical-align: middle;
+
+      > label {
+        padding-left: 0;
+      }
+    }
+
+    > .mui-radio > label > input[type="radio"],
+    > .mui-checkbox > label > input[type="checkbox"] {
+      position: relative;
+      margin-left: 0;
+    }
+
+    > .mui-select {
+      display: inline-block;
+    }
+
+    > .mui-btn {
+      margin-bottom: 0;
+      margin-top: 0;
+      vertical-align: bottom;
+    }
+  }
+}

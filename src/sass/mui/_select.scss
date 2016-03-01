@@ -1,0 +1,111 @@
+/**
+ * MUI Select Component
+ */
+
+$xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
+
+
+.mui-select {
+  display: block;
+  padding-top: $xFormLabelLineHeight;
+  margin-bottom: $mui-form-group-margin-bottom;
+  position: relative;
+
+  &:focus {
+    outline: 0;
+
+    > select {
+      height: $mui-input-height + 1px;
+      margin-bottom: -1px;
+      border-color: $mui-input-border-color-focus;
+      border-width: 2px;
+    }
+  }
+
+  > select {
+    @include mui-node-inserted();
+
+    // Layout
+    display: block;
+    height: $mui-input-height;
+    width: 100%;
+
+    // Look and feel
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid $mui-input-border-color;
+    border-radius: 0px;
+    box-shadow: none;
+    background-color: $mui-input-bg-color;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==");
+    background-repeat: no-repeat;
+    background-position: right center;
+    cursor: pointer;
+
+    // Typography
+    color: $mui-input-font-color;
+    font-size: $mui-input-font-size;
+    padding: 0 25px 0 0;
+
+    &::-ms-expand {
+      display: none;  // For IE
+    }
+
+    &:focus {
+      outline: 0;
+      height: $mui-input-height + 1px;
+      margin-bottom: -1px;
+      border-color: $mui-input-border-color-focus;
+      border-width: 2px;
+    }
+
+    &:disabled {
+      color: mui-color('black-alpha-38');
+      cursor: $mui-cursor-disabled;
+      background-color: $mui-input-bg-color-disabled;
+      opacity: 1;  // iOS fix for unreadable disabled content
+    }
+  }
+}
+
+.mui-select__menu {
+  @extend .mui--z1;
+
+  // Positioning
+  position: absolute;
+  z-index: 1;
+
+  // Display
+  min-width: 100%;
+  overflow-y: auto;
+  padding: 8px 0;
+
+  // Other
+  background-color: mui-color('white');
+  font-size: $mui-input-font-size;
+
+  // IE10+ bugfix
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    border-left: 1px solid mui-color('black-alpha-12');
+    border-top: 1px solid mui-color('black-alpha-12');
+  }
+
+  > div {
+    padding: 0 22px;
+    height: $mui-input-font-size + 26px;
+    line-height: $mui-input-font-size + 26px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: mui-color('grey', '300');
+    }
+
+    &.mui--is-selected {
+      background-color: mui-color('grey', '200');
+    }
+  }
+}
