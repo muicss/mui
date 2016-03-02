@@ -12,12 +12,12 @@
   
   // load dependencies
   var jqLite = require('src/js/lib/jqLite'),
-      textfield = require('src/js/forms/textfield'),
-      select = require('src/js/forms/select'),
-      ripple = require('src/js/ripple'),
-      dropdowns = require('src/js/dropdowns'),
+      dropdown = require('src/js/dropdown'),
+      overlay = require('src/js/overlay'),
+      ripple = require('src/js/ripple'),      
+      select = require('src/js/select'),
       tabs = require('src/js/tabs'),
-      overlay = require('src/js/overlay');
+      textfield = require('src/js/textfield');
 
   // expose api
   win.mui = {
@@ -30,7 +30,7 @@
     textfield.initListeners();
     select.initListeners();
     ripple.initListeners();
-    dropdowns.initListeners();
+    dropdown.initListeners();
     tabs.initListeners();
   });
 })(window);

@@ -6,9 +6,9 @@
 'use strict';
 
 
-var jqLite = require('../lib/jqLite'),
-    util = require('../lib/util'),
-    formlib = require('../lib/forms'),
+var jqLite = require('./lib/jqLite'),
+    util = require('./lib/util'),
+    formlib = require('./lib/forms'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',

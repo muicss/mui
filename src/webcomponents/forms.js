@@ -7,7 +7,7 @@
 
 
 var jqLite = require('../js/lib/jqLite'),
-    muiTextfield = require('../js/forms/textfield'),
+    muiTextfield = require('../js/textfield'),
     textfieldClass = 'mui-textfield',
     floatingMod = '--float-label',
     textfieldTagName = textfieldClass;
