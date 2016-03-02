@@ -1,21 +1,28 @@
 @charset "UTF-8";
 
-// From MUI
+// Normalizer
 @import
-"../sass/mui/colors",
-"../sass/mui/mixins";
+"mui-email/normalize";
 
 // Core variables and mixins
-@import "mui-email/variables";
-
-// Core css
 @import
-"mui-email/normalize",
-"mui-email/scaffolding",
-"mui-email/layout",
-"mui-email/semantic-markup",
-"mui-email/typography",
+"../sass/mui/colors",
+"../sass/mui/mixins",
+"mui-email/variables";
+
+// CSS Reboot
+@import
+"mui-email/reboot";
+
+// Components
+@import
+"mui-email/body",
 "mui-email/buttons",
-"mui-email/panel",
-"mui-email/dividers",
-"mui-email/helpers";
+"mui-email/containers",
+"mui-email/divider",
+"mui-email/panel";
+
+// Miscellaneous
+@import
+"mui-email/helpers",
+"mui-email/typography";

@@ -1,12 +1,11 @@
 @charset "UTF-8";
 
-// From MUI
+// Core variables and mixins
 @import
 "../sass/mui/colors",
-"../sass/mui/mixins";
+"../sass/mui/mixins",
+"mui-email/variables";
 
-// Core variables and mixins
-@import "mui-email/variables";
-
-// Core css
-@import "mui-email/styletag";
+// Main CSS
+@import
+"mui-email/styletag";

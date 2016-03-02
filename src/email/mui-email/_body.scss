@@ -1,8 +1,12 @@
 /**
- * MUI Email Scaffolding
+ * MUI Email Body Component
  */
 
-body {
+.mui-body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
   color: $mui-base-font-color;
   font-family: $mui-base-font-family;
   font-weight: $mui-base-font-weight;
@@ -13,20 +17,4 @@ body {
   @if $mui-body-bg-color {
     background-color: $mui-body-bg-color;
   }
-}
-
-a {
-  color: $mui-link-font-color;
-  text-decoration: $mui-link-text-decoration;
-}
-
-p {
-  margin: 0 0 ($mui-base-line-height-computed / 2);
-}
-
-hr {
-  color: $mui-hr-color;
-  background-color: $mui-hr-color;
-  height: 1px;
-  border: none;
 }

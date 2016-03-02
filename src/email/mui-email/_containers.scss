@@ -1,0 +1,18 @@
+/**
+ * MUI Email Containers
+ */
+
+.mui-container {
+  max-width: $mui-container-max-width;
+  display: block;
+  margin: 0 auto;
+  clear: both;
+  text-align: left;
+  padding-left: $mui-container-padding-horizontal;
+  padding-right: $mui-container-padding-horizontal;
+}
+
+.mui-container-fixed {
+  @extend .mui-container;
+  width: $mui-container-max-width;
+}
