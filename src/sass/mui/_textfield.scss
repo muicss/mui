@@ -182,8 +182,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   &:not(:required),
   &:required.mui--is-not-empty,
   &:required.mui--is-empty.mui--is-dirty,
-  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)\
-,
+  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     border-color: $mui-danger-color;
     border-width: 2px;
@@ -196,8 +195,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   &:not(:required),
   &:required.mui--is-not-empty,
   &:required.mui--is-empty.mui--is-dirty,
-  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)\
-,
+  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     height: $mui-input-height + 1px;
     margin-bottom: -1px;
@@ -211,13 +209,17 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   // Set label color to danger color
   &:not(:required),
   &:required.mui--is-not-empty,
-  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)\
-,
+  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     ~ label {
       color: $mui-danger-color;
     }
   }
+}
+
+.mui-textfield > input:not(:focus).mui--is-invalid,
+.mui-textfield > textarea:not(:focus).mui--is-invalid {
+
 }
 
 .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus),
