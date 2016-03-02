@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.4.7 - March 1, 2016
+
+* Added JS `change` eveent handler to mui-textfield input elements
+* Improved organization of MUI sass files
+* Improved organization of MUI js files
+
 ## 0.4.6 - February 18, 2016
 
 * Fixed component name errors in NPM react.js module
