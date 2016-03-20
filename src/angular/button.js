@@ -9,36 +9,38 @@ module.exports = angular.module('mui.button', [])
       transclude: true,
       link: function(scope, element, attrs) {
         var btnClass = 'mui-btn',
-          styles = {
-            variant: 1, //['default', 'flat', 'raised', 'fab']
-            color: 1, //['default', 'primary', 'danger', 'dark','accent']
-            size: 1 //['default', 'small', 'large']
-          };
+            styles;
+
+        styles = {
+          muiVariant: 1, // ['default', 'flat', 'raised', 'fab']
+          muiColor: 1, // ['default', 'primary', 'danger', 'dark', 'accent']
+          muiSize: 1 // ['default', 'small', 'large']
+        };
 
         scope.type = scope.type || 'button';
 
-        //如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
-        if (!angular.isUndefined(attrs.disabled) && angular.isUndefined(attrs.ngDisabled)) {
+        // 如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
+        if (!angular.isUndefined(attrs.disabled) 
+            && angular.isUndefined(attrs.ngDisabled)) {
           element.prop('disabled', true);
         }
 
-        //change btn-style by attrs
-        var _renderBtn = function() {
+        // change btn-style by attrs
+        function _renderBtn() {
           element.removeAttr('class').addClass(btnClass);
+
           angular.forEach(styles, function(value, style) {
             element.addClass(attrs[style] ? 'mui-btn--' + attrs[style] : '');
           });
         };
 
-        //observe each attr and rerender button
+        // observe each attr and rerender button
         angular.forEach(styles, function(value, style) {
           attrs.$observe(style, function() {
             _renderBtn();
           });
         });
-
       }
-
     };
   })
   .directive('ripple', function($timeout) {
@@ -81,7 +83,6 @@ module.exports = angular.module('mui.button', [])
           $timeout(function() {
             ripple.remove();
           }, 2000);
-
         });
       }
     };
