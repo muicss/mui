@@ -6,16 +6,21 @@ module.exports = angular.module('mui.radio', [])
       require: ['?ngModel'],
       scope: {
         innerInput: '=?ngModel',
-        label: '@',
+        muiLabel: '@',
+        name: '@',
         value: '@',
         ngDisabled : '=',
         select: '&?onSelect'
       },
       template: '<div class="mui-radio">' +
         '<label>' +
-        '<input type="radio" ng-model="innerInput" ' +
-        'value={{value}} ng-disabled="ngDisabled" ng-click="select()" ' +
-        '>{{label}}</label> ' +
+        '<input type="radio" ' +
+        'ng-model="innerInput" ' +
+        'name={{name}} ' +
+        'value={{value}} ' +
+        'ng-disabled="ngDisabled" '+
+        'ng-click="select()" ' +
+        '>{{muiLabel}}</label> ' +
         '</div>'
     }
   })

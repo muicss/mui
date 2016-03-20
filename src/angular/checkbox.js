@@ -6,16 +6,21 @@ module.exports = angular.module('mui.checkbox', [])
       require: ['?ngModel'],
       scope: {
         innerInput: '=?ngModel',
-        label: '@',
+        muiLabel: '@',
+        name: '@',
         value: '@',
         ngDisabled: '=',
         select: '&?onSelect'
       },
       template: '<div class="mui-checkbox">' +
         '<label>' +
-        '<input type="checkbox" ng-model="innerInput" ' +
-        'value={{value}} ng-disabled="ngDisabled" ng-click="select()" ' +
-        '>{{label}}</label> ' +
+        '<input type="checkbox" ' +
+        'ng-model="innerInput" ' +
+        'value={{value}} ' +
+        'name={{name}} ' +
+        'ng-disabled="ngDisabled" ' +
+        'ng-click="select()" ' +
+        '>{{muiLabel}}</label> ' +
         '</div>'
     }
   })

@@ -17,33 +17,8 @@
                $scope.submitForm5 = function(isValid) {
                  alert(isValid);
                };
-               $scope.color = {
-                 name: 'green'
-               };
-               $scope.check = {
-                 select1 : true,
-                 select2 : false,
-                 select3 : true,
-                 select4 : true
-               }
-
-               $scope.data ={
-                 options : [{
-                   label : 'option1',
-                   value : '1'
-                 },{
-                   label : 'option2',
-                   value : '2'
-                 },{
-                   label : 'option3',
-                   value : '3'
-                 }]
-               }
-               $scope.alerts = function(color) {
-                 console.log(color);
-               }
              });
-  </script>
+    </script>
   </head>
   <body>
     <mui-container ng-controller="exampleCtrl">
@@ -77,32 +52,6 @@
           <mui-input ng-model='form4.input1' name="input4-1" hint="Placeholder1"></mui-input>
           <mui-input ng-model='form4.input2' name="input4-2" label="fix"></mui-input>
           <mui-button >submit</mui-button>
-        </form>
-
-        <h3>Checkboxes and radio buttons</h3>
-        <form>
-          <mui-checkbox ng-model="check.select1" value="select1" label="checkbox1"></mui-checkbox>
-          <mui-checkbox ng-model="check.select2" value="select2" label="checkbox2"></mui-checkbox>
-          <mui-checkbox on-select="alerts(check)" ng-model="check.select3" value="select3" label="checkbox3"></mui-checkbox>
-          <mui-checkbox ng-model="check.select4" ng-disabled="true" value="select4" label="checkbox4"></mui-checkbox>
-          <p>
-            checkbox1: {{check.select1}}
-          </p>
-          checkbox2: {{check.select2}}
-          </p>
-          checkbox3: {{check.select3}}
-          </p>
-          checkbox4: {{check.select4}}
-          </p>
-
-          <mui-radio ng-model="color.name"  value="red" label="radio1"></mui-radio>
-          <mui-radio on-select="alerts(color)" ng-model="color.name" value="green"  label="radio2"></mui-radio>
-          <mui-radio ng-model="color.name"   value="blue" label="radio3"></mui-radio>
-          <mui-radio ng-model="color.name"  ng-disabled="true"  value="yellow" label="radio4"></mui-radio>
-          <p>
-            value: {{color.name}}
-          </p>
-
         </form>
 
         <h3>select</h3>
