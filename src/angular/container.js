@@ -9,17 +9,18 @@ module.exports = angular.module('mui.container', [])
       link: function(scope, element, attr, controller, linker) {
         /**
          * <mui-container ng-controller=""></mui-container>
-         * ng-transclude's scope problem , if ng-transclude used , ng-controller will not work.
+         * ng-transclude's scope problem , if ng-transclude used 
+         * ng-controller will not work.
          */
         linker(scope, function(clone) {
           element.append(clone);
         });
 
         /**
-         * if fluid
+         * if mui-fluid
          */
-        if(!angular.isUndefined(attr.fluid)){
-            element.removeClass('mui-container').addClass('mui-container-fluid');
+        if (!angular.isUndefined(attr.muiFluid)){
+          element.removeClass('mui-container').addClass('mui-container-fluid');
         }
       }
     };
