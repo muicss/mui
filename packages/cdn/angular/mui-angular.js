@@ -805,36 +805,38 @@ module.exports = angular.module('mui.button', [])
       transclude: true,
       link: function(scope, element, attrs) {
         var btnClass = 'mui-btn',
-          styles = {
-            variant: 1, //['default', 'flat', 'raised', 'fab']
-            color: 1, //['default', 'primary', 'danger', 'dark','accent']
-            size: 1 //['default', 'small', 'large']
-          };
+            styles;
+
+        styles = {
+          variant: 1, // ['default', 'flat', 'raised', 'fab']
+          color: 1, // ['default', 'primary', 'danger', 'dark', 'accent']
+          size: 1 // ['default', 'small', 'large']
+        };
 
         scope.type = scope.type || 'button';
 
-        //如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
-        if (!angular.isUndefined(attrs.disabled) && angular.isUndefined(attrs.ngDisabled)) {
+        // 如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
+        if (!angular.isUndefined(attrs.disabled) 
+            && angular.isUndefined(attrs.ngDisabled)) {
           element.prop('disabled', true);
         }
 
-        //change btn-style by attrs
-        var _renderBtn = function() {
+        // change btn-style by attrs
+        function _renderBtn() {
           element.removeAttr('class').addClass(btnClass);
+
           angular.forEach(styles, function(value, style) {
             element.addClass(attrs[style] ? 'mui-btn--' + attrs[style] : '');
           });
         };
 
-        //observe each attr and rerender button
+        // observe each attr and rerender button
         angular.forEach(styles, function(value, style) {
           attrs.$observe(style, function() {
             _renderBtn();
           });
         });
-
       }
-
     };
   })
   .directive('ripple', function($timeout) {
@@ -877,7 +879,6 @@ module.exports = angular.module('mui.button', [])
           $timeout(function() {
             ripple.remove();
           }, 2000);
-
         });
       }
     };
@@ -903,14 +904,19 @@ module.exports = angular.module('mui.checkbox', [])
       scope: {
         innerInput: '=?ngModel',
         label: '@',
+        name: '@',
         value: '@',
         ngDisabled: '=',
         select: '&?onSelect'
       },
       template: '<div class="mui-checkbox">' +
         '<label>' +
-        '<input type="checkbox" ng-model="innerInput" ' +
-        'value={{value}} ng-disabled="ngDisabled" ng-click="select()" ' +
+        '<input type="checkbox" ' +
+        'ng-model="innerInput" ' +
+        'value={{value}} ' +
+        'name={{name}} ' +
+        'ng-disabled="ngDisabled" ' +
+        'ng-click="select()" ' +
         '>{{label}}</label> ' +
         '</div>'
     }
@@ -959,7 +965,8 @@ module.exports = angular.module('mui.container', [])
       link: function(scope, element, attr, controller, linker) {
         /**
          * <mui-container ng-controller=""></mui-container>
-         * ng-transclude's scope problem , if ng-transclude used , ng-controller will not work.
+         * ng-transclude's scope problem , if ng-transclude used 
+         * ng-controller will not work.
          */
         linker(scope, function(clone) {
           element.append(clone);
@@ -968,8 +975,8 @@ module.exports = angular.module('mui.container', [])
         /**
          * if fluid
          */
-        if(!angular.isUndefined(attr.fluid)){
-            element.removeClass('mui-container').addClass('mui-container-fluid');
+        if (!angular.isUndefined(attr.fluid)){
+          element.removeClass('mui-container').addClass('mui-container-fluid');
         }
       }
     };
@@ -990,15 +997,15 @@ module.exports = angular.module('mui.divider', [])
 },{}],13:[function(require,module,exports){
 module.exports = angular.module('mui.dropdown-item', [])
   .directive('muiDropdownItem', function() {
-     return {
-        restrict : 'AE',
-        replace: true,
-        scope : {
-            link : '@'
-        },
-        transclude : true,
-        template : '<li><a href="{{link}}" ng-transclude></a></li>'
-     };
+    return {
+      restrict : 'AE',
+      replace: true,
+      scope : {
+        link : '@'
+      },
+      transclude : true,
+      template : '<li><a href="{{link}}" ng-transclude></a></li>'
+    };
   });
 
 },{}],14:[function(require,module,exports){
@@ -1016,38 +1023,50 @@ module.exports = angular.module('mui.dropdown', [])
         disable: '=ngDisabled'
       },
       template: '<div class="mui-dropdown">' +
-                  '<mui-button variant="{{variant}}" ng-disabled="disable" color="{{color}}" '+
-                  'size="{{size}}"></mui-button>' +
-                  '<ul class="mui-dropdown__menu" ng-transclude></ul>'+
-                '</div>',
+        '<mui-button ' +
+        'variant="{{variant}}" ' + 
+        'color="{{color}}" ' +
+        'size="{{size}}" ' +
+        'ng-disabled="disable" ' +
+        '></mui-button>' +
+        '<ul class="mui-dropdown__menu" ng-transclude></ul>'+
+        '</div>',
       link: function(scope, element, attrs) {
         var dropdownClass = 'mui-dropdown',
-          menuClass = 'mui-dropdown__menu',
-          openClass = 'mui--is-open',
-          rightClass = 'mui-dropdown__menu--right',
-          $menu,$muiButton;
+            menuClass = 'mui-dropdown__menu',
+            openClass = 'mui--is-open',
+            rightClass = 'mui-dropdown__menu--right',
+            $menu,
+            $muiButton;
 
-        scope.open = scope.open || false;
-        if (!angular.isUndefined(attrs.disabled) && angular.isUndefined(attrs.ngDisabled)) {
+        if (!angular.isUndefined(attrs.open)) scope.open = true;
+        else scope.open = false;
+
+        if (!angular.isUndefined(attrs.disabled)
+            && angular.isUndefined(attrs.ngDisabled)) {
           scope.disable = true;
         }
 
         var _findMenuNode = function() {
           return angular.element(element[0].querySelector('.' + menuClass));
         };
+
         $menu = _findMenuNode().css('margin-top', '-3px');
 
-        //menu right
-        !angular.isUndefined(attrs.right) && $menu.addClass(rightClass);
+        // menu right
+        !angular.isUndefined(attrs.rightAlign)
+          && $menu.addClass(rightClass);
 
-        //html类型的 label
+        // html类型的 label
         attrs.$observe('label', function() {
           $muiButton = angular.element(element[0].querySelector('.mui-btn'));
-          if (!angular.isUndefined(attrs.nocaret)) {
+
+          if (!angular.isUndefined(attrs.noCaret)) {
             $muiButton.html(attrs.label);
           } else {
             $muiButton.html(attrs.label + ' <mui-caret></mui-caret>');
           }
+
           $compile($muiButton.children())(scope);
         });
 
@@ -1065,22 +1084,20 @@ module.exports = angular.module('mui.dropdown', [])
            */
           var _isLink = function() {
             var links = _findMenuNode()[0].querySelectorAll('a[href]'),
-              bool = false;
+                bool = false;
+
             angular.forEach(links, function(link, index) {
               link.contains(event.target) && (bool = true);
             });
+
             return bool;
           };
 
           scope.$apply(function() {
-            if (_isLink() || scope.disable) {
-              return;
-            }
-            if (!self) {
-              scope.open = false;
-            } else {
-              scope.open = !scope.open;
-            }
+            if (_isLink() || scope.disable) return;
+
+            if (!self) scope.open = false;
+            else scope.open = !scope.open;
           });
         };
 
@@ -1092,14 +1109,13 @@ module.exports = angular.module('mui.dropdown', [])
         scope.$on('$destroy', function() {
           angular.element(document).off('mousedown', toggleEvent);
         });
-
       }
     };
   });
 
 },{}],15:[function(require,module,exports){
 module.exports = angular.module('mui.form', [])
-  .directive('formInline', function() {
+  .directive('muiFormInline', function() {
     return {
       restrict: 'A',
       link: function(scope, element, attrs) {
@@ -1112,7 +1128,7 @@ module.exports = angular.module('mui.form', [])
 var inputFactory = function(isTextArea) {
   var scope = {
     innerInput: '=?ngModel',
-    floatingLabel: '@',
+    floatLabel: '@',
     type: '@',
     hint: '@',
     label: '@',
@@ -1130,9 +1146,9 @@ var inputFactory = function(isTextArea) {
       require: ['?ngModel', '^?form'],
       scope: scope,
       replace: true,
-      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floatingLabel}\'>' +
+      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floatLabel}\'>' +
         '<input ng-model="innerInput" ng-change="onChange()" placeholder={{hint}} type={{type}} />' +
-        '<label>{{floatingLabel || label}}</label>' +
+        '<label>{{label}}</label>' +
         '</div>',
 
       link: function(scope, element, attrs, ctrls) {
@@ -1163,7 +1179,7 @@ var inputFactory = function(isTextArea) {
         if (attrs.required) {
           $input.prop('required', true);
         }
-        if (scope.floatingLabel) {
+        if (scope.floatLabel) {
           $timeout(function() {
             $label.css({
               'transition': '.15s ease-out',
@@ -1246,14 +1262,19 @@ module.exports = angular.module('mui.radio', [])
       scope: {
         innerInput: '=?ngModel',
         label: '@',
+        name: '@',
         value: '@',
         ngDisabled : '=',
         select: '&?onSelect'
       },
       template: '<div class="mui-radio">' +
         '<label>' +
-        '<input type="radio" ng-model="innerInput" ' +
-        'value={{value}} ng-disabled="ngDisabled" ng-click="select()" ' +
+        '<input type="radio" ' +
+        'ng-model="innerInput" ' +
+        'name={{name}} ' +
+        'value={{value}} ' +
+        'ng-disabled="ngDisabled" '+
+        'ng-click="select()" ' +
         '>{{label}}</label> ' +
         '</div>'
     }

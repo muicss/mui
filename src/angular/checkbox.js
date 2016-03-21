@@ -1,3 +1,8 @@
+/**
+ * MUI Angular Checkbox Component
+ * @module angular/checkox
+ */
+
 module.exports = angular.module('mui.checkbox', [])
   .directive('muiCheckbox', function() {
     return {
@@ -5,22 +10,20 @@ module.exports = angular.module('mui.checkbox', [])
       replace: true,
       require: ['?ngModel'],
       scope: {
-        innerInput: '=?ngModel',
-        muiLabel: '@',
+        label: '@',
         name: '@',
         value: '@',
-        ngDisabled: '=',
-        select: '&?onSelect'
+        ngModel: '=',
+        ngDisabled: '='
       },
       template: '<div class="mui-checkbox">' +
         '<label>' +
         '<input type="checkbox" ' +
-        'ng-model="innerInput" ' +
-        'value={{value}} ' +
         'name={{name}} ' +
+        'value={{value}} ' +
+        'ng-model="ngModel" ' +
         'ng-disabled="ngDisabled" ' +
-        'ng-click="select()" ' +
-        '>{{muiLabel}}</label> ' +
+        '>{{label}}</label> ' +
         '</div>'
     }
   })

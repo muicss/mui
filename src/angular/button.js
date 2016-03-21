@@ -1,49 +1,38 @@
+/**
+ * MUI Angular Button Component
+ * @module angular/button
+ */
+
 var jqLite = require('../js/lib/jqLite');
+
+
 module.exports = angular.module('mui.button', [])
   .directive('muiButton', function() {
     return {
       restrict: 'AE',
-      scope: {},
+      scope: {
+        type: '@?'
+      },
       replace: true,
-      template: '<button class="mui-btn" ripple ng-transclude></button>',
+      template: '<button class="mui-btn" type={{type}} mui-ripple ng-transclude></button>',
       transclude: true,
       link: function(scope, element, attrs) {
-        var btnClass = 'mui-btn',
-            styles;
+        var isUndef = angular.isUndefined;
 
-        styles = {
-          muiVariant: 1, // ['default', 'flat', 'raised', 'fab']
-          muiColor: 1, // ['default', 'primary', 'danger', 'dark', 'accent']
-          muiSize: 1 // ['default', 'small', 'large']
-        };
-
-        scope.type = scope.type || 'button';
-
-        // 如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
-        if (!angular.isUndefined(attrs.disabled) 
-            && angular.isUndefined(attrs.ngDisabled)) {
+        // handle disabled attribute
+        if (!isUndef(attrs.disabled) && isUndef(attrs.ngDisabled)) {
           element.prop('disabled', true);
         }
 
-        // change btn-style by attrs
-        function _renderBtn() {
-          element.removeAttr('class').addClass(btnClass);
-
-          angular.forEach(styles, function(value, style) {
-            element.addClass(attrs[style] ? 'mui-btn--' + attrs[style] : '');
-          });
-        };
-
-        // observe each attr and rerender button
-        angular.forEach(styles, function(value, style) {
-          attrs.$observe(style, function() {
-            _renderBtn();
-          });
+        // set button styles        
+        angular.forEach(['variant', 'color', 'size'], function(attrName) {
+          var attrVal = attrs[attrName];
+          if (attrVal) element.addClass('mui-btn--' + attrVal);
         });
       }
     };
   })
-  .directive('ripple', function($timeout) {
+  .directive('muiRipple', ['$timeout', function($timeout) {
     return {
       restrict: 'A',
       link: function(scope, element, attrs) {
@@ -57,10 +46,10 @@ module.exports = angular.module('mui.button', [])
           if (element.prop('disabled')) return;
 
           var offset = jqLite.offset(element[0]),
-            xPos = event.pageX - offset.left,
-            yPos = event.pageY - offset.top,
-            diameter,
-            radius;
+              xPos = event.pageX - offset.left,
+              yPos = event.pageY - offset.top,
+              diameter,
+              radius;
 
           diameter = offset.height;
           if (element.hasClass('mui-btn--fab')) diameter = offset.height / 2;
@@ -80,10 +69,12 @@ module.exports = angular.module('mui.button', [])
           }
 
           element.append(ripple);
+
+          // remove after delay
           $timeout(function() {
             ripple.remove();
           }, 2000);
         });
       }
     };
-  });
+  }]);

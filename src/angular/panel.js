@@ -1,3 +1,8 @@
+/**
+ * MUI Angular Panel Component
+ * @module angular/panel
+ */
+
 module.exports = angular.module('mui.panel', [])
   .directive('muiPanel', function() {
     return {
@@ -6,8 +11,8 @@ module.exports = angular.module('mui.panel', [])
       scope : true,
       template: '<div class="mui-panel"></div>',
       transclude: true,
-      link: function(scope, element, attr, controller, linker) {
-        linker(scope, function(clone) {
+      link: function(scope, element, attr, controller, transcludeFn) {
+        transcludeFn(scope, function(clone) {
           element.append(clone);
         });
       }

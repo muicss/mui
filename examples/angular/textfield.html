@@ -1,0 +1,143 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/angular/mui-angular.js"></script>
+    <script>
+      var myApp = angular.module('myApp', []);
+
+      myApp.controller('ExampleController', ['$scope', function($scope) {
+        $scope.inputA_1_3 = 'test';
+        $scope.change = function() {
+          alert('hi');
+        };
+      }]);
+    </script>
+  </head>
+  <body>
+    <mui-container>
+      <h2>Input</h2>
+      <mui-panel>
+        <h3>Form with placeholders</h3>
+        <div ng-controller="ExampleController">
+          <!--
+          <mui-input ng-model="inputA_1_1" ng-change="change()" hint="Placeholder 1"></mui-input>
+          <mui-input ng-model="inputA_1_2" hint="Placeholder 2"></mui-input>
+          -->
+          <div><input type="text" ng-model="inputA_1_3" ng-change="change()"></div>
+          <mui-button variant="raised">submit</mui-button>
+          <br>
+          <br>
+          <div>inputA_1_1: {{inputA_1_1}}</div>
+          <div>inputA_1_2: {{inputA_1_2}}</div>
+          <div>inputA_1_3: {{inputA_1_3}}</div>
+        </div>
+        
+        <h3>Form with fixed labels</h3>
+        <form>
+          <mui-input label="Label 1"></mui-input>
+          <mui-input label="Label 2"></mui-input>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+
+        <h3>Form with fixed labels and placeholders</h3>
+        <form>
+          <mui-input label="Label 1" hint="Placeholder 1"></mui-input>
+          <mui-input label="Label 2" hint="Placeholder 2"></mui-input>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+
+        <h3>Form with floating labels</h3>
+        <form>
+          <mui-input label="Label 1" float-label></mui-input>
+          <mui-input
+              label="Label 2"
+              default-value="on load"
+              float-label
+          >
+          </mui-input>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+      </mui-panel>
+
+      <br>
+      <br>
+
+      <h2>Textarea</h2>
+      <mui-panel>  
+        <h3>Form with placeholders</h3>
+        <form>
+          <mui-textarea hint="Placeholder 1"></mui-textarea>
+          <mui-textarea hint="Placeholder 2" rows=5></mui-textarea>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+
+        <h3>Form with fixed labels</h3>
+        <form>
+          <mui-textarea label="Label 1"></mui-textarea>
+          <mui-textarea label="Label 2" rows=5></mui-textarea>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+
+        <h3>Form with fixed labels and placeholders</h3>
+        <form>
+          <mui-textarea label="Label 1" hint="Placeholder 1"></mui-textarea>
+          <mui-textarea label="Label 2" hint="Placeholder 2" rows=5></mui-textarea>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+
+        <h3>Form with floating labels</h3>
+        <form>
+          <mui-textarea label="Label 1" float-label></mui-textarea>
+          <mui-textarea label="Label 2" rows=5 float-label></mui-textarea>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+      </mui-panel>
+
+      <br>
+      <br>
+
+      <h2>Form Validation</h2>
+      <mui-panel>
+        <mui-input
+            type="email"
+            label="Email address (should be red on invalid input)"
+        >
+        </mui-input>
+        <mui-input
+            type="email"
+            label="Email address (should be red on load)"
+            default-value="err"
+        >
+        </mui-input>
+        <mui-input
+            type="text"
+            label="Required text (should be red after focus)"
+            required
+        >
+        </mui-input>
+        <mui-input
+            type="text"
+            label="Required text (should be red after deletion)"
+            default-value="val"
+            required
+        >
+        </mui-input>
+        <mui-input
+            type="text"
+            label="Is invalid (should be red on load)"
+            invalid
+        >
+        </mui-input>
+      </mui-panel>
+    </mui-container>
+  </body>
+</html>

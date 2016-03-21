@@ -1,3 +1,8 @@
+/**
+ * MUI Angular Container Component
+ * @module angular/container
+ */
+
 module.exports = angular.module('mui.container', [])
   .directive('muiContainer', function() {
     return {
@@ -6,20 +11,14 @@ module.exports = angular.module('mui.container', [])
       transclude: true,
       scope : true,
       replace: true,
-      link: function(scope, element, attr, controller, linker) {
-        /**
-         * <mui-container ng-controller=""></mui-container>
-         * ng-transclude's scope problem , if ng-transclude used 
-         * ng-controller will not work.
-         */
-        linker(scope, function(clone) {
+      link: function(scope, element, attrs, controller, transcludeFn) {
+        // use transcludeFn to pass ng-controller on parent element
+        transcludeFn(scope, function(clone) {
           element.append(clone);
         });
 
-        /**
-         * if mui-fluid
-         */
-        if (!angular.isUndefined(attr.muiFluid)){
+        // handle fluid containers
+        if (!angular.isUndefined(attrs.fluid)){
           element.removeClass('mui-container').addClass('mui-container-fluid');
         }
       }

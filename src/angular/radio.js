@@ -1,3 +1,8 @@
+/**
+ * MUI Angular Radio Component
+ * @module angular/radio
+ */
+
 module.exports = angular.module('mui.radio', [])
   .directive('muiRadio', function() {
     return {
@@ -5,22 +10,20 @@ module.exports = angular.module('mui.radio', [])
       replace: true,
       require: ['?ngModel'],
       scope: {
-        innerInput: '=?ngModel',
-        muiLabel: '@',
+        label: '@',
         name: '@',
         value: '@',
-        ngDisabled : '=',
-        select: '&?onSelect'
+        ngModel: '=',
+        ngDisabled: '='
       },
       template: '<div class="mui-radio">' +
         '<label>' +
         '<input type="radio" ' +
-        'ng-model="innerInput" ' +
         'name={{name}} ' +
         'value={{value}} ' +
-        'ng-disabled="ngDisabled" '+
-        'ng-click="select()" ' +
-        '>{{muiLabel}}</label> ' +
+        'ng-model="ngModel" ' +
+        'ng-disabled="ngDisabled" ' +
+        '>{{label}}</label> ' +
         '</div>'
     }
-  })
+  });

@@ -1,43 +1,27 @@
 <!doctype html>
-<html ng-app="myapp">
+<html ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- for example only -->
-    <script src="../assets/vendor/angular/1.4.8/angular.js"></script>
+    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
     <!-- end -->
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
     <script>
-      angular.module("myapp", ["mui"])
-             .controller("exampleCtrl", function($scope) {
-               $scope.check = {
-                 select1: true,
-                 select2: false,
-                 select3: true,
-                 select4: true
-               };
+      var myApp = angular.module("myApp", ["mui"]);
 
-               $scope.data = {
-                 options: [
-                   {
-                     label: 'option1',
-                     value: '1'
-                   },
-                   {
-                     label: 'option2',
-                     value: '2'
-                   },
-                   {
-                     label: 'option3',
-                     value: '3'
-                   }
-                 ]
-               };
-             });
+      myApp.controller("exampleCtrl", function($scope) {
+        $scope.check = {
+          select1: true,
+          select2: false,
+          select3: true,
+          select4: true
+        };
+      });
     </script>
   </head>
   <body>
@@ -46,40 +30,39 @@
       <mui-panel>
         <form method="get" action="">
           <mui-checkbox
-              ng-model="check.select1"
+              label="checkbox1"
               name="box1"
               value="select1"
-              mui-label="checkbox1"
+              ng-model="check.select1"
           >
           </mui-checkbox>
           <mui-checkbox
-              ng-model="check.select2"
+              label="checkbox2"
               name="box2"
               value="select2"
-              mui-label="checkbox2"
+              ng-model="check.select2"
           >
           </mui-checkbox>
           <mui-checkbox
-              on-select="alerts(check)"
-              ng-model="check.select3"
+              label="checkbox3"
               name="box3"
               value="select3"
-              mui-label="checkbox3"
+              ng-model="check.select3"
           >
           </mui-checkbox>
           <mui-checkbox
-              ng-model="check.select4"
-              ng-disabled="true"
+              label="checkbox4"
               name="box4"
               value="select4"
-              mui-label="checkbox4"
+              ng-model="check.select4"
+              ng-disabled="true"
           >
           </mui-checkbox>
           <p>checkbox1: {{check.select1}}</p>
           <p>checkbox2: {{check.select2}}</p>
           <p>checkbox3: {{check.select3}}</p>
           <p>checkbox4: {{check.select4}}</p>
-          <mui-button mui-color="primary">submit</mui-button>
+          <mui-button color="primary">submit</mui-button>
         </form>
       </mui-panel>
     </mui-container>

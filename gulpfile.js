@@ -53,6 +53,12 @@ gulp.task('build-packages', gulp.parallel(
 ));
 
 
+gulp.task('build-all', gulp.parallel(
+  'examples:build',
+  'e2e-tests:build',
+  'build-packages'
+));
+
 
 
 // ============================================================================

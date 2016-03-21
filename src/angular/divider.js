@@ -1,3 +1,8 @@
+/**
+ * MUI Angular Divider Component
+ * @module angular/divider
+ */
+
 module.exports = angular.module('mui.divider', [])
   .directive('muiDivider', function() {
     return {

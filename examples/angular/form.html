@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="myApp">
+<html ng-app="mui">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,26 +11,21 @@
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
-    <script>
-      var myApp = angular.module('myApp', ['mui']);
-
-      myApp.controller('ExampleCtrl', function($scope) {
-        $scope.myVal = 'test';
-      });
-    </script>
   </head>
   <body>
-    <h1>Container</h1>
-    <mui-container ng-controller="ExampleCtrl">
-      {{myVal}}
+    <mui-container>
+      <h1>Form</h1>
       <mui-panel>
+        <form name="form1">
+          <mui-input name="inputA1" ng-model="form1.inputA"></mui-input>
+          <mui-button color="primary">submit</mui-button>
+        </form>
       </mui-panel>
-    </mui-container>
-    
-    <h1>Fluid Container</h1>
-    <mui-container ng-controller="ExampleCtrl" fluid>
-      {{myVal}}
       <mui-panel>
+        <form name="form2" mui-form-inline>
+          <mui-input name="inputB1" ng-model="form2.inputB"></mui-input>
+          <mui-button color="primary">submit</mui-button>
+        </form>
       </mui-panel>
     </mui-container>
   </body>

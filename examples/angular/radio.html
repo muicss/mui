@@ -1,31 +1,32 @@
 <!doctype html>
-<html ng-app="myapp">
+<html ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- for example only -->
-    <script src="../assets/vendor/angular/1.4.8/angular.js"></script>
+    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
     <!-- end -->
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
     <script>
-      angular.module("myapp", ["mui"])
-             .controller("exampleCtrl", function($scope) {
-               $scope.color = {
-                 name: 'green'
-               };
+      var myApp = angular.module("myApp", ["mui"]);
 
-               $scope.alerts = function(color) {
-                 console.log(color);
-               };
-             });
+      myApp.controller("ExampleCtrl", function($scope) {
+        $scope.color = {
+          name: 'green'
+        };
+
+        $scope.alerts = function(color) {
+          console.log(color);
+        };
+      });
     </script>
   </head>
   <body>
-    <mui-container ng-controller="exampleCtrl">
+    <mui-container ng-controller="ExampleCtrl">
       <h1>Radio</h1>
       <mui-panel>
         <form method="get" action="">
@@ -33,7 +34,7 @@
               ng-model="color.name"
               name="input1"
               value="red"
-              mui-label="radio1"
+              label="radio1"
           >
           </mui-radio>
           <mui-radio
@@ -41,14 +42,14 @@
               ng-model="color.name"
               name="input1"
               value="green"
-              mui-label="radio2"
+              label="radio2"
           >
           </mui-radio>
           <mui-radio
               ng-model="color.name"
               name="input1"
               value="blue"
-              mui-label="radio3"
+              label="radio3"
           >
           </mui-radio>
           <mui-radio
@@ -56,13 +57,11 @@
               ng-disabled="true"
               name="input1"
               value="yellow"
-              mui-label="radio4"
+              label="radio4"
           >
           </mui-radio>
-
           <p>value: {{color.name}}</p>
-
-          <mui-button mui-color="primary">submit</mui-button>
+          <mui-button color="primary">submit</mui-button>
         </form>
       </mui-panel>
     </mui-container>
