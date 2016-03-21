@@ -17,33 +17,52 @@
       <h1>Dropdowns</h1>
       <mui-panel>
         <h3>Dropdown Left</h3>
-        <mui-dropdown  color="danger" open='true' label='dropdown <em>EM</em>' >
-          <mui-dropdown-item link="#/login">Login</mui-dropdown-item>
-          <mui-dropdown-item >Option 2</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
+        <mui-dropdown
+            mui-label='dropdown <em>EM</em>'
+            mui-color="danger"
+            mui-open="true"
+        >
+          <mui-dropdown-item mui-link="#/login">Login</mui-dropdown-item>
+          <mui-dropdown-item>Option 2</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 3</mui-dropdown-item>
         </mui-dropdown>
 
-        <mui-dropdown color="danger" label='dropdown' disabled>
-          <mui-dropdown-item link="#">Option 1</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 2</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 4</mui-dropdown-item>
+        <mui-dropdown
+            mui-color="danger"
+            mui-label="dropdown"
+            disabled
+        >
+          <mui-dropdown-item mui-link="#">Option 1</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 2</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 3</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 4</mui-dropdown-item>
         </mui-dropdown>
 
-        <mui-dropdown  variant="fab" size='large' color="primary" nocaret right label='R' >
-          <mui-dropdown-item link="#">Option 1</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 2</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 4</mui-dropdown-item>
+        <mui-dropdown
+            mui-label="R"
+            mui-variant="fab"
+            mui-size="large"
+            mui-color="primary"
+            mui-no-caret
+            mui-right-align
+        >
+          <mui-dropdown-item mui-link="#">Option 1</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 2</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 3</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 4</mui-dropdown-item>
         </mui-dropdown>
 
-        <mui-dropdown  variant="fab" size='small' nocaret   label="<i class='fa fa-cogs'></i>" >
-          <mui-dropdown-item link="#">Option 1</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 2</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 3</mui-dropdown-item>
-          <mui-dropdown-item link="#">Option 4</mui-dropdown-item>
+        <mui-dropdown
+            mui-label="<i class='fa fa-cogs'></i>"
+            mui-variant="fab"
+            mui-size='small'
+            nocaret
+        >
+          <mui-dropdown-item mui-link="#">Option 1</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 2</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 3</mui-dropdown-item>
+          <mui-dropdown-item mui-link="#">Option 4</mui-dropdown-item>
         </mui-dropdown>
-
       </mui-panel>
     </mui-container>
   </body>
