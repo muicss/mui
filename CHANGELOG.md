@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.4.8 - March 30, 2016
+
+* Fixed bug that kept dropdowns open when other dropdowns were clicked on
+
 ## 0.4.7 - March 1, 2016
 
 * Added JS `change` eveent handler to mui-textfield input elements

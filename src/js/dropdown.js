@@ -23,6 +23,9 @@ function initialize(toggleEl) {
   if (toggleEl._muiDropdown === true) return;
   else toggleEl._muiDropdown = true;
 
+  // use type "button" to prevent form submission by default
+  if (!toggleEl.hasAttribute('type')) toggleEl.type = 'button';
+
   // attach click handler
   jqLite.on(toggleEl, 'click', clickHandler);
 }
@@ -40,10 +43,6 @@ function clickHandler(ev) {
   
   // exit if toggle button is disabled
   if (toggleEl.getAttribute('disabled') !== null) return;
-
-  // prevent form submission
-  ev.preventDefault();
-  ev.stopPropagation();
 
   // toggle dropdown
   toggleDropdown(toggleEl);
@@ -85,7 +84,7 @@ function toggleDropdown(toggleEl) {
     jqLite.addClass(menuEl, openClass);
 
     // close dropdown when user clicks outside of menu
-    jqLite.on(doc, 'click', closeDropdownFn);
+    setTimeout(function() {jqLite.on(doc, 'click', closeDropdownFn);}, 0);
   }
 
   // toggle dropdown
