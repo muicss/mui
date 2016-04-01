@@ -15,7 +15,7 @@ var inputFactory = function(isTextArea) {
     floatLabel: '@',
     hint: '@',
     label: '@',
-    ngChange: '@',
+    ngDisabled: '=',
     ngModel: '='
   };
 
@@ -26,40 +26,43 @@ var inputFactory = function(isTextArea) {
     scopeArgs.type = '@';
 
     template += '<input ' + 
-      'ng-model="ngModel" ' +
-      'ng-change="{{ngChange}}" ' +
       'placeholder={{hint}} ' +
       'type={{type}} ' +
+      'ng-change="onChange()" ' +
+      'ng-disabled="ngDisabled" ' +
+      'ng-focus="onFocus()" ' +
+      'ng-model="ngModel" ' +
       '>';
   } else {
     scopeArgs.rows = '@';
 
     template += '<textarea ' +
-      'ng-model="ngModel" ' +
-      'ng-change="{{ngChange}}" ' +
       'placeholder={{hint}} ' +
       'rows={{rows}} ' +
+      'ng-change="onChange()" ' +
+      'ng-disabled="ngDisabled" ' +
+      'ng-focus="onFocus()" ' +
+      'ng-model="ngModel" ' +
       '></textarea>';
   }
 
   // update template
   template += '<label>{{label}}</label></div>';
 
-  /**
-   * directive factory
-   */
-  return ['$compile', '$timeout', function($compile, $timeout) {
+  // directive function
+  return ['$timeout', function($timeout) {
     return {
       restrict: 'AE',
-      require: ['?ngModel', '^?form'],
+      require: ['ngModel'],
       scope: scopeArgs,
       replace: true,
       template: template,
-      link: function(scope, element, attrs, ctrls) {
+      link: function(scope, element, attrs, controllers) {
         var $input = element.find('input') || element.find('textarea'),
-            $label = element.find('label');
-
-        console.log(scope);
+            $label = element.find('label'),
+            ngModelCtrl = controllers[0],
+            formCtrl = controllers[1],
+            isUndef = angular.isUndefined;
 
         // remove attributes from wrapper
         element.removeAttr('ng-change');
@@ -70,25 +73,23 @@ var inputFactory = function(isTextArea) {
         else scope.rows = scope.rows || 2;
         
         // autofocus
-        if (!angular.isUndefined(attrs.autofocus)) {
-          $input[0].focus();
-        }
+        if (!isUndef(attrs.autofocus)) $input[0].focus();
 
         // required
-        if (!angular.isUndefined(attrs.required)) {
-          $input.prop('required', true);
-        }
-          
-        // defalutValue
-        if (attrs.defaultValue) {
-          $input.attr('value', attrs.defaultValue);
-          $input.addClass(notEmptyClass);
+        if (!isUndef(attrs.required)) $input.prop('required', true);
+
+        // invalid
+        if (!isUndef(attrs.invalid)) $input.addClass('mui--is-invalid');
+
+        // set is-empty|is-no-empty
+        if (scope.ngModel) {
+          $input.removeClass(emptyClass).addClass(notEmptyClass);
         } else {
-          $input.addClass(emptyClass);
+          $input.removeClass(notEmptyClass).addClass(emptyClass);
         }
 
         // float-label
-        if (!angular.isUndefined(scope.floatLabel)) {
+        if (!isUndef(scope.floatLabel)) {
           element.addClass('mui-textfield--float-label');
 
           $timeout(function() {
@@ -101,18 +102,23 @@ var inputFactory = function(isTextArea) {
             })
           }, 150);
         }
+        
+        // handle changes
+        scope.onChange = function() {
+          var val = scope.ngModel;
 
-        // event handlers
-        $input.on('focus', function() {
-          $input.addClass(dirtyClass);
-        })
-
-        $input.on('input', function() {
-          var value = $input.val();
-
-          if (value) $input.removeClass(emptyClass).addClass(notEmptyClass);
+          // trigger ng-change
+          if (ngModelCtrl) ngModelCtrl.$setViewValue(val);
+          
+          // set is-empty|is-no-empty
+          if (val) $input.removeClass(emptyClass).addClass(notEmptyClass);
           else $input.removeClass(notEmptyClass).addClass(emptyClass);
-        });
+        }
+
+        // handle focus event
+        $input.onFocus = function() {
+          $input.addClass(dirtyClass);
+        }
       }
     };
   }];

@@ -12,27 +12,38 @@
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
     <script>
-      var myApp = angular.module('myApp', []);
+      var myApp = angular.module('myApp', ['mui']);
 
       myApp.controller('ExampleController', ['$scope', function($scope) {
-        $scope.inputA_1_3 = 'test';
-        $scope.change = function() {
-          alert('hi');
+        $scope.inputA_1_1 = 'on load';
+        $scope.inputA_4_2 = 'on load';
+        $scope.inputC_1_2 = 'err';
+        $scope.inputC_1_4 = 'val';
+        $scope.inputC_1_5 = 'val';
+        
+        $scope.change = function(name) {
+          console.log(name);
         };
       }]);
     </script>
   </head>
-  <body>
+  <body ng-controller="ExampleController">
     <mui-container>
       <h2>Input</h2>
       <mui-panel>
         <h3>Form with placeholders</h3>
-        <div ng-controller="ExampleController">
-          <!--
-          <mui-input ng-model="inputA_1_1" ng-change="change()" hint="Placeholder 1"></mui-input>
-          <mui-input ng-model="inputA_1_2" hint="Placeholder 2"></mui-input>
-          -->
-          <div><input type="text" ng-model="inputA_1_3" ng-change="change()"></div>
+        <div>
+          <mui-input
+              hint="Placeholder 1"
+              ng-change="change('A_1_1')"
+              ng-model="inputA_1_1"
+          >
+          </mui-input>
+          <mui-input
+              hint="Placeholder 2"
+              ng-model="inputA_1_2"
+          >
+          </mui-input>
           <mui-button variant="raised">submit</mui-button>
           <br>
           <br>
@@ -43,24 +54,39 @@
         
         <h3>Form with fixed labels</h3>
         <form>
-          <mui-input label="Label 1"></mui-input>
-          <mui-input label="Label 2"></mui-input>
+          <mui-input ng-model="inputA_2_1" label="Label 1"></mui-input>
+          <mui-input ng-model="inputA_2_2" label="Label 2"></mui-input>
           <mui-button variant="raised">submit</mui-button>
         </form>
 
         <h3>Form with fixed labels and placeholders</h3>
         <form>
-          <mui-input label="Label 1" hint="Placeholder 1"></mui-input>
-          <mui-input label="Label 2" hint="Placeholder 2"></mui-input>
+          <mui-input
+              hint="Placeholder 1"
+              label="Label 1"
+              ng-model="inputA_3_1"
+          >
+          </mui-input>
+          <mui-input
+              hint="Placeholder 2"
+              label="Label 2"
+              ng-model="inputA_3_2"
+          >
+          </mui-input>
           <mui-button variant="raised">submit</mui-button>
         </form>
 
         <h3>Form with floating labels</h3>
         <form>
-          <mui-input label="Label 1" float-label></mui-input>
+          <mui-input
+              label="Label 1"
+              ng-model="inputA_4_1"
+              float-label
+          >
+          </mui-input>
           <mui-input
               label="Label 2"
-              default-value="on load"
+              ng-model="inputA_4_2"
               float-label
           >
           </mui-input>
@@ -75,29 +101,69 @@
       <mui-panel>  
         <h3>Form with placeholders</h3>
         <form>
-          <mui-textarea hint="Placeholder 1"></mui-textarea>
-          <mui-textarea hint="Placeholder 2" rows=5></mui-textarea>
+          <mui-textarea
+              hint="Placeholder 1"
+              ng-model="inputB_1_1"
+          >
+          </mui-textarea>
+          <mui-textarea
+              hint="Placeholder 2"
+              rows="5"
+              ng-model="inputB_1_2"
+          >
+          </mui-textarea>
           <mui-button variant="raised">submit</mui-button>
         </form>
 
         <h3>Form with fixed labels</h3>
         <form>
-          <mui-textarea label="Label 1"></mui-textarea>
-          <mui-textarea label="Label 2" rows=5></mui-textarea>
+          <mui-textarea
+              label="Label 1"
+              ng-model="inputB_2_1"
+          >
+          </mui-textarea>
+          <mui-textarea
+              label="Label 2"
+              rows="5"
+              ng-model="inputB_2_2"
+          >
+          </mui-textarea>
           <mui-button variant="raised">submit</mui-button>
         </form>
 
         <h3>Form with fixed labels and placeholders</h3>
         <form>
-          <mui-textarea label="Label 1" hint="Placeholder 1"></mui-textarea>
-          <mui-textarea label="Label 2" hint="Placeholder 2" rows=5></mui-textarea>
+          <mui-textarea
+              hint="Placeholder 1"
+              label="Label 1"
+              ng-model="inputB_3_1"
+          >
+          </mui-textarea>
+          <mui-textarea
+              hint="Placeholder 2"
+              label="Label 2"
+              rows="5"
+              ng-model="inputB_3_2"
+          >
+          </mui-textarea>
           <mui-button variant="raised">submit</mui-button>
         </form>
 
         <h3>Form with floating labels</h3>
         <form>
-          <mui-textarea label="Label 1" float-label></mui-textarea>
-          <mui-textarea label="Label 2" rows=5 float-label></mui-textarea>
+          <mui-textarea
+              label="Label 1"
+              ng-model="inputB_4_1"
+              float-label
+          >
+          </mui-textarea>
+          <mui-textarea
+              label="Label 2"
+              rows="5"
+              ng-model="inputB_4_2"
+              float-label
+          >
+          </mui-textarea>
           <mui-button variant="raised">submit</mui-button>
         </form>
       </mui-panel>
@@ -108,32 +174,35 @@
       <h2>Form Validation</h2>
       <mui-panel>
         <mui-input
-            type="email"
             label="Email address (should be red on invalid input)"
-        >
-        </mui-input>
-        <mui-input
             type="email"
+            ng-model="inputC_1_1"
+        >
+        </mui-input>
+        <mui-input
             label="Email address (should be red on load)"
-            default-value="err"
+            type="email"
+            ng-model="inputC_1_2"
         >
         </mui-input>
         <mui-input
-            type="text"
             label="Required text (should be red after focus)"
+            type="text"
+            ng-model="inputC_1_3"
             required
         >
         </mui-input>
         <mui-input
-            type="text"
             label="Required text (should be red after deletion)"
-            default-value="val"
+            type="text"
+            ng-model="inputC_1_4"
             required
         >
         </mui-input>
         <mui-input
-            type="text"
             label="Is invalid (should be red on load)"
+            type="text"
+            ng-model="inputC_1_5"
             invalid
         >
         </mui-input>

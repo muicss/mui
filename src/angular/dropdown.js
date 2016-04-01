@@ -55,7 +55,6 @@ module.exports = angular.module('mui.dropdown', [])
         if (!isUndef(attrs.noCaret)) buttonEl.html(attrs.label);
         else buttonEl.html(attrs.label + ' <mui-caret></mui-caret>'); 
 
-
         function closeDropdownFn() {
           scope.open = false;
           scope.$apply();
