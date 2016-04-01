@@ -778,6 +778,11 @@ module.exports = {
 };
 
 },{"../config":2,"./jqLite":4}],6:[function(require,module,exports){
+/**
+ * MUI Angular Appbar Component
+ * @module angular/appbar
+ */
+
 module.exports = angular.module('mui.appbar', [])
   .directive('muiAppbar', function() {
     return {
@@ -785,8 +790,9 @@ module.exports = angular.module('mui.appbar', [])
       transclude: true,
       replace: true,
       template: '<div class="mui-appbar"></div>',
-      link: function(scope, element, attr, controller, linker) {
-        linker(scope, function(clone) {
+      link: function(scope, element, attrs, controller, transcludeFn) {
+        // use transcludeFn to pass ng-controller on parent element
+        transcludeFn(scope, function(clone) {
           element.append(clone);
         });
       }
@@ -794,52 +800,41 @@ module.exports = angular.module('mui.appbar', [])
   });
 
 },{}],7:[function(require,module,exports){
+/**
+ * MUI Angular Button Component
+ * @module angular/button
+ */
+
 var jqLite = require('../js/lib/jqLite');
+
+
 module.exports = angular.module('mui.button', [])
   .directive('muiButton', function() {
     return {
       restrict: 'AE',
-      scope: {},
+      scope: {
+        type: '@?'
+      },
       replace: true,
-      template: '<button class="mui-btn" ripple ng-transclude></button>',
+      template: '<button class="mui-btn" type={{type}} mui-ripple ng-transclude></button>',
       transclude: true,
       link: function(scope, element, attrs) {
-        var btnClass = 'mui-btn',
-            styles;
+        var isUndef = angular.isUndefined;
 
-        styles = {
-          variant: 1, // ['default', 'flat', 'raised', 'fab']
-          color: 1, // ['default', 'primary', 'danger', 'dark', 'accent']
-          size: 1 // ['default', 'small', 'large']
-        };
-
-        scope.type = scope.type || 'button';
-
-        // 如果仅存在disabled 属性而没有 ngDisabled 设置ngDisabled = true
-        if (!angular.isUndefined(attrs.disabled) 
-            && angular.isUndefined(attrs.ngDisabled)) {
+        // handle disabled attribute
+        if (!isUndef(attrs.disabled) && isUndef(attrs.ngDisabled)) {
           element.prop('disabled', true);
         }
 
-        // change btn-style by attrs
-        function _renderBtn() {
-          element.removeAttr('class').addClass(btnClass);
-
-          angular.forEach(styles, function(value, style) {
-            element.addClass(attrs[style] ? 'mui-btn--' + attrs[style] : '');
-          });
-        };
-
-        // observe each attr and rerender button
-        angular.forEach(styles, function(value, style) {
-          attrs.$observe(style, function() {
-            _renderBtn();
-          });
+        // set button styles        
+        angular.forEach(['variant', 'color', 'size'], function(attrName) {
+          var attrVal = attrs[attrName];
+          if (attrVal) element.addClass('mui-btn--' + attrVal);
         });
       }
     };
   })
-  .directive('ripple', function($timeout) {
+  .directive('muiRipple', ['$timeout', function($timeout) {
     return {
       restrict: 'A',
       link: function(scope, element, attrs) {
@@ -853,10 +848,10 @@ module.exports = angular.module('mui.button', [])
           if (element.prop('disabled')) return;
 
           var offset = jqLite.offset(element[0]),
-            xPos = event.pageX - offset.left,
-            yPos = event.pageY - offset.top,
-            diameter,
-            radius;
+              xPos = event.pageX - offset.left,
+              yPos = event.pageY - offset.top,
+              diameter,
+              radius;
 
           diameter = offset.height;
           if (element.hasClass('mui-btn--fab')) diameter = offset.height / 2;
@@ -876,25 +871,37 @@ module.exports = angular.module('mui.button', [])
           }
 
           element.append(ripple);
+
+          // remove after delay
           $timeout(function() {
             ripple.remove();
           }, 2000);
         });
       }
     };
-  });
+  }]);
 
 },{"../js/lib/jqLite":4}],8:[function(require,module,exports){
+/**
+ * MUI Angular Caret Component
+ * @module angular/caret
+ */
+
 module.exports = angular.module('mui.caret',[])
   .directive('muiCaret', function() {
-      return {
-        restrict : 'AE',
-        replace: true,
-        template : '<span class="mui-caret"></span>'
-      };
+    return {
+      restrict : 'AE',
+      replace: true,
+      template : '<span class="mui-caret"></span>'
+    };
   });
 
 },{}],9:[function(require,module,exports){
+/**
+ * MUI Angular Checkbox Component
+ * @module angular/checkox
+ */
+
 module.exports = angular.module('mui.checkbox', [])
   .directive('muiCheckbox', function() {
     return {
@@ -902,27 +909,30 @@ module.exports = angular.module('mui.checkbox', [])
       replace: true,
       require: ['?ngModel'],
       scope: {
-        innerInput: '=?ngModel',
         label: '@',
         name: '@',
         value: '@',
-        ngDisabled: '=',
-        select: '&?onSelect'
+        ngModel: '=',
+        ngDisabled: '='
       },
       template: '<div class="mui-checkbox">' +
         '<label>' +
         '<input type="checkbox" ' +
-        'ng-model="innerInput" ' +
-        'value={{value}} ' +
         'name={{name}} ' +
+        'value={{value}} ' +
+        'ng-model="ngModel" ' +
         'ng-disabled="ngDisabled" ' +
-        'ng-click="select()" ' +
         '>{{label}}</label> ' +
         '</div>'
     }
   })
 
 },{}],10:[function(require,module,exports){
+/**
+ * MUI Angular Col (Grid) Component
+ * @module angular/col
+ */
+
 module.exports = angular.module('mui.col', [])
   .directive('muiCol', function() {
     return {
@@ -931,10 +941,13 @@ module.exports = angular.module('mui.col', [])
       replace: true,
       template: '<div></div>',
       transclude: true,
-      link: function(scope, element, attrs, controller, linker) {
-        linker(scope, function(clone) {
+      link: function(scope, element, attrs, controller, transcludeFn) {
+        // use transcludeFn to pass ng-controller on parent element
+        transcludeFn(scope, function(clone) {
           element.append(clone);
         });
+
+        // iterate through breakpoints
         var breakpoints = {
           'xs': 'mui-col-xs-',
           'sm': 'mui-col-sm-',
@@ -945,15 +958,21 @@ module.exports = angular.module('mui.col', [])
           'md-offset': 'mui-col-md-offset-',
           'lg-offset': 'mui-col-lg-offset-'
         };
+
         angular.forEach(breakpoints, function(value, key) {
-          var temp = attrs[attrs.$normalize(key)];
-          temp && element.addClass(value + temp);
+          var attrVal = attrs[attrs.$normalize(key)];
+          if (attrVal) element.addClass(value + attrVal);
         })
       }
     }
-  })
+  });
 
 },{}],11:[function(require,module,exports){
+/**
+ * MUI Angular Container Component
+ * @module angular/container
+ */
+
 module.exports = angular.module('mui.container', [])
   .directive('muiContainer', function() {
     return {
@@ -962,20 +981,14 @@ module.exports = angular.module('mui.container', [])
       transclude: true,
       scope : true,
       replace: true,
-      link: function(scope, element, attr, controller, linker) {
-        /**
-         * <mui-container ng-controller=""></mui-container>
-         * ng-transclude's scope problem , if ng-transclude used 
-         * ng-controller will not work.
-         */
-        linker(scope, function(clone) {
+      link: function(scope, element, attrs, controller, transcludeFn) {
+        // use transcludeFn to pass ng-controller on parent element
+        transcludeFn(scope, function(clone) {
           element.append(clone);
         });
 
-        /**
-         * if fluid
-         */
-        if (!angular.isUndefined(attr.fluid)){
+        // handle fluid containers
+        if (!angular.isUndefined(attrs.fluid)){
           element.removeClass('mui-container').addClass('mui-container-fluid');
         }
       }
@@ -983,6 +996,11 @@ module.exports = angular.module('mui.container', [])
   });
 
 },{}],12:[function(require,module,exports){
+/**
+ * MUI Angular Divider Component
+ * @module angular/divider
+ */
+
 module.exports = angular.module('mui.divider', [])
   .directive('muiDivider', function() {
     return {
@@ -995,39 +1013,49 @@ module.exports = angular.module('mui.divider', [])
   });
 
 },{}],13:[function(require,module,exports){
+/**
+ * MUI Angular DropdownItem Component
+ * @module angular/dropdown-item
+ */
+
 module.exports = angular.module('mui.dropdown-item', [])
   .directive('muiDropdownItem', function() {
     return {
-      restrict : 'AE',
+      restrict: 'AE',
       replace: true,
-      scope : {
-        link : '@'
+      scope: {
+        link: '@'
       },
-      transclude : true,
-      template : '<li><a href="{{link}}" ng-transclude></a></li>'
+      transclude: true,
+      template: '<li><a href="{{link}}" ng-transclude></a></li>'
     };
   });
 
 },{}],14:[function(require,module,exports){
+/**
+ * MUI Angular Dropdown Component
+ * @module angular/dropdown
+ */
+
 module.exports = angular.module('mui.dropdown', [])
-  .directive('muiDropdown', function($timeout, $compile) {
+  .directive('muiDropdown', ['$timeout', '$compile', function($timeout, $compile) {
     return {
       restrict: 'AE',
       transclude: true,
       replace : true,
       scope: {
-        variant: '@', //['default', 'flat', 'raised', 'fab']
-        color: '@', //['default', 'primary', 'danger', 'dark','accent']
-        size: '@', //['default', 'small', 'large']
-        open: '=?', //open ?
-        disable: '=ngDisabled'
+        variant: '@',
+        color: '@',
+        size: '@',
+        open: '=?',
+        ngDisabled: '='
       },
       template: '<div class="mui-dropdown">' +
         '<mui-button ' +
         'variant="{{variant}}" ' + 
         'color="{{color}}" ' +
         'size="{{size}}" ' +
-        'ng-disabled="disable" ' +
+        'ng-click="onClick($event);" ' +
         '></mui-button>' +
         '<ul class="mui-dropdown__menu" ng-transclude></ul>'+
         '</div>',
@@ -1036,84 +1064,71 @@ module.exports = angular.module('mui.dropdown', [])
             menuClass = 'mui-dropdown__menu',
             openClass = 'mui--is-open',
             rightClass = 'mui-dropdown__menu--right',
-            $menu,
-            $muiButton;
+            isUndef = angular.isUndefined,
+            menuEl,
+            buttonEl;
 
-        if (!angular.isUndefined(attrs.open)) scope.open = true;
-        else scope.open = false;
+        // save references
+        menuEl = angular.element(element[0].querySelector('.' + menuClass));
+        buttonEl = angular.element(element[0].querySelector('.mui-btn'));
 
-        if (!angular.isUndefined(attrs.disabled)
-            && angular.isUndefined(attrs.ngDisabled)) {
-          scope.disable = true;
+        menuEl.css('margin-top', '-3px');
+
+        // handle is-open
+        if (!isUndef(attrs.open)) scope.open = true;
+
+        // handle disabled
+        if (!isUndef(attrs.disabled)) {
+          buttonEl.attr('disabled', true);
         }
 
-        var _findMenuNode = function() {
-          return angular.element(element[0].querySelector('.' + menuClass));
-        };
+        // handle right-align
+        if (!isUndef(attrs.rightAlign)) menuEl.addClass(rightClass);
 
-        $menu = _findMenuNode().css('margin-top', '-3px');
+        // handle no-caret
+        if (!isUndef(attrs.noCaret)) buttonEl.html(attrs.label);
+        else buttonEl.html(attrs.label + ' <mui-caret></mui-caret>'); 
 
-        // menu right
-        !angular.isUndefined(attrs.rightAlign)
-          && $menu.addClass(rightClass);
 
-        // html类型的 label
-        attrs.$observe('label', function() {
-          $muiButton = angular.element(element[0].querySelector('.mui-btn'));
+        function closeDropdownFn() {
+          scope.open = false;
+          scope.$apply();
+        }
 
-          if (!angular.isUndefined(attrs.noCaret)) {
-            $muiButton.html(attrs.label);
-          } else {
-            $muiButton.html(attrs.label + ' <mui-caret></mui-caret>');
+        // handle menu open
+        scope.$watch('open', function(newValue) {
+          if (newValue === true) {
+            menuEl.addClass(openClass);
+            document.addEventListener('click', closeDropdownFn);
+          } else if (newValue === false) {
+            menuEl.removeClass(openClass);
+            document.removeEventListener('click', closeDropdownFn);
           }
-
-          $compile($muiButton.children())(scope);
         });
 
-        scope.$watch('open', function() {
-          $menu = _findMenuNode();
-          scope.open ? $menu.addClass(openClass) : $menu.removeClass(openClass);
-        });
+        // click handler
+        scope.onClick = function($event) {
+          // exit if disabled
+          if (scope.disabled) return;
 
+          // prevent form submission
+          $event.preventDefault();
+          $event.stopPropagation();
 
-        var toggleEvent = function(event) {
-          var self = element[0].contains(event.target);
-          /**
-           * [_isLink description]
-           * @return {Boolean} [description]
-           */
-          var _isLink = function() {
-            var links = _findMenuNode()[0].querySelectorAll('a[href]'),
-                bool = false;
-
-            angular.forEach(links, function(link, index) {
-              link.contains(event.target) && (bool = true);
-            });
-
-            return bool;
-          };
-
-          scope.$apply(function() {
-            if (_isLink() || scope.disable) return;
-
-            if (!self) scope.open = false;
-            else scope.open = !scope.open;
-          });
+          // toggle open 
+          if (scope.open) scope.open = false;
+          else scope.open = true;
         };
-
-        /**
-         * document mousedown event
-         */
-        angular.element(document).on('mousedown', toggleEvent);
-
-        scope.$on('$destroy', function() {
-          angular.element(document).off('mousedown', toggleEvent);
-        });
       }
     };
-  });
+  }]);
 
 },{}],15:[function(require,module,exports){
+/**
+ * MUI Angular Form Directive
+ * @module angular/form
+ */
+
 module.exports = angular.module('mui.form', [])
   .directive('muiFormInline', function() {
     return {
@@ -1125,17 +1140,52 @@ module.exports = angular.module('mui.form', [])
   });
 
 },{}],16:[function(require,module,exports){
+/**
+ * MUI Angular Input and Textarea Components
+ * @module angular/input
+ */
+
 var inputFactory = function(isTextArea) {
-  var scope = {
-    innerInput: '=?ngModel',
+  var emptyClass = 'mui--is-empty',
+      notEmptyClass = 'mui--is-not-empty',
+      dirtyClass = 'mui--is-dirty',
+      scopeArgs,
+      template;
+
+  // defaults
+  scopeArgs = {
     floatLabel: '@',
-    type: '@',
     hint: '@',
     label: '@',
-    ngChange: '&'
+    ngChange: '@',
+    ngModel: '='
   };
 
-  isTextArea && (scope.rows = '@');
+  template = '<div class="mui-textfield">';
+
+  // element-specific
+  if (!isTextArea) {
+    scopeArgs.type = '@';
+
+    template += '<input ' + 
+      'ng-model="ngModel" ' +
+      'ng-change="{{ngChange}}" ' +
+      'placeholder={{hint}} ' +
+      'type={{type}} ' +
+      '>';
+  } else {
+    scopeArgs.rows = '@';
+
+    template += '<textarea ' +
+      'ng-model="ngModel" ' +
+      'ng-change="{{ngChange}}" ' +
+      'placeholder={{hint}} ' +
+      'rows={{rows}} ' +
+      '></textarea>';
+  }
+
+  // update template
+  template += '<label>{{label}}</label></div>';
 
   /**
    * directive factory
@@ -1144,42 +1194,45 @@ var inputFactory = function(isTextArea) {
     return {
       restrict: 'AE',
       require: ['?ngModel', '^?form'],
-      scope: scope,
+      scope: scopeArgs,
       replace: true,
-      template: '<div class="mui-textfield" ng-class=\'{"mui-textfield--float-label" : floatLabel}\'>' +
-        '<input ng-model="innerInput" ng-change="onChange()" placeholder={{hint}} type={{type}} />' +
-        '<label>{{label}}</label>' +
-        '</div>',
-
+      template: template,
       link: function(scope, element, attrs, ctrls) {
+        var $input = element.find('input') || element.find('textarea'),
+            $label = element.find('label');
 
-        var $input = element.find('input'),
-          $label = element.find('label'),
-          emptyClass = 'mui--is-empty',
-          notEmptyClass = 'mui--is-not-empty',
-          dirtyClass = 'mui--is-dirty',
-          ngModelCtrl = ctrls[0],
-          formCtrl = ctrls[1],
-          autofocus = !angular.isUndefined(attrs.autofocus),
-          input;
+        console.log(scope);
 
-        /**
-         * init
-         */
-        scope.type = scope.type || (isTextArea ? 'textarea' : 'text');
-        scope.rows = scope.rows || 2;
-        if (scope.type === 'textarea') {
-          $input.remove();
-          $input = angular.element('<textarea ng-model="innerInput" ng-change="onChange()" ' +
-            'placeholder={{hint}} rows={{rows}}></textarea>');
-          element.prepend($compile($input)(scope));
+        // remove attributes from wrapper
+        element.removeAttr('ng-change');
+        element.removeAttr('ng-model');
+
+        // scope defaults
+        if (!isTextArea) scope.type = scope.type || 'text';
+        else scope.rows = scope.rows || 2;
+        
+        // autofocus
+        if (!angular.isUndefined(attrs.autofocus)) {
+          $input[0].focus();
         }
-        autofocus && $input[0].focus();
-        scope.innerInput ? $input.addClass(notEmptyClass) : $input.addClass(emptyClass);
-        if (attrs.required) {
+
+        // required
+        if (!angular.isUndefined(attrs.required)) {
           $input.prop('required', true);
         }
-        if (scope.floatLabel) {
+          
+        // defalutValue
+        if (attrs.defaultValue) {
+          $input.attr('value', attrs.defaultValue);
+          $input.addClass(notEmptyClass);
+        } else {
+          $input.addClass(emptyClass);
+        }
+
+        // float-label
+        if (!angular.isUndefined(scope.floatLabel)) {
+          element.addClass('mui-textfield--float-label');
+
           $timeout(function() {
             $label.css({
               'transition': '.15s ease-out',
@@ -1188,54 +1241,35 @@ var inputFactory = function(isTextArea) {
               '-o-transition': '.15s ease-out',
               '-ms-transition': '.15s ease-out',
             })
-          },150);
+          }, 150);
         }
+
+        // event handlers
         $input.on('focus', function() {
           $input.addClass(dirtyClass);
         })
-        $input.on('input',function() {
-          var inputValue = $input.val();
-          if (inputValue) {
-            $input.attr('value', inputValue)
-            $input.removeClass(emptyClass).addClass(notEmptyClass);
-          } else {
-            $input.removeAttr('value')
-            $input.removeClass(notEmptyClass).addClass(emptyClass);
-          }
+
+        $input.on('input', function() {
+          var value = $input.val();
+
+          if (value) $input.removeClass(emptyClass).addClass(notEmptyClass);
+          else $input.removeClass(notEmptyClass).addClass(emptyClass);
         });
-
-        if (!ngModelCtrl) {
-          throw new Error('ngModel not found inside of muiInput/muiTextarea tag!');
-        }
-
-        if (!formCtrl) {
-          throw new Error('muiInput/muiTextarea must be placed inside of a form tag!');
-        }
-
-        /**
-         * 当指令的model发生变化时触发change事件
-         */
-        ngModelCtrl.$render = function() {
-          scope.innerInput !== undefined && scope.ngChange && scope.ngChange();
-        }
-
-        /**
-         * 表单验证以及样式处理
-         */
-        scope.$watch('innerInput', function() {
-          input = formCtrl[element.attr('name')];
-          input.$valid ? $input.removeClass('mui--is-invalid') : $input.addClass('mui--is-invalid');
-        });
-
       }
     };
   }];
 }
+
 module.exports = angular.module('mui.input', [])
   .directive('muiInput', inputFactory(false))
   .directive('muiTextarea', inputFactory(true));
 
 },{}],17:[function(require,module,exports){
+/**
+ * MUI Angular Panel Component
+ * @module angular/panel
+ */
+
 module.exports = angular.module('mui.panel', [])
   .directive('muiPanel', function() {
     return {
@@ -1244,8 +1278,8 @@ module.exports = angular.module('mui.panel', [])
       scope : true,
       template: '<div class="mui-panel"></div>',
       transclude: true,
-      link: function(scope, element, attr, controller, linker) {
-        linker(scope, function(clone) {
+      link: function(scope, element, attr, controller, transcludeFn) {
+        transcludeFn(scope, function(clone) {
           element.append(clone);
         });
       }
@@ -1253,6 +1287,11 @@ module.exports = angular.module('mui.panel', [])
   });
 
 },{}],18:[function(require,module,exports){
+/**
+ * MUI Angular Radio Component
+ * @module angular/radio
+ */
+
 module.exports = angular.module('mui.radio', [])
   .directive('muiRadio', function() {
     return {
@@ -1260,42 +1299,45 @@ module.exports = angular.module('mui.radio', [])
       replace: true,
       require: ['?ngModel'],
       scope: {
-        innerInput: '=?ngModel',
         label: '@',
         name: '@',
         value: '@',
-        ngDisabled : '=',
-        select: '&?onSelect'
+        ngModel: '=',
+        ngDisabled: '='
       },
       template: '<div class="mui-radio">' +
         '<label>' +
         '<input type="radio" ' +
-        'ng-model="innerInput" ' +
         'name={{name}} ' +
         'value={{value}} ' +
-        'ng-disabled="ngDisabled" '+
-        'ng-click="select()" ' +
+        'ng-model="ngModel" ' +
+        'ng-disabled="ngDisabled" ' +
         '>{{label}}</label> ' +
         '</div>'
     }
-  })
+  });
 
 },{}],19:[function(require,module,exports){
+/**
+ * MUI Angular Grid/Row Module
+ * @module angular/row.js
+ */
+
 module.exports = angular.module('mui.row', [])
-.directive('muiRow', function() {
-  return {
-    restrict : 'AE',
-    scope : true,
-    replace: true,
-    template : "<div class='mui-row'></div>",
-    transclude : true,
-    link: function(scope, element, attr, controller, linker) {
-      linker(scope, function(clone) {
-        element.append(clone);
-      });
-    }
-  }
-})
+  .directive('muiRow', function() {
+    return {
+      restrict: 'AE',
+      scope: true,
+      replace: true,
+      template: '<div class="mui-row"></div>',
+      transclude: true,
+      link: function(scope, element, attr, controller, transcludeFn) {
+        transcludeFn(scope, function(clone) {
+          element.append(clone);
+        });
+      }
+    };
+  });
 
 },{}],20:[function(require,module,exports){
 var formlib = require('../js/lib/forms');
@@ -1467,21 +1509,26 @@ module.exports = angular.module('mui.select', [])
   });
 
 },{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5}],21:[function(require,module,exports){
+/**
+ * MUI Angular Tabs Component
+ * @module angular/tabs
+ */
+
 module.exports = angular.module('mui.tabs', [])
   .directive('muiTabs', function() {
     return {
       restrict: 'E',
       transclude: true,
       scope: {
-        justified: '=',
-        selected: '='
+        justified: '=?',
+        selected: '=?'
       },
       controller: function($scope) {
         var panes = $scope.panes = [];
 
         $scope.selected = $scope.selected || 0;
 
-        $scope.select = function(pane, panelIndex) {
+        $scope.onClick = function(pane, panelIndex) {
           angular.forEach(panes, function(pane) {
             pane.selected = false;
           });
@@ -1489,8 +1536,8 @@ module.exports = angular.module('mui.tabs', [])
           $scope.selected = panelIndex;
         };
 
-        $scope.$watch('selected',function(newVal) {
-          $scope.select(panes[newVal] , newVal);
+        $scope.$watch('selected', function(newVal) {
+          $scope.onClick(panes[newVal] , newVal);
         });
 
         this.addPane = function(pane) {
@@ -1500,12 +1547,15 @@ module.exports = angular.module('mui.tabs', [])
           panes.push(pane);
         };
       },
-      template: '<ul class="mui-tabs__bar" ng-class=\'{"mui-tabs__bar--justified" : justified}\'>' +
-                  '<li ng-repeat="pane in panes track by $index" ng-class=\'{"mui--is-active" : pane.selected}\'>' +
-                    '<a ng-click="select(pane, $index)">{{pane.title}}</a>' +
-                  '</li>' +
-                '</ul>'+
-                '<ng-transclude></ng-transclude>'
+      template: '' +
+        '<ul class="mui-tabs__bar" ' +
+        'ng-class=\'{"mui-tabs__bar--justified" : justified}\'>' +
+        '<li ng-repeat="pane in panes track by $index" ' +
+        'ng-class=\'{"mui--is-active" : pane.selected}\'>' +
+        '<a ng-click="onClick(pane, $index)">{{pane.title}}</a>' +
+        '</li>' +
+        '</ul>'+
+        '<ng-transclude></ng-transclude>'
     };
   })
   .directive('muiTab', function() {
@@ -1516,7 +1566,8 @@ module.exports = angular.module('mui.tabs', [])
         title: '@'
       },
       replace: true,
-      template: '<div class="mui-tabs__pane" ng-class=\'{"mui--is-active" : selected}\' ng-transclude></div>',
+      template: '<div class="mui-tabs__pane" ' +
+        'ng-class=\'{"mui--is-active" : selected}\' ng-transclude></div>',
       transclude: true,
       link: function(scope, element, attrs, tabsCtrl) {
         tabsCtrl.addPane(scope);
