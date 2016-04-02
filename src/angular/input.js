@@ -3,7 +3,27 @@
  * @module angular/input
  */
 
-var inputFactory = function(isTextArea) {
+
+var emptyClass = 'mui--is-empty',
+    notEmptyClass = 'mui--is-not-empty',
+    dirtyClass = 'mui--is-dirty';
+
+
+/**
+ * Handle empty/not-empty/dirty classes.
+ * @param {Element} elem - The angular-wrapped DOM element.
+ */
+function handleEmptyClasses(inputEl, value) {
+  if (value) inputEl.removeClass(emptyClass).addClass(notEmptyClass);
+  else inputEl.removeClass(notEmptyClass).addClass(emptyClass);
+}
+
+
+/**
+ * Build directive function.
+ * @param {Boolean} isTextArea
+ */
+function inputFactory(isTextArea) {
   var emptyClass = 'mui--is-empty',
       notEmptyClass = 'mui--is-not-empty',
       dirtyClass = 'mui--is-dirty',
@@ -58,8 +78,8 @@ var inputFactory = function(isTextArea) {
       replace: true,
       template: template,
       link: function(scope, element, attrs, controllers) {
-        var $input = element.find('input') || element.find('textarea'),
-            $label = element.find('label'),
+        var inputEl = element.find('input') || element.find('textarea'),
+            labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],
             isUndef = angular.isUndefined;
@@ -73,27 +93,23 @@ var inputFactory = function(isTextArea) {
         else scope.rows = scope.rows || 2;
         
         // autofocus
-        if (!isUndef(attrs.autofocus)) $input[0].focus();
+        if (!isUndef(attrs.autofocus)) inputEl[0].focus();
 
         // required
-        if (!isUndef(attrs.required)) $input.prop('required', true);
+        if (!isUndef(attrs.required)) inputEl.prop('required', true);
 
         // invalid
-        if (!isUndef(attrs.invalid)) $input.addClass('mui--is-invalid');
+        if (!isUndef(attrs.invalid)) inputEl.addClass('mui--is-invalid');
 
         // set is-empty|is-no-empty
-        if (scope.ngModel) {
-          $input.removeClass(emptyClass).addClass(notEmptyClass);
-        } else {
-          $input.removeClass(notEmptyClass).addClass(emptyClass);
-        }
+        handleEmptyClasses(inputEl, scope.ngModel);
 
         // float-label
         if (!isUndef(scope.floatLabel)) {
           element.addClass('mui-textfield--float-label');
 
           $timeout(function() {
-            $label.css({
+            labelEl.css({
               'transition': '.15s ease-out',
               '-webkit-transition': '.15s ease-out',
               '-moz-transition': '.15s ease-out',
@@ -111,13 +127,15 @@ var inputFactory = function(isTextArea) {
           if (ngModelCtrl) ngModelCtrl.$setViewValue(val);
           
           // set is-empty|is-no-empty
-          if (val) $input.removeClass(emptyClass).addClass(notEmptyClass);
-          else $input.removeClass(notEmptyClass).addClass(emptyClass);
+          handleEmptyClasses(inputEl, val);
+          
+          // add is-dirty
+          inputEl.addClass(dirtyClass);
         }
 
         // handle focus event
-        $input.onFocus = function() {
-          $input.addClass(dirtyClass);
+        scope.onFocus = function() {
+          inputEl.addClass(dirtyClass);
         }
       }
     };

@@ -98,8 +98,10 @@ Select.prototype.focusHandler = function(ev) {
  * Handle keydown events on doc
  **/
 Select.prototype.keydownHandler = function(ev) {
+  var keyCode = ev.keyCode;
+
   // spacebar, down, up
-  if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
+  if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
     // prevent win scroll
     ev.preventDefault();
     

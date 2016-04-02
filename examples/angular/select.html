@@ -1,5 +1,5 @@
-xsxc<!doctype html>
-<html ng-app="mui">
+<!doctype html>
+<html ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,13 +11,23 @@ xsxc<!doctype html>
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/angular/mui-angular.js"></script>
+    <script>
+      var myApp = angular.module('myApp', ['mui']);
+
+      myApp.controller('ExampleCtrl', function($scope) {
+        $scope.valA = 'opt2';
+        $scope.valB = 'opt4';
+        $scope.valC = 'opt3';
+      });
+    </script>
   </head>
-  <body>
+  <body ng-controller="ExampleCtrl">
     <mui-container>
       <h1>Select</h1>
       <mui-panel>
-        <form>
-          <mui-select name="example1" defaultValue="opt2">
+        <form method="get" action="test">
+          <strong>Should have value "Option 2"</strong>
+          <mui-select name="exampleA" ng-model="valA">
             <mui-option label="Option 1" value="opt1"></mui-option>
             <mui-option label="Option 2" value="opt2"></mui-option>
             <mui-option label="Option 3" value="opt3"></mui-option>
@@ -28,7 +38,8 @@ xsxc<!doctype html>
             <mui-option label="Option 8" value="opt8"></mui-option>
           </mui-select>
 
-          <mui-select name="example2" value="opt3">
+          <strong>Should have value "Option 4"</strong>
+          <mui-select name="exampleB" ng-model="valB" use-default>
             <mui-option label="Option 1" value="opt1"></mui-option>
             <mui-option label="Option 2" value="opt2"></mui-option>
             <mui-option label="Option 3" value="opt3"></mui-option>
@@ -39,7 +50,8 @@ xsxc<!doctype html>
             <mui-option label="Option 8" value="opt8"></mui-option>
           </mui-select>
 
-          <mui-select name="example3" value="opt4" use-default>
+          <strong>Should have value "Option 3" and be disabled</strong>
+          <mui-select name="exampleC" ng-model="valC" ng-disabled="true">
             <mui-option label="Option 1" value="opt1"></mui-option>
             <mui-option label="Option 2" value="opt2"></mui-option>
             <mui-option label="Option 3" value="opt3"></mui-option>
