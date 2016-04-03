@@ -27,20 +27,21 @@ module.exports = angular.module('mui.select', [])
         'ng-keydown="onWrapperKeydown($event)">' +
         '<select ' +
         'name="{{name}}" ' +
+        'ng-click="onClick()" ' +
         'ng-disabled="ngDisabled" ' +
         'ng-focus="onFocus()" ' +
-        'ng-keydown="onKeydown($event)" ' +
         'ng-model="ngModel" ' +
+        'ng-mousedown="onMousedown($event)" ' +
         '>' +
-        '<option ng-repeat="item in options" value="{{item.value}}">{{item.label}}</option>' +
+        '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' +
         '</select>' +
         '<div ' +
         'class="mui-select__menu"' +
         'ng-show="!useDefault && isOpen"> ' +
         '<div ' +
-        'ng-click="select($index)" ' +
+        'ng-click="chooseOption(option)" ' +
         'ng-repeat="option in options track by $index" ' +
-        'ng-class=\'{"mui--is-selected" : option.value == innerInput}\'>{{option.label}}</div>' +
+        'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' +
         '</div>' +
         '</div>',
       link: function(scope, element, attrs, controller, transcludeFn) {
@@ -54,7 +55,8 @@ module.exports = angular.module('mui.select', [])
         scope.options = [];
         scope.isOpen = false;
         scope.useDefault = false;
-        scope.currentIndex = 0;
+        scope.origTabIndex = selectEl[0].tabIndex;
+        scope.menuIndex = 0;
 
         // handle `use-default` attribute
         if (!isUndef(attrs.useDefault)) scope.useDefault = true;
@@ -82,11 +84,31 @@ module.exports = angular.module('mui.select', [])
 
 
         /**
+         * Handle click event on <select> element.
+         */
+        scope.onClick = function() {
+          // check flag
+          if (scope.useDefault === true) return;
+
+          // open menu
+          scope.isOpen = true;
+
+          // defer focus
+          wrapperEl[0].focus();
+        };
+
+
+        /**
          * Handle focus event on <select> element.
          */
         scope.onFocus = function() {
           // check flag
           if (scope.useDefault === true) return;
+
+          // disable tabfocus once
+          var el = selectEl[0];
+          scope.origTabIndex = el.tabIndex;
+          el.tabIndex = -1;
 
           // defer focus to parent
           wrapperEl[0].focus();
@@ -94,30 +116,25 @@ module.exports = angular.module('mui.select', [])
 
 
         /**
-         * Handle keydown event on <select> element.
-         * @param {Event} $event - Angular event instance
+         * Handle mousedown event on <select> element
          */
-        scope.onKeydown = function($event) {
-          var keyCode = $event.keyCode;
+        scope.onMousedown = function($event) {
+          // check flag
+          if (scope.useDefault === true) return;
 
-          if (scope.isOpen === false) {
-            // spacebar, down, up
-            if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
-              // prevent win scroll
-              $event.preventDefault();
-
-              // open menu
-              scope.isOpen = true;
-            }
-          } else {
-            console.log(keyCode);
-          }
+          // cancel default menu
+          $event.preventDefault();
         };
 
 
         /**
-         *
+         * Handle blur event on wrapper element.
          */
+        scope.onWrapperBlur = function() {
+          // replace select element tab index
+          selectEl[0].tabIndex = scope.origTabIndex;
+        };
+
 
         /**
          * Handle focus event on wrapper element.
@@ -134,10 +151,69 @@ module.exports = angular.module('mui.select', [])
          * @param {Event} $event - Angular event instance
          */
         scope.onWrapperKeydown = function($event) {
-          console.log('onWrapperKeydown');
+          var keyCode = $event.keyCode;
+
+          if (scope.isOpen === false) {
+            // spacebar, down, up
+            if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
+              // prevent win scroll
+              $event.preventDefault();
+
+              // open menu
+              scope.isOpen = true;
+            }
+
+          } else {
+            // tab
+            if (keyCode === 9) return scope.isOpen = false;
+
+            // escape | up | down | enter
+            if (keyCode === 27 
+                || keyCode === 40
+                || keyCode === 38
+                || keyCode === 13) {
+              $event.preventDefault();
+            }
+
+            if (keyCode === 27) {
+              // close
+              scope.isOpen = false;
+            } else if (keyCode === 40) {
+              // increment
+              if (scope.menuIndex < scope.options.length - 1) {
+                scope.menuIndex += 1;
+              }
+            } else if (keyCode === 38) {
+              // decrement
+              if (scope.menuIndex > 0) scope.menuIndex -= 1;
+            } else if (keyCode === 13) {
+              // choose and close
+              scope.ngModel = scope.options[scope.menuIndex].value;  
+              scope.isOpen = false;
+            }
+
+          }
         };
 
 
+        /**
+         * Choose option the user selected.
+         * @param {Object} option - The option selected.
+         */
+        scope.chooseOption = function(option) {
+          scope.ngModel = option.value;
+          scope.isOpen = false;
+        };
+        
+
+        // function to close menu on window resize and document click
+        function closeMenuFn() {
+          console.log('close');
+          scope.isOpen = false;
+          scope.$digest();
+        }
+
+        
         /**
          * Open/Close custom select menu
          */
@@ -146,124 +222,50 @@ module.exports = angular.module('mui.select', [])
           if (scope.useDefault === true) return;
 
           if (isOpen === true) {
+            // enable scroll lock
+            util.enableScrollLock();
+
+            // init menuIndex
+            var value = scope.ngModel,
+                options = scope.options,
+                m = options.length,
+                i;
+
+            for (i=0; i < m; i++) {
+              if (options[i].value === value) {
+                scope.menuIndex = i;
+                break;
+              }
+            }
+
             // set position of custom menu
             var props = formlib.getMenuPositionalCSS(
               element[0],
               scope.options.length,
-              scope.currentIndex
+              scope.menuIndex
             );
 
             menuEl.css(props);
+            jqLite.scrollTop(menuEl[0], props.scrollTop);
+
+            // attach event handlers
+            $timeout(function() {
+              jqLite.on(document, 'click', closeMenuFn);
+              jqLite.on(window, 'resize', closeMenuFn);
+            });
+
           } else {
-            
-          }
-        });
-        /*
-        // state vars
-        scope.currentIndex = 0;        
-        scope._menuIsShow = false;
+            // focus select element
+            selectEl[0].focus();
 
-        // 显示菜单
-        function showMenuFn(e) {
-          if (e) e.preventDefault();
-
-          cacheIndex = scope.currentIndex;
-          selectEl[0].focus();
-
-          util.enableScrollLock();
-
-          var css = formlib.getMenuPositionalCSS(
-            element[0],
-            options.length,
-            scope.currentIndex
-          );
-
-          menuEl
-            .css('height', css.height)
-            .css('top', css.top);
-
-          scope.$apply(function() {
-            scope._menuIsShow = true;
-          });
-        };
-
-        //隐藏菜单
-        function hideMenuFn(e) {
-          scope.$apply(function() {
-            scope._menuIsShow = false;
+            // disable scroll lock
             util.disableScrollLock();
-          });
-        }
 
-        function increment() {
-          if(!scope._menuIsShow){
-            showMenuFn();
-          } else if (scope.currentIndex < options.length - 1) {
-            scope.$apply(function() {
-              scope.currentIndex += 1;
-            });
+            // remove event handlers
+            jqLite.off(document, 'click', closeMenuFn);
+            jqLite.off(window, 'resize', closeMenuFn);
           }
-        };
-
-        function decrement() {
-          if (!scope._menuIsShow) {
-            showMenuFn();
-          } else if (scope.currentIndex > 0){
-            scope.$apply(function() {
-              scope.currentIndex--;
-            });
-          }
-        };
-
-        function revertAndHideMenu() {
-          if(scope._menuIsShow){
-            scope.select(cacheIndex);
-            hideMenuFn();
-          }
-        }
-
-        function onKeydown(ev) {
-          var keyCode = ev.keyCode;
-
-          // escape | up | down | enter
-          if (keyCode === 27 
-              || keyCode === 40 
-              || keyCode === 38 
-              || keyCode === 13) {
-            ev.preventDefault();
-          }
-
-          if (keyCode === 27 || keyCode === 9) revertAndHideMenu();
-          else if (keyCode === 40) increment();
-          else if (keyCode === 38) decrement();
-          else if (keyCode === 13) hideMenuFn();
-        }
-
-        scope.$watch('currentIndex', function(newIndex) {
-          if (newIndex === undefined) return;
-          scope.innerInput = options[newIndex].value;
         });
-
-        scope.select = function(index) {
-          scope.innerInput = options[index].value;
-          scope.currentIndex = index;
-          scope._menuIsShow = false;
-          util.disableScrollLock();
-        }
-
-        selectEl.on('mousedown', showMenuFn);
-        element.on('keydown', onKeydown);// add event listeners
-        jqLite.on(window, 'resize', revertAndHideMenu);
-        jqLite.on(document, 'click', revertAndHideMenu);
-
-        scope.$on('$destroy', function() {
-          selectEl.off('mousedown', showMenuFn);
-          element.off('keydown', onKeydown);
-          jqLite.off(window, 'resize', revertAndHideMenu);
-          jqLite.off(document, 'click', revertAndHideMenu);
-        });
-        */
-
       }
     }
   }]);
