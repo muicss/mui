@@ -115,7 +115,8 @@ function buildCdn(dirname) {
   var t2 = gulp.parallel(
     buildCdnWebcomponents(dirname + '/webcomponents', cssDir),
     buildCdnJsCombined(dirname + '/extra', cssDir),
-    buildCdnReactCombined(dirname + '/extra', cssDir)
+    buildCdnReactCombined(dirname + '/extra', cssDir),
+    buildCdnAngularCombined(dirname + '/extra', cssDir)
   );
 
   return gulp.series(t1, t2);
@@ -176,6 +177,7 @@ function buildCdnReact(dirname) {
   });
 }
 
+
 function buildCdnAngular(dirname) {
   return makeTask('build-cdn-angular: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-angular.js')
@@ -190,6 +192,7 @@ function buildCdnAngular(dirname) {
       .pipe(gulp.dest(dirname));
   });
 }
+
 
 function buildCdnEmailInline(dirname) {
   return makeTask('build-cdn-email-inline: ' + dirname, function() {
@@ -270,6 +273,21 @@ function buildCdnReactCombined(dirname, cssDir) {
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-react-combined.js'))
+      .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnAngularCombined(dirname, cssDir) {
+  return makeTask('build-cdn-angular-combined: ' + dirname, function() {
+    return gulp.src('./build-targets/cdn-angular-combined.js')
+      .pipe(plugins.browserify({
+        transform: [stringify(['.css'])],
+        paths: ['./', cssDir]
+      }))
+      .pipe(plugins.ngmin())
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-angular-combined.js'))
       .pipe(gulp.dest(dirname));
   });
 }

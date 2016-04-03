@@ -9,42 +9,42 @@
   else win._muiAngularLoaded = true;
 
   var mui = win.mui = win.mui || [],
-      angular = mui.angular = {},
-      lib;
+      muiNg = mui.angular = {};
 
-  angular.Appbar = require('src/angular/appbar');
-  angular.Button = require('src/angular/button');
-  angular.Caret = require('src/angular/caret');
-  angular.Container = require('src/angular/container');
-  angular.Divider = require('src/angular/divider');
-  angular.Dropdown = require('src/angular/dropdown'),
-  angular.DropdownItem = require('src/angular/dropdown-item'),
-  angular.Panel = require('src/angular/panel');
-  angular.Input = require('src/angular/input');
-  angular.Row = require('src/angular/row');
-  angular.Col = require('src/angular/col');
-  angular.Tabs = require('src/angular/tabs');
-  angular.Radio = require('src/angular/radio');
-  angular.Checkbox = require('src/angular/checkbox');
-  angular.Select = require('src/angular/select');
-  angular.Form = require('src/angular/form');
+  muiNg.Appbar = require('src/angular/appbar');
+  muiNg.Button = require('src/angular/button');
+  muiNg.Caret = require('src/angular/caret');
+  muiNg.Container = require('src/angular/container');
+  muiNg.Divider = require('src/angular/divider');
+  muiNg.Dropdown = require('src/angular/dropdown'),
+  muiNg.DropdownItem = require('src/angular/dropdown-item'),
+  muiNg.Panel = require('src/angular/panel');
+  muiNg.Input = require('src/angular/input');
+  muiNg.Row = require('src/angular/row');
+  muiNg.Col = require('src/angular/col');
+  muiNg.Tabs = require('src/angular/tabs');
+  muiNg.Radio = require('src/angular/radio');
+  muiNg.Checkbox = require('src/angular/checkbox');
+  muiNg.Select = require('src/angular/select');
+  muiNg.Form = require('src/angular/form');
 
+  // define angular "mui" module
   win.angular.module("mui", [
-                              angular.Appbar.name,
-                              angular.Button.name,
-                              angular.Caret.name,
-                              angular.Container.name,
-                              angular.Divider.name,
-                              angular.Dropdown.name,
-                              angular.DropdownItem.name,
-                              angular.Panel.name,
-                              angular.Input.name,
-                              angular.Row.name,
-                              angular.Col.name,
-                              angular.Tabs.name,
-                              angular.Radio.name,
-                              angular.Checkbox.name,
-                              angular.Select.name,
-                              angular.Form.name
-                           ]);
+    muiNg.Appbar.name,
+    muiNg.Button.name,
+    muiNg.Caret.name,
+    muiNg.Container.name,
+    muiNg.Divider.name,
+    muiNg.Dropdown.name,
+    muiNg.DropdownItem.name,
+    muiNg.Panel.name,
+    muiNg.Input.name,
+    muiNg.Row.name,
+    muiNg.Col.name,
+    muiNg.Tabs.name,
+    muiNg.Radio.name,
+    muiNg.Checkbox.name,
+    muiNg.Select.name,
+    muiNg.Form.name
+  ]);
 })(window);
