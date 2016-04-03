@@ -208,7 +208,6 @@ module.exports = angular.module('mui.select', [])
 
         // function to close menu on window resize and document click
         function closeMenuFn() {
-          console.log('close');
           scope.isOpen = false;
           scope.$digest();
         }
