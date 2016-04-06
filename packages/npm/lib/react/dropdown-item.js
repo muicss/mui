@@ -50,7 +50,8 @@ var DropdownItem = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var onClick = _props.onClick;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onClick']);
 
 
       return _react2.default.createElement(

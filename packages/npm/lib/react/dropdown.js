@@ -58,6 +58,7 @@ var Dropdown = function (_React$Component) {
     };
 
     var cb = util.callback;
+    _this.selectCB = cb(_this, 'select');
     _this.onClickCB = cb(_this, 'onClick');
     _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
     return _this;
@@ -82,7 +83,13 @@ var Dropdown = function (_React$Component) {
       // exit if toggle button is disabled
       if (this.props.disabled) return;
 
-      if (!ev.defaultPrevented) this.toggle();
+      if (!ev.defaultPrevented) {
+        this.toggle();
+
+        // execute <Dropdown> onClick method
+        var onClickFn = this.props.onClick;
+        onClickFn && onClickFn(ev);
+      }
     }
   }, {
     key: 'toggle',
@@ -116,7 +123,7 @@ var Dropdown = function (_React$Component) {
   }, {
     key: 'select',
     value: function select() {
-      if (this.props.onClick) this.props.onClick(this, ev);
+      this.close();
     }
   }, {
     key: 'onOutsideClick',
@@ -169,7 +176,8 @@ var Dropdown = function (_React$Component) {
       var ref = _props.ref;
       var className = _props.className;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children']);
+      var onClick = _props.onClick;
+      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children', 'onClick']);
 
 
       return _react2.default.createElement(
