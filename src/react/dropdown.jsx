@@ -36,6 +36,7 @@ class Dropdown extends React.Component {
     }
 
     let cb = util.callback;
+    this.selectCB = cb(this, 'select');
     this.onClickCB = cb(this, 'onClick');
     this.onOutsideClickCB = cb(this, 'onOutsideClick');
   }
@@ -77,7 +78,13 @@ class Dropdown extends React.Component {
     // exit if toggle button is disabled
     if (this.props.disabled) return;
 
-    if (!ev.defaultPrevented) this.toggle();
+    if (!ev.defaultPrevented) {
+      this.toggle();
+      
+      // execute <Dropdown> onClick method
+      let onClickFn = this.props.onClick;
+      onClickFn && onClickFn(ev);
+    }
   }
 
   toggle() {
@@ -108,7 +115,7 @@ class Dropdown extends React.Component {
   }
 
   select() {
-    if (this.props.onClick) this.props.onClick(this, ev);
+    this.close();
   }
 
   onOutsideClick(ev) {
@@ -155,7 +162,7 @@ class Dropdown extends React.Component {
       );
     }
 
-    let { ref, className, children, ...other } = this.props;
+    let { ref, className, children, onClick, ...other } = this.props;
 
     return (
       <div

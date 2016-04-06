@@ -41,7 +41,7 @@ class DropdownItem extends React.Component {
   }
 
   render() {
-    let { children, ...other } = this.props;
+    let { children, onClick, ...other } = this.props;
 
     return (
       <li { ...other }>
