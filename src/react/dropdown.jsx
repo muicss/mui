@@ -49,6 +49,7 @@ class Dropdown extends React.Component {
     label: PropTypes.string,
     alignMenu: PropTypes.oneOf(['left', 'right']),
     onClick: PropTypes.func,
+    onSelect: PropTypes.func,
     disabled: PropTypes.bool
   };
 
@@ -60,6 +61,7 @@ class Dropdown extends React.Component {
     label: '',
     alignMenu: 'left',
     onClick: null,
+    onSelect: null,
     disabled: false
   };
 
@@ -114,8 +116,14 @@ class Dropdown extends React.Component {
     this.setState({opened: false});
   }
 
-  select() {
-    this.close();
+  select(ev) {
+    // onSelect callback
+    if (this.props.onSelect && ev.target.tagName === 'A') {
+      this.props.onSelect(ev.target.getAttribute('data-mui-value'));
+    }
+
+    // close menu
+    if (!ev.defaultPrevented) this.close();
   }
 
   onOutsideClick(ev) {

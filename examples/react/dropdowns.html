@@ -30,13 +30,15 @@
             <Dropdown
                 color="primary"
                 label="Dropdown"
-                onClick={function(ref, ev) {console.log('toggle clicked')}}
-            >
-              <DropdownItem link="#/link1">Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem>Option 3</DropdownItem>
+                onClick={function() {console.log('toggle clicked')}}
+                onSelect={function(val) {console.log(val);}}
+             >
+              <DropdownItem value="a" link="#/link1">Option 1</DropdownItem>
+              <DropdownItem value="b">Option 2</DropdownItem>
+              <DropdownItem value="c">Option 3</DropdownItem>
               <DropdownItem 
-                  onClick={function (ref, ev){alert("Option 4 selected");}}
+                  value="d"
+                  onClick={function() {alert("Option 4 selected");}}
               >
                 Option 4
               </DropdownItem>

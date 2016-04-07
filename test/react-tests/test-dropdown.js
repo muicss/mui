@@ -162,4 +162,28 @@ describe('react/dropdown', function() {
      // check that menu has closed
      assert.equal(node.refs.menuEl, undefined);
   });
+
+
+  it('handles onSelect method on dropdown', function(done) {
+    let onSelectFn = function(value) {
+      assert.equal(value, 'opt1');
+      done();
+    };
+
+    let node = ReactUtils.renderIntoDocument(
+      <Dropdown onSelect={onSelectFn}>
+        <DropdownItem value="opt1">Option 1</DropdownItem>
+        <DropdownItem>Option 2</DropdownItem>
+        <DropdownItem>Option 3</DropdownItem>
+      </Dropdown>
+    );
+
+    // open menu
+    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    ReactUtils.Simulate.click(buttonEl, {button: 0});
+
+    // click on first menu item
+    let anchorEl = ReactUtils.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    ReactUtils.Simulate.click(anchorEl);
+  });
 });
