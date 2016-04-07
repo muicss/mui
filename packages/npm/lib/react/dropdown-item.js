@@ -59,7 +59,11 @@ var DropdownItem = function (_React$Component) {
         other,
         _react2.default.createElement(
           'a',
-          { href: this.props.link, onClick: this.onClickCB },
+          {
+            href: this.props.link,
+            'data-mui-value': this.props.value,
+            onClick: this.onClickCB
+          },
           children
         )
       );
@@ -77,6 +81,7 @@ DropdownItem.propTypes = {
 };
 DropdownItem.defaultProps = {
   link: null,
+  value: null,
   onClick: null
 };
 exports.default = DropdownItem;

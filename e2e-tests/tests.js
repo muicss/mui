@@ -22241,7 +22241,8 @@ var DropdownItem = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var onClick = _props.onClick;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onClick']);
 
 
       return _react2.default.createElement(
@@ -22249,7 +22250,11 @@ var DropdownItem = function (_React$Component) {
         other,
         _react2.default.createElement(
           'a',
-          { href: this.props.link, onClick: this.onClickCB },
+          {
+            href: this.props.link,
+            'data-mui-value': this.props.value,
+            onClick: this.onClickCB
+          },
           children
         )
       );
@@ -22267,6 +22272,7 @@ DropdownItem.propTypes = {
 };
 DropdownItem.defaultProps = {
   link: null,
+  value: null,
   onClick: null
 };
 exports.default = DropdownItem;
@@ -22332,6 +22338,7 @@ var Dropdown = function (_React$Component) {
     };
 
     var cb = util.callback;
+    _this.selectCB = cb(_this, 'select');
     _this.onClickCB = cb(_this, 'onClick');
     _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
     return _this;
@@ -22356,7 +22363,13 @@ var Dropdown = function (_React$Component) {
       // exit if toggle button is disabled
       if (this.props.disabled) return;
 
-      if (!ev.defaultPrevented) this.toggle();
+      if (!ev.defaultPrevented) {
+        this.toggle();
+
+        // execute <Dropdown> onClick method
+        var onClickFn = this.props.onClick;
+        onClickFn && onClickFn(ev);
+      }
     }
   }, {
     key: 'toggle',
@@ -22389,8 +22402,14 @@ var Dropdown = function (_React$Component) {
     }
   }, {
     key: 'select',
-    value: function select() {
-      if (this.props.onClick) this.props.onClick(this, ev);
+    value: function select(ev) {
+      // onSelect callback
+      if (this.props.onSelect && ev.target.tagName === 'A') {
+        this.props.onSelect(ev.target.getAttribute('data-mui-value'));
+      }
+
+      // close menu
+      if (!ev.defaultPrevented) this.close();
     }
   }, {
     key: 'onOutsideClick',
@@ -22402,7 +22421,21 @@ var Dropdown = function (_React$Component) {
     key: 'render',
     value: function render() {
       var buttonEl = undefined,
-          menuEl = undefined;
+          menuEl = undefined,
+          labelEl = undefined;
+
+      // build label
+      if (jqLite.type(this.props.label) === 'string') {
+        labelEl = _react2.default.createElement(
+          'span',
+          null,
+          this.props.label,
+          ' ',
+          _react2.default.createElement(_caret2.default, null)
+        );
+      } else {
+        labelEl = this.props.label;
+      }
 
       buttonEl = _react2.default.createElement(
         _button2.default,
@@ -22415,8 +22448,7 @@ var Dropdown = function (_React$Component) {
           size: this.props.size,
           disabled: this.props.disabled
         },
-        this.props.label,
-        _react2.default.createElement(_caret2.default, null)
+        labelEl
       );
 
       if (this.state.opened) {
@@ -22443,7 +22475,8 @@ var Dropdown = function (_React$Component) {
       var ref = _props.ref;
       var className = _props.className;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children']);
+      var onClick = _props.onClick;
+      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children', 'onClick']);
 
 
       return _react2.default.createElement(
@@ -22467,9 +22500,10 @@ Dropdown.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
   variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
   size: PropTypes.oneOf(['default', 'small', 'large']),
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   alignMenu: PropTypes.oneOf(['left', 'right']),
   onClick: PropTypes.func,
+  onSelect: PropTypes.func,
   disabled: PropTypes.bool
 };
 Dropdown.defaultProps = {
@@ -22480,6 +22514,7 @@ Dropdown.defaultProps = {
   label: '',
   alignMenu: 'left',
   onClick: null,
+  onSelect: null,
   disabled: false
 };
 exports.default = Dropdown;
@@ -24857,6 +24892,130 @@ describe('react/dropdown', function () {
       _assert2.default.equal(el.tagName, 'LI');
       _assert2.default.equal(el.textContent, 'Option ' + (i + 1));
     }
+  });
+
+  it('handles onClick method on toggle button', function (done) {
+    var onClickFn = function onClickFn() {
+      done();
+    };
+
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _dropdown2.default,
+      { onClick: onClickFn },
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        null,
+        'Option 1'
+      ),
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        null,
+        'Option 2'
+      ),
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        null,
+        'Option 3'
+      )
+    ));
+
+    // trigger event
+    var buttonEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'button');
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+  });
+
+  it('handles onClick method on dropdown item', function (done) {
+    var counter = 0;
+
+    var onClickFn = function onClickFn() {
+      counter += 1;
+    };
+
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _dropdown2.default,
+      null,
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        { onClick: onClickFn },
+        'Option 1'
+      ),
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        null,
+        'Option 2'
+      ),
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        null,
+        'Option 3'
+      )
+    ));
+
+    // open menu
+    var buttonEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'button');
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+
+    // click on first menu item
+    var anchorEl = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    _reactAddonsTestUtils2.default.Simulate.click(anchorEl);
+
+    // test conditions
+    setTimeout(function () {
+      // one click per child (https://github.com/muicss/mui/issues/92)
+      _assert2.default.equal(counter, 1);
+
+      done();
+    }, 50);
+  });
+
+  it('closes menu after item click', function () {
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+
+    // open menu
+    var buttonEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'button');
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+
+    // click on first menu item
+    var anchorEl = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    _reactAddonsTestUtils2.default.Simulate.click(anchorEl);
+
+    // check that menu has closed
+    _assert2.default.equal(node.refs.menuEl, undefined);
+  });
+
+  it('handles onSelect method on dropdown', function (done) {
+    var onSelectFn = function onSelectFn(value) {
+      _assert2.default.equal(value, 'opt1');
+      done();
+    };
+
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _dropdown2.default,
+      { onSelect: onSelectFn },
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        { value: 'opt1' },
+        'Option 1'
+      ),
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        null,
+        'Option 2'
+      ),
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        null,
+        'Option 3'
+      )
+    ));
+
+    // open menu
+    var buttonEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'button');
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+
+    // click on first menu item
+    var anchorEl = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    _reactAddonsTestUtils2.default.Simulate.click(anchorEl);
   });
 });
 

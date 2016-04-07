@@ -2175,7 +2175,11 @@ var DropdownItem = function (_React$Component) {
         other,
         _react2.default.createElement(
           'a',
-          { href: this.props.link, onClick: this.onClickCB },
+          {
+            href: this.props.link,
+            'data-mui-value': this.props.value,
+            onClick: this.onClickCB
+          },
           children
         )
       );
@@ -2193,6 +2197,7 @@ DropdownItem.propTypes = {
 };
 DropdownItem.defaultProps = {
   link: null,
+  value: null,
   onClick: null
 };
 exports.default = DropdownItem;
@@ -2322,8 +2327,14 @@ var Dropdown = function (_React$Component) {
     }
   }, {
     key: 'select',
-    value: function select() {
-      this.close();
+    value: function select(ev) {
+      // onSelect callback
+      if (this.props.onSelect && ev.target.tagName === 'A') {
+        this.props.onSelect(ev.target.getAttribute('data-mui-value'));
+      }
+
+      // close menu
+      if (!ev.defaultPrevented) this.close();
     }
   }, {
     key: 'onOutsideClick',
@@ -2335,7 +2346,21 @@ var Dropdown = function (_React$Component) {
     key: 'render',
     value: function render() {
       var buttonEl = undefined,
-          menuEl = undefined;
+          menuEl = undefined,
+          labelEl = undefined;
+
+      // build label
+      if (jqLite.type(this.props.label) === 'string') {
+        labelEl = _react2.default.createElement(
+          'span',
+          null,
+          this.props.label,
+          ' ',
+          _react2.default.createElement(_caret2.default, null)
+        );
+      } else {
+        labelEl = this.props.label;
+      }
 
       buttonEl = _react2.default.createElement(
         _button2.default,
@@ -2348,8 +2373,7 @@ var Dropdown = function (_React$Component) {
           size: this.props.size,
           disabled: this.props.disabled
         },
-        this.props.label,
-        _react2.default.createElement(_caret2.default, null)
+        labelEl
       );
 
       if (this.state.opened) {
@@ -2401,9 +2425,10 @@ Dropdown.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
   variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
   size: PropTypes.oneOf(['default', 'small', 'large']),
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   alignMenu: PropTypes.oneOf(['left', 'right']),
   onClick: PropTypes.func,
+  onSelect: PropTypes.func,
   disabled: PropTypes.bool
 };
 Dropdown.defaultProps = {
@@ -2414,6 +2439,7 @@ Dropdown.defaultProps = {
   label: '',
   alignMenu: 'left',
   onClick: null,
+  onSelect: null,
   disabled: false
 };
 exports.default = Dropdown;

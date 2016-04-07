@@ -1,5 +1,13 @@
 # MUI Changelog
 
+## 0.4.9 - April 6, 2016
+
+* Fixed bug in React Dropdown that prevented menu from closing when a
+  DropdownItem was selected
+* Fixed bug in React Dropdown that fired onClick event on DropdownItem twice
+* Added support for onSelect event to React Dropdown
+* Added support for React elements to React Dropdown label
+
 ## 0.4.8 - March 30, 2016
 
 * Fixed bug that kept dropdowns open when other dropdowns were clicked on
