@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.5.0 - April 7, 2016
+
+* Major upgrade to Angular library - fixed many bugs and added missing features
+
 ## 0.4.9 - April 6, 2016
 
 * Fixed bug in React Dropdown that prevented menu from closing when a

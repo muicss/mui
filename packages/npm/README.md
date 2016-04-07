@@ -131,13 +131,14 @@ Read more: https://www.muicss.com/docs/v1/react/dividers
 import Dropdown from 'muicss/lib/react/dropdown';
 
 <Dropdown />
-  * {String} label
+  * {String or ReactElement} label
   * {String} alignMenu=left|right
   * {String} color=default|primary|danger|accent
   * {String} size=default|small|large
   * {String} variant=default|flat|raised|fab
   * {Boolean} disabled
   * {Function} onClick
+  * {Function} onSelect
 
 ```
 
@@ -150,6 +151,7 @@ import DropdownItem 'muicss/lib/react/dropdown-item';
 
 <DropdownItem />
   * {String} link
+  * {String} value
   * {Function} onClick
 ```
 
