@@ -819,7 +819,12 @@ module.exports = angular.module('mui.button', [])
       template: '<button class="mui-btn" type={{type}} mui-ripple ng-transclude></button>',
       transclude: true,
       link: function(scope, element, attrs) {
-        var isUndef = angular.isUndefined;
+        var isUndef = angular.isUndefined,
+            el = element[0];
+
+        // disable MUI js
+        el._muiDropdown = true;
+        el._muiRipple = true;
 
         // handle disabled attribute
         if (!isUndef(attrs.disabled) && isUndef(attrs.ngDisabled)) {
@@ -925,7 +930,7 @@ module.exports = angular.module('mui.checkbox', [])
         '>{{label}}</label> ' +
         '</div>'
     }
-  })
+  });
 
 },{}],10:[function(require,module,exports){
 /**
@@ -1223,7 +1228,11 @@ function inputFactory(isTextArea) {
             labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],
-            isUndef = angular.isUndefined;
+            isUndef = angular.isUndefined,
+            el = inputEl[0];
+
+        // disable MUI js
+        if (el) el._muiTextfield = true;
 
         // remove attributes from wrapper
         element.removeAttr('ng-change');
@@ -1415,6 +1424,9 @@ module.exports = angular.module('mui.select', [])
             selectEl = element.find('select'),
             isUndef = angular.isUndefined,
             cacheIndex;
+
+        // disable MUI js
+        selectEl[0]._muiSelect = true;
 
         // init scope
         scope.options = [];

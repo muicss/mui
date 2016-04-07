@@ -26,4 +26,4 @@ module.exports = angular.module('mui.checkbox', [])
         '>{{label}}</label> ' +
         '</div>'
     }
-  })
+  });

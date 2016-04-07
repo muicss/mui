@@ -82,7 +82,11 @@ function inputFactory(isTextArea) {
             labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],
-            isUndef = angular.isUndefined;
+            isUndef = angular.isUndefined,
+            el = inputEl[0];
+
+        // disable MUI js
+        if (el) el._muiTextfield = true;
 
         // remove attributes from wrapper
         element.removeAttr('ng-change');

@@ -51,6 +51,9 @@ module.exports = angular.module('mui.select', [])
             isUndef = angular.isUndefined,
             cacheIndex;
 
+        // disable MUI js
+        selectEl[0]._muiSelect = true;
+
         // init scope
         scope.options = [];
         scope.isOpen = false;

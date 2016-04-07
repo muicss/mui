@@ -17,7 +17,12 @@ module.exports = angular.module('mui.button', [])
       template: '<button class="mui-btn" type={{type}} mui-ripple ng-transclude></button>',
       transclude: true,
       link: function(scope, element, attrs) {
-        var isUndef = angular.isUndefined;
+        var isUndef = angular.isUndefined,
+            el = element[0];
+
+        // disable MUI js
+        el._muiDropdown = true;
+        el._muiRipple = true;
 
         // handle disabled attribute
         if (!isUndef(attrs.disabled) && isUndef(attrs.ngDisabled)) {
