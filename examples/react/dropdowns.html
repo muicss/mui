@@ -65,11 +65,31 @@
       }
 
 
+      class DropdownExample3 extends React.Component {
+        render() {
+          let labelEl = <i>test</i>;
+
+          return (
+            <Dropdown 
+                color="primary"
+                alignMenu="right"
+                label={labelEl}>
+              <DropdownItem>Option 1</DropdownItem>
+              <DropdownItem>Option 2</DropdownItem>
+              <DropdownItem>Option 3</DropdownItem>
+              <DropdownItem>Option 4</DropdownItem>
+            </Dropdown>
+          );
+        }
+      }
+
+
       ReactDOM.render(
         <div className="mui-panel">
           <h2>React</h2>
           <DropdownExample1 />
           <DropdownExample2 />
+          <DropdownExample3 />
         </div>,
         document.getElementById('dropdowns')
       );

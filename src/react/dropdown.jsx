@@ -46,7 +46,10 @@ class Dropdown extends React.Component {
       'accent']),
     variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
     size: PropTypes.oneOf(['default', 'small', 'large']),
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
+    ]),
     alignMenu: PropTypes.oneOf(['left', 'right']),
     onClick: PropTypes.func,
     onSelect: PropTypes.func,
@@ -133,7 +136,15 @@ class Dropdown extends React.Component {
 
   render() {
     let buttonEl,
-        menuEl;
+        menuEl,
+        labelEl;
+
+    // build label
+    if (jqLite.type(this.props.label) === 'string') {
+      labelEl = <span>{this.props.label} <Caret /></span>;
+    } else {
+      labelEl = this.props.label;
+    }
 
     buttonEl = (
       <Button
@@ -145,8 +156,7 @@ class Dropdown extends React.Component {
         size={this.props.size}
         disabled={this.props.disabled}
       >
-        {this.props.label}
-        <Caret />
+        {labelEl}
       </Button>
     );
 
