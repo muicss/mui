@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.5.1 - April 12, 2016
+
+* Fixed bug causing onChange to be called twice on React <Checkbox> and <Radio>
+
 ## 0.5.0 - April 7, 2016
 
 * Major upgrade to Angular library - fixed many bugs and added missing features

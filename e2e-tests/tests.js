@@ -21924,7 +21924,8 @@ var Checkbox = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var onChange = _props.onChange;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
 
 
       return _react2.default.createElement(
@@ -22798,7 +22799,8 @@ var Radio = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var onChange = _props.onChange;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
 
 
       return _react2.default.createElement(
@@ -24575,6 +24577,28 @@ describe('react/checkbox', function () {
     _reactAddonsTestUtils2.default.Simulate.change(inputEl);
     _assert2.default.equal(instance.state.checked, false);
   });
+
+  it('supports onChange method', function (done) {
+    var counter = 0;
+
+    var onChangeFn = function onChangeFn() {
+      counter += 1;
+    };
+
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_checkbox2.default, { onChange: onChangeFn }));
+
+    // change checkbox
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'input');
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+
+    // test conditions
+    setTimeout(function () {
+      // one onChange event (https://github.com/muicss/mui/issues/94)
+      _assert2.default.equal(counter, 1);
+
+      done();
+    }, 50);
+  });
 });
 
 },{"../../src/react/checkbox":177,"../lib/react-helpers":196,"assert":1,"react":165,"react-addons-test-utils":34,"react-dom":35}],201:[function(require,module,exports){
@@ -25372,6 +25396,28 @@ describe('react/radio', function () {
     inputEl.checked = false;
     _reactAddonsTestUtils2.default.Simulate.change(inputEl);
     _assert2.default.equal(instance.state.checked, false);
+  });
+
+  it('supports onChange method', function (done) {
+    var counter = 0;
+
+    var onChangeFn = function onChangeFn() {
+      counter += 1;
+    };
+
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_radio2.default, { onChange: onChangeFn }));
+
+    // change checkbox
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'input');
+    _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+
+    // test conditions
+    setTimeout(function () {
+      // one onChange event (https://github.com/muicss/mui/issues/94)
+      _assert2.default.equal(counter, 1);
+
+      done();
+    }, 50);
   });
 });
 

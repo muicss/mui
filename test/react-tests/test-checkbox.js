@@ -98,4 +98,29 @@ describe('react/checkbox', function() {
     ReactUtils.Simulate.change(inputEl);
     assert.equal(instance.state.checked, false);
   });
+
+
+  it('supports onChange method', function(done) {
+    let counter = 0;
+
+    let onChangeFn = function() {
+      counter += 1;
+    };
+
+    let node = ReactUtils.renderIntoDocument(
+      <Checkbox onChange={onChangeFn} />
+    );
+
+    // change checkbox
+    let inputEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'input');
+    ReactUtils.Simulate.change(inputEl);
+
+    // test conditions
+    setTimeout(function() {
+      // one onChange event (https://github.com/muicss/mui/issues/94)
+      assert.equal(counter, 1);
+
+      done();
+    }, 50);
+  });
 });

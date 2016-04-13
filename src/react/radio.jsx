@@ -38,7 +38,7 @@ class Radio extends React.Component {
   };
 
   render() {
-    let { children, ...other } = this.props;
+    let { children, onChange, ...other } = this.props;
 
     return (
       <div

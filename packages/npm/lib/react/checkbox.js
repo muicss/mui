@@ -40,7 +40,8 @@ var Checkbox = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var onChange = _props.onChange;
+      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
 
 
       return _react2.default.createElement(
