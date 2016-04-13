@@ -85,7 +85,7 @@ class Dropdown extends React.Component {
 
     if (!ev.defaultPrevented) {
       this.toggle();
-      
+
       // execute <Dropdown> onClick method
       let onClickFn = this.props.onClick;
       onClickFn && onClickFn(ev);
@@ -180,7 +180,7 @@ class Dropdown extends React.Component {
       );
     }
 
-    let { ref, className, children, onClick, ...other } = this.props;
+    let { className, children, onClick, ...other } = this.props;
 
     return (
       <div
