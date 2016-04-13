@@ -148,7 +148,6 @@ describe('react/select', function() {
           <Select
             ref="refEl"
             value={this.state.value}
-            defaultValue="ignored value"
             onChange={this.onChange}
           >
             <Option value="option-1" />

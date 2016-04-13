@@ -26,7 +26,7 @@ class Select extends React.Component {
 
     // warn if value defined but onChange is not
     if (props.readOnly === false &&
-        props.value !== null &&
+        props.value !== undefined &&
         props.onChange === null) {
       util.raiseError(controlledMessage, true);
     }
@@ -47,7 +47,6 @@ class Select extends React.Component {
   }
 
   state = {
-    value: null,
     showMenu: false
   };
 
@@ -67,8 +66,6 @@ class Select extends React.Component {
   static defaultProps = {
     className: '',
     name: null,
-    value: null,
-    defaultValue: null,
     autoFocus: false,
     disabled: false,
     multiple: false,

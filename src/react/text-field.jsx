@@ -25,13 +25,13 @@ class Input extends React.Component {
     let value = props.value;
     let innerValue = value || props.defaultValue;
 
-    this.state = { 
+    this.state = {
       innerValue: innerValue,
       isDirty: Boolean(innerValue)
     };
 
     // warn if value defined but onChange is not
-    if (value !== null && props.onChange === null) {
+    if (value !== undefined && props.onChange === null) {
       util.raiseError(controlledMessage, true);
     }
 
@@ -51,7 +51,6 @@ class Input extends React.Component {
   static defaultProps = {
     hint: null,
     type: null,
-    value: null,
     autoFocus: false,
     onChange: null
   };
