@@ -30,9 +30,6 @@ class Radio extends React.Component {
     className: '',
     name: null,
     label: null,
-    value: null,
-    checked: null,
-    defaultChecked: null,
     disabled: false,
     onChange: null
   };

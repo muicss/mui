@@ -75,7 +75,6 @@ describe('react/checkbox', function() {
           <Checkbox
             ref="refEl"
             checked={this.state.checked}
-            defaultChecked={true}
             onChange={this.onChange}
           />
         );
