@@ -106,8 +106,8 @@ var Button = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = btnClass,
-          k = undefined,
-          v = undefined;
+          k = void 0,
+          v = void 0;
 
       var ripples = this.state.ripples;
 

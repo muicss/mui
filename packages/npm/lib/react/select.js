@@ -47,10 +47,9 @@ var Select = function (_React$Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
-      value: null,
       showMenu: false
     };
-    if (props.readOnly === false && props.value !== null && props.onChange === null) {
+    if (props.readOnly === false && props.value !== undefined && props.onChange === null) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
@@ -208,7 +207,7 @@ var Select = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var menuElem = undefined;
+      var menuElem = void 0;
 
       if (this.state.showMenu) {
         menuElem = _react2.default.createElement(Menu, {
@@ -279,8 +278,6 @@ Select.propTypes = {
 Select.defaultProps = {
   className: '',
   name: null,
-  value: null,
-  defaultValue: null,
   autoFocus: false,
   disabled: false,
   multiple: false,
@@ -314,7 +311,7 @@ var Menu = function (_React$Component2) {
       var optionEls = this.props.optionEls,
           m = optionEls.length,
           selectedPos = 0,
-          i = undefined;
+          i = void 0;
 
       // get current selected position
       for (i = m - 1; i > -1; i--) {
@@ -407,9 +404,9 @@ var Menu = function (_React$Component2) {
       var menuItems = [],
           optionEls = this.props.optionEls,
           m = optionEls.length,
-          optionEl = undefined,
-          cls = undefined,
-          i = undefined;
+          optionEl = void 0,
+          cls = void 0,
+          i = void 0;
 
       // define menu items
       for (i = 0; i < m; i++) {

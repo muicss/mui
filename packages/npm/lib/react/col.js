@@ -38,8 +38,8 @@ var Col = function (_React$Component) {
     key: 'defaultProps',
     value: function defaultProps() {
       var props = { className: '' },
-          i = undefined,
-          v = undefined;
+          i = void 0,
+          v = void 0;
 
       // add {breakpoint}, {breakpoint}-offset to props
       for (i = breakpoints.length - 1; i > -1; i--) {
@@ -54,10 +54,10 @@ var Col = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = {},
-          i = undefined,
-          bk = undefined,
-          val = undefined,
-          baseCls = undefined;
+          i = void 0,
+          bk = void 0,
+          val = void 0,
+          baseCls = void 0;
 
       // add mui-col classes
       for (i = breakpoints.length - 1; i > -1; i--) {

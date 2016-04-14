@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.5.2 - April 14, 2016
+
+* Added support for React 15.0.1
+
 ## 0.5.1 - April 12, 2016
 
 * Fixed bug causing onChange to be called twice on React <Checkbox> and <Radio>

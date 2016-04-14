@@ -45,7 +45,7 @@ var Input = function (_React$Component) {
     };
 
     // warn if value defined but onChange is not
-    if (value !== null && props.onChange === null) {
+    if (value !== undefined && props.onChange === null) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
@@ -85,7 +85,7 @@ var Input = function (_React$Component) {
     value: function render() {
       var cls = {},
           isNotEmpty = Boolean(this.state.innerValue),
-          inputEl = undefined;
+          inputEl = void 0;
 
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
@@ -149,7 +149,6 @@ Input.propTypes = {
 Input.defaultProps = {
   hint: null,
   type: null,
-  value: null,
   autoFocus: false,
   onChange: null
 };
@@ -180,7 +179,7 @@ var Label = function (_React$Component2) {
 
       setTimeout(function () {
         var s = '.15s ease-out';
-        var style = undefined;
+        var style = void 0;
 
         style = {
           transition: s,
@@ -245,7 +244,7 @@ var TextField = function (_React$Component3) {
     key: 'render',
     value: function render() {
       var cls = {},
-          labelEl = undefined;
+          labelEl = void 0;
 
       if (this.props.label.length) {
         labelEl = _react2.default.createElement(Label, {

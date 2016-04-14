@@ -75,10 +75,10 @@ var Tabs = function (_React$Component) {
           paneEls = [],
           m = children.length,
           selectedIndex = this.state.currentSelectedIndex % m,
-          isActive = undefined,
-          item = undefined,
-          cls = undefined,
-          i = undefined;
+          isActive = void 0,
+          item = void 0,
+          cls = void 0,
+          i = void 0;
 
       for (i = 0; i < m; i++) {
         item = children[i];

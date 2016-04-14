@@ -1229,8 +1229,8 @@ var Button = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = btnClass,
-          k = undefined,
-          v = undefined;
+          k = void 0,
+          v = void 0;
 
       var ripples = this.state.ripples;
 
@@ -1513,7 +1513,7 @@ var Input = function (_React$Component) {
     };
 
     // warn if value defined but onChange is not
-    if (value !== null && props.onChange === null) {
+    if (value !== undefined && props.onChange === null) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
@@ -1553,7 +1553,7 @@ var Input = function (_React$Component) {
     value: function render() {
       var cls = {},
           isNotEmpty = Boolean(this.state.innerValue),
-          inputEl = undefined;
+          inputEl = void 0;
 
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
@@ -1617,7 +1617,6 @@ Input.propTypes = {
 Input.defaultProps = {
   hint: null,
   type: null,
-  value: null,
   autoFocus: false,
   onChange: null
 };
@@ -1648,7 +1647,7 @@ var Label = function (_React$Component2) {
 
       setTimeout(function () {
         var s = '.15s ease-out';
-        var style = undefined;
+        var style = void 0;
 
         style = {
           transition: s,
@@ -1713,7 +1712,7 @@ var TextField = function (_React$Component3) {
     key: 'render',
     value: function render() {
       var cls = {},
-          labelEl = undefined;
+          labelEl = void 0;
 
       if (this.props.label.length) {
         labelEl = _react2.default.createElement(Label, {
@@ -1895,9 +1894,6 @@ Checkbox.defaultProps = {
   className: '',
   name: null,
   label: null,
-  value: null,
-  checked: null,
-  defaultChecked: null,
   disabled: false,
   onChange: null
 };
@@ -1944,8 +1940,8 @@ var Col = function (_React$Component) {
     key: 'defaultProps',
     value: function defaultProps() {
       var props = { className: '' },
-          i = undefined,
-          v = undefined;
+          i = void 0,
+          v = void 0;
 
       // add {breakpoint}, {breakpoint}-offset to props
       for (i = breakpoints.length - 1; i > -1; i--) {
@@ -1960,10 +1956,10 @@ var Col = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = {},
-          i = undefined,
-          bk = undefined,
-          val = undefined,
-          baseCls = undefined;
+          i = void 0,
+          bk = void 0,
+          val = void 0,
+          baseCls = void 0;
 
       // add mui-col classes
       for (i = breakpoints.length - 1; i > -1; i--) {
@@ -2312,7 +2308,7 @@ var Dropdown = function (_React$Component) {
     value: function open() {
       // position menu element below toggle button
       var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
-          toggleRect = undefined;
+          toggleRect = void 0;
 
       toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
 
@@ -2346,9 +2342,9 @@ var Dropdown = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var buttonEl = undefined,
-          menuEl = undefined,
-          labelEl = undefined;
+      var buttonEl = void 0,
+          menuEl = void 0,
+          labelEl = void 0;
 
       // build label
       if (jqLite.type(this.props.label) === 'string') {
@@ -2398,11 +2394,10 @@ var Dropdown = function (_React$Component) {
       }
 
       var _props = this.props;
-      var ref = _props.ref;
       var className = _props.className;
       var children = _props.children;
       var onClick = _props.onClick;
-      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children', 'onClick']);
+      var other = babelHelpers.objectWithoutProperties(_props, ['className', 'children', 'onClick']);
 
 
       return _react2.default.createElement(
@@ -2770,9 +2765,6 @@ Radio.defaultProps = {
   className: '',
   name: null,
   label: null,
-  value: null,
-  checked: null,
-  defaultChecked: null,
   disabled: false,
   onChange: null
 };
@@ -2888,10 +2880,9 @@ var Select = function (_React$Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {
-      value: null,
       showMenu: false
     };
-    if (props.readOnly === false && props.value !== null && props.onChange === null) {
+    if (props.readOnly === false && props.value !== undefined && props.onChange === null) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
@@ -3049,7 +3040,7 @@ var Select = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var menuElem = undefined;
+      var menuElem = void 0;
 
       if (this.state.showMenu) {
         menuElem = _react2.default.createElement(Menu, {
@@ -3120,8 +3111,6 @@ Select.propTypes = {
 Select.defaultProps = {
   className: '',
   name: null,
-  value: null,
-  defaultValue: null,
   autoFocus: false,
   disabled: false,
   multiple: false,
@@ -3155,7 +3144,7 @@ var Menu = function (_React$Component2) {
       var optionEls = this.props.optionEls,
           m = optionEls.length,
           selectedPos = 0,
-          i = undefined;
+          i = void 0;
 
       // get current selected position
       for (i = m - 1; i > -1; i--) {
@@ -3248,9 +3237,9 @@ var Menu = function (_React$Component2) {
       var menuItems = [],
           optionEls = this.props.optionEls,
           m = optionEls.length,
-          optionEl = undefined,
-          cls = undefined,
-          i = undefined;
+          optionEl = void 0,
+          cls = void 0,
+          i = void 0;
 
       // define menu items
       for (i = 0; i < m; i++) {
@@ -3368,10 +3357,10 @@ var Tabs = function (_React$Component) {
           paneEls = [],
           m = children.length,
           selectedIndex = this.state.currentSelectedIndex % m,
-          isActive = undefined,
-          item = undefined,
-          cls = undefined,
-          i = undefined;
+          isActive = void 0,
+          item = void 0,
+          cls = void 0,
+          i = void 0;
 
       for (i = 0; i < m; i++) {
         item = children[i];

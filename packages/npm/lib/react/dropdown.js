@@ -106,7 +106,7 @@ var Dropdown = function (_React$Component) {
     value: function open() {
       // position menu element below toggle button
       var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
-          toggleRect = undefined;
+          toggleRect = void 0;
 
       toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
 
@@ -140,9 +140,9 @@ var Dropdown = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var buttonEl = undefined,
-          menuEl = undefined,
-          labelEl = undefined;
+      var buttonEl = void 0,
+          menuEl = void 0,
+          labelEl = void 0;
 
       // build label
       if (jqLite.type(this.props.label) === 'string') {
@@ -192,11 +192,10 @@ var Dropdown = function (_React$Component) {
       }
 
       var _props = this.props;
-      var ref = _props.ref;
       var className = _props.className;
       var children = _props.children;
       var onClick = _props.onClick;
-      var other = babelHelpers.objectWithoutProperties(_props, ['ref', 'className', 'children', 'onClick']);
+      var other = babelHelpers.objectWithoutProperties(_props, ['className', 'children', 'onClick']);
 
 
       return _react2.default.createElement(
