@@ -22,8 +22,8 @@ describe('react/textarea', function() {
     errFn = console.error;
     console.error = function(msg) {throw Error(msg);};
   });
-  
-  
+
+
   after(function() {
     console.error = errFn;
   });
@@ -40,7 +40,7 @@ describe('react/textarea', function() {
 
     assert.equal(wrapperEl.tagName, 'DIV');
     assert.equal(wrapperEl.className, 'mui-textfield');
-  });  
+  });
 
 
   it('renders native textarea element', function() {
@@ -77,13 +77,12 @@ describe('react/textarea', function() {
         return (
           <Textarea
             value={this.state.value}
-            defaultValue="ignored value"
             onChange={this.onChange}
           />
         );
       }
     });
-    
+
     let elem = <TestApp value="test" />;
     let instance = ReactUtils.renderIntoDocument(elem);
     let findComponent = ReactUtils.findRenderedDOMComponentWithTag;

@@ -21,8 +21,8 @@ describe('react/input', function() {
     errFn = console.error;
     console.error = function(msg) {throw Error(msg);};
   });
-  
-  
+
+
   after(function() {
     console.error = errFn;
   });
@@ -36,7 +36,7 @@ describe('react/input', function() {
     assert.equal(wrapperEl.className, 'mui-textfield');
   });
 
-  
+
   it('renders native input element', function() {
     let elem = <Input defaultValue="my input"></Input>;
     let instance = ReactUtils.renderIntoDocument(elem);
@@ -46,12 +46,12 @@ describe('react/input', function() {
     assert.equal(inputEl.value, 'my input');
   });
 
-  
+
   it('adds dirty class on focus', function() {
     let instance = ReactUtils.renderIntoDocument(<Input></Input>);
     let inputEl = ReactUtils
       .findRenderedDOMComponentWithTag(instance, 'input');
-    
+
     // starts with empty class
     assert.equal(inputEl.className, 'mui--is-empty');
 
@@ -65,7 +65,7 @@ describe('react/input', function() {
     ReactUtils.Simulate.change(inputEl);
   });
 
-  
+
   it('does controlled component validation', function() {
     // raises error when `value` defined and `onChange missing
     assert.throws(
@@ -90,13 +90,12 @@ describe('react/input', function() {
         return (
           <Input
             value={this.state.value}
-            defaultValue="ignored value"
             onChange={this.onChange}
           />
         );
       }
     });
-    
+
     let elem = <TestApp value="test" />;
     let instance = ReactUtils.renderIntoDocument(elem);
     let findComponent = ReactUtils.findRenderedDOMComponentWithTag;

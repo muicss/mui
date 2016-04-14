@@ -102,15 +102,15 @@ describe('react/button', function() {
 
     // check state before ripple
     assert.equal(Object.keys(node.state.ripples).length, 0);
-    assert.equal(buttonEl.children.length, 1);
+    assert.equal(buttonEl.children.length, 0);
 
     // trigger ripple
     ReactUtils.Simulate.mouseDown(buttonEl);
 
     // check state after ripple
     assert.equal(Object.keys(node.state.ripples).length, 1);
-    assert.equal(buttonEl.children.length, 2);
-    assert.equal(buttonEl.children[1].className, 'mui-ripple-effect');
+    assert.equal(buttonEl.children.length, 1);
+    assert.equal(buttonEl.children[0].className, 'mui-ripple-effect');
 
     // add another ripple
     ReactUtils.Simulate.mouseDown(node.refs.buttonEl);

@@ -79,7 +79,6 @@ describe('react/radio', function() {
           <Radio
             ref="refEl"
             checked={this.state.checked}
-            defaultChecked={true}
             onChange={this.onChange}
           />
         );
