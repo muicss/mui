@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.5.3 - April 16, 2016
+
+* Added support for Angular Tabs directive
+* Fixed focus bug with Angular Select directive
+
 ## 0.5.2 - April 14, 2016
 
 * Added support for React 15.0.1
