@@ -219,7 +219,10 @@ module.exports = angular.module('mui.select', [])
         /**
          * Open/Close custom select menu
          */
-        scope.$watch('isOpen', function(isOpen) {
+        scope.$watch('isOpen', function(isOpen, oldVal) {
+          // ignore first call
+          if (isOpen === oldVal) return;
+
           // exit if use-default is true
           if (scope.useDefault === true) return;
 

@@ -3,63 +3,123 @@
  * @module angular/tabs
  */
 
+
+var jqLite = require('../js/lib/jqLite');
+
+
 module.exports = angular.module('mui.tabs', [])
   .directive('muiTabs', function() {
     return {
-      restrict: 'E',
+      restrict: 'EA',
       transclude: true,
       scope: {
-        justified: '=?',
-        selected: '=?'
-      },
-      controller: function($scope) {
-        var panes = $scope.panes = [];
-
-        $scope.selected = $scope.selected || 0;
-
-        $scope.onClick = function(pane, panelIndex) {
-          angular.forEach(panes, function(pane) {
-            pane.selected = false;
-          });
-          pane.selected = true;
-          $scope.selected = panelIndex;
-        };
-
-        $scope.$watch('selected', function(newVal) {
-          $scope.onClick(panes[newVal] , newVal);
-        });
-
-        this.addPane = function(pane) {
-          if (panes.length === $scope.selected) {
-            $scope.select(pane, $scope.selected);
-          }
-          panes.push(pane);
-        };
+        selectedId: '=?selected',
+        onChange: '&?'
       },
       template: '' +
-        '<ul class="mui-tabs__bar" ' +
-        'ng-class=\'{"mui-tabs__bar--justified" : justified}\'>' +
-        '<li ng-repeat="pane in panes track by $index" ' +
-        'ng-class=\'{"mui--is-active" : pane.selected}\'>' +
-        '<a ng-click="onClick(pane, $index)">{{pane.title}}</a>' +
+        '<ul ' +
+        'class="mui-tabs__bar" ' +
+        'ng-class=\'{"mui-tabs__bar--justified": justified}\'>' +
+        '<li ' +
+        'ng-repeat="tab in tabs track by $index" ' +
+        'ng-class=\'{"mui--is-active": $index === selectedId}\'>' +
+        '<a ng-click="onClick($index)">{{tab.label}}</a>' +
         '</li>' +
-        '</ul>'+
-        '<ng-transclude></ng-transclude>'
-    };
-  })
-  .directive('muiTab', function() {
-    return {
-      require: '^muiTabs',
-      restrict: 'AE',
-      scope: {
-        title: '@'
+        '</ul>',
+      controller: function($scope) {
+        var counter = 0;
+
+        // init scope
+        $scope.tabs = [];
+
+        // add tab
+        this.addTab = function(args) {
+          // user counter for tab id
+          var tabId = counter;
+          counter += 1;
+
+          // update tabs list
+          $scope.tabs.push({label: args.label});
+
+          // handle active tabs
+          if (args.isActive) $scope.selectedId = tabId;
+
+          // return id
+          return tabId;
+        };
       },
-      replace: true,
-      template: '<div class="mui-tabs__pane" ' +
-        'ng-class=\'{"mui--is-active" : selected}\' ng-transclude></div>',
-      transclude: true,
-      link: function(scope, element, attrs, tabsCtrl) {
-        tabsCtrl.addPane(scope);
+      link: function(scope, element, attrs, ctrl, transcludeFn) {
+        var isUndef = angular.isUndefined;
+
+        // init scope
+        if (isUndef(scope.selectedId)) scope.selectedId = 0;
+        scope.justified = false;
+
+        // justified
+        if (!isUndef(attrs.justified)) scope.justified = true;
+
+        // click handler
+        scope.onClick = function(tabId) {
+          // check current tab
+          if (tabId === scope.selectedId) return;
+
+          // update active tab
+          scope.selectedId = tabId;
+
+          // execute onChange callback
+          if (scope.onChange) scope.$$postDigest(scope.onChange);
+        };
+
+        // use transcludeFn to pass ng-controller on parent element
+        transcludeFn(scope, function(clone) {
+          element.append(clone);
+        });
       }
     };
-  });
+  })
+  .directive('muiTab', ['$parse', function($parse) {
+    return {
+      require: '^?muiTabs',
+      restrict: 'AE',
+      scope: {
+        active: '&?',
+        label: '@?'
+      },
+      transclude: true,
+      template: '<div ' +
+        'class="mui-tabs__pane" ' +
+        'ng-class=\'{"mui--is-active": tabId === $parent.selectedId}\'></div>',
+      link: function(scope, element, attrs, ctrl, transcludeFn) {
+        var onSelectFn = $parse(attrs.onSelect),
+            onDeselectFn = $parse(attrs.onDeselect),
+            origScope = scope.$parent.$parent;
+
+        // init scope
+        scope.tabId = null;
+
+        // add to parent controller
+        if (ctrl) {
+          scope.tabId = ctrl.addTab({
+            label: scope.label,
+            isActive: Boolean(scope.active)
+          });
+        }
+
+        // use transcludeFn to pass ng-controller on parent element
+        transcludeFn(scope, function(clone) {
+          element.find('div').append(clone);
+        });
+
+        scope.$parent.$watch('selectedId', function(newVal, oldVal) {
+          // ignore initial load
+          if (newVal === oldVal) return;
+
+          // execute onSelect
+          if (newVal === scope.tabId) onSelectFn(origScope);
+
+          // execute onDeselect
+          if (oldVal === scope.tabId) onDeselectFn(origScope);
+        });
+      }
+    };
+  }]);
