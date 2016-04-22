@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.5.4 - April 22, 2016
+
+* Added support for `target` attribute to React DropdownItem
+
 ## 0.5.3 - April 16, 2016
 
 * Added support for Angular Tabs directive

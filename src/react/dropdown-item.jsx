@@ -28,13 +28,8 @@ class DropdownItem extends React.Component {
 
   static propTypes =  {
     link: PropTypes.string,
+    target: PropTypes.string,
     onClick: PropTypes.func
-  };
-
-  static defaultProps = {
-    link: null,
-    value: null,
-    onClick: null
   };
 
   onClick(ev) {
@@ -48,6 +43,7 @@ class DropdownItem extends React.Component {
       <li { ...other }>
         <a
           href={this.props.link}
+          target={this.props.target}
           data-mui-value={this.props.value}
           onClick={this.onClickCB}
         >

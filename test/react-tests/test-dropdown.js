@@ -186,4 +186,21 @@ describe('react/dropdown', function() {
     let anchorEl = ReactUtils.scryRenderedDOMComponentsWithTag(node, 'a')[0];
     ReactUtils.Simulate.click(anchorEl);
   });
+
+
+  it('renders target attribute on DropdownItem', function() {
+    let node = ReactUtils.renderIntoDocument(
+      <Dropdown>
+        <DropdownItem target="_blank">Option 1</DropdownItem>
+      </Dropdown>
+    );
+
+    // open menu
+    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    ReactUtils.Simulate.click(buttonEl, {button: 0});
+
+    // check rendered anchor tag
+    let anchorEl = ReactUtils.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    assert.equal(anchorEl.target, "_blank");
+  });
 });
