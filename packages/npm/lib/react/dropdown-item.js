@@ -61,6 +61,7 @@ var DropdownItem = function (_React$Component) {
           'a',
           {
             href: this.props.link,
+            target: this.props.target,
             'data-mui-value': this.props.value,
             onClick: this.onClickCB
           },
@@ -77,12 +78,8 @@ var DropdownItem = function (_React$Component) {
 
 DropdownItem.propTypes = {
   link: PropTypes.string,
+  target: PropTypes.string,
   onClick: PropTypes.func
-};
-DropdownItem.defaultProps = {
-  link: null,
-  value: null,
-  onClick: null
 };
 exports.default = DropdownItem;
 module.exports = exports['default'];

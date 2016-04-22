@@ -22600,6 +22600,7 @@ var DropdownItem = function (_React$Component) {
           'a',
           {
             href: this.props.link,
+            target: this.props.target,
             'data-mui-value': this.props.value,
             onClick: this.onClickCB
           },
@@ -22616,12 +22617,8 @@ var DropdownItem = function (_React$Component) {
 
 DropdownItem.propTypes = {
   link: PropTypes.string,
+  target: PropTypes.string,
   onClick: PropTypes.func
-};
-DropdownItem.defaultProps = {
-  link: null,
-  value: null,
-  onClick: null
 };
 exports.default = DropdownItem;
 module.exports = exports['default'];
@@ -25378,6 +25375,26 @@ describe('react/dropdown', function () {
     // click on first menu item
     var anchorEl = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
     _reactAddonsTestUtils2.default.Simulate.click(anchorEl);
+  });
+
+  it('renders target attribute on DropdownItem', function () {
+    var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _dropdown2.default,
+      null,
+      _react2.default.createElement(
+        _dropdownItem2.default,
+        { target: '_blank' },
+        'Option 1'
+      )
+    ));
+
+    // open menu
+    var buttonEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(node, 'button');
+    _reactAddonsTestUtils2.default.Simulate.click(buttonEl, { button: 0 });
+
+    // check rendered anchor tag
+    var anchorEl = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    _assert2.default.equal(anchorEl.target, "_blank");
   });
 });
 
