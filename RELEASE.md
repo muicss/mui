@@ -18,6 +18,8 @@
 
 1. Change version number in packages/npm/package.json
 
+1. Update packages/npm/README.md (if necessary)
+
 1. Commit changes and tag code
 
   ```bash

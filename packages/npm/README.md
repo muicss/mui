@@ -151,6 +151,7 @@ import DropdownItem 'muicss/lib/react/dropdown-item';
 
 <DropdownItem />
   * {String} link
+  * {String} target
   * {String} value
   * {Function} onClick
 ```
