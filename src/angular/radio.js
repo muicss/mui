@@ -3,7 +3,9 @@
  * @module angular/radio
  */
 
-module.exports = angular.module('mui.radio', [])
+(function() {
+
+angular.module('mui.radio', [])
   .directive('muiRadio', function() {
     return {
       restrict: 'AE',
@@ -27,3 +29,5 @@ module.exports = angular.module('mui.radio', [])
         '</div>'
     }
   });
+
+})();

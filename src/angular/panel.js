@@ -3,7 +3,9 @@
  * @module angular/panel
  */
 
-module.exports = angular.module('mui.panel', [])
+(function() {
+
+angular.module('mui.panel', [])
   .directive('muiPanel', function() {
     return {
       restrict: 'AE',
@@ -18,3 +20,5 @@ module.exports = angular.module('mui.panel', [])
       }
     };
   });
+
+})();

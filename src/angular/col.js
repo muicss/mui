@@ -3,7 +3,9 @@
  * @module angular/col
  */
 
-module.exports = angular.module('mui.col', [])
+(function() {
+  
+angular.module('mui.col', [])
   .directive('muiCol', function() {
     return {
       restrict: 'AE',
@@ -36,3 +38,5 @@ module.exports = angular.module('mui.col', [])
       }
     }
   });
+
+})();

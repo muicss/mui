@@ -358,7 +358,8 @@ function buildNpm() {
     buildCdnCss('./packages/npm/lib/css'),
     buildNpmSass(),
     buildNpmJs(),
-    buildNpmReact()
+    buildNpmReact(),
+    buildNpmAngular()
   );
 
   return gulp.series(
@@ -410,5 +411,18 @@ function buildNpmReactBabelHelpers() {
     fs.writeFileSync('./packages/npm/lib/react/babel-helpers.js', s);
 
     done();
+  });
+}
+
+function buildNpmAngular() {
+  return makeTask('build-npm-angular', function() {
+    var s = "var babelHelpers = require('./babel-helpers.js');\n";
+
+    return gulp.src('./src/angular/**/*')
+      .pipe(plugins.babel({
+        plugins: ['external-helpers-2']
+      }))
+      .pipe(plugins.injectString.prepend(s))
+      .pipe(gulp.dest('./packages/npm/lib/angular'));
   });
 }

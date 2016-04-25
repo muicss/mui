@@ -3,7 +3,9 @@
  * @module angular/dropdown-item
  */
 
-module.exports = angular.module('mui.dropdown-item', [])
+(function() {
+
+angular.module('mui.dropdown-item', [])
   .directive('muiDropdownItem', function() {
     return {
       restrict: 'AE',
@@ -15,3 +17,5 @@ module.exports = angular.module('mui.dropdown-item', [])
       template: '<li><a href="{{link}}" ng-transclude></a></li>'
     };
   });
+
+})();

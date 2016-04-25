@@ -3,7 +3,9 @@
  * @module angular/appbar
  */
 
-module.exports = angular.module('mui.appbar', [])
+(function() {
+  
+angular.module('mui.appbar', [])
   .directive('muiAppbar', function() {
     return {
       restrict: 'AE',
@@ -18,3 +20,5 @@ module.exports = angular.module('mui.appbar', [])
       }
     };
   });
+  
+})();

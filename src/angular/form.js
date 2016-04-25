@@ -3,7 +3,9 @@
  * @module angular/form
  */
 
-module.exports = angular.module('mui.form', [])
+(function() {
+
+angular.module('mui.form', [])
   .directive('muiFormInline', function() {
     return {
       restrict: 'A',
@@ -12,3 +14,5 @@ module.exports = angular.module('mui.form', [])
       }
     }
   });
+
+})();

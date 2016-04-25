@@ -3,10 +3,12 @@
  * @module angular/button
  */
 
+(function() {
+  
 var jqLite = require('../js/lib/jqLite');
 
 
-module.exports = angular.module('mui.button', [])
+angular.module('mui.button', [])
   .directive('muiButton', function() {
     return {
       restrict: 'AE',
@@ -83,3 +85,5 @@ module.exports = angular.module('mui.button', [])
       }
     };
   }]);
+
+})();

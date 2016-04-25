@@ -3,7 +3,9 @@
  * @module angular/row.js
  */
 
-module.exports = angular.module('mui.row', [])
+(function() {
+
+angular.module('mui.row', [])
   .directive('muiRow', function() {
     return {
       restrict: 'AE',
@@ -18,3 +20,5 @@ module.exports = angular.module('mui.row', [])
       }
     };
   });
+
+})();

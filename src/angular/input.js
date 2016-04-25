@@ -3,6 +3,7 @@
  * @module angular/input
  */
 
+(function() {
 
 var emptyClass = 'mui--is-empty',
     notEmptyClass = 'mui--is-not-empty',
@@ -146,6 +147,8 @@ function inputFactory(isTextArea) {
   }];
 }
 
-module.exports = angular.module('mui.input', [])
+angular.module('mui.input', [])
   .directive('muiInput', inputFactory(false))
   .directive('muiTextarea', inputFactory(true));
+
+})();
