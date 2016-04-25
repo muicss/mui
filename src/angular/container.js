@@ -3,7 +3,9 @@
  * @module angular/container
  */
 
-module.exports = angular.module('mui.container', [])
+(function() {
+
+angular.module('mui.container', [])
   .directive('muiContainer', function() {
     return {
       restrict: 'AE',
@@ -24,3 +26,5 @@ module.exports = angular.module('mui.container', [])
       }
     };
   });
+
+})();

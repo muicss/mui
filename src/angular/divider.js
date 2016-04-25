@@ -3,7 +3,9 @@
  * @module angular/divider
  */
 
-module.exports = angular.module('mui.divider', [])
+(function() {
+
+angular.module('mui.divider', [])
   .directive('muiDivider', function() {
     return {
       restrict: 'AE',
@@ -13,3 +15,5 @@ module.exports = angular.module('mui.divider', [])
       }
     }
   });
+
+})();

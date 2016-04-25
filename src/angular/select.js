@@ -3,13 +3,14 @@
  * @module angular/select
  */
 
+(function() {
 
 var formlib = require('../js/lib/forms'),
     util = require('../js/lib/util'),
     jqLite = require('../js/lib/jqLite');
 
 
-module.exports = angular.module('mui.select', [])
+angular.module('mui.select', [])
   .directive('muiSelect', ['$timeout', function($timeout) {
     return {
       restrict: 'AE',
@@ -274,3 +275,5 @@ module.exports = angular.module('mui.select', [])
       }
     }
   }]);
+
+})();

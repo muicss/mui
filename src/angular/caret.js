@@ -2,8 +2,9 @@
  * MUI Angular Caret Component
  * @module angular/caret
  */
+(function() {
 
-module.exports = angular.module('mui.caret',[])
+angular.module('mui.caret',[])
   .directive('muiCaret', function() {
     return {
       restrict : 'AE',
@@ -11,3 +12,5 @@ module.exports = angular.module('mui.caret',[])
       template : '<span class="mui-caret"></span>'
     };
   });
+
+})();

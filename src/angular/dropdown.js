@@ -3,7 +3,9 @@
  * @module angular/dropdown
  */
 
-module.exports = angular.module('mui.dropdown', [])
+(function() {
+
+angular.module('mui.dropdown', [])
   .directive('muiDropdown', ['$timeout', '$compile', function($timeout, $compile) {
     return {
       restrict: 'AE',
@@ -87,3 +89,5 @@ module.exports = angular.module('mui.dropdown', [])
       }
     };
   }]);
+
+})();

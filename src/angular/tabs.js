@@ -3,11 +3,12 @@
  * @module angular/tabs
  */
 
-
+(function() {
+  
 var jqLite = require('../js/lib/jqLite');
 
 
-module.exports = angular.module('mui.tabs', [])
+angular.module('mui.tabs', [])
   .directive('muiTabs', function() {
     return {
       restrict: 'EA',
@@ -123,3 +124,5 @@ module.exports = angular.module('mui.tabs', [])
       }
     };
   }]);
+
+})();
