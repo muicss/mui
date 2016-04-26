@@ -375,12 +375,14 @@ function buildNpm() {
     buildCdnCss('./packages/npm/lib/css'),
     buildNpmSass(),
     buildNpmJs(),
-    buildNpmReact()
+    buildNpmReact(),
+    buildNpmAngular()
   );
 
   return gulp.series(
     t1,
-    buildNpmReactBabelHelpers()
+    buildNpmBabelHelpersReact(),
+    buildNpmBabelHelpersAngular()
   );
 }
 
@@ -421,10 +423,34 @@ function buildNpmReact() {
 }
 
 
-function buildNpmReactBabelHelpers() {
+function buildNpmAngular() {
+  return makeTask('build-npm-angular', function() {
+    var s = "var babelHelpers = require('./babel-helpers.js');\n";
+
+    return gulp.src('./src/angular/**/*')
+      .pipe(plugins.babel({
+        plugins: ['external-helpers-2']
+      }))
+      .pipe(plugins.injectString.prepend(s))
+      .pipe(gulp.dest('./packages/npm/lib/angular'));
+  });
+}
+
+
+function buildNpmBabelHelpersReact() {
   return makeTask('build-npm-react-babel-helpers', function(done) {
     var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'umd');
     fs.writeFileSync('./packages/npm/lib/react/babel-helpers.js', s);
+
+    done();
+  });
+}
+
+
+function buildNpmBabelHelpersAngular() {
+  return makeTask('build-npm-angular-babel-helpers', function(done) {
+    var s = babelCore.buildExternalHelpers(angularBabelHelpers, 'umd');
+    fs.writeFileSync('./packages/npm/lib/angular/babel-helpers.js', s);
 
     done();
   });
