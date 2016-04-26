@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.5.5 - April 26, 2016
+
+* Using ES6 for Angular source code
+* Added MUI Angular to NPM package
+
 ## 0.5.4 - April 22, 2016
 
 * Added support for `target` attribute to React DropdownItem
