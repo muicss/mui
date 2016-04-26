@@ -3,7 +3,13 @@
  * @module angular/panel
  */
 
-module.exports = angular.module('mui.panel', [])
+import angular from 'angular';
+
+
+const moduleName = 'mui.panel';
+
+
+angular.module(moduleName, [])
   .directive('muiPanel', function() {
     return {
       restrict: 'AE',
@@ -18,3 +24,7 @@ module.exports = angular.module('mui.panel', [])
       }
     };
   });
+
+
+/** Define module API */
+export default moduleName;

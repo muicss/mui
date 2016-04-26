@@ -3,7 +3,13 @@
  * @module angular/appbar
  */
 
-module.exports = angular.module('mui.appbar', [])
+import angular from 'angular';
+
+
+const moduleName = 'mui.appbar';
+
+
+angular.module(moduleName, [])
   .directive('muiAppbar', function() {
     return {
       restrict: 'AE',
@@ -18,3 +24,7 @@ module.exports = angular.module('mui.appbar', [])
       }
     };
   });
+
+
+/** Define module API */
+export default moduleName;

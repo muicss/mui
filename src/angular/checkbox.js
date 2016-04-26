@@ -3,7 +3,13 @@
  * @module angular/checkox
  */
 
-module.exports = angular.module('mui.checkbox', [])
+import angular from 'angular';
+
+
+const moduleName = 'mui.checkbox';
+
+
+angular.module(moduleName, [])
   .directive('muiCheckbox', function() {
     return {
       restrict: 'AE',
@@ -27,3 +33,7 @@ module.exports = angular.module('mui.checkbox', [])
         '</div>'
     }
   });
+
+
+/** Define module API */
+export default moduleName;

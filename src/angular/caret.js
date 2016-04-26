@@ -3,7 +3,13 @@
  * @module angular/caret
  */
 
-module.exports = angular.module('mui.caret',[])
+import angular from 'angular';
+
+
+const moduleName = 'mui.caret';
+
+
+angular.module(moduleName, [])
   .directive('muiCaret', function() {
     return {
       restrict : 'AE',
@@ -11,3 +17,7 @@ module.exports = angular.module('mui.caret',[])
       template : '<span class="mui-caret"></span>'
     };
   });
+
+
+/** Define module API */
+export default moduleName;

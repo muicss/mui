@@ -3,7 +3,13 @@
  * @module angular/dropdown-item
  */
 
-module.exports = angular.module('mui.dropdown-item', [])
+import angular from 'angular';
+
+
+const moduleName = 'mui.dropdown-item';
+
+
+angular.module(moduleName, [])
   .directive('muiDropdownItem', function() {
     return {
       restrict: 'AE',
@@ -15,3 +21,7 @@ module.exports = angular.module('mui.dropdown-item', [])
       template: '<li><a href="{{link}}" ng-transclude></a></li>'
     };
   });
+
+
+/** Define module API */
+export default moduleName;

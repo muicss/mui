@@ -3,10 +3,15 @@
  * @module angular/button
  */
 
-var jqLite = require('../js/lib/jqLite');
+import angular from 'angular';
+
+import * as jqLite from '../js/lib/jqLite';
 
 
-module.exports = angular.module('mui.button', [])
+const moduleName = 'mui.button';
+
+
+angular.module(moduleName, [])
   .directive('muiButton', function() {
     return {
       restrict: 'AE',
@@ -83,3 +88,7 @@ module.exports = angular.module('mui.button', [])
       }
     };
   }]);
+
+
+/** Define module API */
+export default moduleName;

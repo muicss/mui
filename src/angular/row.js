@@ -3,7 +3,13 @@
  * @module angular/row.js
  */
 
-module.exports = angular.module('mui.row', [])
+import angular from 'angular';
+
+
+const moduleName = 'mui.row';
+
+
+angular.module('mui.row', [])
   .directive('muiRow', function() {
     return {
       restrict: 'AE',
@@ -18,3 +24,7 @@ module.exports = angular.module('mui.row', [])
       }
     };
   });
+
+
+/** Define module API */
+export default moduleName;

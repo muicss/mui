@@ -8,6 +8,21 @@ var babelCore = require('babel-core'),
     plugins = require('gulp-load-plugins')(),
     stringify = require('stringify');
 
+var reactBabelHelpers = [
+  'inherits',
+  'createClass',
+  'classCallCheck',
+  'possibleConstructorReturn',
+  'interopRequireDefault',
+  'interopRequireWildcard',
+  'extends',
+  'objectWithoutProperties'
+];
+
+var angularBabelHelpers = [
+  'interopRequireDefault',
+  'interopRequireWildcard'
+];
 
 
 
@@ -67,18 +82,6 @@ gulp.task('build-all', gulp.parallel(
 
 var del = require('del'),
     babelify = require('babelify');
-
-
-var babelHelpersList = [
-  'inherits',
-  'createClass',
-  'classCallCheck',
-  'possibleConstructorReturn',
-  'interopRequireDefault',
-  'interopRequireWildcard',
-  'extends',
-  'objectWithoutProperties'
-];
 
 
 function makeTask(displayName, fn) {
@@ -157,7 +160,7 @@ function buildCdnJs(dirname) {
 
 
 function buildCdnReact(dirname) {
-  var s = babelCore.buildExternalHelpers(babelHelpersList, 'global');
+  var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'global');
 
   return makeTask('build-cdn-react: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-react.js')
@@ -179,11 +182,17 @@ function buildCdnReact(dirname) {
 
 
 function buildCdnAngular(dirname) {
+  var s = babelCore.buildExternalHelpers(angularBabelHelpers, 'global');
+
   return makeTask('build-cdn-angular: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-angular.js')
       .pipe(plugins.browserify({
-        paths: ['./']
+        transform: [babelify.configure({plugins: ['external-helpers-2']})],
+        paths: ['./', './node_modules/'],
+        external: ['angular']
       }))
+      .pipe(plugins.replace("require('angular')", "window.angular"))
+      .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.concat('mui-angular.js'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.ngmin())
@@ -256,7 +265,7 @@ function buildCdnJsCombined(dirname, cssDir) {
 
 
 function buildCdnReactCombined(dirname, cssDir) {
-  var s = babelCore.buildExternalHelpers(babelHelpersList, 'global');
+  var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'global');
 
   return makeTask('build-cdn-react-combined: ' + dirname, function(done) {
     return gulp.src('./build-targets/cdn-react-combined.js')
@@ -279,12 +288,20 @@ function buildCdnReactCombined(dirname, cssDir) {
 
 
 function buildCdnAngularCombined(dirname, cssDir) {
+  var s = babelCore.buildExternalHelpers(angularBabelHelpers, 'global');
+
   return makeTask('build-cdn-angular-combined: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-angular-combined.js')
       .pipe(plugins.browserify({
-        transform: [stringify(['.css'])],
-        paths: ['./', cssDir]
+        transform: [
+          babelify.configure({plugins: ['external-helpers-2']}),
+          stringify(['.css'])
+        ],
+        paths: ['./', './node_modules/', cssDir],
+        external: ['angular']
       }))
+      .pipe(plugins.replace("require('angular')", "window.angular"))
+      .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.ngmin())
       .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-angular-combined.js'))
@@ -299,7 +316,7 @@ function buildCdnAngularCombined(dirname, cssDir) {
 // ----------------------------------------------------------------------------
 
 function buildE2eTests() {
-  var s = babelCore.buildExternalHelpers(babelHelpersList, 'global');
+  var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'global');
 
   return gulp.src('./build-targets/e2e-tests.js')
     .pipe(plugins.browserify({
@@ -406,7 +423,7 @@ function buildNpmReact() {
 
 function buildNpmReactBabelHelpers() {
   return makeTask('build-npm-react-babel-helpers', function(done) {
-    var s = babelCore.buildExternalHelpers(babelHelpersList, 'umd');
+    var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'umd');
     fs.writeFileSync('./packages/npm/lib/react/babel-helpers.js', s);
 
     done();

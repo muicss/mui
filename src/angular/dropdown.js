@@ -3,7 +3,13 @@
  * @module angular/dropdown
  */
 
-module.exports = angular.module('mui.dropdown', [])
+import angular from 'angular';
+
+
+const moduleName = 'mui.dropdown';
+
+
+angular.module(moduleName, [])
   .directive('muiDropdown', ['$timeout', '$compile', function($timeout, $compile) {
     return {
       restrict: 'AE',
@@ -87,3 +93,7 @@ module.exports = angular.module('mui.dropdown', [])
       }
     };
   }]);
+
+
+/** Define module API */
+export default moduleName;

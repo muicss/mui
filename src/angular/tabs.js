@@ -3,11 +3,15 @@
  * @module angular/tabs
  */
 
+import angular from 'angular';
 
-var jqLite = require('../js/lib/jqLite');
+import * as jqLite from '../js/lib/jqLite';
 
 
-module.exports = angular.module('mui.tabs', [])
+const moduleName = 'mui.tabs';
+
+
+angular.module(moduleName, [])
   .directive('muiTabs', function() {
     return {
       restrict: 'EA',
@@ -123,3 +127,7 @@ module.exports = angular.module('mui.tabs', [])
       }
     };
   }]);
+
+
+/** Define module API */
+export default moduleName;

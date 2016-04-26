@@ -3,7 +3,13 @@
  * @module angular/container
  */
 
-module.exports = angular.module('mui.container', [])
+import angular from 'angular';
+
+
+const moduleName = 'mui.container';
+
+
+angular.module(moduleName, [])
   .directive('muiContainer', function() {
     return {
       restrict: 'AE',
@@ -24,3 +30,7 @@ module.exports = angular.module('mui.container', [])
       }
     };
   });
+
+
+/** Define module API */
+export default moduleName;

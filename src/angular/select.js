@@ -3,13 +3,17 @@
  * @module angular/select
  */
 
+import angular from 'angular';
 
-var formlib = require('../js/lib/forms'),
-    util = require('../js/lib/util'),
-    jqLite = require('../js/lib/jqLite');
+import * as formlib from '../js/lib/forms';
+import * as util from '../js/lib/util';
+import * as jqLite from '../js/lib/jqLite';
 
 
-module.exports = angular.module('mui.select', [])
+const moduleName = 'mui.select';
+
+
+angular.module(moduleName, [])
   .directive('muiSelect', ['$timeout', function($timeout) {
     return {
       restrict: 'AE',
@@ -274,3 +278,7 @@ module.exports = angular.module('mui.select', [])
       }
     }
   }]);
+
+
+/** Define module API */
+export default moduleName;

@@ -3,10 +3,13 @@
  * @module angular/input
  */
 
+import angular from 'angular';
 
-var emptyClass = 'mui--is-empty',
-    notEmptyClass = 'mui--is-not-empty',
-    dirtyClass = 'mui--is-dirty';
+
+const moduleName = 'mui.input',
+      emptyClass = 'mui--is-empty',
+      notEmptyClass = 'mui--is-not-empty',
+      dirtyClass = 'mui--is-dirty';
 
 
 /**
@@ -146,6 +149,11 @@ function inputFactory(isTextArea) {
   }];
 }
 
-module.exports = angular.module('mui.input', [])
+
+angular.module(moduleName, [])
   .directive('muiInput', inputFactory(false))
   .directive('muiTextarea', inputFactory(true));
+
+
+/** Define module API */
+export default moduleName;
