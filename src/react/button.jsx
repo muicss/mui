@@ -155,17 +155,15 @@ class Ripple extends React.Component {
 
   componentDidMount() {
     // trigger teardown in 2 sec
-    let teardownTimer = setTimeout(() => {
+    this.teardownTimer = setTimeout(() => {
       let fn = this.props.onTeardown;
       fn && fn();
     }, 2000);
-
-    this.setState({ teardownTimer });
   }
 
   componentWillUnmount() {
     // clear timeout
-    clearTimeout(this.state.teardownTimer);
+    clearTimeout(this.teardownTimer);
   }
 
   render() {

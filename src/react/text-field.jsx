@@ -144,7 +144,7 @@ class Label extends React.Component {
   };
 
   componentDidMount() {
-    setTimeout(() => {
+    this.styleTimer = setTimeout(() => {
       const s = '.15s ease-out';
       let style;
 
@@ -158,6 +158,11 @@ class Label extends React.Component {
 
       this.setState({style});
     }, 150);
+  }
+
+  componentWillUnmount() {
+    // clear timer
+    clearTimeout(this.styleTimer);
   }
 
   render() {

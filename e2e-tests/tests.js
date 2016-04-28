@@ -22128,18 +22128,16 @@ var Ripple = function (_React$Component2) {
       var _this3 = this;
 
       // trigger teardown in 2 sec
-      var teardownTimer = setTimeout(function () {
+      this.teardownTimer = setTimeout(function () {
         var fn = _this3.props.onTeardown;
         fn && fn();
       }, 2000);
-
-      this.setState({ teardownTimer: teardownTimer });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       // clear timeout
-      clearTimeout(this.state.teardownTimer);
+      clearTimeout(this.teardownTimer);
     }
   }, {
     key: 'render',
@@ -23578,7 +23576,7 @@ var Menu = function (_React$Component2) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // blur active element (IE10 bugfix)
-      setTimeout(function () {
+      this.blurTimer = setTimeout(function () {
         var el = document.activeElement;
         if (el.nodeName.toLowerCase() !== 'body') el.blur();
       }, 0);
@@ -23596,6 +23594,9 @@ var Menu = function (_React$Component2) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      // clear timer
+      clearTimeout(this.blurTimer);
+
       // remove keydown handler
       jqLite.off(document, 'keydown', this.onKeydownCB);
     }
@@ -24085,7 +24086,7 @@ var Label = function (_React$Component2) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      setTimeout(function () {
+      this.styleTimer = setTimeout(function () {
         var s = '.15s ease-out';
         var style = void 0;
 
@@ -24099,6 +24100,12 @@ var Label = function (_React$Component2) {
 
         _this3.setState({ style: style });
       }, 150);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear timer
+      clearTimeout(this.styleTimer);
     }
   }, {
     key: 'render',
@@ -25479,13 +25486,6 @@ var _input = require('../../src/react/input');
 
 var _input2 = babelHelpers.interopRequireDefault(_input);
 
-var _reactHelpers = require('../lib/react-helpers');
-
-/**
- * MUI test react input component
- * @module test/react-tests/test-input
- */
-
 describe('react/input', function () {
   var errFn = void 0;
 
@@ -25576,9 +25576,24 @@ describe('react/input', function () {
     _reactAddonsTestUtils2.default.Simulate.change(inputEl);
     _assert2.default.equal(instance.state.value, 'test3');
   });
-});
 
-},{"../../src/react/input":191,"../lib/react-helpers":203,"assert":1,"react":172,"react-addons-test-utils":34,"react-dom":35}],214:[function(require,module,exports){
+  it('handles label unmount gracefully', function () {
+    var elem = _react2.default.createElement(_input2.default, { label: 'label', defaultValue: 'defaultValue' });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = _reactDom2.default.findDOMNode(instance);
+
+    _reactDom2.default.unmountComponentAtNode(wrapperEl.parentNode);
+
+    // TODO: How can we access the timer id to check if it was removed
+    //       successfully?
+    _assert2.default.equal(true, true);
+  });
+}); /**
+     * MUI test react input component
+     * @module test/react-tests/test-input
+     */
+
+},{"../../src/react/input":191,"assert":1,"react":172,"react-addons-test-utils":34,"react-dom":35}],214:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');

@@ -10,8 +10,6 @@ import ReactUtils from 'react-addons-test-utils';
 
 import Input from '../../src/react/input';
 
-import { getShallowRendererOutput } from '../lib/react-helpers';
-
 
 describe('react/input', function() {
   let errFn;
@@ -112,5 +110,18 @@ describe('react/input', function() {
     inputEl.value = 'test3';
     ReactUtils.Simulate.change(inputEl);
     assert.equal(instance.state.value, 'test3');
+  });
+
+
+  it('handles label unmount gracefully', function() {
+    let elem = <Input label="label" defaultValue="defaultValue"></Input>;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let wrapperEl = ReactDOM.findDOMNode(instance);
+
+    ReactDOM.unmountComponentAtNode(wrapperEl.parentNode);
+
+    // TODO: How can we access the timer id to check if it was removed
+    //       successfully?
+    assert.equal(true, true);
   });
 });

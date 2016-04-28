@@ -277,7 +277,7 @@ class Menu extends React.Component {
 
   componentDidMount() {
     // blur active element (IE10 bugfix)
-    setTimeout(function() {
+    this.blurTimer = setTimeout(function() {
       let el = document.activeElement;
       if (el.nodeName.toLowerCase() !== 'body') el.blur();
     }, 0);
@@ -298,6 +298,9 @@ class Menu extends React.Component {
   }
 
   componentWillUnmount() {
+    // clear timer
+    clearTimeout(this.blurTimer);
+    
     // remove keydown handler
     jqLite.off(document, 'keydown', this.onKeydownCB);
   }
