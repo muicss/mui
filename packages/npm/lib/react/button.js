@@ -181,18 +181,16 @@ var Ripple = function (_React$Component2) {
       var _this3 = this;
 
       // trigger teardown in 2 sec
-      var teardownTimer = setTimeout(function () {
+      this.teardownTimer = setTimeout(function () {
         var fn = _this3.props.onTeardown;
         fn && fn();
       }, 2000);
-
-      this.setState({ teardownTimer: teardownTimer });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       // clear timeout
-      clearTimeout(this.state.teardownTimer);
+      clearTimeout(this.teardownTimer);
     }
   }, {
     key: 'render',

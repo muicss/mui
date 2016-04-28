@@ -322,7 +322,7 @@ var Menu = function (_React$Component2) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // blur active element (IE10 bugfix)
-      setTimeout(function () {
+      this.blurTimer = setTimeout(function () {
         var el = document.activeElement;
         if (el.nodeName.toLowerCase() !== 'body') el.blur();
       }, 0);
@@ -340,6 +340,9 @@ var Menu = function (_React$Component2) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      // clear timer
+      clearTimeout(this.blurTimer);
+
       // remove keydown handler
       jqLite.off(document, 'keydown', this.onKeydownCB);
     }

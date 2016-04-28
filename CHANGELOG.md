@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.5.6 - April 28, 2016
+
+* Bugfix to Email SASS semantic markup
+* Handling timeouts gracefully in React componentWillUnmount
+
 ## 0.5.5 - April 26, 2016
 
 * Using ES6 for Angular source code

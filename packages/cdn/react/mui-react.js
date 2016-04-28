@@ -1026,18 +1026,16 @@ var Ripple = function (_React$Component2) {
       var _this3 = this;
 
       // trigger teardown in 2 sec
-      var teardownTimer = setTimeout(function () {
+      this.teardownTimer = setTimeout(function () {
         var fn = _this3.props.onTeardown;
         fn && fn();
       }, 2000);
-
-      this.setState({ teardownTimer: teardownTimer });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       // clear timeout
-      clearTimeout(this.state.teardownTimer);
+      clearTimeout(this.teardownTimer);
     }
   }, {
     key: 'render',
@@ -1367,7 +1365,7 @@ var Label = function (_React$Component2) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      setTimeout(function () {
+      this.styleTimer = setTimeout(function () {
         var s = '.15s ease-out';
         var style = void 0;
 
@@ -1381,6 +1379,12 @@ var Label = function (_React$Component2) {
 
         _this3.setState({ style: style });
       }, 150);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear timer
+      clearTimeout(this.styleTimer);
     }
   }, {
     key: 'render',
@@ -2874,7 +2878,7 @@ var Menu = function (_React$Component2) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // blur active element (IE10 bugfix)
-      setTimeout(function () {
+      this.blurTimer = setTimeout(function () {
         var el = document.activeElement;
         if (el.nodeName.toLowerCase() !== 'body') el.blur();
       }, 0);
@@ -2892,6 +2896,9 @@ var Menu = function (_React$Component2) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      // clear timer
+      clearTimeout(this.blurTimer);
+
       // remove keydown handler
       jqLite.off(document, 'keydown', this.onKeydownCB);
     }

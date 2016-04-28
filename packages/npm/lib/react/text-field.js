@@ -177,7 +177,7 @@ var Label = function (_React$Component2) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      setTimeout(function () {
+      this.styleTimer = setTimeout(function () {
         var s = '.15s ease-out';
         var style = void 0;
 
@@ -191,6 +191,12 @@ var Label = function (_React$Component2) {
 
         _this3.setState({ style: style });
       }, 150);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear timer
+      clearTimeout(this.styleTimer);
     }
   }, {
     key: 'render',
