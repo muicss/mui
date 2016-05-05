@@ -1756,7 +1756,7 @@ _angular2.default.module(moduleName, []).directive('muiTabs', function () {
       onChange: '&?'
     },
     template: '' + '<ul ' + 'class="mui-tabs__bar" ' + 'ng-class=\'{"mui-tabs__bar--justified": justified}\'>' + '<li ' + 'ng-repeat="tab in tabs track by $index" ' + 'ng-class=\'{"mui--is-active": $index === selectedId}\'>' + '<a ng-click="onClick($index)">{{tab.label}}</a>' + '</li>' + '</ul>',
-    controller: function controller($scope) {
+    controller: ['$scope', function ($scope) {
       var counter = 0;
 
       // init scope
@@ -1777,7 +1777,7 @@ _angular2.default.module(moduleName, []).directive('muiTabs', function () {
         // return id
         return tabId;
       };
-    },
+    }],
     link: function link(scope, element, attrs, ctrl, transcludeFn) {
       var isUndef = _angular2.default.isUndefined;
 

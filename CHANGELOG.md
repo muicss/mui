@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.5.7 - May 5, 2016
+
+* Fixed Angular injector minification bug in MUI Tabs
+
 ## 0.5.6 - April 28, 2016
 
 * Bugfix to Email SASS semantic markup

@@ -30,7 +30,7 @@ angular.module(moduleName, [])
         '<a ng-click="onClick($index)">{{tab.label}}</a>' +
         '</li>' +
         '</ul>',
-      controller: function($scope) {
+      controller: ['$scope', function($scope) {
         var counter = 0;
 
         // init scope
@@ -51,7 +51,7 @@ angular.module(moduleName, [])
           // return id
           return tabId;
         };
-      },
+      }],
       link: function(scope, element, attrs, ctrl, transcludeFn) {
         var isUndef = angular.isUndefined;
 
