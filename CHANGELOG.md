@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.5.8 - May 6, 2016
+
+* Added react@^15.0.0 as peerDependency in NPM package.json
+
 ## 0.5.7 - May 5, 2016
 
 * Fixed Angular injector minification bug in MUI Tabs
