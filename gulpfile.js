@@ -195,7 +195,7 @@ function buildCdnAngular(dirname) {
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.concat('mui-angular.js'))
       .pipe(gulp.dest(dirname))
-      .pipe(plugins.ngmin())
+      .pipe(plugins.ngAnnotate())
       .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-angular.min.js'))
       .pipe(gulp.dest(dirname));
@@ -302,7 +302,7 @@ function buildCdnAngularCombined(dirname, cssDir) {
       }))
       .pipe(plugins.replace("require('angular')", "window.angular"))
       .pipe(plugins.injectString.prepend(s))
-      .pipe(plugins.ngmin())
+      .pipe(plugins.ngAnnotate())
       .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-angular-combined.js'))
       .pipe(gulp.dest(dirname));
