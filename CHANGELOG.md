@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.5.9 - May 17, 2016
+
+* Set z-index of .mui-select__menu to 2 to fix overlap bug with floating action
+  buttons
+
 ## 0.5.8 - May 6, 2016
 
 * Added react@^15.0.0 as peerDependency in NPM package.json

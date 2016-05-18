@@ -579,9 +579,7 @@ h4, h5, h6 {
  * MUI Buttons
  */
 .mui-btn {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   font-weight: 500;
   font-size: 14px;
@@ -1017,9 +1015,7 @@ h4, h5, h6 {
 }
 
 [data-mui-toggle="dropdown"] {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   outline: 0;
 }
@@ -1610,9 +1606,7 @@ h4, h5, h6 {
 }
 
 .mui-select > select {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   display: block;
   height: 32px;
@@ -1656,7 +1650,7 @@ h4, h5, h6 {
 
 .mui-select__menu {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   min-width: 100%;
   overflow-y: auto;
   padding: 8px 0;
@@ -1794,9 +1788,7 @@ th {
 }
 
 [data-mui-toggle="tab"] {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
 }
 
@@ -1840,7 +1832,6 @@ th {
 
 .mui-textfield--float-label > label {
   position: absolute;
-  -webkit-transform: translate(0px, 15px);
   transform: translate(0px, 15px);
   font-size: 16px;
   line-height: 32px;
@@ -1852,7 +1843,6 @@ th {
 
 .mui-textfield--float-label > input:focus ~ label,
 .mui-textfield--float-label > textarea:focus ~ label {
-  -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
   font-size: 12px;
   line-height: 15px;
@@ -1866,7 +1856,6 @@ th {
   color: rgba(0, 0, 0, 0.54);
   font-size: 12px;
   line-height: 15px;
-  -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
   text-overflow: ellipsis;
 }
@@ -1886,9 +1875,7 @@ th {
 
 .mui-textfield > input,
 .mui-textfield > textarea {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   display: block;
   background-color: transparent;
@@ -2028,14 +2015,6 @@ th {
 /**
  * MUI Helpers module
  */
-@-webkit-keyframes mui-node-inserted {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
-}
 @keyframes mui-node-inserted {
   from {
     opacity: 0.99;
@@ -2428,31 +2407,15 @@ body.mui-body--scroll-lock {
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
-  -webkit-animation: mui-ripple-animation 2s;
   animation: mui-ripple-animation 2s;
-}
-
-@-webkit-keyframes mui-ripple-animation {
-  from {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  to {
-    -webkit-transform: scale(100);
-    transform: scale(100);
-    opacity: 0;
-  }
 }
 
 @keyframes mui-ripple-animation {
   from {
-    -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 0.4;
   }
   to {
-    -webkit-transform: scale(100);
     transform: scale(100);
     opacity: 0;
   }
