@@ -1648,6 +1648,25 @@ h4, h5, h6 {
   opacity: 1;
 }
 
+.mui-select > label {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mui-select:focus > label,
+.mui-select > select:focus ~ label {
+  color: #2196F3;
+}
+
 .mui-select__menu {
   position: absolute;
   z-index: 2;

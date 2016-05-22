@@ -69,6 +69,15 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
       opacity: 1;  // iOS fix for unreadable disabled content
     }
   }
+
+  > label {
+    @include form-label();
+  }
+}
+
+.mui-select:focus > label,
+.mui-select > select:focus ~ label {
+  color: $mui-input-border-color-focus;
 }
 
 .mui-select__menu {
