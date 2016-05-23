@@ -19,6 +19,7 @@ angular.module(moduleName, [])
       restrict: 'AE',
       require: ['ngModel'],
       scope: {
+        label: '@',
         name: '@',
         ngDisabled: '=',
         ngModel: '='
@@ -39,6 +40,7 @@ angular.module(moduleName, [])
         '>' +
         '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' +
         '</select>' +
+        '<label>{{label}}</label>' +
         '<div ' +
         'class="mui-select__menu"' +
         'ng-show="!useDefault && isOpen"> ' +

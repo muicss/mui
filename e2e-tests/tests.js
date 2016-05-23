@@ -23821,6 +23821,11 @@ var Select = function (_React$Component) {
           },
           this.props.children
         ),
+        _react2.default.createElement(
+          'label',
+          null,
+          this.props.label
+        ),
         menuElem
       );
     }
@@ -23835,6 +23840,7 @@ var Select = function (_React$Component) {
 
 
 Select.propTypes = {
+  label: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
   defaultValue: PropTypes.string,
@@ -26243,7 +26249,6 @@ describe('react/select', function () {
     var wrapperEl = instance.refs.wrapperEl;
 
     // check that select element is only child
-    _assert2.default.equal(wrapperEl.children.length, 1);
     _assert2.default.equal(wrapperEl.children[0].tagName, 'SELECT');
   });
 
@@ -26253,9 +26258,9 @@ describe('react/select', function () {
     var selectEl = instance.refs.selectEl;
 
     // check before and after click
-    _assert2.default.equal(wrapperEl.children.length, 1);
+    var numBefore = wrapperEl.children.length;
     _reactAddonsTestUtils2.default.Simulate.click(selectEl, { button: 0 });
-    _assert2.default.equal(wrapperEl.children.length, 2);
+    _assert2.default.equal(wrapperEl.children.length, numBefore + 1);
   });
 
   it('renders properly with additional classNames', function () {

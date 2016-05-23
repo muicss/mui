@@ -52,7 +52,6 @@ describe('react/select', function() {
     let wrapperEl = instance.refs.wrapperEl;
 
     // check that select element is only child
-    assert.equal(wrapperEl.children.length, 1);
     assert.equal(wrapperEl.children[0].tagName, 'SELECT');
   });
 
@@ -63,9 +62,9 @@ describe('react/select', function() {
     let selectEl = instance.refs.selectEl;
 
     // check before and after click
-    assert.equal(wrapperEl.children.length, 1);
+    let numBefore = wrapperEl.children.length;
     ReactUtils.Simulate.click(selectEl, {button: 0});
-    assert.equal(wrapperEl.children.length, 2);
+    assert.equal(wrapperEl.children.length, numBefore + 1);
   });
 
 

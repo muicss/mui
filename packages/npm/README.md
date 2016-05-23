@@ -251,6 +251,7 @@ import Select from 'muicss/lib/react/select';
 
 <Select />
   * {String} defaultValue
+  * {String} label
   * {String} name
   * {String} value
   * {Boolean} autoFocus=false|true

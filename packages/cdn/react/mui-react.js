@@ -2806,6 +2806,11 @@ var Select = function (_React$Component) {
           },
           this.props.children
         ),
+        _react2.default.createElement(
+          'label',
+          null,
+          this.props.label
+        ),
         menuElem
       );
     }
@@ -2820,6 +2825,7 @@ var Select = function (_React$Component) {
 
 
 Select.propTypes = {
+  label: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
   defaultValue: PropTypes.string,

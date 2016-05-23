@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.6.0 - May 22, 2016
+
+* Added support for select box label to MUI CSS/JS, MUI React and MUI Angular
+
 ## 0.5.9 - May 17, 2016
 
 * Set z-index of .mui-select__menu to 2 to fix overlap bug with floating action

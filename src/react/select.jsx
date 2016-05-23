@@ -51,6 +51,7 @@ class Select extends React.Component {
   };
 
   static propTypes = {
+    label: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.string,
     defaultValue: PropTypes.string,
@@ -234,6 +235,7 @@ class Select extends React.Component {
         >
           {this.props.children}
         </select>
+        <label>{this.props.label}</label>
         {menuElem}
       </div>
     );
