@@ -1,3 +1,5 @@
+The MIT License (MIT)
+
 Copyright (c) 2015 Andres Morey
 
 The following license applies to all parts of this software except as
