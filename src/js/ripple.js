@@ -9,7 +9,6 @@
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
     waves = require('./lib/waves'),
-    btnFABClass = 'mui-btn--fab',
     mui2wavesAddTuples = [
         ['mui-btn--fab',['waves-circle','waves-float']],
         ['mui-btn--raised',['waves-float']],
