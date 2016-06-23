@@ -91,8 +91,7 @@ var Button = function (_React$Component) {
           clickEv = ev.type === 'touchstart' ? ev.touches[0] : ev;
 
       // choose diameter
-      var diameter = offset.height;
-      if (this.props.variant === 'fab') diameter = diameter / 2;
+      var diameter = Math.sqrt(offset.width * offset.width + offset.height * offset.height) * 2;
 
       // add ripple to state
       var ripples = this.state.ripples;

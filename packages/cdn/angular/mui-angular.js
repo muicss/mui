@@ -805,17 +805,21 @@ var _angular2 = babelHelpers.interopRequireDefault(_angular);
 var _jqLite = require('../js/lib/jqLite');
 
 var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-/**
- * MUI Angular Button Component
- * @module angular/button
- */
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
 
 var moduleName = 'mui.button',
     rippleClass = 'mui-ripple-effect',
     supportsTouch = 'ontouchstart' in document.documentElement,
     mouseDownEvents = supportsTouch ? 'touchstart' : 'mousedown',
     mouseUpEvents = supportsTouch ? 'touchend' : 'mouseup mouseleave',
-    animationDuration = 600;
+    animationDuration = 600; /**
+                              * MUI Angular Button Component
+                              * @module angular/button
+                              */
 
 _angular2.default.module(moduleName, []).directive('muiButton', function () {
   return {
@@ -881,9 +885,8 @@ function mouseDownHandler(ev) {
       radius,
       rippleEl;
 
-  // choose diameter
-  diameter = offset.height;
-  if (element.hasClass('mui-btn--fab')) diameter = offset.height / 2;
+  // calculate diameter
+  diameter = Math.sqrt(offset.width * offset.width + offset.height * offset.height) * 2;
 
   // create ripple element
   rippleEl = _angular2.default.element('<div class="' + rippleClass + '"></div>');
@@ -946,7 +949,7 @@ function mouseUpHandler(ev) {
 exports.default = moduleName;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":4,"angular":"aeQg5j"}],8:[function(require,module,exports){
+},{"../js/lib/jqLite":4,"../js/lib/util":5,"angular":"aeQg5j"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

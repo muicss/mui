@@ -1212,9 +1212,9 @@ function createRippleEl(ev, buttonEl) {
       radius,
       rippleEl;
 
-  // choose diameter
-  if (jqLite.hasClass(buttonEl, btnFABClass)) diameter = offset.height / 2;
-  else diameter = offset.height;
+  // calculate diameter
+  diameter = Math.sqrt(offset.width * offset.width + 
+                       offset.height * offset.height) * 2;
 
   // create element
   rippleEl = document.createElement('div'),

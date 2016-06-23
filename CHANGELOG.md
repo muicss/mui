@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.6.3 - June 22, 2016
+
+* Improved handling of ripple dimensions to deal with long buttons
+
 ## 0.6.2 - June 22, 2016
 
 * Fixed bug causing recursive call to requestAnimationFrame

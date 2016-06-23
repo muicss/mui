@@ -6,6 +6,7 @@
 import angular from 'angular';
 
 import * as jqLite from '../js/lib/jqLite';
+import * as util from '../js/lib/util';
 
 
 const moduleName = 'mui.button',
@@ -83,9 +84,9 @@ function mouseDownHandler(ev) {
       radius,
       rippleEl;
 
-  // choose diameter
-  diameter = offset.height;
-  if (element.hasClass('mui-btn--fab')) diameter = offset.height / 2;
+  // calculate diameter
+  diameter = Math.sqrt(offset.width * offset.width +
+                       offset.height * offset.height) * 2;
   
   // create ripple element
   rippleEl = angular.element('<div class="' + rippleClass + '"></div>');

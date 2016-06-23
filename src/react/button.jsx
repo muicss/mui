@@ -85,8 +85,8 @@ class Button extends React.Component {
         clickEv = (ev.type === 'touchstart') ? ev.touches[0] : ev;
 
     // choose diameter
-    let diameter = offset.height;
-    if (this.props.variant === 'fab') diameter = diameter / 2;
+    let diameter = Math.sqrt(offset.width * offset.width +
+      offset.height * offset.height) * 2;
 
     // add ripple to state
     let ripples = this.state.ripples;
