@@ -739,8 +739,9 @@ function disableScrollLockFn() {
  * requestAnimationFrame polyfilled
  * @param {Function} callback - The callback function
  */
-function requestAnimationFrame(callback) {
-  if (window.requestAnimationFrame) requestAnimationFrame(callback);
+function requestAnimationFrameFn(callback) {
+  var fn = window.requestAnimationFrame;
+  if (fn) fn(callback);
   else setTimeout(callback, 0);
 }
 
@@ -777,7 +778,7 @@ module.exports = {
   raiseError: raiseErrorFn,
 
   /** Request animation frame */
-  requestAnimationFrame: requestAnimationFrame,
+  requestAnimationFrame: requestAnimationFrameFn,
 
   /** Support Pointer Events check */
   supportsPointerEvents: supportsPointerEventsFn

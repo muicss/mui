@@ -807,8 +807,9 @@ function disableScrollLockFn() {
  * requestAnimationFrame polyfilled
  * @param {Function} callback - The callback function
  */
-function requestAnimationFrame(callback) {
-  if (window.requestAnimationFrame) requestAnimationFrame(callback);else setTimeout(callback, 0);
+function requestAnimationFrameFn(callback) {
+  var fn = window.requestAnimationFrame;
+  if (fn) fn(callback);else setTimeout(callback, 0);
 }
 
 /**
@@ -843,7 +844,7 @@ module.exports = {
   raiseError: raiseErrorFn,
 
   /** Request animation frame */
-  requestAnimationFrame: requestAnimationFrame,
+  requestAnimationFrame: requestAnimationFrameFn,
 
   /** Support Pointer Events check */
   supportsPointerEvents: supportsPointerEventsFn
@@ -1089,11 +1090,9 @@ var Ripple = function (_React$Component2) {
     value: function componentDidMount() {
       var _this4 = this;
 
-      // NOTE: we're using setTimeout instead of requestAnimationFrame to avoid
-      // calling componentDidMount recursively
-      setTimeout(function () {
+      util.requestAnimationFrame(function () {
         _this4.setState({ animateIn: true });
-      }, 0);
+      });
     }
   }, {
     key: 'render',

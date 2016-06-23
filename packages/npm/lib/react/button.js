@@ -226,11 +226,9 @@ var Ripple = function (_React$Component2) {
     value: function componentDidMount() {
       var _this4 = this;
 
-      // NOTE: we're using setTimeout instead of requestAnimationFrame to avoid
-      // calling componentDidMount recursively
-      setTimeout(function () {
+      util.requestAnimationFrame(function () {
         _this4.setState({ animateIn: true });
-      }, 0);
+      });
     }
   }, {
     key: 'render',

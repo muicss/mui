@@ -194,11 +194,9 @@ class Ripple extends React.Component {
   };
 
   componentDidMount() {
-    // NOTE: we're using setTimeout instead of requestAnimationFrame to avoid
-    // calling componentDidMount recursively
-    setTimeout(() => {
+    util.requestAnimationFrame(() => {
       this.setState({animateIn: true});
-    }, 0);
+    });
   }
 
   render() {

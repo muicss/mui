@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.6.2 - June 22, 2016
+
+* Fixed bug causing recursive call to requestAnimationFrame
+
 ## 0.6.1 - June 22, 2016
 
 * Fixed slow animation issue with ripple effect in Firefox on linux
