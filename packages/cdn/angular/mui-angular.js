@@ -218,69 +218,78 @@ function jqLiteType(somevar) {
 /**
  * Attach an event handler to a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOn(element, type, callback, useCapture) {
+function jqLiteOn(element, events, callback, useCapture) {
   useCapture = useCapture === undefined ? false : useCapture;
 
-  // add to DOM
-  element.addEventListener(type, callback, useCapture);
-
-  // add to cache
   var cache = element._muiEventCache = element._muiEventCache || {};
-  cache[type] = cache[type] || [];
-  cache[type].push([callback, useCapture]);
+
+  events.split(' ').map(function (event) {
+    // add to DOM
+    element.addEventListener(event, callback, useCapture);
+
+    // add to cache
+    cache[event] = cache[event] || [];
+    cache[event].push([callback, useCapture]);
+  });
 }
 
 /**
  * Remove an event handler from a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOff(element, type, callback, useCapture) {
+function jqLiteOff(element, events, callback, useCapture) {
   useCapture = useCapture === undefined ? false : useCapture;
 
   // remove from cache
   var cache = element._muiEventCache = element._muiEventCache || {},
-      argsList = cache[type] || [],
+      argsList,
       args,
       i;
 
-  i = argsList.length;
-  while (i--) {
-    args = argsList[i];
+  events.split(' ').map(function (event) {
+    argsList = cache[event] || [];
 
-    // remove all events if callback is undefined
-    if (callback === undefined || args[0] === callback && args[1] === useCapture) {
+    i = argsList.length;
+    while (i--) {
+      args = argsList[i];
 
-      // remove from cache
-      argsList.splice(i, 1);
+      // remove all events if callback is undefined
+      if (callback === undefined || args[0] === callback && args[1] === useCapture) {
 
-      // remove from DOM
-      element.removeEventListener(type, args[0], args[1]);
+        // remove from cache
+        argsList.splice(i, 1);
+
+        // remove from DOM
+        element.removeEventListener(event, args[0], args[1]);
+      }
     }
-  }
+  });
 }
 
 /**
- * Attach an event hander which will only execute once
+ * Attach an event hander which will only execute once per element per event
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOne(element, type, callback, useCapture) {
-  jqLiteOn(element, type, function onFn(ev) {
-    // execute callback
-    if (callback) callback.apply(this, arguments);
+function jqLiteOne(element, events, callback, useCapture) {
+  events.split(' ').map(function (event) {
+    jqLiteOn(element, event, function onFn(ev) {
+      // execute callback
+      if (callback) callback.apply(this, arguments);
 
-    // remove wrapper
-    jqLiteOff(element, type, onFn);
-  }, useCapture);
+      // remove wrapper
+      jqLiteOff(element, event, onFn);
+    }, useCapture);
+  });
 }
 
 /**
@@ -575,12 +584,10 @@ function onNodeInsertedFn(callbackFn) {
 
   // initalize listeners
   if (nodeInsertedCallbacks._initialized === undefined) {
-    var doc = document;
+    var doc = document,
+        events = 'animationstart mozAnimationStart webkitAnimationStart';
 
-    jqLite.on(doc, 'animationstart', animationHandlerFn);
-    jqLite.on(doc, 'mozAnimationStart', animationHandlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', animationHandlerFn);
-
+    jqLite.on(doc, events, animationHandlerFn);
     nodeInsertedCallbacks._initialized = true;
   }
 }
@@ -703,6 +710,14 @@ function disableScrollLockFn() {
 }
 
 /**
+ * requestAnimationFrame polyfilled
+ * @param {Function} callback - The callback function
+ */
+function requestAnimationFrame(callback) {
+  if (window.requestAnimationFrame) requestAnimationFrame(callback);else setTimeout(callback, 0);
+}
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -732,6 +747,9 @@ module.exports = {
 
   /** Raise MUI error */
   raiseError: raiseErrorFn,
+
+  /** Request animation frame */
+  requestAnimationFrame: requestAnimationFrame,
 
   /** Support Pointer Events check */
   supportsPointerEvents: supportsPointerEventsFn
@@ -791,7 +809,12 @@ var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
  * @module angular/button
  */
 
-var moduleName = 'mui.button';
+var moduleName = 'mui.button',
+    rippleClass = 'mui-ripple-effect',
+    supportsTouch = 'ontouchstart' in document.documentElement,
+    mouseDownEvents = supportsTouch ? 'touchstart' : 'mousedown',
+    mouseUpEvents = supportsTouch ? 'touchend' : 'mouseup mouseleave',
+    animationDuration = 600;
 
 _angular2.default.module(moduleName, []).directive('muiButton', function () {
   return {
@@ -826,48 +849,97 @@ _angular2.default.module(moduleName, []).directive('muiButton', function () {
   return {
     restrict: 'A',
     link: function link(scope, element, attrs) {
-      var rippleClass = 'mui-ripple-effect';
-
-      /**
-       * onmousedown ripple effect
-       * @param  {event} mousedown event
-       */
-      element.on('mousedown', function (event) {
-        if (element.prop('disabled')) return;
-
-        var offset = jqLite.offset(element[0]),
-            xPos = event.pageX - offset.left,
-            yPos = event.pageY - offset.top,
-            diameter,
-            radius;
-
-        diameter = offset.height;
-        if (element.hasClass('mui-btn--fab')) diameter = offset.height / 2;
-        radius = diameter / 2;
-
-        // ripple Dom position
-        var rippleStyle = {
-          height: diameter + 'px',
-          width: diameter + 'px',
-          top: yPos - radius + 'px',
-          left: xPos - radius + 'px'
-        };
-
-        var ripple = _angular2.default.element('<div></div>').addClass(rippleClass);
-        for (var style in rippleStyle) {
-          ripple.css(style, rippleStyle[style]);
-        }
-
-        element.append(ripple);
-
-        // remove after delay
-        $timeout(function () {
-          ripple.remove();
-        }, 2000);
-      });
+      // add mousedown event handler
+      element.on(mouseDownEvents, mouseDownHandler);
     }
   };
 }]);
+
+/**
+ * MouseDown event handler.
+ * @param {Event} ev - The DOM event
+ */
+function mouseDownHandler(ev) {
+  var element = _angular2.default.element(this);
+
+  // exit if disabled
+  if (element.prop('disabled')) return;
+
+  // add mouseup event handler once
+  if (!this.muiMouseUp) {
+    element.on(mouseUpEvents, mouseUpHandler);
+    this.muiMouseUp = true;
+  }
+
+  // get (x, y) position of click
+  var offset = jqLite.offset(this),
+      clickEv = ev.type === 'touchstart' ? ev.touches[0] : ev,
+      xPos = clickEv.pageX - offset.left,
+      yPos = clickEv.pageY - offset.top,
+      diameter,
+      radius,
+      rippleEl;
+
+  // choose diameter
+  diameter = offset.height;
+  if (element.hasClass('mui-btn--fab')) diameter = offset.height / 2;
+
+  // create ripple element
+  rippleEl = _angular2.default.element('<div class="' + rippleClass + '"></div>');
+
+  radius = diameter / 2;
+
+  rippleEl.css({
+    height: diameter + 'px',
+    width: diameter + 'px',
+    top: yPos - radius + 'px',
+    left: xPos - radius + 'px'
+  });
+
+  // add to DOM
+  element.append(rippleEl);
+
+  // start animation
+  util.requestAnimationFrame(function () {
+    rippleEl.addClass('mui--animate-in mui--active');
+  });
+}
+
+/**
+ * MouseUp event handler.
+ * @param {Event} ev - The DOM event
+ */
+function mouseUpHandler(ev) {
+  var children = this.children,
+      i = children.length,
+      rippleEls = [],
+      el;
+
+  // animate out ripples
+  while (i--) {
+    el = children[i];
+    if (jqLite.hasClass(el, rippleClass)) {
+      jqLite.addClass(el, 'mui--animate-out');
+      rippleEls.push(el);
+    }
+  }
+
+  // remove ripples after animation
+  if (rippleEls.length) {
+    setTimeout(function () {
+      var i = rippleEls.length,
+          el,
+          parentNode;
+
+      // remove elements
+      while (i--) {
+        el = rippleEls[i];
+        parentNode = el.parentNode;
+        if (parentNode) parentNode.removeChild(el);
+      }
+    }, animationDuration);
+  }
+}
 
 /** Define module API */
 exports.default = moduleName;

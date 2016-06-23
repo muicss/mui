@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.6.1 - June 22, 2016
+
+* Fixed slow animation issue with ripple effect in Firefox on linux
+* Improved ripple effect animation
+
 ## 0.6.0 - May 22, 2016
 
 * Added support for select box label to MUI CSS/JS, MUI React and MUI Angular

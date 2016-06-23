@@ -118,23 +118,24 @@ describe('react/button', function() {
   });
 
 
-  it('removes ripples after two seconds', function(done) {
-    this.timeout(2050);
+  it('removes ripples after mouseup and animation duration', function(done) {
+    this.timeout(700);
 
     let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
 
     ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
+    ReactUtils.Simulate.mouseUp(node.refs.buttonEl);
     assert.equal(Object.keys(node.state.ripples).length, 1);
 
     setTimeout(function() {
       // check that ripple is still there
       assert.equal(Object.keys(node.state.ripples).length, 1);
-    }, 1000);
+    }, 500);
 
     setTimeout(function() {
       // check that ripple has been removed
       assert.equal(Object.keys(node.state.ripples).length, 0);
       done();
-    }, 2001);
+    }, 601);
   });
 });

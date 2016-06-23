@@ -10,12 +10,11 @@ import React from 'react';
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 
-let rippleIter = 0;
-
 const PropTypes = React.PropTypes,
       btnClass = 'mui-btn',
-      rippleClass = 'mui-ripple-effect',
-      btnAttrs = {color: 1, variant: 1, size: 1};
+      btnAttrs = {color: 1, variant: 1, size: 1},
+      animationDuration = 600,
+      supportsTouch = 'ontouchstart' in document.documentElement;
 
 
 /**
@@ -23,9 +22,20 @@ const PropTypes = React.PropTypes,
  * @class
  */
 class Button extends React.Component {
-  state = {
-    ripples: {}
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ripples: {}
+    };
+
+    this.rippleTimers = [];
+
+    let cb = util.callback;
+    this.onClickCB = cb(this, 'onClick');
+    this.onMouseDownCB = cb(this, 'onMouseDown');
+    this.onMouseUpCB = cb(this, 'onMouseUp');
+  }
 
   static propTypes = {
     color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
@@ -53,14 +63,26 @@ class Button extends React.Component {
     el._muiRipple = true;
   }
 
+  componentWillUnmount() {
+    // clear ripple timers
+    let timers = this.rippleTimers,
+        i = timers.length;
+
+    while (i--) clearTimeout(timers[i]);
+  }
+
   onClick(ev) {
     let onClickFn = this.props.onClick;
     onClickFn && onClickFn(ev);
   }
 
   onMouseDown(ev) {
+    // de-dupe touch events
+    if (supportsTouch && ev.type === 'mousedown') return;
+
     // get (x, y) position of click
-    let offset = jqLite.offset(this.refs.buttonEl);
+    let offset = jqLite.offset(this.refs.buttonEl),
+        clickEv = (ev.type === 'touchstart') ? ev.touches[0] : ev;
 
     // choose diameter
     let diameter = offset.height;
@@ -71,24 +93,34 @@ class Button extends React.Component {
     let key = Date.now();
 
     ripples[key] = {
-      xPos: ev.pageX - offset.left,
-      yPos: ev.pageY - offset.top,
+      xPos: clickEv.pageX - offset.left,
+      yPos: clickEv.pageY - offset.top,
       diameter: diameter,
-      teardownFn: this.teardownRipple.bind(this, key)
+      animateOut: false
     };
 
     this.setState({ ripples });
   }
 
-  onTouchStart(ev) {
+  onMouseUp(ev) {
+    // animate out ripples
+    let ripples = this.state.ripples,
+        deleteKeys = Object.keys(ripples),
+        k;
 
-  }
-
-  teardownRipple(key) {
-    // delete ripple
-    let ripples = this.state.ripples;
-    delete ripples[key];
+    for (k in ripples) ripples[k].animateOut = true;
     this.setState({ ripples });
+
+    // remove ripples after animation
+    let timer = setTimeout(() => {
+      let ripples = this.state.ripples,
+          i = deleteKeys.length;
+
+      while (i--) delete ripples[deleteKeys[i]];
+      this.setState({ ripples });
+    }, animationDuration);
+
+    this.rippleTimers.push(timer);
   }
 
   render() {
@@ -109,8 +141,12 @@ class Button extends React.Component {
         { ...this.props }
         ref="buttonEl"
         className={cls + ' ' + this.props.className}
-        onClick={this.onClick.bind(this)}
-        onMouseDown={this.onMouseDown.bind(this)}
+        onClick={this.onClickCB}
+        onMouseDown={this.onMouseDownCB}
+        onTouchStart={this.onMouseDownCB}
+        onMouseUp={this.onMouseUpCB}
+        onMouseLeave={this.onMouseUpCB}
+        onTouchEnd={this.onMouseUpCB}
       >
         {this.props.children}
         {
@@ -123,7 +159,7 @@ class Button extends React.Component {
                 xPos={v.xPos}
                 yPos={v.yPos}
                 diameter={v.diameter}
-                onTeardown={v.teardownFn}
+                animateOut={v.animateOut}
               />
             );
           })
@@ -139,31 +175,30 @@ class Button extends React.Component {
  * @class
  */
 class Ripple extends React.Component {
+  state = {
+    animateIn: false
+  };
+
   static propTypes = {
     xPos: PropTypes.number,
     yPos: PropTypes.number,
     diameter: PropTypes.number,
-    onTeardown: PropTypes.func
+    animateOut: PropTypes.bool
   };
 
   static defaultProps = {
     xPos: 0,
     yPos: 0,
     diameter: 0,
-    onTeardown: null
+    animateOut: false
   };
 
   componentDidMount() {
-    // trigger teardown in 2 sec
-    this.teardownTimer = setTimeout(() => {
-      let fn = this.props.onTeardown;
-      fn && fn();
-    }, 2000);
-  }
-
-  componentWillUnmount() {
-    // clear timeout
-    clearTimeout(this.teardownTimer);
+    // NOTE: we're using setTimeout instead of requestAnimationFrame to avoid
+    // calling componentDidMount recursively
+    setTimeout(() => {
+      this.setState({animateIn: true});
+    }, 0);
   }
 
   render() {
@@ -177,7 +212,12 @@ class Ripple extends React.Component {
       left: this.props.xPos - radius || 0
     };
 
-    return <div className={rippleClass} style={style} />;
+    // define class
+    let cls = 'mui-ripple-effect';
+    if (this.state.animateIn) cls += ' mui--animate-in mui--active';
+    if (this.props.animateOut) cls += ' mui--animate-out';
+
+    return <div className={cls} style={style} />;
   }
 }
 

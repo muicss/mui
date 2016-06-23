@@ -75,7 +75,6 @@ describe('js/lib/jqLite.js', function() {
       el.parentNode.removeChild(el);
     });
 
-
     
     it('should attach a listener', function() {
       var isClicked = false;
@@ -84,6 +83,17 @@ describe('js/lib/jqLite.js', function() {
       });
       el.dispatchEvent(event('click'));
       assert.equal(isClicked, true);
+    });
+
+
+    it('should attach multiple listeners', function() {
+      var numEvs = 0;
+      jqLite.on(el, 'click touchstart', function() {
+        numEvs += 1;
+      });
+      el.dispatchEvent(event('click'));
+      el.dispatchEvent(event('touchstart'));
+      assert.equal(numEvs, 2);
     });
 
 
@@ -105,6 +115,26 @@ describe('js/lib/jqLite.js', function() {
       el.dispatchEvent(event('click'));
       assert.equal(trigger1, true);
       assert.equal(trigger2, false);
+    });
+
+
+    it('should remove multiple listeners', function() {
+      var trigger = false,
+          fn = function() {trigger = true;};
+      
+      // add both
+      jqLite.on(el, 'click touchstart', fn);
+      
+      // remove both
+      jqLite.off(el, 'touchstart click', fn);
+
+      // trigger first
+      el.dispatchEvent(event('click'));
+      assert.equal(trigger, false);
+
+      // trigger second
+      el.dispatchEvent(event('touchstart'));
+      assert.equal(trigger, false);
     });
 
 
@@ -142,6 +172,29 @@ describe('js/lib/jqLite.js', function() {
       // trigger again
       el.dispatchEvent(event('click'));
       assert.equal(t, 1);
+    });
+
+
+    it('should only trigger once per event', function() {
+      var events = [],
+          fn;
+
+      fn = function(ev) {
+        events.push(ev.type);
+      }
+      
+      jqLite.one(el, 'click touchstart', fn);
+
+      // trigger once
+      el.dispatchEvent(event('click'));
+      el.dispatchEvent(event('click'));
+      el.dispatchEvent(event('touchstart'));
+      el.dispatchEvent(event('touchstart'));
+
+      // check triggers
+      assert.equal(events.length, 2);
+      assert.equal(events[0], 'click');
+      assert.equal(events[1], 'touchstart');
     });
   });
 

@@ -23,12 +23,11 @@ var _util = require('../js/lib/util');
 var util = babelHelpers.interopRequireWildcard(_util);
 
 
-var rippleIter = 0;
-
 var PropTypes = _react2.default.PropTypes,
     btnClass = 'mui-btn',
-    rippleClass = 'mui-ripple-effect',
-    btnAttrs = { color: 1, variant: 1, size: 1 };
+    btnAttrs = { color: 1, variant: 1, size: 1 },
+    animationDuration = 600,
+    supportsTouch = 'ontouchstart' in document.documentElement;
 
 /**
  * Button element
@@ -38,20 +37,22 @@ var PropTypes = _react2.default.PropTypes,
 var Button = function (_React$Component) {
   babelHelpers.inherits(Button, _React$Component);
 
-  function Button() {
-    var _Object$getPrototypeO;
-
-    var _temp, _this, _ret;
-
+  function Button(props) {
     babelHelpers.classCallCheck(this, Button);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this, props));
 
-    return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Button)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    _this.state = {
       ripples: {}
-    }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
+    };
+
+    _this.rippleTimers = [];
+
+    var cb = util.callback;
+    _this.onClickCB = cb(_this, 'onClick');
+    _this.onMouseDownCB = cb(_this, 'onMouseDown');
+    _this.onMouseUpCB = cb(_this, 'onMouseUp');
+    return _this;
   }
 
   babelHelpers.createClass(Button, [{
@@ -63,6 +64,17 @@ var Button = function (_React$Component) {
       el._muiRipple = true;
     }
   }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear ripple timers
+      var timers = this.rippleTimers,
+          i = timers.length;
+
+      while (i--) {
+        clearTimeout(timers[i]);
+      }
+    }
+  }, {
     key: 'onClick',
     value: function onClick(ev) {
       var onClickFn = this.props.onClick;
@@ -71,8 +83,12 @@ var Button = function (_React$Component) {
   }, {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
+      // de-dupe touch events
+      if (supportsTouch && ev.type === 'mousedown') return;
+
       // get (x, y) position of click
-      var offset = jqLite.offset(this.refs.buttonEl);
+      var offset = jqLite.offset(this.refs.buttonEl),
+          clickEv = ev.type === 'touchstart' ? ev.touches[0] : ev;
 
       // choose diameter
       var diameter = offset.height;
@@ -83,24 +99,39 @@ var Button = function (_React$Component) {
       var key = Date.now();
 
       ripples[key] = {
-        xPos: ev.pageX - offset.left,
-        yPos: ev.pageY - offset.top,
+        xPos: clickEv.pageX - offset.left,
+        yPos: clickEv.pageY - offset.top,
         diameter: diameter,
-        teardownFn: this.teardownRipple.bind(this, key)
+        animateOut: false
       };
 
       this.setState({ ripples: ripples });
     }
   }, {
-    key: 'onTouchStart',
-    value: function onTouchStart(ev) {}
-  }, {
-    key: 'teardownRipple',
-    value: function teardownRipple(key) {
-      // delete ripple
-      var ripples = this.state.ripples;
-      delete ripples[key];
-      this.setState({ ripples: ripples });
+    key: 'onMouseUp',
+    value: function onMouseUp(ev) {
+      var _this2 = this;
+
+      // animate out ripples
+      var ripples = this.state.ripples,
+          deleteKeys = Object.keys(ripples),
+          k = void 0;
+
+      for (k in ripples) {
+        ripples[k].animateOut = true;
+      }this.setState({ ripples: ripples });
+
+      // remove ripples after animation
+      var timer = setTimeout(function () {
+        var ripples = _this2.state.ripples,
+            i = deleteKeys.length;
+
+        while (i--) {
+          delete ripples[deleteKeys[i]];
+        }_this2.setState({ ripples: ripples });
+      }, animationDuration);
+
+      this.rippleTimers.push(timer);
     }
   }, {
     key: 'render',
@@ -122,8 +153,12 @@ var Button = function (_React$Component) {
         babelHelpers.extends({}, this.props, {
           ref: 'buttonEl',
           className: cls + ' ' + this.props.className,
-          onClick: this.onClick.bind(this),
-          onMouseDown: this.onMouseDown.bind(this)
+          onClick: this.onClickCB,
+          onMouseDown: this.onMouseDownCB,
+          onTouchStart: this.onMouseDownCB,
+          onMouseUp: this.onMouseUpCB,
+          onMouseLeave: this.onMouseUpCB,
+          onTouchEnd: this.onMouseUpCB
         }),
         this.props.children,
         Object.keys(ripples).map(function (k, i) {
@@ -134,7 +169,7 @@ var Button = function (_React$Component) {
             xPos: v.xPos,
             yPos: v.yPos,
             diameter: v.diameter,
-            onTeardown: v.teardownFn
+            animateOut: v.animateOut
           });
         })
       );
@@ -171,26 +206,31 @@ var Ripple = function (_React$Component2) {
   babelHelpers.inherits(Ripple, _React$Component2);
 
   function Ripple() {
+    var _Object$getPrototypeO;
+
+    var _temp, _this3, _ret;
+
     babelHelpers.classCallCheck(this, Ripple);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Ripple)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this3), _this3.state = {
+      animateIn: false
+    }, _temp), babelHelpers.possibleConstructorReturn(_this3, _ret);
   }
 
   babelHelpers.createClass(Ripple, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this3 = this;
+      var _this4 = this;
 
-      // trigger teardown in 2 sec
-      this.teardownTimer = setTimeout(function () {
-        var fn = _this3.props.onTeardown;
-        fn && fn();
-      }, 2000);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // clear timeout
-      clearTimeout(this.teardownTimer);
+      // NOTE: we're using setTimeout instead of requestAnimationFrame to avoid
+      // calling componentDidMount recursively
+      setTimeout(function () {
+        _this4.setState({ animateIn: true });
+      }, 0);
     }
   }, {
     key: 'render',
@@ -205,7 +245,12 @@ var Ripple = function (_React$Component2) {
         left: this.props.xPos - radius || 0
       };
 
-      return _react2.default.createElement('div', { className: rippleClass, style: style });
+      // define class
+      var cls = 'mui-ripple-effect';
+      if (this.state.animateIn) cls += ' mui--animate-in mui--active';
+      if (this.props.animateOut) cls += ' mui--animate-out';
+
+      return _react2.default.createElement('div', { className: cls, style: style });
     }
   }]);
   return Ripple;
@@ -218,13 +263,13 @@ Ripple.propTypes = {
   xPos: PropTypes.number,
   yPos: PropTypes.number,
   diameter: PropTypes.number,
-  onTeardown: PropTypes.func
+  animateOut: PropTypes.bool
 };
 Ripple.defaultProps = {
   xPos: 0,
   yPos: 0,
   diameter: 0,
-  onTeardown: null
+  animateOut: false
 };
 exports.default = Button;
 module.exports = exports['default'];

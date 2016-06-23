@@ -21673,69 +21673,78 @@ function jqLiteType(somevar) {
 /**
  * Attach an event handler to a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOn(element, type, callback, useCapture) {
+function jqLiteOn(element, events, callback, useCapture) {
   useCapture = useCapture === undefined ? false : useCapture;
 
-  // add to DOM
-  element.addEventListener(type, callback, useCapture);
-
-  // add to cache
   var cache = element._muiEventCache = element._muiEventCache || {};
-  cache[type] = cache[type] || [];
-  cache[type].push([callback, useCapture]);
+
+  events.split(' ').map(function (event) {
+    // add to DOM
+    element.addEventListener(event, callback, useCapture);
+
+    // add to cache
+    cache[event] = cache[event] || [];
+    cache[event].push([callback, useCapture]);
+  });
 }
 
 /**
  * Remove an event handler from a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOff(element, type, callback, useCapture) {
+function jqLiteOff(element, events, callback, useCapture) {
   useCapture = useCapture === undefined ? false : useCapture;
 
   // remove from cache
   var cache = element._muiEventCache = element._muiEventCache || {},
-      argsList = cache[type] || [],
+      argsList,
       args,
       i;
 
-  i = argsList.length;
-  while (i--) {
-    args = argsList[i];
+  events.split(' ').map(function (event) {
+    argsList = cache[event] || [];
 
-    // remove all events if callback is undefined
-    if (callback === undefined || args[0] === callback && args[1] === useCapture) {
+    i = argsList.length;
+    while (i--) {
+      args = argsList[i];
 
-      // remove from cache
-      argsList.splice(i, 1);
+      // remove all events if callback is undefined
+      if (callback === undefined || args[0] === callback && args[1] === useCapture) {
 
-      // remove from DOM
-      element.removeEventListener(type, args[0], args[1]);
+        // remove from cache
+        argsList.splice(i, 1);
+
+        // remove from DOM
+        element.removeEventListener(event, args[0], args[1]);
+      }
     }
-  }
+  });
 }
 
 /**
- * Attach an event hander which will only execute once
+ * Attach an event hander which will only execute once per element per event
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOne(element, type, callback, useCapture) {
-  jqLiteOn(element, type, function onFn(ev) {
-    // execute callback
-    if (callback) callback.apply(this, arguments);
+function jqLiteOne(element, events, callback, useCapture) {
+  events.split(' ').map(function (event) {
+    jqLiteOn(element, event, function onFn(ev) {
+      // execute callback
+      if (callback) callback.apply(this, arguments);
 
-    // remove wrapper
-    jqLiteOff(element, type, onFn);
-  }, useCapture);
+      // remove wrapper
+      jqLiteOff(element, event, onFn);
+    }, useCapture);
+  });
 }
 
 /**
@@ -22030,12 +22039,10 @@ function onNodeInsertedFn(callbackFn) {
 
   // initalize listeners
   if (nodeInsertedCallbacks._initialized === undefined) {
-    var doc = document;
+    var doc = document,
+        events = 'animationstart mozAnimationStart webkitAnimationStart';
 
-    jqLite.on(doc, 'animationstart', animationHandlerFn);
-    jqLite.on(doc, 'mozAnimationStart', animationHandlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', animationHandlerFn);
-
+    jqLite.on(doc, events, animationHandlerFn);
     nodeInsertedCallbacks._initialized = true;
   }
 }
@@ -22158,6 +22165,14 @@ function disableScrollLockFn() {
 }
 
 /**
+ * requestAnimationFrame polyfilled
+ * @param {Function} callback - The callback function
+ */
+function requestAnimationFrame(callback) {
+  if (window.requestAnimationFrame) requestAnimationFrame(callback);else setTimeout(callback, 0);
+}
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -22187,6 +22202,9 @@ module.exports = {
 
   /** Raise MUI error */
   raiseError: raiseErrorFn,
+
+  /** Request animation frame */
+  requestAnimationFrame: requestAnimationFrame,
 
   /** Support Pointer Events check */
   supportsPointerEvents: supportsPointerEventsFn
@@ -22282,12 +22300,11 @@ var _util = require('../js/lib/util');
 var util = babelHelpers.interopRequireWildcard(_util);
 
 
-var rippleIter = 0;
-
 var PropTypes = _react2.default.PropTypes,
     btnClass = 'mui-btn',
-    rippleClass = 'mui-ripple-effect',
-    btnAttrs = { color: 1, variant: 1, size: 1 };
+    btnAttrs = { color: 1, variant: 1, size: 1 },
+    animationDuration = 600,
+    supportsTouch = 'ontouchstart' in document.documentElement;
 
 /**
  * Button element
@@ -22297,20 +22314,22 @@ var PropTypes = _react2.default.PropTypes,
 var Button = function (_React$Component) {
   babelHelpers.inherits(Button, _React$Component);
 
-  function Button() {
-    var _Object$getPrototypeO;
-
-    var _temp, _this, _ret;
-
+  function Button(props) {
     babelHelpers.classCallCheck(this, Button);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this, props));
 
-    return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Button)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    _this.state = {
       ripples: {}
-    }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
+    };
+
+    _this.rippleTimers = [];
+
+    var cb = util.callback;
+    _this.onClickCB = cb(_this, 'onClick');
+    _this.onMouseDownCB = cb(_this, 'onMouseDown');
+    _this.onMouseUpCB = cb(_this, 'onMouseUp');
+    return _this;
   }
 
   babelHelpers.createClass(Button, [{
@@ -22322,6 +22341,17 @@ var Button = function (_React$Component) {
       el._muiRipple = true;
     }
   }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // clear ripple timers
+      var timers = this.rippleTimers,
+          i = timers.length;
+
+      while (i--) {
+        clearTimeout(timers[i]);
+      }
+    }
+  }, {
     key: 'onClick',
     value: function onClick(ev) {
       var onClickFn = this.props.onClick;
@@ -22330,8 +22360,12 @@ var Button = function (_React$Component) {
   }, {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
+      // de-dupe touch events
+      if (supportsTouch && ev.type === 'mousedown') return;
+
       // get (x, y) position of click
-      var offset = jqLite.offset(this.refs.buttonEl);
+      var offset = jqLite.offset(this.refs.buttonEl),
+          clickEv = ev.type === 'touchstart' ? ev.touches[0] : ev;
 
       // choose diameter
       var diameter = offset.height;
@@ -22342,24 +22376,39 @@ var Button = function (_React$Component) {
       var key = Date.now();
 
       ripples[key] = {
-        xPos: ev.pageX - offset.left,
-        yPos: ev.pageY - offset.top,
+        xPos: clickEv.pageX - offset.left,
+        yPos: clickEv.pageY - offset.top,
         diameter: diameter,
-        teardownFn: this.teardownRipple.bind(this, key)
+        animateOut: false
       };
 
       this.setState({ ripples: ripples });
     }
   }, {
-    key: 'onTouchStart',
-    value: function onTouchStart(ev) {}
-  }, {
-    key: 'teardownRipple',
-    value: function teardownRipple(key) {
-      // delete ripple
-      var ripples = this.state.ripples;
-      delete ripples[key];
-      this.setState({ ripples: ripples });
+    key: 'onMouseUp',
+    value: function onMouseUp(ev) {
+      var _this2 = this;
+
+      // animate out ripples
+      var ripples = this.state.ripples,
+          deleteKeys = Object.keys(ripples),
+          k = void 0;
+
+      for (k in ripples) {
+        ripples[k].animateOut = true;
+      }this.setState({ ripples: ripples });
+
+      // remove ripples after animation
+      var timer = setTimeout(function () {
+        var ripples = _this2.state.ripples,
+            i = deleteKeys.length;
+
+        while (i--) {
+          delete ripples[deleteKeys[i]];
+        }_this2.setState({ ripples: ripples });
+      }, animationDuration);
+
+      this.rippleTimers.push(timer);
     }
   }, {
     key: 'render',
@@ -22381,8 +22430,12 @@ var Button = function (_React$Component) {
         babelHelpers.extends({}, this.props, {
           ref: 'buttonEl',
           className: cls + ' ' + this.props.className,
-          onClick: this.onClick.bind(this),
-          onMouseDown: this.onMouseDown.bind(this)
+          onClick: this.onClickCB,
+          onMouseDown: this.onMouseDownCB,
+          onTouchStart: this.onMouseDownCB,
+          onMouseUp: this.onMouseUpCB,
+          onMouseLeave: this.onMouseUpCB,
+          onTouchEnd: this.onMouseUpCB
         }),
         this.props.children,
         Object.keys(ripples).map(function (k, i) {
@@ -22393,7 +22446,7 @@ var Button = function (_React$Component) {
             xPos: v.xPos,
             yPos: v.yPos,
             diameter: v.diameter,
-            onTeardown: v.teardownFn
+            animateOut: v.animateOut
           });
         })
       );
@@ -22430,26 +22483,31 @@ var Ripple = function (_React$Component2) {
   babelHelpers.inherits(Ripple, _React$Component2);
 
   function Ripple() {
+    var _Object$getPrototypeO;
+
+    var _temp, _this3, _ret;
+
     babelHelpers.classCallCheck(this, Ripple);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Ripple)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this3), _this3.state = {
+      animateIn: false
+    }, _temp), babelHelpers.possibleConstructorReturn(_this3, _ret);
   }
 
   babelHelpers.createClass(Ripple, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this3 = this;
+      var _this4 = this;
 
-      // trigger teardown in 2 sec
-      this.teardownTimer = setTimeout(function () {
-        var fn = _this3.props.onTeardown;
-        fn && fn();
-      }, 2000);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // clear timeout
-      clearTimeout(this.teardownTimer);
+      // NOTE: we're using setTimeout instead of requestAnimationFrame to avoid
+      // calling componentDidMount recursively
+      setTimeout(function () {
+        _this4.setState({ animateIn: true });
+      }, 0);
     }
   }, {
     key: 'render',
@@ -22464,7 +22522,12 @@ var Ripple = function (_React$Component2) {
         left: this.props.xPos - radius || 0
       };
 
-      return _react2.default.createElement('div', { className: rippleClass, style: style });
+      // define class
+      var cls = 'mui-ripple-effect';
+      if (this.state.animateIn) cls += ' mui--animate-in mui--active';
+      if (this.props.animateOut) cls += ' mui--animate-out';
+
+      return _react2.default.createElement('div', { className: cls, style: style });
     }
   }]);
   return Ripple;
@@ -22477,13 +22540,13 @@ Ripple.propTypes = {
   xPos: PropTypes.number,
   yPos: PropTypes.number,
   diameter: PropTypes.number,
-  onTeardown: PropTypes.func
+  animateOut: PropTypes.bool
 };
 Ripple.defaultProps = {
   xPos: 0,
   yPos: 0,
   diameter: 0,
-  onTeardown: null
+  animateOut: false
 };
 exports.default = Button;
 module.exports = exports['default'];
@@ -24644,6 +24707,16 @@ describe('js/lib/jqLite.js', function () {
       assert.equal(isClicked, true);
     });
 
+    it('should attach multiple listeners', function () {
+      var numEvs = 0;
+      jqLite.on(el, 'click touchstart', function () {
+        numEvs += 1;
+      });
+      el.dispatchEvent(event('click'));
+      el.dispatchEvent(event('touchstart'));
+      assert.equal(numEvs, 2);
+    });
+
     it('should remove a listener', function () {
       var trigger1 = false,
           trigger2 = false;
@@ -24666,6 +24739,27 @@ describe('js/lib/jqLite.js', function () {
       el.dispatchEvent(event('click'));
       assert.equal(trigger1, true);
       assert.equal(trigger2, false);
+    });
+
+    it('should remove multiple listeners', function () {
+      var trigger = false,
+          fn = function fn() {
+        trigger = true;
+      };
+
+      // add both
+      jqLite.on(el, 'click touchstart', fn);
+
+      // remove both
+      jqLite.off(el, 'touchstart click', fn);
+
+      // trigger first
+      el.dispatchEvent(event('click'));
+      assert.equal(trigger, false);
+
+      // trigger second
+      el.dispatchEvent(event('touchstart'));
+      assert.equal(trigger, false);
     });
 
     it('should remove all listeners', function () {
@@ -24707,6 +24801,28 @@ describe('js/lib/jqLite.js', function () {
       // trigger again
       el.dispatchEvent(event('click'));
       assert.equal(t, 1);
+    });
+
+    it('should only trigger once per event', function () {
+      var events = [],
+          fn;
+
+      fn = function fn(ev) {
+        events.push(ev.type);
+      };
+
+      jqLite.one(el, 'click touchstart', fn);
+
+      // trigger once
+      el.dispatchEvent(event('click'));
+      el.dispatchEvent(event('click'));
+      el.dispatchEvent(event('touchstart'));
+      el.dispatchEvent(event('touchstart'));
+
+      // check triggers
+      assert.equal(events.length, 2);
+      assert.equal(events[0], 'click');
+      assert.equal(events[1], 'touchstart');
     });
   });
 
@@ -25052,8 +25168,8 @@ describe('react/button', function () {
     _assert2.default.equal(Object.keys(node.state.ripples).length, 2);
   });
 
-  it('removes ripples after two seconds', function (done) {
-    this.timeout(2050);
+  it('removes ripples after mouseup and animation duration', function (done) {
+    this.timeout(700);
 
     var node = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
       _button2.default,
@@ -25062,18 +25178,19 @@ describe('react/button', function () {
     ));
 
     _reactAddonsTestUtils2.default.Simulate.mouseDown(node.refs.buttonEl);
+    _reactAddonsTestUtils2.default.Simulate.mouseUp(node.refs.buttonEl);
     _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
 
     setTimeout(function () {
       // check that ripple is still there
       _assert2.default.equal(Object.keys(node.state.ripples).length, 1);
-    }, 1000);
+    }, 500);
 
     setTimeout(function () {
       // check that ripple has been removed
       _assert2.default.equal(Object.keys(node.state.ripples).length, 0);
       done();
-    }, 2001);
+    }, 601);
   });
 });
 

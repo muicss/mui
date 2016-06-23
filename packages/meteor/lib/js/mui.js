@@ -217,72 +217,81 @@ function jqLiteType(somevar) {
 /**
  * Attach an event handler to a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOn(element, type, callback, useCapture) {
+function jqLiteOn(element, events, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
-  // add to DOM
-  element.addEventListener(type, callback, useCapture);
+  var cache = element._muiEventCache = element._muiEventCache || {};  
 
-  // add to cache
-  var cache = element._muiEventCache = element._muiEventCache || {};
-  cache[type] = cache[type] || [];
-  cache[type].push([callback, useCapture]);
+  events.split(' ').map(function(event) {
+    // add to DOM
+    element.addEventListener(event, callback, useCapture);
+
+    // add to cache
+    cache[event] = cache[event] || [];
+    cache[event].push([callback, useCapture]);
+  });
 }
 
 
 /**
  * Remove an event handler from a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOff(element, type, callback, useCapture) {
+function jqLiteOff(element, events, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
   // remove from cache
   var cache = element._muiEventCache = element._muiEventCache || {},
-      argsList = cache[type] || [],
+      argsList,
       args,
       i;
 
-  i = argsList.length;
-  while (i--) {
-    args = argsList[i];
+  events.split(' ').map(function(event) {
+    argsList = cache[event] || [];
 
-    // remove all events if callback is undefined
-    if (callback === undefined ||
-        (args[0] === callback && args[1] === useCapture)) {
+    i = argsList.length;
+    while (i--) {
+      args = argsList[i];
 
-      // remove from cache
-      argsList.splice(i, 1);
-      
-      // remove from DOM
-      element.removeEventListener(type, args[0], args[1]);
+      // remove all events if callback is undefined
+      if (callback === undefined ||
+          (args[0] === callback && args[1] === useCapture)) {
+
+        // remove from cache
+        argsList.splice(i, 1);
+        
+        // remove from DOM
+        element.removeEventListener(event, args[0], args[1]);
+      }
     }
-  }
+  });
 }
 
 
 /**
- * Attach an event hander which will only execute once
+ * Attach an event hander which will only execute once per element per event
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOne(element, type, callback, useCapture) {
-  jqLiteOn(element, type, function onFn(ev) {
-    // execute callback
-    if (callback) callback.apply(this, arguments);
+function jqLiteOne(element, events, callback, useCapture) {
+  events.split(' ').map(function(event) {
+    jqLiteOn(element, event, function onFn(ev) {
+      // execute callback
+      if (callback) callback.apply(this, arguments);
 
-    // remove wrapper
-    jqLiteOff(element, type, onFn);
-  }, useCapture);
+      // remove wrapper
+      jqLiteOff(element, event, onFn);
+    }, useCapture);
+  });
 }
 
 
@@ -595,12 +604,10 @@ function onNodeInsertedFn(callbackFn) {
 
   // initalize listeners
   if (nodeInsertedCallbacks._initialized === undefined) {
-    var doc = document;
+    var doc = document,
+        events = 'animationstart mozAnimationStart webkitAnimationStart';
 
-    jqLite.on(doc, 'animationstart', animationHandlerFn);
-    jqLite.on(doc, 'mozAnimationStart', animationHandlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', animationHandlerFn);
-
+    jqLite.on(doc, events, animationHandlerFn);
     nodeInsertedCallbacks._initialized = true;
   }
 }
@@ -729,6 +736,16 @@ function disableScrollLockFn() {
 
 
 /**
+ * requestAnimationFrame polyfilled
+ * @param {Function} callback - The callback function
+ */
+function requestAnimationFrame(callback) {
+  if (window.requestAnimationFrame) requestAnimationFrame(callback);
+  else setTimeout(callback, 0);
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -758,6 +775,9 @@ module.exports = {
 
   /** Raise MUI error */
   raiseError: raiseErrorFn,
+
+  /** Request animation frame */
+  requestAnimationFrame: requestAnimationFrame,
 
   /** Support Pointer Events check */
   supportsPointerEvents: supportsPointerEventsFn
@@ -1086,7 +1106,10 @@ var jqLite = require('./lib/jqLite'),
     btnClass = 'mui-btn',
     btnFABClass = 'mui-btn--fab',
     rippleClass = 'mui-ripple-effect',
-    animationName = 'mui-btn-inserted';
+    supportsTouch = 'ontouchstart' in document.documentElement,
+    mouseDownEvents = (supportsTouch) ? 'touchstart' : 'mousedown',
+    mouseUpEvents = (supportsTouch) ? 'touchend' : 'mouseup mouseleave',
+    animationDuration = 600;
 
 
 /**
@@ -1102,49 +1125,102 @@ function initialize(buttonEl) {
   if (buttonEl.tagName === 'INPUT') return;
 
   // attach event handler
-  jqLite.on(buttonEl, 'touchstart', eventHandler);
-  jqLite.on(buttonEl, 'mousedown', eventHandler);
+  jqLite.on(buttonEl, mouseDownEvents, mouseDownHandler);
 }
 
 
 /**
- * Event handler
+ * MouseDown Event handler.
  * @param {Event} ev - The DOM event
  */
-function eventHandler(ev) {
+function mouseDownHandler(ev) {
   // only left clicks
-  if (ev.button !== 0) return;
+  if (ev.type === 'mousedown' && ev.button !== 0) return;
 
   var buttonEl = this;
 
   // exit if button is disabled
   if (buttonEl.disabled === true) return;
 
-  // de-dupe touchstart and mousedown with 100msec flag
-  if (buttonEl.touchFlag === true) {
-    return;
-  } else {
-    buttonEl.touchFlag = true;
-    setTimeout(function() {
-      buttonEl.touchFlag = false;
-    }, 100);
+  // add mouseup event to button once
+  if (!buttonEl.muiMouseUp) {
+    jqLite.on(buttonEl, mouseUpEvents, mouseUpHandler);
+    buttonEl.muiMouseUp = true;
   }
 
-  var rippleEl = document.createElement('div');
-  rippleEl.className = rippleClass;
+  // create ripple element
+  var rippleEl = createRippleEl(ev, buttonEl);
 
+  buttonEl.appendChild(rippleEl);
+
+  // animate in
+  util.requestAnimationFrame(function() {
+    jqLite.addClass(rippleEl, 'mui--animate-in mui--active');
+  });
+}
+
+
+/**
+ * MouseUp event handler.
+ * @param {Event} ev - The DOM event
+ */
+function mouseUpHandler(ev) {
+  var children = this.children,
+      i = children.length,
+      rippleEls = [],
+      el;
+
+  // animate out ripples
+  while (i--) {
+    el = children[i];
+    if (jqLite.hasClass(el, rippleClass)) {
+      jqLite.addClass(el, 'mui--animate-out');
+      rippleEls.push(el);
+    }
+  }
+
+  // remove ripples after animation
+  if (rippleEls.length) {
+    setTimeout(function() {
+      var i = rippleEls.length,
+          el,
+          parentNode;
+
+      // remove elements
+      while (i--) {
+        el = rippleEls[i];
+        parentNode = el.parentNode;
+        if (parentNode) parentNode.removeChild(el);
+      }
+    }, animationDuration);
+  }
+}
+
+
+/**
+ * Create ripple element  
+ * @param {Element} - buttonEl - The button element.
+ */
+function createRippleEl(ev, buttonEl) {
+  // get (x, y) position of click
   var offset = jqLite.offset(buttonEl),
-      xPos = ev.pageX - offset.left,
-      yPos = ev.pageY - offset.top,
+      clickEv = (ev.type === 'touchstart') ? ev.touches[0] : ev,
+      xPos = clickEv.pageX - offset.left,
+      yPos = clickEv.pageY - offset.top,
       diameter,
-      radius;
+      radius,
+      rippleEl;
 
-  // get height
+  // choose diameter
   if (jqLite.hasClass(buttonEl, btnFABClass)) diameter = offset.height / 2;
   else diameter = offset.height;
 
+  // create element
+  rippleEl = document.createElement('div'),
+  rippleEl.className = rippleClass;
+
   radius = diameter / 2;
-  
+
   jqLite.css(rippleEl, {
     height: diameter + 'px',
     width: diameter + 'px',
@@ -1152,12 +1228,7 @@ function eventHandler(ev) {
     left: xPos - radius + 'px'
   });
 
-  buttonEl.appendChild(rippleEl);
-  
-  window.setTimeout(function() {
-    var parentNode = rippleEl.parentNode;
-    if (parentNode) parentNode.removeChild(rippleEl);
-  }, 2000);
+  return rippleEl;
 }
 
 
@@ -1734,8 +1805,7 @@ function initialize(inputEl) {
   if (inputEl.value.length) jqLite.addClass(inputEl, notEmptyClass);
   else jqLite.addClass(inputEl, emptyClass);
 
-  jqLite.on(inputEl, 'input', inputHandler);
-  jqLite.on(inputEl, 'change', inputHandler);
+  jqLite.on(inputEl, 'input change', inputHandler);
 
   // add dirty class on focus
   jqLite.on(inputEl, 'focus', function(){jqLite.addClass(this, dirtyClass);});
