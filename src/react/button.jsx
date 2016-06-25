@@ -13,8 +13,7 @@ import * as util from '../js/lib/util';
 const PropTypes = React.PropTypes,
       btnClass = 'mui-btn',
       btnAttrs = {color: 1, variant: 1, size: 1},
-      animationDuration = 600,
-      supportsTouch = 'ontouchstart' in document.documentElement;
+      animationDuration = 600;
 
 
 /**
@@ -77,8 +76,10 @@ class Button extends React.Component {
   }
 
   onMouseDown(ev) {
+    let buttonEl = this.refs.buttonEl;
+
     // de-dupe touch events
-    if (supportsTouch && ev.type === 'mousedown') return;
+    if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return;
 
     // get (x, y) position of click
     let offset = jqLite.offset(this.refs.buttonEl),

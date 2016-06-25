@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.6.4 - June 25, 2016
+
+* Removed reference to document in MUI React button module causing issues with
+  server-side rendering
+
 ## 0.6.3 - June 22, 2016
 
 * Improved handling of ripple dimensions to deal with long buttons

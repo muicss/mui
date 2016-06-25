@@ -22304,8 +22304,7 @@ var util = babelHelpers.interopRequireWildcard(_util);
 var PropTypes = _react2.default.PropTypes,
     btnClass = 'mui-btn',
     btnAttrs = { color: 1, variant: 1, size: 1 },
-    animationDuration = 600,
-    supportsTouch = 'ontouchstart' in document.documentElement;
+    animationDuration = 600;
 
 /**
  * Button element
@@ -22361,8 +22360,10 @@ var Button = function (_React$Component) {
   }, {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
+      var buttonEl = this.refs.buttonEl;
+
       // de-dupe touch events
-      if (supportsTouch && ev.type === 'mousedown') return;
+      if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return;
 
       // get (x, y) position of click
       var offset = jqLite.offset(this.refs.buttonEl),
