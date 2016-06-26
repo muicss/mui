@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.6.5 - June 26, 2016
+
+* Fixed bug in React dropdown component causing issues with server-side
+  rendering
+
 ## 0.6.4 - June 25, 2016
 
 * Removed reference to document in MUI React button module causing issues with

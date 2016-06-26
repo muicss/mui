@@ -2052,8 +2052,8 @@ var Dropdown = function (_React$Component) {
   }
 
   babelHelpers.createClass(Dropdown, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       document.addEventListener('click', this.onOutsideClickCB);
     }
   }, {

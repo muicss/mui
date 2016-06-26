@@ -68,7 +68,7 @@ class Dropdown extends React.Component {
     disabled: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('click', this.onOutsideClickCB);
   }
 
