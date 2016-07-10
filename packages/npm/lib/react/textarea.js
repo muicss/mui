@@ -40,12 +40,8 @@ var Textarea = function (_React$Component) {
   return Textarea;
 }(_react2.default.Component);
 
-Textarea.propTypes = {
-  rows: PropTypes.number
-};
 Textarea.defaultProps = {
-  type: 'textarea',
-  rows: 2
+  type: 'textarea'
 };
 exports.default = Textarea;
 module.exports = exports['default'];

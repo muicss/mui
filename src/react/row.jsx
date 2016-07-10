@@ -23,12 +23,14 @@ class Row extends React.Component {
   };
 
   render() {
+    const { children, className, ...reactProps } = this.props;
+
     return (
       <div
-        { ...this.props }
-        className={'mui-row ' + this.props.className}
+        { ...reactProps }
+        className={'mui-row ' + className}
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }

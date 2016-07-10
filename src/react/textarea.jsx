@@ -18,13 +18,8 @@ const PropTypes = React.PropTypes;
  * @class
  */
 class Textarea extends React.Component {
-  static propTypes = {
-    rows: PropTypes.number
-  };
-
   static defaultProps = {
-    type: 'textarea',
-    rows: 2
+    type: 'textarea'
   };
 
   render() {

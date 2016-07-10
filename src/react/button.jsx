@@ -10,6 +10,7 @@ import React from 'react';
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 
+
 const PropTypes = React.PropTypes,
       btnClass = 'mui-btn',
       btnAttrs = {color: 1, variant: 1, size: 1},
@@ -31,28 +32,24 @@ class Button extends React.Component {
     this.rippleTimers = [];
 
     let cb = util.callback;
-    this.onClickCB = cb(this, 'onClick');
     this.onMouseDownCB = cb(this, 'onMouseDown');
     this.onMouseUpCB = cb(this, 'onMouseUp');
+    this.onMouseLeaveCB = cb(this, 'onMouseLeave');
+    this.onTouchStartCB = cb(this, 'onTouchStart');
+    this.onTouchEndCB = cb(this, 'onTouchEnd');
   }
 
   static propTypes = {
     color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-    disabled: PropTypes.bool,
     size: PropTypes.oneOf(['default', 'small', 'large']),
-    type: PropTypes.oneOf(['submit', 'button']),
-    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-    onClick: PropTypes.func
+    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab'])
   };
 
   static defaultProps = {
     className: '',
     color: 'default',
-    disabled: false,
     size: 'default',
-    type: null,
-    variant: 'default',
-    onClick: null
+    variant: 'default'
   };
 
   componentDidMount() {
@@ -70,12 +67,47 @@ class Button extends React.Component {
     while (i--) clearTimeout(timers[i]);
   }
 
-  onClick(ev) {
-    let onClickFn = this.props.onClick;
-    onClickFn && onClickFn(ev);
+  onMouseDown(ev) {
+    this.addRipple(ev);
+
+    // execute callback
+    const fn = this.props.onMouseDown;
+    fn && fn(ev);
   }
 
-  onMouseDown(ev) {
+  onMouseUp(ev) {
+    this.removeRipples(ev);
+    
+    // execute callback
+    const fn = this.props.onMouseUp;
+    fn && fn(ev);
+  }
+
+  onMouseLeave(ev) {
+    this.removeRipples(ev);
+
+    // execute callback
+    const fn = this.props.onMouseLeave;
+    fn && fn(ev);
+  }
+
+  onTouchStart(ev) {
+    this.addRipple(ev);
+    
+    // execute callback
+    const fn = this.props.onTouchStart;
+    fn && fn(ev);
+  }
+
+  onTouchEnd(ev) {
+    this.removeRipples(ev);
+
+    // execute callback
+    const fn = this.props.onTouchEnd;
+    fn && fn(ev);
+  }
+
+  addRipple(ev) {
     let buttonEl = this.refs.buttonEl;
 
     // de-dupe touch events
@@ -83,7 +115,10 @@ class Button extends React.Component {
 
     // get (x, y) position of click
     let offset = jqLite.offset(this.refs.buttonEl),
-        clickEv = (ev.type === 'touchstart') ? ev.touches[0] : ev;
+        clickEv;
+
+    if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];
+    else clickEv = ev;
 
     // choose diameter
     let diameter = Math.sqrt(offset.width * offset.width +
@@ -103,7 +138,7 @@ class Button extends React.Component {
     this.setState({ ripples });
   }
 
-  onMouseUp(ev) {
+  removeRipples(ev) {
     // animate out ripples
     let ripples = this.state.ripples,
         deleteKeys = Object.keys(ripples),
@@ -130,6 +165,7 @@ class Button extends React.Component {
         v;
 
     const ripples = this.state.ripples;
+    const { color, size, variant, ...reactProps } = this.props;
 
     // button attributes
     for (k in btnAttrs) {
@@ -139,15 +175,14 @@ class Button extends React.Component {
 
     return (
       <button
-        { ...this.props }
+        { ...reactProps }
         ref="buttonEl"
         className={cls + ' ' + this.props.className}
-        onClick={this.onClickCB}
-        onMouseDown={this.onMouseDownCB}
-        onTouchStart={this.onMouseDownCB}
         onMouseUp={this.onMouseUpCB}
-        onMouseLeave={this.onMouseUpCB}
-        onTouchEnd={this.onMouseUpCB}
+        onMouseDown={this.onMouseDownCB}
+        onMouseLeave={this.onMouseLeaveCB}
+        onTouchStart={this.onTouchStartCB}
+        onTouchEnd={this.onTouchEndCB}
       >
         {this.props.children}
         {

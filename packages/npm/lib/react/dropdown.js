@@ -144,17 +144,31 @@ var Dropdown = function (_React$Component) {
           menuEl = void 0,
           labelEl = void 0;
 
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var color = _props.color;
+      var variant = _props.variant;
+      var size = _props.size;
+      var label = _props.label;
+      var alignMenu = _props.alignMenu;
+      var onClick = _props.onClick;
+      var onSelect = _props.onSelect;
+      var disabled = _props.disabled;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'color', 'variant', 'size', 'label', 'alignMenu', 'onClick', 'onSelect', 'disabled']);
+
       // build label
-      if (jqLite.type(this.props.label) === 'string') {
+
+      if (jqLite.type(label) === 'string') {
         labelEl = _react2.default.createElement(
           'span',
           null,
-          this.props.label,
+          label,
           ' ',
           _react2.default.createElement(_caret2.default, null)
         );
       } else {
-        labelEl = this.props.label;
+        labelEl = label;
       }
 
       buttonEl = _react2.default.createElement(
@@ -163,10 +177,10 @@ var Dropdown = function (_React$Component) {
           ref: 'button',
           type: 'button',
           onClick: this.onClickCB,
-          color: this.props.color,
-          variant: this.props.variant,
-          size: this.props.size,
-          disabled: this.props.disabled
+          color: color,
+          variant: variant,
+          size: size,
+          disabled: disabled
         },
         labelEl
       );
@@ -176,7 +190,7 @@ var Dropdown = function (_React$Component) {
 
         cs[menuClass] = true;
         cs[openClass] = this.state.opened;
-        cs[rightClass] = this.props.alignMenu === 'right';
+        cs[rightClass] = alignMenu === 'right';
         cs = util.classNames(cs);
 
         menuEl = _react2.default.createElement(
@@ -187,20 +201,15 @@ var Dropdown = function (_React$Component) {
             style: { top: this.state.menuTop },
             onClick: this.selectCB
           },
-          this.props.children
+          children
         );
+      } else {
+        menuEl = _react2.default.createElement('div', null);
       }
-
-      var _props = this.props;
-      var className = _props.className;
-      var children = _props.children;
-      var onClick = _props.onClick;
-      var other = babelHelpers.objectWithoutProperties(_props, ['className', 'children', 'onClick']);
-
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, other, {
+        babelHelpers.extends({}, reactProps, {
           ref: 'wrapperEl',
           className: dropdownClass + ' ' + className
         }),

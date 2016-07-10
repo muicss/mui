@@ -37,12 +37,18 @@ var Row = function (_React$Component) {
   babelHelpers.createClass(Row, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+
+
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: 'mui-row ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-row ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);

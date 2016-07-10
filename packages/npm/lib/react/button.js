@@ -48,9 +48,11 @@ var Button = function (_React$Component) {
     _this.rippleTimers = [];
 
     var cb = util.callback;
-    _this.onClickCB = cb(_this, 'onClick');
     _this.onMouseDownCB = cb(_this, 'onMouseDown');
     _this.onMouseUpCB = cb(_this, 'onMouseUp');
+    _this.onMouseLeaveCB = cb(_this, 'onMouseLeave');
+    _this.onTouchStartCB = cb(_this, 'onTouchStart');
+    _this.onTouchEndCB = cb(_this, 'onTouchEnd');
     return _this;
   }
 
@@ -74,14 +76,53 @@ var Button = function (_React$Component) {
       }
     }
   }, {
-    key: 'onClick',
-    value: function onClick(ev) {
-      var onClickFn = this.props.onClick;
-      onClickFn && onClickFn(ev);
-    }
-  }, {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
+      this.addRipple(ev);
+
+      // execute callback
+      var fn = this.props.onMouseDown;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onMouseUp',
+    value: function onMouseUp(ev) {
+      this.removeRipples(ev);
+
+      // execute callback
+      var fn = this.props.onMouseUp;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onMouseLeave',
+    value: function onMouseLeave(ev) {
+      this.removeRipples(ev);
+
+      // execute callback
+      var fn = this.props.onMouseLeave;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onTouchStart',
+    value: function onTouchStart(ev) {
+      this.addRipple(ev);
+
+      // execute callback
+      var fn = this.props.onTouchStart;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onTouchEnd',
+    value: function onTouchEnd(ev) {
+      this.removeRipples(ev);
+
+      // execute callback
+      var fn = this.props.onTouchEnd;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'addRipple',
+    value: function addRipple(ev) {
       var buttonEl = this.refs.buttonEl;
 
       // de-dupe touch events
@@ -89,7 +130,9 @@ var Button = function (_React$Component) {
 
       // get (x, y) position of click
       var offset = jqLite.offset(this.refs.buttonEl),
-          clickEv = ev.type === 'touchstart' ? ev.touches[0] : ev;
+          clickEv = void 0;
+
+      if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev;
 
       // choose diameter
       var diameter = Math.sqrt(offset.width * offset.width + offset.height * offset.height) * 2;
@@ -108,8 +151,8 @@ var Button = function (_React$Component) {
       this.setState({ ripples: ripples });
     }
   }, {
-    key: 'onMouseUp',
-    value: function onMouseUp(ev) {
+    key: 'removeRipples',
+    value: function removeRipples(ev) {
       var _this2 = this;
 
       // animate out ripples
@@ -141,8 +184,14 @@ var Button = function (_React$Component) {
           v = void 0;
 
       var ripples = this.state.ripples;
+      var _props = this.props;
+      var color = _props.color;
+      var size = _props.size;
+      var variant = _props.variant;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['color', 'size', 'variant']);
 
       // button attributes
+
       for (k in btnAttrs) {
         v = this.props[k];
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
@@ -150,15 +199,14 @@ var Button = function (_React$Component) {
 
       return _react2.default.createElement(
         'button',
-        babelHelpers.extends({}, this.props, {
+        babelHelpers.extends({}, reactProps, {
           ref: 'buttonEl',
           className: cls + ' ' + this.props.className,
-          onClick: this.onClickCB,
-          onMouseDown: this.onMouseDownCB,
-          onTouchStart: this.onMouseDownCB,
           onMouseUp: this.onMouseUpCB,
-          onMouseLeave: this.onMouseUpCB,
-          onTouchEnd: this.onMouseUpCB
+          onMouseDown: this.onMouseDownCB,
+          onMouseLeave: this.onMouseLeaveCB,
+          onTouchStart: this.onTouchStartCB,
+          onTouchEnd: this.onTouchEndCB
         }),
         this.props.children,
         Object.keys(ripples).map(function (k, i) {
@@ -186,20 +234,14 @@ var Button = function (_React$Component) {
 
 Button.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  disabled: PropTypes.bool,
   size: PropTypes.oneOf(['default', 'small', 'large']),
-  type: PropTypes.oneOf(['submit', 'button']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-  onClick: PropTypes.func
+  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab'])
 };
 Button.defaultProps = {
   className: '',
   color: 'default',
-  disabled: false,
   size: 'default',
-  type: null,
-  variant: 'default',
-  onClick: null
+  variant: 'default'
 };
 
 var Ripple = function (_React$Component2) {

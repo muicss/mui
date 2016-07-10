@@ -17,43 +17,40 @@ const PropTypes = React.PropTypes;
  */
 class Radio extends React.Component {
   static propTypes = {
-    name: PropTypes.string,
-    label: PropTypes.string,
-    value: PropTypes.string,
-    checked: PropTypes.bool,
-    defaultChecked: PropTypes.bool,
-    disabled: PropTypes.bool,
-    onChange: PropTypes.func
+    label: PropTypes.string
   };
 
   static defaultProps = {
     className: '',
-    name: null,
-    label: null,
-    disabled: false,
-    onChange: null
+    label: null
   };
 
   render() {
-    let { children, onChange, ...other } = this.props;
+    const { children, className, label, autoFocus, checked, defaultChecked,
+      defaultValue, disabled, form, name, required, value, onChange,
+      ...reactProps } = this.props;
 
     return (
       <div
-        { ...other }
-        className={'mui-radio ' + this.props.className}
+        { ...reactProps }
+        className={'mui-radio ' + className}
       >
         <label>
           <input
             ref="inputEl"
             type="radio"
-            name={this.props.name}
-            value={this.props.value}
-            checked={this.props.checked}
-            defaultChecked={this.props.defaultChecked}
-            disabled={this.props.disabled}
-            onChange={this.props.onChange}
+            autoFocus={autoFocus}
+            checked={checked}
+            defaultChecked={defaultChecked}
+            defaultValue={defaultValue}
+            disabled={disabled}
+            form={form}
+            name={name}
+            required={required}
+            value={value}
+            onChange={onChange}
           />
-          {this.props.label}
+          {label}
         </label>
       </div>
     );

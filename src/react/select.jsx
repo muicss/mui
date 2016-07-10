@@ -52,26 +52,16 @@ class Select extends React.Component {
 
   static propTypes = {
     label: PropTypes.string,
-    name: PropTypes.string,
     value: PropTypes.string,
     defaultValue: PropTypes.string,
-    autoFocus: PropTypes.bool,
-    disabled: PropTypes.bool,
-    multiple: PropTypes.bool,
     readOnly: PropTypes.bool,
-    required: PropTypes.bool,
     useDefault: PropTypes.bool,
     onChange: PropTypes.func
   };
 
   static defaultProps = {
     className: '',
-    name: null,
-    autoFocus: false,
-    disabled: false,
-    multiple: false,
     readOnly: false,
-    required: false,
     useDefault: false,
     onChange: null
   };
@@ -94,19 +84,28 @@ class Select extends React.Component {
   onInnerMouseDown(ev) {
     if (ev.button !== 0 || this.props.useDefault === true) return;
     ev.preventDefault();
+
+    // execute callback
+    const fn = this.props.onMouseDown;
+    fn && fn(ev);
   }
 
   onInnerChange(ev) {
     let value = ev.target.value;
     this.setState({ value });
 
-    let fn = this.props.onChange;
-    if (fn) fn(value);
+    // execute callback
+    const fn = this.props.onChange;
+    fn && fn(value);
   }
 
   onInnerClick(ev) {
     if (ev.button !== 0) return;  // only left clicks
     this.showMenu();
+
+    // execute callback
+    const fn = this.props.onClick;
+    fn && fn(ev);
   }
 
   onInnerFocus(ev) {
@@ -131,6 +130,10 @@ class Select extends React.Component {
 
     // attach keydown handler
     jqLite.on(document, 'keydown', this.onKeydownCB);
+
+    // execute callback
+    const fn = this.onFocus;
+    fn && fn(ev);
   }
 
   onOuterBlur(ev) {
@@ -143,6 +146,10 @@ class Select extends React.Component {
 
     // remove keydown handler
     jqLite.off(document, 'keydown', this.onKeydownCB);
+
+    // execute callback
+    const fn = this.onBlur;
+    fn && fn(ev);
   }
 
   onKeydown(ev) {
@@ -209,33 +216,31 @@ class Select extends React.Component {
       );
     }
 
-    let { children, onChange, ...other } = this.props;
+    const { children, className, style, label, value, defaultValue, readOnly,
+      useDefault, ...reactProps } = this.props;
 
     return (
       <div
-        { ...other }
         ref="wrapperEl"
-        className={'mui-select ' + this.props.className}
+        style={style}
+        className={'mui-select ' + className}
         onFocus={this.onOuterFocusCB}
         onBlur={this.onOuterBlurCB}
       >
         <select
+          { ...reactProps }
           ref="selectEl"
-          name={this.props.name}
-          value={this.state.value}
-          defaultValue={this.props.defaultValue}
-          disabled={this.props.disabled}
-          multiple={this.props.multiple}
+          value={value}
+          defaultValue={defaultValue}
           readOnly={this.props.readOnly}
-          required={this.props.required}
           onChange={this.onInnerChangeCB}
           onMouseDown={this.onInnerMouseDownCB}
           onClick={this.onInnerClickCB}
           onFocus={this.onInnerFocusCB}
         >
-          {this.props.children}
+          {children}
         </select>
-        <label>{this.props.label}</label>
+        <label>{label}</label>
         {menuElem}
       </div>
     );

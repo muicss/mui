@@ -58,8 +58,9 @@ class Tabs extends React.Component {
   }
 
   render() {
-    let { children, ...other } = this.props;
-
+    const { children, initialSelectedIndex, justified,
+      ...reactProps } = this.props;
+    
     let tabEls = [],
         paneEls = [],
         m = children.length,
@@ -98,10 +99,10 @@ class Tabs extends React.Component {
     }
 
     cls = tabsBarClass;
-    if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+    if (justified) cls += ' ' + tabsBarJustifiedClass;
 
     return (
-      <div { ...other }>
+      <div { ...reactProps }>
         <ul className={cls}>
           {tabEls}
         </ul>

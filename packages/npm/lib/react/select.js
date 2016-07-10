@@ -91,6 +91,10 @@ var Select = function (_React$Component) {
     value: function onInnerMouseDown(ev) {
       if (ev.button !== 0 || this.props.useDefault === true) return;
       ev.preventDefault();
+
+      // execute callback
+      var fn = this.props.onMouseDown;
+      fn && fn(ev);
     }
   }, {
     key: 'onInnerChange',
@@ -98,14 +102,19 @@ var Select = function (_React$Component) {
       var value = ev.target.value;
       this.setState({ value: value });
 
+      // execute callback
       var fn = this.props.onChange;
-      if (fn) fn(value);
+      fn && fn(value);
     }
   }, {
     key: 'onInnerClick',
     value: function onInnerClick(ev) {
       if (ev.button !== 0) return; // only left clicks
       this.showMenu();
+
+      // execute callback
+      var fn = this.props.onClick;
+      fn && fn(ev);
     }
   }, {
     key: 'onInnerFocus',
@@ -136,6 +145,10 @@ var Select = function (_React$Component) {
 
       // attach keydown handler
       jqLite.on(document, 'keydown', this.onKeydownCB);
+
+      // execute callback
+      var fn = this.onFocus;
+      fn && fn(ev);
     }
   }, {
     key: 'onOuterBlur',
@@ -149,6 +162,10 @@ var Select = function (_React$Component) {
 
       // remove keydown handler
       jqLite.off(document, 'keydown', this.onKeydownCB);
+
+      // execute callback
+      var fn = this.onBlur;
+      fn && fn(ev);
     }
   }, {
     key: 'onKeydown',
@@ -220,40 +237,43 @@ var Select = function (_React$Component) {
 
       var _props = this.props;
       var children = _props.children;
-      var onChange = _props.onChange;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
+      var className = _props.className;
+      var style = _props.style;
+      var label = _props.label;
+      var value = _props.value;
+      var defaultValue = _props.defaultValue;
+      var readOnly = _props.readOnly;
+      var useDefault = _props.useDefault;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'value', 'defaultValue', 'readOnly', 'useDefault']);
 
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, other, {
+        {
           ref: 'wrapperEl',
-          className: 'mui-select ' + this.props.className,
+          style: style,
+          className: 'mui-select ' + className,
           onFocus: this.onOuterFocusCB,
           onBlur: this.onOuterBlurCB
-        }),
+        },
         _react2.default.createElement(
           'select',
-          {
+          babelHelpers.extends({}, reactProps, {
             ref: 'selectEl',
-            name: this.props.name,
-            value: this.state.value,
-            defaultValue: this.props.defaultValue,
-            disabled: this.props.disabled,
-            multiple: this.props.multiple,
+            value: value,
+            defaultValue: defaultValue,
             readOnly: this.props.readOnly,
-            required: this.props.required,
             onChange: this.onInnerChangeCB,
             onMouseDown: this.onInnerMouseDownCB,
             onClick: this.onInnerClickCB,
             onFocus: this.onInnerFocusCB
-          },
-          this.props.children
+          }),
+          children
         ),
         _react2.default.createElement(
           'label',
           null,
-          this.props.label
+          label
         ),
         menuElem
       );
@@ -270,25 +290,15 @@ var Select = function (_React$Component) {
 
 Select.propTypes = {
   label: PropTypes.string,
-  name: PropTypes.string,
   value: PropTypes.string,
   defaultValue: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  disabled: PropTypes.bool,
-  multiple: PropTypes.bool,
   readOnly: PropTypes.bool,
-  required: PropTypes.bool,
   useDefault: PropTypes.bool,
   onChange: PropTypes.func
 };
 Select.defaultProps = {
   className: '',
-  name: null,
-  autoFocus: false,
-  disabled: false,
-  multiple: false,
   readOnly: false,
-  required: false,
   useDefault: false,
   onChange: null
 };

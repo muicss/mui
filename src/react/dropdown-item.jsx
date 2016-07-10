@@ -20,32 +20,23 @@ const PropTypes = React.PropTypes;
  * @class
  */
 class DropdownItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.onClickCB = util.callback(this, 'onClick');
-  }
-
   static propTypes =  {
     link: PropTypes.string,
     target: PropTypes.string,
     onClick: PropTypes.func
   };
 
-  onClick(ev) {
-    if (this.props.onClick) this.props.onClick(this, ev);
-  }
-
   render() {
-    let { children, onClick, ...other } = this.props;
+    const { children, link, target, value, onClick,
+      ...reactProps } = this.props;
 
     return (
-      <li { ...other }>
+      <li { ...reactProps }>
         <a
-          href={this.props.link}
-          target={this.props.target}
-          data-mui-value={this.props.value}
-          onClick={this.onClickCB}
+          href={link}
+          target={target}
+          data-mui-value={value}
+          onClick={onClick}
         >
           {children}
         </a>

@@ -18,11 +18,11 @@ class Caret extends React.Component {
   };
 
   render() {
-    let { children, ...other } = this.props;
+    const { children, ...reactProps } = this.props;
 
     return (
       <span
-        { ...other }
+        { ...reactProps }
         className={'mui-caret ' + this.props.className}
       >
       </span>

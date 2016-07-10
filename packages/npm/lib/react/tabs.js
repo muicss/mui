@@ -68,7 +68,9 @@ var Tabs = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var initialSelectedIndex = _props.initialSelectedIndex;
+      var justified = _props.justified;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
 
 
       var tabEls = [],
@@ -111,11 +113,11 @@ var Tabs = function (_React$Component) {
       }
 
       cls = tabsBarClass;
-      if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+      if (justified) cls += ' ' + tabsBarJustifiedClass;
 
       return _react2.default.createElement(
         'div',
-        other,
+        reactProps,
         _react2.default.createElement(
           'ul',
           { className: cls },

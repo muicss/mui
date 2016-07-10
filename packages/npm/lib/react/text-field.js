@@ -1,7 +1,7 @@
 var babelHelpers = require('./babel-helpers.js');
 /**
  * MUI React TextInput Component
- * @module react/text-input
+ * @module react/text-field
  */
 
 'use strict';
@@ -45,7 +45,7 @@ var Input = function (_React$Component) {
     };
 
     // warn if value defined but onChange is not
-    if (value !== undefined && props.onChange === null) {
+    if (value !== undefined && !props.onChange) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
@@ -66,6 +66,7 @@ var Input = function (_React$Component) {
     value: function onChange(ev) {
       this.setState({ innerValue: ev.target.value });
 
+      // execute callback
       var fn = this.props.onChange;
       if (fn) fn(ev);
     }
@@ -87,43 +88,38 @@ var Input = function (_React$Component) {
           isNotEmpty = Boolean(this.state.innerValue),
           inputEl = void 0;
 
+      var _props = this.props;
+      var hint = _props.hint;
+      var invalid = _props.invalid;
+      var rows = _props.rows;
+      var type = _props.type;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
+
+
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
       cls['mui--is-dirty'] = this.state.isDirty;
-      cls['mui--is-invalid'] = this.props.invalid;
+      cls['mui--is-invalid'] = invalid;
 
       cls = util.classNames(cls);
 
-      var _props = this.props;
-      var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-
-      if (this.props.type === 'textarea') {
-        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
+      if (type === 'textarea') {
+        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, reactProps, {
           ref: 'inputEl',
           className: cls,
-          rows: this.props.rows,
-          placeholder: this.props.hint,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
-          autoFocus: this.props.autoFocus,
+          rows: rows,
+          placeholder: hint,
           onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
+          onFocus: this.onFocusCB
         }));
       } else {
-        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, other, {
+        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, reactProps, {
           ref: 'inputEl',
           className: cls,
-          type: this.props.type,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
+          type: type,
           placeholder: this.props.hint,
-          autoFocus: this.props.autofocus,
           onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
+          onFocus: this.onFocusCB
         }));
       }
 
@@ -141,16 +137,13 @@ var Input = function (_React$Component) {
 
 Input.propTypes = {
   hint: PropTypes.string,
-  value: PropTypes.string,
-  type: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  onChange: PropTypes.func
+  invalid: PropTypes.bool,
+  rows: PropTypes.number
 };
 Input.defaultProps = {
   hint: null,
-  type: null,
-  autoFocus: false,
-  onChange: null
+  invalid: false,
+  rows: 2
 };
 
 var Label = function (_React$Component2) {
@@ -252,21 +245,30 @@ var TextField = function (_React$Component3) {
       var cls = {},
           labelEl = void 0;
 
-      if (this.props.label.length) {
-        labelEl = _react2.default.createElement(Label, {
-          text: this.props.label,
-          onClick: this.onClickCB
-        });
+      var _props2 = this.props;
+      var children = _props2.children;
+      var className = _props2.className;
+      var style = _props2.style;
+      var label = _props2.label;
+      var floatingLabel = _props2.floatingLabel;
+      var other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
+
+
+      if (label.length) {
+        labelEl = _react2.default.createElement(Label, { text: label, onClick: this.onClickCB });
       }
 
       cls['mui-textfield'] = true;
-      cls['mui-textfield--float-label'] = this.props.floatingLabel;
+      cls['mui-textfield--float-label'] = floatingLabel;
       cls = util.classNames(cls);
 
       return _react2.default.createElement(
         'div',
-        { className: cls },
-        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, this.props)),
+        {
+          className: cls + ' ' + className,
+          style: style
+        },
+        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, other)),
         labelEl
       );
     }
@@ -282,6 +284,7 @@ TextField.propTypes = {
   floatingLabel: PropTypes.bool
 };
 TextField.defaultProps = {
+  className: '',
   label: '',
   floatingLabel: false
 };

@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.6.6 - July 10, 2016
+
+* Improved handling of spread attributes in MUI React library to prevent
+  unknown property warnings in React 15.2.1
+* Fixed bug in React Button component that was ignoring mouse/touch event
+  callbacks (onMouseDown, onMouseUp, onMouseLeave, onTouchStart, onTouchEnd)
+
 ## 0.6.5 - June 26, 2016
 
 * Fixed bug in React dropdown component causing issues with server-side

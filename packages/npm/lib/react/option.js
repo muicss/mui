@@ -26,6 +26,7 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+var _helpers = require('./_helpers');
 
 var PropTypes = _react2.default.PropTypes;
 
@@ -47,13 +48,14 @@ var Option = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var label = _props.label;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
 
 
       return _react2.default.createElement(
         'option',
-        babelHelpers.extends({}, other, { value: this.props.value }),
-        this.props.label
+        reactProps,
+        label
       );
     }
   }]);
@@ -64,11 +66,9 @@ var Option = function (_React$Component) {
 
 
 Option.propTypes = {
-  value: PropTypes.string,
   label: PropTypes.string
 };
 Option.defaultProps = {
-  value: null,
   label: null
 };
 exports.default = Option;

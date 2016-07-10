@@ -428,18 +428,7 @@ function jqLiteRemoveClass(element, cssClasses) {
 // ------------------------------
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
-    ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g,
-    BOOLEAN_ATTRS;
-
-BOOLEAN_ATTRS = {
-  multiple: true,
-  selected: true,
-  checked: true,
-  disabled: true,
-  readonly: true,
-  required: true,
-  open: true
-};
+    ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g;
 
 function _getExistingClasses(element) {
   var classes = (element.getAttribute('class') || '').replace(/[\n\t]/g, '');

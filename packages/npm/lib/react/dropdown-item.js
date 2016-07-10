@@ -31,39 +31,33 @@ var PropTypes = _react2.default.PropTypes;
 var DropdownItem = function (_React$Component) {
   babelHelpers.inherits(DropdownItem, _React$Component);
 
-  function DropdownItem(props) {
+  function DropdownItem() {
     babelHelpers.classCallCheck(this, DropdownItem);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).call(this, props));
-
-    _this.onClickCB = util.callback(_this, 'onClick');
-    return _this;
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).apply(this, arguments));
   }
 
   babelHelpers.createClass(DropdownItem, [{
-    key: 'onClick',
-    value: function onClick(ev) {
-      if (this.props.onClick) this.props.onClick(this, ev);
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _props = this.props;
       var children = _props.children;
+      var link = _props.link;
+      var target = _props.target;
+      var value = _props.value;
       var onClick = _props.onClick;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onClick']);
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
 
 
       return _react2.default.createElement(
         'li',
-        other,
+        reactProps,
         _react2.default.createElement(
           'a',
           {
-            href: this.props.link,
-            target: this.props.target,
-            'data-mui-value': this.props.value,
-            onClick: this.onClickCB
+            href: link,
+            target: target,
+            'data-mui-value': value,
+            onClick: onClick
           },
           children
         )

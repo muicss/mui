@@ -30,17 +30,24 @@ var Container = function (_React$Component) {
   babelHelpers.createClass(Container, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var fluid = _props.fluid;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
+
+
       var cls = 'mui-container';
 
       // fluid containers
-      if (this.props.fluid) cls += '-fluid';
+      if (fluid) cls += '-fluid';
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: cls + ' ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: cls + ' ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);

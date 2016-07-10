@@ -32,11 +32,12 @@ var Divider = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var className = _props.className;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
 
-      return _react2.default.createElement('div', babelHelpers.extends({}, other, {
-        className: 'mui-divider ' + this.props.className
+      return _react2.default.createElement('div', babelHelpers.extends({}, reactProps, {
+        className: 'mui-divider ' + className
       }));
     }
   }]);

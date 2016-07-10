@@ -23,17 +23,18 @@ class Form extends React.Component {
   };
 
   render() {
+    const { children, className, inline, ...reactProps } = this.props;
     let cls = '';
 
     // inline form
-    if (this.props.inline) cls = 'mui-form--inline';
+    if (inline) cls = 'mui-form--inline';
 
     return (
       <form
-        { ...this.props }
-        className={cls + ' ' + this.props.className }
+        { ...reactProps }
+        className={cls + ' ' + className }
       >
-        {this.props.children}
+        {children}
       </form>
     );
   }

@@ -139,11 +139,14 @@ class Dropdown extends React.Component {
         menuEl,
         labelEl;
 
+    const { children, className, color, variant, size, label, alignMenu,
+      onClick, onSelect, disabled, ...reactProps } = this.props;
+
     // build label
-    if (jqLite.type(this.props.label) === 'string') {
-      labelEl = <span>{this.props.label} <Caret /></span>;
+    if (jqLite.type(label) === 'string') {
+      labelEl = <span>{label} <Caret /></span>;
     } else {
-      labelEl = this.props.label;
+      labelEl = label;
     }
 
     buttonEl = (
@@ -151,10 +154,10 @@ class Dropdown extends React.Component {
         ref="button"
         type="button"
         onClick={this.onClickCB}
-        color={this.props.color}
-        variant={this.props.variant}
-        size={this.props.size}
-        disabled={this.props.disabled}
+        color={color}
+        variant={variant}
+        size={size}
+        disabled={disabled}
       >
         {labelEl}
       </Button>
@@ -165,26 +168,26 @@ class Dropdown extends React.Component {
 
       cs[menuClass] = true;
       cs[openClass] = this.state.opened;
-      cs[rightClass] = (this.props.alignMenu === 'right');
+      cs[rightClass] = (alignMenu === 'right');
       cs = util.classNames(cs);
 
       menuEl = (
         <ul
           ref="menuEl"
           className={cs}
-          style={{top: this.state.menuTop} }
+          style={{top: this.state.menuTop}}
           onClick={this.selectCB}
         >
-          {this.props.children}
+          {children}
         </ul>
       );
+    } else {
+      menuEl = <div></div>;
     }
-
-    let { className, children, onClick, ...other } = this.props;
 
     return (
       <div
-        { ...other }
+        { ...reactProps }
         ref="wrapperEl"
         className={dropdownClass + ' ' + className}
       >

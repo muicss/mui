@@ -522,18 +522,7 @@ function jqLiteRemoveClass(element, cssClasses) {
 // ------------------------------
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
-    ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g,
-    BOOLEAN_ATTRS;
-
-BOOLEAN_ATTRS = {
-  multiple: true,
-  selected: true,
-  checked: true,
-  disabled: true,
-  readonly: true,
-  required: true,
-  open: true
-};
+    ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g;
 
 function _getExistingClasses(element) {
   var classes = (element.getAttribute('class') || '').replace(/[\n\t]/g, '');
@@ -860,6 +849,7 @@ module.exports = {
 
 var controlledMessage = 'You provided a `value` prop to a form field ' + 'without an `OnChange` handler. Please see React documentation on ' + 'controlled components';
 
+/** Module export */
 module.exports = { controlledMessage: controlledMessage };
 
 },{}],7:[function(require,module,exports){
@@ -912,9 +902,11 @@ var Button = function (_React$Component) {
     _this.rippleTimers = [];
 
     var cb = util.callback;
-    _this.onClickCB = cb(_this, 'onClick');
     _this.onMouseDownCB = cb(_this, 'onMouseDown');
     _this.onMouseUpCB = cb(_this, 'onMouseUp');
+    _this.onMouseLeaveCB = cb(_this, 'onMouseLeave');
+    _this.onTouchStartCB = cb(_this, 'onTouchStart');
+    _this.onTouchEndCB = cb(_this, 'onTouchEnd');
     return _this;
   }
 
@@ -938,14 +930,53 @@ var Button = function (_React$Component) {
       }
     }
   }, {
-    key: 'onClick',
-    value: function onClick(ev) {
-      var onClickFn = this.props.onClick;
-      onClickFn && onClickFn(ev);
-    }
-  }, {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
+      this.addRipple(ev);
+
+      // execute callback
+      var fn = this.props.onMouseDown;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onMouseUp',
+    value: function onMouseUp(ev) {
+      this.removeRipples(ev);
+
+      // execute callback
+      var fn = this.props.onMouseUp;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onMouseLeave',
+    value: function onMouseLeave(ev) {
+      this.removeRipples(ev);
+
+      // execute callback
+      var fn = this.props.onMouseLeave;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onTouchStart',
+    value: function onTouchStart(ev) {
+      this.addRipple(ev);
+
+      // execute callback
+      var fn = this.props.onTouchStart;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onTouchEnd',
+    value: function onTouchEnd(ev) {
+      this.removeRipples(ev);
+
+      // execute callback
+      var fn = this.props.onTouchEnd;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'addRipple',
+    value: function addRipple(ev) {
       var buttonEl = this.refs.buttonEl;
 
       // de-dupe touch events
@@ -953,7 +984,9 @@ var Button = function (_React$Component) {
 
       // get (x, y) position of click
       var offset = jqLite.offset(this.refs.buttonEl),
-          clickEv = ev.type === 'touchstart' ? ev.touches[0] : ev;
+          clickEv = void 0;
+
+      if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev;
 
       // choose diameter
       var diameter = Math.sqrt(offset.width * offset.width + offset.height * offset.height) * 2;
@@ -972,8 +1005,8 @@ var Button = function (_React$Component) {
       this.setState({ ripples: ripples });
     }
   }, {
-    key: 'onMouseUp',
-    value: function onMouseUp(ev) {
+    key: 'removeRipples',
+    value: function removeRipples(ev) {
       var _this2 = this;
 
       // animate out ripples
@@ -1005,8 +1038,14 @@ var Button = function (_React$Component) {
           v = void 0;
 
       var ripples = this.state.ripples;
+      var _props = this.props;
+      var color = _props.color;
+      var size = _props.size;
+      var variant = _props.variant;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['color', 'size', 'variant']);
 
       // button attributes
+
       for (k in btnAttrs) {
         v = this.props[k];
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
@@ -1014,15 +1053,14 @@ var Button = function (_React$Component) {
 
       return _react2.default.createElement(
         'button',
-        babelHelpers.extends({}, this.props, {
+        babelHelpers.extends({}, reactProps, {
           ref: 'buttonEl',
           className: cls + ' ' + this.props.className,
-          onClick: this.onClickCB,
-          onMouseDown: this.onMouseDownCB,
-          onTouchStart: this.onMouseDownCB,
           onMouseUp: this.onMouseUpCB,
-          onMouseLeave: this.onMouseUpCB,
-          onTouchEnd: this.onMouseUpCB
+          onMouseDown: this.onMouseDownCB,
+          onMouseLeave: this.onMouseLeaveCB,
+          onTouchStart: this.onTouchStartCB,
+          onTouchEnd: this.onTouchEndCB
         }),
         this.props.children,
         Object.keys(ripples).map(function (k, i) {
@@ -1050,20 +1088,14 @@ var Button = function (_React$Component) {
 
 Button.propTypes = {
   color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  disabled: PropTypes.bool,
   size: PropTypes.oneOf(['default', 'small', 'large']),
-  type: PropTypes.oneOf(['submit', 'button']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-  onClick: PropTypes.func
+  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab'])
 };
 Button.defaultProps = {
   className: '',
   color: 'default',
-  disabled: false,
   size: 'default',
-  type: null,
-  variant: 'default',
-  onClick: null
+  variant: 'default'
 };
 
 var Ripple = function (_React$Component2) {
@@ -1170,10 +1202,10 @@ var Caret = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
 
 
-      return _react2.default.createElement('span', babelHelpers.extends({}, other, {
+      return _react2.default.createElement('span', babelHelpers.extends({}, reactProps, {
         className: 'mui-caret ' + this.props.className
       }));
     }
@@ -1251,7 +1283,7 @@ module.exports = exports['default'];
 },{"react":"CwoHg3"}],10:[function(require,module,exports){
 /**
  * MUI React TextInput Component
- * @module react/text-input
+ * @module react/text-field
  */
 
 'use strict';
@@ -1295,7 +1327,7 @@ var Input = function (_React$Component) {
     };
 
     // warn if value defined but onChange is not
-    if (value !== undefined && props.onChange === null) {
+    if (value !== undefined && !props.onChange) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
@@ -1316,6 +1348,7 @@ var Input = function (_React$Component) {
     value: function onChange(ev) {
       this.setState({ innerValue: ev.target.value });
 
+      // execute callback
       var fn = this.props.onChange;
       if (fn) fn(ev);
     }
@@ -1337,43 +1370,38 @@ var Input = function (_React$Component) {
           isNotEmpty = Boolean(this.state.innerValue),
           inputEl = void 0;
 
+      var _props = this.props;
+      var hint = _props.hint;
+      var invalid = _props.invalid;
+      var rows = _props.rows;
+      var type = _props.type;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
+
+
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
       cls['mui--is-dirty'] = this.state.isDirty;
-      cls['mui--is-invalid'] = this.props.invalid;
+      cls['mui--is-invalid'] = invalid;
 
       cls = util.classNames(cls);
 
-      var _props = this.props;
-      var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-
-      if (this.props.type === 'textarea') {
-        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
+      if (type === 'textarea') {
+        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, reactProps, {
           ref: 'inputEl',
           className: cls,
-          rows: this.props.rows,
-          placeholder: this.props.hint,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
-          autoFocus: this.props.autoFocus,
+          rows: rows,
+          placeholder: hint,
           onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
+          onFocus: this.onFocusCB
         }));
       } else {
-        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, other, {
+        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, reactProps, {
           ref: 'inputEl',
           className: cls,
-          type: this.props.type,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
+          type: type,
           placeholder: this.props.hint,
-          autoFocus: this.props.autofocus,
           onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
+          onFocus: this.onFocusCB
         }));
       }
 
@@ -1391,16 +1419,13 @@ var Input = function (_React$Component) {
 
 Input.propTypes = {
   hint: PropTypes.string,
-  value: PropTypes.string,
-  type: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  onChange: PropTypes.func
+  invalid: PropTypes.bool,
+  rows: PropTypes.number
 };
 Input.defaultProps = {
   hint: null,
-  type: null,
-  autoFocus: false,
-  onChange: null
+  invalid: false,
+  rows: 2
 };
 
 var Label = function (_React$Component2) {
@@ -1502,21 +1527,30 @@ var TextField = function (_React$Component3) {
       var cls = {},
           labelEl = void 0;
 
-      if (this.props.label.length) {
-        labelEl = _react2.default.createElement(Label, {
-          text: this.props.label,
-          onClick: this.onClickCB
-        });
+      var _props2 = this.props;
+      var children = _props2.children;
+      var className = _props2.className;
+      var style = _props2.style;
+      var label = _props2.label;
+      var floatingLabel = _props2.floatingLabel;
+      var other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
+
+
+      if (label.length) {
+        labelEl = _react2.default.createElement(Label, { text: label, onClick: this.onClickCB });
       }
 
       cls['mui-textfield'] = true;
-      cls['mui-textfield--float-label'] = this.props.floatingLabel;
+      cls['mui-textfield--float-label'] = floatingLabel;
       cls = util.classNames(cls);
 
       return _react2.default.createElement(
         'div',
-        { className: cls },
-        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, this.props)),
+        {
+          className: cls + ' ' + className,
+          style: style
+        },
+        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, other)),
         labelEl
       );
     }
@@ -1532,6 +1566,7 @@ TextField.propTypes = {
   floatingLabel: PropTypes.bool
 };
 TextField.defaultProps = {
+  className: '',
   label: '',
   floatingLabel: false
 };
@@ -1569,12 +1604,17 @@ var Appbar = function (_React$Component) {
   babelHelpers.createClass(Appbar, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
+
+
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
+        babelHelpers.extends({}, reactProps, {
           className: 'mui-appbar ' + this.props.className
         }),
-        this.props.children
+        children
       );
     }
   }]);
@@ -1636,14 +1676,25 @@ var Checkbox = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
+      var className = _props.className;
+      var label = _props.label;
+      var autoFocus = _props.autoFocus;
+      var checked = _props.checked;
+      var defaultChecked = _props.defaultChecked;
+      var defaultValue = _props.defaultValue;
+      var disabled = _props.disabled;
+      var form = _props.form;
+      var name = _props.name;
+      var required = _props.required;
+      var value = _props.value;
       var onChange = _props.onChange;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
 
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, other, {
-          className: 'mui-checkbox ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-checkbox ' + className
         }),
         _react2.default.createElement(
           'label',
@@ -1651,14 +1702,18 @@ var Checkbox = function (_React$Component) {
           _react2.default.createElement('input', {
             ref: 'inputEl',
             type: 'checkbox',
-            name: this.props.name,
-            value: this.props.value,
-            checked: this.props.checked,
-            defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled,
-            onChange: this.props.onChange
+            autoFocus: autoFocus,
+            checked: checked,
+            defaultChecked: defaultChecked,
+            defaultValue: defaultValue,
+            disabled: disabled,
+            form: form,
+            name: name,
+            required: required,
+            value: value,
+            onChange: onChange
           }),
-          this.props.label
+          label
         )
       );
     }
@@ -1670,20 +1725,11 @@ var Checkbox = function (_React$Component) {
 
 
 Checkbox.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  value: PropTypes.string,
-  checked: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func
+  label: PropTypes.string
 };
 Checkbox.defaultProps = {
   className: '',
-  name: null,
-  label: null,
-  disabled: false,
-  onChange: null
+  label: null
 };
 exports.default = Checkbox;
 module.exports = exports['default'];
@@ -1749,7 +1795,13 @@ var Col = function (_React$Component) {
           val = void 0,
           baseCls = void 0;
 
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+
       // add mui-col classes
+
       for (i = breakpoints.length - 1; i > -1; i--) {
         bk = breakpoints[i];
         baseCls = 'mui-col-' + bk;
@@ -1761,16 +1813,20 @@ var Col = function (_React$Component) {
         // add mui-col-{bk}-offset-{val}
         val = this.props[bk + '-offset'];
         if (val) cls[baseCls + '-offset-' + val] = true;
+
+        // remove from reactProps
+        delete reactProps[bk];
+        delete reactProps[bk + '-offset'];
       }
 
       cls = util.classNames(cls);
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: cls + ' ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: cls + ' ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);
@@ -1815,17 +1871,24 @@ var Container = function (_React$Component) {
   babelHelpers.createClass(Container, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var fluid = _props.fluid;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
+
+
       var cls = 'mui-container';
 
       // fluid containers
-      if (this.props.fluid) cls += '-fluid';
+      if (fluid) cls += '-fluid';
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: cls + ' ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: cls + ' ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);
@@ -1879,11 +1942,12 @@ var Divider = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var className = _props.className;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
 
-      return _react2.default.createElement('div', babelHelpers.extends({}, other, {
-        className: 'mui-divider ' + this.props.className
+      return _react2.default.createElement('div', babelHelpers.extends({}, reactProps, {
+        className: 'mui-divider ' + className
       }));
     }
   }]);
@@ -1932,39 +1996,33 @@ var PropTypes = _react2.default.PropTypes;
 var DropdownItem = function (_React$Component) {
   babelHelpers.inherits(DropdownItem, _React$Component);
 
-  function DropdownItem(props) {
+  function DropdownItem() {
     babelHelpers.classCallCheck(this, DropdownItem);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).call(this, props));
-
-    _this.onClickCB = util.callback(_this, 'onClick');
-    return _this;
+    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).apply(this, arguments));
   }
 
   babelHelpers.createClass(DropdownItem, [{
-    key: 'onClick',
-    value: function onClick(ev) {
-      if (this.props.onClick) this.props.onClick(this, ev);
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _props = this.props;
       var children = _props.children;
+      var link = _props.link;
+      var target = _props.target;
+      var value = _props.value;
       var onClick = _props.onClick;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onClick']);
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
 
 
       return _react2.default.createElement(
         'li',
-        other,
+        reactProps,
         _react2.default.createElement(
           'a',
           {
-            href: this.props.link,
-            target: this.props.target,
-            'data-mui-value': this.props.value,
-            onClick: this.onClickCB
+            href: link,
+            target: target,
+            'data-mui-value': value,
+            onClick: onClick
           },
           children
         )
@@ -2131,17 +2189,31 @@ var Dropdown = function (_React$Component) {
           menuEl = void 0,
           labelEl = void 0;
 
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var color = _props.color;
+      var variant = _props.variant;
+      var size = _props.size;
+      var label = _props.label;
+      var alignMenu = _props.alignMenu;
+      var onClick = _props.onClick;
+      var onSelect = _props.onSelect;
+      var disabled = _props.disabled;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'color', 'variant', 'size', 'label', 'alignMenu', 'onClick', 'onSelect', 'disabled']);
+
       // build label
-      if (jqLite.type(this.props.label) === 'string') {
+
+      if (jqLite.type(label) === 'string') {
         labelEl = _react2.default.createElement(
           'span',
           null,
-          this.props.label,
+          label,
           ' ',
           _react2.default.createElement(_caret2.default, null)
         );
       } else {
-        labelEl = this.props.label;
+        labelEl = label;
       }
 
       buttonEl = _react2.default.createElement(
@@ -2150,10 +2222,10 @@ var Dropdown = function (_React$Component) {
           ref: 'button',
           type: 'button',
           onClick: this.onClickCB,
-          color: this.props.color,
-          variant: this.props.variant,
-          size: this.props.size,
-          disabled: this.props.disabled
+          color: color,
+          variant: variant,
+          size: size,
+          disabled: disabled
         },
         labelEl
       );
@@ -2163,7 +2235,7 @@ var Dropdown = function (_React$Component) {
 
         cs[menuClass] = true;
         cs[openClass] = this.state.opened;
-        cs[rightClass] = this.props.alignMenu === 'right';
+        cs[rightClass] = alignMenu === 'right';
         cs = util.classNames(cs);
 
         menuEl = _react2.default.createElement(
@@ -2174,20 +2246,15 @@ var Dropdown = function (_React$Component) {
             style: { top: this.state.menuTop },
             onClick: this.selectCB
           },
-          this.props.children
+          children
         );
+      } else {
+        menuEl = _react2.default.createElement('div', null);
       }
-
-      var _props = this.props;
-      var className = _props.className;
-      var children = _props.children;
-      var onClick = _props.onClick;
-      var other = babelHelpers.objectWithoutProperties(_props, ['className', 'children', 'onClick']);
-
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, other, {
+        babelHelpers.extends({}, reactProps, {
           ref: 'wrapperEl',
           className: dropdownClass + ' ' + className
         }),
@@ -2258,17 +2325,23 @@ var Form = function (_React$Component) {
   babelHelpers.createClass(Form, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var inline = _props.inline;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
+
       var cls = '';
 
       // inline form
-      if (this.props.inline) cls = 'mui-form--inline';
+      if (inline) cls = 'mui-form--inline';
 
       return _react2.default.createElement(
         'form',
-        babelHelpers.extends({}, this.props, {
-          className: cls + ' ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: cls + ' ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);
@@ -2367,6 +2440,7 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
+var _helpers = require('./_helpers');
 
 var PropTypes = _react2.default.PropTypes;
 
@@ -2388,13 +2462,14 @@ var Option = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var label = _props.label;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
 
 
       return _react2.default.createElement(
         'option',
-        babelHelpers.extends({}, other, { value: this.props.value }),
-        this.props.label
+        reactProps,
+        label
       );
     }
   }]);
@@ -2405,17 +2480,15 @@ var Option = function (_React$Component) {
 
 
 Option.propTypes = {
-  value: PropTypes.string,
   label: PropTypes.string
 };
 Option.defaultProps = {
-  value: null,
   label: null
 };
 exports.default = Option;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],23:[function(require,module,exports){
+},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],23:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -2447,12 +2520,18 @@ var Panel = function (_React$Component) {
   babelHelpers.createClass(Panel, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+
+
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: 'mui-panel ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-panel ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);
@@ -2504,14 +2583,25 @@ var Radio = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
+      var className = _props.className;
+      var label = _props.label;
+      var autoFocus = _props.autoFocus;
+      var checked = _props.checked;
+      var defaultChecked = _props.defaultChecked;
+      var defaultValue = _props.defaultValue;
+      var disabled = _props.disabled;
+      var form = _props.form;
+      var name = _props.name;
+      var required = _props.required;
+      var value = _props.value;
       var onChange = _props.onChange;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
 
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, other, {
-          className: 'mui-radio ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-radio ' + className
         }),
         _react2.default.createElement(
           'label',
@@ -2519,14 +2609,18 @@ var Radio = function (_React$Component) {
           _react2.default.createElement('input', {
             ref: 'inputEl',
             type: 'radio',
-            name: this.props.name,
-            value: this.props.value,
-            checked: this.props.checked,
-            defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled,
-            onChange: this.props.onChange
+            autoFocus: autoFocus,
+            checked: checked,
+            defaultChecked: defaultChecked,
+            defaultValue: defaultValue,
+            disabled: disabled,
+            form: form,
+            name: name,
+            required: required,
+            value: value,
+            onChange: onChange
           }),
-          this.props.label
+          label
         )
       );
     }
@@ -2538,20 +2632,11 @@ var Radio = function (_React$Component) {
 
 
 Radio.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  value: PropTypes.string,
-  checked: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func
+  label: PropTypes.string
 };
 Radio.defaultProps = {
   className: '',
-  name: null,
-  label: null,
-  disabled: false,
-  onChange: null
+  label: null
 };
 exports.default = Radio;
 module.exports = exports['default'];
@@ -2595,12 +2680,18 @@ var Row = function (_React$Component) {
   babelHelpers.createClass(Row, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+
+
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: 'mui-row ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-row ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);
@@ -2709,6 +2800,10 @@ var Select = function (_React$Component) {
     value: function onInnerMouseDown(ev) {
       if (ev.button !== 0 || this.props.useDefault === true) return;
       ev.preventDefault();
+
+      // execute callback
+      var fn = this.props.onMouseDown;
+      fn && fn(ev);
     }
   }, {
     key: 'onInnerChange',
@@ -2716,14 +2811,19 @@ var Select = function (_React$Component) {
       var value = ev.target.value;
       this.setState({ value: value });
 
+      // execute callback
       var fn = this.props.onChange;
-      if (fn) fn(value);
+      fn && fn(value);
     }
   }, {
     key: 'onInnerClick',
     value: function onInnerClick(ev) {
       if (ev.button !== 0) return; // only left clicks
       this.showMenu();
+
+      // execute callback
+      var fn = this.props.onClick;
+      fn && fn(ev);
     }
   }, {
     key: 'onInnerFocus',
@@ -2754,6 +2854,10 @@ var Select = function (_React$Component) {
 
       // attach keydown handler
       jqLite.on(document, 'keydown', this.onKeydownCB);
+
+      // execute callback
+      var fn = this.onFocus;
+      fn && fn(ev);
     }
   }, {
     key: 'onOuterBlur',
@@ -2767,6 +2871,10 @@ var Select = function (_React$Component) {
 
       // remove keydown handler
       jqLite.off(document, 'keydown', this.onKeydownCB);
+
+      // execute callback
+      var fn = this.onBlur;
+      fn && fn(ev);
     }
   }, {
     key: 'onKeydown',
@@ -2838,40 +2946,43 @@ var Select = function (_React$Component) {
 
       var _props = this.props;
       var children = _props.children;
-      var onChange = _props.onChange;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
+      var className = _props.className;
+      var style = _props.style;
+      var label = _props.label;
+      var value = _props.value;
+      var defaultValue = _props.defaultValue;
+      var readOnly = _props.readOnly;
+      var useDefault = _props.useDefault;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'value', 'defaultValue', 'readOnly', 'useDefault']);
 
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, other, {
+        {
           ref: 'wrapperEl',
-          className: 'mui-select ' + this.props.className,
+          style: style,
+          className: 'mui-select ' + className,
           onFocus: this.onOuterFocusCB,
           onBlur: this.onOuterBlurCB
-        }),
+        },
         _react2.default.createElement(
           'select',
-          {
+          babelHelpers.extends({}, reactProps, {
             ref: 'selectEl',
-            name: this.props.name,
-            value: this.state.value,
-            defaultValue: this.props.defaultValue,
-            disabled: this.props.disabled,
-            multiple: this.props.multiple,
+            value: value,
+            defaultValue: defaultValue,
             readOnly: this.props.readOnly,
-            required: this.props.required,
             onChange: this.onInnerChangeCB,
             onMouseDown: this.onInnerMouseDownCB,
             onClick: this.onInnerClickCB,
             onFocus: this.onInnerFocusCB
-          },
-          this.props.children
+          }),
+          children
         ),
         _react2.default.createElement(
           'label',
           null,
-          this.props.label
+          label
         ),
         menuElem
       );
@@ -2888,25 +2999,15 @@ var Select = function (_React$Component) {
 
 Select.propTypes = {
   label: PropTypes.string,
-  name: PropTypes.string,
   value: PropTypes.string,
   defaultValue: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  disabled: PropTypes.bool,
-  multiple: PropTypes.bool,
   readOnly: PropTypes.bool,
-  required: PropTypes.bool,
   useDefault: PropTypes.bool,
   onChange: PropTypes.func
 };
 Select.defaultProps = {
   className: '',
-  name: null,
-  autoFocus: false,
-  disabled: false,
-  multiple: false,
   readOnly: false,
-  required: false,
   useDefault: false,
   onChange: null
 };
@@ -3144,7 +3245,9 @@ var Tabs = function (_React$Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var initialSelectedIndex = _props.initialSelectedIndex;
+      var justified = _props.justified;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
 
 
       var tabEls = [],
@@ -3187,11 +3290,11 @@ var Tabs = function (_React$Component) {
       }
 
       cls = tabsBarClass;
-      if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+      if (justified) cls += ' ' + tabsBarJustifiedClass;
 
       return _react2.default.createElement(
         'div',
-        other,
+        reactProps,
         _react2.default.createElement(
           'ul',
           { className: cls },
@@ -3263,12 +3366,8 @@ var Textarea = function (_React$Component) {
   return Textarea;
 }(_react2.default.Component);
 
-Textarea.propTypes = {
-  rows: PropTypes.number
-};
 Textarea.defaultProps = {
-  type: 'textarea',
-  rows: 2
+  type: 'textarea'
 };
 exports.default = Textarea;
 module.exports = exports['default'];

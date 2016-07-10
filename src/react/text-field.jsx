@@ -1,6 +1,6 @@
 /**
  * MUI React TextInput Component
- * @module react/text-input
+ * @module react/text-field
  */
 
 'use strict';
@@ -31,7 +31,7 @@ class Input extends React.Component {
     };
 
     // warn if value defined but onChange is not
-    if (value !== undefined && props.onChange === null) {
+    if (value !== undefined && !props.onChange) {
       util.raiseError(controlledMessage, true);
     }
 
@@ -42,17 +42,14 @@ class Input extends React.Component {
 
   static propTypes = {
     hint: PropTypes.string,
-    value: PropTypes.string,
-    type: PropTypes.string,
-    autoFocus: PropTypes.bool,
-    onChange: PropTypes.func
+    invalid: PropTypes.bool,
+    rows: PropTypes.number
   };
 
   static defaultProps = {
     hint: null,
-    type: null,
-    autoFocus: false,
-    onChange: null
+    invalid: false,
+    rows: 2
   };
 
   componentDidMount() {
@@ -63,6 +60,7 @@ class Input extends React.Component {
   onChange(ev) {
     this.setState({innerValue: ev.target.value});
 
+    // execute callback
     let fn = this.props.onChange;
     if (fn) fn(ev);
   }
@@ -81,45 +79,37 @@ class Input extends React.Component {
         isNotEmpty = Boolean(this.state.innerValue),
         inputEl;
 
+    const { hint, invalid, rows, type, ...reactProps } = this.props;
+
     cls['mui--is-empty'] = !isNotEmpty;
     cls['mui--is-not-empty'] = isNotEmpty;
     cls['mui--is-dirty'] = this.state.isDirty;
-    cls['mui--is-invalid'] = this.props.invalid;
+    cls['mui--is-invalid'] = invalid;
 
     cls = util.classNames(cls);
 
-    let { children, ...other } = this.props;
-
-    if (this.props.type === 'textarea') {
+    if (type === 'textarea') {
       inputEl = (
         <textarea
-          { ...other }
+          { ...reactProps }
           ref="inputEl"
           className={cls}
-          rows={this.props.rows}
-          placeholder={this.props.hint}
-          value={this.props.value}
-          defaultValue={this.props.defaultValue}
-          autoFocus={this.props.autoFocus}
+          rows={rows}
+          placeholder={hint}
           onChange={this.onChangeCB}
           onFocus={this.onFocusCB}
-          required={this.props.required}
         />
       );
     } else {
       inputEl = (
         <input
-          { ...other }
+          { ...reactProps }
           ref="inputEl"
           className={cls}
-          type={this.props.type}
-          value={this.props.value}
-          defaultValue={this.props.defaultValue}
+          type={type}
           placeholder={this.props.hint}
-          autoFocus={this.props.autofocus}
           onChange={this.onChangeCB}
           onFocus={this.onFocusCB}
-          required={this.props.required}
         />
       );
     }
@@ -195,6 +185,7 @@ class TextField extends React.Component {
   };
 
   static defaultProps = {
+    className: '',
     label: '',
     floatingLabel: false
   };
@@ -211,22 +202,23 @@ class TextField extends React.Component {
     let cls = {},
         labelEl;
 
-    if (this.props.label.length) {
-      labelEl = (
-        <Label
-          text={this.props.label}
-          onClick={this.onClickCB}
-        />
-      );
+    const { children, className, style, label, floatingLabel,
+      ...other } = this.props;
+
+    if (label.length) {
+      labelEl = <Label text={label} onClick={this.onClickCB} />;
     }
 
     cls['mui-textfield'] = true;
-    cls['mui-textfield--float-label'] = this.props.floatingLabel;
+    cls['mui-textfield--float-label'] = floatingLabel;
     cls = util.classNames(cls);
 
     return (
-      <div className={cls}>
-        <Input ref="inputEl" { ...this.props } />
+      <div
+        className={cls + ' ' + className}
+        style={style}
+      >
+        <Input ref="inputEl" { ...other } />
         {labelEl}
       </div>
     );

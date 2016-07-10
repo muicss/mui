@@ -81,18 +81,42 @@ describe('react/button', function() {
   });
 
 
-  it('supports click callbacks', function(done) {
-    // define callback
-    let fn = function() {
-      done();
-    }
+  it('supports click, mouse and touch events', function() {
+    let executedEvents = [],
+        triggeredEvents = [];
 
-    let node = ReactUtils.renderIntoDocument(
-      <Button onClick={ fn }>test</Button>
+    // define callback
+    const fn = function(ev) {executedEvents.push(ev.type);};
+
+    // define props
+    const props = {
+      onClick: fn,
+      onMouseDown: fn,
+      onMouseUp: fn,
+      onMouseLeave: fn,
+      onTouchStart: fn,
+      onTouchEnd: fn
+    };
+
+    const node = ReactUtils.renderIntoDocument(
+      <Button { ...props }>test</Button>
     );
 
-    // click on button
-    ReactUtils.Simulate.click(node.refs.buttonEl);
+    // trigger events
+    let k, eventName, eventType;
+
+    for (k in props) {
+      // remove 'on' and lowercase first letter
+      eventName = k.charAt(2).toLowerCase() + k.substr(3, k.length);
+      eventType = eventName.toLowerCase();
+
+      // trigger event
+      ReactUtils.Simulate[eventName](node.refs.buttonEl, {type: eventType});
+      triggeredEvents.push(eventType);
+    }
+
+    // check that events were executed
+    assert.deepEqual(triggeredEvents, executedEvents);
   });
 
 

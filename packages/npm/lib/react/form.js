@@ -30,17 +30,23 @@ var Form = function (_React$Component) {
   babelHelpers.createClass(Form, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+      var inline = _props.inline;
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
+
       var cls = '';
 
       // inline form
-      if (this.props.inline) cls = 'mui-form--inline';
+      if (inline) cls = 'mui-form--inline';
 
       return _react2.default.createElement(
         'form',
-        babelHelpers.extends({}, this.props, {
-          className: cls + ' ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: cls + ' ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);

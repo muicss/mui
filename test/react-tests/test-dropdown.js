@@ -65,7 +65,7 @@ describe('react/dropdown', function() {
     assert.equal(node.refs.menuEl, undefined);
 
     // click to render menu
-    ReactUtils.Simulate.click(buttonEl, {button: 0});
+    return ReactUtils.Simulate.click(buttonEl, {button: 0});
     let cls = 'mui-dropdown__menu mui--is-open';
     assert.equal(node.refs.menuEl.className, cls);
 

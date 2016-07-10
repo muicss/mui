@@ -39,7 +39,7 @@ describe('react/textarea', function() {
     let wrapperEl = ReactDOM.findDOMNode(instance);
 
     assert.equal(wrapperEl.tagName, 'DIV');
-    assert.equal(wrapperEl.className, 'mui-textfield');
+    assert.equal(wrapperEl.className.trim(), 'mui-textfield');
   });
 
 
