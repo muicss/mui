@@ -2149,28 +2149,32 @@ th {
   color: #F44336;
 }
 
-.mui--primary {
+.mui--bg-primary {
   background-color: #2196F3;
 }
 
-.mui--primary-dark {
+.mui--bg-primary-dark {
   background-color: #1976D2;
 }
 
-.mui--primary-light {
+.mui--bg-primary-light {
   background-color: #BBDEFB;
 }
 
-.mui--accent {
+.mui--bg-accent {
   background-color: #FF4081;
 }
 
-.mui--accent-dark {
+.mui--bg-accent-dark {
   background-color: #F50057;
 }
 
-.mui--accent-light {
+.mui--bg-accent-light {
   background-color: #FF80AB;
+}
+
+.mui--bg-danger {
+  background-color: #F44336;
 }
 
 .mui-list--unstyled {

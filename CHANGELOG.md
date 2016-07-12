@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.6.8 - July 12, 2016
+
+* Changed class name of background color helpers
+* Added danger color to background color helpers
+
 ## 0.6.7 - July 12, 2016
 
 * Added background color helpers
