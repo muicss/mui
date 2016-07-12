@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.6.7 - July 12, 2016
+
+* Added background color helpers
+
 ## 0.6.6 - July 10, 2016
 
 * Improved handling of spread attributes in MUI React library to prevent

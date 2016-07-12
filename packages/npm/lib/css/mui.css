@@ -2149,6 +2149,30 @@ th {
   color: #F44336;
 }
 
+.mui--primary {
+  background-color: #2196F3;
+}
+
+.mui--primary-dark {
+  background-color: #1976D2;
+}
+
+.mui--primary-light {
+  background-color: #BBDEFB;
+}
+
+.mui--accent {
+  background-color: #FF4081;
+}
+
+.mui--accent-dark {
+  background-color: #F50057;
+}
+
+.mui--accent-light {
+  background-color: #FF80AB;
+}
+
 .mui-list--unstyled {
   padding-left: 0;
   list-style: none;

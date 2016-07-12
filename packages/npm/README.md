@@ -402,6 +402,15 @@ Read more: https://www.muicss.com/docs/v1/react/forms
 <div className="mui--text-black"></div>
 <div className="mui--text-white"></div>
 
+<!-- background color -->
+<div className="mui--primary"></div>
+<div className="mui--primary-dark"></div>
+<div className="mui--primary-light"></div>
+<div className="mui--accent"></div>
+<div className="mui--accent-dark"></div>
+<div className="mui--accent-light"></div>
+
+
 <!-- user select -->
 <div className="mui--no-user-select"></div>
 
