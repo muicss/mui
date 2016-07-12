@@ -95,6 +95,22 @@
 
 
 // ============================================================================
+// BACKGROUND COLORS
+// ============================================================================
+
+.mui--primary       { background-color: $mui-primary-color; }
+.mui--primary-dark  { background-color: $mui-primary-color-dark; }
+.mui--primary-light { background-color: $mui-primary-color-light; }
+
+.mui--accent        { background-color: $mui-accent-color; }
+.mui--accent-dark   { background-color: $mui-accent-color-dark; }
+.mui--accent-light  { background-color: $mui-accent-color-light; }
+
+
+
+
+
+// ============================================================================
 // LISTS
 // ============================================================================
 
@@ -145,7 +161,7 @@
 
 .mui--z4 {
   box-shadow: 0 14px 28px rgba(mui-color('black'), 0.25),
-              0 10px 10px rgba(mui-color('black'), 0.22);  
+              0 10px 10px rgba(mui-color('black'), 0.22);
 }
 
 .mui--z5 {
@@ -248,7 +264,7 @@
 
 @media (max-width: $mui-screen-xs-max) {
   @include x-responsive-visibility('.mui-visible-xs');
-  
+
   .mui--visible-xs-block        { display: block !important; }
   .mui--visible-xs-inline       { display: inline !important; }
   .mui--visible-xs-inline-block { display: inline-block !important; }
@@ -257,7 +273,7 @@
 
 @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
   @include x-responsive-visibility('.mui-visible-sm');
-  
+
   .mui--visible-sm-block        { display: block !important; }
   .mui--visible-sm-inline       { display: inline !important; }
   .mui--visible-sm-inline-block { display: inline-block !important; }
@@ -266,7 +282,7 @@
 
 @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
   @include x-responsive-visibility('.mui-visible-md');
-  
+
   .mui--visible-md-block        { display: block !important; }
   .mui--visible-md-inline       { display: inline !important; }
   .mui--visible-md-inline-block { display: inline-block !important; }
@@ -275,7 +291,7 @@
 
 @media (min-width: $mui-screen-lg-min) and (max-width: $mui-screen-lg-max) {
   @include x-responsive-visibility('.mui-visible-lg');
-  
+
   .mui--visible-lg-block        { display: block !important; }
   .mui--visible-lg-inline       { display: inline !important; }
   .mui--visible-lg-inline-block { display: inline-block !important; }
@@ -284,7 +300,7 @@
 
 @media (min-width: $mui-screen-xl-min) {
   @include x-responsive-visibility('.mui-visible-xl');
-  
+
   .mui--visible-xl-block        { display: block !important; }
   .mui--visible-xl-inline       { display: inline !important; }
   .mui--visible-xl-inline-block { display: inline-block !important; }
