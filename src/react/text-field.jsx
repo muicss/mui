@@ -57,6 +57,14 @@ class Input extends React.Component {
     this.refs.inputEl._muiTextfield = true;
   }
 
+  //ADDED IN THIS FUNCTION in order to update the innerValue even when new props are received due to programmatic changes
+  //and onChange is not called.
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      innerValue: nextProps.value
+    });
+  }
+
   onChange(ev) {
     this.setState({innerValue: ev.target.value});
 
