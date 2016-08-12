@@ -162,6 +162,7 @@ optionHeight = 42,
     // from CSS
 menuPadding = 8; // from CSS
 
+
 /**
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
@@ -632,7 +633,7 @@ function loadStyleFn(cssText) {
   var doc = document,
       head;
 
-  // copied from jQuery
+  // copied from jQuery 
   head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
   var e = doc.createElement('style');
@@ -782,7 +783,7 @@ function disableScrollLockFn() {
   // decrement counter
   scrollLock -= 1;
 
-  // remove lock
+  // remove lock 
   if (scrollLock === 0) {
     var win = window,
         doc = document;
@@ -1188,7 +1189,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Caret constructor
  * @class
  */
-
 var Caret = function (_React$Component) {
   babelHelpers.inherits(Caret, _React$Component);
 
@@ -1342,6 +1342,17 @@ var Input = function (_React$Component) {
     value: function componentDidMount() {
       // disable MUI js
       this.refs.inputEl._muiTextfield = true;
+    }
+
+    //ADDED IN THIS FUNCTION in order to update the innerValue even when new props are received due to programmatic changes
+    //and onChange is not called.
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        innerValue: nextProps.value
+      });
     }
   }, {
     key: 'onChange',
@@ -1592,7 +1603,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Appbar constructor
  * @class
  */
-
 var Appbar = function (_React$Component) {
   babelHelpers.inherits(Appbar, _React$Component);
 
@@ -1859,7 +1869,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Container constructor
  * @class
  */
-
 var Container = function (_React$Component) {
   babelHelpers.inherits(Container, _React$Component);
 
@@ -1928,7 +1937,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Divider constructor
  * @class
  */
-
 var Divider = function (_React$Component) {
   babelHelpers.inherits(Divider, _React$Component);
 
@@ -2313,7 +2321,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Form constructor
  * @class
  */
-
 var Form = function (_React$Component) {
   babelHelpers.inherits(Form, _React$Component);
 
@@ -2508,7 +2515,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Panel constructor
  * @class
  */
-
 var Panel = function (_React$Component) {
   babelHelpers.inherits(Panel, _React$Component);
 
@@ -2750,9 +2756,7 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
-
     // warn if value defined but onChange is not
-
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {

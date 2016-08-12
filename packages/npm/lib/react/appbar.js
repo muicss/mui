@@ -18,7 +18,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Appbar constructor
  * @class
  */
-
 var Appbar = function (_React$Component) {
   babelHelpers.inherits(Appbar, _React$Component);
 

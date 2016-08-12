@@ -41,9 +41,7 @@ var Select = function (_React$Component) {
   function Select(props) {
     babelHelpers.classCallCheck(this, Select);
 
-
     // warn if value defined but onChange is not
-
     var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
     _this.state = {

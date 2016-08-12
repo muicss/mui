@@ -18,7 +18,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Panel constructor
  * @class
  */
-
 var Panel = function (_React$Component) {
   babelHelpers.inherits(Panel, _React$Component);
 

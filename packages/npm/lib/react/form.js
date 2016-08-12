@@ -18,7 +18,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Form constructor
  * @class
  */
-
 var Form = function (_React$Component) {
   babelHelpers.inherits(Form, _React$Component);
 

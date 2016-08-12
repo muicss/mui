@@ -68,6 +68,7 @@ optionHeight = 42,
     // from CSS
 menuPadding = 8; // from CSS
 
+
 /**
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
@@ -538,7 +539,7 @@ function loadStyleFn(cssText) {
   var doc = document,
       head;
 
-  // copied from jQuery
+  // copied from jQuery 
   head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
   var e = doc.createElement('style');
@@ -688,7 +689,7 @@ function disableScrollLockFn() {
   // decrement counter
   scrollLock -= 1;
 
-  // remove lock
+  // remove lock 
   if (scrollLock === 0) {
     var win = window,
         doc = document;
@@ -832,7 +833,7 @@ _angular2.default.module(moduleName, []).directive('muiButton', function () {
         element.prop('disabled', true);
       }
 
-      // set button styles       
+      // set button styles        
       _angular2.default.forEach(['variant', 'color', 'size'], function (attrName) {
         var attrVal = attrs[attrName];
         if (attrVal) element.addClass('mui-btn--' + attrVal);
@@ -1241,7 +1242,7 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
         $event.preventDefault();
         $event.stopPropagation();
 
-        // toggle open
+        // toggle open 
         if (scope.open) scope.open = false;else scope.open = true;
       };
     }

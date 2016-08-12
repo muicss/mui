@@ -18,7 +18,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Container constructor
  * @class
  */
-
 var Container = function (_React$Component) {
   babelHelpers.inherits(Container, _React$Component);
 

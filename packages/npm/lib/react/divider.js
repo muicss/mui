@@ -18,7 +18,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Divider constructor
  * @class
  */
-
 var Divider = function (_React$Component) {
   babelHelpers.inherits(Divider, _React$Component);
 

@@ -50,7 +50,7 @@ _angular2.default.module(moduleName, []).directive('muiButton', function () {
         element.prop('disabled', true);
       }
 
-      // set button styles       
+      // set button styles        
       _angular2.default.forEach(['variant', 'color', 'size'], function (attrName) {
         var attrVal = attrs[attrName];
         if (attrVal) element.addClass('mui-btn--' + attrVal);

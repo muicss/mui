@@ -18,7 +18,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Caret constructor
  * @class
  */
-
 var Caret = function (_React$Component) {
   babelHelpers.inherits(Caret, _React$Component);
 
