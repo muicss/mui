@@ -64,6 +64,45 @@ describe('react/input', function() {
   });
 
 
+  it('adds and removes mui--is-empty classes', function() {
+    var TestApp = React.createClass({
+      getInitialState: function() {
+        return {value: this.props.value};
+      },
+      onChange: function(ev) {
+        this.setState({value: ev.target.value});
+      },
+      render: function() {
+        return (
+          <Input
+            value={this.state.value}
+            onChange={this.onChange}
+          />
+        );
+      }
+    });
+
+    let elem = <TestApp value="" />;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let findComponent = ReactUtils.findRenderedDOMComponentWithTag;
+    let inputEl = findComponent(instance, 'input');
+
+    // check empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+
+    // add input value and check classes
+    instance.setState({value: 'test'});
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+
+    // remove input classes and check classes
+    instance.setState({value: ''});
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+  });
+
+
   it('does controlled component validation', function() {
     // raises error when `value` defined and `onChange missing
     assert.throws(
