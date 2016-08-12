@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.6.9 - August 11, 2016
+
+* Fixed empty/not-empty CSS bug with React Input and Textarea components
+
 ## 0.6.8 - July 12, 2016
 
 * Changed class name of background color helpers
