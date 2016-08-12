@@ -35,13 +35,18 @@ describe('react/input', function() {
   });
 
 
-  it('renders native input element', function() {
+  it('renders component with defaultValue properly', function() {
     let elem = <Input defaultValue="my input"></Input>;
     let instance = ReactUtils.renderIntoDocument(elem);
     let inputEl = ReactUtils
       .findRenderedDOMComponentWithTag(instance, 'input');
 
+    // check input element value
     assert.equal(inputEl.value, 'my input');
+
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
 
 

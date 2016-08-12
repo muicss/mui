@@ -27137,12 +27137,17 @@ describe('react/input', function () {
     _assert2.default.equal(wrapperEl.className.trim(), 'mui-textfield');
   });
 
-  it('renders native input element', function () {
+  it('renders component with defaultValue properly', function () {
     var elem = _react2.default.createElement(_input2.default, { defaultValue: 'my input' });
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
     var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
 
+    // check input element value
     _assert2.default.equal(inputEl.value, 'my input');
+
+    // check empty/not-empty classes
+    _assert2.default.equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
 
   it('adds dirty class on focus', function () {
