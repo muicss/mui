@@ -41,7 +41,7 @@
     "gulp-cssmin": "^0.1.7",
     "gulp-inject-string": "^1.1.0",
     "gulp-inline-css": "^3.1.0",
-    "gulp-inline-source": "^2.1.0",
+    "gulp-inline-source": "^3.0.0",
     "gulp-jshint": "^2.0.1",
     "gulp-load-plugins": "^1.2.4",
     "gulp-ng-annotate": "^2.0.0",
