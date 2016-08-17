@@ -75,6 +75,10 @@ class Input extends React.Component {
 
   onFocus(ev) {
     this.setState({isDirty: true});
+
+    // execute callback
+    let fn = this.props.onFocus;
+    if (fn) fn(ev);
   }
 
   triggerFocus() {
