@@ -1367,6 +1367,10 @@ var Input = function (_React$Component) {
     key: 'onFocus',
     value: function onFocus(ev) {
       this.setState({ isDirty: true });
+
+      // execute callback
+      var fn = this.props.onFocus;
+      if (fn) fn(ev);
     }
   }, {
     key: 'triggerFocus',

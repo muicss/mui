@@ -25531,6 +25531,10 @@ var Input = function (_React$Component) {
     key: 'onFocus',
     value: function onFocus(ev) {
       this.setState({ isDirty: true });
+
+      // execute callback
+      var fn = this.props.onFocus;
+      if (fn) fn(ev);
     }
   }, {
     key: 'triggerFocus',
@@ -27165,6 +27169,19 @@ describe('react/input', function () {
 
     // modify input
     _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+  });
+
+  it('executes onFocus callback', function (done) {
+    var callbackFn = function callbackFn(ev) {
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_input2.default, { onFocus: callbackFn }));
+
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
+
+    // simulate focus
+    _reactAddonsTestUtils2.default.Simulate.focus(inputEl);
   });
 
   it('adds and removes mui--is-empty classes', function () {
