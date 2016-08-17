@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.7.0 - August 17, 2016
+
+* Fixed bug preventing execution of onFocus callback in React Input and
+  Textarea components
+
 ## 0.6.9 - August 11, 2016
 
 * Fixed empty/not-empty CSS bug with React Input and Textarea components
