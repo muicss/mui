@@ -69,6 +69,24 @@ describe('react/input', function() {
   });
 
 
+  it('executes onFocus callback', function(done) {
+    let callbackFn = function(ev) {
+      done();
+    };
+
+    let instance = ReactUtils.renderIntoDocument(
+        <Input onFocus={callbackFn}>
+        </Input>
+    );
+
+    let inputEl = ReactUtils
+      .findRenderedDOMComponentWithTag(instance, 'input');
+
+    // simulate focus
+    ReactUtils.Simulate.focus(inputEl);
+  });
+
+
   it('adds and removes mui--is-empty classes', function() {
     var TestApp = React.createClass({
       getInitialState: function() {
