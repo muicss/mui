@@ -50,6 +50,42 @@ describe('react/input', function() {
   });
 
 
+  it('renders component with defaultValue received by update', function() {
+    const ParentClass = React.createClass({
+      getInitialState() {
+        return { testState: 'init' };
+      },
+      render() {
+        return <Input defaultValue="my input"></Input>;
+      },
+    });
+    
+    const parentElem = <ParentClass></ParentClass>;
+    const parentInstance = ReactUtils.renderIntoDocument(parentElem);
+    const instance = ReactUtils.findRenderedComponentWithType(parentInstance,
+                                                              Input);
+    const inputEl = ReactUtils.findRenderedDOMComponentWithTag(instance,
+                                                               'input');
+    
+    // check input element value
+    assert.equal(inputEl.value, 'my input');
+    
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+    
+    // changing state calls componentWillReceiveProps()
+    parentInstance.setState({ testState: 'new' });
+    
+    // check input element value
+    assert.equal(inputEl.value, 'my input');
+    
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+  });
+
+
   it('adds dirty class on focus', function() {
     let instance = ReactUtils.renderIntoDocument(<Input></Input>);
     let inputEl = ReactUtils
