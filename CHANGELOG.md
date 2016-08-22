@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.7.1 - August 21, 2016
+
+* Fixed bug causing React Input and Textarea components with defaultValue to
+  unfloat labels on state update
+
 ## 0.7.0 - August 17, 2016
 
 * Fixed bug preventing execution of onFocus callback in React Input and
