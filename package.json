@@ -31,7 +31,7 @@
     "contextify": "^0.1.15",
     "del": "^2.2.1",
     "each-async": "^1.1.1",
-    "gulp": "git+https://github.com/gulpjs/gulp#4ed9a4a3275559c73a396eff7e1fde3824951ebb",
+    "gulp": "git+https://github.com/gulpjs/gulp#4.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.2",
     "gulp-browserify": "^0.5.1",
