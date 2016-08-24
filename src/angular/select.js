@@ -270,7 +270,7 @@ angular.module(moduleName, [])
             selectEl[0].focus();
 
             // disable scroll lock
-            util.disableScrollLock();
+            util.disableScrollLock(true);
 
             // remove event handlers
             jqLite.off(document, 'click', closeMenuFn);

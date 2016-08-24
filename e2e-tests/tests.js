@@ -23155,8 +23155,9 @@ function enableScrollLockFn() {
 
 /**
  * Turn off window scroll lock.
+ * @param {Boolean} resetPos - Reset scroll position to original value.
  */
-function disableScrollLockFn() {
+function disableScrollLockFn(resetPos) {
   // ignore
   if (scrollLock === 0) return;
 
@@ -23169,7 +23170,7 @@ function disableScrollLockFn() {
         doc = document;
 
     jqLite.removeClass(doc.body, scrollLockCls);
-    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    if (resetPos) win.scrollTo(scrollLockPos.left, scrollLockPos.top);
   }
 }
 
@@ -24926,7 +24927,7 @@ var Select = function (_React$Component) {
     key: 'hideMenu',
     value: function hideMenu() {
       // remove scroll lock
-      util.disableScrollLock();
+      util.disableScrollLock(true);
 
       // remove event listeners
       jqLite.off(window, 'resize', this.hideMenuCB);
@@ -24968,11 +24969,10 @@ var Select = function (_React$Component) {
       var className = _props.className;
       var style = _props.style;
       var label = _props.label;
-      var value = _props.value;
       var defaultValue = _props.defaultValue;
       var readOnly = _props.readOnly;
       var useDefault = _props.useDefault;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'value', 'defaultValue', 'readOnly', 'useDefault']);
+      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault']);
 
 
       return _react2.default.createElement(
@@ -24988,7 +24988,7 @@ var Select = function (_React$Component) {
           'select',
           babelHelpers.extends({}, reactProps, {
             ref: 'selectEl',
-            value: value,
+            value: this.state.value,
             defaultValue: defaultValue,
             readOnly: this.props.readOnly,
             onChange: this.onInnerChangeCB,

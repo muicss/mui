@@ -334,7 +334,7 @@ Menu.prototype.destroy = function() {
   this.selectEl.focus();
 
   // remove scroll lock
-  util.disableScrollLock();
+  util.disableScrollLock(true);
 
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);

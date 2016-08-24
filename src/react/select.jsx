@@ -179,7 +179,7 @@ class Select extends React.Component {
 
   hideMenu() {
     // remove scroll lock
-    util.disableScrollLock();
+    util.disableScrollLock(true);
 
     // remove event listeners
     jqLite.off(window, 'resize', this.hideMenuCB);
@@ -216,7 +216,7 @@ class Select extends React.Component {
       );
     }
 
-    const { children, className, style, label, value, defaultValue, readOnly,
+    const { children, className, style, label, defaultValue, readOnly,
       useDefault, ...reactProps } = this.props;
 
     return (
@@ -230,7 +230,7 @@ class Select extends React.Component {
         <select
           { ...reactProps }
           ref="selectEl"
-          value={value}
+          value={this.state.value}
           defaultValue={defaultValue}
           readOnly={this.props.readOnly}
           onChange={this.onInnerChangeCB}
