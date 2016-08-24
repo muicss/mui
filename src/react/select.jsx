@@ -375,7 +375,10 @@ class Menu extends React.Component {
     // define menu items
     for (i=0; i < m; i++) {
       cls = (i === this.state.currentIndex) ? 'mui--is-selected' : '';
-
+      
+      if(optionEls[i].className) {
+        cls += (cls ? ' ' : '') + optionEls[i].className;
+      }
       menuItems.push(
         <div
           key={i}
