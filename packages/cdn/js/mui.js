@@ -704,8 +704,9 @@ function enableScrollLockFn() {
 
 /**
  * Turn off window scroll lock.
+ * @param {Boolean} resetPos - Reset scroll position to original value.
  */
-function disableScrollLockFn() {
+function disableScrollLockFn(resetPos) {
   // ignore
   if (scrollLock === 0) return;
 
@@ -718,7 +719,7 @@ function disableScrollLockFn() {
         doc = document;
 
     jqLite.removeClass(doc.body, scrollLockCls);
-    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    if (resetPos) win.scrollTo(scrollLockPos.left, scrollLockPos.top);
   }
 }
 
@@ -1575,7 +1576,7 @@ Menu.prototype.destroy = function() {
   this.selectEl.focus();
 
   // remove scroll lock
-  util.disableScrollLock();
+  util.disableScrollLock(true);
 
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);

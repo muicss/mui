@@ -241,7 +241,7 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           selectEl[0].focus();
 
           // disable scroll lock
-          util.disableScrollLock();
+          util.disableScrollLock(true);
 
           // remove event handlers
           jqLite.off(document, 'click', closeMenuFn);

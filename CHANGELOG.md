@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.7.2 - August 24, 2016
+
+* Fixed bug causing React <Select> component to ignore value change on item
+  click in dropdown menu
+* Removed reset scroll position from overlay teardown
+
 ## 0.7.1 - August 21, 2016
 
 * Fixed bug causing React Input and Textarea components with defaultValue to
