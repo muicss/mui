@@ -24506,6 +24506,7 @@ Option.propTypes = {
   label: PropTypes.string
 };
 Option.defaultProps = {
+  className: '',
   label: null
 };
 exports.default = Option;
@@ -25157,7 +25158,10 @@ var Menu = function (_React$Component2) {
 
       // define menu items
       for (i = 0; i < m; i++) {
-        cls = i === this.state.currentIndex ? 'mui--is-selected' : '';
+        cls = i === this.state.currentIndex ? 'mui--is-selected ' : '';
+
+        // add custom css class from <Option> component
+        cls += optionEls[i].className;
 
         menuItems.push(_react2.default.createElement(
           'div',
@@ -27632,6 +27636,30 @@ describe('react/select', function () {
     ));
 
     _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+
+  it('renders menu items with additional classNames', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _select2.default,
+      null,
+      _react2.default.createElement(_option2.default, null),
+      _react2.default.createElement(_option2.default, { className: 'my-custom-class' })
+    ));
+
+    var selectEl = instance.refs.selectEl;
+
+    // check option element custom class
+    var optionEl = selectEl.children[1];
+    _assert2.default.equal(optionEl.className, 'my-custom-class');
+
+    // open menu
+    _reactAddonsTestUtils2.default.Simulate.click(selectEl, { button: 0 });
+
+    // check menu item custom class
+    var findComponentFn = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithClass;
+    var menuEl = findComponentFn(instance, 'mui-select__menu');
+    var itemEl = menuEl.children[1];
+    _assert2.default.equal(itemEl.className, 'my-custom-class');
   });
 
   it('handles default undefined value', function () {

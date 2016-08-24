@@ -26,6 +26,7 @@ class Option extends React.Component {
   };
 
   static defaultProps = {
+    className: '',
     label: null
   };
 

@@ -90,6 +90,31 @@ describe('react/select', function() {
   });
 
 
+  it('renders menu items with additional classNames', function() {
+    let instance = ReactUtils.renderIntoDocument(
+      <Select>
+        <Option />
+        <Option className="my-custom-class" />
+      </Select>
+    );
+
+    let selectEl = instance.refs.selectEl;
+
+    // check option element custom class
+    let optionEl = selectEl.children[1];
+    assert.equal(optionEl.className, 'my-custom-class');
+
+    // open menu
+    ReactUtils.Simulate.click(selectEl, {button: 0});
+
+    // check menu item custom class
+    let findComponentFn = ReactUtils.findRenderedDOMComponentWithClass;
+    let menuEl = findComponentFn(instance, 'mui-select__menu');
+    let itemEl = menuEl.children[1];
+    assert.equal(itemEl.className, 'my-custom-class');
+  });
+
+
   it('handles default undefined value', function() {
     let testElem = (
       <Select>
