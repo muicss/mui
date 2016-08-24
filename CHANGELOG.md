@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.7.3 - August 25, 2016
+
+* Added support for custom className to React Option component
+
 ## 0.7.2 - August 24, 2016
 
 * Fixed bug causing React <Select> component to ignore value change on item

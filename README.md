@@ -12,8 +12,8 @@ MUI is a lightweight CSS framework that follows Google's Material Design guideli
 **Use From the CDN:**
 
 ```html
-<link href="//cdn.muicss.com/mui-0.7.2/css/mui.min.css" rel="stylesheet" type="text/css" />
-<script src="//cdn.muicss.com/mui-0.7.2/js/mui.min.js"></script>
+<link href="//cdn.muicss.com/mui-0.7.3/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.7.3/js/mui.min.js"></script>
 ```
 
 Or for development you can use the latest:

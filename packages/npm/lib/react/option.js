@@ -69,6 +69,7 @@ Option.propTypes = {
   label: PropTypes.string
 };
 Option.defaultProps = {
+  className: '',
   label: null
 };
 exports.default = Option;

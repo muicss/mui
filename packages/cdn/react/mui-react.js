@@ -2491,6 +2491,7 @@ Option.propTypes = {
   label: PropTypes.string
 };
 Option.defaultProps = {
+  className: '',
   label: null
 };
 exports.default = Option;
@@ -3142,7 +3143,10 @@ var Menu = function (_React$Component2) {
 
       // define menu items
       for (i = 0; i < m; i++) {
-        cls = i === this.state.currentIndex ? 'mui--is-selected' : '';
+        cls = i === this.state.currentIndex ? 'mui--is-selected ' : '';
+
+        // add custom css class from <Option> component
+        cls += optionEls[i].className;
 
         menuItems.push(_react2.default.createElement(
           'div',
