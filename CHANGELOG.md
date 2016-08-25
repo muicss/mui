@@ -6,7 +6,7 @@
 
 ## 0.7.2 - August 24, 2016
 
-* Fixed bug causing React <Select> component to ignore value change on item
+* Fixed bug causing React Select component to ignore value change on item
   click in dropdown menu
 * Removed reset scroll position from overlay teardown
 
