@@ -26,7 +26,7 @@ Or for development you can use the latest:
 **Install with NPM:**
 
 ```shell
-$ npm install --save-dev muicss
+$ npm install --save muicss
 ```
 
 Read more: https://www.npmjs.com/package/muicss
