@@ -8,14 +8,8 @@
   "homepage": "https://www.muicss.com",
   "description": "MUI is a lightweight HTML/CSS/JS framework that follows Google's Material Design guidelines.",
   "main": [
-    "src/sass/mui.scss",
-    "src/sass/mui/_colors.scss",
-    "src/email/mui-email-inline.scss",
-    "src/email/mui-email-styletag.scss",
     "packages/cdn/css/mui.css",
-    "packages/cdn/css/mui.min.css",
-    "packages/cdn/js/mui.js",
-    "packages/cdn/js/mui.min.js"
+    "packages/cdn/js/mui.js"
   ],
   "repository": {
     "type": "git",
