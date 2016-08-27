@@ -123,6 +123,10 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   }
 
   > .optgroup-label {
-    color: #aaaaaa;
+    color: #888888;
+
+    &:hover {
+      background-color: #ffffff;
+    }
   }
 }

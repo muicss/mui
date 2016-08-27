@@ -228,8 +228,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       itemEl.className += ' optgroup-label'
       menuEl.appendChild(itemEl);
 
-      for (j=0; j < optionEl.children.length; j++) {
-        pos++;
+      for (j=0; j < optionEl.children.length; j++, pos++) {
         var opt = optionEl.children[j], optItemEl = doc.createElement('div');
 
         optItemEl._muiPos = pos;
@@ -247,12 +246,12 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
     else {
       itemEl.textContent = optionEl.textContent;
       itemEl._muiPos = pos;
-      pos++;
 
       if (optionEl.selected) {
         itemEl.className += ' ' + selectedClass;
         selectedPos = pos;
       }
+      pos++;
       menuEl.appendChild(itemEl);
     }
     
