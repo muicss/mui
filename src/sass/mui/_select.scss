@@ -117,4 +117,12 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
       background-color: mui-color('grey', '200');
     }
   }
+
+  > .optgroup-option {
+    text-indent: 1em;
+  }
+
+  > .optgroup-label {
+    color: #aaaaaa;
+  }
 }

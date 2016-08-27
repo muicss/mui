@@ -35,6 +35,24 @@ function initialize(selectEl) {
 
 
 /**
+ * Calculates number of options from a mixed list of options and optgroups.
+ * @param optList - List of option/optgroup.
+ */
+function calculateOptions(optList) {
+  var numOptions = 0;
+
+  Array.from(optList).forEach(function(el) {
+    if (el.tagName === 'OPTGROUP') {
+      numOptions += el.children.length;
+    }
+      numOptions++;
+
+  });
+  return numOptions;
+}
+
+
+/**
  * Creates a new Select object
  * @class
  */
@@ -188,28 +206,56 @@ function Menu(wrapperEl, selectEl) {
 Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   var menuEl = doc.createElement('div'),
       optionEls = selectEl.children,
-      numOptions = optionEls.length,
+      numOptions = calculateOptions(optionEls),
       selectedPos = 0,
       optionEl,
       itemEl,
-      i;
+      i,
+      j,
+      pos = 0;
 
   menuEl.className = menuClass;
 
   // add options
-  for (i=0; i < numOptions; i++) {
+  for (i=0; i < optionEls.length; i++) {
     optionEl = optionEls[i];
 
     itemEl = doc.createElement('div');
-    itemEl.textContent = optionEl.textContent;
-    itemEl._muiPos = i;
 
-    if (optionEl.selected) {
-      itemEl.setAttribute('class', selectedClass);
-      selectedPos = i;
+    if (optionEl.tagName === 'OPTGROUP') {
+      itemEl.textContent = optionEl.label;
+      itemEl._muiPos = undefined;
+      itemEl.className += ' optgroup-label'
+      menuEl.appendChild(itemEl);
+
+      for (j=0; j < optionEl.children.length; j++) {
+        pos++;
+        var opt = optionEl.children[j], optItemEl = doc.createElement('div');
+
+        optItemEl._muiPos = pos;
+        optItemEl.textContent = opt.textContent;
+        optItemEl.className += ' optgroup-option';
+
+        if (opt.selected) {
+          optItemEl.className += ' ' + selectedClass;
+          selectedPos = pos;
+        }
+
+        menuEl.appendChild(optItemEl);
+      }
     }
+    else {
+      itemEl.textContent = optionEl.textContent;
+      itemEl._muiPos = pos;
+      pos++;
 
-    menuEl.appendChild(itemEl);
+      if (optionEl.selected) {
+        itemEl.className += ' ' + selectedClass;
+        selectedPos = pos;
+      }
+      menuEl.appendChild(itemEl);
+    }
+    
   }
 
   // save indices
@@ -313,7 +359,7 @@ Menu.prototype.decrement = function() {
  */
 Menu.prototype.selectCurrent = function() {
   if (this.currentIndex !== this.origIndex) {
-    var optionEls = this.selectEl.children;
+    var optionEls = this.selectEl;
     optionEls[this.origIndex].selected = false;
     optionEls[this.currentIndex].selected = true;
 
