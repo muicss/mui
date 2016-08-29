@@ -109,7 +109,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     cursor: pointer;
     white-space: nowrap;
 
-    &:hover {
+    &:not(.mui-optgroup__label):hover {
       background-color: mui-color('grey', '300');
     }
 
@@ -118,15 +118,12 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     }
   }
 
-  > .optgroup-option {
+  > .mui-optgroup__option {
     text-indent: 1em;
   }
 
-  > .optgroup-label {
-    color: #888888;
-
-    &:hover {
-      background-color: #ffffff;
-    }
+  > .mui-optgroup__label {
+    color: $mui-text-dark-secondary;
+    font-size: 0.8em;
   }
 }

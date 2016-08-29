@@ -225,7 +225,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
     if (optionEl.tagName === 'OPTGROUP') {
       itemEl.textContent = optionEl.label;
       itemEl._muiPos = undefined;
-      itemEl.className += ' optgroup-label'
+      itemEl.className += ' mui-optgroup__label'
       menuEl.appendChild(itemEl);
 
       for (j=0; j < optionEl.children.length; j++, pos++) {
@@ -233,7 +233,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
 
         optItemEl._muiPos = pos;
         optItemEl.textContent = opt.textContent;
-        optItemEl.className += ' optgroup-option';
+        optItemEl.className += ' mui-optgroup__option';
 
         if (opt.selected) {
           optItemEl.className += ' ' + selectedClass;
