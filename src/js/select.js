@@ -239,6 +239,10 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
           optItemEl.className += ' ' + selectedClass;
           selectedPos = pos;
         }
+        if (selectedPos == 0) {
+          // If the first element is an optgroup, point the selectedPos to 1.
+          selectedPos++;
+        }
 
         menuEl.appendChild(optItemEl);
       }
@@ -331,10 +335,14 @@ Menu.prototype.clickHandler = function(ev) {
 Menu.prototype.increment = function() {
   if (this.currentIndex === this.menuEl.children.length - 1) return;
 
+  // These can be both options and optgroups.
   var optionEls = this.menuEl.children;
   
   jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex += 1;
+  if ((' ' + optionEls[this.currentIndex].className + ' ').indexOf(' mui-optgroup__label ') > -1) {
+    this.currentIndex++;
+  }
   jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
@@ -348,7 +356,13 @@ Menu.prototype.decrement = function() {
   var optionEls = this.menuEl.children;
 
   jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
-  this.currentIndex -= 1;
+  if ((' ' + optionEls[this.currentIndex-1].className + ' ').indexOf(' mui-optgroup__label ') > -1) {
+    // If the element is first inside an optgroup, then don't decrement it.
+    this.currentIndex -= this.currentIndex != 1? 2 : 0;
+  }
+  else {
+    this.currentIndex--;
+  }
   jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
 
