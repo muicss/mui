@@ -39,15 +39,15 @@ function initialize(selectEl) {
  * @param optList - List of option/optgroup.
  */
 function calculateOptions(optList) {
-  var numOptions = 0;
+  var numOptions = 0,
+      i = optList.length,
+      el;
 
-  Array.from(optList).forEach(function(el) {
-    if (el.tagName === 'OPTGROUP') {
-      numOptions += el.children.length;
-    }
-      numOptions++;
+  while (i--) {
+    el = optList[i];
+    numOptions += el.tagName === 'OPTGROUP' ? el.children.length + 1 : 1;
+  }
 
-  });
   return numOptions;
 }
 
@@ -207,6 +207,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   var menuEl = doc.createElement('div'),
       optionEls = selectEl.children,
       numOptions = calculateOptions(optionEls),
+      numSelectEls = optionEls.length,
       selectedPos = 0,
       optionEl,
       itemEl,
@@ -217,18 +218,18 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   menuEl.className = menuClass;
 
   // add options
-  for (i=0; i < optionEls.length; i++) {
+  for ( i=0; i < numSelectEls; i++) {
     optionEl = optionEls[i];
 
     itemEl = doc.createElement('div');
 
     if (optionEl.tagName === 'OPTGROUP') {
       itemEl.textContent = optionEl.label;
-      itemEl._muiPos = undefined;
-      itemEl.className += ' mui-optgroup__label'
+      itemEl.className += ' mui-optgroup__label';
       menuEl.appendChild(itemEl);
 
-      for (j=0; j < optionEl.children.length; j++, pos++) {
+      var numOptgroupEls = optionEl.children.length;
+      for (j=0; j < numOptgroupEls; j++, pos++) {
         var opt = optionEl.children[j], optItemEl = doc.createElement('div');
 
         optItemEl._muiPos = pos;
@@ -241,7 +242,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
         }
         if (selectedPos == 0) {
           // If the first element is an optgroup, point the selectedPos to 1.
-          selectedPos++;
+          selectedPos += 1;
         }
 
         menuEl.appendChild(optItemEl);
@@ -255,7 +256,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
         itemEl.className += ' ' + selectedClass;
         selectedPos = pos;
       }
-      pos++;
+      pos += 1;
       menuEl.appendChild(itemEl);
     }
     
@@ -340,8 +341,8 @@ Menu.prototype.increment = function() {
   
   jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
   this.currentIndex += 1;
-  if ((' ' + optionEls[this.currentIndex].className + ' ').indexOf(' mui-optgroup__label ') > -1) {
-    this.currentIndex++;
+  if (jqLite.hasClass(optionEls[this.currentIndex], 'mui-optgroup__label')) {
+    this.currentIndex += 1;
   }
   jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
@@ -356,12 +357,12 @@ Menu.prototype.decrement = function() {
   var optionEls = this.menuEl.children;
 
   jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
-  if ((' ' + optionEls[this.currentIndex-1].className + ' ').indexOf(' mui-optgroup__label ') > -1) {
+  if (jqLite.hasClass(optionEls[this.currentIndex], 'mui-optgroup__label')) {
     // If the element is first inside an optgroup, then don't decrement it.
-    this.currentIndex -= this.currentIndex != 1? 2 : 0;
+    this.currentIndex -= this.currentIndex != 1 ? 2 : 0;
   }
   else {
-    this.currentIndex--;
+    this.currentIndex -= 1;
   }
   jqLite.addClass(optionEls[this.currentIndex], selectedClass);
 }
