@@ -22538,7 +22538,7 @@ var wrapperPadding = 15,
     // from CSS
 inputHeight = 32,
     // from CSS
-optionHeight = 42,
+rowHeight = 42,
     // from CSS
 menuPadding = 8; // from CSS
 
@@ -22547,18 +22547,18 @@ menuPadding = 8; // from CSS
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
  */
-function getMenuPositionalCSSFn(wrapperEl, numOptions, currentIndex) {
+function getMenuPositionalCSSFn(wrapperEl, numRows, selectedRow) {
   var viewHeight = document.documentElement.clientHeight;
 
   // determine 'height'
-  var h = numOptions * optionHeight + 2 * menuPadding,
+  var h = numRows * rowHeight + 2 * menuPadding,
       height = Math.min(h, viewHeight);
 
   // determine 'top'
   var top, initTop, minTop, maxTop;
 
-  initTop = menuPadding + optionHeight - (wrapperPadding + inputHeight);
-  initTop -= currentIndex * optionHeight;
+  initTop = menuPadding + rowHeight - (wrapperPadding + inputHeight);
+  initTop -= selectedRow * rowHeight;
 
   minTop = -1 * wrapperEl.getBoundingClientRect().top;
   maxTop = viewHeight - height + minTop;
@@ -22571,8 +22571,8 @@ function getMenuPositionalCSSFn(wrapperEl, numOptions, currentIndex) {
       scrollMax;
 
   if (h > viewHeight) {
-    scrollIdeal = menuPadding + (currentIndex + 1) * optionHeight - (-1 * top + wrapperPadding + inputHeight);
-    scrollMax = numOptions * optionHeight + 2 * menuPadding - height;
+    scrollIdeal = menuPadding + (selectedRow + 1) * rowHeight - (-1 * top + wrapperPadding + inputHeight);
+    scrollMax = numRows * rowHeight + 2 * menuPadding - height;
     scrollTop = Math.min(scrollIdeal, scrollMax);
   }
 
@@ -23259,7 +23259,7 @@ var Appbar = function (_React$Component) {
 
   function Appbar() {
     babelHelpers.classCallCheck(this, Appbar);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Appbar).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Appbar.__proto__ || Object.getPrototypeOf(Appbar)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Appbar, [{
@@ -23332,7 +23332,7 @@ var Button = function (_React$Component) {
   function Button(props) {
     babelHelpers.classCallCheck(this, Button);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, props));
 
     _this.state = {
       ripples: {}
@@ -23541,7 +23541,7 @@ var Ripple = function (_React$Component2) {
   babelHelpers.inherits(Ripple, _React$Component2);
 
   function Ripple() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this3, _ret;
 
@@ -23551,7 +23551,7 @@ var Ripple = function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Ripple)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this3), _this3.state = {
+    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_ref = Ripple.__proto__ || Object.getPrototypeOf(Ripple)).call.apply(_ref, [this].concat(args))), _this3), _this3.state = {
       animateIn: false
     }, _temp), babelHelpers.possibleConstructorReturn(_this3, _ret);
   }
@@ -23632,7 +23632,7 @@ var Caret = function (_React$Component) {
 
   function Caret() {
     babelHelpers.classCallCheck(this, Caret);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Caret).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Caret.__proto__ || Object.getPrototypeOf(Caret)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Caret, [{
@@ -23694,7 +23694,7 @@ var Checkbox = function (_React$Component) {
 
   function Checkbox() {
     babelHelpers.classCallCheck(this, Checkbox);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Checkbox).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Checkbox, [{
@@ -23793,7 +23793,7 @@ var Col = function (_React$Component) {
 
   function Col() {
     babelHelpers.classCallCheck(this, Col);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Col).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Col.__proto__ || Object.getPrototypeOf(Col)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Col, [{
@@ -23890,7 +23890,7 @@ var Container = function (_React$Component) {
 
   function Container() {
     babelHelpers.classCallCheck(this, Container);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Container).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Container, [{
@@ -23958,7 +23958,7 @@ var Divider = function (_React$Component) {
 
   function Divider() {
     babelHelpers.classCallCheck(this, Divider);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Divider).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Divider.__proto__ || Object.getPrototypeOf(Divider)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Divider, [{
@@ -24022,7 +24022,7 @@ var DropdownItem = function (_React$Component) {
 
   function DropdownItem() {
     babelHelpers.classCallCheck(this, DropdownItem);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (DropdownItem.__proto__ || Object.getPrototypeOf(DropdownItem)).apply(this, arguments));
   }
 
   babelHelpers.createClass(DropdownItem, [{
@@ -24119,7 +24119,7 @@ var Dropdown = function (_React$Component) {
   function Dropdown(props) {
     babelHelpers.classCallCheck(this, Dropdown);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Dropdown).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this, props));
 
     _this.state = {
       opened: false,
@@ -24342,7 +24342,7 @@ var Form = function (_React$Component) {
 
   function Form() {
     babelHelpers.classCallCheck(this, Form);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Form).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Form, [{
@@ -24414,7 +24414,7 @@ var Input = function (_React$Component) {
 
   function Input() {
     babelHelpers.classCallCheck(this, Input);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Input, [{
@@ -24477,7 +24477,7 @@ var Option = function (_React$Component) {
 
   function Option() {
     babelHelpers.classCallCheck(this, Option);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Option).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Option, [{
@@ -24537,7 +24537,7 @@ var Panel = function (_React$Component) {
 
   function Panel() {
     babelHelpers.classCallCheck(this, Panel);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Panel).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Panel, [{
@@ -24598,7 +24598,7 @@ var Radio = function (_React$Component) {
 
   function Radio() {
     babelHelpers.classCallCheck(this, Radio);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Radio).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Radio.__proto__ || Object.getPrototypeOf(Radio)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Radio, [{
@@ -24697,7 +24697,7 @@ var Row = function (_React$Component) {
 
   function Row() {
     babelHelpers.classCallCheck(this, Row);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Row).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Row, [{
@@ -24774,7 +24774,7 @@ var Select = function (_React$Component) {
     babelHelpers.classCallCheck(this, Select);
 
     // warn if value defined but onChange is not
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
 
     _this.state = {
       showMenu: false
@@ -25038,7 +25038,7 @@ var Menu = function (_React$Component2) {
   function Menu(props) {
     babelHelpers.classCallCheck(this, Menu);
 
-    var _this3 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props));
+    var _this3 = babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
     _this3.state = {
       origIndex: null,
@@ -25226,7 +25226,7 @@ var Tab = function (_React$Component) {
 
   function Tab() {
     babelHelpers.classCallCheck(this, Tab);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tab).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Tab, [{
@@ -25298,7 +25298,7 @@ var Tabs = function (_React$Component) {
   function Tabs(props) {
     babelHelpers.classCallCheck(this, Tabs);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tabs).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
     _this.state = { currentSelectedIndex: props.initialSelectedIndex };
     return _this;
@@ -25439,7 +25439,7 @@ var Input = function (_React$Component) {
   function Input(props) {
     babelHelpers.classCallCheck(this, Input);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     var value = props.value;
     var innerValue = value || props.defaultValue;
@@ -25566,7 +25566,7 @@ var Label = function (_React$Component2) {
   babelHelpers.inherits(Label, _React$Component2);
 
   function Label() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this2, _ret;
 
@@ -25576,7 +25576,7 @@ var Label = function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Label)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this2), _this2.state = {
+    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_ref = Label.__proto__ || Object.getPrototypeOf(Label)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
       style: {}
     }, _temp), babelHelpers.possibleConstructorReturn(_this2, _ret);
   }
@@ -25640,7 +25640,7 @@ var TextField = function (_React$Component3) {
   function TextField(props) {
     babelHelpers.classCallCheck(this, TextField);
 
-    var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextField).call(this, props));
+    var _this4 = babelHelpers.possibleConstructorReturn(this, (TextField.__proto__ || Object.getPrototypeOf(TextField)).call(this, props));
 
     _this4.onClickCB = util.callback(_this4, 'onClick');
     return _this4;
@@ -25736,7 +25736,7 @@ var Textarea = function (_React$Component) {
 
   function Textarea() {
     babelHelpers.classCallCheck(this, Textarea);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Textarea).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Textarea.__proto__ || Object.getPrototypeOf(Textarea)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Textarea, [{

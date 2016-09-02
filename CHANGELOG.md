@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.7.4 - September 2, 2016
+
+* Added support for Optgroups to CSS/JS Select component
+
 ## 0.7.3 - August 25, 2016
 
 * Added support for custom className to React Option component

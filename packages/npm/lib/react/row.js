@@ -31,7 +31,7 @@ var Row = function (_React$Component) {
 
   function Row() {
     babelHelpers.classCallCheck(this, Row);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Row).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Row, [{

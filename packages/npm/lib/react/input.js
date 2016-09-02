@@ -28,7 +28,7 @@ var Input = function (_React$Component) {
 
   function Input() {
     babelHelpers.classCallCheck(this, Input);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Input, [{

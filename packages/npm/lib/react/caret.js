@@ -23,7 +23,7 @@ var Caret = function (_React$Component) {
 
   function Caret() {
     babelHelpers.classCallCheck(this, Caret);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Caret).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Caret.__proto__ || Object.getPrototypeOf(Caret)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Caret, [{

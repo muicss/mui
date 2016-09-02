@@ -23,7 +23,7 @@ var Divider = function (_React$Component) {
 
   function Divider() {
     babelHelpers.classCallCheck(this, Divider);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Divider).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Divider.__proto__ || Object.getPrototypeOf(Divider)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Divider, [{

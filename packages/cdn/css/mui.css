@@ -1692,12 +1692,21 @@ h4, h5, h6 {
   white-space: nowrap;
 }
 
-.mui-select__menu > div:hover {
+.mui-select__menu > div.mui--is-selected {
+  background-color: #EEEEEE;
+}
+
+.mui-select__menu > div:not(.mui-optgroup__label):hover {
   background-color: #E0E0E0;
 }
 
-.mui-select__menu > div.mui--is-selected {
-  background-color: #EEEEEE;
+.mui-optgroup__option {
+  text-indent: 1em;
+}
+
+.mui-optgroup__label {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 0.9em;
 }
 
 /**

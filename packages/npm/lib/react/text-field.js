@@ -34,7 +34,7 @@ var Input = function (_React$Component) {
   function Input(props) {
     babelHelpers.classCallCheck(this, Input);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     var value = props.value;
     var innerValue = value || props.defaultValue;
@@ -161,7 +161,7 @@ var Label = function (_React$Component2) {
   babelHelpers.inherits(Label, _React$Component2);
 
   function Label() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this2, _ret;
 
@@ -171,7 +171,7 @@ var Label = function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Label)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this2), _this2.state = {
+    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_ref = Label.__proto__ || Object.getPrototypeOf(Label)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
       style: {}
     }, _temp), babelHelpers.possibleConstructorReturn(_this2, _ret);
   }
@@ -235,7 +235,7 @@ var TextField = function (_React$Component3) {
   function TextField(props) {
     babelHelpers.classCallCheck(this, TextField);
 
-    var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextField).call(this, props));
+    var _this4 = babelHelpers.possibleConstructorReturn(this, (TextField.__proto__ || Object.getPrototypeOf(TextField)).call(this, props));
 
     _this4.onClickCB = util.callback(_this4, 'onClick');
     return _this4;

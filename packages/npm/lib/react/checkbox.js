@@ -32,7 +32,7 @@ var Checkbox = function (_React$Component) {
 
   function Checkbox() {
     babelHelpers.classCallCheck(this, Checkbox);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Checkbox).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Checkbox, [{

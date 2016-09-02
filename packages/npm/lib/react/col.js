@@ -31,7 +31,7 @@ var Col = function (_React$Component) {
 
   function Col() {
     babelHelpers.classCallCheck(this, Col);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Col).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Col.__proto__ || Object.getPrototypeOf(Col)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Col, [{
