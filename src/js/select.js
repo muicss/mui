@@ -35,24 +35,6 @@ function initialize(selectEl) {
 
 
 /**
- * Calculates number of options from a mixed list of options and optgroups.
- * @param optList - List of option/optgroup.
- */
-function calculateOptions(optList) {
-  var numOptions = 0,
-      i = optList.length,
-      el;
-
-  while (i--) {
-    el = optList[i];
-    numOptions += el.tagName === 'OPTGROUP' ? el.children.length + 1 : 1;
-  }
-
-  return numOptions;
-}
-
-
-/**
  * Creates a new Select object
  * @class
  */
@@ -94,7 +76,7 @@ Select.prototype.focusHandler = function(ev) {
 
   var selectEl = this.selectEl,
       wrapperEl = this.wrapperEl,
-      origIndex = selectEl.tabIndex,
+      tabIndex = selectEl.tabIndex,
       keydownFn = util.callback(this, 'keydownHandler');
 
   // attach keydown handler
@@ -103,7 +85,7 @@ Select.prototype.focusHandler = function(ev) {
   // disable tabfocus once
   selectEl.tabIndex = -1;
   jqLite.one(wrapperEl, 'blur', function() {
-    selectEl.tabIndex = origIndex;
+    selectEl.tabIndex = tabIndex;
     jqLite.off(doc, 'keydown', keydownFn);
   });
   
@@ -168,6 +150,7 @@ function Menu(wrapperEl, selectEl) {
   util.enableScrollLock();
 
   // instance variables
+  this.indexMap = {};
   this.origIndex = null;
   this.currentIndex = null;
   this.selectEl = selectEl;
@@ -205,72 +188,75 @@ function Menu(wrapperEl, selectEl) {
  */
 Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   var menuEl = doc.createElement('div'),
-      optionEls = selectEl.children,
-      numOptions = calculateOptions(optionEls),
-      numSelectEls = optionEls.length,
-      selectedPos = 0,
-      optionEl,
-      itemEl,
+      childEls = selectEl.children,
+      indexNum = 0,
+      indexMap = this.indexMap,
+      selectedRow = 0,
+      loopEl,
+      rowEl,
+      optionEls,
+      inGroup,
       i,
+      iMax,
       j,
-      pos = 0;
+      jMax;
 
   menuEl.className = menuClass;
 
-  // add options
-  for ( i=0; i < numSelectEls; i++) {
-    optionEl = optionEls[i];
+  for (i=0, iMax=childEls.length; i < iMax; i++) {
+    loopEl = childEls[i];
 
-    itemEl = doc.createElement('div');
+    if (loopEl.tagName === 'OPTGROUP') {
+      // add row item to menu
+      rowEl = doc.createElement('div');
+      rowEl.textContent = loopEl.label;
+      rowEl.className = 'mui-optgroup__label';
+      menuEl.appendChild(rowEl);
 
-    if (optionEl.tagName === 'OPTGROUP') {
-      itemEl.textContent = optionEl.label;
-      itemEl.className += ' mui-optgroup__label';
-      menuEl.appendChild(itemEl);
-
-      var numOptgroupEls = optionEl.children.length;
-      for (j=0; j < numOptgroupEls; j++, pos++) {
-        var opt = optionEl.children[j], optItemEl = doc.createElement('div');
-
-        optItemEl._muiPos = pos;
-        optItemEl.textContent = opt.textContent;
-        optItemEl.className += ' mui-optgroup__option';
-
-        if (opt.selected) {
-          optItemEl.className += ' ' + selectedClass;
-          selectedPos = pos;
-        }
-        if (selectedPos == 0) {
-          // If the first element is an optgroup, point the selectedPos to 1.
-          selectedPos += 1;
-        }
-
-        menuEl.appendChild(optItemEl);
-      }
+      inGroup = true;
+      optionEls = loopEl.children;
+    } else {
+      inGroup = false;
+      optionEls = [loopEl];
     }
-    else {
-      itemEl.textContent = optionEl.textContent;
-      itemEl._muiPos = pos;
 
-      if (optionEl.selected) {
-        itemEl.className += ' ' + selectedClass;
-        selectedPos = pos;
+    // loop through option elements
+    for (j=0, jMax=optionEls.length; j < jMax; j++) {
+      loopEl = optionEls[j];
+
+      // add row item to menu
+      rowEl = doc.createElement('div');
+      rowEl.textContent = loopEl.textContent;
+      rowEl._muiIndex = indexNum;
+
+      // handle selected options
+      if (loopEl.selected) {
+        rowEl.className = selectedClass;
+        selectedRow = menuEl.children.length;
       }
-      pos += 1;
-      menuEl.appendChild(itemEl);
+
+      // handle optgroup options
+      if (inGroup) jqLite.addClass(rowEl, 'mui-optgroup__option');
+
+      menuEl.appendChild(rowEl);
+
+      // add to index map
+      indexMap[indexNum] = rowEl;
+      indexNum += 1;
     }
-    
   }
 
   // save indices
-  this.origIndex = selectedPos;
-  this.currentIndex = selectedPos;
+  var selectedIndex = selectEl.selectedIndex;
+
+  this.origIndex = selectedIndex;
+  this.currentIndex = selectedIndex;
 
   // set position
   var props = formlib.getMenuPositionalCSS(
     wrapperEl,
-    numOptions,
-    selectedPos
+    menuEl.children.length,
+    selectedRow
   );
 
   jqLite.css(menuEl, props);
@@ -316,13 +302,13 @@ Menu.prototype.clickHandler = function(ev) {
   // don't allow events to bubble
   ev.stopPropagation();
 
-  var pos = ev.target._muiPos;
+  var index = ev.target._muiIndex;
 
   // ignore clicks on non-items                                               
-  if (pos === undefined) return;
+  if (index === undefined) return;
 
   // select option
-  this.currentIndex = pos;
+  this.currentIndex = index;
   this.selectCurrent();
 
   // destroy menu
@@ -334,17 +320,14 @@ Menu.prototype.clickHandler = function(ev) {
  * Increment selected item
  */
 Menu.prototype.increment = function() {
-  if (this.currentIndex === this.menuEl.children.length - 1) return;
+  if (this.currentIndex === this.selectEl.length - 1) return;
 
-  // These can be both options and optgroups.
-  var optionEls = this.menuEl.children;
-  
-  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
+  // un-select old row
+  jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
+
+  // select new row
   this.currentIndex += 1;
-  if (jqLite.hasClass(optionEls[this.currentIndex], 'mui-optgroup__label')) {
-    this.currentIndex += 1;
-  }
-  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
+  jqLite.addClass(this.indexMap[this.currentIndex], selectedClass);
 }
 
 
@@ -354,17 +337,12 @@ Menu.prototype.increment = function() {
 Menu.prototype.decrement = function() {
   if (this.currentIndex === 0) return;
 
-  var optionEls = this.menuEl.children;
+  // un-select old row
+  jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
 
-  jqLite.removeClass(optionEls[this.currentIndex], selectedClass);
-  if (jqLite.hasClass(optionEls[this.currentIndex], 'mui-optgroup__label')) {
-    // If the element is first inside an optgroup, then don't decrement it.
-    this.currentIndex -= this.currentIndex != 1 ? 2 : 0;
-  }
-  else {
-    this.currentIndex -= 1;
-  }
-  jqLite.addClass(optionEls[this.currentIndex], selectedClass);
+  // select new row
+  this.currentIndex -= 1;
+  jqLite.addClass(this.indexMap[this.currentIndex], selectedClass);
 }
 
 
@@ -373,9 +351,7 @@ Menu.prototype.decrement = function() {
  */
 Menu.prototype.selectCurrent = function() {
   if (this.currentIndex !== this.origIndex) {
-    var optionEls = this.selectEl;
-    optionEls[this.origIndex].selected = false;
-    optionEls[this.currentIndex].selected = true;
+    this.selectEl.selectedIndex = this.currentIndex;
 
     // trigger change event
     util.dispatchEvent(this.selectEl, 'change');
