@@ -109,21 +109,21 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     cursor: pointer;
     white-space: nowrap;
 
-    &:not(.mui-optgroup__label):hover {
-      background-color: mui-color('grey', '300');
-    }
-
     &.mui--is-selected {
       background-color: mui-color('grey', '200');
     }
-  }
 
-  > .mui-optgroup__option {
-    text-indent: 1em;
+    &:not(.mui-optgroup__label):hover {
+      background-color: mui-color('grey', '300');
+    }
   }
+}
 
-  > .mui-optgroup__label {
-    color: $mui-text-dark-secondary;
-    font-size: 0.8em;
-  }
+.mui-optgroup__option {
+  text-indent: 1em;
+}
+
+.mui-optgroup__label {
+  color: $mui-text-dark-secondary;
+  font-size: 0.9em;
 }
