@@ -64,7 +64,7 @@ var wrapperPadding = 15,
     // from CSS
 inputHeight = 32,
     // from CSS
-optionHeight = 42,
+rowHeight = 42,
     // from CSS
 menuPadding = 8; // from CSS
 
@@ -73,18 +73,18 @@ menuPadding = 8; // from CSS
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
  */
-function getMenuPositionalCSSFn(wrapperEl, numOptions, currentIndex) {
+function getMenuPositionalCSSFn(wrapperEl, numRows, selectedRow) {
   var viewHeight = document.documentElement.clientHeight;
 
   // determine 'height'
-  var h = numOptions * optionHeight + 2 * menuPadding,
+  var h = numRows * rowHeight + 2 * menuPadding,
       height = Math.min(h, viewHeight);
 
   // determine 'top'
   var top, initTop, minTop, maxTop;
 
-  initTop = menuPadding + optionHeight - (wrapperPadding + inputHeight);
-  initTop -= currentIndex * optionHeight;
+  initTop = menuPadding + rowHeight - (wrapperPadding + inputHeight);
+  initTop -= selectedRow * rowHeight;
 
   minTop = -1 * wrapperEl.getBoundingClientRect().top;
   maxTop = viewHeight - height + minTop;
@@ -97,8 +97,8 @@ function getMenuPositionalCSSFn(wrapperEl, numOptions, currentIndex) {
       scrollMax;
 
   if (h > viewHeight) {
-    scrollIdeal = menuPadding + (currentIndex + 1) * optionHeight - (-1 * top + wrapperPadding + inputHeight);
-    scrollMax = numOptions * optionHeight + 2 * menuPadding - height;
+    scrollIdeal = menuPadding + (selectedRow + 1) * rowHeight - (-1 * top + wrapperPadding + inputHeight);
+    scrollMax = numRows * rowHeight + 2 * menuPadding - height;
     scrollTop = Math.min(scrollIdeal, scrollMax);
   }
 

@@ -26,7 +26,7 @@ var Radio = function (_React$Component) {
 
   function Radio() {
     babelHelpers.classCallCheck(this, Radio);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Radio).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Radio.__proto__ || Object.getPrototypeOf(Radio)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Radio, [{

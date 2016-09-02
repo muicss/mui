@@ -33,7 +33,7 @@ var DropdownItem = function (_React$Component) {
 
   function DropdownItem() {
     babelHelpers.classCallCheck(this, DropdownItem);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (DropdownItem.__proto__ || Object.getPrototypeOf(DropdownItem)).apply(this, arguments));
   }
 
   babelHelpers.createClass(DropdownItem, [{

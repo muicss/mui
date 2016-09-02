@@ -39,7 +39,7 @@ var Button = function (_React$Component) {
   function Button(props) {
     babelHelpers.classCallCheck(this, Button);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, props));
 
     _this.state = {
       ripples: {}
@@ -248,7 +248,7 @@ var Ripple = function (_React$Component2) {
   babelHelpers.inherits(Ripple, _React$Component2);
 
   function Ripple() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this3, _ret;
 
@@ -258,7 +258,7 @@ var Ripple = function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Ripple)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this3), _this3.state = {
+    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_ref = Ripple.__proto__ || Object.getPrototypeOf(Ripple)).call.apply(_ref, [this].concat(args))), _this3), _this3.state = {
       animateIn: false
     }, _temp), babelHelpers.possibleConstructorReturn(_this3, _ret);
   }

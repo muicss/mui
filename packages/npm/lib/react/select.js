@@ -42,7 +42,7 @@ var Select = function (_React$Component) {
     babelHelpers.classCallCheck(this, Select);
 
     // warn if value defined but onChange is not
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
 
     _this.state = {
       showMenu: false
@@ -306,7 +306,7 @@ var Menu = function (_React$Component2) {
   function Menu(props) {
     babelHelpers.classCallCheck(this, Menu);
 
-    var _this3 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props));
+    var _this3 = babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
     _this3.state = {
       origIndex: null,

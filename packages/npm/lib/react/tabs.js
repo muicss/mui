@@ -42,7 +42,7 @@ var Tabs = function (_React$Component) {
   function Tabs(props) {
     babelHelpers.classCallCheck(this, Tabs);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tabs).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
     _this.state = { currentSelectedIndex: props.initialSelectedIndex };
     return _this;

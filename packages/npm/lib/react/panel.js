@@ -23,7 +23,7 @@ var Panel = function (_React$Component) {
 
   function Panel() {
     babelHelpers.classCallCheck(this, Panel);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Panel).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Panel, [{

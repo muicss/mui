@@ -23,7 +23,7 @@ var Form = function (_React$Component) {
 
   function Form() {
     babelHelpers.classCallCheck(this, Form);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Form).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Form, [{

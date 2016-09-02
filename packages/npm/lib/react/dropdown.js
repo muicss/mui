@@ -50,7 +50,7 @@ var Dropdown = function (_React$Component) {
   function Dropdown(props) {
     babelHelpers.classCallCheck(this, Dropdown);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Dropdown).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this, props));
 
     _this.state = {
       opened: false,
