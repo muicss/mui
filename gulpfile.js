@@ -75,6 +75,14 @@ gulp.task('build-all', gulp.parallel(
 ));
 
 
+gulp.task('watch', function() {
+  gulp.watch('./src/**/*', gulp.parallel(
+    'examples:build',
+    'e2e-tests:build'
+  ));
+});
+
+
 
 // ============================================================================
 // PRIVATE TASKS
