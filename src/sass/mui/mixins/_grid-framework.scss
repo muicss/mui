@@ -10,8 +10,8 @@
     min-height: 1px;
 
     // Inner gutter via padding
-    padding-left:  ($mui-grid-gutter-width / 2);
-    padding-right: ($mui-grid-gutter-width / 2);
+    @include PaddingLeftOrRight("padding-left", ($mui-grid-gutter-width / 2));
+    @include PaddingLeftOrRight("padding-right", ($mui-grid-gutter-width / 2));
   }
 }
 
@@ -21,7 +21,7 @@
   }
 
   #{$list} {
-    float: left;
+    @include FloatItem("left");
   }
 }
 
@@ -33,7 +33,7 @@
   }
   @if ($type == 'offset') {
     .mui-col-#{$class}-offset-#{$i} {
-      margin-left: percentage(($i / $mui-grid-columns));
+      @include MarginLeftOrRight("margin-left", percentage(($i / $mui-grid-columns)));
     }
   }
 }

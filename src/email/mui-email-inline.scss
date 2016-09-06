@@ -1,5 +1,9 @@
-@charset "UTF-8";
-
+﻿@charset "UTF-8";
+// RTLit
+$ltr: ltr;
+$rtl: rtl;
+$direction: $ltr;
+@import "../sass/RTLit";
 // Normalizer
 @import
 "mui-email/normalize";

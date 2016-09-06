@@ -6,8 +6,8 @@
 .mui-row {
   @include mui-clearfix();
 
-  margin-left: ($mui-grid-gutter-width / -2);
-  margin-right: ($mui-grid-gutter-width / -2);
+  @include MarginLeftOrRight("margin-left", ($mui-grid-gutter-width / -2));
+  @include MarginLeftOrRight("margin-right", ($mui-grid-gutter-width / -2));
 }
 
 // columns

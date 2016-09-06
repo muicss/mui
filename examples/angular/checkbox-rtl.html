@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/angular/mui-angular.js"></script>
+    <script>
+      var myApp = angular.module("myApp", ["mui"]);
+
+      myApp.controller("ExampleCtrl", function($scope) {
+        $scope.check = {
+          select1: true,
+          select2: false,
+          select3: true,
+          select4: true
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <mui-container ng-controller="ExampleCtrl">
+      <h1>Checkbox</h1>
+      <mui-panel>
+        <form method="get" action="">
+          <mui-checkbox
+              label="checkbox1"
+              name="box1"
+              value="select1"
+              ng-model="check.select1"
+          >
+          </mui-checkbox>
+          <mui-checkbox
+              label="checkbox2"
+              name="box2"
+              value="select2"
+              ng-model="check.select2"
+          >
+          </mui-checkbox>
+          <mui-checkbox
+              label="checkbox3"
+              name="box3"
+              value="select3"
+              ng-model="check.select3"
+          >
+          </mui-checkbox>
+          <mui-checkbox
+              label="checkbox4"
+              name="box4"
+              value="select4"
+              ng-model="check.select4"
+              ng-disabled="true"
+          >
+          </mui-checkbox>
+          <p>checkbox1: {{check.select1}}</p>
+          <p>checkbox2: {{check.select2}}</p>
+          <p>checkbox3: {{check.select3}}</p>
+          <p>checkbox4: {{check.select4}}</p>
+          <mui-button color="primary">submit</mui-button>
+        </form>
+      </mui-panel>
+    </mui-container>
+  </body>
+</html>

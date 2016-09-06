@@ -1,0 +1,38 @@
+﻿<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/angular/mui-angular.js"></script>
+    <script>
+      var myApp = angular.module('myApp', ['mui']);
+
+      myApp.controller('ExampleController', ['$scope', function($scope) {
+        $scope.valueA = 'loadA';
+        $scope.changeA = function() {
+          console.log($scope.valueA);
+        };
+
+        $scope.valueB = 'loadB';
+        $scope.changeB = function() {
+          console.log($scope.valueB);
+        };
+      }]);
+    </script>
+  </head>
+  <body>
+    <form ng-controller="ExampleController">
+      <mui-input ng-model="valueA" ng-change="changeA()"></mui-input>
+      <input type="text" ng-model="valueB" ng-change="changeB()">
+      <div>valueA: {{valueA}}</div>
+      <div>valueB: {{valueB}}</div>
+    </form>
+  </body>
+</html>

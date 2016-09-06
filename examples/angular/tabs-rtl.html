@@ -1,0 +1,146 @@
+﻿<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.5.3/angular.min.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/angular/mui-angular.min.js"></script>
+    <script>
+      var myApp = angular.module("myApp", ["mui"]);
+
+
+      myApp.controller('TestCtrlA', function($scope) {
+        $scope.selectedIndex = 1;
+        $scope.data = {
+          selectedIndex: 1
+        };
+
+        $scope.onChange = function() {
+          console.log('onChange: ' + $scope.selectedIndex);
+        };
+
+        $scope.onSelect = function(val) {
+          console.log('onSelect: ' + val);
+        };
+
+        $scope.onDeselect = function(val) {
+          console.log('onDeselect: ' + val);
+        };
+
+        $scope.$watch('selectedIndex', function(newVal, oldVal) {
+          console.log('selectedIndex: ' + newVal);
+        });
+      });
+
+
+      myApp.controller("TestCtrlC", function($scope) {
+        $scope.selectedIndex = 1;
+
+        $scope.onChange = function() {
+          console.log('onChange: ' + $scope.selectedIndex);
+        };
+
+        $scope.nextTab = function() {
+          console.log('nextTab');
+          if ($scope.selectedIndex === 2) $scope.selectedIndex = 0;
+          else $scope.selectedIndex += 1;
+
+          console.log('should be: ' + $scope.selectedIndex);
+        };
+      });      
+    </script>
+  </head>
+  <body>
+    <mui-container>
+      <h1>Tabs</h1>
+      <mui-panel>
+        <h3>Default tabs</h3>
+        <em>Second tab should be selected, will display onChange, onSelect, onDeselect, selectedIndex messages in console</em>
+        <div ng-controller="TestCtrlA">
+          <mui-tabs
+              selected="selectedIndex"
+              on-change="onChange()"
+          >
+            <mui-tab
+                label="Tab 0"
+                on-select="onSelect('0')"
+                on-deselect="onDeselect('0')"
+            >
+              TabA1 Content
+            </mui-tab>
+            <mui-tab
+                label="Tab 1"
+                on-select="onSelect('1')"
+                on-deselect="onDeselect('1')"
+            >
+              TabA2 Content
+            </mui-tab>
+          </mui-tabs>
+        </div>
+
+        <br>
+        <br>
+
+        <h3>Justified tabs</h3>
+        <em>Tab labels should be justified, third should be active</em>
+        <mui-tabs selected="2" justified>
+          <mui-tab label="Tab 1">
+            TabB1 Content
+          </mui-tab>
+          <mui-tab label="Tab 2">
+            TabB2 Content
+          </mui-tab>
+          <mui-tab label="Tab 3">
+            TabB3 Content
+          </mui-tab>
+        </mui-tabs>
+
+        <br>
+        <br>
+
+        <h3>Tabs with incrementor</h3>
+        <em>Should increment tabs when button is clicked, should only call onChange when user changes tabs manually</em>
+        <div ng-controller="TestCtrlC">
+          <mui-tabs selected="selectedIndex" on-change="onChange()">
+            <mui-tab label="tab1">
+              TabC1 Content
+            </mui-tab>
+            <mui-tab label="tab2">
+              TabC2 Content
+            </mui-tab>
+            <mui-tab label="tab3">
+              TabC3 Content
+            </mui-tab>
+          </mui-tabs>
+          <mui-button variant="raised" ng-click="nextTab()">
+            Next Tab
+          </mui-button>
+        </div>
+
+        <br>
+        <br>
+
+        <h3>Active tab</h3>
+        <em>Second label should be active</em>
+        <mui-tabs>
+          <mui-tab label="Tab 1">
+            TabD1 Content
+          </mui-tab>
+          <mui-tab label="Tab 2" active>
+            TabD2 Content
+          </mui-tab>
+          <mui-tab label="Tab 3">
+            TabD3 Content
+          </mui-tab>
+        </mui-tabs>
+
+      </mui-panel>
+    </mui-container>
+  </body>
+</html>

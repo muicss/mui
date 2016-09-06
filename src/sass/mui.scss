@@ -1,3 +1,9 @@
+// RTLit
+$ltr: ltr;
+$rtl: rtl;
+$direction: $ltr;
+@import "RTLit";
+
 // Normalizer
 @import
 "normalize-3.0.3";

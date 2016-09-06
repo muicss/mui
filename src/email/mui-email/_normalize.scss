@@ -27,7 +27,7 @@ table {
 
 td {
   padding: 0;
-  text-align: left;
+  @include TextAlignTo("left");
   word-break: break-word;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;

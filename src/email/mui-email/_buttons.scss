@@ -70,15 +70,15 @@ $x-padding-vertical-lg-computed:
     }
 
     border-top: $x-border-width solid $color1;
-    border-left: $x-border-width solid $color2;
-    border-right: $x-border-width solid $color2;
+    @include BorderLeftOrRight("border-left", $x-border-width, $color2, solid);
+    @include BorderLeftOrRight("border-right", $x-border-width, $color2, solid);
     border-bottom: 2px solid $color3;
   } @else {
     $border-color: $bg-color;
     
     border-top: $x-border-width solid $border-color;
-    border-left: $x-border-width solid $border-color;
-    border-right: $x-border-width solid $border-color;
+    @include BorderLeftOrRight("border-left", $x-border-width, $border-color, solid);
+    @include BorderLeftOrRight("border-right", $x-border-width, $border-color, solid);
     border-bottom: $x-border-width solid $border-color;
   }
 }

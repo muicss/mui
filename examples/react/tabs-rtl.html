@@ -1,0 +1,64 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->   
+    <script src="../assets/vendor/react/15.2.1/react.js"></script>
+    <script src="../assets/vendor/react/15.2.1/react-dom.js"></script>
+    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <!-- end -->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/react/mui-react.js"></script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Tabs</h1>
+      <div class="mui-panel">
+        <div id="tabs-example1"></div>
+      </div>
+    </div>
+    <script type="text/babel">
+      let Tab = mui.react.Tab,
+          Tabs = mui.react.Tabs;
+
+
+      // default tabs
+      class Example1 extends React.Component {
+        onChange(i, value, tab, ev) {
+          console.log(arguments)
+        }
+
+        onActive(tab) {
+          console.log(arguments);
+        }
+
+        render() {
+          return (
+            <Tabs
+              onChange={this.onChange}
+              initialSelectedIndex={1}>
+              <Tab
+                value="pane-1"
+                label="Tab 1"
+                onActive={this.onActive}
+              >
+                Content 1
+              </Tab>
+              <Tab value="pane-2" label="Tab 2">
+                Content 2
+              </Tab>
+            </Tabs>
+          );
+        }
+      }
+
+
+      ReactDOM.render(<Example1 />, document.getElementById('tabs-example1'));
+    </script>
+  </body>
+</html>

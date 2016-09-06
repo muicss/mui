@@ -17,9 +17,9 @@
 }
 
 .mui--divider-left {
-  border-left: 1px solid $mui-divider-color;
+  @include BorderLeftOrRight("border-left", 1px, $mui-divider-color, solid);
 }
 
 .mui--divider-right {
-  border-right: 1px solid $mui-divider-color;
+  @include BorderLeftOrRight("border-right", 1px, $mui-divider-color, solid);
 }

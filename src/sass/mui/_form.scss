@@ -17,14 +17,14 @@
       vertical-align: middle;
 
       > label {
-        padding-left: 0;
+        @include PaddingLeftOrRight("padding-left", 0);
       }
     }
 
     > .mui-radio > label > input[type="radio"],
     > .mui-checkbox > label > input[type="checkbox"] {
       position: relative;
-      margin-left: 0;
+      @include MarginLeftOrRight("margin-left", 0);
     }
 
     > .mui-select {

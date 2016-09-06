@@ -21,7 +21,7 @@ a {
 }
 
 p {
-  margin: 0 0 ($mui-base-line-height-computed / 2);
+  @include SwapMargin(0, 0, ($mui-base-line-height-computed / 2), 0);
 }
 
 hr {

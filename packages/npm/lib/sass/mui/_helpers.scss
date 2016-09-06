@@ -43,11 +43,11 @@
   display: inline-block;
   width: 0;
   height: 0;
-  margin-left: 2px;
+  @include MarginLeftOrRight("margin-left", 2px);
   vertical-align: middle;
   border-top:   $mui-caret-width solid;
-  border-right: $mui-caret-width solid transparent;
-  border-left:  $mui-caret-width solid transparent;
+  @include BorderLeftOrRight("border-right", $mui-caret-width, transparent, solid);
+  @include BorderLeftOrRight("border-left", $mui-caret-width, transparent, solid);
 }
 
 
@@ -57,8 +57,8 @@
 // ALIGNMENT HELPERS
 // ============================================================================
 
-.mui--text-left           { text-align: left !important; }
-.mui--text-right          { text-align: right !important; }
+.mui--text-left           { @include TextAlignTo("left", $important: true); }
+.mui--text-right          { @include TextAlignTo("right", $important: true); }
 .mui--text-center         { text-align: center !important; }
 .mui--text-justify        { text-align: justify !important; }
 .mui--text-nowrap         { white-space: nowrap !important; }
@@ -115,7 +115,7 @@
 // ============================================================================
 
 @mixin x-list-unstyled {
-  padding-left: 0;
+  @include PaddingLeftOrRight("padding-left", 0);
   list-style: none;
 }
 
@@ -128,12 +128,12 @@
 .mui-list--inline {
   @include x-list-unstyled();
 
-  margin-left: -5px;
+  @include MarginLeftOrRight("margin-left", -5px);
 
   > li {
     display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
+    @include PaddingLeftOrRight("padding-left", 5px);
+    @include PaddingLeftOrRight("padding-right", 5px);
   }
 }
 
@@ -181,11 +181,11 @@
 }
 
 .mui--pull-right {
-  float: right !important;
+  @include FloatItem("right", $important:true);
 }
 
 .mui--pull-left {
-  float: left !important;
+  @include FloatItem("left", $important:true);
 }
 
 

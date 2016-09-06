@@ -7,9 +7,9 @@
   display: block;
   margin: 0 auto;
   clear: both;
-  text-align: left;
-  padding-left: $mui-container-padding-horizontal;
-  padding-right: $mui-container-padding-horizontal;
+  @include TextAlignTo("left");
+  @include PaddingLeftOrRight("padding-left", $mui-container-padding-horizontal);
+  @include PaddingLeftOrRight("padding-right", $mui-container-padding-horizontal);
 }
 
 .mui-container-fixed {

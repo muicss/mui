@@ -48,7 +48,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     // Typography
     color: $mui-input-font-color;
     font-size: $mui-input-font-size;
-    padding: 0 25px 0 0;
+    @include SwapPadding(0, 25px, 0, 0);
 
     &::-ms-expand {
       display: none;  // For IE
@@ -98,7 +98,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
   // IE10+ bugfix
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    border-left: 1px solid mui-color('black-alpha-12');
+    @include BorderLeftOrRight("border-left", 1px, mui-color('black-alpha-12'), solid);
     border-top: 1px solid mui-color('black-alpha-12');
   }
 

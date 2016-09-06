@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/js/mui.js"></script>
+    <style>
+      .flexbox {
+        display: flex;
+        align-items: center;
+        min-height: inherit;
+      }
+      
+      .item {
+        width: 33.33%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Container Element</h1>
+    <div class="mui-appbar">
+    </div>
+    <h1>Helpers</h1>
+    <h2>.mui--appbar-height</h2>
+    <div class="mui-appbar">
+      <table width="100%">
+        <tr class="mui--align-middle">
+          <td class="mui--appbar-height">Left Side</td>
+          <td class="mui--appbar-height" align="right">Right Side</td>
+        </tr>
+      </table>
+    </div>
+    <h2>.mui--appbar-min-height</h2>
+    <div class="mui--appbar-min-height mui--divider-top mui--divider-bottom">
+      Content
+    </div>
+    <h2>.mui--appbar-line-height</h2>
+    <div class="mui-appbar mui--appbar-line-height">
+      Content
+    </div>
+  </body>
+</html>

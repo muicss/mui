@@ -1,0 +1,69 @@
+﻿<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/angular/mui-angular.js"></script>
+    <script>
+      var myApp = angular.module("myApp", ["mui"]);
+
+      myApp.controller("ExampleCtrl", function($scope) {
+        $scope.color = {
+          name: 'green'
+        };
+
+        $scope.alerts = function(color) {
+          console.log(color);
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <mui-container ng-controller="ExampleCtrl">
+      <h1>Radio</h1>
+      <mui-panel>
+        <form method="get" action="">
+          <mui-radio
+              ng-model="color.name"
+              name="input1"
+              value="red"
+              label="radio1"
+          >
+          </mui-radio>
+          <mui-radio
+              on-select="alerts(color)"
+              ng-model="color.name"
+              name="input1"
+              value="green"
+              label="radio2"
+          >
+          </mui-radio>
+          <mui-radio
+              ng-model="color.name"
+              name="input1"
+              value="blue"
+              label="radio3"
+          >
+          </mui-radio>
+          <mui-radio
+              ng-model="color.name"
+              ng-disabled="true"
+              name="input1"
+              value="yellow"
+              label="radio4"
+          >
+          </mui-radio>
+          <p>value: {{color.name}}</p>
+          <mui-button color="primary">submit</mui-button>
+        </form>
+      </mui-panel>
+    </mui-container>
+  </body>
+</html>
