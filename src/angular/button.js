@@ -21,11 +21,8 @@ angular.module(moduleName, [])
   .directive('muiButton', function() {
     return {
       restrict: 'AE',
-      scope: {
-        type: '@?'
-      },
       replace: true,
-      template: '<button class="mui-btn" type={{type}} mui-ripple ng-transclude></button>',
+      template: '<button class="mui-btn" mui-ripple ng-transclude></button>',
       transclude: true,
       link: function(scope, element, attrs) {
         var isUndef = angular.isUndefined,
