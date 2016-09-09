@@ -31,11 +31,8 @@ var moduleName = 'mui.button',
 _angular2.default.module(moduleName, []).directive('muiButton', function () {
   return {
     restrict: 'AE',
-    scope: {
-      type: '@?'
-    },
     replace: true,
-    template: '<button class="mui-btn" type={{type}} mui-ripple ng-transclude></button>',
+    template: '<button class="mui-btn" mui-ripple ng-transclude></button>',
     transclude: true,
     link: function link(scope, element, attrs) {
       var isUndef = _angular2.default.isUndefined,

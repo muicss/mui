@@ -173,7 +173,7 @@ function buildCdnReact(dirname) {
   return makeTask('build-cdn-react: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-react.js')
       .pipe(plugins.browserify({
-        transform: [babelify.configure({plugins: ['external-helpers-2']})],
+        transform: [babelify.configure({plugins: ['external-helpers']})],
         paths: ['./', './node_modules'],
         external: ['react'],
         extensions: ['.jsx']
@@ -195,7 +195,7 @@ function buildCdnAngular(dirname) {
   return makeTask('build-cdn-angular: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-angular.js')
       .pipe(plugins.browserify({
-        transform: [babelify.configure({plugins: ['external-helpers-2']})],
+        transform: [babelify.configure({plugins: ['external-helpers']})],
         paths: ['./', './node_modules/'],
         external: ['angular']
       }))
@@ -279,7 +279,7 @@ function buildCdnReactCombined(dirname, cssDir) {
     return gulp.src('./build-targets/cdn-react-combined.js')
       .pipe(plugins.browserify({
         transform: [
-          babelify.configure({plugins: ['external-helpers-2']}),
+          babelify.configure({plugins: ['external-helpers']}),
           stringify(['.css'])
         ],
         paths: ['./', cssDir, './node_modules'],
@@ -302,7 +302,7 @@ function buildCdnAngularCombined(dirname, cssDir) {
     return gulp.src('./build-targets/cdn-angular-combined.js')
       .pipe(plugins.browserify({
         transform: [
-          babelify.configure({plugins: ['external-helpers-2']}),
+          babelify.configure({plugins: ['external-helpers']}),
           stringify(['.css'])
         ],
         paths: ['./', './node_modules/', cssDir],
@@ -328,7 +328,7 @@ function buildE2eTests() {
 
   return gulp.src('./build-targets/e2e-tests.js')
     .pipe(plugins.browserify({
-      transform: [babelify.configure({plugins: ['external-helpers-2']})],
+      transform: [babelify.configure({plugins: ['external-helpers']})],
       extensions: ['.jsx']
     }))
     .pipe(plugins.injectString.prepend(s))
@@ -423,7 +423,7 @@ function buildNpmReact() {
 
     return gulp.src('./src/react/**/*')
       .pipe(plugins.babel({
-        plugins: ['external-helpers-2']
+        plugins: ['external-helpers']
       }))
       .pipe(plugins.injectString.prepend(s))
       .pipe(gulp.dest('./packages/npm/lib/react'));
@@ -437,7 +437,7 @@ function buildNpmAngular() {
 
     return gulp.src('./src/angular/**/*')
       .pipe(plugins.babel({
-        plugins: ['external-helpers-2']
+        plugins: ['external-helpers']
       }))
       .pipe(plugins.injectString.prepend(s))
       .pipe(gulp.dest('./packages/npm/lib/angular'));

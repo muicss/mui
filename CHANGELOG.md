@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.7.5 - September 8, 2016
+
+* Added gulp watch task for development
+* Improved handling of focused elements when overlay method is activated
+* Added up/down scroll to overlay by setting focus to overlay element
+* Fixed issue with MUI Angular button attributes (e.g. `type`)
+
 ## 0.7.4 - September 2, 2016
 
 * Added support for Optgroups to CSS/JS Select component

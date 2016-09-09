@@ -688,7 +688,7 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
  */
 function enableScrollLockFn() {
   // increment counter
-  scrollLock += 1
+  scrollLock += 1;
 
   // add lock
   if (scrollLock === 1) {
@@ -711,7 +711,7 @@ function disableScrollLockFn(resetPos) {
   if (scrollLock === 0) return;
 
   // decrement counter
-  scrollLock -= 1
+  scrollLock -= 1;
 
   // remove lock 
   if (scrollLock === 0) {
@@ -901,7 +901,8 @@ var util = require('./lib/util'),
     jqLite = require('./lib/jqLite'),
     overlayId = 'mui-overlay',
     bodyClass = 'mui--overflow-hidden',
-    iosRegex = /(iPad|iPhone|iPod)/g;
+    iosRegex = /(iPad|iPhone|iPod)/g,
+    activeElement;
 
 
 /**
@@ -942,6 +943,7 @@ function overlayFn(action) {
   } else {
     // raise error
     util.raiseError("Expecting 'on' or 'off'");
+
   }
 
   return overlayEl;
@@ -954,17 +956,21 @@ function overlayFn(action) {
  * @param {Element} childElement - The child element.
  */
 function overlayOn(options, childElement) {
-  var bodyEl = document.body,
-      overlayEl = document.getElementById(overlayId);
-    
+  var doc = document,
+      bodyEl = doc.body,
+      overlayEl = doc.getElementById(overlayId);
+
+  // cache activeElement
+  if (doc.activeElement) activeElement = doc.activeElement;
+
   // add overlay
   util.enableScrollLock();
-  //jqLite.addClass(bodyEl, bodyClass);
 
   if (!overlayEl) {
     // create overlayEl
-    overlayEl = document.createElement('div');
+    overlayEl = doc.createElement('div');
     overlayEl.setAttribute('id', overlayId);
+    overlayEl.setAttribute('tabindex', '-1');
     
     // add child element
     if (childElement) overlayEl.appendChild(childElement);
@@ -993,6 +999,9 @@ function overlayOn(options, childElement) {
 
   // attach options
   overlayEl.muiOptions = options;
+
+  // focus overlay element
+  overlayEl.focus();
 
   return overlayEl;
 }
@@ -1023,6 +1032,9 @@ function overlayOff() {
 
   // remove keyup handler
   removeKeyupHandler();
+
+  // return focus to activeElement
+  if (activeElement) activeElement.focus();
 
   // execute callback
   if (callbackFn) callbackFn();

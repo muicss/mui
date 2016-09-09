@@ -614,7 +614,7 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
  */
 function enableScrollLockFn() {
   // increment counter
-  scrollLock += 1
+  scrollLock += 1;
 
   // add lock
   if (scrollLock === 1) {
@@ -637,7 +637,7 @@ function disableScrollLockFn(resetPos) {
   if (scrollLock === 0) return;
 
   // decrement counter
-  scrollLock -= 1
+  scrollLock -= 1;
 
   // remove lock 
   if (scrollLock === 0) {
