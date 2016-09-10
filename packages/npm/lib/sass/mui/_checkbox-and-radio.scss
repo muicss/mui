@@ -11,7 +11,7 @@
 
   > label {
     min-height: $mui-base-line-height-computed;
-    padding-left: 20px;
+    @include PaddingLeftOrRight("padding-left", 20px);
     margin-bottom: 0;
     font-weight: normal;
     cursor: pointer;
@@ -23,7 +23,7 @@
 .mui-checkbox > label> input[type="checkbox"],
 .mui-checkbox--inline > label > input[type="checkbox"] {
   position: absolute;
-  margin-left: -20px;
+  @include MarginLeftOrRight("margin-left", -20px);
   margin-top: 4px;
 }
 
@@ -37,7 +37,7 @@
 .mui-checkbox--inline {
   // Radios and checkboxes on same line
   display: inline-block;
-  padding-left: 20px;
+  @include PaddingLeftOrRight("padding-left", 20px);
   margin-bottom: 0;
   vertical-align: middle;
   font-weight: normal;
@@ -47,7 +47,7 @@
   > input[type="checkbox"],
   > label > input[type="radio"],
   > label > input[type="checkbox"] {
-    margin: 4px 0 0;
+    @include SwapMargin(4px, 0, 0, 0);
     line-height: normal;
   }
 }
@@ -56,5 +56,5 @@
 .mui-checkbox--inline + .mui-checkbox--inline {
   // Space out consecutive inline controls
   margin-top: 0;
-  margin-left: 10px;
+  @include MarginLeftOrRight("margin-left", 10px);
 }

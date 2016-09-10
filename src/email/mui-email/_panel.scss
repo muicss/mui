@@ -7,7 +7,7 @@
   border-radius: $mui-panel-border-radius;
   background-color: $mui-panel-bg;
   border-top: 1px solid darken(mui-color('white'), 7%);
-  border-left: 1px solid darken(mui-color('white'), 10%);
-  border-right: 1px solid darken(mui-color('white'), 10%);
+  @include BorderLeftOrRight("border-left", 1px, darken(mui-color('white'), 10%), solid);
+  @include BorderLeftOrRight("border-right", 1px, darken(mui-color('white'), 10%), solid);
   border-bottom: 2px solid darken(mui-color('white'), 17%);
 }

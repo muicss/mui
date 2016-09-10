@@ -4,7 +4,7 @@
 
 // Global styles
 th {
-  text-align: left;
+  @include TextAlignTo("left");
 }
 
 // Table style

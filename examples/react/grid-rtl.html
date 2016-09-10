@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->   
+    <script src="../assets/vendor/react/15.2.1/react.js"></script>
+    <script src="../assets/vendor/react/15.2.1/react-dom.js"></script>
+    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/react/mui-react.js"></script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Grid</h1>
+      <div class="mui-panel">
+        <div id="example1"></div>
+        <hr>
+        <div id="example2"></div>
+      </div>
+    </div>
+    <script type="text/babel">
+      let Col = mui.react.Col,
+          Row = mui.react.Row;
+
+      ReactDOM.render(
+        <div>
+          <Row>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+            <Col md="1">md-1</Col>
+          </Row>
+          <Row>
+            <Col md="8">md-8</Col>
+            <Col md="4">md-4</Col>
+          </Row>
+          <Row>
+            <Col md="4">md-4</Col>
+            <Col md="4">md-4</Col>
+            <Col md="4">md-4</Col>
+          </Row>
+          <Row>
+            <Col md="6">md-6</Col>
+            <Col md="6">md-6</Col>
+          </Row>
+        </div>,
+        document.getElementById('example1')
+      );
+
+      ReactDOM.render(
+        <div>
+          <Row>
+            <Col md="4">
+              md-4
+            </Col>
+            <Col md="4" md-offset="4">
+              md-4 md-offset-4
+            </Col>
+          </Row>
+          <Row>
+            <Col md="3" md-offset="3">
+              md-3 md-offset-3
+            </Col>
+            <Col md="3" md-offset="3">
+              md-3 md-offset-3
+            </Col>
+          </Row>
+          <Row>
+            <Col md="6" md-offset="3">
+              md-6 md-offset-3
+            </Col>
+          </Row>
+        </div>,
+        document.getElementById('example2')
+      );
+    </script>
+  </body>
+</html>

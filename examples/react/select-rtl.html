@@ -1,0 +1,148 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->   
+    <script src="../assets/vendor/react/15.2.1/react.js"></script>
+    <script src="../assets/vendor/react/15.2.1/react-dom.js"></script>
+    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/react/mui-react.js"></script>
+    <style>
+      .i-am-red {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Select</h1>
+      <div class="mui-panel">
+        <form>
+          <div id="example1"></div>
+          <div id="example2"></div>
+          <div id="example3"></div>
+          <div id="example4"></div>
+          <button class="mui-btn mui-btn--raised">submit</button>
+        </form>
+      </div>
+    </div>
+    <script type="text/babel">
+      let Select = mui.react.Select,
+          Option = mui.react.Option;
+
+
+      // Example 1
+      class Example1 extends React.Component {
+        onChange(value) {
+          console.log('[Example1] onchange: ' + value);
+        }
+
+        render() {
+          return (
+            <Select
+              label="Select Box 1"
+              name="example1"
+              defaultValue="opt2"
+              onChange={this.onChange}
+            >
+              <Option label="Option 1" value="opt1" />
+              <Option label="Option 2" value="opt2" />
+              <Option label="Option 3" value="opt3" />
+              <Option className="i-am-red" label="Option 4" value="opt4" />
+              <Option label="Option 5" value="opt5" />
+              <Option label="Option 6" value="opt6" />
+              <Option label="Option 7" value="opt7" />
+              <Option label="Option 8" value="opt8" />
+            </Select>
+          );
+        }
+      }
+
+     
+      // Example 2
+      class Example2 extends React.Component {
+        onChange(value) {
+          console.log('[Example2] onchange: ' + value);
+        }
+
+        render() {
+          return (
+            <Select
+              name="example2"
+              value="opt3"
+              onChange={this.onChange}
+              autoFocus={true}
+            >
+              <Option label="Option 1" value="opt1" />
+              <Option label="Option 2" value="opt2" />
+              <Option label="Option 3" value="opt3" />
+              <Option label="Option 4" value="opt4" />
+              <Option label="Option 5" value="opt5" />
+              <Option label="Option 6" value="opt6" />
+              <Option label="Option 7" value="opt7" />
+              <Option label="Option 8" value="opt8" />
+            </Select>
+          );
+        }
+      }
+
+
+      // Example 3
+      class Example3 extends React.Component {
+        onChange(value) {
+          console.log('[Example3] onchange: ' + value);
+        }
+
+        render() {
+          return (
+            <Select
+              name="example3"
+              value="opt4"
+              useDefault={true}
+              onChange={this.onChange}
+            >
+              <Option label="Option 1" value="opt1" />
+              <Option label="Option 2" value="opt2" />
+              <Option label="Option 3" value="opt3" />
+              <Option label="Option 4" value="opt4" />
+              <Option label="Option 5" value="opt5" />
+              <Option label="Option 6" value="opt6" />
+              <Option label="Option 7" value="opt7" />
+              <Option label="Option 8" value="opt8" />
+            </Select>
+          );
+        }
+      }
+
+
+      // Example4
+      class Example4 extends React.Component {
+        onChange(ev) {
+          console.log('[Example4] onchange: ' + ev.target.value);
+        }
+
+        render() {
+          return (
+            <select value="opt2" onChange={this.onChange}>
+              <option value="opt1">Option 1</option>
+              <option value="opt2">Option 2</option>
+              <option value="opt3">Option 3</option>
+            </select>
+          );
+        }
+      }
+
+      // Render examples
+      ReactDOM.render(<Example1 />, document.getElementById('example1'));
+      ReactDOM.render(<Example2 />, document.getElementById('example2'));
+      ReactDOM.render(<Example3 />, document.getElementById('example3'));
+      ReactDOM.render(<Example4 />, document.getElementById('example4'));
+    </script>
+  </body>
+</html>

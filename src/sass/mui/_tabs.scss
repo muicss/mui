@@ -4,7 +4,7 @@
 
 .mui-tabs__bar {
   list-style: none;
-  padding-left: 0;
+  @include PaddingLeftOrRight("padding-left", 0);
   margin-bottom: 0;
   background-color: transparent;
   white-space: nowrap;
@@ -23,8 +23,8 @@
       cursor: default;
       height: 48px;
       line-height: 48px;
-      padding-left: 24px;
-      padding-right: 24px;
+      @include PaddingLeftOrRight("padding-left", 24px);
+      @include PaddingLeftOrRight("padding-right", 24px);
       user-select: none;
 
       &:hover {
@@ -55,8 +55,8 @@
 
       > a {
         text-align: center;
-        padding-left: 0px;
-        padding-right: 0px;
+        @include PaddingLeftOrRight("padding-left", 0);
+        @include PaddingLeftOrRight("padding-right", 0);
       }
     }
   }

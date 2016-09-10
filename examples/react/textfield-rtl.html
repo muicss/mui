@@ -1,0 +1,186 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->   
+    <script src="../assets/vendor/react/15.2.1/react.js"></script>
+    <script src="../assets/vendor/react/15.2.1/react-dom.js"></script>
+    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui-rtl.css"/>
+    <script src="../assets/mui/react/mui-react.js"></script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h2>Input</h2>
+      <div class="mui-panel">
+        <h3>Form with placeholders</h3>
+        <div id="example1"></div>
+        <h3>Form with fixed labels</h3>
+        <div id="example2"></div>
+        <h3>Form with fixed labels and placeholders</h3>
+        <div id="example3"></div>
+        <h3>Form with floating labels</h3>
+        <div id="example4"></div>
+      </div>
+
+      <h2>Textarea</h2>
+      <div class="mui-panel">
+        <h3>Form with placeholders</h3>
+        <div id="exampleA"></div>
+        <h3>Form with fixed labels</h3>
+        <div id="exampleB"></div>
+        <h3>Form with fixed labels and placeholders</h3>
+        <div id="exampleC"></div>
+        <h3>Form with floating labels</h3>
+        <div id="exampleD"></div>
+      </div>
+
+      <h2>Form Validation</h2>
+      <div class="mui-panel">
+        <div id="example-validation"></div>
+      </div>
+    </div>
+    <script type="text/babel">
+      let Button = mui.react.Button,
+          Form = mui.react.Form,
+          Input = mui.react.Input,
+          Textarea = mui.react.Textarea;
+
+      // form with placeholders
+      ReactDOM.render(
+        <Form>
+          <Input hint="Placeholder 1" />
+          <Input hint="Placeholder 2" />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('example1')
+      );
+
+      // form with fixed labels
+      ReactDOM.render(
+        <Form>
+          <Input label="Label 1" />
+          <Input label="Label 2" />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('example2')
+      );
+
+      // form with fixed labels and placeholders
+      ReactDOM.render(
+        <Form>
+          <Input label="Label 1" hint="Placeholder 1" />
+          <Input label="Label 2" hint="Placeholder 2" />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('example3')
+      );
+
+      // form with floating labels
+      ReactDOM.render(
+        <Form>
+          <Input label="Label 1" floatingLabel={true} />
+          <Input
+            label="Label 2"
+            floatingLabel={true}
+            defaultValue="on load"
+          />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('example4')
+      );
+
+      // form with textarea and placeholders
+      ReactDOM.render(
+        <Form>
+          <Textarea hint="Placeholder 1" />
+          <Textarea hint="Placeholder 2" rows={5} />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('exampleA')
+      );
+
+      // form with textarea and fixed labels
+      ReactDOM.render(
+        <Form>
+          <Textarea label="Label 1" />
+          <Textarea label="Label 2" rows={5} />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('exampleB')
+      );
+
+      // form with textarea fixed labels and placeholders
+      ReactDOM.render(
+        <Form>
+          <Textarea
+              label="Label 1"
+              hint="Placeholder 1"
+          />
+          <Textarea
+              label="Label 2"
+              hint="Placeholder 2" 
+              rows={5}
+          />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('exampleC')
+      );
+
+      // form with textarea and floating labels
+      ReactDOM.render(
+        <Form>
+          <Textarea
+              label="Label 1"
+              floatingLabel={true}
+          />
+          <Textarea
+              label="Label 2"
+              floatingLabel={true}
+              rows={5}
+          />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('exampleD')
+      );
+
+      // form with validators
+      ReactDOM.render(
+        <Form>
+          <Input
+              type="email"
+              label="Email address (should be red on invalid input)"
+          />
+          <Input
+              type="email"
+              label="Email address (should be red on load)"
+              defaultValue="err"
+          />
+          <Input
+              type="text"
+              label="Required text (should be red after focus)"
+              required={true}
+          />
+          <Input
+              type="text"
+              label="Required text (should be red after deletion)"
+              defaultValue="val"
+              required={true}
+          />
+          <Input
+              type="text"
+              label="Is invalid (should be red on load)"
+              invalid={true}
+          />
+          <Button variant="raised">Submit</Button>
+        </Form>,
+        document.getElementById('example-validation')
+      );
+    </script>
+  </body>
+</html>

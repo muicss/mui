@@ -28,14 +28,14 @@
 
   position: absolute;
   top: 100%;
-  left: 0;
+  @include DockItem("left", 0);
   display: none;
   min-width: 160px;
   padding: 5px 0;
-  margin: 2px 0 0;  // override default ul
+  @include SwapMargin(2px, 0, 0, 0);  // override default ul
   list-style: none;
   font-size: $mui-base-font-size;
-  text-align: left;
+  @include TextAlignTo("left");
   background-color: $mui-dropdown-bg-color;
   border-radius: $mui-dropdown-border-radius;
   z-index: 1;
@@ -85,6 +85,6 @@
 
 // right align
 .mui-dropdown__menu--right {
-  left: auto;
-  right: 0;
+  @include DockItem("left", auto);
+  @include DockItem("right", 0);
 }

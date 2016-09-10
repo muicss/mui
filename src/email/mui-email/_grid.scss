@@ -27,6 +27,6 @@ table {
 }
 
 td.mui-wrapper {
-  padding: $mui-wrapper-padding-top $mui-column-gutter 0px 0px;
+  @include SwapPadding($mui-wrapper-padding-top, $mui-column-gutter, 0, 0);
   position: relative;
 }

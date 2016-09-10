@@ -29,10 +29,10 @@
 @mixin mui-container-fixed($gutter: $mui-grid-gutter-width) {
   @include mui-clearfix();
 
-  margin-right: auto;
-  margin-left: auto;
-  padding-left:  ($gutter / 2);
-  padding-right: ($gutter / 2);
+  @include MarginLeftOrRight("margin-right", auto);
+  @include MarginLeftOrRight("margin-left", auto);
+  @include PaddingLeftOrRight("padding-left", ($gutter / 2));
+  @include PaddingLeftOrRight("padding-right", ($gutter / 2));
 }
 
 @mixin mui-tab-focus() {

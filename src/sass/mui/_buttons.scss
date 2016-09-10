@@ -101,7 +101,7 @@
 }
 
 .mui-btn + .mui-btn {
-  margin-left: $mui-btn-spacing-horizontal;
+  @include MarginLeftOrRight("margin-left", $mui-btn-spacing-horizontal);
 }
 
 
