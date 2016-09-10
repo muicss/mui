@@ -380,7 +380,7 @@ function buildMeteor() {
 
 function buildNpm() {
   var t1 = gulp.parallel(
-    buildCdnCss('./packages/npm/lib/css'),
+    buildCdn('./packages/npm/dist'),
     buildNpmSass(),
     buildNpmJs(),
     buildNpmReact(),
