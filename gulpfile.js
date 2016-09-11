@@ -6,6 +6,7 @@ var fs = require('fs');
 var babelCore = require('babel-core'),
     gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
+    mergeStream = require('merge-stream'),
     stringify = require('stringify');
 
 var reactBabelHelpers = [
@@ -136,7 +137,7 @@ function buildCdn(dirname) {
 
 function buildCdnCss(dirname) {
   return makeTask('build-cdn-css: ' + dirname, function() {
-    return gulp.src('./src/sass/mui.scss')
+    var baseStream = gulp.src('./src/sass/mui.scss')
       .pipe(plugins.sass({outputStyle: 'expanded'}))
       .pipe(plugins.autoprefixer({
         browsers: ['last 2 versions'],
@@ -144,10 +145,30 @@ function buildCdnCss(dirname) {
       }))
       .on('error', function(err) {console.log(err.message);})
       .pipe(plugins.rename('mui.css'))
-      .pipe(gulp.dest(dirname))
+      .pipe(gulp.dest(dirname));
+
+    // ltr
+    var stream1 = baseStream
       .pipe(plugins.cssmin({advanced: false}))
       .pipe(plugins.rename('mui.min.css'))
       .pipe(gulp.dest(dirname));
+
+    // rtl
+    var stream2 = baseStream
+      .pipe(plugins.rtlcss())
+      .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
+        // switch right and left
+        if (match.endsWith('-left')) return match.replace('left', 'right')
+        else return match.replace('right', 'left');
+      }))
+      .pipe(plugins.injectString.append('html,body{direction:rtl;}'))
+      .pipe(plugins.rename('mui-rtl.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.cssmin({advanced: false}))
+      .pipe(plugins.rename('mui-rtl.min.css'))
+      .pipe(gulp.dest(dirname));
+    
+    return mergeStream(stream1, stream2);
   });
 }
 
@@ -213,9 +234,19 @@ function buildCdnAngular(dirname) {
 
 function buildCdnEmailInline(dirname) {
   return makeTask('build-cdn-email-inline: ' + dirname, function() {
+    // handles ltr and rtl directions
     return gulp.src('./src/email/mui-email-inline.scss')
       .pipe(plugins.sass({outputStyle: 'expanded'}))
       .pipe(plugins.rename('mui-email-inline.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.rtlcss())
+      .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
+        // switch right and left
+        if (match.endsWith('-left')) return match.replace('left', 'right')
+        else return match.replace('right', 'left');
+      }))
+      .pipe(plugins.injectString.append('html,body,.mui-body{direction:rtl;}'))
+      .pipe(plugins.rename('mui-email-inline-rtl.css'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -223,9 +254,13 @@ function buildCdnEmailInline(dirname) {
 
 function buildCdnEmailStyletag(dirname) {
   return makeTask('build-cdn-email-styletag: ' + dirname, function() {
+    // ltr and rtl
     return gulp.src('./src/email/mui-email-styletag.scss')
       .pipe(plugins.sass({outputStyle: 'expanded'}))
       .pipe(plugins.rename('mui-email-styletag.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.rtlcss())
+      .pipe(plugins.rename('mui-email-styletag-rtl.css'))
       .pipe(gulp.dest(dirname));
   });
 }
