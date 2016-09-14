@@ -13,6 +13,7 @@ var jqLite = require('./lib/jqLite'),
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
     selectedClass = 'mui--is-selected',
+    disabledClass = 'mui--is-disabled',
     doc = document,
     win = window;
 
@@ -235,6 +236,11 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
         selectedRow = menuEl.children.length;
       }
 
+      // handle disabled options
+      if (loopEl.disabled) {
+        rowEl.className = disabledClass;
+      }
+
       // handle optgroup options
       if (inGroup) jqLite.addClass(rowEl, 'mui-optgroup__option');
 
@@ -288,8 +294,10 @@ Menu.prototype.keydownHandler = function(ev) {
   } else if (keyCode === 38) {
     this.decrement();
   } else if (keyCode === 13) {
-    this.selectCurrent();
-    this.destroy();
+    if (!jqLite.hasClass(this.indexMap[this.currentIndex], disabledClass)) {
+      this.selectCurrent();
+      this.destroy();
+    }
   }
 }
 
@@ -307,6 +315,9 @@ Menu.prototype.clickHandler = function(ev) {
   // ignore clicks on non-items                                               
   if (index === undefined) return;
 
+  // ignore clicks on disabled items
+  if (jqLite.hasClass(this.indexMap[index], disabledClass)) return;
+
   // select option
   this.currentIndex = index;
   this.selectCurrent();
@@ -320,14 +331,19 @@ Menu.prototype.clickHandler = function(ev) {
  * Increment selected item
  */
 Menu.prototype.increment = function() {
-  if (this.currentIndex === this.selectEl.length - 1) return;
+  var nextIndex = this.currentIndex;
+  while (nextIndex < this.selectEl.length - 1) {
+    nextIndex += 1;
+    if (!jqLite.hasClass(this.indexMap[nextIndex], disabledClass)) {
+      // un-select old row
+      jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
 
-  // un-select old row
-  jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
-
-  // select new row
-  this.currentIndex += 1;
-  jqLite.addClass(this.indexMap[this.currentIndex], selectedClass);
+      // select new row
+      jqLite.addClass(this.indexMap[nextIndex], selectedClass);
+      this.currentIndex = nextIndex;
+      break;
+    }
+  }
 }
 
 
@@ -335,14 +351,19 @@ Menu.prototype.increment = function() {
  * Decrement selected item
  */
 Menu.prototype.decrement = function() {
-  if (this.currentIndex === 0) return;
+  var nextIndex = this.currentIndex;
+  while (nextIndex > 0) {
+    nextIndex -= 1;
+    if (!jqLite.hasClass(this.indexMap[nextIndex], disabledClass)) {
+      // un-select old row
+      jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
 
-  // un-select old row
-  jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
-
-  // select new row
-  this.currentIndex -= 1;
-  jqLite.addClass(this.indexMap[this.currentIndex], selectedClass);
+      // select new row
+      jqLite.addClass(this.indexMap[nextIndex], selectedClass);
+      this.currentIndex = nextIndex;
+      break;
+    }
+  }
 }
 
 
