@@ -12,8 +12,8 @@ MUI is a lightweight CSS framework that follows Google's Material Design guideli
 **Use From the CDN:**
 
 ```html
-<link href="//cdn.muicss.com/mui-0.7.5/css/mui.min.css" rel="stylesheet" type="text/css" />
-<script src="//cdn.muicss.com/mui-0.7.5/js/mui.min.js"></script>
+<link href="//cdn.muicss.com/mui-0.8.0/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.8.0/js/mui.min.js"></script>
 ```
 
 Or for development you can use the latest:
@@ -127,25 +127,33 @@ The build will be located in the `packages/cdn` directory:
 
 <pre>
 cdn/
+├── angular
+│   ├── mui-angular.js
+│   └── mui-angular.min.js
 ├── css
-│   ├── mui.css
-│   ├── mui.min.css
-├── js
-│   ├── mui.js
-│   └── mui.min.js
+│   ├── mui.css
+│   ├── mui.min.css
+│   ├── mui-rtl.css
+│   └── mui-rtl.min.css
 ├── email
-│   ├── mui-email-inline.css
-|   └── mui-email-styletag.css
+│   ├── mui-email-inline.css
+│   ├── mui-email-inline-rtl.css
+│   ├── mui-email-styletag.css
+│   └── mui-email-styletag-rtl.css
+├── extra
+│   ├── mui-angular-combined.js
+│   ├── mui-colors.css
+│   ├── mui-combined.js
+│   └── mui-react-combined.js
+├── js
+│   ├── mui.js
+│   └── mui.min.js
 ├── react
-│   ├── mui-react.js
-│   └── mui-react.min.js
+│   ├── mui-react.js
+│   └── mui-react.min.js
 └── webcomponents
-|   ├── mui-webcomponents.js
-|   └── mui-webcomponents.min.js
-└── extra
-    ├── mui-colors.css
-    ├── mui-combined.js
-    └── mui-react-combined.js
+    ├── mui-webcomponents.js
+    └── mui-webcomponents.min.js
 </pre>
 
 ### NPM

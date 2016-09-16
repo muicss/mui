@@ -435,10 +435,14 @@ muicss
 │   │   └── mui-angular.min.js
 │   ├── css
 │   │   ├── mui.css
-│   │   └── mui.min.css
+│   │   ├── mui.min.css
+│   │   ├── mui-rtl.css
+│   │   └── mui-rtl.min.css
 │   ├── email
 │   │   ├── mui-email-inline.css
-│   │   └── mui-email-styletag.css
+│   │   ├── mui-email-inline-rtl.css
+│   │   ├── mui-email-styletag.css
+│   │   └── mui-email-styletag-rtl.css
 │   ├── extra
 │   │   ├── mui-angular-combined.js
 │   │   ├── mui-colors.css

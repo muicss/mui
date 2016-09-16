@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.8.0 - September 15, 2016
+
+* Added RTL support to CSS
+* Added CDN package to NPM package
+
 ## 0.7.5 - September 8, 2016
 
 * Added gulp watch task for development
