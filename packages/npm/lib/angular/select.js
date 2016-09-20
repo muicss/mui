@@ -53,7 +53,7 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
       // init scope
       scope.options = [];
       scope.isOpen = false;
-      scope.useDefault = false;
+      scope.useDefault = 'ontouchstart' in document.documentElement ? true : false;
       scope.origTabIndex = selectEl[0].tabIndex;
       scope.menuIndex = 0;
 

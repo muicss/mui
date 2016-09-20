@@ -113,7 +113,12 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
       background-color: mui-color('grey', '200');
     }
 
-    &:not(.mui-optgroup__label):hover {
+    &.mui--is-disabled {
+      color: $mui-text-dark-hint;
+      cursor: $mui-cursor-disabled;
+    }
+
+    &:not(.mui-optgroup__label):not(.mui--is-disabled):hover {
       background-color: mui-color('grey', '300');
     }
   }

@@ -1696,7 +1696,12 @@ h4, h5, h6 {
   background-color: #EEEEEE;
 }
 
-.mui-select__menu > div:not(.mui-optgroup__label):hover {
+.mui-select__menu > div.mui--is-disabled {
+  color: rgba(0, 0, 0, 0.38);
+  cursor: not-allowed;
+}
+
+.mui-select__menu > div:not(.mui-optgroup__label):not(.mui--is-disabled):hover {
   background-color: #E0E0E0;
 }
 

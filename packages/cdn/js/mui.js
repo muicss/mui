@@ -1267,6 +1267,7 @@ var jqLite = require('./lib/jqLite'),
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
     selectedClass = 'mui--is-selected',
+    disabledClass = 'mui--is-disabled',
     doc = document,
     win = window;
 
@@ -1404,9 +1405,9 @@ function Menu(wrapperEl, selectEl) {
   util.enableScrollLock();
 
   // instance variables
-  this.indexMap = {};
-  this.origIndex = null;
-  this.currentIndex = null;
+  this.itemArray = [];
+  this.origPos = null;
+  this.currentPos = null;
   this.selectEl = selectEl;
   this.menuEl = this._createMenuEl(wrapperEl, selectEl);
   this.clickCallbackFn = util.callback(this, 'clickHandler');
@@ -1443,8 +1444,9 @@ function Menu(wrapperEl, selectEl) {
 Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   var menuEl = doc.createElement('div'),
       childEls = selectEl.children,
-      indexNum = 0,
-      indexMap = this.indexMap,
+      itemArray = this.itemArray,
+      itemPos = 0,
+      selectedPos = 0,
       selectedRow = 0,
       loopEl,
       rowEl,
@@ -1481,30 +1483,37 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       // add row item to menu
       rowEl = doc.createElement('div');
       rowEl.textContent = loopEl.textContent;
-      rowEl._muiIndex = indexNum;
-
-      // handle selected options
-      if (loopEl.selected) {
-        rowEl.className = selectedClass;
-        selectedRow = menuEl.children.length;
-      }
 
       // handle optgroup options
       if (inGroup) jqLite.addClass(rowEl, 'mui-optgroup__option');
 
-      menuEl.appendChild(rowEl);
+      if (loopEl.disabled) {
+        // do not attach muiIndex to disable <option> elements to make them
+        // unselectable.
+        jqLite.addClass(rowEl, disabledClass);
+      } else {
+        rowEl._muiIndex = loopEl.index;
+        rowEl._muiPos = itemPos;
 
-      // add to index map
-      indexMap[indexNum] = rowEl;
-      indexNum += 1;
+        // handle selected options
+        if (loopEl.selected) {
+          jqLite.addClass(rowEl, selectedClass);
+          selectedRow = menuEl.children.length;
+          selectedPos = itemPos;
+        }
+
+        // add to item array
+        itemArray.push(rowEl);
+        itemPos += 1;
+      }
+
+      menuEl.appendChild(rowEl);
     }
   }
 
   // save indices
-  var selectedIndex = selectEl.selectedIndex;
-
-  this.origIndex = selectedIndex;
-  this.currentIndex = selectedIndex;
+  this.origPos = selectedPos;
+  this.currentPos = selectedPos;
 
   // set position
   var props = formlib.getMenuPositionalCSS(
@@ -1556,13 +1565,14 @@ Menu.prototype.clickHandler = function(ev) {
   // don't allow events to bubble
   ev.stopPropagation();
 
-  var index = ev.target._muiIndex;
+  var item = ev.target,
+      index = item._muiIndex;
 
   // ignore clicks on non-items                                               
   if (index === undefined) return;
 
   // select option
-  this.currentIndex = index;
+  this.currentPos = item._muiPos;
   this.selectCurrent();
 
   // destroy menu
@@ -1574,14 +1584,14 @@ Menu.prototype.clickHandler = function(ev) {
  * Increment selected item
  */
 Menu.prototype.increment = function() {
-  if (this.currentIndex === this.selectEl.length - 1) return;
+  if (this.currentPos === this.itemArray.length - 1) return;
 
   // un-select old row
-  jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
+  jqLite.removeClass(this.itemArray[this.currentPos], selectedClass);
 
   // select new row
-  this.currentIndex += 1;
-  jqLite.addClass(this.indexMap[this.currentIndex], selectedClass);
+  this.currentPos += 1;
+  jqLite.addClass(this.itemArray[this.currentPos], selectedClass);
 }
 
 
@@ -1589,14 +1599,14 @@ Menu.prototype.increment = function() {
  * Decrement selected item
  */
 Menu.prototype.decrement = function() {
-  if (this.currentIndex === 0) return;
+  if (this.currentPos === 0) return;
 
   // un-select old row
-  jqLite.removeClass(this.indexMap[this.currentIndex], selectedClass);
+  jqLite.removeClass(this.itemArray[this.currentPos], selectedClass);
 
   // select new row
-  this.currentIndex -= 1;
-  jqLite.addClass(this.indexMap[this.currentIndex], selectedClass);
+  this.currentPos -= 1;
+  jqLite.addClass(this.itemArray[this.currentPos], selectedClass);
 }
 
 
@@ -1604,8 +1614,8 @@ Menu.prototype.decrement = function() {
  * Select current item
  */
 Menu.prototype.selectCurrent = function() {
-  if (this.currentIndex !== this.origIndex) {
-    this.selectEl.selectedIndex = this.currentIndex;
+  if (this.currentPos !== this.origPos) {
+    this.selectEl.selectedIndex = this.itemArray[this.currentPos]._muiIndex;
 
     // trigger change event
     util.dispatchEvent(this.selectEl, 'change');

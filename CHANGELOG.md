@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.8.1 - September 20, 2016
+
+* Added support for disabled options to MUI CSS/JS Select component
+* Modified Select components to use browser built-in menu for touchscreen
+  devices
+
 ## 0.8.0 - September 15, 2016
 
 * Added RTL support to CSS
