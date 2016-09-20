@@ -114,7 +114,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     }
 
     &.mui--is-disabled {
-      color: $mui-text-dark-secondary;
+      color: $mui-text-dark-hint;
       cursor: $mui-cursor-disabled;
     }
 
