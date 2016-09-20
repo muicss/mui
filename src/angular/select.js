@@ -63,7 +63,8 @@ angular.module(moduleName, [])
         // init scope
         scope.options = [];
         scope.isOpen = false;
-        scope.useDefault = false;
+        scope.useDefault = ('ontouchstart' in document.documentElement) 
+          ? true : false;
         scope.origTabIndex = selectEl[0].tabIndex;
         scope.menuIndex = 0;
 

@@ -62,7 +62,7 @@ class Select extends React.Component {
   static defaultProps = {
     className: '',
     readOnly: false,
-    useDefault: false,
+    useDefault: ('ontouchstart' in document.documentElement) ? true : false,
     onChange: null
   };
 
