@@ -286,8 +286,10 @@ function buildCdnColors(dirname) {
   return makeTask('build-cdn-colors: ' + dirname, function() {
     return gulp.src('./src/sass/mui-colors.scss')
       .pipe(plugins.sass({outputStyle: 'expanded'}))
-      .pipe(plugins.cssmin())
       .pipe(plugins.rename('mui-colors.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.cssmin())
+      .pipe(plugins.rename('mui-colors.min.css'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -300,8 +302,10 @@ function buildCdnJsCombined(dirname, cssDir) {
         transform: [stringify(['.css'])],
         paths: ['./', cssDir]
       }))
-      .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-combined.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -323,8 +327,10 @@ function buildCdnReactCombined(dirname, cssDir) {
       }))
       .pipe(plugins.replace("require('react')", "window.React"))
       .pipe(plugins.injectString.prepend(s))
-      .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-react-combined.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-react-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -346,8 +352,10 @@ function buildCdnAngularCombined(dirname, cssDir) {
       .pipe(plugins.replace("require('angular')", "window.angular"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.ngAnnotate())
-      .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-angular-combined.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename('mui-angular-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
 }
