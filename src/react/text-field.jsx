@@ -68,7 +68,7 @@ class Input extends React.Component {
 
     // execute callback
     let fn = this.props.onChange;
-    if (fn) fn(ev);
+    fn && fn(ev);
   }
 
   onFocus(ev) {
@@ -76,7 +76,7 @@ class Input extends React.Component {
 
     // execute callback
     let fn = this.props.onFocus;
-    if (fn) fn(ev);
+    fn && fn(ev);
   }
 
   triggerFocus() {

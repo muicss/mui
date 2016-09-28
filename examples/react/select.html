@@ -39,8 +39,16 @@
 
       // Example 1
       class Example1 extends React.Component {
-        onChange(value) {
-          console.log('[Example1] onchange: ' + value);
+        onBlur(ev) {
+          console.log('[Example 1] onblur: ' + ev.target);
+        }
+
+        onChange(ev) {
+          console.log('[Example 1] onchange: ' + ev.target.value);
+        }
+
+        onFocus(ev) {
+          console.log('[Example 1] onfocus: ' + ev.target);
         }
 
         render() {
@@ -49,7 +57,9 @@
               label="Select Box 1"
               name="example1"
               defaultValue="opt2"
+              onBlur={this.onBlur}
               onChange={this.onChange}
+              onFocus={this.onFocus}
             >
               <Option label="Option 1" value="opt1" />
               <Option label="Option 2" value="opt2" />
@@ -67,16 +77,27 @@
      
       // Example 2
       class Example2 extends React.Component {
-        onChange(value) {
-          console.log('[Example2] onchange: ' + value);
+        onBlur(ev) {
+          console.log('[Example 2] onblur: ' + ev.target);
+        }
+
+        onChange(ev) {
+          console.log('[Example 2] onchange: ' + ev.target.value);
+        }
+
+        onFocus(ev) {
+          console.log('[Example 2] onfocus: ' + ev.target);
         }
 
         render() {
           return (
             <Select
               name="example2"
+              label="Select Box 2"
               value="opt3"
+              onBlur={this.onBlur}
               onChange={this.onChange}
+              onFocus={this.onFocus}
               autoFocus={true}
             >
               <Option label="Option 1" value="opt1" />
@@ -95,17 +116,28 @@
 
       // Example 3
       class Example3 extends React.Component {
-        onChange(value) {
-          console.log('[Example3] onchange: ' + value);
+        onBlur(ev) {
+          console.log('[Example 3] onblur: ' + ev.target);
+        }
+
+        onChange(ev) {
+          console.log('[Example3] onchange: ' + ev.target.value);
+        }
+
+        onFocus(ev) {
+          console.log('[Example 3] onfocus: ' + ev.target);
         }
 
         render() {
           return (
             <Select
               name="example3"
+              label="Select Box 3"
               value="opt4"
               useDefault={true}
+              onBlur={this.onBlur}
               onChange={this.onChange}
+              onFocus={this.onFocus}
             >
               <Option label="Option 1" value="opt1" />
               <Option label="Option 2" value="opt2" />

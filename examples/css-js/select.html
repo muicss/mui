@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css" />
     <style>
-     html, body {height: 100%;}
+     html, body {height: 100%; padding-top: 50px;}
     </style>
     <script>
       window.addEventListener('load', function() {
@@ -18,10 +18,12 @@
   </head>
   <body>
     <div class="mui-container">
-      <br>
-      <br>
       <div class="mui-select">
-        <select>
+        <select
+          onblur="console.log('[Example 1] onblur')"
+          onchange="console.log('[Example 1] onchange: ' + event.target.value)"
+          onfocus="console.log('[Example 1]: onfocus')"
+        >
           <option>Option 1</option>
           <option selected>Option 2</option>
           <option>Option 3</option>
@@ -31,15 +33,15 @@
           <option>Option 7</option>
           <option>Option 8</option>
         </select>
-        <label>Select Box 1</label>
+        <label>Example 1</label>
       </div>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+
       <div class="mui-select">
-        <select>
+        <select
+          onblur="console.log('[Example 2] onblur')"
+          onchange="console.log('[Example 2] onchange: ' + event.target.value)"
+          onfocus="console.log('[Example 2]: onfocus')"
+        >
           <option>Option 1</option>
           <option selected>Option 2</option>
           <option>Option 3</option>
@@ -49,15 +51,34 @@
           <option>Option 7</option>
           <option>Option 8</option>
         </select>
-        <label>Select Box 2</label>
+        <label>Example 2</label>
       </div>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+
       <div class="mui-select">
-        <select>
+        <select
+          onblur="console.log('[Example 3] onblur')"
+          onchange="console.log('[Example 3] onchange: ' + event.target.value)"
+          onfocus="console.log('[Example 3]: onfocus')"
+          disabled
+        >
+          <option>Option 1</option>
+          <option selected>Option 2</option>
+          <option>Option 3</option>
+          <option>Option 4</option>
+          <option>Option 5</option>
+          <option>Option 6</option>
+          <option>Option 7</option>
+          <option>Option 8</option>
+        </select>
+        <label>Example 3 (Should be disabled)</label>
+      </div>
+
+      <div class="mui-select">
+        <select
+          onblur="console.log('[Example 4] onblur')"
+          onchange="console.log('[Example 4] onchange: ' + event.target.value)"
+          onfocus="console.log('[Example 4]: onfocus')"
+>
           <optgroup label="Group 1">
             <option>Option 1</option>
             <option disabled>Option 2</option>
@@ -71,7 +92,22 @@
             <option>Option 6</option>
           </optgroup>
         </select>
+        <label>Example 4</label>
       </div>
+
+      <label>Example 5</label>
+      <div>
+        <select
+          onblur="console.log('[Example 5] onblur')"
+          onchange="console.log('[Example 5] onchange: ' + event.target.value)"
+          onfocus="console.log('[Example 5]: onfocus')"
+        >
+          <option>Option 1</option>
+          <option>Option 2</option>
+        </select>
+      </div>
+      <br>
+      <br>
     </div>
   </body>
 </html>

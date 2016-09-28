@@ -35,15 +35,15 @@ class Select extends React.Component {
 
     // bind callback function
     let cb = util.callback;
-    this.hideMenuCB = cb(this, 'hideMenu');
+
     this.onInnerChangeCB = cb(this, 'onInnerChange');
-    this.onInnerClickCB = cb(this, 'onInnerClick');
-    this.onInnerFocusCB = cb(this, 'onInnerFocus');
     this.onInnerMouseDownCB = cb(this, 'onInnerMouseDown');
-    this.onKeydownCB = cb(this, 'onKeydown');
+
+    this.onOuterClickCB = cb(this, 'onOuterClick');
+    this.onOuterKeyDownCB = cb(this, 'onOuterKeyDown');
+
+    this.hideMenuCB = cb(this, 'hideMenu');
     this.onMenuChangeCB = cb(this, 'onMenuChange');
-    this.onOuterFocusCB = cb(this, 'onOuterFocus');
-    this.onOuterBlurCB = cb(this, 'onOuterBlur');
   }
 
   state = {
@@ -56,118 +56,93 @@ class Select extends React.Component {
     defaultValue: PropTypes.string,
     readOnly: PropTypes.bool,
     useDefault: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    onClick: PropTypes.func,
+    onKeyDown: PropTypes.func
   };
 
   static defaultProps = {
     className: '',
     readOnly: false,
     useDefault: ('ontouchstart' in document.documentElement) ? true : false,
-    onChange: null
+    onChange: null,
+    onClick: null,
+    onKeyDown: null
   };
 
   componentDidMount() {
-    // disable MUI js
+    // disable MUI CSS/JS
     this.refs.selectEl._muiSelect = true;
-
-    // make wrapper element focusable (to enable Firefox bugfix)
-    this.refs.wrapperEl.tabIndex = -1;
-
-    // handle autofocus
-    if (this.props.autoFocus) this.refs.wrapperEl.focus();
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({value: nextProps.value});
   }
 
-  onInnerMouseDown(ev) {
-    if (ev.button !== 0 || this.props.useDefault === true) return;
-    ev.preventDefault();
-
-    // execute callback
-    const fn = this.props.onMouseDown;
-    fn && fn(ev);
+  componentWillUnmount() {
+    // ensure that doc event listners have been removed
+    jqLite.off(window, 'resize', this.hideMenuCB);
+    jqLite.off(document, 'click', this.hideMenuCB);
   }
-
+  
   onInnerChange(ev) {
     let value = ev.target.value;
-    this.setState({ value });
 
-    // execute callback
-    const fn = this.props.onChange;
-    fn && fn(value);
+    // update state
+    this.setState({ value });
+  }
+  
+  onInnerMouseDown(ev) {
+    // only left clicks & check flag
+    if (ev.button !== 0 || this.props.useDefault) return;
+
+    // prevent built-in menu from opening
+    ev.preventDefault();
   }
 
-  onInnerClick(ev) {
-    if (ev.button !== 0) return;  // only left clicks
-    this.showMenu();
+  onOuterClick(ev) {
+    // only left clicks, return if <select> is disabled
+    if (ev.button !== 0 || this.refs.selectEl.disabled) return;
 
     // execute callback
     const fn = this.props.onClick;
     fn && fn(ev);
+
+    // exit if preventDefault() was called
+    if (ev.defaultPrevented || this.props.useDefault) return;
+
+    // focus wrapper
+    this.refs.wrapperEl.focus();
+    
+    // open custom menu
+    this.showMenu();
   }
 
-  onInnerFocus(ev) {
-    // check flag
-    if (this.props.useDefault === true) return;
-
-    // defer focus to parent
-    setTimeout(() => {this.refs.wrapperEl.focus();}, 0);
-  }
-
-  onOuterFocus(ev) {
-    // ignore focus on inner element (react artifact)
-    if (ev.target !== this.refs.wrapperEl) return;
-
-    // disable tabfocus on inner element
-    var selectEl = this.refs.selectEl;
-    selectEl._muiOrigIndex = selectEl.tabIndex;
-    selectEl.tabIndex = -1;
-
-    // firefox bugfix
-    if (selectEl.disabled) return this.refs.wrapperEl.blur();
-
-    // attach keydown handler
-    jqLite.on(document, 'keydown', this.onKeydownCB);
-
+  onOuterKeyDown(ev) {
     // execute callback
-    const fn = this.onFocus;
+    const fn = this.props.onKeyDown;
     fn && fn(ev);
-  }
 
-  onOuterBlur(ev) {
-    // ignore blur on inner element
-    if (ev.target !== this.refs.wrapperEl) return;
-
-    // restore tab focus on inner element
-    let selectEl = this.refs.selectEl;
-    selectEl.tabIndex = selectEl._muiOrigIndex;
-
-    // remove keydown handler
-    jqLite.off(document, 'keydown', this.onKeydownCB);
-
-    // execute callback
-    const fn = this.onBlur;
-    fn && fn(ev);
-  }
-
-  onKeydown(ev) {
-    // spacebar, down, up
-    if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
-      // prevent win scroll
-      ev.preventDefault();
-
-      if (this.refs.selectEl.disabled !== true) this.showMenu();
+    // exit if preventDevault() was called or useDefault is true
+    if (ev.defaultPrevented || this.props.useDefault) return;
+        
+    if (this.state.showMenu === false) {
+      let keyCode = ev.keyCode;
+    
+      // spacebar, down, up
+      if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
+        // prevent default browser action
+        ev.preventDefault();
+        
+        // open custom menu
+        this.showMenu();
+      }
     }
   }
 
   showMenu() {
     // check useDefault flag
-    if (this.props.useDefault === true) return;
-
-    // add scroll lock
-    util.enableScrollLock();
+    if (this.props.useDefault) return;
 
     // add event listeners
     jqLite.on(window, 'resize', this.hideMenuCB);
@@ -178,9 +153,6 @@ class Select extends React.Component {
   }
 
   hideMenu() {
-    // remove scroll lock
-    util.disableScrollLock(true);
-
     // remove event listeners
     jqLite.off(window, 'resize', this.hideMenuCB);
     jqLite.off(document, 'click', this.hideMenuCB);
@@ -189,17 +161,15 @@ class Select extends React.Component {
     this.setState({showMenu: false});
 
     // refocus
-    this.refs.selectEl.focus();
+    this.refs.wrapperEl.focus();
   }
 
   onMenuChange(value) {
-    if (this.props.readOnly === true) return;
+    if (this.props.readOnly) return;
 
-    this.setState({ value });
-
-    // execute onChange method
-    let fn = this.props.onChange;
-    if (fn) fn(value);
+    // update inner <select> and dispatch 'change' event
+    this.refs.selectEl.value = value;
+    util.dispatchEvent(this.refs.selectEl, 'change');
   }
 
   render() {
@@ -216,27 +186,36 @@ class Select extends React.Component {
       );
     }
 
+    // set tab index so user can focus wrapper element
+    let tabIndexWrapper = '-1',
+        tabIndexInner = '0';
+
+    if (this.props.useDefault === false) {
+      tabIndexWrapper = '0';
+      tabIndexInner = '-1';
+    }
+
     const { children, className, style, label, defaultValue, readOnly,
       useDefault, ...reactProps } = this.props;
 
     return (
       <div
+        { ...reactProps }
         ref="wrapperEl"
+        tabIndex={tabIndexWrapper}
         style={style}
         className={'mui-select ' + className}
-        onFocus={this.onOuterFocusCB}
-        onBlur={this.onOuterBlurCB}
+        onClick={this.onOuterClickCB}
+        onKeyDown={this.onOuterKeyDownCB}
       >
         <select
-          { ...reactProps }
           ref="selectEl"
+          tabIndex={tabIndexInner}
           value={this.state.value}
           defaultValue={defaultValue}
           readOnly={this.props.readOnly}
           onChange={this.onInnerChangeCB}
           onMouseDown={this.onInnerMouseDownCB}
-          onClick={this.onInnerClickCB}
-          onFocus={this.onInnerFocusCB}
         >
           {children}
         </select>
@@ -256,7 +235,7 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onKeydownCB = util.callback(this, 'onKeydown');
+    this.onKeyDownCB = util.callback(this, 'onKeyDown');
   }
 
   state = {
@@ -283,11 +262,8 @@ class Menu extends React.Component {
   }
 
   componentDidMount() {
-    // blur active element (IE10 bugfix)
-    this.blurTimer = setTimeout(function() {
-      let el = document.activeElement;
-      if (el.nodeName.toLowerCase() !== 'body') el.blur();
-    }, 0);
+    // prevent scrolling
+    util.enableScrollLock();
 
     // set position
     let props = formlib.getMenuPositionalCSS(
@@ -301,15 +277,15 @@ class Menu extends React.Component {
     jqLite.scrollTop(el, props.scrollTop);
 
     // attach keydown handler
-    jqLite.on(document, 'keydown', this.onKeydownCB);
+    jqLite.on(document, 'keydown', this.onKeyDownCB);
   }
 
   componentWillUnmount() {
-    // clear timer
-    clearTimeout(this.blurTimer);
-    
+    // remove scroll lock
+    util.disableScrollLock(true);
+
     // remove keydown handler
-    jqLite.off(document, 'keydown', this.onKeydownCB);
+    jqLite.off(document, 'keydown', this.onKeyDownCB);
   }
 
   onClick(pos, ev) {
@@ -318,7 +294,7 @@ class Menu extends React.Component {
     this.selectAndDestroy(pos);
   }
 
-  onKeydown(ev) {
+  onKeyDown(ev) {
     let keyCode = ev.keyCode;
 
     // tab
@@ -336,10 +312,7 @@ class Menu extends React.Component {
   }
 
   increment() {
-    if (this.state.currentIndex === this.props.optionEls.length - 1) {
-      return;
-    }
-
+    if (this.state.currentIndex === this.props.optionEls.length - 1) return;
     this.setState({currentIndex: this.state.currentIndex + 1});
   }
 

@@ -24159,8 +24159,8 @@ var Dropdown = function (_React$Component) {
         this.toggle();
 
         // execute <Dropdown> onClick method
-        var onClickFn = this.props.onClick;
-        onClickFn && onClickFn(ev);
+        var fn = this.props.onClick;
+        fn && fn(ev);
       }
     }
   }, {
@@ -24790,29 +24790,23 @@ var Select = function (_React$Component) {
 
     // bind callback function
     var cb = util.callback;
-    _this.hideMenuCB = cb(_this, 'hideMenu');
+
     _this.onInnerChangeCB = cb(_this, 'onInnerChange');
-    _this.onInnerClickCB = cb(_this, 'onInnerClick');
-    _this.onInnerFocusCB = cb(_this, 'onInnerFocus');
     _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
-    _this.onKeydownCB = cb(_this, 'onKeydown');
+
+    _this.onOuterClickCB = cb(_this, 'onOuterClick');
+    _this.onOuterKeyDownCB = cb(_this, 'onOuterKeyDown');
+
+    _this.hideMenuCB = cb(_this, 'hideMenu');
     _this.onMenuChangeCB = cb(_this, 'onMenuChange');
-    _this.onOuterFocusCB = cb(_this, 'onOuterFocus');
-    _this.onOuterBlurCB = cb(_this, 'onOuterBlur');
     return _this;
   }
 
   babelHelpers.createClass(Select, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // disable MUI js
+      // disable MUI CSS/JS
       this.refs.selectEl._muiSelect = true;
-
-      // make wrapper element focusable (to enable Firefox bugfix)
-      this.refs.wrapperEl.tabIndex = -1;
-
-      // handle autofocus
-      if (this.props.autoFocus) this.refs.wrapperEl.focus();
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -24820,105 +24814,76 @@ var Select = function (_React$Component) {
       this.setState({ value: nextProps.value });
     }
   }, {
-    key: 'onInnerMouseDown',
-    value: function onInnerMouseDown(ev) {
-      if (ev.button !== 0 || this.props.useDefault === true) return;
-      ev.preventDefault();
-
-      // execute callback
-      var fn = this.props.onMouseDown;
-      fn && fn(ev);
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // ensure that doc event listners have been removed
+      jqLite.off(window, 'resize', this.hideMenuCB);
+      jqLite.off(document, 'click', this.hideMenuCB);
     }
   }, {
     key: 'onInnerChange',
     value: function onInnerChange(ev) {
       var value = ev.target.value;
-      this.setState({ value: value });
 
-      // execute callback
-      var fn = this.props.onChange;
-      fn && fn(value);
+      // update state
+      this.setState({ value: value });
     }
   }, {
-    key: 'onInnerClick',
-    value: function onInnerClick(ev) {
-      if (ev.button !== 0) return; // only left clicks
-      this.showMenu();
+    key: 'onInnerMouseDown',
+    value: function onInnerMouseDown(ev) {
+      // only left clicks & check flag
+      if (ev.button !== 0 || this.props.useDefault) return;
+
+      // prevent built-in menu from opening
+      ev.preventDefault();
+    }
+  }, {
+    key: 'onOuterClick',
+    value: function onOuterClick(ev) {
+      // only left clicks
+      if (ev.button !== 0) return;
 
       // execute callback
       var fn = this.props.onClick;
       fn && fn(ev);
+
+      // exit if preventDefault() was called
+      if (ev.defaultPrevented || this.props.useDefault) return;
+
+      // focus wrapper
+      this.refs.wrapperEl.focus();
+
+      // open custom menu
+      this.showMenu();
     }
   }, {
-    key: 'onInnerFocus',
-    value: function onInnerFocus(ev) {
-      var _this2 = this;
-
-      // check flag
-      if (this.props.useDefault === true) return;
-
-      // defer focus to parent
-      setTimeout(function () {
-        _this2.refs.wrapperEl.focus();
-      }, 0);
-    }
-  }, {
-    key: 'onOuterFocus',
-    value: function onOuterFocus(ev) {
-      // ignore focus on inner element (react artifact)
-      if (ev.target !== this.refs.wrapperEl) return;
-
-      // disable tabfocus on inner element
-      var selectEl = this.refs.selectEl;
-      selectEl._muiOrigIndex = selectEl.tabIndex;
-      selectEl.tabIndex = -1;
-
-      // firefox bugfix
-      if (selectEl.disabled) return this.refs.wrapperEl.blur();
-
-      // attach keydown handler
-      jqLite.on(document, 'keydown', this.onKeydownCB);
-
+    key: 'onOuterKeyDown',
+    value: function onOuterKeyDown(ev) {
       // execute callback
-      var fn = this.onFocus;
+      var fn = this.props.onKeyDown;
       fn && fn(ev);
-    }
-  }, {
-    key: 'onOuterBlur',
-    value: function onOuterBlur(ev) {
-      // ignore blur on inner element
-      if (ev.target !== this.refs.wrapperEl) return;
 
-      // restore tab focus on inner element
-      var selectEl = this.refs.selectEl;
-      selectEl.tabIndex = selectEl._muiOrigIndex;
+      // exit if preventDevault() was called or useDefault is true
+      if (ev.defaultPrevented || this.props.useDefault) return;
 
-      // remove keydown handler
-      jqLite.off(document, 'keydown', this.onKeydownCB);
+      if (this.state.showMenu === false) {
+        var keyCode = ev.keyCode;
 
-      // execute callback
-      var fn = this.onBlur;
-      fn && fn(ev);
-    }
-  }, {
-    key: 'onKeydown',
-    value: function onKeydown(ev) {
-      // spacebar, down, up
-      if (ev.keyCode === 32 || ev.keyCode === 38 || ev.keyCode === 40) {
-        // prevent win scroll
-        ev.preventDefault();
+        // spacebar, down, up
+        if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
+          // prevent default browser action
+          ev.preventDefault();
 
-        if (this.refs.selectEl.disabled !== true) this.showMenu();
+          // open custom menu
+          this.showMenu();
+        }
       }
     }
   }, {
     key: 'showMenu',
     value: function showMenu() {
       // check useDefault flag
-      if (this.props.useDefault === true) return;
-
-      // add scroll lock
-      util.enableScrollLock();
+      if (this.props.useDefault) return;
 
       // add event listeners
       jqLite.on(window, 'resize', this.hideMenuCB);
@@ -24930,9 +24895,6 @@ var Select = function (_React$Component) {
   }, {
     key: 'hideMenu',
     value: function hideMenu() {
-      // remove scroll lock
-      util.disableScrollLock(true);
-
       // remove event listeners
       jqLite.off(window, 'resize', this.hideMenuCB);
       jqLite.off(document, 'click', this.hideMenuCB);
@@ -24941,18 +24903,16 @@ var Select = function (_React$Component) {
       this.setState({ showMenu: false });
 
       // refocus
-      this.refs.selectEl.focus();
+      this.refs.wrapperEl.focus();
     }
   }, {
     key: 'onMenuChange',
     value: function onMenuChange(value) {
-      if (this.props.readOnly === true) return;
+      if (this.props.readOnly) return;
 
-      this.setState({ value: value });
-
-      // execute onChange method
-      var fn = this.props.onChange;
-      if (fn) fn(value);
+      // update inner <select> and dispatch 'change' event
+      this.refs.selectEl.value = value;
+      util.dispatchEvent(this.refs.selectEl, 'change');
     }
   }, {
     key: 'render',
@@ -24968,6 +24928,15 @@ var Select = function (_React$Component) {
         });
       }
 
+      // set tab index so user can focus wrapper element
+      var tabIndexWrapper = '-1',
+          tabIndexInner = '0';
+
+      if (this.props.useDefault === false) {
+        tabIndexWrapper = '0';
+        tabIndexInner = '-1';
+      }
+
       var _props = this.props;
       var children = _props.children;
       var className = _props.className;
@@ -24981,25 +24950,25 @@ var Select = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        {
+        babelHelpers.extends({}, reactProps, {
           ref: 'wrapperEl',
+          tabIndex: tabIndexWrapper,
           style: style,
           className: 'mui-select ' + className,
-          onFocus: this.onOuterFocusCB,
-          onBlur: this.onOuterBlurCB
-        },
+          onClick: this.onOuterClickCB,
+          onKeyDown: this.onOuterKeyDownCB
+        }),
         _react2.default.createElement(
           'select',
-          babelHelpers.extends({}, reactProps, {
+          {
             ref: 'selectEl',
+            tabIndex: tabIndexInner,
             value: this.state.value,
             defaultValue: defaultValue,
             readOnly: this.props.readOnly,
             onChange: this.onInnerChangeCB,
-            onMouseDown: this.onInnerMouseDownCB,
-            onClick: this.onInnerClickCB,
-            onFocus: this.onInnerFocusCB
-          }),
+            onMouseDown: this.onInnerMouseDownCB
+          },
           children
         ),
         _react2.default.createElement(
@@ -25026,13 +24995,17 @@ Select.propTypes = {
   defaultValue: PropTypes.string,
   readOnly: PropTypes.bool,
   useDefault: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  onKeyDown: PropTypes.func
 };
 Select.defaultProps = {
   className: '',
   readOnly: false,
   useDefault: 'ontouchstart' in document.documentElement ? true : false,
-  onChange: null
+  onChange: null,
+  onClick: null,
+  onKeyDown: null
 };
 
 var Menu = function (_React$Component2) {
@@ -25041,16 +25014,16 @@ var Menu = function (_React$Component2) {
   function Menu(props) {
     babelHelpers.classCallCheck(this, Menu);
 
-    var _this3 = babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+    var _this2 = babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
-    _this3.state = {
+    _this2.state = {
       origIndex: null,
       currentIndex: null
     };
 
 
-    _this3.onKeydownCB = util.callback(_this3, 'onKeydown');
-    return _this3;
+    _this2.onKeyDownCB = util.callback(_this2, 'onKeyDown');
+    return _this2;
   }
 
   babelHelpers.createClass(Menu, [{
@@ -25069,11 +25042,8 @@ var Menu = function (_React$Component2) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // blur active element (IE10 bugfix)
-      this.blurTimer = setTimeout(function () {
-        var el = document.activeElement;
-        if (el.nodeName.toLowerCase() !== 'body') el.blur();
-      }, 0);
+      // prevent scrolling
+      util.enableScrollLock();
 
       // set position
       var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.optionEls.length, this.state.currentIndex);
@@ -25083,16 +25053,16 @@ var Menu = function (_React$Component2) {
       jqLite.scrollTop(el, props.scrollTop);
 
       // attach keydown handler
-      jqLite.on(document, 'keydown', this.onKeydownCB);
+      jqLite.on(document, 'keydown', this.onKeyDownCB);
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      // clear timer
-      clearTimeout(this.blurTimer);
+      // remove scroll lock
+      util.disableScrollLock(true);
 
       // remove keydown handler
-      jqLite.off(document, 'keydown', this.onKeydownCB);
+      jqLite.off(document, 'keydown', this.onKeyDownCB);
     }
   }, {
     key: 'onClick',
@@ -25102,8 +25072,8 @@ var Menu = function (_React$Component2) {
       this.selectAndDestroy(pos);
     }
   }, {
-    key: 'onKeydown',
-    value: function onKeydown(ev) {
+    key: 'onKeyDown',
+    value: function onKeyDown(ev) {
       var keyCode = ev.keyCode;
 
       // tab
@@ -25119,10 +25089,7 @@ var Menu = function (_React$Component2) {
   }, {
     key: 'increment',
     value: function increment() {
-      if (this.state.currentIndex === this.props.optionEls.length - 1) {
-        return;
-      }
-
+      if (this.state.currentIndex === this.props.optionEls.length - 1) return;
       this.setState({ currentIndex: this.state.currentIndex + 1 });
     }
   }, {
@@ -25483,7 +25450,7 @@ var Input = function (_React$Component) {
 
       // execute callback
       var fn = this.props.onChange;
-      if (fn) fn(ev);
+      fn && fn(ev);
     }
   }, {
     key: 'onFocus',
@@ -25492,7 +25459,7 @@ var Input = function (_React$Component) {
 
       // execute callback
       var fn = this.props.onFocus;
-      if (fn) fn(ev);
+      fn && fn(ev);
     }
   }, {
     key: 'triggerFocus',
@@ -27610,17 +27577,6 @@ describe('react/select', function () {
     _assert2.default.equal(wrapperEl.children[0].tagName, 'SELECT');
   });
 
-  it('shows menu on click', function () {
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
-    var wrapperEl = instance.refs.wrapperEl;
-    var selectEl = instance.refs.selectEl;
-
-    // check before and after click
-    var numBefore = wrapperEl.children.length;
-    _reactAddonsTestUtils2.default.Simulate.click(selectEl, { button: 0 });
-    _assert2.default.equal(wrapperEl.children.length, numBefore + 1);
-  });
-
   it('renders properly with additional classNames', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _select2.default,
@@ -27634,35 +27590,25 @@ describe('react/select', function () {
   it('renders properly with additional styles', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _select2.default,
-      { style: { additonal: 'style' } },
+      { style: { additional: 'style' } },
       'test'
     ));
 
-    _assert2.default.equal(result.props.style.additonal, 'style');
+    _assert2.default.equal(result.props.style.additional, 'style');
   });
 
-  it('renders menu items with additional classNames', function () {
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
-      _select2.default,
-      null,
-      _react2.default.createElement(_option2.default, null),
-      _react2.default.createElement(_option2.default, { className: 'my-custom-class' })
-    ));
+  it('renders tabIndex properly', function () {
+    var instance = void 0;
 
-    var selectEl = instance.refs.selectEl;
+    // useDefault is false
+    instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, null));
+    _assert2.default.equal(instance.refs.wrapperEl.tabIndex, 0);
+    _assert2.default.equal(instance.refs.selectEl.tabIndex, -1);
 
-    // check option element custom class
-    var optionEl = selectEl.children[1];
-    _assert2.default.equal(optionEl.className, 'my-custom-class');
-
-    // open menu
-    _reactAddonsTestUtils2.default.Simulate.click(selectEl, { button: 0 });
-
-    // check menu item custom class
-    var findComponentFn = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithClass;
-    var menuEl = findComponentFn(instance, 'mui-select__menu');
-    var itemEl = menuEl.children[1];
-    _assert2.default.equal(itemEl.className, 'my-custom-class');
+    // useDefault is true
+    instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { useDefault: true }));
+    _assert2.default.equal(instance.refs.wrapperEl.tabIndex, -1);
+    _assert2.default.equal(instance.refs.selectEl.tabIndex, 0);
   });
 
   it('handles default undefined value', function () {
@@ -27710,14 +27656,14 @@ describe('react/select', function () {
       getInitialState: function getInitialState() {
         return { value: this.props.value };
       },
-      onChange: function onChange(value) {
-        this.setState({ value: value });
+      onChange: function onChange(ev) {
+        this.setState({ value: ev.target.value });
       },
       render: function render() {
         return _react2.default.createElement(
           _select2.default,
           {
-            ref: 'refEl',
+            ref: 'innerEl',
             value: this.state.value,
             onChange: this.onChange
           },
@@ -27729,40 +27675,175 @@ describe('react/select', function () {
 
     var elem = _react2.default.createElement(TestApp, { value: 'option-2' });
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
-    var selectEl = instance.refs.refEl.refs.selectEl;
+    var innerEl = instance.refs.innerEl;
 
-    // check default value
-    _assert2.default.equal(selectEl.value, 'option-2');
+    // check default inner value
+    _assert2.default.equal(innerEl.state.value, 'option-2');
 
-    // update TestApp and check selectEl value
+    // update outer and check <select> element
     instance.setState({ value: 'option-1' });
-    _assert2.default.equal(selectEl.value, 'option-1');
+    _assert2.default.equal(innerEl.refs.selectEl.value, 'option-1');
 
-    // update selectEl and check state
-    selectEl.value = 'option-2';
-    _reactAddonsTestUtils2.default.Simulate.change(selectEl);
+    // update <select> element and trigger 'change' event
+    innerEl.refs.selectEl.value = 'option-2';
+    _reactAddonsTestUtils2.default.Simulate.change(innerEl.refs.selectEl);
     _assert2.default.equal(instance.state.value, 'option-2');
   });
 
-  it('handles onChange event', function (done) {
-    var checkChangeFn = function checkChangeFn(value) {
-      _assert2.default.equal(value, "value2");
+  it('handles blur on wrapper <div> properly', function (done) {
+    var onBlur = function onBlur(ev) {
+      _assert2.default.equal(ev.type, 'blur');
+      _assert2.default.equal(ev.target, instance.refs.wrapperEl);
       done();
     };
 
-    var testElem = _react2.default.createElement(
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onBlur: onBlur }));
+
+    // trigger 'blur' on wrapper <div> element
+    _reactAddonsTestUtils2.default.Simulate.blur(instance.refs.wrapperEl);
+  });
+
+  it('handles change event on <select> properly', function (done) {
+    var checkChangeFn = function checkChangeFn(ev) {
+      _assert2.default.equal(ev.type, 'change');
+      _assert2.default.equal(ev.target, instance.refs.selectEl);
+      _assert2.default.equal(ev.target.value, "value2");
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
       _select2.default,
       { defaultValue: 'value2', onChange: checkChangeFn },
       _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
-      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
-      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
-    );
+      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' })
+    ));
 
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
+    // trigger 'change' on inner <select> element
+    _reactAddonsTestUtils2.default.Simulate.change(instance.refs.selectEl);
+  });
+
+  it('handles click on inner <select> properly', function (done) {
+    var onClick = function onClick(ev) {
+      _assert2.default.equal(ev.type, 'click');
+      _assert2.default.equal(ev.target, instance.refs.selectEl);
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onClick: onClick }));
+
+    // trigger 'click' on inner <select> element
+    _reactAddonsTestUtils2.default.Simulate.click(instance.refs.selectEl, { button: 0 });
+  });
+
+  it('handles focus on inner <select> properly', function (done) {
+    var onFocus = function onFocus(ev) {
+      _assert2.default.equal(ev.type, 'focus');
+      _assert2.default.equal(ev.target, instance.refs.selectEl);
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onFocus: onFocus }));
+
+    // trigger 'focus' on inner <select> element
+    _reactAddonsTestUtils2.default.Simulate.focus(instance.refs.selectEl);
+  });
+
+  it('handles focus on wrapper <div> properly', function (done) {
+    var onFocus = function onFocus(ev) {
+      _assert2.default.equal(ev.type, 'focus');
+      _assert2.default.equal(ev.target, instance.refs.wrapperEl);
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onFocus: onFocus }));
+
+    // trigger 'focus' on wrapper <div> element
+    //ReactUtils.Simulate.focus(instance.refs.wrapperEl);
+    instance.refs.wrapperEl.focus();
+  });
+
+  it('handles keydown on inner <select> properly', function (done) {
+    var onKeyDown = function onKeyDown(ev) {
+      _assert2.default.equal(ev.type, 'keydown');
+      _assert2.default.equal(ev.target, instance.refs.selectEl);
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onKeyDown: onKeyDown }));
+
+    // trigger 'keydown' on inner <select> element
+    _reactAddonsTestUtils2.default.Simulate.keyDown(instance.refs.selectEl);
+  });
+
+  it('handles keydown on wrapper <div> properly', function (done) {
+    var onKeyDown = function onKeyDown(ev) {
+      _assert2.default.equal(ev.type, 'keydown');
+      _assert2.default.equal(ev.target, instance.refs.wrapperEl);
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onKeyDown: onKeyDown }));
+
+    // trigger 'keydown' on wrapper <div> element
+    _reactAddonsTestUtils2.default.Simulate.keyDown(instance.refs.wrapperEl);
+  });
+
+  it('handles mousedown on inner <select> properly', function (done) {
+    var onMouseDown = function onMouseDown(ev) {
+      (0, _assert2.default)(ev.defaultPrevented, true);
+      done();
+    };
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onMouseDown: onMouseDown }));
+
+    // trigger 'mousedown' on inner <select> element
+    _reactAddonsTestUtils2.default.Simulate.mouseDown(instance.refs.selectEl, { button: 0 });
+  });
+
+  it('shows custom menu on click', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var wrapperEl = instance.refs.wrapperEl;
     var selectEl = instance.refs.selectEl;
 
-    // trigger event and check callback
-    _reactAddonsTestUtils2.default.Simulate.change(selectEl, {});
+    // check before and after click
+    var numBefore = wrapperEl.children.length;
+    _reactAddonsTestUtils2.default.Simulate.click(selectEl, { button: 0 });
+    _assert2.default.equal(wrapperEl.children.length, numBefore + 1);
+  });
+
+  it("doesn't show custom menu when useDefault is true", function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { useDefault: true }));
+
+    var wrapperEl = instance.refs.wrapperEl;
+
+    // check before and after 'click' on inner <select> element
+    var numBefore = wrapperEl.children.length;
+    _reactAddonsTestUtils2.default.Simulate.click(instance.refs.selectEl, { button: 0 });
+    _assert2.default.equal(wrapperEl.children.length, numBefore);
+  });
+
+  it('renders menu items with additional classNames', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _select2.default,
+      null,
+      _react2.default.createElement(_option2.default, null),
+      _react2.default.createElement(_option2.default, { className: 'my-custom-class' })
+    ));
+
+    var selectEl = instance.refs.selectEl;
+
+    // check option element custom class
+    var optionEl = selectEl.children[1];
+    _assert2.default.equal(optionEl.className, 'my-custom-class');
+
+    // open menu
+    _reactAddonsTestUtils2.default.Simulate.click(selectEl, { button: 0 });
+
+    // check menu item custom class
+    var findComponentFn = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithClass;
+    var menuEl = findComponentFn(instance, 'mui-select__menu');
+    var itemEl = menuEl.children[1];
+    _assert2.default.equal(itemEl.className, 'my-custom-class');
   });
 });
 

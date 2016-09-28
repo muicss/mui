@@ -27,16 +27,15 @@ angular.module(moduleName, [])
       replace: true,
       transclude: true,
       template: '<div class="mui-select" ' +
-        'ng-blur="onWrapperBlur()" ' +
-        'ng-focus="onWrapperFocus($event)" ' +
+        'ng-blur="onWrapperBlurOrFocus($event)" ' +
+        'ng-click="onWrapperClick($event)" ' +
+        'ng-focus="onWrapperBlurOrFocus($event)" ' +
         'ng-keydown="onWrapperKeydown($event)">' +
         '<select ' +
         'name="{{name}}" ' +
-        'ng-click="onClick()" ' +
         'ng-disabled="ngDisabled" ' +
-        'ng-focus="onFocus()" ' +
         'ng-model="ngModel" ' +
-        'ng-mousedown="onMousedown($event)" ' +
+        'ng-mousedown="onInnerMousedown($event)" ' +
         '>' +
         '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' +
         '</select>' +
@@ -45,7 +44,7 @@ angular.module(moduleName, [])
         'class="mui-select__menu"' +
         'ng-show="!useDefault && isOpen"> ' +
         '<div ' +
-        'ng-click="chooseOption(option)" ' +
+        'ng-click="chooseOption($event, option)" ' +
         'ng-repeat="option in options track by $index" ' +
         'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' +
         '</div>' +
@@ -71,8 +70,14 @@ angular.module(moduleName, [])
         // handle `use-default` attribute
         if (!isUndef(attrs.useDefault)) scope.useDefault = true;
 
-        // make wrapper focusable
-        wrapperEl.prop('tabIndex', -1);
+        // use tabIndex to make wrapper or inner focusable
+        if (scope.useDefault === false) {
+          wrapperEl.prop('tabIndex', '0');
+          selectEl.prop('tabIndex', '-1');
+        } else {
+          wrapperEl.prop('tabIndex', '-1');
+          selectEl.prop('tabIndex', '0');
+        }
 
         // extract <option> elements from children
         transcludeFn(function(clone) {
@@ -94,65 +99,35 @@ angular.module(moduleName, [])
 
 
         /**
-         * Handle click event on <select> element.
-         */
-        scope.onClick = function() {
-          // check flag
-          if (scope.useDefault === true) return;
-
-          // open menu
-          scope.isOpen = true;
-
-          // defer focus
-          wrapperEl[0].focus();
-        };
-
-
-        /**
-         * Handle focus event on <select> element.
-         */
-        scope.onFocus = function() {
-          // check flag
-          if (scope.useDefault === true) return;
-
-          // disable tabfocus once
-          var el = selectEl[0];
-          scope.origTabIndex = el.tabIndex;
-          el.tabIndex = -1;
-
-          // defer focus to parent
-          wrapperEl[0].focus();
-        };
-
-
-        /**
-         * Handle mousedown event on <select> element
-         */
-        scope.onMousedown = function($event) {
-          // check flag
-          if (scope.useDefault === true) return;
-
-          // cancel default menu
-          $event.preventDefault();
-        };
-
-
-        /**
-         * Handle blur event on wrapper element.
-         */
-        scope.onWrapperBlur = function() {
-          // replace select element tab index
-          selectEl[0].tabIndex = scope.origTabIndex;
-        };
-
-
-        /**
-         * Handle focus event on wrapper element.
+         * Handle blur and focus events on wrapper <div> element.
          * @param {Event} $event - Angular event instance
          */
-        scope.onWrapperFocus = function($event) {
-          // firefox bugfix
-          if (selectEl[0].disabled) return wrapperEl[0].blur();
+        scope.onWrapperBlurOrFocus = function($event) {
+          // ignore events that bubbled up
+          if (document.activeElement !== wrapperEl[0]) return;
+
+          util.dispatchEvent(selectEl[0], $event.type, false, false);
+        };
+
+
+        /**
+         * Handle click event on wrapper <div> element.
+         * @param {Event} $event - Angular event instance
+         */
+        scope.onWrapperClick = function($event) {
+          // only left click, check default prevented and useDefault
+          if ($event.button !== 0 ||
+              $event.defaultPrevented ||
+              scope.useDefault ||
+              selectEl[0].disabled) {
+            return;
+          }
+
+          // focus wrapper
+          wrapperEl[0].focus();
+
+          // open custom menu
+          scope.isOpen = true;
         };
 
 
@@ -161,6 +136,9 @@ angular.module(moduleName, [])
          * @param {Event} $event - Angular event instance
          */
         scope.onWrapperKeydown = function($event) {
+          // exit if preventDefault() was called or useDefault is true
+          if ($event.defaultPrevented || scope.useDefault) return;
+
           var keyCode = $event.keyCode;
 
           if (scope.isOpen === false) {
@@ -207,10 +185,26 @@ angular.module(moduleName, [])
 
 
         /**
+         * Handle mousedown event on Inner <select> element
+         * @param {Event} $event - Angular event instance
+         */
+        scope.onInnerMousedown = function($event) {
+          // check flag
+          if ($event.button !== 0 || scope.useDefault === true) return;
+
+          // prevent built-in menu from opening
+          $event.preventDefault();
+        };
+
+
+        /**
          * Choose option the user selected.
          * @param {Object} option - The option selected.
          */
-        scope.chooseOption = function(option) {
+        scope.chooseOption = function($event, option) {
+          // prevent bubbling
+          $event.stopImmediatePropagation();
+
           scope.ngModel = option.value;
           scope.isOpen = false;
         };
@@ -219,6 +213,14 @@ angular.module(moduleName, [])
         // function to close menu on window resize and document click
         function closeMenuFn() {
           scope.isOpen = false;
+
+          // disable scroll lock
+          util.disableScrollLock(true);
+
+          // remove event handlers
+          jqLite.off(document, 'click', closeMenuFn);
+          jqLite.off(window, 'resize', closeMenuFn);
+
           scope.$digest();
         }
 
@@ -277,6 +279,11 @@ angular.module(moduleName, [])
             jqLite.off(document, 'click', closeMenuFn);
             jqLite.off(window, 'resize', closeMenuFn);
           }
+        });
+
+        scope.$watch('ngDisabled', function(newVal) {
+          if (newVal === true) wrapperEl.prop('tabIndex', '-1');
+          else if (!scope.useDefault) wrapperEl.prop('tabIndex', '0');
         });
       }
     }
