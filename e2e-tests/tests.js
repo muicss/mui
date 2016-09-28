@@ -22765,7 +22765,7 @@ function jqLiteOne(element, events, callback, useCapture) {
       if (callback) callback.apply(this, arguments);
 
       // remove wrapper
-      jqLiteOff(element, event, onFn);
+      jqLiteOff(element, event, onFn, useCapture);
     }, useCapture);
   });
 }
@@ -24840,8 +24840,8 @@ var Select = function (_React$Component) {
   }, {
     key: 'onOuterClick',
     value: function onOuterClick(ev) {
-      // only left clicks
-      if (ev.button !== 0) return;
+      // only left clicks, return if <select> is disabled
+      if (ev.button !== 0 || this.refs.selectEl.disabled) return;
 
       // execute callback
       var fn = this.props.onClick;
@@ -25879,6 +25879,23 @@ describe('js/lib/jqLite.js', function () {
       el.dispatchEvent(event('click'));
       assert.equal(trigger1, false);
       assert.equal(trigger2, false);
+    });
+
+    it('should only trigger once', function () {
+      var t = 0,
+          fn = function fn() {
+        t += 1;
+      };
+
+      jqLite.one(el, 'click', fn);
+
+      // trigger once
+      el.dispatchEvent(event('click'));
+      assert.equal(t, 1);
+
+      // trigger again
+      el.dispatchEvent(event('click'));
+      assert.equal(t, 1);
     });
 
     it('should only trigger once', function () {
@@ -27758,8 +27775,7 @@ describe('react/select', function () {
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { onFocus: onFocus }));
 
     // trigger 'focus' on wrapper <div> element
-    //ReactUtils.Simulate.focus(instance.refs.wrapperEl);
-    instance.refs.wrapperEl.focus();
+    _reactAddonsTestUtils2.default.Simulate.focus(instance.refs.wrapperEl);
   });
 
   it('handles keydown on inner <select> properly', function (done) {

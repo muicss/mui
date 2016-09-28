@@ -177,7 +177,7 @@ function jqLiteOne(element, events, callback, useCapture) {
       if (callback) callback.apply(this, arguments);
 
       // remove wrapper
-      jqLiteOff(element, event, onFn);
+      jqLiteOff(element, event, onFn, useCapture);
     }, useCapture);
   });
 }
