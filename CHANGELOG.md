@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.9.0-rc1 - September 27, 2016
+
+* Refactored CSS/JS, React, Angular Select components
+* Using more robust, wrapper-based method for wrapping built-in `<select>` elements
+* Fixed bug in jqLite.one() method preventing detaching method with useCapture
+* Added minified files to packages/cdn/extra
+
 ## 0.8.1 - September 20, 2016
 
 * Added support for disabled options to MUI CSS/JS Select component

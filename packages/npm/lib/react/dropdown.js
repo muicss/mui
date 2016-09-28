@@ -87,8 +87,8 @@ var Dropdown = function (_React$Component) {
         this.toggle();
 
         // execute <Dropdown> onClick method
-        var onClickFn = this.props.onClick;
-        onClickFn && onClickFn(ev);
+        var fn = this.props.onClick;
+        fn && fn(ev);
       }
     }
   }, {

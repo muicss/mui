@@ -445,9 +445,13 @@ muicss
 │   │   └── mui-email-styletag-rtl.css
 │   ├── extra
 │   │   ├── mui-angular-combined.js
+│   │   ├── mui-angular-combined.min.js
 │   │   ├── mui-colors.css
+│   │   ├── mui-colors.min.css
 │   │   ├── mui-combined.js
-│   │   └── mui-react-combined.js
+│   │   ├── mui-combined.min.js
+│   │   ├── mui-react-combined.js
+│   │   └── mui-react-combined.min.js
 │   ├── js
 │   │   ├── mui.js
 │   │   └── mui.min.js

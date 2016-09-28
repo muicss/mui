@@ -75,7 +75,7 @@ var Input = function (_React$Component) {
 
       // execute callback
       var fn = this.props.onChange;
-      if (fn) fn(ev);
+      fn && fn(ev);
     }
   }, {
     key: 'onFocus',
@@ -84,7 +84,7 @@ var Input = function (_React$Component) {
 
       // execute callback
       var fn = this.props.onFocus;
-      if (fn) fn(ev);
+      fn && fn(ev);
     }
   }, {
     key: 'triggerFocus',

@@ -289,7 +289,7 @@ function jqLiteOne(element, events, callback, useCapture) {
       if (callback) callback.apply(this, arguments);
 
       // remove wrapper
-      jqLiteOff(element, event, onFn);
+      jqLiteOff(element, event, onFn, useCapture);
     }, useCapture);
   });
 }
@@ -1294,94 +1294,141 @@ function initialize(selectEl) {
  * @class
  */
 function Select(selectEl) {
+  var wrapperEl = selectEl.parentNode;
+
   // instance variables
   this.selectEl = selectEl;
-  this.wrapperEl = selectEl.parentNode;
+  this.wrapperEl = wrapperEl;
   this.useDefault = false;  // currently unused but let's keep just in case
+  this.isOpen = false;
+  this.menu = null;
 
-  // attach event handlers
-  jqLite.on(selectEl, 'mousedown', util.callback(this, 'mousedownHandler'));
-  jqLite.on(selectEl, 'focus', util.callback(this, 'focusHandler'));
-  jqLite.on(selectEl, 'click', util.callback(this, 'clickHandler'));
-  
-  // make wrapper focusable and fix firefox bug
-  this.wrapperEl.tabIndex = -1;
-  var callbackFn = util.callback(this, 'wrapperFocusHandler');
-  jqLite.on(this.wrapperEl, 'focus', callbackFn);
+  // NOTE: To get around cross-browser issues with <select> behavior we will
+  //       defer focus to the parent element and handle events there
+
+  // make wrapper tab focusable, remove tab focus from <select>
+  if (this.useDefault === false) {
+    wrapperEl.tabIndex = 0;
+    selectEl.tabIndex = -1;
+  }
+
+  var cb = util.callback;
+
+  // prevent built-in menu from opening on <select>
+  jqLite.on(selectEl, 'mousedown', cb(this, 'onInnerMouseDown'));
+
+  // attach event listeners for custom menu
+  jqLite.on(wrapperEl, 'click', cb(this, 'onWrapperClick'));
+  jqLite.on(wrapperEl, 'blur focus', cb(this, 'onWrapperBlurOrFocus'));
+  jqLite.on(wrapperEl, 'keydown', cb(this, 'onWrapperKeyDown'));
+
+  // attach event listener for tab keypress
+  this.onDocKeydownCB = cb(this, 'onDocKeydown');
+  jqLite.on(document, 'keydown', this.onDocKeydownCB);
 }
+
+
+/**
+ * Dispatch focus and blur events on inner <select> element.
+ * @param {Event} ev - The DOM event
+ */
+Select.prototype.onWrapperBlurOrFocus = function(ev) {
+  util.dispatchEvent(this.selectEl, ev.type, false, false);
+}
+
 
 
 /**
  * Disable default dropdown on mousedown.
  * @param {Event} ev - The DOM event
  */
-Select.prototype.mousedownHandler = function(ev) {
-  if (ev.button !== 0 || this.useDefault === true) return;
+Select.prototype.onInnerMouseDown = function(ev) {
+  // only left clicks
+  if (ev.button !== 0 || this.useDefault) return;
+
+  // prevent built-in menu from opening
   ev.preventDefault();
 }
 
 
 /**
- * Handle focus event on select element.
- * @param {Event} ev - The DOM event
- */
-Select.prototype.focusHandler = function(ev) {
-  // check flag
-  if (this.useDefault === true) return;
-
-  var selectEl = this.selectEl,
-      wrapperEl = this.wrapperEl,
-      tabIndex = selectEl.tabIndex,
-      keydownFn = util.callback(this, 'keydownHandler');
-
-  // attach keydown handler
-  jqLite.on(doc, 'keydown', keydownFn);
-
-  // disable tabfocus once
-  selectEl.tabIndex = -1;
-  jqLite.one(wrapperEl, 'blur', function() {
-    selectEl.tabIndex = tabIndex;
-    jqLite.off(doc, 'keydown', keydownFn);
-  });
-  
-  // defer focus to parent
-  wrapperEl.focus();
-}
-
-
-/**
- * Handle keydown events on doc
+ * Handle keydown events when wrapper is focused
  **/
-Select.prototype.keydownHandler = function(ev) {
+Select.prototype.onWrapperKeyDown = function(ev) {
+  // check flag
+  if (this.useDefault || ev.defaultPrevented) return;
+
   var keyCode = ev.keyCode;
 
-  // spacebar, down, up
-  if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
-    // prevent win scroll
-    ev.preventDefault();
-    
-    if (this.selectEl.disabled !== true) this.renderMenu();
+  if (this.isOpen === false) {
+    // spacebar, down, up
+    if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
+      ev.preventDefault();
+
+      // open custom menu
+      this.renderMenu();
+    }
+
+  } else {
+    var menu = this.menu;
+
+    // tab
+    if (keyCode === 9) return menu.destroy();
+  
+    // escape | up | down | enter
+    if (keyCode === 27 || keyCode === 40 || keyCode === 38 || keyCode === 13) {
+      ev.preventDefault();
+    }
+
+    if (keyCode === 27) {
+      menu.destroy();
+    } else if (keyCode === 40) {
+      menu.increment();
+    } else if (keyCode === 38) {
+      menu.decrement();
+    } else if (keyCode === 13) {
+      menu.selectCurrent();
+      menu.destroy();
+    }
   }
 }
 
 
 /**
- * Handle focus event on wrapper element.
+ * Handle click events on wrapper element.
+ * @param {Event} ev - The DOM event
  */
-Select.prototype.wrapperFocusHandler = function() {
-  // firefox bugfix
-  if (this.selectEl.disabled) return this.wrapperEl.blur();
+Select.prototype.onWrapperClick = function(ev) {
+  // only left clicks, check default and disabled flags
+  if (ev.button !== 0 || this.useDefault) return;
+
+  // focus wrapper
+  this.wrapperEl.focus();
+
+  // open menu
+  this.renderMenu();
 }
 
 
 /**
- * Handle click events on select element.
+ * Handle <tab> key press
  * @param {Event} ev - The DOM event
  */
-Select.prototype.clickHandler = function(ev) {
-  // only left clicks
-  if (ev.button !== 0) return;
-  this.renderMenu();
+Select.prototype.onDocKeydown = function(ev) {
+  if (ev.keyCode === 9) {
+    // remove listener if element has been removed
+    if (!this.wrapperEl.parentNode) {
+      jqLite.off(document, 'keydown', this.onDocKeydownCB);
+      return;
+    }
+
+    // update tabIndex based on <select> disabled
+    if (this.selectEl.disabled) {
+      this.wrapperEl.tabIndex = -1;
+    } else if (this.useDefault === false) {
+      this.wrapperEl.tabIndex = 0;
+    }
+  }
 }
 
 
@@ -1389,10 +1436,19 @@ Select.prototype.clickHandler = function(ev) {
  * Render options dropdown.
  */
 Select.prototype.renderMenu = function() {
-  // check and reset flag
-  if (this.useDefault === true) return this.useDefault = false;
+  // check flag
+  if (this.isOpen) return;
 
-  new Menu(this.wrapperEl, this.selectEl);
+  // render custom menu and reset flag
+  var self = this;
+  this.menu = new Menu(this.wrapperEl, this.selectEl, function() {
+    self.isOpen = false;
+    self.menu = null;
+    self.wrapperEl.focus();
+  });
+
+  // set flag
+  this.isOpen = true;
 }
 
 
@@ -1400,7 +1456,7 @@ Select.prototype.renderMenu = function() {
  * Creates a new Menu
  * @class
  */
-function Menu(wrapperEl, selectEl) {
+function Menu(wrapperEl, selectEl, wrapperCallbackFn) {
   // add scroll lock
   util.enableScrollLock();
 
@@ -1409,30 +1465,25 @@ function Menu(wrapperEl, selectEl) {
   this.origPos = null;
   this.currentPos = null;
   this.selectEl = selectEl;
+  this.wrapperEl = wrapperEl;
   this.menuEl = this._createMenuEl(wrapperEl, selectEl);
-  this.clickCallbackFn = util.callback(this, 'clickHandler');
-  this.keydownCallbackFn = util.callback(this, 'keydownHandler');
-  this.destroyCallbackFn = util.callback(this, 'destroy');
+
+  var cb = util.callback;
+
+  this.onClickCB = cb(this, 'onClick');
+  this.destroyCB = cb(this, 'destroy');
+  this.wrapperCallbackFn = wrapperCallbackFn;
 
   // add to DOM
   wrapperEl.appendChild(this.menuEl);
   jqLite.scrollTop(this.menuEl, this.menuEl._muiScrollTop);
 
-  // blur active element
-  setTimeout(function() {
-    // ie10 bugfix
-    if (doc.activeElement.nodeName.toLowerCase() !== "body") {
-      doc.activeElement.blur();
-    }
-  }, 0);
-
   // attach event handlers
-  jqLite.on(this.menuEl, 'click', this.clickCallbackFn);
-  jqLite.on(doc, 'keydown', this.keydownCallbackFn);
-  jqLite.on(win, 'resize', this.destroyCallbackFn);
+  jqLite.on(this.menuEl, 'click', this.onClickCB);
+  jqLite.on(win, 'resize', this.destroyCB);
 
   // attach event handler after current event loop exits
-  var fn = this.destroyCallbackFn;
+  var fn = this.destroyCB;
   setTimeout(function() {jqLite.on(doc, 'click', fn);}, 0);
 }
 
@@ -1530,38 +1581,10 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
 
 
 /**
- * Handle keydown events on doc element.
- * @param {Event} ev - The DOM event
- */
-Menu.prototype.keydownHandler = function(ev) {
-  var keyCode = ev.keyCode;
-
-  // tab
-  if (keyCode === 9) return this.destroy();
-  
-  // escape | up | down | enter
-  if (keyCode === 27 || keyCode === 40 || keyCode === 38 || keyCode === 13) {
-    ev.preventDefault();
-  }
-
-  if (keyCode === 27) {
-    this.destroy();
-  } else if (keyCode === 40) {
-    this.increment();
-  } else if (keyCode === 38) {
-    this.decrement();
-  } else if (keyCode === 13) {
-    this.selectCurrent();
-    this.destroy();
-  }
-}
-
-
-/**
  * Handle click events on menu element.
  * @param {Event} ev - The DOM event
  */
-Menu.prototype.clickHandler = function(ev) {
+Menu.prototype.onClick = function(ev) {
   // don't allow events to bubble
   ev.stopPropagation();
 
@@ -1618,7 +1641,7 @@ Menu.prototype.selectCurrent = function() {
     this.selectEl.selectedIndex = this.itemArray[this.currentPos]._muiIndex;
 
     // trigger change event
-    util.dispatchEvent(this.selectEl, 'change');
+    util.dispatchEvent(this.selectEl, 'change', false, false);
   }
 }
 
@@ -1627,20 +1650,20 @@ Menu.prototype.selectCurrent = function() {
  * Destroy menu and detach event handlers
  */
 Menu.prototype.destroy = function() {
-  // remove element and focus element
-  var parentNode = this.menuEl.parentNode;
-  if (parentNode) parentNode.removeChild(this.menuEl);
-
-  this.selectEl.focus();
-
   // remove scroll lock
   util.disableScrollLock(true);
 
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);
-  jqLite.off(doc, 'keydown', this.keydownCallbackFn);
-  jqLite.off(doc, 'click', this.destroyCallbackFn);
-  jqLite.off(win, 'resize', this.destroyCallbackFn);
+  jqLite.off(doc, 'click', this.destroyCB);
+  jqLite.off(win, 'resize', this.destroyCB);
+
+  // remove element and execute wrapper callback
+  var parentNode = this.menuEl.parentNode;
+  if (parentNode) {
+    parentNode.removeChild(this.menuEl);
+    this.wrapperCallbackFn();
+  }
 }
 
 

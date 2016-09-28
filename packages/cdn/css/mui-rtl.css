@@ -1648,6 +1648,16 @@ h4, h5, h6 {
   opacity: 1;
 }
 
+.mui-select > select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+.mui-select > select:focus::-ms-value {
+  background: none;
+  color: rgba(0, 0, 0, 0.87);
+}
+
 .mui-select > label {
   position: absolute;
   top: 0;
