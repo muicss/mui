@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css" />
     <style>
-     html, body {height: 100%; padding-top: 50px;}
+     html, body {height: 100%; padding-top: 25px;}
     </style>
     <script>
       window.addEventListener('load', function() {
@@ -14,10 +14,19 @@
         s.src = "../assets/mui/js/mui.js";
         document.head.appendChild(s);
       });
+
+      function toggleAll() {
+        var els = document.getElementsByTagName('select');
+        for (var i=0; i <= els.length - 1; i++) {
+          els[i].disabled = !els[i].disabled;
+        }
+      }
     </script>
   </head>
   <body>
     <div class="mui-container">
+      <div><button class="mui-btn mui-btn--raised" onclick="toggleAll()">Toggle elements</button></div>
+      <br>
       <div class="mui-select">
         <select
           onblur="console.log('[Example 1] onblur')"

@@ -32,6 +32,9 @@ function initialize(selectEl) {
 
   // initialize element
   new Select(selectEl);
+
+  // set flag
+  selectEl._muiJs = true;
 }
 
 
@@ -53,10 +56,8 @@ function Select(selectEl) {
   //       defer focus to the parent element and handle events there
 
   // make wrapper tab focusable, remove tab focus from <select>
-  if (this.useDefault === false) {
-    wrapperEl.tabIndex = 0;
-    selectEl.tabIndex = -1;
-  }
+  if (!selectEl.disabled) wrapperEl.tabIndex = 0;
+  if (!this.useDefault) selectEl.tabIndex = -1;
 
   var cb = util.callback;
 
@@ -68,9 +69,23 @@ function Select(selectEl) {
   jqLite.on(wrapperEl, 'blur focus', cb(this, 'onWrapperBlurOrFocus'));
   jqLite.on(wrapperEl, 'keydown', cb(this, 'onWrapperKeyDown'));
 
-  // attach event listener for tab keypress
-  this.onDocKeydownCB = cb(this, 'onDocKeydown');
-  jqLite.on(document, 'keydown', this.onDocKeydownCB);
+  // add element to detect 'disabled' change (using sister element due to 
+  // IE/Firefox issue
+  var el = document.createElement('div');
+  el.className = 'mui-event-trigger';
+  wrapperEl.appendChild(el);
+
+  // handle 'disabled' add/remove
+  jqLite.on(el, util.animationEvents, function(ev) {
+    // no need to propagate
+    ev.stopPropagation();
+
+    if (ev.animationName === 'mui-node-disabled') {
+      ev.target.parentNode.removeAttribute('tabIndex');
+    } else {
+      ev.target.parentNode.tabIndex = 0;
+    }    
+  });
 }
 
 
@@ -146,35 +161,13 @@ Select.prototype.onWrapperKeyDown = function(ev) {
  */
 Select.prototype.onWrapperClick = function(ev) {
   // only left clicks, check default and disabled flags
-  if (ev.button !== 0 || this.useDefault) return;
+  if (ev.button !== 0 || this.useDefault || this.selectEl.disabled) return;
 
   // focus wrapper
   this.wrapperEl.focus();
 
   // open menu
   this.renderMenu();
-}
-
-
-/**
- * Handle <tab> key press
- * @param {Event} ev - The DOM event
- */
-Select.prototype.onDocKeydown = function(ev) {
-  if (ev.keyCode === 9) {
-    // remove listener if element has been removed
-    if (!this.wrapperEl.parentNode) {
-      jqLite.off(document, 'keydown', this.onDocKeydownCB);
-      return;
-    }
-
-    // update tabIndex based on <select> disabled
-    if (this.selectEl.disabled) {
-      this.wrapperEl.tabIndex = -1;
-    } else if (this.useDefault === false) {
-      this.wrapperEl.tabIndex = 0;
-    }
-  }
 }
 
 
@@ -421,7 +414,7 @@ module.exports = {
     var elList = doc.querySelectorAll(cssSelector);
     for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
 
-    // listen for new elements
+    // listen for mui-node-inserted events
     util.onNodeInserted(function(el) {
       if (el.tagName === 'SELECT' &&
           jqLite.hasClass(el.parentNode, wrapperClass)) {
