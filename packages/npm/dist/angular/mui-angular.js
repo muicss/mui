@@ -509,6 +509,7 @@ module.exports = {
 
 var config = require('../config'),
     jqLite = require('./jqLite'),
+    animationEvents = 'animationstart mozAnimationStart webkitAnimationStart',
     nodeInsertedCallbacks = [],
     scrollLock = 0,
     scrollLockCls = 'mui-body--scroll-lock',
@@ -573,12 +574,9 @@ function onNodeInsertedFn(callbackFn) {
   nodeInsertedCallbacks.push(callbackFn);
 
   // initalize listeners
-  if (nodeInsertedCallbacks._initialized === undefined) {
-    var doc = document,
-        events = 'animationstart mozAnimationStart webkitAnimationStart';
-
-    jqLite.on(doc, events, animationHandlerFn);
-    nodeInsertedCallbacks._initialized = true;
+  if (!this.initialized) {
+    jqLite.on(document, animationEvents, animationHandlerFn);
+    this.initialized = true;
   }
 }
 
@@ -590,10 +588,11 @@ function animationHandlerFn(ev) {
   // check animation name
   if (ev.animationName !== 'mui-node-inserted') return;
 
-  var el = ev.target;
+  var el = ev.target,
+      i = nodeInsertedCallbacks.length;
 
   // iterate through callbacks
-  for (var i = nodeInsertedCallbacks.length - 1; i >= 0; i--) {
+  while (i--) {
     nodeInsertedCallbacks[i](el);
   }
 }
@@ -713,6 +712,9 @@ function requestAnimationFrameFn(callback) {
  * Define the module API
  */
 module.exports = {
+  /** List cross-browser animation events */
+  animationEvents: animationEvents,
+
   /** Create callback closures */
   callback: callbackFn,
 

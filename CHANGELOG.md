@@ -1,6 +1,6 @@
 # MUI Changelog
 
-## 0.9.0-rc1 - September 27, 2016
+## 0.9.0 - October 2, 2016
 
 * Refactored CSS/JS, React, Angular Select components
 * Using more robust, wrapper-based method for wrapping built-in `<select>` elements

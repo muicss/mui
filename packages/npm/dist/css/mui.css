@@ -1677,6 +1677,16 @@ h4, h5, h6 {
   color: #2196F3;
 }
 
+.mui-select > select ~ .mui-event-trigger {
+  animation-duration: 0.0001s;
+  animation-name: mui-node-inserted;
+}
+
+.mui-select > select:disabled ~ .mui-event-trigger {
+  animation-duration: 0.0001s;
+  animation-name: mui-node-disabled;
+}
+
 .mui-select__menu {
   position: absolute;
   z-index: 2;
@@ -2059,6 +2069,15 @@ th {
  * MUI Helpers module
  */
 @keyframes mui-node-inserted {
+  from {
+    opacity: 0.99;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mui-node-disabled {
   from {
     opacity: 0.99;
   }
