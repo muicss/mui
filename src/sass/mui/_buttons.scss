@@ -33,7 +33,6 @@
 // ============================================================================
 
 .mui-btn {
-  @include mui-node-inserted();
   @include mui-text("button");
 
   @include button-variant(

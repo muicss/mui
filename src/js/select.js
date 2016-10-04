@@ -8,6 +8,7 @@
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     formlib = require('./lib/forms'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
@@ -76,7 +77,7 @@ function Select(selectEl) {
   wrapperEl.appendChild(el);
 
   // handle 'disabled' add/remove
-  jqLite.on(el, util.animationEvents, function(ev) {
+  jqLite.on(el, animationHelpers.animationEvents, function(ev) {
     // no need to propagate
     ev.stopPropagation();
 
@@ -411,15 +412,13 @@ module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
     // markup elements available when method is called
-    var elList = doc.querySelectorAll(cssSelector);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = doc.querySelectorAll(cssSelector),
+        i = elList.length;
+    while (i--) initialize(elList[i]);
 
     // listen for mui-node-inserted events
-    util.onNodeInserted(function(el) {
-      if (el.tagName === 'SELECT' &&
-          jqLite.hasClass(el.parentNode, wrapperClass)) {
-        initialize(el);
-      }
+    animationHelpers.onAnimationStart('mui-select-inserted', function(ev) {
+      initialize(ev.target);
     });
   }
 };

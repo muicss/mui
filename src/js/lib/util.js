@@ -8,8 +8,6 @@
 
 var config = require('../config'),
     jqLite = require('./jqLite'),
-    animationEvents = 'animationstart mozAnimationStart webkitAnimationStart',
-    nodeInsertedCallbacks = [],
     scrollLock = 0,
     scrollLockCls = 'mui-body--scroll-lock',
     scrollLockPos,
@@ -69,37 +67,6 @@ function raiseErrorFn(msg, useConsole) {
   } else {
     throw new Error('MUI: ' + msg);
   }
-}
-
-
-/**
- * Register callbacks on muiNodeInserted event
- * @param {function} callbackFn - The callback function.
- */
-function onNodeInsertedFn(callbackFn) {
-  nodeInsertedCallbacks.push(callbackFn);
-
-  // initalize listeners
-  if (!this.initialized) {
-    jqLite.on(document, animationEvents, animationHandlerFn);
-    this.initialized = true;
-  }
-}
-
-
-/**
- * Execute muiNodeInserted callbacks
- * @param {Event} ev - The DOM event.
- */
-function animationHandlerFn(ev) {
-  // check animation name
-  if (ev.animationName !== 'mui-node-inserted') return;
-
-  var el = ev.target,
-      i = nodeInsertedCallbacks.length;
-
-  // iterate through callbacks
-  while (i--) nodeInsertedCallbacks[i](el);
 }
 
 
@@ -224,9 +191,6 @@ function requestAnimationFrameFn(callback) {
  * Define the module API
  */
 module.exports = {
-  /** List cross-browser animation events */
-  animationEvents: animationEvents,
-
   /** Create callback closures */
   callback: callbackFn,
   
@@ -247,9 +211,6 @@ module.exports = {
 
   /** Load CSS text as new stylesheet */
   loadStyle: loadStyleFn,
-
-  /** Register muiNodeInserted handler */
-  onNodeInserted: onNodeInsertedFn,
 
   /** Raise MUI error */
   raiseError: raiseErrorFn,

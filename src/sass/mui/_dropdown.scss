@@ -12,8 +12,6 @@
 
 // Toggle element
 [data-mui-toggle="dropdown"] {
-  @include mui-node-inserted();
-
   outline: 0;
 }
 

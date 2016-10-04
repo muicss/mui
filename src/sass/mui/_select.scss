@@ -23,8 +23,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   }
 
   > select {
-    @include mui-node-inserted();
-
     // Layout
     display: block;
     height: $mui-input-height;
@@ -91,20 +89,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 .mui-select > select:focus ~ label {
   color: $mui-input-border-color-focus;
 }
-
-// 'disabled' animations (uses separate element for Firefox/IE)
-.mui-select > select {
-  // re-paint
-  & ~ .mui-event-trigger {
-    @include mui-node-inserted();
-  }
-  
-  // disable
-  &:disabled ~ .mui-event-trigger {
-    @include mui-node-disabled();
-  }
-}
-
 
 .mui-select__menu {
   @extend .mui--z1;

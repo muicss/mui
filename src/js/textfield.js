@@ -8,6 +8,7 @@
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     cssSelector = '.mui-textfield > input, .mui-textfield > textarea',
     emptyClass = 'mui--is-empty',
     notEmptyClass = 'mui--is-not-empty',
@@ -62,12 +63,13 @@ module.exports = {
     var doc = document;
     
     // markup elements available when method is called
-    var elList = doc.querySelectorAll(cssSelector);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = doc.querySelectorAll(cssSelector),
+        i = elList.length;
+    while (i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onNodeInserted(function(el) {
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') initialize(el);
+    animationHelpers.onAnimationStart('mui-textfield-inserted', function(ev) {
+      initialize(ev.target);
     });
 
     // add transition css for floating labels
@@ -85,7 +87,7 @@ module.exports = {
 
     // pointer-events shim for floating labels
     if (util.supportsPointerEvents() === false) {
-      jqLite.on(document, 'click', function(ev) {
+      jqLite.on(doc, 'click', function(ev) {
         var targetEl = ev.target;
 
         if (targetEl.tagName === 'LABEL' &&
