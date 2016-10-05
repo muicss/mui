@@ -50,6 +50,21 @@ describe('react/input', function() {
   });
 
 
+  it('renders component with integer defaultValue', function() {
+    let elem = <Input defaultValue={0}></Input>;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let inputEl = ReactUtils
+      .findRenderedDOMComponentWithTag(instance, 'input');
+
+    // check input element value
+    assert.equal(inputEl.value, 0);
+
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+  });
+
+
   it('renders component with defaultValue received by update', function() {
     const ParentClass = React.createClass({
       getInitialState() {

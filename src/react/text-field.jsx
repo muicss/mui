@@ -25,9 +25,11 @@ class Input extends React.Component {
     let value = props.value;
     let innerValue = value || props.defaultValue;
 
+    if (innerValue === undefined) innerValue = '';
+
     this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue)
+      isDirty: Boolean(innerValue.toString())
     };
 
     // warn if value defined but onChange is not
@@ -86,7 +88,7 @@ class Input extends React.Component {
 
   render() {
     let cls = {},
-        isNotEmpty = Boolean(this.state.innerValue),
+        isNotEmpty = Boolean(this.state.innerValue.toString()),
         inputEl;
 
     const { hint, invalid, rows, type, ...reactProps } = this.props;
