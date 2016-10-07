@@ -22982,12 +22982,16 @@ module.exports = {
 
 var config = require('../config'),
     jqLite = require('./jqLite'),
-    animationEvents = 'animationstart mozAnimationStart webkitAnimationStart',
-    nodeInsertedCallbacks = [],
     scrollLock = 0,
-    scrollLockCls = 'mui-body--scroll-lock',
-    scrollLockPos,
+    scrollLockCls = 'mui-scroll-lock',
+    scrollStyleEl,
+    scrollEventHandler,
     _supportsPointerEvents;
+
+scrollEventHandler = function scrollEventHandler(ev) {
+  // stop propagation on window scroll events
+  if (!ev.target.tagName) ev.stopImmediatePropagation();
+};
 
 /**
  * Logging function
@@ -23036,37 +23040,6 @@ function raiseErrorFn(msg, useConsole) {
     if (typeof console !== 'undefined') console.error('MUI Warning: ' + msg);
   } else {
     throw new Error('MUI: ' + msg);
-  }
-}
-
-/**
- * Register callbacks on muiNodeInserted event
- * @param {function} callbackFn - The callback function.
- */
-function onNodeInsertedFn(callbackFn) {
-  nodeInsertedCallbacks.push(callbackFn);
-
-  // initalize listeners
-  if (!this.initialized) {
-    jqLite.on(document, animationEvents, animationHandlerFn);
-    this.initialized = true;
-  }
-}
-
-/**
- * Execute muiNodeInserted callbacks
- * @param {Event} ev - The DOM event.
- */
-function animationHandlerFn(ev) {
-  // check animation name
-  if (ev.animationName !== 'mui-node-inserted') return;
-
-  var el = ev.target,
-      i = nodeInsertedCallbacks.length;
-
-  // iterate through callbacks
-  while (i--) {
-    nodeInsertedCallbacks[i](el);
   }
 }
 
@@ -23142,12 +23115,35 @@ function enableScrollLockFn() {
 
   // add lock
   if (scrollLock === 1) {
-    var win = window,
-        doc = document;
+    var htmlEl = document.documentElement,
+        top = jqLite.scrollTop(window),
+        left = jqLite.scrollLeft(window),
+        cssProps,
+        cssStr;
 
-    scrollLockPos = { left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win) };
-    jqLite.addClass(doc.body, scrollLockCls);
-    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    // define scroll lock class dynamically
+    cssProps = ['position:fixed', 'top:' + -top + 'px', 'right:0', 'bottom:0', 'left:' + -left + 'px'];
+
+    // scrollbar-y
+    if (htmlEl.scrollHeight > htmlEl.clientHeight) {
+      cssProps.push('overflow-y:scroll');
+    }
+
+    // scrollbar-x
+    if (htmlEl.scrollWidth > htmlEl.clientWidth) {
+      cssProps.push('overflow-x:scroll');
+    }
+
+    // define css class dynamically
+    cssStr = '.' + scrollLockCls + '{';
+    cssStr += cssProps.join(' !important;') + ' !important;}';
+    scrollStyleEl = loadStyleFn(cssStr);
+
+    // cancel 'scroll' event listener callbacks
+    jqLite.on(window, 'scroll', scrollEventHandler, true);
+
+    // add scroll lock
+    jqLite.addClass(htmlEl, scrollLockCls);
   }
 }
 
@@ -23164,11 +23160,19 @@ function disableScrollLockFn(resetPos) {
 
   // remove lock 
   if (scrollLock === 0) {
-    var win = window,
-        doc = document;
+    var htmlEl = document.documentElement,
+        top = parseInt(jqLite.css(htmlEl, 'top')),
+        left = parseInt(jqLite.css(htmlEl, 'left'));
 
-    jqLite.removeClass(doc.body, scrollLockCls);
-    if (resetPos) win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    // remove scroll lock and delete style element
+    jqLite.removeClass(htmlEl, scrollLockCls);
+    scrollStyleEl.parentNode.removeChild(scrollStyleEl);
+
+    // restore scroll position
+    window.scrollTo(-left, -top);
+
+    // restore scroll event listeners
+    jqLite.off(window, 'scroll', scrollEventHandler, true);
   }
 }
 
@@ -23185,9 +23189,6 @@ function requestAnimationFrameFn(callback) {
  * Define the module API
  */
 module.exports = {
-  /** List cross-browser animation events */
-  animationEvents: animationEvents,
-
   /** Create callback closures */
   callback: callbackFn,
 
@@ -23208,9 +23209,6 @@ module.exports = {
 
   /** Load CSS text as new stylesheet */
   loadStyle: loadStyleFn,
-
-  /** Register muiNodeInserted handler */
-  onNodeInserted: onNodeInsertedFn,
 
   /** Raise MUI error */
   raiseError: raiseErrorFn,
@@ -25412,9 +25410,11 @@ var Input = function (_React$Component) {
     var value = props.value;
     var innerValue = value || props.defaultValue;
 
+    if (innerValue === undefined) innerValue = '';
+
     _this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue)
+      isDirty: Boolean(innerValue.toString())
     };
 
     // warn if value defined but onChange is not
@@ -25469,7 +25469,7 @@ var Input = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = {},
-          isNotEmpty = Boolean(this.state.innerValue),
+          isNotEmpty = Boolean(this.state.innerValue.toString()),
           inputEl = void 0;
 
       var _props = this.props;
@@ -25896,13 +25896,13 @@ describe('js/lib/jqLite.js', function () {
       assert.equal(t, 1);
     });
 
-    it('should only trigger once', function () {
+    it('should only trigger once with useCapture', function () {
       var t = 0,
           fn = function fn() {
         t += 1;
       };
 
-      jqLite.one(el, 'click', fn);
+      jqLite.one(el, 'click', fn, true);
 
       // trigger once
       el.dispatchEvent(event('click'));
@@ -27088,6 +27088,19 @@ describe('react/input', function () {
 
     // check input element value
     _assert2.default.equal(inputEl.value, 'my input');
+
+    // check empty/not-empty classes
+    _assert2.default.equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
+  });
+
+  it('renders component with integer defaultValue', function () {
+    var elem = _react2.default.createElement(_input2.default, { defaultValue: 0 });
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(elem);
+    var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
+
+    // check input element value
+    _assert2.default.equal(inputEl.value, 0);
 
     // check empty/not-empty classes
     _assert2.default.equal(/mui--is-empty/.test(inputEl.className), false);

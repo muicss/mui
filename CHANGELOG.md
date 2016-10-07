@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.9.1 - October 6, 2016
+
+* Moved node-inserted CSS classes to JavaScript library
+* Fixed issue with integer 0 values in React Input/Textarea components
+* Added support for visible scroll bars to overlay method
+
 ## 0.9.0 - October 2, 2016
 
 * Refactored CSS/JS, React, Angular Select components

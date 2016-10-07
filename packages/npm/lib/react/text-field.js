@@ -39,9 +39,11 @@ var Input = function (_React$Component) {
     var value = props.value;
     var innerValue = value || props.defaultValue;
 
+    if (innerValue === undefined) innerValue = '';
+
     _this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue)
+      isDirty: Boolean(innerValue.toString())
     };
 
     // warn if value defined but onChange is not
@@ -96,7 +98,7 @@ var Input = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = {},
-          isNotEmpty = Boolean(this.state.innerValue),
+          isNotEmpty = Boolean(this.state.innerValue.toString()),
           inputEl = void 0;
 
       var _props = this.props;

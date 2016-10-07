@@ -69,7 +69,3 @@
     display: block;
   }
 }
-
-[data-mui-toggle="tab"] {
-  @include mui-node-inserted();
-}

@@ -36,7 +36,7 @@
   });
 })(window);
 
-},{"src/js/dropdown":6,"src/js/lib/jqLite":7,"src/js/overlay":8,"src/js/ripple":9,"src/js/select":10,"src/js/tabs":11,"src/js/textfield":12}],2:[function(require,module,exports){
+},{"src/js/dropdown":7,"src/js/lib/jqLite":8,"src/js/overlay":9,"src/js/ripple":10,"src/js/select":11,"src/js/tabs":12,"src/js/textfield":13}],2:[function(require,module,exports){
 /**
  * MUI config module
  * @module config
@@ -49,6 +49,98 @@ module.exports = {
 };
 
 },{}],3:[function(require,module,exports){
+/**
+ * MUI CSS/JS animation helper module
+ * @module lib/animationHelpers
+ */
+
+'use strict';
+
+var jqLite = require('./jqLite'),
+    util = require('./util'),
+    animationEvents = 'animationstart mozAnimationStart webkitAnimationStart',
+    animationCallbacks = {};
+
+
+/**
+ * Register callbacks
+ * @param {String} name - The animation name
+ * @param {Function} callbackFn = The callback function
+ */
+function onAnimationStartFn(name, callbackFn) {
+  // get/set callback function
+  var callbacks = animationCallbacks[name];
+  if (!callbacks) callbacks = animationCallbacks[name] = [];
+  callbacks.push(callbackFn);
+
+  // initialize listeners
+  if (!this.init) {
+    // add css classes
+    loadCss();
+
+    // add listener
+    jqLite.on(document, animationEvents, animationStartHandler);
+
+    // set flag
+    this.init = true;
+  }
+}
+
+
+/**
+ * Animation start handler
+ * @param {Event} ev - The DOM event
+ */
+function animationStartHandler(ev) {
+  var callbacks = animationCallbacks[ev.animationName] || [],
+      i = callbacks.length;
+
+  // iterate through callbacks
+  while (i--) callbacks[i](ev);
+}
+
+
+/**
+ * Load animation css
+ */
+function loadCss() {
+  // define rules
+  var rules = [
+    ['.mui-btn', 'mui-btn-inserted'],
+    ['[data-mui-toggle="dropdown"]', 'mui-dropdown-inserted'],
+    ['[data-mui-toggle="tab"]', 'mui-tab-inserted'],
+    ['.mui-textfield > input', 'mui-textfield-inserted'],
+    ['.mui-textfield > textarea', 'mui-textfield-inserted'],
+    ['.mui-select > select', 'mui-select-inserted'],
+    ['.mui-select > select ~ .mui-event-trigger', 'mui-node-inserted'],
+    ['.mui-select > select:disabled ~ .mui-event-trigger', 'mui-node-disabled']
+  ];
+
+  // build css
+  var css = '',
+      rule;
+
+  for (var i=0, m=rules.length; i < m; i++) {
+    rule = rules[i];
+    css += '@keyframes ' + rule[1] + '{from{opacity:0.99;}to{opacity:1;}}';
+    css += rule[0];
+    css += '{animation-duration:0.0001s;animation-name:' + rule[1] + ';}';
+  }
+  
+  // add CSS to DOM
+  util.loadStyle(css);
+}
+
+
+/**
+ * Define module API
+ */
+module.exports = {
+  animationEvents: animationEvents,
+  onAnimationStart: onAnimationStartFn
+}
+
+},{"./jqLite":5,"./util":6}],4:[function(require,module,exports){
 /**
  * MUI CSS/JS form helpers module
  * @module lib/forms.py
@@ -109,7 +201,7 @@ module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -509,7 +601,7 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -520,12 +612,17 @@ module.exports = {
 
 var config = require('../config'),
     jqLite = require('./jqLite'),
-    animationEvents = 'animationstart mozAnimationStart webkitAnimationStart',
-    nodeInsertedCallbacks = [],
     scrollLock = 0,
-    scrollLockCls = 'mui-body--scroll-lock',
-    scrollLockPos,
+    scrollLockCls = 'mui-scroll-lock',
+    scrollStyleEl,
+    scrollEventHandler,
     _supportsPointerEvents;
+
+
+scrollEventHandler = function(ev) {
+  // stop propagation on window scroll events
+  if (!ev.target.tagName) ev.stopImmediatePropagation();
+}
 
 
 /**
@@ -533,7 +630,7 @@ var config = require('../config'),
  */
 function logFn() {
   var win = window;
-
+  
   if (config.debug && typeof win.console !== "undefined") {
     try {
       win.console.log.apply(win.console, arguments);
@@ -552,7 +649,7 @@ function logFn() {
 function loadStyleFn(cssText) {
   var doc = document,
       head;
-
+  
   // copied from jQuery 
   head = doc.head ||
     doc.getElementsByTagName('head')[0] ||
@@ -560,13 +657,13 @@ function loadStyleFn(cssText) {
   
   var e = doc.createElement('style');
   e.type = 'text/css';
-    
+  
   if (e.styleSheet) e.styleSheet.cssText = cssText;
   else e.appendChild(doc.createTextNode(cssText));
   
   // add to document
   head.insertBefore(e, head.firstChild);
-
+  
   return e;
 }
 
@@ -581,37 +678,6 @@ function raiseErrorFn(msg, useConsole) {
   } else {
     throw new Error('MUI: ' + msg);
   }
-}
-
-
-/**
- * Register callbacks on muiNodeInserted event
- * @param {function} callbackFn - The callback function.
- */
-function onNodeInsertedFn(callbackFn) {
-  nodeInsertedCallbacks.push(callbackFn);
-
-  // initalize listeners
-  if (!this.initialized) {
-    jqLite.on(document, animationEvents, animationHandlerFn);
-    this.initialized = true;
-  }
-}
-
-
-/**
- * Execute muiNodeInserted callbacks
- * @param {Event} ev - The DOM event.
- */
-function animationHandlerFn(ev) {
-  // check animation name
-  if (ev.animationName !== 'mui-node-inserted') return;
-
-  var el = ev.target,
-      i = nodeInsertedCallbacks.length;
-
-  // iterate through callbacks
-  while (i--) nodeInsertedCallbacks[i](el);
 }
 
 
@@ -665,17 +731,17 @@ function callbackFn(instance, funcName) {
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-      cancelable = (cancelable !== undefined) ? cancelable : true,
-      k;
-  
-  ev.initEvent(eventType, bubbles, cancelable);
+       cancelable = (cancelable !== undefined) ? cancelable : true,
+       k;
 
+  ev.initEvent(eventType, bubbles, cancelable);
+  
   // add data to event object
   if (data) for (k in data) ev[k] = data[k];
-
+  
   // dispatch
   if (element) element.dispatchEvent(ev);
-
+  
   return ev;
 }
 
@@ -686,15 +752,44 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
 function enableScrollLockFn() {
   // increment counter
   scrollLock += 1;
-
+  
   // add lock
   if (scrollLock === 1) {
-    var win = window,
-        doc = document;
+    var htmlEl = document.documentElement,
+        top = jqLite.scrollTop(window),
+        left = jqLite.scrollLeft(window),
+        cssProps,
+        cssStr;
 
-    scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
-    jqLite.addClass(doc.body, scrollLockCls);
-    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    // define scroll lock class dynamically
+    cssProps = [
+      'position:fixed',
+      'top:' + -top + 'px',
+      'right:0',
+      'bottom:0',
+      'left:' + -left + 'px'
+    ];
+
+    // scrollbar-y
+    if (htmlEl.scrollHeight > htmlEl.clientHeight) {
+      cssProps.push('overflow-y:scroll');
+    }
+    
+    // scrollbar-x
+    if (htmlEl.scrollWidth > htmlEl.clientWidth) {
+      cssProps.push('overflow-x:scroll');
+    }
+
+    // define css class dynamically
+    cssStr = '.' + scrollLockCls + '{';
+    cssStr += cssProps.join(' !important;') + ' !important;}';
+    scrollStyleEl = loadStyleFn(cssStr);
+
+    // cancel 'scroll' event listener callbacks
+    jqLite.on(window, 'scroll', scrollEventHandler, true);
+
+    // add scroll lock
+    jqLite.addClass(htmlEl, scrollLockCls);
   }
 }
 
@@ -712,14 +807,21 @@ function disableScrollLockFn(resetPos) {
 
   // remove lock 
   if (scrollLock === 0) {
-    var win = window,
-        doc = document;
+    var htmlEl = document.documentElement,
+        top = parseInt(jqLite.css(htmlEl, 'top')),
+        left = parseInt(jqLite.css(htmlEl, 'left'));
 
-    jqLite.removeClass(doc.body, scrollLockCls);
-    if (resetPos) win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    // remove scroll lock and delete style element
+    jqLite.removeClass(htmlEl, scrollLockCls);
+    scrollStyleEl.parentNode.removeChild(scrollStyleEl);
+
+    // restore scroll position
+    window.scrollTo(-left, -top);      
+
+    // restore scroll event listeners
+    jqLite.off(window, 'scroll', scrollEventHandler, true);
   }
 }
-
 
 /**
  * requestAnimationFrame polyfilled
@@ -736,9 +838,6 @@ function requestAnimationFrameFn(callback) {
  * Define the module API
  */
 module.exports = {
-  /** List cross-browser animation events */
-  animationEvents: animationEvents,
-
   /** Create callback closures */
   callback: callbackFn,
   
@@ -760,9 +859,6 @@ module.exports = {
   /** Load CSS text as new stylesheet */
   loadStyle: loadStyleFn,
 
-  /** Register muiNodeInserted handler */
-  onNodeInserted: onNodeInsertedFn,
-
   /** Raise MUI error */
   raiseError: raiseErrorFn,
 
@@ -773,7 +869,7 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config":2,"./jqLite":4}],6:[function(require,module,exports){
+},{"../config":2,"./jqLite":5}],7:[function(require,module,exports){
 /**
  * MUI CSS/JS dropdown module
  * @module dropdowns
@@ -784,6 +880,7 @@ module.exports = {
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[data-mui-toggle="dropdown"]',
     openClass = 'mui--is-open',
@@ -873,22 +970,21 @@ function toggleDropdown(toggleEl) {
 module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
-    var doc = document;
-
     // markup elements available when method is called
-    var elList = doc.querySelectorAll(attrSelector);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = document.querySelectorAll(attrSelector),
+        i = elList.length;
+    while (i--) {initialize(elList[i]);}
 
     // listen for new elements
-    util.onNodeInserted(function(el) {
-      if (el.getAttribute(attrKey) === 'dropdown') initialize(el);
+    animationHelpers.onAnimationStart('mui-dropdown-inserted', function(ev) {
+      initialize(ev.target);
     });
   }
 };
 
-},{"./lib/jqLite":4,"./lib/util":5}],7:[function(require,module,exports){
-module.exports=require(4)
-},{}],8:[function(require,module,exports){
+},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}],8:[function(require,module,exports){
+module.exports=require(5)
+},{}],9:[function(require,module,exports){
 /**
  * MUI CSS/JS overlay module
  * @module overlay
@@ -1094,7 +1190,7 @@ function onClick(ev) {
 /** Define module API */
 module.exports = overlayFn;
 
-},{"./lib/jqLite":4,"./lib/util":5}],9:[function(require,module,exports){
+},{"./lib/jqLite":5,"./lib/util":6}],10:[function(require,module,exports){
 /**
  * MUI CSS/JS ripple module
  * @module ripple
@@ -1105,6 +1201,7 @@ module.exports = overlayFn;
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     btnClass = 'mui-btn',
     btnFABClass = 'mui-btn--fab',
     rippleClass = 'mui-ripple-effect',
@@ -1238,20 +1335,19 @@ function createRippleEl(ev, buttonEl) {
 module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
-    var doc = document;
-
     // markup elements available when method is called
-    var elList = doc.getElementsByClassName(btnClass);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = document.getElementsByClassName(btnClass),
+        i = elList.length;
+    while (i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onNodeInserted(function(el) {
-      if (jqLite.hasClass(el, btnClass)) initialize(el);
+    animationHelpers.onAnimationStart('mui-btn-inserted', function(ev) {
+      initialize(ev.target);
     });
   }
 };
 
-},{"./lib/jqLite":4,"./lib/util":5}],10:[function(require,module,exports){
+},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}],11:[function(require,module,exports){
 /**
  * MUI CSS/JS select module
  * @module forms/select
@@ -1262,6 +1358,7 @@ module.exports = {
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     formlib = require('./lib/forms'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
@@ -1330,7 +1427,7 @@ function Select(selectEl) {
   wrapperEl.appendChild(el);
 
   // handle 'disabled' add/remove
-  jqLite.on(el, util.animationEvents, function(ev) {
+  jqLite.on(el, animationHelpers.animationEvents, function(ev) {
     // no need to propagate
     ev.stopPropagation();
 
@@ -1665,20 +1762,18 @@ module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
     // markup elements available when method is called
-    var elList = doc.querySelectorAll(cssSelector);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = doc.querySelectorAll(cssSelector),
+        i = elList.length;
+    while (i--) initialize(elList[i]);
 
     // listen for mui-node-inserted events
-    util.onNodeInserted(function(el) {
-      if (el.tagName === 'SELECT' &&
-          jqLite.hasClass(el.parentNode, wrapperClass)) {
-        initialize(el);
-      }
+    animationHelpers.onAnimationStart('mui-select-inserted', function(ev) {
+      initialize(ev.target);
     });
   }
 };
 
-},{"./lib/forms":3,"./lib/jqLite":4,"./lib/util":5}],11:[function(require,module,exports){
+},{"./lib/animationHelpers":3,"./lib/forms":4,"./lib/jqLite":5,"./lib/util":6}],12:[function(require,module,exports){
 /**
  * MUI CSS/JS tabs module
  * @module tabs
@@ -1689,6 +1784,7 @@ module.exports = {
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',
@@ -1815,12 +1911,12 @@ module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
     // markup elements available when method is called
-    var elList = document.querySelectorAll(attrSelector);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = document.querySelectorAll(attrSelector),
+        i = elList.length;
+    while (i--) {initialize(elList[i]);}
     
-    // TODO: listen for new elements
-    util.onNodeInserted(function(el) {
-      if (el.getAttribute(attrKey) === 'tab') initialize(el);
+    animationHelpers.onAnimationStart('mui-tab-inserted', function(ev) {
+      initialize(ev.target);
     });
   },
   
@@ -1839,7 +1935,7 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite":4,"./lib/util":5}],12:[function(require,module,exports){
+},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}],13:[function(require,module,exports){
 /**
  * MUI CSS/JS form-control module
  * @module forms/form-control
@@ -1850,6 +1946,7 @@ module.exports = {
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     cssSelector = '.mui-textfield > input, .mui-textfield > textarea',
     emptyClass = 'mui--is-empty',
     notEmptyClass = 'mui--is-not-empty',
@@ -1904,12 +2001,13 @@ module.exports = {
     var doc = document;
     
     // markup elements available when method is called
-    var elList = doc.querySelectorAll(cssSelector);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = doc.querySelectorAll(cssSelector),
+        i = elList.length;
+    while (i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onNodeInserted(function(el) {
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') initialize(el);
+    animationHelpers.onAnimationStart('mui-textfield-inserted', function(ev) {
+      initialize(ev.target);
     });
 
     // add transition css for floating labels
@@ -1927,7 +2025,7 @@ module.exports = {
 
     // pointer-events shim for floating labels
     if (util.supportsPointerEvents() === false) {
-      jqLite.on(document, 'click', function(ev) {
+      jqLite.on(doc, 'click', function(ev) {
         var targetEl = ev.target;
 
         if (targetEl.tagName === 'LABEL' &&
@@ -1940,4 +2038,4 @@ module.exports = {
   }
 };
 
-},{"./lib/jqLite":4,"./lib/util":5}]},{},[1])
+},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}]},{},[1])

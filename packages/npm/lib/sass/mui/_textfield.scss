@@ -93,8 +93,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
 .mui-textfield > input,
 .mui-textfield > textarea {
-  @include mui-node-inserted();
-
   display: block;
   background-color: $mui-input-bg-color;
   color: $mui-input-font-color;

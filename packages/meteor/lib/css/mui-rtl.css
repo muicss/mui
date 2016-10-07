@@ -579,8 +579,6 @@ h4, h5, h6 {
  * MUI Buttons
  */
 .mui-btn {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
@@ -1015,8 +1013,6 @@ h4, h5, h6 {
 }
 
 [data-mui-toggle="dropdown"] {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
   outline: 0;
 }
 
@@ -1606,8 +1602,6 @@ h4, h5, h6 {
 }
 
 .mui-select > select {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
   display: block;
   height: 32px;
   width: 100%;
@@ -1675,16 +1669,6 @@ h4, h5, h6 {
 .mui-select:focus > label,
 .mui-select > select:focus ~ label {
   color: #2196F3;
-}
-
-.mui-select > select ~ .mui-event-trigger {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
-}
-
-.mui-select > select:disabled ~ .mui-event-trigger {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-disabled;
 }
 
 .mui-select__menu {
@@ -1840,11 +1824,6 @@ th {
   display: block;
 }
 
-[data-mui-toggle="tab"] {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
-}
-
 /**
  * MUI Textfield Component
  */
@@ -1928,8 +1907,6 @@ th {
 
 .mui-textfield > input,
 .mui-textfield > textarea {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
   display: block;
   background-color: transparent;
   color: rgba(0, 0, 0, 0.87);
@@ -2068,24 +2045,6 @@ th {
 /**
  * MUI Helpers module
  */
-@keyframes mui-node-inserted {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes mui-node-disabled {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .mui--no-transition {
   transition: none !important;
 }
@@ -2471,8 +2430,12 @@ th {
   }
 }
 
-body.mui-body--scroll-lock {
-  overflow: hidden !important;
+.mui-scrlock--showbar-y {
+  overflow-y: scroll !important;
+}
+
+.mui-scrlock--showbar-x {
+  overflow-x: scroll !important;
 }
 
 /**
