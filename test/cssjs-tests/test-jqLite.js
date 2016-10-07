@@ -175,11 +175,11 @@ describe('js/lib/jqLite.js', function() {
     });
 
 
-    it('should only trigger once', function() {
+    it('should only trigger once with useCapture', function() {
       var t = 0,
           fn = function() {t += 1;};
-
-      jqLite.one(el, 'click', fn);
+      
+      jqLite.one(el, 'click', fn, true);
 
       // trigger once
       el.dispatchEvent(event('click'));

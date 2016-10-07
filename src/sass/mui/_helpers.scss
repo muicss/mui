@@ -322,9 +322,13 @@
 
 
 // ============================================================================
-// SCROLL BLOCK
+// SCROLL LOCK
 // ============================================================================
 
-body.mui-body--scroll-lock {
-  overflow: hidden !important;
+.mui-scrlock--showbar-y {
+  overflow-y: scroll !important;
+}
+
+.mui-scrlock--showbar-x {
+  overflow-x: scroll !important;
 }

@@ -9,9 +9,16 @@
 var config = require('../config'),
     jqLite = require('./jqLite'),
     scrollLock = 0,
-    scrollLockCls = 'mui-body--scroll-lock',
-    scrollLockPos,
+    scrollLockCls = 'mui-scroll-lock',
+    scrollStyleEl,
+    scrollEventHandler,
     _supportsPointerEvents;
+
+
+scrollEventHandler = function(ev) {
+  // stop propagation on window scroll events
+  if (!ev.target.tagName) ev.stopImmediatePropagation();
+}
 
 
 /**
@@ -19,7 +26,7 @@ var config = require('../config'),
  */
 function logFn() {
   var win = window;
-
+  
   if (config.debug && typeof win.console !== "undefined") {
     try {
       win.console.log.apply(win.console, arguments);
@@ -38,7 +45,7 @@ function logFn() {
 function loadStyleFn(cssText) {
   var doc = document,
       head;
-
+  
   // copied from jQuery 
   head = doc.head ||
     doc.getElementsByTagName('head')[0] ||
@@ -46,13 +53,13 @@ function loadStyleFn(cssText) {
   
   var e = doc.createElement('style');
   e.type = 'text/css';
-    
+  
   if (e.styleSheet) e.styleSheet.cssText = cssText;
   else e.appendChild(doc.createTextNode(cssText));
   
   // add to document
   head.insertBefore(e, head.firstChild);
-
+  
   return e;
 }
 
@@ -120,17 +127,17 @@ function callbackFn(instance, funcName) {
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-      cancelable = (cancelable !== undefined) ? cancelable : true,
-      k;
-  
-  ev.initEvent(eventType, bubbles, cancelable);
+       cancelable = (cancelable !== undefined) ? cancelable : true,
+       k;
 
+  ev.initEvent(eventType, bubbles, cancelable);
+  
   // add data to event object
   if (data) for (k in data) ev[k] = data[k];
-
+  
   // dispatch
   if (element) element.dispatchEvent(ev);
-
+  
   return ev;
 }
 
@@ -141,15 +148,44 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
 function enableScrollLockFn() {
   // increment counter
   scrollLock += 1;
-
+  
   // add lock
   if (scrollLock === 1) {
-    var win = window,
-        doc = document;
+    var htmlEl = document.documentElement,
+        top = jqLite.scrollTop(window),
+        left = jqLite.scrollLeft(window),
+        cssProps,
+        cssStr;
 
-    scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
-    jqLite.addClass(doc.body, scrollLockCls);
-    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    // define scroll lock class dynamically
+    cssProps = [
+      'position:fixed',
+      'top:' + -top + 'px',
+      'right:0',
+      'bottom:0',
+      'left:' + -left + 'px'
+    ];
+
+    // scrollbar-y
+    if (htmlEl.scrollHeight > htmlEl.clientHeight) {
+      cssProps.push('overflow-y:scroll');
+    }
+    
+    // scrollbar-x
+    if (htmlEl.scrollWidth > htmlEl.clientWidth) {
+      cssProps.push('overflow-x:scroll');
+    }
+
+    // define css class dynamically
+    cssStr = '.' + scrollLockCls + '{';
+    cssStr += cssProps.join(' !important;') + ' !important;}';
+    scrollStyleEl = loadStyleFn(cssStr);
+
+    // cancel 'scroll' event listener callbacks
+    jqLite.on(window, 'scroll', scrollEventHandler, true);
+
+    // add scroll lock
+    jqLite.addClass(htmlEl, scrollLockCls);
   }
 }
 
@@ -167,14 +203,21 @@ function disableScrollLockFn(resetPos) {
 
   // remove lock 
   if (scrollLock === 0) {
-    var win = window,
-        doc = document;
+    var htmlEl = document.documentElement,
+        top = parseInt(jqLite.css(htmlEl, 'top')),
+        left = parseInt(jqLite.css(htmlEl, 'left'));
 
-    jqLite.removeClass(doc.body, scrollLockCls);
-    if (resetPos) win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    // remove scroll lock and delete style element
+    jqLite.removeClass(htmlEl, scrollLockCls);
+    scrollStyleEl.parentNode.removeChild(scrollStyleEl);
+
+    // restore scroll position
+    window.scrollTo(-left, -top);      
+
+    // restore scroll event listeners
+    jqLite.off(window, 'scroll', scrollEventHandler, true);
   }
 }
-
 
 /**
  * requestAnimationFrame polyfilled
