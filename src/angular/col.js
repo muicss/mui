@@ -29,10 +29,12 @@ angular.module(moduleName, [])
           'sm': 'mui-col-sm-',
           'md': 'mui-col-md-',
           'lg': 'mui-col-lg-',
+          'xl': 'mui-col-xl-',
           'xs-offset': 'mui-col-xs-offset-',
           'sm-offset': 'mui-col-sm-offset-',
           'md-offset': 'mui-col-md-offset-',
-          'lg-offset': 'mui-col-lg-offset-'
+          'lg-offset': 'mui-col-lg-offset-',
+          'xl-offset': 'mui-col-xl-offset-'
         };
 
         angular.forEach(breakpoints, function(value, key) {
