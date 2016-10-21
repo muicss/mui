@@ -897,7 +897,11 @@ function initialize(toggleEl) {
   else toggleEl._muiDropdown = true;
 
   // use type "button" to prevent form submission by default
-  if (!toggleEl.hasAttribute('type')) toggleEl.type = 'button';
+  var tagName = toggleEl.tagName;
+  if ((tagName === 'INPUT' || tagName === 'BUTTON')
+      && !toggleEl.hasAttribute('type')) {
+    toggleEl.type = 'button';
+  }
 
   // attach click handler
   jqLite.on(toggleEl, 'click', clickHandler);

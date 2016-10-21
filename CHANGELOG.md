@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.3 - October 21, 2016
+
+* Fixed styling issue in CSS/JS Dropdown component when using non-INPUT/BUTTON
+  toggle elements
+
 ## 0.9.2 - October 20, 2016
 
 * Fixed issue with reference to `document` in React Select component causing
