@@ -1589,6 +1589,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       itemPos = 0,
       selectedPos = 0,
       selectedRow = 0,
+      docFrag = document.createDocumentFragment(),  // for speed
       loopEl,
       rowEl,
       optionEls,
@@ -1608,7 +1609,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       rowEl = doc.createElement('div');
       rowEl.textContent = loopEl.label;
       rowEl.className = 'mui-optgroup__label';
-      menuEl.appendChild(rowEl);
+      docFrag.appendChild(rowEl);
 
       inGroup = true;
       optionEls = loopEl.children;
@@ -1648,9 +1649,12 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
         itemPos += 1;
       }
 
-      menuEl.appendChild(rowEl);
+      docFrag.appendChild(rowEl);
     }
   }
+
+  // add rows to menu
+  menuEl.appendChild(docFrag);
 
   // save indices
   this.origPos = selectedPos;

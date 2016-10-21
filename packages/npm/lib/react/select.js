@@ -267,7 +267,7 @@ Select.propTypes = {
 Select.defaultProps = {
   className: '',
   readOnly: false,
-  useDefault: 'ontouchstart' in document.documentElement ? true : false,
+  useDefault: typeof document !== 'undefined' && 'ontouchstart' in document.documentElement ? true : false,
   onChange: null,
   onClick: null,
   onKeyDown: null

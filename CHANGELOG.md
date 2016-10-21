@@ -1,5 +1,14 @@
 # MUI Changelog
 
+## 0.9.2 - October 20, 2016
+
+* Fixed issue with reference to `document` in React Select component causing
+  problems with server-side rendering
+* Added missing `xl` breakpoint to Angular library
+* Introduced use of documentFragment in CSS/JS Select component to improve
+  performance
+* Upgraded Normalize.css to 5.0.0
+
 ## 0.9.1 - October 6, 2016
 
 * Moved node-inserted CSS classes to JavaScript library
