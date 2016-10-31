@@ -63,6 +63,10 @@ function loadCss() {
   var rules = [
     ['.mui-btn', 'mui-btn-inserted'],
     ['[data-mui-toggle="dropdown"]', 'mui-dropdown-inserted'],
+    [
+      '.mui-btn[data-mui-toggle="dropdown"]',
+      'mui-btn-inserted,mui-dropdown-inserted'
+    ],
     ['[data-mui-toggle="tab"]', 'mui-tab-inserted'],
     ['.mui-textfield > input', 'mui-textfield-inserted'],
     ['.mui-textfield > textarea', 'mui-textfield-inserted'],
