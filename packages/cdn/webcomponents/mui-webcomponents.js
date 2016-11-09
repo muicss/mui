@@ -66,7 +66,7 @@ function onAnimationStartFn(name, callbackFn) {
     loadCss();
 
     // add listener
-    jqLite.on(document, animationEvents, animationStartHandler);
+    jqLite.on(document, animationEvents, animationStartHandler, true);
 
     // set flag
     this.init = true;
@@ -82,6 +82,12 @@ function animationStartHandler(ev) {
   var callbacks = animationCallbacks[ev.animationName] || [],
       i = callbacks.length;
 
+  // exit if a callback hasn't been registered
+  if (!i) return;
+  
+  // stop other callbacks from firing
+  ev.stopImmediatePropagation();
+
   // iterate through callbacks
   while (i--) callbacks[i](ev);
 }
@@ -95,6 +101,10 @@ function loadCss() {
   var rules = [
     ['.mui-btn', 'mui-btn-inserted'],
     ['[data-mui-toggle="dropdown"]', 'mui-dropdown-inserted'],
+    [
+      '.mui-btn[data-mui-toggle="dropdown"]',
+      'mui-btn-inserted,mui-dropdown-inserted'
+    ],
     ['[data-mui-toggle="tab"]', 'mui-tab-inserted'],
     ['.mui-textfield > input', 'mui-textfield-inserted'],
     ['.mui-textfield > textarea', 'mui-textfield-inserted'],
@@ -109,7 +119,8 @@ function loadCss() {
 
   for (var i=0, m=rules.length; i < m; i++) {
     rule = rules[i];
-    css += '@keyframes ' + rule[1] + '{from{opacity:0.99;}to{opacity:1;}}';
+    // use an IE-only property to trigger animation cross-browser
+    css += '@keyframes ' + rule[1] + '{from{-ms-zoom:1;}to{-ms-zoom:1;}}';
     css += rule[0];
     css += '{animation-duration:0.0001s;animation-name:' + rule[1] + ';}';
   }

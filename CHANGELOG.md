@@ -1,5 +1,16 @@
 # MUI Changelog
 
+## 0.9.4 - November 9, 2016
+
+* Fixed issue with single tab elements in React Tabs component
+* Improved handling of MUI animationstart callbacks - using useCapture to
+  capture event and calling ev.stopImmediatePropagation() to prevent other
+  listeners from firing
+* Fixed bug preventing ripple effect on dynamically added dropdown button
+  elements in CSS/JS library
+* Removed flicker on animationstart helpers css load
+* upgraded devDependencies
+
 ## 0.9.3 - October 21, 2016
 
 * Fixed styling issue in CSS/JS Dropdown component when using non-INPUT/BUTTON

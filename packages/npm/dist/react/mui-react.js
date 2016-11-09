@@ -3227,9 +3227,10 @@ var Tabs = function (_React$Component) {
       var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
 
 
+      var tabs = Array.isArray(children) ? children : [children];
       var tabEls = [],
           paneEls = [],
-          m = children.length,
+          m = tabs.length,
           selectedIndex = this.state.currentSelectedIndex % m,
           isActive = void 0,
           item = void 0,
@@ -3237,7 +3238,7 @@ var Tabs = function (_React$Component) {
           i = void 0;
 
       for (i = 0; i < m; i++) {
-        item = children[i];
+        item = tabs[i];
 
         // only accept MUITab elements
         if (item.type !== _tab2.default) util.raiseError('Expecting MUITab React Element');
