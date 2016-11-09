@@ -60,10 +60,11 @@ class Tabs extends React.Component {
   render() {
     const { children, initialSelectedIndex, justified,
       ...reactProps } = this.props;
-    
+
+    let tabs = Array.isArray(children) ? children : [children];
     let tabEls = [],
         paneEls = [],
-        m = children.length,
+        m = tabs.length,
         selectedIndex = this.state.currentSelectedIndex % m,
         isActive,
         item,
@@ -71,7 +72,7 @@ class Tabs extends React.Component {
         i;
 
     for (i=0; i < m; i++) {
-      item = children[i];
+      item = tabs[i];
 
       // only accept MUITab elements
       if (item.type !== Tab) util.raiseError('Expecting MUITab React Element');

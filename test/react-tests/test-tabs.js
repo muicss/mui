@@ -6,6 +6,7 @@
 import assert from 'assert';
 import React from 'react';
 import ReactUtils from 'react-addons-test-utils';
+import ReactDOMServer from 'react-dom/server';
 
 import Tab from '../../src/react/tab';
 import Tabs from '../../src/react/tabs';
@@ -31,6 +32,26 @@ describe('react/tabs', function() {
 
     assert.equal(result.props.className, 'additional');
   });
+  it('renders with one Tab as child', function() {
+    let result = ReactDOMServer.renderToStaticMarkup(
+      <Tabs>
+        <Tab>ABC</Tab>
+      </Tabs>
+    );
+    assert.equal((result.match(/ABC/g) || []).length, 1);
+
+  });
+  it('renders with two Tabs as children', function() {
+    let result = ReactDOMServer.renderToStaticMarkup(
+      <Tabs>
+        <Tab>ABC</Tab>
+        <Tab>ABC</Tab>
+      </Tabs>
+    );
+    assert.equal((result.match(/ABC/g) || []).length, 2);
+
+  });
+
 
 
   it('renders properly with additional styles', function() {
