@@ -120,46 +120,32 @@ describe('react/button', function() {
   });
 
 
-  it('renders ripples on click', function() {
-    let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
-    let buttonEl = node.refs.buttonEl;
+  it('renders ripples on click', function(done) {
+    let node = ReactUtils.renderIntoDocument(<Button>test</Button>),
+        buttonEl = node.refs.buttonEl,
+        rippleEl = node.refs.rippleEl;
 
-    // check state before ripple
-    assert.equal(Object.keys(node.state.ripples).length, 0);
-    assert.equal(buttonEl.children.length, 0);
+    // check state before click
+    assert.equal(node.state.ripple, null);
+    assert.equal(rippleEl.className.includes('mui--is-visible'), false);
 
     // trigger ripple
     ReactUtils.Simulate.mouseDown(buttonEl);
 
-    // check state after ripple
-    assert.equal(Object.keys(node.state.ripples).length, 1);
-    assert.equal(buttonEl.children.length, 1);
-    assert.equal(buttonEl.children[0].className, 'mui-ripple-effect');
+    // check state after click
+    assert.notEqual(node.state.ripple, null)
+    assert.equal(rippleEl.className.includes('mui--is-visible'), true);
+    assert.equal(rippleEl.className.includes('mui--is-animating'), false);
 
-    // add another ripple
-    ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
-    assert.equal(Object.keys(node.state.ripples).length, 2);
-  });
-
-
-  it('removes ripples after mouseup and animation duration', function(done) {
-    this.timeout(700);
-
-    let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
-
-    ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
-    ReactUtils.Simulate.mouseUp(node.refs.buttonEl);
-    assert.equal(Object.keys(node.state.ripples).length, 1);
-
+    // check animation
     setTimeout(function() {
-      // check that ripple is still there
-      assert.equal(Object.keys(node.state.ripples).length, 1);
-    }, 500);
-
-    setTimeout(function() {
-      // check that ripple has been removed
-      assert.equal(Object.keys(node.state.ripples).length, 0);
+      assert.equal(rippleEl.className.includes('mui--is-animating'), true);
       done();
-    }, 601);
+
+      // remove ripple
+      ReactUtils.Simulate.mouseUp(node.refs.buttonEl);
+      assert.equal(node.state.ripple, null);
+      assert.equal(rippleEl.className.includes('mui--is-visible'), false);
+    }, 0);
   });
 });
