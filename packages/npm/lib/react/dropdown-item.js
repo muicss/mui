@@ -39,13 +39,13 @@ var DropdownItem = function (_React$Component) {
   babelHelpers.createClass(DropdownItem, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var link = _props.link;
-      var target = _props.target;
-      var value = _props.value;
-      var onClick = _props.onClick;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
+      var _props = this.props,
+          children = _props.children,
+          link = _props.link,
+          target = _props.target,
+          value = _props.value,
+          onClick = _props.onClick,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
 
 
       return _react2.default.createElement(

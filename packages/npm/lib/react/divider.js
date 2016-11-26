@@ -29,10 +29,10 @@ var Divider = function (_React$Component) {
   babelHelpers.createClass(Divider, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
 
       return _react2.default.createElement('div', babelHelpers.extends({}, reactProps, {

@@ -66,11 +66,11 @@ var Tabs = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var initialSelectedIndex = _props.initialSelectedIndex;
-      var justified = _props.justified;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
+      var _props = this.props,
+          children = _props.children,
+          initialSelectedIndex = _props.initialSelectedIndex,
+          justified = _props.justified,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
 
 
       var tabs = Array.isArray(children) ? children : [children];

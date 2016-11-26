@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.9.5 - November 26, 2016
+
+* Added '!default` modifier to value of $mui-base-font-smoothing in SASS
+* Implemented MDL ripple technique to fix animation flash issue
+  https://github.com/muicss/mui/issues/169
+* Decreased box-shadow effect when button is activated
+
 ## 0.9.4 - November 9, 2016
 
 * Fixed issue with single tab elements in React Tabs component

@@ -29,11 +29,11 @@ var Form = function (_React$Component) {
   babelHelpers.createClass(Form, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var inline = _props.inline;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          inline = _props.inline,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
 
       var cls = '';
 

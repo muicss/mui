@@ -144,18 +144,18 @@ var Dropdown = function (_React$Component) {
           menuEl = void 0,
           labelEl = void 0;
 
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var color = _props.color;
-      var variant = _props.variant;
-      var size = _props.size;
-      var label = _props.label;
-      var alignMenu = _props.alignMenu;
-      var onClick = _props.onClick;
-      var onSelect = _props.onSelect;
-      var disabled = _props.disabled;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'color', 'variant', 'size', 'label', 'alignMenu', 'onClick', 'onSelect', 'disabled']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          color = _props.color,
+          variant = _props.variant,
+          size = _props.size,
+          label = _props.label,
+          alignMenu = _props.alignMenu,
+          onClick = _props.onClick,
+          onSelect = _props.onSelect,
+          disabled = _props.disabled,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'color', 'variant', 'size', 'label', 'alignMenu', 'onClick', 'onSelect', 'disabled']);
 
       // build label
 

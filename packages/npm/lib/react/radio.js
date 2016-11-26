@@ -32,21 +32,21 @@ var Radio = function (_React$Component) {
   babelHelpers.createClass(Radio, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var label = _props.label;
-      var autoFocus = _props.autoFocus;
-      var checked = _props.checked;
-      var defaultChecked = _props.defaultChecked;
-      var defaultValue = _props.defaultValue;
-      var disabled = _props.disabled;
-      var form = _props.form;
-      var name = _props.name;
-      var required = _props.required;
-      var value = _props.value;
-      var onChange = _props.onChange;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          label = _props.label,
+          autoFocus = _props.autoFocus,
+          checked = _props.checked,
+          defaultChecked = _props.defaultChecked,
+          defaultValue = _props.defaultValue,
+          disabled = _props.disabled,
+          form = _props.form,
+          name = _props.name,
+          required = _props.required,
+          value = _props.value,
+          onChange = _props.onChange,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
 
 
       return _react2.default.createElement(

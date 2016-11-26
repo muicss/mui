@@ -46,10 +46,10 @@ var Option = function (_React$Component) {
   babelHelpers.createClass(Option, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var label = _props.label;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
+      var _props = this.props,
+          children = _props.children,
+          label = _props.label,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
 
 
       return _react2.default.createElement(

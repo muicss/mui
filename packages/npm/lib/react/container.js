@@ -29,11 +29,11 @@ var Container = function (_React$Component) {
   babelHelpers.createClass(Container, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var fluid = _props.fluid;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          fluid = _props.fluid,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
 
 
       var cls = 'mui-container';

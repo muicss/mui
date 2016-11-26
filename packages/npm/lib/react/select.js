@@ -202,15 +202,15 @@ var Select = function (_React$Component) {
         tabIndexInner = '-1';
       }
 
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var style = _props.style;
-      var label = _props.label;
-      var defaultValue = _props.defaultValue;
-      var readOnly = _props.readOnly;
-      var useDefault = _props.useDefault;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          style = _props.style,
+          label = _props.label,
+          defaultValue = _props.defaultValue,
+          readOnly = _props.readOnly,
+          useDefault = _props.useDefault,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault']);
 
 
       return _react2.default.createElement(

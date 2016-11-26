@@ -881,8 +881,7 @@ var util = babelHelpers.interopRequireWildcard(_util);
 
 var PropTypes = _react2.default.PropTypes,
     btnClass = 'mui-btn',
-    btnAttrs = { color: 1, variant: 1, size: 1 },
-    animationDuration = 600;
+    btnAttrs = { color: 1, variant: 1, size: 1 };
 
 /**
  * Button element
@@ -898,10 +897,9 @@ var Button = function (_React$Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, props));
 
     _this.state = {
-      ripples: {}
+      ripple: null
     };
 
-    _this.rippleTimers = [];
 
     var cb = util.callback;
     _this.onMouseDownCB = cb(_this, 'onMouseDown');
@@ -921,20 +919,9 @@ var Button = function (_React$Component) {
       el._muiRipple = true;
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // clear ripple timers
-      var timers = this.rippleTimers,
-          i = timers.length;
-
-      while (i--) {
-        clearTimeout(timers[i]);
-      }
-    }
-  }, {
     key: 'onMouseDown',
     value: function onMouseDown(ev) {
-      this.addRipple(ev);
+      this.showRipple(ev);
 
       // execute callback
       var fn = this.props.onMouseDown;
@@ -943,7 +930,7 @@ var Button = function (_React$Component) {
   }, {
     key: 'onMouseUp',
     value: function onMouseUp(ev) {
-      this.removeRipples(ev);
+      this.hideRipple(ev);
 
       // execute callback
       var fn = this.props.onMouseUp;
@@ -952,7 +939,7 @@ var Button = function (_React$Component) {
   }, {
     key: 'onMouseLeave',
     value: function onMouseLeave(ev) {
-      this.removeRipples(ev);
+      this.hideRipple(ev);
 
       // execute callback
       var fn = this.props.onMouseLeave;
@@ -961,7 +948,7 @@ var Button = function (_React$Component) {
   }, {
     key: 'onTouchStart',
     value: function onTouchStart(ev) {
-      this.addRipple(ev);
+      this.showRipple(ev);
 
       // execute callback
       var fn = this.props.onTouchStart;
@@ -970,15 +957,15 @@ var Button = function (_React$Component) {
   }, {
     key: 'onTouchEnd',
     value: function onTouchEnd(ev) {
-      this.removeRipples(ev);
+      this.hideRipple(ev);
 
       // execute callback
       var fn = this.props.onTouchEnd;
       fn && fn(ev);
     }
   }, {
-    key: 'addRipple',
-    value: function addRipple(ev) {
+    key: 'showRipple',
+    value: function showRipple(ev) {
       var buttonEl = this.refs.buttonEl;
 
       // de-dupe touch events
@@ -994,63 +981,75 @@ var Button = function (_React$Component) {
       var diameter = Math.sqrt(offset.width * offset.width + offset.height * offset.height) * 2;
 
       // add ripple to state
-      var ripples = this.state.ripples;
-      var key = Date.now();
-
-      ripples[key] = {
-        xPos: clickEv.pageX - offset.left,
-        yPos: clickEv.pageY - offset.top,
-        diameter: diameter,
-        animateOut: false
-      };
-
-      this.setState({ ripples: ripples });
+      this.setState({
+        ripple: {
+          xPos: Math.round(clickEv.pageX - offset.left),
+          yPos: Math.round(clickEv.pageY - offset.top),
+          diameter: diameter
+        }
+      });
     }
   }, {
-    key: 'removeRipples',
-    value: function removeRipples(ev) {
+    key: 'hideRipple',
+    value: function hideRipple(ev) {
+      this.setState({
+        ripple: null
+      });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
       var _this2 = this;
 
-      // animate out ripples
-      var ripples = this.state.ripples,
-          deleteKeys = Object.keys(ripples),
-          k = void 0;
+      var ripple = this.state.ripple;
 
-      for (k in ripples) {
-        ripples[k].animateOut = true;
-      }this.setState({ ripples: ripples });
-
-      // remove ripples after animation
-      var timer = setTimeout(function () {
-        var ripples = _this2.state.ripples,
-            i = deleteKeys.length;
-
-        while (i--) {
-          delete ripples[deleteKeys[i]];
-        }_this2.setState({ ripples: ripples });
-      }, animationDuration);
-
-      this.rippleTimers.push(timer);
+      // trigger ripple animation
+      if (ripple && !prevState.ripple) {
+        util.requestAnimationFrame(function () {
+          ripple.isAnimating = true;
+          _this2.setState({ ripple: ripple });
+        });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
       var cls = btnClass,
+          rippleCls = 'mui-ripple',
+          rippleStyle = void 0,
           k = void 0,
           v = void 0;
 
-      var ripples = this.state.ripples;
-      var _props = this.props;
-      var color = _props.color;
-      var size = _props.size;
-      var variant = _props.variant;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['color', 'size', 'variant']);
+      var ripple = this.state.ripple;
+      var _props = this.props,
+          color = _props.color,
+          size = _props.size,
+          variant = _props.variant,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['color', 'size', 'variant']);
 
       // button attributes
 
       for (k in btnAttrs) {
         v = this.props[k];
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
+      }
+
+      // ripple attributes
+      if (ripple) {
+        rippleCls += ' mui--is-visible';
+
+        // css transform
+        var tCss = 'translate(-50%, -50%) translate(' + ripple.xPos + 'px,' + ripple.yPos + 'px)';
+
+        // handle animation
+        if (ripple.isAnimating) rippleCls += ' mui--is-animating';else tCss = tCss + ' scale(0.0001, 0.0001)';
+
+        // style attrs
+        rippleStyle = {
+          width: ripple.diameter,
+          height: ripple.diameter,
+          transform: tCss
+        };
       }
 
       return _react2.default.createElement(
@@ -1065,27 +1064,18 @@ var Button = function (_React$Component) {
           onTouchEnd: this.onTouchEndCB
         }),
         this.props.children,
-        Object.keys(ripples).map(function (k, i) {
-          var v = ripples[k];
-
-          return _react2.default.createElement(Ripple, {
-            key: k,
-            xPos: v.xPos,
-            yPos: v.yPos,
-            diameter: v.diameter,
-            animateOut: v.animateOut
-          });
-        })
+        _react2.default.createElement(
+          'span',
+          { className: 'mui-btn__ripple-container' },
+          _react2.default.createElement('span', { ref: 'rippleEl', className: rippleCls, style: rippleStyle })
+        )
       );
     }
   }]);
   return Button;
 }(_react2.default.Component);
 
-/**
- * Ripple component
- * @class
- */
+/** Define module API */
 
 
 Button.propTypes = {
@@ -1098,74 +1088,6 @@ Button.defaultProps = {
   color: 'default',
   size: 'default',
   variant: 'default'
-};
-
-var Ripple = function (_React$Component2) {
-  babelHelpers.inherits(Ripple, _React$Component2);
-
-  function Ripple() {
-    var _ref;
-
-    var _temp, _this3, _ret;
-
-    babelHelpers.classCallCheck(this, Ripple);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_ref = Ripple.__proto__ || Object.getPrototypeOf(Ripple)).call.apply(_ref, [this].concat(args))), _this3), _this3.state = {
-      animateIn: false
-    }, _temp), babelHelpers.possibleConstructorReturn(_this3, _ret);
-  }
-
-  babelHelpers.createClass(Ripple, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this4 = this;
-
-      util.requestAnimationFrame(function () {
-        _this4.setState({ animateIn: true });
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var diameter = this.props.diameter,
-          radius = diameter / 2;
-
-      var style = {
-        height: diameter,
-        width: diameter,
-        top: this.props.yPos - radius || 0,
-        left: this.props.xPos - radius || 0
-      };
-
-      // define class
-      var cls = 'mui-ripple-effect';
-      if (this.state.animateIn) cls += ' mui--animate-in mui--active';
-      if (this.props.animateOut) cls += ' mui--animate-out';
-
-      return _react2.default.createElement('div', { className: cls, style: style });
-    }
-  }]);
-  return Ripple;
-}(_react2.default.Component);
-
-/** Define module API */
-
-
-Ripple.propTypes = {
-  xPos: PropTypes.number,
-  yPos: PropTypes.number,
-  diameter: PropTypes.number,
-  animateOut: PropTypes.bool
-};
-Ripple.defaultProps = {
-  xPos: 0,
-  yPos: 0,
-  diameter: 0,
-  animateOut: false
 };
 exports.default = Button;
 module.exports = exports['default'];
@@ -1201,9 +1123,9 @@ var Caret = function (_React$Component) {
   babelHelpers.createClass(Caret, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var _props = this.props,
+          children = _props.children,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
 
 
       return _react2.default.createElement('span', babelHelpers.extends({}, reactProps, {
@@ -1384,12 +1306,12 @@ var Input = function (_React$Component) {
           isNotEmpty = Boolean(this.state.innerValue.toString()),
           inputEl = void 0;
 
-      var _props = this.props;
-      var hint = _props.hint;
-      var invalid = _props.invalid;
-      var rows = _props.rows;
-      var type = _props.type;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
+      var _props = this.props,
+          hint = _props.hint,
+          invalid = _props.invalid,
+          rows = _props.rows,
+          type = _props.type,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
 
 
       cls['mui--is-empty'] = !isNotEmpty;
@@ -1541,13 +1463,13 @@ var TextField = function (_React$Component3) {
       var cls = {},
           labelEl = void 0;
 
-      var _props2 = this.props;
-      var children = _props2.children;
-      var className = _props2.className;
-      var style = _props2.style;
-      var label = _props2.label;
-      var floatingLabel = _props2.floatingLabel;
-      var other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
+      var _props2 = this.props,
+          children = _props2.children,
+          className = _props2.className,
+          style = _props2.style,
+          label = _props2.label,
+          floatingLabel = _props2.floatingLabel,
+          other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
 
 
       if (label.length) {
@@ -1617,9 +1539,9 @@ var Appbar = function (_React$Component) {
   babelHelpers.createClass(Appbar, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var _props = this.props,
+          children = _props.children,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
 
 
       return _react2.default.createElement(
@@ -1687,21 +1609,21 @@ var Checkbox = function (_React$Component) {
   babelHelpers.createClass(Checkbox, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var label = _props.label;
-      var autoFocus = _props.autoFocus;
-      var checked = _props.checked;
-      var defaultChecked = _props.defaultChecked;
-      var defaultValue = _props.defaultValue;
-      var disabled = _props.disabled;
-      var form = _props.form;
-      var name = _props.name;
-      var required = _props.required;
-      var value = _props.value;
-      var onChange = _props.onChange;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          label = _props.label,
+          autoFocus = _props.autoFocus,
+          checked = _props.checked,
+          defaultChecked = _props.defaultChecked,
+          defaultValue = _props.defaultValue,
+          disabled = _props.disabled,
+          form = _props.form,
+          name = _props.name,
+          required = _props.required,
+          value = _props.value,
+          onChange = _props.onChange,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
 
 
       return _react2.default.createElement(
@@ -1808,10 +1730,10 @@ var Col = function (_React$Component) {
           val = void 0,
           baseCls = void 0;
 
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
       // add mui-col classes
 
@@ -1883,11 +1805,11 @@ var Container = function (_React$Component) {
   babelHelpers.createClass(Container, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var fluid = _props.fluid;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          fluid = _props.fluid,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
 
 
       var cls = 'mui-container';
@@ -1951,10 +1873,10 @@ var Divider = function (_React$Component) {
   babelHelpers.createClass(Divider, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
 
       return _react2.default.createElement('div', babelHelpers.extends({}, reactProps, {
@@ -2015,13 +1937,13 @@ var DropdownItem = function (_React$Component) {
   babelHelpers.createClass(DropdownItem, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var link = _props.link;
-      var target = _props.target;
-      var value = _props.value;
-      var onClick = _props.onClick;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
+      var _props = this.props,
+          children = _props.children,
+          link = _props.link,
+          target = _props.target,
+          value = _props.value,
+          onClick = _props.onClick,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
 
 
       return _react2.default.createElement(
@@ -2200,18 +2122,18 @@ var Dropdown = function (_React$Component) {
           menuEl = void 0,
           labelEl = void 0;
 
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var color = _props.color;
-      var variant = _props.variant;
-      var size = _props.size;
-      var label = _props.label;
-      var alignMenu = _props.alignMenu;
-      var onClick = _props.onClick;
-      var onSelect = _props.onSelect;
-      var disabled = _props.disabled;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'color', 'variant', 'size', 'label', 'alignMenu', 'onClick', 'onSelect', 'disabled']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          color = _props.color,
+          variant = _props.variant,
+          size = _props.size,
+          label = _props.label,
+          alignMenu = _props.alignMenu,
+          onClick = _props.onClick,
+          onSelect = _props.onSelect,
+          disabled = _props.disabled,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'color', 'variant', 'size', 'label', 'alignMenu', 'onClick', 'onSelect', 'disabled']);
 
       // build label
 
@@ -2335,11 +2257,11 @@ var Form = function (_React$Component) {
   babelHelpers.createClass(Form, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var inline = _props.inline;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          inline = _props.inline,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
 
       var cls = '';
 
@@ -2470,10 +2392,10 @@ var Option = function (_React$Component) {
   babelHelpers.createClass(Option, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var label = _props.label;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
+      var _props = this.props,
+          children = _props.children,
+          label = _props.label,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
 
 
       return _react2.default.createElement(
@@ -2530,10 +2452,10 @@ var Panel = function (_React$Component) {
   babelHelpers.createClass(Panel, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
 
       return _react2.default.createElement(
@@ -2591,21 +2513,21 @@ var Radio = function (_React$Component) {
   babelHelpers.createClass(Radio, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var label = _props.label;
-      var autoFocus = _props.autoFocus;
-      var checked = _props.checked;
-      var defaultChecked = _props.defaultChecked;
-      var defaultValue = _props.defaultValue;
-      var disabled = _props.disabled;
-      var form = _props.form;
-      var name = _props.name;
-      var required = _props.required;
-      var value = _props.value;
-      var onChange = _props.onChange;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          label = _props.label,
+          autoFocus = _props.autoFocus,
+          checked = _props.checked,
+          defaultChecked = _props.defaultChecked,
+          defaultValue = _props.defaultValue,
+          disabled = _props.disabled,
+          form = _props.form,
+          name = _props.name,
+          required = _props.required,
+          value = _props.value,
+          onChange = _props.onChange,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
 
 
       return _react2.default.createElement(
@@ -2690,10 +2612,10 @@ var Row = function (_React$Component) {
   babelHelpers.createClass(Row, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
 
       return _react2.default.createElement(
@@ -2921,15 +2843,15 @@ var Select = function (_React$Component) {
         tabIndexInner = '-1';
       }
 
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var style = _props.style;
-      var label = _props.label;
-      var defaultValue = _props.defaultValue;
-      var readOnly = _props.readOnly;
-      var useDefault = _props.useDefault;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          style = _props.style,
+          label = _props.label,
+          defaultValue = _props.defaultValue,
+          readOnly = _props.readOnly,
+          useDefault = _props.useDefault,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault']);
 
 
       return _react2.default.createElement(
@@ -3220,11 +3142,11 @@ var Tabs = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var initialSelectedIndex = _props.initialSelectedIndex;
-      var justified = _props.justified;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
+      var _props = this.props,
+          children = _props.children,
+          initialSelectedIndex = _props.initialSelectedIndex,
+          justified = _props.justified,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
 
 
       var tabs = Array.isArray(children) ? children : [children];

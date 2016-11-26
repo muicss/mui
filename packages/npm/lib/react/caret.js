@@ -29,9 +29,9 @@ var Caret = function (_React$Component) {
   babelHelpers.createClass(Caret, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
+      var _props = this.props,
+          children = _props.children,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
 
 
       return _react2.default.createElement('span', babelHelpers.extends({}, reactProps, {

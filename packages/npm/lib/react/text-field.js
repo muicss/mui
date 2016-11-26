@@ -101,12 +101,12 @@ var Input = function (_React$Component) {
           isNotEmpty = Boolean(this.state.innerValue.toString()),
           inputEl = void 0;
 
-      var _props = this.props;
-      var hint = _props.hint;
-      var invalid = _props.invalid;
-      var rows = _props.rows;
-      var type = _props.type;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
+      var _props = this.props,
+          hint = _props.hint,
+          invalid = _props.invalid,
+          rows = _props.rows,
+          type = _props.type,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
 
 
       cls['mui--is-empty'] = !isNotEmpty;
@@ -258,13 +258,13 @@ var TextField = function (_React$Component3) {
       var cls = {},
           labelEl = void 0;
 
-      var _props2 = this.props;
-      var children = _props2.children;
-      var className = _props2.className;
-      var style = _props2.style;
-      var label = _props2.label;
-      var floatingLabel = _props2.floatingLabel;
-      var other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
+      var _props2 = this.props,
+          children = _props2.children,
+          className = _props2.className,
+          style = _props2.style,
+          label = _props2.label,
+          floatingLabel = _props2.floatingLabel,
+          other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
 
 
       if (label.length) {

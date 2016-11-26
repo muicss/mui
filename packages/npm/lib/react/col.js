@@ -59,10 +59,10 @@ var Col = function (_React$Component) {
           val = void 0,
           baseCls = void 0;
 
-      var _props = this.props;
-      var children = _props.children;
-      var className = _props.className;
-      var reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
 
       // add mui-col classes
 
