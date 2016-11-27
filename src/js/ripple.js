@@ -63,38 +63,28 @@ function mouseDownHandler(ev) {
   // get ripple element offset values and (x, y) position of click
   var offset = jqLite.offset(buttonEl),
       clickEv = (ev.type === 'touchstart') ? ev.touches[0] : ev,
-      xPos = Math.round(clickEv.pageX - offset.left),
-      yPos = Math.round(clickEv.pageY - offset.top),
+      radius,
       diameter;
 
-  // calculate diameter
-  diameter = Math.sqrt(offset.height * offset.height + 
-                       offset.width * offset.width) * 2 + 2 + 'px';
+  // calculate radius
+  radius = Math.sqrt(offset.height * offset.height + 
+                     offset.width * offset.width);
 
-  // css transform
-  var tEnd = 'translate(-50%, -50%) translate(' + xPos + 'px,' + yPos + 'px)',
-      tStart = tEnd + ' scale(0.0001, 0.0001)';
+  diameter = radius * 2 + 'px';
 
-  // set position and initial scale
+  // set position and dimensions
   jqLite.css(rippleEl, {
     width: diameter,
     height: diameter,
-    webkitTransform: tStart,
-    msTransform: tStart,
-    transform: tStart
+    top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
+    left: Math.round(clickEv.pageX - offset.left - radius) + 'px'
   });
 
-  jqLite.addClass(rippleEl, 'mui--is-visible');
   jqLite.removeClass(rippleEl, 'mui--is-animating');
+  jqLite.addClass(rippleEl, 'mui--is-visible');
 
   // start animation
   util.requestAnimationFrame(function() {
-    jqLite.css(rippleEl, {
-      webkitTransform: tEnd,
-      msTransform: tEnd,
-      transform: tEnd
-    });
-    
     jqLite.addClass(rippleEl, 'mui--is-animating');
   });
 }
