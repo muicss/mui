@@ -53,6 +53,7 @@ class Select extends React.Component {
   static propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
+    name: PropTypes.string,
     defaultValue: PropTypes.string,
     readOnly: PropTypes.bool,
     useDefault: PropTypes.bool,
@@ -63,6 +64,7 @@ class Select extends React.Component {
 
   static defaultProps = {
     className: '',
+    name: '',
     readOnly: false,
     useDefault: (typeof document !== 'undefined' && 'ontouchstart' in document.documentElement) ? true : false,
     onChange: null,
@@ -196,7 +198,7 @@ class Select extends React.Component {
     }
 
     const { children, className, style, label, defaultValue, readOnly,
-      useDefault, ...reactProps } = this.props;
+      useDefault, name, ...reactProps } = this.props;
 
     return (
       <div
@@ -210,6 +212,7 @@ class Select extends React.Component {
       >
         <select
           ref="selectEl"
+          name={name}
           tabIndex={tabIndexInner}
           value={this.state.value}
           defaultValue={defaultValue}
