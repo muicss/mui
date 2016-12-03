@@ -121,15 +121,15 @@ var Button = function (_React$Component) {
 
       if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev;
 
-      // choose diameter
-      var diameter = Math.sqrt(offset.width * offset.width + offset.height * offset.height) * 2;
+      // calculate radius
+      var radius = Math.sqrt(offset.width * offset.width + offset.height * offset.height);
 
       // add ripple to state
       this.setState({
         ripple: {
-          xPos: Math.round(clickEv.pageX - offset.left),
-          yPos: Math.round(clickEv.pageY - offset.top),
-          diameter: diameter
+          top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
+          left: Math.round(clickEv.pageX - offset.left - radius) + 'px',
+          diameter: radius * 2 + 'px'
         }
       });
     }
@@ -182,17 +182,15 @@ var Button = function (_React$Component) {
       if (ripple) {
         rippleCls += ' mui--is-visible';
 
-        // css transform
-        var tCss = 'translate(-50%, -50%) translate(' + ripple.xPos + 'px,' + ripple.yPos + 'px)';
-
         // handle animation
-        if (ripple.isAnimating) rippleCls += ' mui--is-animating';else tCss = tCss + ' scale(0.0001, 0.0001)';
+        if (ripple.isAnimating) rippleCls += ' mui--is-animating';
 
         // style attrs
         rippleStyle = {
           width: ripple.diameter,
           height: ripple.diameter,
-          transform: tCss
+          top: ripple.top,
+          left: ripple.left
         };
       }
 

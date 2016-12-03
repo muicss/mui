@@ -1271,38 +1271,28 @@ function mouseDownHandler(ev) {
   // get ripple element offset values and (x, y) position of click
   var offset = jqLite.offset(buttonEl),
       clickEv = (ev.type === 'touchstart') ? ev.touches[0] : ev,
-      xPos = Math.round(clickEv.pageX - offset.left),
-      yPos = Math.round(clickEv.pageY - offset.top),
+      radius,
       diameter;
 
-  // calculate diameter
-  diameter = Math.sqrt(offset.height * offset.height + 
-                       offset.width * offset.width) * 2 + 2 + 'px';
+  // calculate radius
+  radius = Math.sqrt(offset.height * offset.height + 
+                     offset.width * offset.width);
 
-  // css transform
-  var tEnd = 'translate(-50%, -50%) translate(' + xPos + 'px,' + yPos + 'px)',
-      tStart = tEnd + ' scale(0.0001, 0.0001)';
+  diameter = radius * 2 + 'px';
 
-  // set position and initial scale
+  // set position and dimensions
   jqLite.css(rippleEl, {
     width: diameter,
     height: diameter,
-    webkitTransform: tStart,
-    msTransform: tStart,
-    transform: tStart
+    top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
+    left: Math.round(clickEv.pageX - offset.left - radius) + 'px'
   });
 
-  jqLite.addClass(rippleEl, 'mui--is-visible');
   jqLite.removeClass(rippleEl, 'mui--is-animating');
+  jqLite.addClass(rippleEl, 'mui--is-visible');
 
   // start animation
   util.requestAnimationFrame(function() {
-    jqLite.css(rippleEl, {
-      webkitTransform: tEnd,
-      msTransform: tEnd,
-      transform: tEnd
-    });
-    
     jqLite.addClass(rippleEl, 'mui--is-animating');
   });
 }
@@ -1374,44 +1364,26 @@ function initialize(selectEl) {
   // use default behavior on touch devices
   if ('ontouchstart' in doc.documentElement) return;
 
-  // initialize element
-  new Select(selectEl);
-
-  // set flag
-  selectEl._muiJs = true;
-}
-
-
-/**
- * Creates a new Select object
- * @class
- */
-function Select(selectEl) {
-  var wrapperEl = selectEl.parentNode;
-
-  // instance variables
-  this.selectEl = selectEl;
-  this.wrapperEl = wrapperEl;
-  this.useDefault = false;  // currently unused but let's keep just in case
-  this.isOpen = false;
-  this.menu = null;
-
   // NOTE: To get around cross-browser issues with <select> behavior we will
   //       defer focus to the parent element and handle events there
 
+  var wrapperEl = selectEl.parentNode;
+
+  // initialize variables
+  wrapperEl._selectEl = selectEl;
+  wrapperEl._menu = null;
+
   // make wrapper tab focusable, remove tab focus from <select>
   if (!selectEl.disabled) wrapperEl.tabIndex = 0;
-  if (!this.useDefault) selectEl.tabIndex = -1;
-
-  var cb = util.callback;
+  selectEl.tabIndex = -1;
 
   // prevent built-in menu from opening on <select>
-  jqLite.on(selectEl, 'mousedown', cb(this, 'onInnerMouseDown'));
+  jqLite.on(selectEl, 'mousedown', onInnerMouseDown);
 
   // attach event listeners for custom menu
-  jqLite.on(wrapperEl, 'click', cb(this, 'onWrapperClick'));
-  jqLite.on(wrapperEl, 'blur focus', cb(this, 'onWrapperBlurOrFocus'));
-  jqLite.on(wrapperEl, 'keydown', cb(this, 'onWrapperKeyDown'));
+  jqLite.on(wrapperEl, 'click', onWrapperClick);
+  jqLite.on(wrapperEl, 'blur focus', onWrapperBlurOrFocus);
+  jqLite.on(wrapperEl, 'keydown', onWrapperKeyDown);
 
   // add element to detect 'disabled' change (using sister element due to 
   // IE/Firefox issue
@@ -1434,22 +1406,12 @@ function Select(selectEl) {
 
 
 /**
- * Dispatch focus and blur events on inner <select> element.
- * @param {Event} ev - The DOM event
- */
-Select.prototype.onWrapperBlurOrFocus = function(ev) {
-  util.dispatchEvent(this.selectEl, ev.type, false, false);
-}
-
-
-
-/**
  * Disable default dropdown on mousedown.
  * @param {Event} ev - The DOM event
  */
-Select.prototype.onInnerMouseDown = function(ev) {
+function onInnerMouseDown(ev) {
   // only left clicks
-  if (ev.button !== 0 || this.useDefault) return;
+  if (ev.button !== 0) return;
 
   // prevent built-in menu from opening
   ev.preventDefault();
@@ -1457,26 +1419,33 @@ Select.prototype.onInnerMouseDown = function(ev) {
 
 
 /**
+ * Dispatch focus and blur events on inner <select> element.
+ * @param {Event} ev - The DOM event
+ */
+function onWrapperBlurOrFocus(ev) {
+  util.dispatchEvent(this._selectEl, ev.type, false, false);
+}
+
+
+/**
  * Handle keydown events when wrapper is focused
  **/
-Select.prototype.onWrapperKeyDown = function(ev) {
-  // check flag
-  if (this.useDefault || ev.defaultPrevented) return;
+function onWrapperKeyDown(ev) {
+  if (ev.defaultPrevented) return;
 
-  var keyCode = ev.keyCode;
+  var keyCode = ev.keyCode,
+      menu = this._menu;
 
-  if (this.isOpen === false) {
+  if (!menu) {
     // spacebar, down, up
     if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
       ev.preventDefault();
 
       // open custom menu
-      this.renderMenu();
+      renderMenu(this);
     }
 
   } else {
-    var menu = this.menu;
-
     // tab
     if (keyCode === 9) return menu.destroy();
   
@@ -1503,35 +1472,30 @@ Select.prototype.onWrapperKeyDown = function(ev) {
  * Handle click events on wrapper element.
  * @param {Event} ev - The DOM event
  */
-Select.prototype.onWrapperClick = function(ev) {
+function onWrapperClick(ev) {
   // only left clicks, check default and disabled flags
-  if (ev.button !== 0 || this.useDefault || this.selectEl.disabled) return;
+  if (ev.button !== 0 || this._selectEl.disabled) return;
 
   // focus wrapper
-  this.wrapperEl.focus();
+  this.focus();
 
   // open menu
-  this.renderMenu();
+  renderMenu(this);
 }
 
 
 /**
- * Render options dropdown.
+ * Render options menu
  */
-Select.prototype.renderMenu = function() {
-  // check flag
-  if (this.isOpen) return;
+function renderMenu(wrapperEl) {
+  // check instance
+  if (wrapperEl._menu) return;
 
-  // render custom menu and reset flag
-  var self = this;
-  this.menu = new Menu(this.wrapperEl, this.selectEl, function() {
-    self.isOpen = false;
-    self.menu = null;
-    self.wrapperEl.focus();
+  // render custom menu
+  wrapperEl._menu = new Menu(wrapperEl, wrapperEl._selectEl, function() {
+    wrapperEl._menu = null;  // de-reference instance
+    wrapperEl.focus();
   });
-
-  // set flag
-  this.isOpen = true;
 }
 
 
@@ -1559,15 +1523,15 @@ function Menu(wrapperEl, selectEl, wrapperCallbackFn) {
 
   // add to DOM
   wrapperEl.appendChild(this.menuEl);
-  jqLite.scrollTop(this.menuEl, this.menuEl._muiScrollTop);
+  jqLite.scrollTop(this.menuEl, this.menuEl._scrollTop);
 
   // attach event handlers
+  var destroyCB = this.destroyCB;
   jqLite.on(this.menuEl, 'click', this.onClickCB);
-  jqLite.on(win, 'resize', this.destroyCB);
+  jqLite.on(win, 'resize', destroyCB);
 
   // attach event handler after current event loop exits
-  var fn = this.destroyCB;
-  setTimeout(function() {jqLite.on(doc, 'click', fn);}, 0);
+  setTimeout(function() {jqLite.on(doc, 'click', destroyCB);}, 0);
 }
 
 
@@ -1661,7 +1625,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   );
 
   jqLite.css(menuEl, props);
-  menuEl._muiScrollTop = props.scrollTop;
+  menuEl._scrollTop = props.scrollTop;
 
   return menuEl;
 }
@@ -1966,7 +1930,7 @@ function initialize(inputEl) {
   jqLite.on(inputEl, 'input change', inputHandler);
 
   // add dirty class on focus
-  jqLite.on(inputEl, 'focus', function(){jqLite.addClass(this, dirtyClass);});
+  jqLite.on(inputEl, 'focus', function() {jqLite.addClass(this, dirtyClass);});
 }
 
 

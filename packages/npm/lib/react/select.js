@@ -210,7 +210,8 @@ var Select = function (_React$Component) {
           defaultValue = _props.defaultValue,
           readOnly = _props.readOnly,
           useDefault = _props.useDefault,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault']);
+          name = _props.name,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault', 'name']);
 
 
       return _react2.default.createElement(
@@ -227,6 +228,7 @@ var Select = function (_React$Component) {
           'select',
           {
             ref: 'selectEl',
+            name: name,
             tabIndex: tabIndexInner,
             value: this.state.value,
             defaultValue: defaultValue,
@@ -257,6 +259,7 @@ var Select = function (_React$Component) {
 Select.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
+  name: PropTypes.string,
   defaultValue: PropTypes.string,
   readOnly: PropTypes.bool,
   useDefault: PropTypes.bool,
@@ -266,6 +269,7 @@ Select.propTypes = {
 };
 Select.defaultProps = {
   className: '',
+  name: '',
   readOnly: false,
   useDefault: typeof document !== 'undefined' && 'ontouchstart' in document.documentElement ? true : false,
   onChange: null,

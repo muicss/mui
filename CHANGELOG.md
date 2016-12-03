@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.9.6 - December 3, 2016
+
+* Fixed bug in React Select component that added `name` property to outer
+  `<div>` element wrather than inner `<select>` element
+* Improved ripple code, fixed bug in opera
+* Made CSS/JS Select component more robust against memory leaks
+
 ## 0.9.5 - November 26, 2016
 
 * Added '!default` modifier to value of $mui-base-font-smoothing in SASS
