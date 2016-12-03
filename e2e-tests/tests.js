@@ -24822,7 +24822,8 @@ var Select = function (_React$Component) {
           defaultValue = _props.defaultValue,
           readOnly = _props.readOnly,
           useDefault = _props.useDefault,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault']);
+          name = _props.name,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault', 'name']);
 
 
       return _react2.default.createElement(
@@ -24839,6 +24840,7 @@ var Select = function (_React$Component) {
           'select',
           {
             ref: 'selectEl',
+            name: name,
             tabIndex: tabIndexInner,
             value: this.state.value,
             defaultValue: defaultValue,
@@ -24869,6 +24871,7 @@ var Select = function (_React$Component) {
 Select.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
+  name: PropTypes.string,
   defaultValue: PropTypes.string,
   readOnly: PropTypes.bool,
   useDefault: PropTypes.bool,
@@ -24878,6 +24881,7 @@ Select.propTypes = {
 };
 Select.defaultProps = {
   className: '',
+  name: '',
   readOnly: false,
   useDefault: typeof document !== 'undefined' && 'ontouchstart' in document.documentElement ? true : false,
   onChange: null,
@@ -27502,6 +27506,21 @@ describe('react/select', function () {
     instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_select2.default, { useDefault: true }));
     _assert2.default.equal(instance.refs.wrapperEl.tabIndex, -1);
     _assert2.default.equal(instance.refs.selectEl.tabIndex, 0);
+  });
+
+  it('renders name attribute properly', function () {
+    var testElem = _react2.default.createElement(
+      _select2.default,
+      { name: 'my-name' },
+      _react2.default.createElement(_option2.default, { value: 'value1', label: 'Option 1' }),
+      _react2.default.createElement(_option2.default, { value: 'value2', label: 'Option 2' }),
+      _react2.default.createElement(_option2.default, { value: 'value3', label: 'Option 3' })
+    );
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(testElem);
+    var selectEl = instance.refs.selectEl;
+
+    _assert2.default.equal(selectEl.name, 'my-name');
   });
 
   it('handles default undefined value', function () {

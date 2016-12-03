@@ -95,6 +95,22 @@ describe('react/select', function() {
   });
 
 
+  it('renders name attribute properly', function() {
+    let testElem = (
+      <Select name="my-name">
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.refs.selectEl;
+
+    assert.equal(selectEl.name, 'my-name');
+  });
+
+
   it('handles default undefined value', function() {
     let testElem = (
       <Select>
