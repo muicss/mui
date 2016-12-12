@@ -3122,14 +3122,14 @@ var Tabs = function (_React$Component) {
 
     var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
-    _this.state = { currentSelectedIndex: props.initialSelectedIndex };
+    _this.state = { currentSelectedIndex: typeof props.currentSelectedIndex === 'number' ? props.currentSelectedIndex : props.initialSelectedIndex };
     return _this;
   }
 
   babelHelpers.createClass(Tabs, [{
     key: 'onClick',
     value: function onClick(i, tab, ev) {
-      if (i !== this.state.currentSelectedIndex) {
+      if (i !== this.props.currentSelectedIndex || i !== this.state.currentSelectedIndex) {
         this.setState({ currentSelectedIndex: i });
 
         // onActive callback
@@ -3146,16 +3146,17 @@ var Tabs = function (_React$Component) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
+          currentSelectedIndex = _props.currentSelectedIndex,
           initialSelectedIndex = _props.initialSelectedIndex,
           justified = _props.justified,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'currentSelectedIndex', 'initialSelectedIndex', 'justified']);
 
 
       var tabs = Array.isArray(children) ? children : [children];
       var tabEls = [],
           paneEls = [],
           m = tabs.length,
-          selectedIndex = this.state.currentSelectedIndex % m,
+          selectedIndex = (typeof currentSelectedIndex === 'number' ? currentSelectedIndex : this.state.currentSelectedIndex) % m,
           isActive = void 0,
           item = void 0,
           cls = void 0,
@@ -3213,12 +3214,14 @@ var Tabs = function (_React$Component) {
 
 
 Tabs.propTypes = {
+  currentSelectedIndex: PropTypes.number,
   initialSelectedIndex: PropTypes.number,
   justified: PropTypes.bool,
   onChange: PropTypes.func
 };
 Tabs.defaultProps = {
   className: '',
+  currentSelectedIndex: null,
   initialSelectedIndex: 0,
   justified: false,
   onChange: null

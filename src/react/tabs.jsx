@@ -27,10 +27,11 @@ const PropTypes = React.PropTypes,
 class Tabs extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {currentSelectedIndex: props.initialSelectedIndex};
+    this.state = {currentSelectedIndex: typeof props.currentSelectedIndex === 'number' ? props.currentSelectedIndex : props.initialSelectedIndex};
   }
 
   static propTypes = {
+    currentSelectedIndex: PropTypes.number,
     initialSelectedIndex: PropTypes.number,
     justified: PropTypes.bool,
     onChange: PropTypes.func
@@ -38,13 +39,14 @@ class Tabs extends React.Component {
 
   static defaultProps = {
     className: '',
+    currentSelectedIndex: null,
     initialSelectedIndex: 0,
     justified: false,
     onChange: null
   };
 
   onClick(i, tab, ev) {
-    if (i !== this.state.currentSelectedIndex) {
+    if (i !== this.props.currentSelectedIndex || i !== this.state.currentSelectedIndex) {
       this.setState({currentSelectedIndex: i});
 
       // onActive callback
@@ -58,14 +60,14 @@ class Tabs extends React.Component {
   }
 
   render() {
-    const { children, initialSelectedIndex, justified,
+    const { children, currentSelectedIndex, initialSelectedIndex, justified,
       ...reactProps } = this.props;
 
     let tabs = Array.isArray(children) ? children : [children];
     let tabEls = [],
         paneEls = [],
         m = tabs.length,
-        selectedIndex = this.state.currentSelectedIndex % m,
+        selectedIndex = (typeof currentSelectedIndex === 'number' ? currentSelectedIndex : this.state.currentSelectedIndex) % m,
         isActive,
         item,
         cls,
