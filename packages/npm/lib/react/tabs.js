@@ -51,7 +51,7 @@ var Tabs = function (_React$Component) {
   babelHelpers.createClass(Tabs, [{
     key: 'onClick',
     value: function onClick(i, tab, ev) {
-      if (i !== this.props.currentSelectedIndex || i !== this.state.currentSelectedIndex) {
+      if (typeof this.props.currentSelectedIndex === 'number' && i !== this.props.currentSelectedIndex || i !== this.state.currentSelectedIndex) {
         this.setState({ currentSelectedIndex: i });
 
         // onActive callback
