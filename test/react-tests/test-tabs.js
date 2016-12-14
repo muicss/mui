@@ -75,7 +75,7 @@ describe('react/tabs', function() {
       },
       render: function() {
         return (
-          <Tabs currentSelectedIndex={this.state.tabIndex}>
+          <Tabs selectedIndex={this.state.tabIndex}>
             <Tab>ABC</Tab>
             <Tab>DEF</Tab>
           </Tabs>

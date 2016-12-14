@@ -27,26 +27,26 @@ const PropTypes = React.PropTypes,
 class Tabs extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {currentSelectedIndex: typeof props.currentSelectedIndex === 'number' ? props.currentSelectedIndex : props.initialSelectedIndex};
+    this.state = {currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : props.initialSelectedIndex};
   }
 
   static propTypes = {
-    currentSelectedIndex: PropTypes.number,
     initialSelectedIndex: PropTypes.number,
     justified: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    selectedIndex: PropTypes.number
   };
 
   static defaultProps = {
     className: '',
-    currentSelectedIndex: null,
     initialSelectedIndex: 0,
     justified: false,
-    onChange: null
+    onChange: null,
+    selectedIndex: null
   };
 
   onClick(i, tab, ev) {
-    if ((typeof this.props.currentSelectedIndex === 'number' && i !== this.props.currentSelectedIndex) || i !== this.state.currentSelectedIndex) {
+    if ((typeof this.props.selectedIndex === 'number' && i !== this.props.selectedIndex) || i !== this.state.currentSelectedIndex) {
       this.setState({currentSelectedIndex: i});
 
       // onActive callback
@@ -60,14 +60,14 @@ class Tabs extends React.Component {
   }
 
   render() {
-    const { children, currentSelectedIndex, initialSelectedIndex, justified,
+    const { children, initialSelectedIndex, justified, selectedIndex,
       ...reactProps } = this.props;
 
     let tabs = Array.isArray(children) ? children : [children];
     let tabEls = [],
         paneEls = [],
         m = tabs.length,
-        selectedIndex = (typeof currentSelectedIndex === 'number' ? currentSelectedIndex : this.state.currentSelectedIndex) % m,
+        currentSelectedIndex = (typeof selectedIndex === 'number' ? selectedIndex : this.state.currentSelectedIndex) % m,
         isActive,
         item,
         cls,
@@ -79,7 +79,7 @@ class Tabs extends React.Component {
       // only accept MUITab elements
       if (item.type !== Tab) util.raiseError('Expecting MUITab React Element');
 
-      isActive = (i === selectedIndex) ? true : false;
+      isActive = (i === currentSelectedIndex) ? true : false;
 
       // tab element
       tabEls.push(

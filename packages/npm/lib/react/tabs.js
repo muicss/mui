@@ -44,14 +44,14 @@ var Tabs = function (_React$Component) {
 
     var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
-    _this.state = { currentSelectedIndex: typeof props.currentSelectedIndex === 'number' ? props.currentSelectedIndex : props.initialSelectedIndex };
+    _this.state = { currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : props.initialSelectedIndex };
     return _this;
   }
 
   babelHelpers.createClass(Tabs, [{
     key: 'onClick',
     value: function onClick(i, tab, ev) {
-      if (typeof this.props.currentSelectedIndex === 'number' && i !== this.props.currentSelectedIndex || i !== this.state.currentSelectedIndex) {
+      if (typeof this.props.selectedIndex === 'number' && i !== this.props.selectedIndex || i !== this.state.currentSelectedIndex) {
         this.setState({ currentSelectedIndex: i });
 
         // onActive callback
@@ -68,17 +68,17 @@ var Tabs = function (_React$Component) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
-          currentSelectedIndex = _props.currentSelectedIndex,
           initialSelectedIndex = _props.initialSelectedIndex,
           justified = _props.justified,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'currentSelectedIndex', 'initialSelectedIndex', 'justified']);
+          selectedIndex = _props.selectedIndex,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified', 'selectedIndex']);
 
 
       var tabs = Array.isArray(children) ? children : [children];
       var tabEls = [],
           paneEls = [],
           m = tabs.length,
-          selectedIndex = (typeof currentSelectedIndex === 'number' ? currentSelectedIndex : this.state.currentSelectedIndex) % m,
+          currentSelectedIndex = (typeof selectedIndex === 'number' ? selectedIndex : this.state.currentSelectedIndex) % m,
           isActive = void 0,
           item = void 0,
           cls = void 0,
@@ -90,7 +90,7 @@ var Tabs = function (_React$Component) {
         // only accept MUITab elements
         if (item.type !== _tab2.default) util.raiseError('Expecting MUITab React Element');
 
-        isActive = i === selectedIndex ? true : false;
+        isActive = i === currentSelectedIndex ? true : false;
 
         // tab element
         tabEls.push(_react2.default.createElement(
@@ -136,17 +136,17 @@ var Tabs = function (_React$Component) {
 
 
 Tabs.propTypes = {
-  currentSelectedIndex: PropTypes.number,
   initialSelectedIndex: PropTypes.number,
   justified: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  selectedIndex: PropTypes.number
 };
 Tabs.defaultProps = {
   className: '',
-  currentSelectedIndex: null,
   initialSelectedIndex: 0,
   justified: false,
-  onChange: null
+  onChange: null,
+  selectedIndex: null
 };
 exports.default = Tabs;
 module.exports = exports['default'];
