@@ -28,12 +28,12 @@ class Tabs extends React.Component {
   constructor(props) {
     /*
      * The following code exists only to warn about deprecating props.initialSelectedIndex in favor of props.defaultSelectedIndex.
-     * It can be removed once
+     * It can be removed once support for props.initialSelectedIndex is officially dropped.
      */
     let defaultSelectedIndex;
     if (typeof props.initialSelectedIndex === 'number') {
       defaultSelectedIndex = props.initialSelectedIndex;
-      if (process && process.env && process.NODE_ENV !== 'production') {
+      if (console && process && process.env && process.NODE_ENV !== 'production') {
         console.warn(
           'MUICSS DEPRECATION WARNING: '
           + 'property "initialSelectedIndex" on the muicss Tabs component is deprecated in favor of "defaultSelectedIndex". '
