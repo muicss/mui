@@ -64,19 +64,19 @@
       }
 
 
-      // `currentSelectedIndex` example
+      // `selectedIndex` example
       class Example2 extends React.Component {
         constructor(props) {
           super(props);
 
           this.state = {
-            currentSelectedIndex: 1
+            selectedIndex: 1
           };
         }
 
         onClick(ev) {
-          let newVal = + !this.state.currentSelectedIndex;
-          this.setState({currentSelectedIndex: newVal});
+          let newVal = + !this.state.selectedIndex;
+          this.setState({selectedIndex: newVal});
         }
 
         onChange(i, value, tab, ev) {
@@ -92,7 +92,7 @@
             <div>
               <Tabs
                 onChange={this.onChange}
-                currentSelectedIndex={this.state.currentSelectedIndex}
+                selectedIndex={this.state.selectedIndex}
               >
                 <Tab
                   value="pane-1"
