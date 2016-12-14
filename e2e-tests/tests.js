@@ -25149,14 +25149,14 @@ var Tabs = function (_React$Component) {
 
     var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
-    _this.state = { currentSelectedIndex: props.initialSelectedIndex };
+    _this.state = { currentSelectedIndex: typeof props.currentSelectedIndex === 'number' ? props.currentSelectedIndex : props.initialSelectedIndex };
     return _this;
   }
 
   babelHelpers.createClass(Tabs, [{
     key: 'onClick',
     value: function onClick(i, tab, ev) {
-      if (i !== this.state.currentSelectedIndex) {
+      if (typeof this.props.currentSelectedIndex === 'number' && i !== this.props.currentSelectedIndex || i !== this.state.currentSelectedIndex) {
         this.setState({ currentSelectedIndex: i });
 
         // onActive callback
@@ -25173,16 +25173,17 @@ var Tabs = function (_React$Component) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
+          currentSelectedIndex = _props.currentSelectedIndex,
           initialSelectedIndex = _props.initialSelectedIndex,
           justified = _props.justified,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'currentSelectedIndex', 'initialSelectedIndex', 'justified']);
 
 
       var tabs = Array.isArray(children) ? children : [children];
       var tabEls = [],
           paneEls = [],
           m = tabs.length,
-          selectedIndex = this.state.currentSelectedIndex % m,
+          selectedIndex = (typeof currentSelectedIndex === 'number' ? currentSelectedIndex : this.state.currentSelectedIndex) % m,
           isActive = void 0,
           item = void 0,
           cls = void 0,
@@ -25240,12 +25241,14 @@ var Tabs = function (_React$Component) {
 
 
 Tabs.propTypes = {
+  currentSelectedIndex: PropTypes.number,
   initialSelectedIndex: PropTypes.number,
   justified: PropTypes.bool,
   onChange: PropTypes.func
 };
 Tabs.defaultProps = {
   className: '',
+  currentSelectedIndex: null,
   initialSelectedIndex: 0,
   justified: false,
   onChange: null
@@ -27806,6 +27809,7 @@ describe('react/tabs', function () {
 
     _assert2.default.equal(result.props.className, 'additional');
   });
+
   it('renders with one Tab as child', function () {
     var result = _server2.default.renderToStaticMarkup(_react2.default.createElement(
       _tabs2.default,
@@ -27816,8 +27820,10 @@ describe('react/tabs', function () {
         'ABC'
       )
     ));
+
     _assert2.default.equal((result.match(/ABC/g) || []).length, 1);
   });
+
   it('renders with two Tabs as children', function () {
     var result = _server2.default.renderToStaticMarkup(_react2.default.createElement(
       _tabs2.default,
@@ -27833,6 +27839,7 @@ describe('react/tabs', function () {
         'ABC'
       )
     ));
+
     _assert2.default.equal((result.match(/ABC/g) || []).length, 2);
   });
 
@@ -27844,6 +27851,39 @@ describe('react/tabs', function () {
     ));
 
     _assert2.default.equal(result.props.style.additonal, 'style');
+  });
+
+  it('can be used as a controlled component', function () {
+    var TestApp = _react2.default.createClass({
+      displayName: 'TestApp',
+
+      getInitialState: function getInitialState() {
+        return { currentSelectedIndex: 1 };
+      },
+      render: function render() {
+        return _react2.default.createElement(
+          _tabs2.default,
+          { currentSelectedIndex: this.state.currentSelectedIndex },
+          _react2.default.createElement(
+            _tab2.default,
+            null,
+            'ABC'
+          ),
+          _react2.default.createElement(
+            _tab2.default,
+            null,
+            'BCD'
+          )
+        );
+      }
+    });
+
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(TestApp, null));
+    var findElements = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithClass;
+
+    // check default value
+    var tabEl = findElements(instance, 'mui--is-active')[0];
+    console.log(tabEl.innerHTML);
   });
 }); /**
      * MUI test react select library
