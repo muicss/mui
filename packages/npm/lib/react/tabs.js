@@ -42,9 +42,26 @@ var Tabs = function (_React$Component) {
   function Tabs(props) {
     babelHelpers.classCallCheck(this, Tabs);
 
+    /*
+     * The following code exists only to warn about deprecating props.initialSelectedIndex in favor of props.defaultSelectedIndex.
+     * It can be removed once
+     */
+    var defaultSelectedIndex = void 0;
+    if (typeof props.initialSelectedIndex === 'number') {
+      defaultSelectedIndex = props.initialSelectedIndex;
+      if (process && process.env && process.NODE_ENV !== 'production') {
+        console.warn('MUICSS DEPRECATION WARNING: ' + 'property "initialSelectedIndex" on the muicss Tabs component is deprecated in favor of "defaultSelectedIndex". ' + 'It will be removed in a future release.');
+      }
+    } else {
+      defaultSelectedIndex = props.defaultSelectedIndex;
+    }
+    /*
+     * End deprecation warning
+     */
+
     var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
-    _this.state = { currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : props.initialSelectedIndex };
+    _this.state = { currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex };
     return _this;
   }
 
@@ -68,10 +85,11 @@ var Tabs = function (_React$Component) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
+          defaultSelectedIndex = _props.defaultSelectedIndex,
           initialSelectedIndex = _props.initialSelectedIndex,
           justified = _props.justified,
           selectedIndex = _props.selectedIndex,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified', 'selectedIndex']);
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'defaultSelectedIndex', 'initialSelectedIndex', 'justified', 'selectedIndex']);
 
 
       var tabs = Array.isArray(children) ? children : [children];
@@ -136,6 +154,10 @@ var Tabs = function (_React$Component) {
 
 
 Tabs.propTypes = {
+  defaultSelectedIndex: PropTypes.number,
+  /* 
+   * @deprecated
+   */
   initialSelectedIndex: PropTypes.number,
   justified: PropTypes.bool,
   onChange: PropTypes.func,
@@ -143,7 +165,11 @@ Tabs.propTypes = {
 };
 Tabs.defaultProps = {
   className: '',
-  initialSelectedIndex: 0,
+  defaultSelectedIndex: 0,
+  /*
+   * @deprecated
+   */
+  initialSelectedIndex: null,
   justified: false,
   onChange: null,
   selectedIndex: null

@@ -285,7 +285,8 @@ Read more: https://www.muicss.com/docs/v1/react/forms
 import Tabs from 'muicss/lib/react/tabs';
 
 <Tabs />
-  * {Integer} initialSelectedIndex=0
+  * {Integer} defaultSelectedIndex=0
+  * {Integer} selectedIndex
   * {Boolean} justified=false|true
   * {Function} onChange
 ```
