@@ -26,11 +26,36 @@ const PropTypes = React.PropTypes,
  */
 class Tabs extends React.Component {
   constructor(props) {
+    /*
+     * The following code exists only to warn about deprecating props.initialSelectedIndex in favor of props.defaultSelectedIndex.
+     * It can be removed once
+     */
+    let defaultSelectedIndex;
+    if (typeof props.initialSelectedIndex === 'number') {
+      defaultSelectedIndex = props.initialSelectedIndex;
+      if (process && process.env && process.NODE_ENV !== 'production') {
+        console.warn(
+          'MUICSS DEPRECATION WARNING: '
+          + 'property "initialSelectedIndex" on the muicss Tabs component is deprecated in favor of "defaultSelectedIndex". '
+          + 'It will be removed in a future release.'
+        );
+      }
+    }
+    else {
+      defaultSelectedIndex = props.defaultSelectedIndex;
+    }
+    /*
+     * End deprecation warning
+     */
     super(props);
-    this.state = {currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : props.initialSelectedIndex};
+    this.state = {currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex};
   }
 
   static propTypes = {
+    defaultSelectedIndex: PropTypes.number,
+    /* 
+     * @deprecated
+     */
     initialSelectedIndex: PropTypes.number,
     justified: PropTypes.bool,
     onChange: PropTypes.func,
@@ -39,7 +64,11 @@ class Tabs extends React.Component {
 
   static defaultProps = {
     className: '',
-    initialSelectedIndex: 0,
+    defaultSelectedIndex: 0,
+    /*
+     * @deprecated
+     */
+    initialSelectedIndex: null,
     justified: false,
     onChange: null,
     selectedIndex: null
@@ -60,7 +89,7 @@ class Tabs extends React.Component {
   }
 
   render() {
-    const { children, initialSelectedIndex, justified, selectedIndex,
+    const { children, defaultSelectedIndex, initialSelectedIndex, justified, selectedIndex,
       ...reactProps } = this.props;
 
     let tabs = Array.isArray(children) ? children : [children];
