@@ -26,25 +26,56 @@ const PropTypes = React.PropTypes,
  */
 class Tabs extends React.Component {
   constructor(props) {
+    /*
+     * The following code exists only to warn about deprecating props.initialSelectedIndex in favor of props.defaultSelectedIndex.
+     * It can be removed once support for props.initialSelectedIndex is officially dropped.
+     */
+    let defaultSelectedIndex;
+    if (typeof props.initialSelectedIndex === 'number') {
+      defaultSelectedIndex = props.initialSelectedIndex;
+      if (console && process && process.env && process.NODE_ENV !== 'production') {
+        console.warn(
+          'MUICSS DEPRECATION WARNING: '
+          + 'property "initialSelectedIndex" on the muicss Tabs component is deprecated in favor of "defaultSelectedIndex". '
+          + 'It will be removed in a future release.'
+        );
+      }
+    }
+    else {
+      defaultSelectedIndex = props.defaultSelectedIndex;
+    }
+    /*
+     * End deprecation warning
+     */
     super(props);
-    this.state = {currentSelectedIndex: props.initialSelectedIndex};
+    this.state = {currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex};
   }
 
   static propTypes = {
+    defaultSelectedIndex: PropTypes.number,
+    /* 
+     * @deprecated
+     */
     initialSelectedIndex: PropTypes.number,
     justified: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    selectedIndex: PropTypes.number
   };
 
   static defaultProps = {
     className: '',
-    initialSelectedIndex: 0,
+    defaultSelectedIndex: 0,
+    /*
+     * @deprecated
+     */
+    initialSelectedIndex: null,
     justified: false,
-    onChange: null
+    onChange: null,
+    selectedIndex: null
   };
 
   onClick(i, tab, ev) {
-    if (i !== this.state.currentSelectedIndex) {
+    if ((typeof this.props.selectedIndex === 'number' && i !== this.props.selectedIndex) || i !== this.state.currentSelectedIndex) {
       this.setState({currentSelectedIndex: i});
 
       // onActive callback
@@ -58,14 +89,14 @@ class Tabs extends React.Component {
   }
 
   render() {
-    const { children, initialSelectedIndex, justified,
+    const { children, defaultSelectedIndex, initialSelectedIndex, justified, selectedIndex,
       ...reactProps } = this.props;
 
     let tabs = Array.isArray(children) ? children : [children];
     let tabEls = [],
         paneEls = [],
         m = tabs.length,
-        selectedIndex = this.state.currentSelectedIndex % m,
+        currentSelectedIndex = (typeof selectedIndex === 'number' ? selectedIndex : this.state.currentSelectedIndex) % m,
         isActive,
         item,
         cls,
@@ -77,7 +108,7 @@ class Tabs extends React.Component {
       // only accept MUITab elements
       if (item.type !== Tab) util.raiseError('Expecting MUITab React Element');
 
-      isActive = (i === selectedIndex) ? true : false;
+      isActive = (i === currentSelectedIndex) ? true : false;
 
       // tab element
       tabEls.push(

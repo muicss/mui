@@ -32,15 +32,19 @@ describe('react/tabs', function() {
 
     assert.equal(result.props.className, 'additional');
   });
+
+
   it('renders with one Tab as child', function() {
     let result = ReactDOMServer.renderToStaticMarkup(
       <Tabs>
         <Tab>ABC</Tab>
       </Tabs>
     );
-    assert.equal((result.match(/ABC/g) || []).length, 1);
 
+    assert.equal((result.match(/ABC/g) || []).length, 1);
   });
+
+
   it('renders with two Tabs as children', function() {
     let result = ReactDOMServer.renderToStaticMarkup(
       <Tabs>
@@ -48,10 +52,9 @@ describe('react/tabs', function() {
         <Tab>ABC</Tab>
       </Tabs>
     );
+
     assert.equal((result.match(/ABC/g) || []).length, 2);
-
   });
-
 
 
   it('renders properly with additional styles', function() {
@@ -62,5 +65,35 @@ describe('react/tabs', function() {
     );
 
     assert.equal(result.props.style.additonal, 'style');
+  });
+
+
+  it('can be used as a controlled component', function() {
+    var TestApp = React.createClass({
+      getInitialState: function() {
+        return {tabIndex: 1};
+      },
+      render: function() {
+        return (
+          <Tabs selectedIndex={this.state.tabIndex}>
+            <Tab>ABC</Tab>
+            <Tab>DEF</Tab>
+          </Tabs>
+        );
+      }
+    });
+
+    let instance = ReactUtils.renderIntoDocument(<TestApp />),
+        findElements = ReactUtils.scryRenderedDOMComponentsWithClass,
+        paneEl;
+
+    // check default value
+    paneEl = findElements(instance, 'mui--is-active')[1];
+    assert.equal(paneEl.innerHTML, 'DEF');
+
+    // update state and check value
+    instance.setState({tabIndex: 0});
+    paneEl = findElements(instance, 'mui--is-active')[1];
+    assert.equal(paneEl.innerHTML, 'ABC');
   });
 });

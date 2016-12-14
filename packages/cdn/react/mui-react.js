@@ -132,7 +132,72 @@
   react.Textarea = require('src/react/textarea');
 })(window);
 
-},{"src/react/appbar":11,"src/react/button":12,"src/react/caret":13,"src/react/checkbox":14,"src/react/col":15,"src/react/container":16,"src/react/divider":17,"src/react/dropdown":19,"src/react/dropdown-item":18,"src/react/form":20,"src/react/input":21,"src/react/option":22,"src/react/panel":23,"src/react/radio":24,"src/react/row":25,"src/react/select":26,"src/react/tab":27,"src/react/tabs":28,"src/react/textarea":29}],2:[function(require,module,exports){
+},{"src/react/appbar":12,"src/react/button":13,"src/react/caret":14,"src/react/checkbox":15,"src/react/col":16,"src/react/container":17,"src/react/divider":18,"src/react/dropdown":20,"src/react/dropdown-item":19,"src/react/form":21,"src/react/input":22,"src/react/option":23,"src/react/panel":24,"src/react/radio":25,"src/react/row":26,"src/react/select":27,"src/react/tab":28,"src/react/tabs":29,"src/react/textarea":30}],2:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+    && window.setImmediate;
+    var canPost = typeof window !== 'undefined'
+    && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return function (f) { return window.setImmediate(f) };
+    }
+
+    if (canPost) {
+        var queue = [];
+        window.addEventListener('message', function (ev) {
+            var source = ev.source;
+            if ((source === window || source === null) && ev.data === 'process-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        return function nextTick(fn) {
+            queue.push(fn);
+            window.postMessage('process-tick', '*');
+        };
+    }
+
+    return function nextTick(fn) {
+        setTimeout(fn, 0);
+    };
+})();
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+}
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 /**
@@ -146,7 +211,7 @@ module.exports = {
   debug: true
 };
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * MUI CSS/JS form helpers module
  * @module lib/forms.py
@@ -208,7 +273,7 @@ module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -593,7 +658,7 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -841,7 +906,7 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config":2,"./jqLite":4}],6:[function(require,module,exports){
+},{"../config":3,"./jqLite":5}],7:[function(require,module,exports){
 /**
  * MUI React helpers
  * @module react/_helpers
@@ -854,7 +919,7 @@ var controlledMessage = 'You provided a `value` prop to a form field ' + 'withou
 /** Module export */
 module.exports = { controlledMessage: controlledMessage };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * MUI React button module
  * @module react/button
@@ -1090,7 +1155,7 @@ Button.defaultProps = {
 exports.default = Button;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],8:[function(require,module,exports){
+},{"../js/lib/jqLite":5,"../js/lib/util":6,"react":"CwoHg3"}],9:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
@@ -1143,7 +1208,7 @@ Caret.defaultProps = {
 exports.default = Caret;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],9:[function(require,module,exports){
+},{"react":"CwoHg3"}],10:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -1201,7 +1266,7 @@ Tab.defaultProps = {
 exports.default = Tab;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],10:[function(require,module,exports){
+},{"react":"CwoHg3"}],11:[function(require,module,exports){
 /**
  * MUI React TextInput Component
  * @module react/text-field
@@ -1506,7 +1571,7 @@ TextField.defaultProps = {
 };
 exports.TextField = TextField;
 
-},{"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],11:[function(require,module,exports){
+},{"../js/lib/util":6,"./_helpers":7,"react":"CwoHg3"}],12:[function(require,module,exports){
 /**
  * MUI React Appbar Module
  * @module react/appbar
@@ -1563,11 +1628,11 @@ Appbar.defaultProps = {
 exports.default = Appbar;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],12:[function(require,module,exports){
-module.exports=require(7)
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"react":"CwoHg3"}],13:[function(require,module,exports){
+},{"react":"CwoHg3"}],13:[function(require,module,exports){
 module.exports=require(8)
-},{"react":"CwoHg3"}],14:[function(require,module,exports){
+},{"../js/lib/jqLite":5,"../js/lib/util":6,"react":"CwoHg3"}],14:[function(require,module,exports){
+module.exports=require(9)
+},{"react":"CwoHg3"}],15:[function(require,module,exports){
 /**
  * MUI React checkbox module
  * @module react/checkbox
@@ -1667,7 +1732,7 @@ Checkbox.defaultProps = {
 exports.default = Checkbox;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],15:[function(require,module,exports){
+},{"../js/lib/util":6,"./_helpers":7,"react":"CwoHg3"}],16:[function(require,module,exports){
 /**
  * MUI React Col Component
  * @module react/col
@@ -1772,7 +1837,7 @@ var Col = function (_React$Component) {
 exports.default = Col;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],16:[function(require,module,exports){
+},{"../js/lib/util":6,"react":"CwoHg3"}],17:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
@@ -1840,7 +1905,7 @@ Container.defaultProps = {
 exports.default = Container;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],17:[function(require,module,exports){
+},{"react":"CwoHg3"}],18:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -1894,7 +1959,7 @@ Divider.defaultProps = {
 exports.default = Divider;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],18:[function(require,module,exports){
+},{"react":"CwoHg3"}],19:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -1974,7 +2039,7 @@ DropdownItem.propTypes = {
 exports.default = DropdownItem;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],19:[function(require,module,exports){
+},{"../js/lib/util":6,"react":"CwoHg3"}],20:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -2224,7 +2289,7 @@ Dropdown.defaultProps = {
 exports.default = Dropdown;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":4,"../js/lib/util":5,"./button":7,"./caret":8,"react":"CwoHg3"}],20:[function(require,module,exports){
+},{"../js/lib/jqLite":5,"../js/lib/util":6,"./button":8,"./caret":9,"react":"CwoHg3"}],21:[function(require,module,exports){
 /**
  * MUI React form module
  * @module react/form
@@ -2291,7 +2356,7 @@ Form.defaultProps = {
 exports.default = Form;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],21:[function(require,module,exports){
+},{"react":"CwoHg3"}],22:[function(require,module,exports){
 /**                                                                            
  * MUI React Input Component
  * @module react/input
@@ -2342,7 +2407,7 @@ Input.defaultProps = {
 exports.default = Input;
 module.exports = exports['default'];
 
-},{"./text-field":10,"react":"CwoHg3"}],22:[function(require,module,exports){
+},{"./text-field":11,"react":"CwoHg3"}],23:[function(require,module,exports){
 /**
  * MUI React options module
  * @module react/option
@@ -2419,7 +2484,7 @@ Option.defaultProps = {
 exports.default = Option;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],23:[function(require,module,exports){
+},{"../js/lib/forms":4,"../js/lib/jqLite":5,"../js/lib/util":6,"./_helpers":7,"react":"CwoHg3"}],24:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -2477,7 +2542,7 @@ Panel.defaultProps = {
 exports.default = Panel;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],24:[function(require,module,exports){
+},{"react":"CwoHg3"}],25:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
@@ -2571,7 +2636,7 @@ Radio.defaultProps = {
 exports.default = Radio;
 module.exports = exports['default'];
 
-},{"react":"CwoHg3"}],25:[function(require,module,exports){
+},{"react":"CwoHg3"}],26:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
@@ -2637,7 +2702,7 @@ Row.defaultProps = {
 exports.default = Row;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"react":"CwoHg3"}],26:[function(require,module,exports){
+},{"../js/lib/util":6,"react":"CwoHg3"}],27:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
@@ -3074,9 +3139,10 @@ Menu.defaultProps = {
 exports.default = Select;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":3,"../js/lib/jqLite":4,"../js/lib/util":5,"./_helpers":6,"react":"CwoHg3"}],27:[function(require,module,exports){
-module.exports=require(9)
-},{"react":"CwoHg3"}],28:[function(require,module,exports){
+},{"../js/lib/forms":4,"../js/lib/jqLite":5,"../js/lib/util":6,"./_helpers":7,"react":"CwoHg3"}],28:[function(require,module,exports){
+module.exports=require(10)
+},{"react":"CwoHg3"}],29:[function(require,module,exports){
+(function (process){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -3120,16 +3186,33 @@ var Tabs = function (_React$Component) {
   function Tabs(props) {
     babelHelpers.classCallCheck(this, Tabs);
 
+    /*
+     * The following code exists only to warn about deprecating props.initialSelectedIndex in favor of props.defaultSelectedIndex.
+     * It can be removed once support for props.initialSelectedIndex is officially dropped.
+     */
+    var defaultSelectedIndex = void 0;
+    if (typeof props.initialSelectedIndex === 'number') {
+      defaultSelectedIndex = props.initialSelectedIndex;
+      if (console && process && process.env && process.NODE_ENV !== 'production') {
+        console.warn('MUICSS DEPRECATION WARNING: ' + 'property "initialSelectedIndex" on the muicss Tabs component is deprecated in favor of "defaultSelectedIndex". ' + 'It will be removed in a future release.');
+      }
+    } else {
+      defaultSelectedIndex = props.defaultSelectedIndex;
+    }
+    /*
+     * End deprecation warning
+     */
+
     var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
-    _this.state = { currentSelectedIndex: props.initialSelectedIndex };
+    _this.state = { currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex };
     return _this;
   }
 
   babelHelpers.createClass(Tabs, [{
     key: 'onClick',
     value: function onClick(i, tab, ev) {
-      if (i !== this.state.currentSelectedIndex) {
+      if (typeof this.props.selectedIndex === 'number' && i !== this.props.selectedIndex || i !== this.state.currentSelectedIndex) {
         this.setState({ currentSelectedIndex: i });
 
         // onActive callback
@@ -3146,16 +3229,18 @@ var Tabs = function (_React$Component) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
+          defaultSelectedIndex = _props.defaultSelectedIndex,
           initialSelectedIndex = _props.initialSelectedIndex,
           justified = _props.justified,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'initialSelectedIndex', 'justified']);
+          selectedIndex = _props.selectedIndex,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'defaultSelectedIndex', 'initialSelectedIndex', 'justified', 'selectedIndex']);
 
 
       var tabs = Array.isArray(children) ? children : [children];
       var tabEls = [],
           paneEls = [],
           m = tabs.length,
-          selectedIndex = this.state.currentSelectedIndex % m,
+          currentSelectedIndex = (typeof selectedIndex === 'number' ? selectedIndex : this.state.currentSelectedIndex) % m,
           isActive = void 0,
           item = void 0,
           cls = void 0,
@@ -3167,7 +3252,7 @@ var Tabs = function (_React$Component) {
         // only accept MUITab elements
         if (item.type !== _tab2.default) util.raiseError('Expecting MUITab React Element');
 
-        isActive = i === selectedIndex ? true : false;
+        isActive = i === currentSelectedIndex ? true : false;
 
         // tab element
         tabEls.push(_react2.default.createElement(
@@ -3213,20 +3298,31 @@ var Tabs = function (_React$Component) {
 
 
 Tabs.propTypes = {
+  defaultSelectedIndex: PropTypes.number,
+  /* 
+   * @deprecated
+   */
   initialSelectedIndex: PropTypes.number,
   justified: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  selectedIndex: PropTypes.number
 };
 Tabs.defaultProps = {
   className: '',
-  initialSelectedIndex: 0,
+  defaultSelectedIndex: 0,
+  /*
+   * @deprecated
+   */
+  initialSelectedIndex: null,
   justified: false,
-  onChange: null
+  onChange: null,
+  selectedIndex: null
 };
 exports.default = Tabs;
 module.exports = exports['default'];
 
-},{"../js/lib/util":5,"./tab":9,"react":"CwoHg3"}],29:[function(require,module,exports){
+}).call(this,require("pBGvAp"))
+},{"../js/lib/util":6,"./tab":10,"pBGvAp":2,"react":"CwoHg3"}],30:[function(require,module,exports){
 /**
  * MUI React Textarea Component
  * @module react/textarea
@@ -3274,4 +3370,4 @@ Textarea.defaultProps = {
 exports.default = Textarea;
 module.exports = exports['default'];
 
-},{"./text-field":10,"react":"CwoHg3"}]},{},[1])
+},{"./text-field":11,"react":"CwoHg3"}]},{},[1])

@@ -19,7 +19,12 @@
     <div class="mui-container">
       <h1>Tabs</h1>
       <div class="mui-panel">
+        <strong>Example1: Should have "Tab 2" selected by default</strong>
         <div id="tabs-example1"></div>
+        <br>
+        <br>
+        <strong>Example2: Should have "Tab 2" selected by default and toggle on click</strong>
+        <div id="tabs-example2"></div>
       </div>
     </div>
     <script type="text/babel">
@@ -41,7 +46,8 @@
           return (
             <Tabs
               onChange={this.onChange}
-              initialSelectedIndex={1}>
+              defaultSelectedIndex={1}
+            >
               <Tab
                 value="pane-1"
                 label="Tab 1"
@@ -58,7 +64,56 @@
       }
 
 
+      // `selectedIndex` example
+      class Example2 extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            selectedIndex: 1
+          };
+        }
+
+        onClick(ev) {
+          let newVal = + !this.state.selectedIndex;
+          this.setState({selectedIndex: newVal});
+        }
+
+        onChange(i, value, tab, ev) {
+          console.log(arguments)
+        }
+
+        onActive(tab) {
+          console.log(arguments);
+        }
+
+        render() {
+          return (
+            <div>
+              <Tabs
+                onChange={this.onChange}
+                selectedIndex={this.state.selectedIndex}
+              >
+                <Tab
+                  value="pane-1"
+                  label="Tab 1"
+                  onActive={this.onActive}
+                >
+                  Content 1
+                </Tab>
+                <Tab value="pane-2" label="Tab 2">
+                  Content 2
+                </Tab>
+              </Tabs>
+              <a href="#" onClick={this.onClick.bind(this)}>Toggle tab</a>
+            </div>
+          );
+        }
+      }
+
+
       ReactDOM.render(<Example1 />, document.getElementById('tabs-example1'));
+      ReactDOM.render(<Example2 />, document.getElementById('tabs-example2'));
     </script>
   </body>
 </html>
