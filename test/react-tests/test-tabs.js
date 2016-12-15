@@ -96,4 +96,29 @@ describe('react/tabs', function() {
     paneEl = findElements(instance, 'mui--is-active')[1];
     assert.equal(paneEl.innerHTML, 'ABC');
   });
+
+
+  it('can support list of tab elements', function() {
+    let instance = ReactUtils.renderIntoDocument(
+      <Tabs>
+        {
+          [1, 2, 3].map(function(val) {
+            return <Tab key={val}>{val}</Tab>;
+          })
+        }
+      </Tabs>
+    );
+
+    // get panes
+    let panes = ReactUtils
+      .scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane');
+
+    // check number
+    assert.equal(panes.length, 3);
+
+    // check content
+    [1, 2, 3].map(function(val, i) {
+      assert.equal(panes[i].innerHTML, val);
+    });
+  });
 });
