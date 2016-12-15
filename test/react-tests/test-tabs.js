@@ -121,4 +121,30 @@ describe('react/tabs', function() {
       assert.equal(panes[i].innerHTML, val);
     });
   });
+
+
+  it('can support mixed static and dynamic children', function() {
+    let instance = ReactUtils.renderIntoDocument(
+      <Tabs>
+        <Tab>0</Tab>
+        {
+          [1, 2, 3].map(function(val) {
+            return <Tab key={val}>{val}</Tab>;
+          })
+        }
+      </Tabs>
+    );
+
+    // get panes
+    let panes = ReactUtils
+      .scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane');
+
+    // check number
+    assert.equal(panes.length, 4);
+
+    // check content
+    [0, 1, 2, 3].map(function(val, i) {
+      assert.equal(panes[i].innerHTML, val);
+    });
+  });  
 });
