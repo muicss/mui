@@ -92,7 +92,7 @@ class Tabs extends React.Component {
     const { children, defaultSelectedIndex, initialSelectedIndex, justified, selectedIndex,
       ...reactProps } = this.props;
 
-    let tabs = Array.isArray(children) ? children : [children];
+    let tabs = React.Children.toArray(children);
     let tabEls = [],
         paneEls = [],
         m = tabs.length,

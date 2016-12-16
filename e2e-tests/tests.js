@@ -25198,7 +25198,7 @@ var Tabs = function (_React$Component) {
           reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'defaultSelectedIndex', 'initialSelectedIndex', 'justified', 'selectedIndex']);
 
 
-      var tabs = Array.isArray(children) ? children : [children];
+      var tabs = _react2.default.Children.toArray(children);
       var tabEls = [],
           paneEls = [],
           m = tabs.length,
@@ -27503,6 +27503,49 @@ describe('react/select', function () {
     _assert2.default.equal(wrapperEl.children[0].tagName, 'SELECT');
   });
 
+  it('supports dynamic list of children', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _select2.default,
+      null,
+      [1, 2, 3].map(function (val, i) {
+        return _react2.default.createElement(_option2.default, { key: i, value: val });
+      })
+    ));
+
+    // get options
+    var optionEls = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithTag(instance, 'option');
+
+    // check number
+    _assert2.default.equal(optionEls.length, 3);
+
+    // check content
+    [1, 2, 3].map(function (val, i) {
+      _assert2.default.equal(optionEls[i].value, val);
+    });
+  });
+
+  it('supports mixed static and dynamic children', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _select2.default,
+      null,
+      _react2.default.createElement(_option2.default, { value: 0 }),
+      [1, 2, 3].map(function (val, i) {
+        return _react2.default.createElement(_option2.default, { key: i, value: val });
+      })
+    ));
+
+    // get options
+    var optionEls = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithTag(instance, 'option');
+
+    // check number
+    _assert2.default.equal(optionEls.length, 4);
+
+    // check content
+    [0, 1, 2, 3].map(function (val, i) {
+      _assert2.default.equal(optionEls[i].value, val);
+    });
+  });
+
   it('renders properly with additional classNames', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(
       _select2.default,
@@ -27941,6 +27984,36 @@ describe('react/tabs', function () {
 
     // check content
     [1, 2, 3].map(function (val, i) {
+      _assert2.default.equal(panes[i].innerHTML, val);
+    });
+  });
+
+  it('can support mixed static and dynamic children', function () {
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(
+      _tabs2.default,
+      null,
+      _react2.default.createElement(
+        _tab2.default,
+        null,
+        '0'
+      ),
+      [1, 2, 3].map(function (val) {
+        return _react2.default.createElement(
+          _tab2.default,
+          { key: val },
+          val
+        );
+      })
+    ));
+
+    // get panes
+    var panes = _reactAddonsTestUtils2.default.scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane');
+
+    // check number
+    _assert2.default.equal(panes.length, 4);
+
+    // check content
+    [0, 1, 2, 3].map(function (val, i) {
       _assert2.default.equal(panes[i].innerHTML, val);
     });
   });

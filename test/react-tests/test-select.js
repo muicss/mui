@@ -56,6 +56,57 @@ describe('react/select', function() {
   });
 
 
+  it('supports dynamic list of children', function() {
+    let instance = ReactUtils.renderIntoDocument(
+      <Select>
+        {
+          [1, 2, 3].map(function(val, i) {
+            return <Option key={i} value={val} />;
+          })
+        }
+      </Select>
+    );
+
+    // get options
+    let optionEls = ReactUtils
+      .scryRenderedDOMComponentsWithTag(instance, 'option');
+
+    // check number
+    assert.equal(optionEls.length, 3);
+
+    // check content
+    [1, 2, 3].map(function(val, i) {
+      assert.equal(optionEls[i].value, val);
+    });
+  });
+
+
+  it('supports mixed static and dynamic children', function() {
+    let instance = ReactUtils.renderIntoDocument(
+      <Select>
+        <Option value={0} />
+        {
+          [1, 2, 3].map(function(val, i) {
+            return <Option key={i} value={val} />;
+          })
+        }
+      </Select>
+    );
+
+    // get options
+    let optionEls = ReactUtils
+      .scryRenderedDOMComponentsWithTag(instance, 'option');
+
+    // check number
+    assert.equal(optionEls.length, 4);
+
+    // check content
+    [0, 1, 2, 3].map(function(val, i) {
+      assert.equal(optionEls[i].value, val);
+    });
+  });
+
+
   it('renders properly with additional classNames', function() {
     let result = getShallowRendererOutput(
       <Select className="additional">
