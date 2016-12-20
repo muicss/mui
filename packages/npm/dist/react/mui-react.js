@@ -98,41 +98,6 @@
     return call && (typeof call === "object" || typeof call === "function") ? call : self;
   };
 })(typeof global === "undefined" ? self : global);(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
-/**
- * MUI React main module
- * @module react/main
- */
-
-(function (win) {
-  // return if library has been loaded already
-  if (win._muiReactLoaded) return;else win._muiReactLoaded = true;
-
-  var mui = win.mui = win.mui || [],
-      react = mui.react = {},
-      lib;
-
-  react.Appbar = require('src/react/appbar');
-  react.Button = require('src/react/button');
-  react.Caret = require('src/react/caret');
-  react.Checkbox = require('src/react/checkbox');
-  react.Col = require('src/react/col');
-  react.Container = require('src/react/container');
-  react.Divider = require('src/react/divider');
-  react.Dropdown = require('src/react/dropdown'), react.DropdownItem = require('src/react/dropdown-item'), react.Form = require('src/react/form');
-  react.Input = require('src/react/input');
-  react.Option = require('src/react/option');
-  react.Panel = require('src/react/panel');
-  react.Radio = require('src/react/radio');
-  react.Row = require('src/react/row');
-  react.Select = require('src/react/select');
-  react.Tab = require('src/react/tab');
-  react.Tabs = require('src/react/tabs');
-  react.Textarea = require('src/react/textarea');
-})(window);
-
-},{"src/react/appbar":12,"src/react/button":13,"src/react/caret":14,"src/react/checkbox":15,"src/react/col":16,"src/react/container":17,"src/react/divider":18,"src/react/dropdown":20,"src/react/dropdown-item":19,"src/react/form":21,"src/react/input":22,"src/react/option":23,"src/react/panel":24,"src/react/radio":25,"src/react/row":26,"src/react/select":27,"src/react/tab":28,"src/react/tabs":29,"src/react/textarea":30}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -197,7 +162,42 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
+'use strict';
+
+/**
+ * MUI React main module
+ * @module react/main
+ */
+
+(function (win) {
+  // return if library has been loaded already
+  if (win._muiReactLoaded) return;else win._muiReactLoaded = true;
+
+  var mui = win.mui = win.mui || [],
+      react = mui.react = {},
+      lib;
+
+  react.Appbar = require('src/react/appbar');
+  react.Button = require('src/react/button');
+  react.Caret = require('src/react/caret');
+  react.Checkbox = require('src/react/checkbox');
+  react.Col = require('src/react/col');
+  react.Container = require('src/react/container');
+  react.Divider = require('src/react/divider');
+  react.Dropdown = require('src/react/dropdown'), react.DropdownItem = require('src/react/dropdown-item'), react.Form = require('src/react/form');
+  react.Input = require('src/react/input');
+  react.Option = require('src/react/option');
+  react.Panel = require('src/react/panel');
+  react.Radio = require('src/react/radio');
+  react.Row = require('src/react/row');
+  react.Select = require('src/react/select');
+  react.Tab = require('src/react/tab');
+  react.Tabs = require('src/react/tabs');
+  react.Textarea = require('src/react/textarea');
+})(window);
+
+},{"src/react/appbar":12,"src/react/button":13,"src/react/caret":14,"src/react/checkbox":15,"src/react/col":16,"src/react/container":17,"src/react/divider":18,"src/react/dropdown":20,"src/react/dropdown-item":19,"src/react/form":21,"src/react/input":22,"src/react/option":23,"src/react/panel":24,"src/react/radio":25,"src/react/row":26,"src/react/select":27,"src/react/tab":28,"src/react/tabs":29,"src/react/textarea":30}],3:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3236,7 +3236,7 @@ var Tabs = function (_React$Component) {
           reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'defaultSelectedIndex', 'initialSelectedIndex', 'justified', 'selectedIndex']);
 
 
-      var tabs = Array.isArray(children) ? children : [children];
+      var tabs = _react2.default.Children.toArray(children);
       var tabEls = [],
           paneEls = [],
           m = tabs.length,
@@ -3321,8 +3321,8 @@ Tabs.defaultProps = {
 exports.default = Tabs;
 module.exports = exports['default'];
 
-}).call(this,require("pBGvAp"))
-},{"../js/lib/util":6,"./tab":10,"pBGvAp":2,"react":"CwoHg3"}],30:[function(require,module,exports){
+}).call(this,require("rh2vBp"))
+},{"../js/lib/util":6,"./tab":10,"react":"CwoHg3","rh2vBp":1}],30:[function(require,module,exports){
 /**
  * MUI React Textarea Component
  * @module react/textarea
@@ -3370,4 +3370,4 @@ Textarea.defaultProps = {
 exports.default = Textarea;
 module.exports = exports['default'];
 
-},{"./text-field":11,"react":"CwoHg3"}]},{},[1])
+},{"./text-field":11,"react":"CwoHg3"}]},{},[2])

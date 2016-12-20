@@ -13,8 +13,8 @@ MUI is a lightweight CSS framework that follows Google's Material Design guideli
 **Use From the CDN:**
 
 ```html
-<link href="//cdn.muicss.com/mui-0.9.6/css/mui.min.css" rel="stylesheet" type="text/css" />
-<script src="//cdn.muicss.com/mui-0.9.6/js/mui.min.js"></script>
+<link href="//cdn.muicss.com/mui-0.9.7/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.9.7/js/mui.min.js"></script>
 ```
 
 Or for development you can use the latest:
@@ -84,14 +84,14 @@ MUI is tested and works in:
 1. Build examples
 
    ```bash
-   $ ./node_modules/.bin/gulp examples:build
+   $ npm run build-examples
    ```
 
    To view the examples you can use any static file server. To use the nodejs `http-server` module:
 
    ```bash
    $ npm install http-server
-   $ ./node_modules/.bin/http-server -p 3000
+   $ npm run http-server -- -p 3000
    ```
 
    Then visit http://localhost:3000/examples
@@ -111,7 +111,7 @@ $ npm test
 To run the E2E tests first compile the unit test files into a version that runs in the browser:
 
 ```bash
-$ ./node_modules/.bin/gulp e2e-tests:build
+$ npm run build-e2e-tests
 ```
 
 Then visit http://localhost:3000/e2e-tests
@@ -121,7 +121,7 @@ Then visit http://localhost:3000/e2e-tests
 ### CDN
 
 ```bash
-$ ./node_modules/.bin/gulp cdn:build
+$ npm run build-cdn
 ```
 
 The build will be located in the `packages/cdn` directory:
@@ -164,7 +164,7 @@ cdn/
 ### NPM
 
 ```bash
-$ ./node_modules/.bin/gulp npm:build
+$ npm run build-npm
 ```
 
 The NPM package is located in the `packages/npm` directory.
@@ -172,7 +172,7 @@ The NPM package is located in the `packages/npm` directory.
 ### Meteor
 
 ```bash
-$ ./node_modules/.bin/gulp meteor:build
+$ npm run build-meteor
 ```
 
 The Meteor package is located in the `packages/meteor` directory.

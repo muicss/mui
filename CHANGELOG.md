@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.9.7 - December 20, 2016
+
+* Fixed static/dynamic content bug in React Tabs component
+* Added support for controlled tabs in React Tabs component
+* Changed `initialSelectedIndex` to `defaultSelectedIndex` in React Tabs
+  component
+
 ## 0.9.6 - December 3, 2016
 
 * Fixed bug in React Select component that added `name` property to outer

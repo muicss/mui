@@ -92,7 +92,7 @@ var Tabs = function (_React$Component) {
           reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'defaultSelectedIndex', 'initialSelectedIndex', 'justified', 'selectedIndex']);
 
 
-      var tabs = Array.isArray(children) ? children : [children];
+      var tabs = _react2.default.Children.toArray(children);
       var tabEls = [],
           paneEls = [],
           m = tabs.length,

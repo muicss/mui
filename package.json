@@ -1,5 +1,5 @@
 {
-  "version": "0.9.6",
+  "version": "0.9.7",
   "license": "MIT",
   "description": "Source code for MUI",
   "homepage": "https://www.muicss.com",
@@ -12,6 +12,15 @@
     "url": "https://github.com/muicss/mui.git"
   },
   "scripts": {
+    "build-all": "gulp build-all",
+    "build-examples": "gulp examples:build",
+    "build-e2e-tests": "gulp e2e-tests:build",
+    "build-packages": "gulp build-packages",
+    "build-cdn": "gulp cdn:build",
+    "build-meteor": "gulp meteor:build",
+    "build-npm": "gulp npm:build",
+    "gulp": "gulp",
+    "http-server": "http-server",
     "test": "mocha"
   },
   "devDependencies": {
