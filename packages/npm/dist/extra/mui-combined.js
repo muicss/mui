@@ -644,8 +644,10 @@ var config = require('../config'),
     jqLite = require('./jqLite'),
     scrollLock = 0,
     scrollLockCls = 'mui-scroll-lock',
+    scrollLockPos,
     scrollStyleEl,
     scrollEventHandler,
+    _scrollBarWidth,
     _supportsPointerEvents;
 
 
@@ -785,29 +787,30 @@ function enableScrollLockFn() {
   
   // add lock
   if (scrollLock === 1) {
-    var htmlEl = document.documentElement,
-        top = jqLite.scrollTop(window),
-        left = jqLite.scrollLeft(window),
+    var doc = document,
+        win = window,
+        htmlEl = doc.documentElement,
+        bodyEl = doc.body,
+        scrollBarWidth = getScrollBarWidth(),
         cssProps,
-        cssStr;
+        cssStr,
+        x;
 
     // define scroll lock class dynamically
-    cssProps = [
-      'position:fixed',
-      'top:' + -top + 'px',
-      'right:0',
-      'bottom:0',
-      'left:' + -left + 'px'
-    ];
+    cssProps = ['overflow:hidden'];
 
-    // scrollbar-y
-    if (htmlEl.scrollHeight > htmlEl.clientHeight) {
-      cssProps.push('overflow-y:scroll');
-    }
+    if (scrollBarWidth) {
+      // scrollbar-y
+      if (htmlEl.scrollHeight > htmlEl.clientHeight) {
+        x = parseInt(jqLite.css(bodyEl, 'padding-right')) + scrollBarWidth;
+        cssProps.push('padding-right:' + x + 'px');
+      }
     
-    // scrollbar-x
-    if (htmlEl.scrollWidth > htmlEl.clientWidth) {
-      cssProps.push('overflow-x:scroll');
+      // scrollbar-x
+      if (htmlEl.scrollWidth > htmlEl.clientWidth) {
+        x = parseInt(jqLite.css(bodyEl, 'padding-bottom')) + scrollBarWidth;
+        cssProps.push('padding-bottom:' + x + 'px');
+      }
     }
 
     // define css class dynamically
@@ -816,10 +819,11 @@ function enableScrollLockFn() {
     scrollStyleEl = loadStyleFn(cssStr);
 
     // cancel 'scroll' event listener callbacks
-    jqLite.on(window, 'scroll', scrollEventHandler, true);
+    jqLite.on(win, 'scroll', scrollEventHandler, true);
 
     // add scroll lock
-    jqLite.addClass(htmlEl, scrollLockCls);
+    scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
+    jqLite.addClass(bodyEl, scrollLockCls);
   }
 }
 
@@ -837,21 +841,41 @@ function disableScrollLockFn(resetPos) {
 
   // remove lock 
   if (scrollLock === 0) {
-    var htmlEl = document.documentElement,
-        top = parseInt(jqLite.css(htmlEl, 'top')),
-        left = parseInt(jqLite.css(htmlEl, 'left'));
-
     // remove scroll lock and delete style element
-    jqLite.removeClass(htmlEl, scrollLockCls);
+    jqLite.removeClass(document.body, scrollLockCls);
     scrollStyleEl.parentNode.removeChild(scrollStyleEl);
 
     // restore scroll position
-    window.scrollTo(-left, -top);      
+    if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top);
 
     // restore scroll event listeners
     jqLite.off(window, 'scroll', scrollEventHandler, true);
   }
 }
+
+/**
+ * Return scroll bar width.
+ */
+var getScrollBarWidth = function() {
+  // check cache
+  if (_scrollBarWidth !== undefined) return _scrollBarWidth;
+  
+  // calculate scroll bar width
+  var doc = document,
+      bodyEl = doc.body,
+      el = doc.createElement('div');
+
+  el.innerHTML = '<div style="width:50px;height:50px;position:absolute;' + 
+    'left:-50px;top:-50px;overflow:auto;"><div style="width:1px;' + 
+    'height:100px;"></div></div>';
+  el = el.firstChild;
+  bodyEl.appendChild(el);
+  _scrollBarWidth = el.offsetWidth - el.clientWidth;
+  bodyEl.removeChild(el);
+
+  return _scrollBarWidth;
+}
+
 
 /**
  * requestAnimationFrame polyfilled
@@ -1955,6 +1979,9 @@ function initialize(inputEl) {
 
   // add dirty class on focus
   jqLite.on(inputEl, 'focus', function() {jqLite.addClass(this, dirtyClass);});
+
+  // add dirty class if element is currently focused
+  if (document.activeElement === inputEl) jqLite.addClass(inputEl, dirtyClass);
 }
 
 

@@ -163,7 +163,7 @@ function enableScrollLockFn() {
         x;
 
     // define scroll lock class dynamically
-    cssProps = ['overflow:hidden', 'padding-right:30px'];
+    cssProps = ['overflow:hidden'];
 
     if (scrollBarWidth) {
       // scrollbar-y

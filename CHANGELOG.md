@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.9.8 - January 12, 2017
+
+* Reverted to body method for scroll lock
+* Fixed bug causing issues with validation of required input fields when MUI
+  JS is loaded asynchronously
+
 ## 0.9.7 - December 20, 2016
 
 * Fixed static/dynamic content bug in React Tabs component
