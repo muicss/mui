@@ -32,6 +32,9 @@ function initialize(inputEl) {
 
   // add dirty class on focus
   jqLite.on(inputEl, 'focus', function() {jqLite.addClass(this, dirtyClass);});
+
+  // add dirty class if element is currently focused
+  if (document.activeElement === inputEl) jqLite.addClass(inputEl, dirtyClass);
 }
 
 
