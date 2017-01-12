@@ -8,6 +8,8 @@ import React from 'react';
 import ReactUtils from 'react-addons-test-utils';
 import ReactDOM from 'react-dom';
 
+import { requestAnimationFrame } from '../../src/js/lib/util';
+import jqLite from '../../src/js/lib/jqLite';
 import Button from '../../src/react/button';
 
 import { getShallowRendererOutput } from '../lib/react-helpers';
@@ -127,25 +129,26 @@ describe('react/button', function() {
 
     // check state before click
     assert.equal(node.state.ripple, null);
-    assert.equal(rippleEl.className.includes('mui--is-visible'), false);
+    assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), false);
 
     // trigger ripple
     ReactUtils.Simulate.mouseDown(buttonEl);
 
     // check state after click
     assert.notEqual(node.state.ripple, null)
-    assert.equal(rippleEl.className.includes('mui--is-visible'), true);
-    assert.equal(rippleEl.className.includes('mui--is-animating'), false);
+    assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), true);
+    assert.equal(jqLite.hasClass(rippleEl, 'mui--is-animating'), false);
 
     // check animation
-    setTimeout(function() {
-      assert.equal(rippleEl.className.includes('mui--is-animating'), true);
-      done();
+    requestAnimationFrame(function() {
+      assert.equal(jqLite.hasClass(rippleEl, 'mui--is-animating'), true);
 
       // remove ripple
       ReactUtils.Simulate.mouseUp(node.refs.buttonEl);
       assert.equal(node.state.ripple, null);
-      assert.equal(rippleEl.className.includes('mui--is-visible'), false);
-    }, 0);
+      assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), false);
+
+      done();
+    });
   });
 });
