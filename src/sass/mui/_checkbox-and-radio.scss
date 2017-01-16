@@ -16,6 +16,14 @@
     font-weight: normal;
     cursor: pointer;
   }
+
+  input:disabled {
+    cursor: $mui-cursor-disabled;
+  }
+  
+  input:focus {
+    @include mui-tab-focus();
+  }
 }
 
 .mui-radio > label > input[type="radio"],

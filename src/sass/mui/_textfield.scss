@@ -26,8 +26,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
   > input,
   > textarea {
-    display: block;
-
     &:focus ~ label {
       color: $mui-input-border-color-focus;
     }
@@ -93,6 +91,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
 .mui-textfield > input,
 .mui-textfield > textarea {
+  box-sizing: border-box;
   display: block;
   background-color: $mui-input-bg-color;
   color: $mui-input-font-color;
@@ -100,10 +99,14 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   border-bottom: 1px solid $mui-input-border-color;
   outline: none;
   width: 100%;
-  font-size: $mui-input-font-size;
   padding: 0;
   box-shadow: none;
   border-radius: 0px;
+
+  // Typography
+  font-size: $mui-input-font-size;
+  font-family: inherit;
+  line-height: inherit; 
 
   // Bugfix for firefox-android
   background-image: none;

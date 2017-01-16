@@ -137,38 +137,50 @@ function buildCdn(dirname) {
 
 function buildCdnCss(dirname) {
   return makeTask('build-cdn-css: ' + dirname, function() {
-    var baseStream = gulp.src('./src/sass/mui.scss')
-      .pipe(plugins.sass({outputStyle: 'expanded'}))
-      .pipe(plugins.autoprefixer({
-        browsers: ['last 2 versions'],
-        cascade: false
-      }))
-      .on('error', function(err) {console.log(err.message);})
-      .pipe(plugins.rename('mui.css'))
-      .pipe(gulp.dest(dirname));
 
-    // ltr
-    var stream1 = baseStream
-      .pipe(plugins.cssmin({advanced: false}))
-      .pipe(plugins.rename('mui.min.css'))
-      .pipe(gulp.dest(dirname));
+    function cssStream(filename) {
+      var basename = filename.split('.')[0];
 
-    // rtl
-    var stream2 = baseStream
-      .pipe(plugins.rtlcss())
-      .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
-        // switch right and left
-        if (match.endsWith('-left')) return match.replace('left', 'right')
-        else return match.replace('right', 'left');
-      }))
-      .pipe(plugins.injectString.append('html,body{direction:rtl;}'))
-      .pipe(plugins.rename('mui-rtl.css'))
-      .pipe(gulp.dest(dirname))
-      .pipe(plugins.cssmin({advanced: false}))
-      .pipe(plugins.rename('mui-rtl.min.css'))
-      .pipe(gulp.dest(dirname));
-    
-    return mergeStream(stream1, stream2);
+      // base stream
+      var baseStream = gulp.src('./src/sass/' + filename)
+        .pipe(plugins.sass({outputStyle: 'expanded'}))
+        .pipe(plugins.autoprefixer({
+          browsers: ['last 2 versions'],
+          cascade: false
+        }))
+        .on('error', function(err) {console.log(err.message);})
+        .pipe(plugins.rename(basename + '.css'))
+        .pipe(gulp.dest(dirname));
+
+      // left-to-right
+      var stream1 = baseStream
+        .pipe(plugins.cssmin({advanced: false}))
+        .pipe(plugins.rename(basename + '.min.css'))
+        .pipe(gulp.dest(dirname));
+
+      // right-to-left
+      var stream2 = baseStream
+        .pipe(plugins.rtlcss())
+        .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
+          // switch right and left
+          if (match.endsWith('-left')) return match.replace('left', 'right')
+          else return match.replace('right', 'left');
+        }))
+        .pipe(plugins.injectString.append('html,body{direction:rtl;}'))
+        .pipe(plugins.rename(basename + '-rtl.css'))
+        .pipe(gulp.dest(dirname))
+        .pipe(plugins.cssmin({advanced: false}))
+        .pipe(plugins.rename(basename + '-rtl.min.css'))
+        .pipe(gulp.dest(dirname));
+
+      return mergeStream(stream1, stream2);
+    }
+
+    // build versions with and without globals
+    return mergeStream(
+      cssStream('mui.scss'),
+      cssStream('mui-noglobals.scss')
+    );
   });
 }
 
