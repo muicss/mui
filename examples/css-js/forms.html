@@ -29,8 +29,8 @@
       <h2>Forms</h2>
       <div class="mui-panel">
         <h3>Form with placeholders</h3>
-        <form>
-          <div class="mui-form__title">Title</div>
+        <form class="mui-form">
+          <legend>Legend</legend>
           <div class="mui-textfield">
             <input type="text" placeholder="Placeholder 1">
           </div>
@@ -41,19 +41,37 @@
         </form>
 
         <h3>Form with fixed labels</h3>
-        <form>
-          <div class="mui-textfield">
-            <input type="text">
-            <label>Input 1</label>
-          </div>
-          <div class="mui-textfield">
-            <input type="text">
-            <label>Input 2</label>
-          </div>
-          <div class="mui-textfield">
-            <textarea></textarea>
-            <label>Textarea</label>
-          </div>
+        <form class="mui-form">
+          <fieldset>
+            <legend>Fieldset1</legend>
+            <div class="mui-textfield">
+              <input type="text">
+              <label>Input 1</label>
+            </div>
+            <div class="mui-textfield">
+              <input type="text">
+              <label>Input 2</label>
+            </div>
+            <div class="mui-textfield">
+              <textarea></textarea>
+              <label>Textarea</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Fieldset2</legend>
+            <div class="mui-textfield">
+              <input type="text">
+              <label>Input 1</label>
+            </div>
+            <div class="mui-textfield">
+              <input type="text">
+              <label>Input 2</label>
+            </div>
+            <div class="mui-textfield">
+              <textarea></textarea>
+              <label>Textarea</label>
+            </div>
+          </fieldset>
           <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
         </form>
         

@@ -24291,10 +24291,10 @@ var Form = function (_React$Component) {
           inline = _props.inline,
           reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
 
-      var cls = '';
+      var cls = 'mui-form';
 
       // inline form
-      if (inline) cls = 'mui-form--inline';
+      if (inline) cls += ' mui-form--inline';
 
       return _react2.default.createElement(
         'form',
@@ -26969,7 +26969,7 @@ describe('react/form', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_form2.default, null));
 
     _assert2.default.equal(result.type, 'form');
-    _assert2.default.equal(result.props.className, ' ');
+    _assert2.default.equal(result.props.className, 'mui-form ');
   });
 
   it('renders properly with additional classNames', function () {
@@ -26979,7 +26979,7 @@ describe('react/form', function () {
       'test'
     ));
 
-    _assert2.default.equal(result.props.className, ' additional');
+    _assert2.default.equal(result.props.className, 'mui-form additional');
   });
 
   it('renders properly with additional styles', function () {
@@ -26996,7 +26996,7 @@ describe('react/form', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_form2.default, { inline: true }));
 
     _assert2.default.equal(result.type, 'form');
-    _assert2.default.equal(result.props.className, 'mui-form--inline ');
+    _assert2.default.equal(result.props.className, 'mui-form mui-form--inline ');
   });
 });
 
