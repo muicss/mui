@@ -1,3 +1,9 @@
+/**
+ * MUI Colors module
+ */
+/**
+ * MUI Globals
+ */
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Change the default font family in all browsers (opinionated).
@@ -446,21 +452,6 @@ template {
   display: none;
 }
 
-/**
- * MUI Colors module
- */
-/**
- * MUI Reboot
- */
-* {
-  box-sizing: border-box;
-}
-
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
 html {
   font-size: 10px;
   -webkit-tap-highlight-color: transparent;
@@ -473,15 +464,6 @@ body {
   line-height: 1.429;
   color: rgba(0, 0, 0, 0.87);
   background-color: #FFF;
-}
-
-input,
-button,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
 }
 
 a {
@@ -510,49 +492,12 @@ ol {
   margin-bottom: 10px;
 }
 
-figure {
-  margin: 0;
-}
-
-img {
-  vertical-align: middle;
-}
-
 hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.12);
-}
-
-legend {
-  display: block;
-  width: 100%;
-  padding: 0;
-  margin-bottom: 10px;
-  font-size: 21px;
-  color: rgba(0, 0, 0, 0.87);
-  line-height: inherit;
-  border: 0;
-}
-
-input[type="search"] {
-  box-sizing: border-box;
-  -webkit-appearance: none;
-}
-
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-input[type="radio"]:disabled,
-input[type="checkbox"]:disabled {
-  cursor: not-allowed;
 }
 
 strong {
@@ -642,8 +587,7 @@ h4, h5, h6 {
   display: inline-block;
   height: 36px;
   padding: 0 26px;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin: 6px 0;
   border: none;
   border-radius: 2px;
   cursor: pointer;
@@ -659,6 +603,7 @@ h4, h5, h6 {
   -ms-user-select: none;
   user-select: none;
   font-size: 14px;
+  font-family: inherit;
   letter-spacing: 0.03em;
   position: relative;
   overflow: hidden;
@@ -705,11 +650,23 @@ h4, h5, h6 {
   }
 }
 
+@supports (-ms-ime-align: auto) {
+  .mui-btn:hover, .mui-btn:focus {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .mui-btn:active:hover {
   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-btn:active:hover {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
   .mui-btn:active:hover {
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
   }
@@ -745,11 +702,23 @@ h4, h5, h6 {
   }
 }
 
+@supports (-ms-ime-align: auto) {
+  .mui-btn--raised, .mui-btn--fab {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .mui-btn--raised:active, .mui-btn--fab:active {
   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-btn--raised:active, .mui-btn--fab:active {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
   .mui-btn--raised:active, .mui-btn--fab:active {
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
   }
@@ -931,6 +900,18 @@ h4, h5, h6 {
   cursor: pointer;
 }
 
+.mui-radio input:disabled,
+.mui-checkbox input:disabled {
+  cursor: not-allowed;
+}
+
+.mui-radio input:focus,
+.mui-checkbox input:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
 .mui-radio > label > input[type="radio"],
 .mui-radio--inline > label > input[type="radio"],
 .mui-checkbox > label > input[type="checkbox"],
@@ -977,6 +958,7 @@ h4, h5, h6 {
  * MUI Container module
  */
 .mui-container {
+  box-sizing: border-box;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -1017,6 +999,7 @@ h4, h5, h6 {
 }
 
 .mui-container-fluid {
+  box-sizing: border-box;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -1097,6 +1080,7 @@ h4, h5, h6 {
   font-weight: normal;
   line-height: 1.429;
   color: rgba(0, 0, 0, 0.87);
+  text-decoration: none;
   white-space: nowrap;
 }
 
@@ -1125,9 +1109,27 @@ h4, h5, h6 {
 /**
  * MUI Form Component
  */
+.mui-form legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 21px;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: inherit;
+  border: 0;
+}
+
+.mui-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
 @media (min-width: 544px) {
   .mui-form--inline > .mui-textfield {
     display: inline-block;
+    vertical-align: bottom;
     margin-bottom: 0;
   }
   .mui-form--inline > .mui-radio,
@@ -1174,6 +1176,7 @@ h4, h5, h6 {
 }
 
 .mui-col-xs-1, .mui-col-sm-1, .mui-col-md-1, .mui-col-lg-1, .mui-col-xs-2, .mui-col-sm-2, .mui-col-md-2, .mui-col-lg-2, .mui-col-xs-3, .mui-col-sm-3, .mui-col-md-3, .mui-col-lg-3, .mui-col-xs-4, .mui-col-sm-4, .mui-col-md-4, .mui-col-lg-4, .mui-col-xs-5, .mui-col-sm-5, .mui-col-md-5, .mui-col-lg-5, .mui-col-xs-6, .mui-col-sm-6, .mui-col-md-6, .mui-col-lg-6, .mui-col-xs-7, .mui-col-sm-7, .mui-col-md-7, .mui-col-lg-7, .mui-col-xs-8, .mui-col-sm-8, .mui-col-md-8, .mui-col-lg-8, .mui-col-xs-9, .mui-col-sm-9, .mui-col-md-9, .mui-col-lg-9, .mui-col-xs-10, .mui-col-sm-10, .mui-col-md-10, .mui-col-lg-10, .mui-col-xs-11, .mui-col-sm-11, .mui-col-md-11, .mui-col-lg-11, .mui-col-xs-12, .mui-col-sm-12, .mui-col-md-12, .mui-col-lg-12 {
+  box-sizing: border-box;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -1633,6 +1636,12 @@ h4, h5, h6 {
   }
 }
 
+@supports (-ms-ime-align: auto) {
+  .mui-panel {
+    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+  }
+}
+
 /**
  * MUI Select Component
  */
@@ -1673,6 +1682,8 @@ h4, h5, h6 {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.87);
   font-size: 16px;
+  font-family: inherit;
+  line-height: inherit;
   padding: 0 25px 0 0;
 }
 
@@ -1741,6 +1752,13 @@ h4, h5, h6 {
   }
 }
 
+@supports (-ms-ime-align: auto) {
+  .mui-select__menu {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
 .mui-select__menu > div {
   padding: 0 22px;
   height: 42px;
@@ -1774,14 +1792,16 @@ h4, h5, h6 {
 /**
  * MUI Table Component
  */
-th {
-  text-align: left;
-}
-
 .mui-table {
   width: 100%;
   max-width: 100%;
   margin-bottom: 20px;
+}
+
+.mui-table > thead > tr > th,
+.mui-table > tbody > tr > th,
+.mui-table > tfoot > tr > th {
+  text-align: left;
 }
 
 .mui-table > thead > tr > th,
@@ -1905,11 +1925,6 @@ th {
   padding-top: 5px;
 }
 
-.mui-textfield > input,
-.mui-textfield > textarea {
-  display: block;
-}
-
 .mui-textfield > input:focus ~ label,
 .mui-textfield > textarea:focus ~ label {
   color: #2196F3;
@@ -1960,6 +1975,7 @@ th {
 
 .mui-textfield > input,
 .mui-textfield > textarea {
+  box-sizing: border-box;
   display: block;
   background-color: transparent;
   color: rgba(0, 0, 0, 0.87);
@@ -1967,10 +1983,12 @@ th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.26);
   outline: none;
   width: 100%;
-  font-size: 16px;
   padding: 0;
   box-shadow: none;
   border-radius: 0px;
+  font-size: 16px;
+  font-family: inherit;
+  line-height: inherit;
   background-image: none;
 }
 

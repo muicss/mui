@@ -14,11 +14,23 @@ var moduleName = 'mui.form'; /**
                               * @module angular/form
                               */
 
-_angular2.default.module(moduleName, []).directive('muiFormInline', function () {
+_angular2.default.module(moduleName, []).directive('muiForm', function () {
   return {
-    restrict: 'A',
-    link: function link(scope, element, attrs) {
-      element.addClass('mui-form--inline');
+    restrict: 'AE',
+    template: '<form class="mui-form"></form>',
+    transclude: true,
+    scope: true,
+    replace: true,
+    link: function link(scope, element, attrs, controller, transcludeFn) {
+      // use transcludeFn to pass ng-controller on parent element
+      transcludeFn(scope, function (clone) {
+        element.append(clone);
+      });
+
+      // handle inline forms
+      if (!_angular2.default.isUndefined(attrs.inline)) {
+        element.addClass('mui-form--inline');
+      }
     }
   };
 });

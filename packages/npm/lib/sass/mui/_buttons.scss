@@ -13,6 +13,14 @@
                 0 0px 2px rgba(mui-color('black'), 0.12),
                 0 2px 2px rgba(mui-color('black'), 0.20);
   }
+
+  // Edge
+  @supports (-ms-ime-align:auto) {
+    box-shadow: 0 -1px 2px rgba(mui-color('black'), 0.12),
+                -1px 0px 2px rgba(mui-color('black'), 0.12),
+                0 0px 2px rgba(mui-color('black'), 0.12),
+                0 2px 2px rgba(mui-color('black'), 0.20);
+  }
 }
 
 @mixin x-btn-box-shadow-active() {
@@ -21,6 +29,14 @@
   
   // IE10+
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    box-shadow: 0 -1px 2px rgba(mui-color('black'), 0.12),
+                -1px 0px 2px rgba(mui-color('black'), 0.12),
+                0 0px 4px rgba(mui-color('black'), 0.12),
+                1px 3px 4px rgba(mui-color('black'), 0.20);
+  }
+
+  // Edge
+  @supports (-ms-ime-align:auto) {
     box-shadow: 0 -1px 2px rgba(mui-color('black'), 0.12),
                 -1px 0px 2px rgba(mui-color('black'), 0.12),
                 0 0px 4px rgba(mui-color('black'), 0.12),
@@ -49,8 +65,7 @@
   display: inline-block;
   height: $mui-btn-height;
   padding: 0 $mui-btn-padding-horizontal;
-  margin-top: $mui-btn-margin-vertical;
-  margin-bottom: $mui-btn-margin-vertical;
+  margin: $mui-btn-margin-vertical 0;
   
   // Look and feel
   border: none;
@@ -66,6 +81,7 @@
   white-space: nowrap;
   user-select: none;
   font-size: $mui-btn-font-size;
+  font-family: inherit;
   letter-spacing: 0.03em;
 
   // For ripples

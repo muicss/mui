@@ -121,7 +121,8 @@ function buildCdn(dirname) {
     buildCdnAngular(dirname + '/angular'),
     buildCdnEmailInline(dirname + '/email'),
     buildCdnEmailStyletag(dirname + '/email'),
-    buildCdnColors(dirname + '/extra')
+    buildCdnColors(dirname + '/extra'),
+    buildCdnNoGlobals(dirname + '/extra')
   );
 
   var t2 = gulp.parallel(
@@ -137,50 +138,13 @@ function buildCdn(dirname) {
 
 function buildCdnCss(dirname) {
   return makeTask('build-cdn-css: ' + dirname, function() {
-
-    function cssStream(filename) {
-      var basename = filename.split('.')[0];
-
-      // base stream
-      var baseStream = gulp.src('./src/sass/' + filename)
-        .pipe(plugins.sass({outputStyle: 'expanded'}))
-        .pipe(plugins.autoprefixer({
-          browsers: ['last 2 versions'],
-          cascade: false
-        }))
-        .on('error', function(err) {console.log(err.message);})
-        .pipe(plugins.rename(basename + '.css'))
-        .pipe(gulp.dest(dirname));
-
-      // left-to-right
-      var stream1 = baseStream
-        .pipe(plugins.cssmin({advanced: false}))
-        .pipe(plugins.rename(basename + '.min.css'))
-        .pipe(gulp.dest(dirname));
-
-      // right-to-left
-      var stream2 = baseStream
-        .pipe(plugins.rtlcss())
-        .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
-          // switch right and left
-          if (match.endsWith('-left')) return match.replace('left', 'right')
-          else return match.replace('right', 'left');
-        }))
-        .pipe(plugins.injectString.append('html,body{direction:rtl;}'))
-        .pipe(plugins.rename(basename + '-rtl.css'))
-        .pipe(gulp.dest(dirname))
-        .pipe(plugins.cssmin({advanced: false}))
-        .pipe(plugins.rename(basename + '-rtl.min.css'))
-        .pipe(gulp.dest(dirname));
-
-      return mergeStream(stream1, stream2);
-    }
-
+    return cssStream('mui.scss', dirname);
+    
     // build versions with and without globals
-    return mergeStream(
-      cssStream('mui.scss'),
-      cssStream('mui-noglobals.scss')
-    );
+    //return mergeStream(
+    //cssStream('mui.scss'),
+    //cssStream('mui-noglobals.scss')
+    //);
   });
 }
 
@@ -307,6 +271,13 @@ function buildCdnColors(dirname) {
 }
 
 
+function buildCdnNoGlobals(dirname) {
+  return makeTask('build-cdn-noglobals: ' + dirname, function() {
+    return cssStream('mui-noglobals.scss', dirname);
+  });
+}
+
+
 function buildCdnJsCombined(dirname, cssDir) {
   return makeTask('build-cdn-js-combined: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-js-combined.js')
@@ -429,6 +400,7 @@ function buildMeteor() {
 }
 
 
+
 // ----------------------------------------------------------------------------
 // NPM TASKS
 // ----------------------------------------------------------------------------
@@ -517,4 +489,51 @@ function buildNpmBabelHelpersAngular() {
 
     done();
   });
+}
+
+
+
+// ----------------------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------------------
+
+function cssStream(filename, dirname) {
+  var basename = filename.split('.')[0],
+      rtlGlobalStr = 'html,body{direction:rtl;}';
+  
+  if (filename.indexOf('noglobals') >= 0) rtlGlobalStr = '';
+
+  // base stream
+  var baseStream = gulp.src('./src/sass/' + filename)
+    .pipe(plugins.sass({outputStyle: 'expanded'}))
+    .pipe(plugins.autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .on('error', function(err) {console.log(err.message);})
+    .pipe(plugins.rename(basename + '.css'))
+    .pipe(gulp.dest(dirname));
+  
+  // left-to-right
+  var stream1 = baseStream
+    .pipe(plugins.cssmin({advanced: false}))
+    .pipe(plugins.rename(basename + '.min.css'))
+    .pipe(gulp.dest(dirname));
+  
+  // right-to-left
+  var stream2 = baseStream
+    .pipe(plugins.rtlcss())
+    .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
+      // switch right and left
+      if (match.endsWith('-left')) return match.replace('left', 'right')
+      else return match.replace('right', 'left');
+    }))
+    .pipe(plugins.injectString.append(rtlGlobalStr))
+    .pipe(plugins.rename(basename + '-rtl.css'))
+    .pipe(gulp.dest(dirname))
+    .pipe(plugins.cssmin({advanced: false}))
+    .pipe(plugins.rename(basename + '-rtl.min.css'))
+    .pipe(gulp.dest(dirname));
+  
+  return mergeStream(stream1, stream2);
 }

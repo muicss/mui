@@ -16,6 +16,35 @@ $mui-danger-color:             mui-color('red', '500') !default;
 
 
 // ============================================================================
+// GLOBAL VARIABLES
+// ============================================================================
+
+$mui-include-globals:            true !default;
+
+$mui-body-bg-color:              mui-color('white') !default;
+
+$mui-base-font-color:            mui-color('black-alpha-87') !default;
+$mui-base-font-family:           Arial, Verdana, Tahoma !default;
+$mui-base-font-size:             14px !default;
+$mui-base-font-weight:           400 !default;
+$mui-base-line-height:           1.429 !default;
+$mui-base-font-smoothing:        false !default;
+
+$mui-link-font-color:            $mui-primary-color !default;
+$mui-link-text-decoration:       none !default;
+$mui-link-font-color-hover:      $mui-primary-color-dark !default;
+$mui-link-text-decoration-hover: underline !default;
+
+$mui-cursor-disabled:            not-allowed !default;
+$mui-border-radius-default:      2px !default;
+
+$mui-hr-color:                   mui-color('black-alpha-12') !default;
+$mui-abbr-border-color:          $mui-primary-color !default;
+
+
+
+
+// ============================================================================
 // MEDIA QUERY BREAKPOINTS
 // ============================================================================
 
@@ -46,38 +75,6 @@ $mui-container-sm:               570px !default;
 $mui-container-md:               740px !default;
 $mui-container-lg:               960px !default;
 $mui-container-xl:               1170px !default;
-
-
-
-
-// ============================================================================
-// SCAFFOLDING
-// ============================================================================
-
-$mui-body-bg-color:              mui-color('white') !default;
-$mui-link-font-color:            $mui-primary-color !default;
-$mui-link-text-decoration:       none !default;
-$mui-link-font-color-hover:      $mui-primary-color-dark !default;
-$mui-link-text-decoration-hover: underline !default;
-
-$mui-hr-color:                   mui-color('black-alpha-12') !default;
-$mui-abbr-border-color:          $mui-primary-color !default;
-$mui-cursor-disabled:            not-allowed !default;
-$mui-border-radius-default:      2px !default;
-
-
-
-
-// ============================================================================
-// TYPOGRAPHY
-// ============================================================================
-
-$mui-base-font-color:     mui-color('black-alpha-87') !default;
-$mui-base-font-family:    Arial, Verdana, Tahoma !default;
-$mui-base-font-size:      14px !default;
-$mui-base-font-weight:    400 !default;
-$mui-base-line-height:    1.429 !default;
-$mui-base-font-smoothing: false !default;
 
 
 
@@ -165,27 +162,27 @@ $mui-btn-flat-ripple-color:           darken(mui-color('white'), 35%) !default;
 // FORMS
 // ============================================================================
 
-$mui-input-bg-color:                  transparent !default;
-$mui-input-bg-color-disabled:         transparent !default;
-$mui-input-font-color:                $mui-base-font-color !default;
-$mui-input-font-size:                 16px !default;
-$mui-input-height:                    32px !default;
+$mui-input-bg-color:              transparent !default;
+$mui-input-bg-color-disabled:     transparent !default;
+$mui-input-font-color:            $mui-base-font-color !default;
+$mui-input-font-size:             16px !default;
+$mui-input-height:                32px !default;
 
-$mui-input-placeholder-color:         rgba(mui-color('black'), 0.26) !default;
+$mui-input-placeholder-color:     rgba(mui-color('black'), 0.26) !default;
 
-$mui-input-border-color:              $mui-input-placeholder-color !default;
-$mui-input-border-color-focus:        $mui-primary-color !default;
+$mui-input-border-color:          $mui-input-placeholder-color !default;
+$mui-input-border-color-focus:    $mui-primary-color !default;
 
-$mui-textarea-height:                 64px !default;
+$mui-textarea-height:             64px !default;
 
-$mui-label-font-size:                 12px !default;
-$mui-label-font-color:                mui-color('black-alpha-54') !default;
-$mui-label-margin-bottom:             3px !default;
+$mui-label-font-size:             12px !default;
+$mui-label-font-color:            mui-color('black-alpha-54') !default;
+$mui-label-margin-bottom:         3px !default;
 
-$mui-legend-font-size:                $mui-base-font-size * 1.5 !default;
-$mui-legend-font-color:               $mui-base-font-color !default;
-
-$mui-form-group-margin-bottom:        20px !default;
+$mui-form-legend-font-size:       $mui-base-font-size * 1.5 !default;
+$mui-form-legend-margin-bottom:   $mui-form-legend-font-size / 2 !default;
+$mui-form-legend-font-color:      $mui-base-font-color !default;
+$mui-form-group-margin-bottom:    20px !default;
 
 
 

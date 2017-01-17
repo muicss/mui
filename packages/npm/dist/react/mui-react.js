@@ -2353,10 +2353,10 @@ var Form = function (_React$Component) {
           inline = _props.inline,
           reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
 
-      var cls = '';
+      var cls = 'mui-form';
 
       // inline form
-      if (inline) cls = 'mui-form--inline';
+      if (inline) cls += ' mui-form--inline';
 
       return _react2.default.createElement(
         'form',

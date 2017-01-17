@@ -1,5 +1,22 @@
 # MUI Changelog
 
+## 0.9.9-rc1 January 16, 2017
+
+* Minimized global CSS footprint (mui.css)
+  * Includes Normalize.css
+  * Sets font styles for `<html>`, `<body>` tags
+  * Sets style for naked `<a>` tags
+  * Sets style for `<p>`, `<ul>`, `<ol>`, `<strong>`, `<abbr>`, `<hr>`, `<h1>`,
+    `<h2>`, etc.
+  * No longer sets `box-sizing: border-box` CSS property globally
+  * No longer modifies styles for `<figure>`, `<img>`, `<legend>`,
+    `<input type="search">`, `<input type="file">`, `<input type="radio">`,
+    `<input type="checkbox">`
+* Added version without globals (mui-noglobals.css)
+  * No global CSS properties
+* Bugfix for IE Edge box shadows
+* Added `mui-form` class to scope `<legend>` and `<fieldset>` tags
+
 ## 0.9.8 - January 12, 2017
 
 * Reverted to body method for scroll lock

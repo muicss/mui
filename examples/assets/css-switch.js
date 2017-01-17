@@ -7,20 +7,17 @@ window.addEventListener('load', function() {
   var selectEl = document.createElement('select');
   selectEl.innerHTML = [
     '<optgroup label="Basic">',
-    '<option value="mui.css" selected>mui.css</option>',
-    '<option value="mui.min.css">mui.min.css</option>',
+    '<option value="css/mui.css" selected>mui.css</option>',
+    '<option value="css/mui.min.css">mui.min.css</option>',
+    '<option value="css/mui-rtl.css">mui-rtl.css</option>',
+    '<option value="css/mui-rtl.min.css">mui-rtl.min.css</option>',
     '</optgroup>',
 
     '<optgroup label="No Globals">',
-    '<option value="mui-noglobals.css">mui-noglobals.css</option>',
-    '<option value="mui-noglobals.min.css">mui-noglobals.min.css</option>',
-    '</optgroup>',
-
-    '<optgroup label="Right-to-left">',
-    '<option value="mui-rtl.css">mui-rtl.css</option>',
-    '<option value="mui-rtl.min.css">mui-rtl.min.css</option>',
-    '<option value="mui-noglobals-rtl.css">mui-noglobals-rtl.css</option>',
-    '<option value="mui-noglobals-rtl.min.css">mui-noglobals-rtl.min.css</option>',
+    '<option value="extra/mui-noglobals.css">mui-noglobals.css</option>',
+    '<option value="extra/mui-noglobals.min.css">mui-noglobals.min.css</option>',
+    '<option value="extra/mui-noglobals-rtl.css">mui-noglobals-rtl.css</option>',
+    '<option value="extra/mui-noglobals-rtl.min.css">mui-noglobals-rtl.min.css</option>',
     '</optgroup>'
   ].join('');
 
@@ -30,7 +27,7 @@ window.addEventListener('load', function() {
 
   // change css file
   selectEl.addEventListener('change', function(ev) {
-    linkEl.href = '../assets/mui/css/' + this.value + '?' + (new Date());
+    linkEl.href = '../assets/mui/' + this.value + '?' + (new Date());
   });
 
   document.body.appendChild(selectEl);
