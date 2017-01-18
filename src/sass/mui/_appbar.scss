@@ -42,3 +42,7 @@ $x-mobile-breakpoint: 480px;
   background-color: $mui-appbar-bg-color;
   color: $mui-appbar-font-color;
 }
+
+.mui-appbar a {
+  color: $mui-appbar-font-color;  
+}
