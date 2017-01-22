@@ -25388,7 +25388,8 @@ var Input = function (_React$Component) {
 
     _this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue.toString())
+      isTouched: false,
+      isPristine: true
     };
 
     // warn if value defined but onChange is not
@@ -25397,8 +25398,8 @@ var Input = function (_React$Component) {
     }
 
     var cb = util.callback;
+    _this.onBlurCB = cb(_this, 'onBlur');
     _this.onChangeCB = cb(_this, 'onChange');
-    _this.onFocusCB = cb(_this, 'onFocus');
     return _this;
   }
 
@@ -25416,21 +25417,27 @@ var Input = function (_React$Component) {
       if ('value' in nextProps) this.setState({ innerValue: nextProps.value });
     }
   }, {
-    key: 'onChange',
-    value: function onChange(ev) {
-      this.setState({ innerValue: ev.target.value });
+    key: 'onBlur',
+    value: function onBlur(ev) {
+      // ignore if event is a window blur
+      if (document.activeElement !== this.refs.inputEl) {
+        this.setState({ isTouched: true });
+      }
 
       // execute callback
-      var fn = this.props.onChange;
+      var fn = this.props.onBlur;
       fn && fn(ev);
     }
   }, {
-    key: 'onFocus',
-    value: function onFocus(ev) {
-      this.setState({ isDirty: true });
+    key: 'onChange',
+    value: function onChange(ev) {
+      this.setState({
+        innerValue: ev.target.value,
+        isPristine: false
+      });
 
       // execute callback
-      var fn = this.props.onFocus;
+      var fn = this.props.onChange;
       fn && fn(ev);
     }
   }, {
@@ -25454,9 +25461,12 @@ var Input = function (_React$Component) {
           reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
 
 
+      cls['mui--is-touched'] = this.state.isTouched;
+      cls['mui--is-untouched'] = !this.state.isTouched;
+      cls['mui--is-pristine'] = this.state.isPristine;
+      cls['mui--is-dirty'] = !this.state.isPristine;
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
-      cls['mui--is-dirty'] = this.state.isDirty;
       cls['mui--is-invalid'] = invalid;
 
       cls = util.classNames(cls);
@@ -25467,8 +25477,8 @@ var Input = function (_React$Component) {
           className: cls,
           rows: rows,
           placeholder: hint,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB
+          onBlur: this.onBlurCB,
+          onChange: this.onChangeCB
         }));
       } else {
         inputEl = _react2.default.createElement('input', babelHelpers.extends({}, reactProps, {
@@ -25476,8 +25486,8 @@ var Input = function (_React$Component) {
           className: cls,
           type: type,
           placeholder: this.props.hint,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB
+          onBlur: this.onBlurCB,
+          onChange: this.onChangeCB
         }));
       }
 
@@ -27105,34 +27115,48 @@ describe('react/input', function () {
     _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
 
-  it('adds dirty class on focus', function () {
+  it('properly renders instance classes', function () {
     var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_input2.default, null));
     var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
 
-    // starts with empty class
-    _assert2.default.equal(inputEl.className, 'mui--is-empty');
-
-    // adds dirty class on focus
-    _reactAddonsTestUtils2.default.Simulate.focus(inputEl);
-    _assert2.default.equal(/mui--is-dirty/.test(inputEl.className), true);
+    // starts with empty|pristine|untouched classes
     _assert2.default.equal(/mui--is-empty/.test(inputEl.className), true);
     _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-untouched/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-touched/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-pristine/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-dirty/.test(inputEl.className), false);
 
-    // modify input
+    // replaces `untouched` with `touched` on blur
+    _reactAddonsTestUtils2.default.Simulate.blur(inputEl);
+    _assert2.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-untouched/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-touched/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-pristine/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-dirty/.test(inputEl.className), false);
+
+    // replaces `pristine` with `dirty` on user input
     _reactAddonsTestUtils2.default.Simulate.change(inputEl);
+    _assert2.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-untouched/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-touched/.test(inputEl.className), true);
+    _assert2.default.equal(/mui--is-pristine/.test(inputEl.className), false);
+    _assert2.default.equal(/mui--is-dirty/.test(inputEl.className), true);
   });
 
-  it('executes onFocus callback', function (done) {
+  it('executes onBlur callback', function (done) {
     var callbackFn = function callbackFn(ev) {
       done();
     };
 
-    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_input2.default, { onFocus: callbackFn }));
+    var instance = _reactAddonsTestUtils2.default.renderIntoDocument(_react2.default.createElement(_input2.default, { onBlur: callbackFn }));
 
     var inputEl = _reactAddonsTestUtils2.default.findRenderedDOMComponentWithTag(instance, 'input');
 
-    // simulate focus
-    _reactAddonsTestUtils2.default.Simulate.focus(inputEl);
+    // simulate blur
+    _reactAddonsTestUtils2.default.Simulate.blur(inputEl);
   });
 
   it('adds and removes mui--is-empty classes', function () {

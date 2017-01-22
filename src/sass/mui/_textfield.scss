@@ -167,7 +167,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 .mui-textfield > textarea:not(:focus).mui--is-invalid {
   &:not(:required),
   &:required.mui--is-not-empty,
-  &:required.mui--is-empty.mui--is-dirty,
+  &:required.mui--is-empty.mui--is-touched,
   &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     border-color: $mui-danger-color;
@@ -180,7 +180,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 .mui-textfield > input:not(:focus).mui--is-invalid {
   &:not(:required),
   &:required.mui--is-not-empty,
-  &:required.mui--is-empty.mui--is-dirty,
+  &:required.mui--is-empty.mui--is-touched,
   &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     height: $mui-input-height + 1px;
@@ -188,32 +188,52 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   }
 }
 
-.mui-textfield > input:invalid:not(:focus),
-.mui-textfield > textarea:invalid:not(:focus),
-.mui-textfield > input:not(:focus).mui--is-invalid,
-.mui-textfield > textarea:not(:focus).mui--is-invalid {
-  // Set label color to danger color
-  &:not(:required),
-  &:required.mui--is-not-empty,
-  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
-  &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
-    ~ label {
-      color: $mui-danger-color;
+// set label color for invalid inputs
+.mui-textfield {
+  // has floating label
+  &.mui-textfield--float-label {
+    > input:invalid:not(:focus),
+    > textarea:invalid:not(:focus) {
+      &:not(:required),
+      &:required.mui--is-not-empty,
+      &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+      &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
+        ~ label {
+          color: $mui-danger-color;
+        }
+      }
+    }
+  }
+
+  // doesn't have floating label
+  &:not(.mui-textfield--float-label) {
+    > input:invalid:not(:focus),
+    > textarea:invalid:not(:focus) {
+      &:not(:required),
+      &:required.mui--is-empty.mui--is-touched,
+      &:required.mui--is-not-empty {
+        ~ label {
+          color: $mui-danger-color;
+        }
+      }
     }
   }
 }
 
-.mui-textfield > input:not(:focus).mui--is-invalid,
-.mui-textfield > textarea:not(:focus).mui--is-invalid {
 
-}
+// set label color for force class (mui--is-invalid)
+.mui-textfield {
+  // has floating label
+  &.mui-textfield--float-label {
+    > .mui--is-invalid.mui--is-not-empty:not(:focus) ~ label {
+      color: $mui-danger-color;
+    }
+  }
 
-.mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus),
-.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus),
-.mui-textfield:not(.mui-textfield--float-label) > input:not(:focus).mui--is-invalid,
-.mui-textfield:not(.mui-textfield--float-label) > textarea:not(:focus).mui--is-invalid {
-  // Set label color to danger color for dirty, empty fields
-  &:required.mui--is-empty.mui--is-dirty ~ label {
-    color: $mui-danger-color;
+  // doesn't have floating label
+  &:not(.mui-textfield--float-label) {
+    > .mui--is-invalid:not(:focus) ~ label {
+      color: $mui-danger-color;
+    }
   }
 }

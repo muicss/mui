@@ -22,15 +22,9 @@
           <mui-button color="primary">submit</mui-button>
         </mui-form>
       </mui-panel>
+
       <mui-panel>
-        <mui-form name="form2" inline>
-          <legend>Title</legend>
-          <mui-input name="inputB1" ng-model="form2.inputB"></mui-input>
-          <mui-button color="primary">submit</mui-button>
-        </mui-form>
-      </mui-panel>
-      <mui-panel>
-        <mui-form name="form3">
+        <mui-form name="form2">
           <fieldset>
             <legend>Fieldset1</legend>
             <mui-input name="inputC1x" ng-model="form3.inputC1"></mui-input>
@@ -44,6 +38,31 @@
           <mui-button color="primary">submit</mui-button>
         </mui-form>
       </mui-panel>
+
+      <mui-panel>
+        <mui-form name="form3" inline>
+          <legend>Title</legend>
+          <mui-input name="inputB1" ng-model="form2.inputB"></mui-input>
+          <mui-button color="primary">submit</mui-button>
+        </mui-form>
+      </mui-panel>
+
+      <mui-panel>
+        <mui-form name="form4" inline>
+          <fieldset>
+            <legend>Fieldset1</legend>
+            <mui-input name="inputC1x" ng-model="form3.inputC1"></mui-input>
+            <mui-input name="inputC2x" ng-model="form3.inputC2"></mui-input>
+          </fieldset>
+          <fieldset>
+            <legend>Fieldset2</legend>
+            <mui-input name="inputC3x" ng-model="form3.inputC4"></mui-input>
+            <mui-input name="inputC4x" ng-model="form3.inputC4"></mui-input>
+          </fieldset>
+          <mui-button color="primary">submit</mui-button>
+        </mui-form>
+      </mui-panel>
+
     </mui-container>
   </body>
 </html>

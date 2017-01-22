@@ -29,7 +29,8 @@ class Input extends React.Component {
 
     this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue.toString())
+      isTouched: false,
+      isPristine: true
     };
 
     // warn if value defined but onChange is not
@@ -38,8 +39,8 @@ class Input extends React.Component {
     }
 
     let cb = util.callback;
+    this.onBlurCB = cb(this, 'onBlur');
     this.onChangeCB = cb(this, 'onChange');
-    this.onFocusCB = cb(this, 'onFocus');
   }
 
   static propTypes = {
@@ -65,19 +66,25 @@ class Input extends React.Component {
     if ('value' in nextProps) this.setState({innerValue: nextProps.value});
   }
 
-  onChange(ev) {
-    this.setState({innerValue: ev.target.value});
+  onBlur(ev) {
+    // ignore if event is a window blur
+    if (document.activeElement !== this.refs.inputEl) {
+      this.setState({isTouched: true});
+    }
 
     // execute callback
-    let fn = this.props.onChange;
+    let fn = this.props.onBlur;
     fn && fn(ev);
   }
 
-  onFocus(ev) {
-    this.setState({isDirty: true});
+  onChange(ev) {
+    this.setState({
+      innerValue: ev.target.value,
+      isPristine: false
+    });
 
     // execute callback
-    let fn = this.props.onFocus;
+    let fn = this.props.onChange;
     fn && fn(ev);
   }
 
@@ -93,9 +100,12 @@ class Input extends React.Component {
 
     const { hint, invalid, rows, type, ...reactProps } = this.props;
 
+    cls['mui--is-touched'] = this.state.isTouched;
+    cls['mui--is-untouched'] = !this.state.isTouched;
+    cls['mui--is-pristine'] = this.state.isPristine;
+    cls['mui--is-dirty'] = !this.state.isPristine;
     cls['mui--is-empty'] = !isNotEmpty;
     cls['mui--is-not-empty'] = isNotEmpty;
-    cls['mui--is-dirty'] = this.state.isDirty;
     cls['mui--is-invalid'] = invalid;
 
     cls = util.classNames(cls);
@@ -108,8 +118,8 @@ class Input extends React.Component {
           className={cls}
           rows={rows}
           placeholder={hint}
+          onBlur={this.onBlurCB}
           onChange={this.onChangeCB}
-          onFocus={this.onFocusCB}
         />
       );
     } else {
@@ -120,8 +130,8 @@ class Input extends React.Component {
           className={cls}
           type={type}
           placeholder={this.props.hint}
+          onBlur={this.onBlurCB}
           onChange={this.onChangeCB}
-          onFocus={this.onFocusCB}
         />
       );
     }

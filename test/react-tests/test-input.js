@@ -101,40 +101,54 @@ describe('react/input', function() {
   });
 
 
-  it('adds dirty class on focus', function() {
+  it('properly renders instance classes', function() {
     let instance = ReactUtils.renderIntoDocument(<Input></Input>);
     let inputEl = ReactUtils
       .findRenderedDOMComponentWithTag(instance, 'input');
 
-    // starts with empty class
-    assert.equal(inputEl.className, 'mui--is-empty');
-
-    // adds dirty class on focus
-    ReactUtils.Simulate.focus(inputEl);
-    assert.equal(/mui--is-dirty/.test(inputEl.className), true);
+    // starts with empty|pristine|untouched classes
     assert.equal(/mui--is-empty/.test(inputEl.className), true);
     assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-untouched/.test(inputEl.className), true);
+    assert.equal(/mui--is-touched/.test(inputEl.className), false);
+    assert.equal(/mui--is-pristine/.test(inputEl.className), true);
+    assert.equal(/mui--is-dirty/.test(inputEl.className), false);
 
-    // modify input
+    // replaces `untouched` with `touched` on blur
+    ReactUtils.Simulate.blur(inputEl);
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-untouched/.test(inputEl.className), false);
+    assert.equal(/mui--is-touched/.test(inputEl.className), true);
+    assert.equal(/mui--is-pristine/.test(inputEl.className), true);
+    assert.equal(/mui--is-dirty/.test(inputEl.className), false);
+
+    // replaces `pristine` with `dirty` on user input
     ReactUtils.Simulate.change(inputEl);
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-untouched/.test(inputEl.className), false);
+    assert.equal(/mui--is-touched/.test(inputEl.className), true);
+    assert.equal(/mui--is-pristine/.test(inputEl.className), false);
+    assert.equal(/mui--is-dirty/.test(inputEl.className), true);
   });
 
 
-  it('executes onFocus callback', function(done) {
+  it('executes onBlur callback', function(done) {
     let callbackFn = function(ev) {
       done();
     };
 
     let instance = ReactUtils.renderIntoDocument(
-        <Input onFocus={callbackFn}>
+        <Input onBlur={callbackFn}>
         </Input>
     );
 
     let inputEl = ReactUtils
       .findRenderedDOMComponentWithTag(instance, 'input');
 
-    // simulate focus
-    ReactUtils.Simulate.focus(inputEl);
+    // simulate blur
+    ReactUtils.Simulate.blur(inputEl);
   });
 
 

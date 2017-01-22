@@ -18,8 +18,8 @@
         $scope.inputA_1_1 = 'on load';
         $scope.inputA_4_2 = 'on load';
         $scope.inputC_1_2 = 'err';
-        $scope.inputC_1_4 = 'val';
         $scope.inputC_1_5 = 'val';
+        $scope.inputC_1_6 = 'val';
         
         $scope.change = function(name) {
           console.log(name);
@@ -185,23 +185,30 @@
         >
         </mui-input>
         <mui-input
-            label="Required text (should be red after focus)"
-            type="text"
+            label="Required email address (should turn red after focus or invalid input)"
+            type="email"
             ng-model="inputC_1_3"
             required
         >
         </mui-input>
         <mui-input
-            label="Required text (should be red after deletion)"
+            label="Required text (should be red after focus)"
             type="text"
             ng-model="inputC_1_4"
             required
         >
         </mui-input>
         <mui-input
-            label="Is invalid (should be red on load)"
+            label="Required text (should be red after deletion)"
             type="text"
             ng-model="inputC_1_5"
+            required
+        >
+        </mui-input>
+        <mui-input
+            label="Is invalid (should be red on load)"
+            type="text"
+            ng-model="inputC_1_6"
             invalid
         >
         </mui-input>
