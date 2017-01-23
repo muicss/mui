@@ -1,5 +1,17 @@
 # MUI Changelog
 
+## 0.9.9-rc2 January 22, 2017
+
+* Added more fine-grained CSS state classes to input and textfield controls
+  * `.mui--is-untouched` - Control instance has not lost focus
+  * `.mui--is-touched` - Control instance has lost focus
+  * `.mui--is-pristine` - User has not interacted with control instance
+  * `.mui--is-dirty` - User has interacted with control instance
+  * `.mui--is-empty` - Control instance is empty
+  * `.mui--is-not-empty` - Control instance is not empty
+* Skipping replacement of `untouched`/`touched` CSS states on window blur event
+* Removed hard coded anchor tag :hover color
+
 ## 0.9.9-rc1 January 16, 2017
 
 * Minimized global CSS footprint (mui.css)

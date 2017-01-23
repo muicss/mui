@@ -1933,10 +1933,15 @@ var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
     animationHelpers = require('./lib/animationHelpers'),
     cssSelector = '.mui-textfield > input, .mui-textfield > textarea',
-    emptyClass = 'mui--is-empty',
-    notEmptyClass = 'mui--is-not-empty',
-    dirtyClass = 'mui--is-dirty',
     floatingLabelClass = 'mui-textfield--float-label';
+
+
+var touchedClass = 'mui--is-touched',  // hasn't lost focus yet
+    untouchedClass = 'mui--is-untouched',
+    pristineClass = 'mui--is-pristine',  // user hasn't interacted yet 
+    dirtyClass = 'mui--is-dirty',
+    emptyClass = 'mui--is-empty',  // control is empty
+    notEmptyClass = 'mui--is-not-empty';
 
 
 /**
@@ -1948,16 +1953,31 @@ function initialize(inputEl) {
   if (inputEl._muiTextfield === true) return;
   else inputEl._muiTextfield = true;
 
+  // add initial control state classes
   if (inputEl.value.length) jqLite.addClass(inputEl, notEmptyClass);
   else jqLite.addClass(inputEl, emptyClass);
 
+  jqLite.addClass(inputEl, untouchedClass + ' ' + pristineClass);
+
+  // replace `untouched` with `touched` when control loses focus
+  jqLite.on(inputEl, 'blur', function blurHandler () {
+    // ignore if event is a window blur
+    if (document.activeElement === inputEl) return;
+
+    // replace class and remove event handler
+    jqLite.removeClass(inputEl, untouchedClass);
+    jqLite.addClass(inputEl, touchedClass);
+    jqLite.off(inputEl, 'blur', blurHandler);
+  });
+
+  // replace `pristine` with `dirty` when user interacts with control
+  jqLite.one(inputEl, 'input change', function() {
+    jqLite.removeClass(inputEl, pristineClass);
+    jqLite.addClass(inputEl, dirtyClass);
+  });
+
+  // add change handler
   jqLite.on(inputEl, 'input change', inputHandler);
-
-  // add dirty class on focus
-  jqLite.on(inputEl, 'focus', function() {jqLite.addClass(this, dirtyClass);});
-
-  // add dirty class if element is currently focused
-  if (document.activeElement === inputEl) jqLite.addClass(inputEl, dirtyClass);
 }
 
 
@@ -1974,8 +1994,6 @@ function inputHandler() {
     jqLite.removeClass(inputEl, notEmptyClass);
     jqLite.addClass(inputEl, emptyClass)
   }
-
-  jqLite.addClass(inputEl, dirtyClass);
 }
 
 

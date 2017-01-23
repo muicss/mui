@@ -647,31 +647,31 @@ button.mui-btn:-moz-focusring,
 }
 
 @media (min-width: 544px) {
-  .mui-form--inline > .mui-textfield {
+  .mui-form--inline .mui-textfield {
     display: inline-block;
     vertical-align: bottom;
     margin-bottom: 0;
   }
-  .mui-form--inline > .mui-radio,
-  .mui-form--inline > .mui-checkbox {
+  .mui-form--inline .mui-radio,
+  .mui-form--inline .mui-checkbox {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     vertical-align: middle;
   }
-  .mui-form--inline > .mui-radio > label,
-  .mui-form--inline > .mui-checkbox > label {
+  .mui-form--inline .mui-radio > label,
+  .mui-form--inline .mui-checkbox > label {
     padding-right: 0;
   }
-  .mui-form--inline > .mui-radio > label > input[type="radio"],
-  .mui-form--inline > .mui-checkbox > label > input[type="checkbox"] {
+  .mui-form--inline .mui-radio > label > input[type="radio"],
+  .mui-form--inline .mui-checkbox > label > input[type="checkbox"] {
     position: relative;
     margin-right: 0;
   }
-  .mui-form--inline > .mui-select {
+  .mui-form--inline .mui-select {
     display: inline-block;
   }
-  .mui-form--inline > .mui-btn {
+  .mui-form--inline .mui-btn {
     margin-bottom: 0;
     margin-top: 0;
     vertical-align: bottom;
@@ -1580,56 +1580,56 @@ button.mui-btn:-moz-focusring,
   margin-bottom: -1px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-touched, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:invalid:not(:focus):not(:required),
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty,
-.mui-textfield > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,
+.mui-textfield > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-touched,
 .mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:not(:required),
 .mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty,
-.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-touched,
 .mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:not(:focus).mui--is-invalid:not(:required),
 .mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-touched,
 .mui-textfield > textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   border-color: #F44336;
   border-width: 2px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-touched, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:not(:required),
 .mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty,
-.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-touched,
 .mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   height: 33px;
   margin-bottom: -1px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required) ~ label, .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty ~ label, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label, .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:invalid:not(:focus):not(:required) ~ label,
-.mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label,
-.mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:not(:required) ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:not(:required) ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
+.mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):not(:required) ~ label, .mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):required.mui--is-not-empty ~ label, .mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label, .mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):not(:required) ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
   color: #F44336;
 }
 
-.mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield:not(.mui-textfield--float-label) > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield:not(.mui-textfield--float-label) > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty ~ label {
+.mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):not(:required) ~ label, .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-empty.mui--is-touched ~ label, .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-not-empty ~ label,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):not(:required) ~ label,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-touched ~ label,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label {
+  color: #F44336;
+}
+
+.mui-textfield.mui-textfield--float-label > .mui--is-invalid.mui--is-not-empty:not(:focus) ~ label {
+  color: #F44336;
+}
+
+.mui-textfield:not(.mui-textfield--float-label) > .mui--is-invalid:not(:focus) ~ label {
   color: #F44336;
 }
 

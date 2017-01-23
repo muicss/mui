@@ -43,7 +43,8 @@ var Input = function (_React$Component) {
 
     _this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue.toString())
+      isTouched: false,
+      isPristine: true
     };
 
     // warn if value defined but onChange is not
@@ -52,8 +53,8 @@ var Input = function (_React$Component) {
     }
 
     var cb = util.callback;
+    _this.onBlurCB = cb(_this, 'onBlur');
     _this.onChangeCB = cb(_this, 'onChange');
-    _this.onFocusCB = cb(_this, 'onFocus');
     return _this;
   }
 
@@ -71,21 +72,27 @@ var Input = function (_React$Component) {
       if ('value' in nextProps) this.setState({ innerValue: nextProps.value });
     }
   }, {
-    key: 'onChange',
-    value: function onChange(ev) {
-      this.setState({ innerValue: ev.target.value });
+    key: 'onBlur',
+    value: function onBlur(ev) {
+      // ignore if event is a window blur
+      if (document.activeElement !== this.refs.inputEl) {
+        this.setState({ isTouched: true });
+      }
 
       // execute callback
-      var fn = this.props.onChange;
+      var fn = this.props.onBlur;
       fn && fn(ev);
     }
   }, {
-    key: 'onFocus',
-    value: function onFocus(ev) {
-      this.setState({ isDirty: true });
+    key: 'onChange',
+    value: function onChange(ev) {
+      this.setState({
+        innerValue: ev.target.value,
+        isPristine: false
+      });
 
       // execute callback
-      var fn = this.props.onFocus;
+      var fn = this.props.onChange;
       fn && fn(ev);
     }
   }, {
@@ -109,9 +116,12 @@ var Input = function (_React$Component) {
           reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
 
 
+      cls['mui--is-touched'] = this.state.isTouched;
+      cls['mui--is-untouched'] = !this.state.isTouched;
+      cls['mui--is-pristine'] = this.state.isPristine;
+      cls['mui--is-dirty'] = !this.state.isPristine;
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
-      cls['mui--is-dirty'] = this.state.isDirty;
       cls['mui--is-invalid'] = invalid;
 
       cls = util.classNames(cls);
@@ -122,8 +132,8 @@ var Input = function (_React$Component) {
           className: cls,
           rows: rows,
           placeholder: hint,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB
+          onBlur: this.onBlurCB,
+          onChange: this.onChangeCB
         }));
       } else {
         inputEl = _react2.default.createElement('input', babelHelpers.extends({}, reactProps, {
@@ -131,8 +141,8 @@ var Input = function (_React$Component) {
           className: cls,
           type: type,
           placeholder: this.props.hint,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB
+          onBlur: this.onBlurCB,
+          onChange: this.onChangeCB
         }));
       }
 

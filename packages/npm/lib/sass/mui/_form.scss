@@ -23,14 +23,14 @@
 
 .mui-form--inline {
   @media (min-width: $mui-screen-sm-min) {
-    > .mui-textfield {
+    .mui-textfield {
       display: inline-block;
       vertical-align: bottom;
       margin-bottom: 0;
     }
 
-    > .mui-radio,
-    > .mui-checkbox {
+    .mui-radio,
+    .mui-checkbox {
       display: inline-block;
       margin-top: 0;
       margin-bottom: 0;
@@ -41,17 +41,17 @@
       }
     }
 
-    > .mui-radio > label > input[type="radio"],
-    > .mui-checkbox > label > input[type="checkbox"] {
+    .mui-radio > label > input[type="radio"],
+    .mui-checkbox > label > input[type="checkbox"] {
       position: relative;
       margin-left: 0;
     }
 
-    > .mui-select {
+    .mui-select {
       display: inline-block;
     }
 
-    > .mui-btn {
+    .mui-btn {
       margin-bottom: 0;
       margin-top: 0;
       vertical-align: bottom;
