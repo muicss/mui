@@ -202,13 +202,16 @@ class TextField extends React.Component {
   }
 
   static propTypes = {
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      React.PropTypes.object
+    ]),
     floatingLabel: PropTypes.bool
   };
 
   static defaultProps = {
     className: '',
-    label: '',
+    label: null,
     floatingLabel: false
   };
 
@@ -227,7 +230,7 @@ class TextField extends React.Component {
     const { children, className, style, label, floatingLabel,
       ...other } = this.props;
 
-    if (label.length) {
+    if ((typeof label === 'string' && label.length)  || typeof label === 'object') {
       labelEl = <Label text={label} onClick={this.onClickCB} />;
     }
 
