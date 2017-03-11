@@ -7,6 +7,7 @@
 
 import React from 'react';
 
+import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 import { controlledMessage } from './_helpers';
 
@@ -230,7 +231,9 @@ class TextField extends React.Component {
     const { children, className, style, label, floatingLabel,
       ...other } = this.props;
 
-    if ((typeof label === 'string' && label.length)  || typeof label === 'object') {
+    const type = jqLite.type(label);
+
+    if ((type === 'string' && label.length) || type === 'object') {
       labelEl = <Label text={label} onClick={this.onClickCB} />;
     }
 
