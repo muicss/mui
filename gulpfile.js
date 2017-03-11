@@ -251,7 +251,7 @@ function buildCdnWebcomponents(dirname, cssdir) {
       }))
       .pipe(plugins.rename('mui-webcomponents.js'))
       .pipe(gulp.dest(dirname))
-      .pipe(plugins.uglify())
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
       .pipe(plugins.rename('mui-webcomponents.min.js'))
       .pipe(gulp.dest(dirname));
   });
@@ -287,7 +287,7 @@ function buildCdnJsCombined(dirname, cssDir) {
       }))
       .pipe(plugins.rename('mui-combined.js'))
       .pipe(gulp.dest(dirname))
-      .pipe(plugins.uglify())
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
       .pipe(plugins.rename('mui-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
@@ -312,7 +312,7 @@ function buildCdnReactCombined(dirname, cssDir) {
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.rename('mui-react-combined.js'))
       .pipe(gulp.dest(dirname))
-      .pipe(plugins.uglify())
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
       .pipe(plugins.rename('mui-react-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
@@ -337,7 +337,7 @@ function buildCdnAngularCombined(dirname, cssDir) {
       .pipe(plugins.ngAnnotate())
       .pipe(plugins.rename('mui-angular-combined.js'))
       .pipe(gulp.dest(dirname))
-      .pipe(plugins.uglify())
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
       .pipe(plugins.rename('mui-angular-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });

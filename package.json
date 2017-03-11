@@ -24,8 +24,8 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "angular": "^1.6.2",
-    "angular-mocks": "^1.6.2",
+    "angular": "^1.6.3",
+    "angular-mocks": "^1.6.3",
     "array-equal": "^1.0.0",
     "autoprefixer-core": "^6.0.1",
     "babel-core": "^6.23.1",
@@ -57,7 +57,7 @@
     "gulp-replace": "^0.5.4",
     "gulp-rtlcss": "1.0.0",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^2.0.1",
+    "gulp-uglify": "^2.1.0",
     "jsdom": "^9.11.0",
     "jshint": "^2.9.4",
     "merge-stream": "^1.0.1",
