@@ -15,6 +15,10 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
 var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
@@ -277,7 +281,9 @@ var TextField = function (_React$Component3) {
           other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
 
 
-      if (label.length) {
+      var type = jqLite.type(label);
+
+      if (type === 'string' && label.length || type === 'object') {
         labelEl = _react2.default.createElement(Label, { text: label, onClick: this.onClickCB });
       }
 
@@ -303,12 +309,12 @@ var TextField = function (_React$Component3) {
 
 
 TextField.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, _react2.default.PropTypes.object]),
   floatingLabel: PropTypes.bool
 };
 TextField.defaultProps = {
   className: '',
-  label: '',
+  label: null,
   floatingLabel: false
 };
 exports.TextField = TextField;

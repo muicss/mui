@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.10 - March 11, 2017
+
+* Upgraded devDependencies
+* Updated React TextField component to allow object or string labels
+
 ## 0.9.9 - February 15, 2017
 
 * Bumped version number

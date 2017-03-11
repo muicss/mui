@@ -1540,12 +1540,6 @@ button.mui-btn:-moz-focusring,
   opacity: 1;
 }
 
-.mui-textfield > input::-moz-placeholder,
-.mui-textfield > textarea::-moz-placeholder {
-  color: rgba(0, 0, 0, 0.26);
-  opacity: 1;
-}
-
 .mui-textfield > input:-ms-input-placeholder,
 .mui-textfield > textarea:-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.26);

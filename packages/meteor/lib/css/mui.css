@@ -2019,12 +2019,6 @@ h4, h5, h6 {
   opacity: 1;
 }
 
-.mui-textfield > input::-moz-placeholder,
-.mui-textfield > textarea::-moz-placeholder {
-  color: rgba(0, 0, 0, 0.26);
-  opacity: 1;
-}
-
 .mui-textfield > input:-ms-input-placeholder,
 .mui-textfield > textarea:-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.26);
