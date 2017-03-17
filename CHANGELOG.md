@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.11 - March 17, 2017
+
+* Fixed CSS animation trigger bug in IE Edge
+
 ## 0.9.10 - March 11, 2017
 
 * Upgraded devDependencies
