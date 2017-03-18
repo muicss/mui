@@ -39,7 +39,7 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
     },
     replace: true,
     transclude: true,
-    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + '>' + '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' + '</select>' + '<label>{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-show="!useDefault && isOpen"> ' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in options track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' + '</div>' + '</div>',
+    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)" ' + 'ng-keypress="onWrapperKeypress($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + '>' + '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' + '</select>' + '<label>{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-show="!useDefault && isOpen"> ' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in options track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' + '</div>' + '</div>',
     link: function link(scope, element, attrs, controller, transcludeFn) {
       var wrapperEl = element,
           menuEl = element.find('div'),
@@ -56,6 +56,8 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
       scope.useDefault = 'ontouchstart' in document.documentElement ? true : false;
       scope.origTabIndex = selectEl[0].tabIndex;
       scope.menuIndex = 0;
+      scope.q = '';
+      scope.qTimeout = null;
 
       // handle `use-default` attribute
       if (!isUndef(attrs.useDefault)) scope.useDefault = true;
@@ -144,20 +146,52 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           }
 
           if (keyCode === 27) {
-            // close
+            // escape -> close
             scope.isOpen = false;
           } else if (keyCode === 40) {
-            // increment
+            // up -> increment
             if (scope.menuIndex < scope.options.length - 1) {
               scope.menuIndex += 1;
             }
           } else if (keyCode === 38) {
-            // decrement
+            // down -> decrement
             if (scope.menuIndex > 0) scope.menuIndex -= 1;
           } else if (keyCode === 13) {
-            // choose and close
+            // enter -> choose and close
             scope.ngModel = scope.options[scope.menuIndex].value;
             scope.isOpen = false;
+          }
+        }
+      };
+
+      /**
+       * Handle keypress event on wrapper element.
+       * @param {Event} $event - Angular event instance
+       */
+      scope.onWrapperKeypress = function ($event) {
+        // exit if preventDefault() was called or useDefault is true or
+        // menu is closed
+        if ($event.defaultPrevented || scope.useDefault || !scope.isOpen) {
+          return;
+        }
+
+        // handle query timer
+        clearTimeout(scope.qTimeout);
+        scope.q += $event.key;
+        scope.qTimeout = setTimeout(function () {
+          scope.q = '';
+        }, 300);
+
+        // select first match alphabetically
+        var prefixRegex = new RegExp('^' + scope.q, 'i'),
+            options = scope.options,
+            m = options.length,
+            i;
+
+        for (i = 0; i < m; i++) {
+          if (prefixRegex.test(options[i].label)) {
+            scope.menuIndex = i;
+            break;
           }
         }
       };

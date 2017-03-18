@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.12 - March 18, 2017
+
+* Added support for jump-to alphabetical matches to CSS/JS, Angular and React
+  Select components
+
 ## 0.9.11 - March 17, 2017
 
 * Fixed CSS animation trigger bug in IE Edge

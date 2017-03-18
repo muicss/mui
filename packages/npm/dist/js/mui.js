@@ -1396,6 +1396,8 @@ function initialize(selectEl) {
   // initialize variables
   wrapperEl._selectEl = selectEl;
   wrapperEl._menu = null;
+  wrapperEl._q = '';
+  wrapperEl._qTimeout = null;
 
   // make wrapper tab focusable, remove tab focus from <select>
   if (!selectEl.disabled) wrapperEl.tabIndex = 0;
@@ -1408,6 +1410,7 @@ function initialize(selectEl) {
   jqLite.on(wrapperEl, 'click', onWrapperClick);
   jqLite.on(wrapperEl, 'blur focus', onWrapperBlurOrFocus);
   jqLite.on(wrapperEl, 'keydown', onWrapperKeyDown);
+  jqLite.on(wrapperEl, 'keypress', onWrapperKeyPress);
 
   // add element to detect 'disabled' change (using sister element due to 
   // IE/Firefox issue
@@ -1479,14 +1482,47 @@ function onWrapperKeyDown(ev) {
     }
 
     if (keyCode === 27) {
+      // escape
       menu.destroy();
     } else if (keyCode === 40) {
+      // up
       menu.increment();
     } else if (keyCode === 38) {
+      // down
       menu.decrement();
     } else if (keyCode === 13) {
+      // enter
       menu.selectCurrent();
       menu.destroy();
+    }
+  }
+}
+
+
+/**
+ *
+ */
+function onWrapperKeyPress(ev) {
+  var menu = this._menu;
+
+  // exit if default prevented or menu is closed
+  if (ev.defaultPrevented || !menu) return;
+
+  // handle query timer
+  var self = this;
+  clearTimeout(this._qTimeout);
+  this._q += ev.key;
+  this._qTimeout = setTimeout(function() {self._q = '';}, 300);
+
+  // select first match alphabetically
+  var prefixRegex = new RegExp('^' + this._q, 'i'),
+      itemArray = menu.itemArray,
+      pos;
+
+  for (pos in itemArray) {
+    if (prefixRegex.test(itemArray[pos].innerText)) {
+      menu.selectPos(pos);
+      break;
     }
   }
 }
@@ -1718,6 +1754,19 @@ Menu.prototype.selectCurrent = function() {
     // trigger change event
     util.dispatchEvent(this.selectEl, 'change', false, false);
   }
+}
+
+
+/**
+ * Select item at position
+ */
+Menu.prototype.selectPos = function(pos) {
+  // un-select old row                                                      
+  jqLite.removeClass(this.itemArray[this.currentPos], selectedClass);
+
+  // select new row
+  this.currentPos = pos;
+  jqLite.addClass(this.itemArray[pos], selectedClass);
 }
 
 

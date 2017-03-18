@@ -212,7 +212,6 @@ angular.module(moduleName, [])
           for (i=0; i < m; i++) {
             if (prefixRegex.test(options[i].label)) {
               scope.menuIndex = i;
-              console.log(i);
               break;
             }
           }

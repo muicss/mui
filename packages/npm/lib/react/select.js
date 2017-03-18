@@ -292,6 +292,9 @@ var Menu = function (_React$Component2) {
 
 
     _this2.onKeyDownCB = util.callback(_this2, 'onKeyDown');
+    _this2.onKeyPressCB = util.callback(_this2, 'onKeyPress');
+    _this2.q = '';
+    _this2.qTimeout = null;
     return _this2;
   }
 
@@ -323,6 +326,7 @@ var Menu = function (_React$Component2) {
 
       // attach keydown handler
       jqLite.on(document, 'keydown', this.onKeyDownCB);
+      jqLite.on(document, 'keypress', this.onKeyPressCB);
     }
   }, {
     key: 'componentWillUnmount',
@@ -332,6 +336,7 @@ var Menu = function (_React$Component2) {
 
       // remove keydown handler
       jqLite.off(document, 'keydown', this.onKeyDownCB);
+      jqLite.off(document, 'keypress', this.onKeyPressCB);
     }
   }, {
     key: 'onClick',
@@ -354,6 +359,31 @@ var Menu = function (_React$Component2) {
       }
 
       if (keyCode === 27) this.destroy();else if (keyCode === 40) this.increment();else if (keyCode === 38) this.decrement();else if (keyCode === 13) this.selectAndDestroy();
+    }
+  }, {
+    key: 'onKeyPress',
+    value: function onKeyPress(ev) {
+      // handle query timer
+      var self = this;
+      clearTimeout(this.qTimeout);
+      this.q += ev.key;
+      this.qTimeout = setTimeout(function () {
+        self.q = '';
+      }, 300);
+
+      // select first match alphabetically
+      var prefixRegex = new RegExp('^' + this.q, 'i'),
+          optionEls = this.props.optionEls,
+          m = optionEls.length,
+          i = void 0;
+
+      for (i = 0; i < m; i++) {
+        // select item if code matches
+        if (prefixRegex.test(optionEls[i].innerText)) {
+          this.setState({ currentIndex: i });
+          break;
+        }
+      }
     }
   }, {
     key: 'increment',
