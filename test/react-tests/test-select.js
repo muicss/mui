@@ -362,6 +362,38 @@ describe('react/select', function() {
   });
 
 
+  it('handles keypress on inner <select> properly', function(done) {
+    let onKeyPress = function(ev) {
+      assert.equal(ev.type, 'keypress');
+      assert.equal(ev.target, instance.refs.selectEl);
+      done();
+    };
+    
+    let instance = ReactUtils.renderIntoDocument(
+      <Select onKeyPress={onKeyPress}></Select>
+    );
+
+    // trigger 'keypress' on inner <select> element
+    ReactUtils.Simulate.keyPress(instance.refs.selectEl);
+  });
+
+
+  it('handles keypress on wrapper <div> properly', function(done) {
+    let onKeyPress = function(ev) {
+      assert.equal(ev.type, 'keypress');
+      assert.equal(ev.target, instance.refs.wrapperEl);
+      done();
+    };
+    
+    let instance = ReactUtils.renderIntoDocument(
+      <Select onKeyPress={onKeyPress}></Select>
+    );
+
+    // trigger 'keypress' on wrapper <div> element
+    ReactUtils.Simulate.keyPress(instance.refs.wrapperEl);
+  });
+
+
   it('handles mousedown on inner <select> properly', function(done) {
     let onMouseDown = function(ev) {
       assert(ev.defaultPrevented, true);

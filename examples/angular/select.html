@@ -19,6 +19,7 @@
         $scope.valB = 'opt4';
         $scope.valC = 'opt3';
         $scope.valD = 'opt2';
+        $scope.valE = 'opt2';
       });
     </script>
   </head>
@@ -68,7 +69,7 @@
           </mui-select>
 
           <strong>Should have value "Option 2"</strong>
-          <mui-select name="exampleC" ng-model="valD">
+          <mui-select name="exampleD" ng-model="valD">
             <mui-option label="Option 1" value="opt1"></mui-option>
             <mui-option label="Option 2" value="opt2"></mui-option>
             <mui-option label="Option 3" value="opt3"></mui-option>
@@ -77,6 +78,16 @@
             <mui-option label="Option 6" value="opt6"></mui-option>
             <mui-option label="Option 7" value="opt7"></mui-option>
             <mui-option label="Option 8" value="opt8"></mui-option>
+          </mui-select>
+
+          <strong>Should jump to item as you type</strong>
+          <mui-select name="exampleE" ng-model="valE">
+            <mui-option label="A" value="opt1"></mui-option>
+            <mui-option label="B" value="opt2"></mui-option>
+            <mui-option label="Ba" value="opt3"></mui-option>
+            <mui-option label="Bb" value="opt4"></mui-option>
+            <mui-option label="C" value="opt5"></mui-option>
+            <mui-option label="6" value="opt6"></mui-option>
           </mui-select>
 
           <mui-button variant="raised">submit</mui-button>

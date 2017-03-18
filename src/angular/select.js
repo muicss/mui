@@ -30,7 +30,8 @@ angular.module(moduleName, [])
         'ng-blur="onWrapperBlurOrFocus($event)" ' +
         'ng-click="onWrapperClick($event)" ' +
         'ng-focus="onWrapperBlurOrFocus($event)" ' +
-        'ng-keydown="onWrapperKeydown($event)">' +
+        'ng-keydown="onWrapperKeydown($event)" ' +
+        'ng-keypress="onWrapperKeypress($event)">' +
         '<select ' +
         'name="{{name}}" ' +
         'ng-disabled="ngDisabled" ' +
@@ -66,6 +67,8 @@ angular.module(moduleName, [])
           ? true : false;
         scope.origTabIndex = selectEl[0].tabIndex;
         scope.menuIndex = 0;
+        scope.q = '';
+        scope.qTimeout = null;
 
         // handle `use-default` attribute
         if (!isUndef(attrs.useDefault)) scope.useDefault = true;
@@ -164,24 +167,56 @@ angular.module(moduleName, [])
             }
 
             if (keyCode === 27) {
-              // close
+              // escape -> close
               scope.isOpen = false;
             } else if (keyCode === 40) {
-              // increment
+              // up -> increment
               if (scope.menuIndex < scope.options.length - 1) {
                 scope.menuIndex += 1;
               }
             } else if (keyCode === 38) {
-              // decrement
+              // down -> decrement
               if (scope.menuIndex > 0) scope.menuIndex -= 1;
             } else if (keyCode === 13) {
-              // choose and close
+              // enter -> choose and close
               scope.ngModel = scope.options[scope.menuIndex].value;  
               scope.isOpen = false;
             }
 
           }
         };
+
+
+        /**
+         * Handle keypress event on wrapper element.
+         * @param {Event} $event - Angular event instance
+         */
+        scope.onWrapperKeypress = function($event) {
+          // exit if preventDefault() was called or useDefault is true or
+          // menu is closed
+          if ($event.defaultPrevented || scope.useDefault || !scope.isOpen) {
+            return;
+          }
+
+          // handle query timer
+          clearTimeout(scope.qTimeout);
+          scope.q += $event.key;
+          scope.qTimeout = setTimeout(function() {scope.q = '';}, 300);
+
+          // select first match alphabetically
+          var prefixRegex = new RegExp('^' + scope.q, 'i'),
+              options = scope.options,
+              m = options.length,
+              i;
+
+          for (i=0; i < m; i++) {
+            if (prefixRegex.test(options[i].label)) {
+              scope.menuIndex = i;
+              console.log(i);
+              break;
+            }
+          }
+        }
 
 
         /**
@@ -224,7 +259,7 @@ angular.module(moduleName, [])
           scope.$digest();
         }
 
-        
+
         /**
          * Open/Close custom select menu
          */

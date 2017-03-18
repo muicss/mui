@@ -28,6 +28,7 @@
           <div id="example2"></div>
           <div id="example3"></div>
           <div id="example4"></div>
+          <div id="example5"></div>
           <button class="mui-btn mui-btn--raised">submit</button>
         </form>
       </div>
@@ -170,11 +171,33 @@
         }
       }
 
+
+      // Example5
+      class Example5 extends React.Component {
+        render() {
+          return (
+            <Select label="Example 5">
+              <Option label="A" value="opt1" />
+              <Option label="B" value="opt2" />
+              <Option label="Ba" value="opt3" />
+              <Option label="Bb" value="opt4" />
+              <Option label="C" value="opt5" />
+              <Option label="F" value="opt6" />
+              <Option label="G" value="opt7" />
+              <Option label="H" value="opt8" />
+              <Option label="6" value="opt9" />
+            </Select>
+          );
+        }
+      }
+
+
       // Render examples
       ReactDOM.render(<Example1 />, document.getElementById('example1'));
       ReactDOM.render(<Example2 />, document.getElementById('example2'));
       ReactDOM.render(<Example3 />, document.getElementById('example3'));
       ReactDOM.render(<Example4 />, document.getElementById('example4'));
+      ReactDOM.render(<Example5 />, document.getElementById('example5'));
     </script>
   </body>
 </html>

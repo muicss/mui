@@ -239,6 +239,9 @@ class Menu extends React.Component {
     super(props);
 
     this.onKeyDownCB = util.callback(this, 'onKeyDown');
+    this.onKeyPressCB = util.callback(this, 'onKeyPress');
+    this.q = '';
+    this.qTimeout = null;
   }
 
   state = {
@@ -281,6 +284,7 @@ class Menu extends React.Component {
 
     // attach keydown handler
     jqLite.on(document, 'keydown', this.onKeyDownCB);
+    jqLite.on(document, 'keypress', this.onKeyPressCB);
   }
 
   componentWillUnmount() {
@@ -289,6 +293,7 @@ class Menu extends React.Component {
 
     // remove keydown handler
     jqLite.off(document, 'keydown', this.onKeyDownCB);
+    jqLite.off(document, 'keypress', this.onKeyPressCB);
   }
 
   onClick(pos, ev) {
@@ -312,6 +317,28 @@ class Menu extends React.Component {
     else if (keyCode === 40) this.increment();
     else if (keyCode === 38) this.decrement();
     else if (keyCode === 13) this.selectAndDestroy();
+  }
+
+  onKeyPress(ev) {
+    // handle query timer
+    let self = this;
+    clearTimeout(this.qTimeout);
+    this.q += ev.key;
+    this.qTimeout = setTimeout(function() {self.q = '';}, 300);
+
+    // select first match alphabetically
+    let prefixRegex = new RegExp('^' + this.q, 'i'),
+        optionEls = this.props.optionEls,
+        m = optionEls.length,
+        i;
+
+    for (i=0; i < m; i++) {
+      // select item if code matches
+      if (prefixRegex.test(optionEls[i].innerText)) {
+        this.setState({currentIndex: i});
+        break;
+      }
+    }
   }
 
   increment() {
