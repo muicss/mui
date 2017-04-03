@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.13 - April, 3 2017
+
+* Fixed issue in Chrome where textfield floating labels were ignoring autofill events in CSS/JS library
+
 ## 0.9.12 - March 18, 2017
 
 * Added support for jump-to alphabetical matches to CSS/JS, Angular and React

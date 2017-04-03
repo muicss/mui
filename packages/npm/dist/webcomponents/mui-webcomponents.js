@@ -108,6 +108,8 @@ function loadCss() {
     ['[data-mui-toggle="tab"]', 'mui-tab-inserted'],
     ['.mui-textfield > input', 'mui-textfield-inserted'],
     ['.mui-textfield > textarea', 'mui-textfield-inserted'],
+    ['.mui-textfield > input:-webkit-autofill', 'mui-textfield-autofill'],
+    ['.mui-textfield > textarea:-webkit-autofill', 'mui-textfield-autofill'],
     ['.mui-select > select', 'mui-select-inserted'],
     ['.mui-select > select ~ .mui-event-trigger', 'mui-node-inserted'],
     ['.mui-select > select:disabled ~ .mui-event-trigger', 'mui-node-disabled']
@@ -907,6 +909,18 @@ function inputHandler() {
 }
 
 
+/**
+ * Handle autofill events.
+ */
+function autofillHandler(inputEl) {
+  // exit if not under css/js control
+  if (inputEl._muiTextfield !== true) return;
+
+  // execute inputHandler
+  inputHandler.call(inputEl);
+}
+
+
 /** Define module API */
 module.exports = {
   /** Initialize input elements */
@@ -938,6 +952,11 @@ module.exports = {
       
       util.loadStyle(css);
     }, 150);
+
+    // listen for autofill events
+    animationHelpers.onAnimationStart('mui-textfield-autofill', function(ev) {
+      autofillHandler(ev.target);
+    });
 
     // pointer-events shim for floating labels
     if (util.supportsPointerEvents() === false) {
