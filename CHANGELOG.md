@@ -1,5 +1,13 @@
 # MUI Changelog
 
+## 0.9.14 - April, 8 2017
+
+* Fixed issue with CSS/JS DOM insertion CSS causing animation flash on disabled
+  elements
+* Added top/left borders to dropdown component menu on IE
+* Deferred creation of ripple effect container element to mousedown event in
+  CSS/JS library
+
 ## 0.9.13 - April, 3 2017
 
 * Fixed issue in Chrome where textfield floating labels were ignoring autofill events in CSS/JS library

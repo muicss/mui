@@ -24,6 +24,18 @@
 .mui-dropdown__menu {
   @extend .mui--z1;
 
+  // IE10+ bugfix
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    border-top: 1px solid rgba(mui-color('black'), 0.12);
+    border-left: 1px solid rgba(mui-color('black'), 0.12);
+  }
+
+  // Edge
+  @supports (-ms-ime-align:auto) {
+    border-top: 1px solid rgba(mui-color('black'), 0.12);
+    border-left: 1px solid rgba(mui-color('black'), 0.12);
+  }
+
   position: absolute;
   top: 100%;
   left: 0;

@@ -1068,6 +1068,20 @@ h4, h5, h6 {
   background-clip: padding-box;
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-dropdown__menu {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .mui-dropdown__menu {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
 .mui-dropdown__menu.mui--is-open {
   display: block;
 }
@@ -2528,6 +2542,7 @@ h4, h5, h6 {
   width: 100%;
   overflow: hidden;
   z-index: 0;
+  pointer-events: none;
 }
 
 .mui-ripple {
