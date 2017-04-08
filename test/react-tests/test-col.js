@@ -5,7 +5,7 @@
 
 import assert from 'assert';
 import React from 'react';
-import ReactUtils from 'react-addons-test-utils';
+import ReactUtils from 'react-dom/test-utils';
 
 import Col from '../../src/react/col';
 

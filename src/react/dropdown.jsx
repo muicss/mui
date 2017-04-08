@@ -8,6 +8,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from './button';
 import Caret from './caret';
@@ -15,8 +16,7 @@ import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 
 
-const PropTypes = React.PropTypes,
-      dropdownClass = 'mui-dropdown',
+const dropdownClass = 'mui-dropdown',
       menuClass = 'mui-dropdown__menu',
       openClass = 'mui--is-open',
       rightClass = 'mui-dropdown__menu--right';

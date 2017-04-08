@@ -5,8 +5,8 @@
 
 import assert from 'assert';
 import React from 'react';
-import ReactUtils from 'react-addons-test-utils';
 import ReactDOM from 'react-dom';
+import ReactUtils from 'react-dom/test-utils';
 
 import { requestAnimationFrame } from '../../src/js/lib/util';
 import jqLite from '../../src/js/lib/jqLite';

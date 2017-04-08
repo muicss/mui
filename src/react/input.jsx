@@ -6,11 +6,9 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { TextField } from './text-field';
-
-
-const PropTypes = React.PropTypes;
 
 
 /**

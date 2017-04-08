@@ -8,13 +8,13 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Tab from './tab';
 import * as util from '../js/lib/util';
 
 
-const PropTypes = React.PropTypes,
-      tabsBarClass = 'mui-tabs__bar',
+const tabsBarClass = 'mui-tabs__bar',
       tabsBarJustifiedClass = 'mui-tabs__bar--justified',
       tabsPaneClass = 'mui-tabs__pane',
       isActiveClass = 'mui--is-active';

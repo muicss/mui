@@ -6,13 +6,11 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 import { controlledMessage } from './_helpers';
-
-
-const PropTypes = React.PropTypes;
 
 
 /**
@@ -205,7 +203,7 @@ class TextField extends React.Component {
   static propTypes = {
     label: PropTypes.oneOfType([
       PropTypes.string,
-      React.PropTypes.object
+      PropTypes.object
     ]),
     floatingLabel: PropTypes.bool
   };

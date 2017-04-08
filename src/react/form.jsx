@@ -6,6 +6,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 /**
@@ -14,7 +15,7 @@ import React from 'react';
  */
 class Form extends React.Component {
   static propTypes = {
-    inline: React.PropTypes.bool
+    inline: PropTypes.bool
   };
 
   static defaultProps = {

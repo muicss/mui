@@ -6,13 +6,13 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 
 
-const PropTypes = React.PropTypes,
-      btnClass = 'mui-btn',
+const btnClass = 'mui-btn',
       btnAttrs = {color: 1, variant: 1, size: 1};
 
 

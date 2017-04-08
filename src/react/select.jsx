@@ -6,14 +6,12 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import * as formlib from '../js/lib/forms';
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 import { controlledMessage } from './_helpers';
-
-
-const PropTypes = React.PropTypes;
 
 
 /**

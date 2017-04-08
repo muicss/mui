@@ -8,11 +8,9 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import * as util from '../js/lib/util';
-
-
-const PropTypes = React.PropTypes;
 
 
 /**

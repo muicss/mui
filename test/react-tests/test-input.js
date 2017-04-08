@@ -4,9 +4,10 @@
  */
 
 import assert from 'assert';
+import createClass from 'create-react-class';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactUtils from 'react-addons-test-utils';
+import ReactUtils from 'react-dom/test-utils';
 
 import Input from '../../src/react/input';
 
@@ -66,7 +67,7 @@ describe('react/input', function() {
 
 
   it('renders component with defaultValue received by update', function() {
-    const ParentClass = React.createClass({
+    const ParentClass = createClass({
       getInitialState() {
         return { testState: 'init' };
       },
@@ -153,7 +154,7 @@ describe('react/input', function() {
 
 
   it('adds and removes mui--is-empty classes', function() {
-    var TestApp = React.createClass({
+    var TestApp = createClass({
       getInitialState: function() {
         return {value: this.props.value};
       },
@@ -204,7 +205,7 @@ describe('react/input', function() {
 
 
   it('can be used as controlled component', function() {
-    var TestApp = React.createClass({
+    var TestApp = createClass({
       getInitialState: function() {
         return {value: this.props.value};
       },

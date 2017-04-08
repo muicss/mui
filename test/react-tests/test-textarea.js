@@ -4,9 +4,10 @@
  */
 
 import assert from 'assert';
+import createClass from'create-react-class';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactUtils from 'react-addons-test-utils';
+import ReactUtils from 'react-dom/test-utils';
 
 import Textarea from '../../src/react/textarea';
 
@@ -66,7 +67,7 @@ describe('react/textarea', function() {
 
 
   it('can be used as controlled component', function() {
-    var TestApp = React.createClass({
+    var TestApp = createClass({
       getInitialState: function() {
         return {value: this.props.value};
       },

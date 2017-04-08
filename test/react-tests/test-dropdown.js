@@ -5,7 +5,7 @@
 
 import assert from 'assert';
 import React from 'react';
-import ReactUtils from 'react-addons-test-utils';
+import ReactUtils from 'react-dom/test-utils';
 
 import Dropdown from '../../src/react/dropdown';
 import DropdownItem from '../../src/react/dropdown-item';

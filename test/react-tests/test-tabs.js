@@ -4,9 +4,10 @@
  */
 
 import assert from 'assert';
+import createClass from'create-react-class';
 import React from 'react';
-import ReactUtils from 'react-addons-test-utils';
 import ReactDOMServer from 'react-dom/server';
+import ReactUtils from 'react-dom/test-utils';
 
 import Tab from '../../src/react/tab';
 import Tabs from '../../src/react/tabs';
@@ -69,7 +70,7 @@ describe('react/tabs', function() {
 
 
   it('can be used as a controlled component', function() {
-    var TestApp = React.createClass({
+    var TestApp = createClass({
       getInitialState: function() {
         return {tabIndex: 1};
       },
