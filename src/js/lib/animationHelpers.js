@@ -83,8 +83,8 @@ function loadCss() {
 
   for (var i=0, m=rules.length; i < m; i++) {
     rule = rules[i];
-    // use an IE-only property to trigger animation cross-browser
-    css += '@keyframes ' + rule[1] + '{from{opacity:1;}to{opacity:1;}}';
+    css += '@keyframes ' + rule[1];
+    css += '{from{transform:none;}to{transform:none;}}';
     css += rule[0];
     css += '{animation-duration:0.0001s;animation-name:' + rule[1] + ';}';
   }
