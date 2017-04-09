@@ -8,7 +8,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Tab from './tab';
 import * as util from '../js/lib/util';
@@ -50,17 +49,6 @@ class Tabs extends React.Component {
     super(props);
     this.state = {currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex};
   }
-
-  static propTypes = {
-    defaultSelectedIndex: PropTypes.number,
-    /* 
-     * @deprecated
-     */
-    initialSelectedIndex: PropTypes.number,
-    justified: PropTypes.bool,
-    onChange: PropTypes.func,
-    selectedIndex: PropTypes.number
-  };
 
   static defaultProps = {
     className: '',

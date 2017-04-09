@@ -8,7 +8,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 
 /**
@@ -16,12 +15,6 @@ import PropTypes from 'prop-types';
  * @class
  */
 class Tab extends React.Component {
-  static propTypes = {
-    value: PropTypes.any,
-    label: PropTypes.string,
-    onActive: PropTypes.func
-  };
-
   static defaultProps = {
     value: null,
     label: '',

@@ -8,7 +8,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Button from './button';
 import Caret from './caret';
@@ -40,21 +39,6 @@ class Dropdown extends React.Component {
     this.onClickCB = cb(this, 'onClick');
     this.onOutsideClickCB = cb(this, 'onOutsideClick');
   }
-
-  static propTypes = {
-    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark',
-      'accent']),
-    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-    size: PropTypes.oneOf(['default', 'small', 'large']),
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element
-    ]),
-    alignMenu: PropTypes.oneOf(['left', 'right']),
-    onClick: PropTypes.func,
-    onSelect: PropTypes.func,
-    disabled: PropTypes.bool
-  };
 
   static defaultProps = {
     className: '',

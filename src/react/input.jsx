@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { TextField } from './text-field';
 
@@ -16,10 +15,6 @@ import { TextField } from './text-field';
  * @class
  */
 class Input extends React.Component {
-  static propTypes = {
-    type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
-  };
-
   static defaultProps = {
     type: 'text'
   };

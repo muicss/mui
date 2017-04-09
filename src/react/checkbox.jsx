@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import * as util from '../js/lib/util';
 import { controlledMessage } from './_helpers';
@@ -18,10 +17,6 @@ import { getReactProps } from './_helpers';
  * @class
  */
 class Checkbox extends React.Component {
-  static propTypes = {
-    label: PropTypes.string
-  };
-
   static defaultProps = {
     className: '',
     label: null

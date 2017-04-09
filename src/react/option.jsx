@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import * as formlib from '../js/lib/forms';
 import * as jqLite from '../js/lib/jqLite';
@@ -19,10 +18,6 @@ import { getReactProps } from './_helpers';
  * @class
  */
 class Option extends React.Component {
-  static propTypes = {
-    label: PropTypes.string
-  };
-
   static defaultProps = {
     className: '',
     label: null

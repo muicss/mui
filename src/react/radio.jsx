@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 
 /**
@@ -14,10 +13,6 @@ import PropTypes from 'prop-types';
  * @class
  */
 class Radio extends React.Component {
-  static propTypes = {
-    label: PropTypes.string
-  };
-
   static defaultProps = {
     className: '',
     label: null

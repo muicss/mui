@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import * as formlib from '../js/lib/forms';
 import * as jqLite from '../js/lib/jqLite';
@@ -46,18 +45,6 @@ class Select extends React.Component {
 
   state = {
     showMenu: false
-  };
-
-  static propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    name: PropTypes.string,
-    defaultValue: PropTypes.string,
-    readOnly: PropTypes.bool,
-    useDefault: PropTypes.bool,
-    onChange: PropTypes.func,
-    onClick: PropTypes.func,
-    onKeyDown: PropTypes.func
   };
 
   static defaultProps = {

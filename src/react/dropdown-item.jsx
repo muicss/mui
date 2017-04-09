@@ -8,7 +8,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import * as util from '../js/lib/util';
 
@@ -18,12 +17,6 @@ import * as util from '../js/lib/util';
  * @class
  */
 class DropdownItem extends React.Component {
-  static propTypes =  {
-    link: PropTypes.string,
-    target: PropTypes.string,
-    onClick: PropTypes.func
-  };
-
   render() {
     const { children, link, target, value, onClick,
       ...reactProps } = this.props;

@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
@@ -34,12 +33,6 @@ class Button extends React.Component {
 
   state = {
     ripple: null
-  };
-
-  static propTypes = {
-    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-    size: PropTypes.oneOf(['default', 'small', 'large']),
-    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab'])
   };
 
   static defaultProps = {

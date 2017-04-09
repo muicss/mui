@@ -63,7 +63,6 @@
     "merge-stream": "^1.0.1",
     "mocha": "^3.2.0",
     "mocha-jsdom": "^1.1.0",
-    "prop-types": "^15.5.4",
     "react": "^15.5.3",
     "create-react-class": "^15.5.1",
     "react-dom": "^15.5.3",

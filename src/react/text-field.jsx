@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
@@ -41,12 +40,6 @@ class Input extends React.Component {
     this.onBlurCB = cb(this, 'onBlur');
     this.onChangeCB = cb(this, 'onChange');
   }
-
-  static propTypes = {
-    hint: PropTypes.string,
-    invalid: PropTypes.bool,
-    rows: PropTypes.number
-  };
 
   static defaultProps = {
     hint: null,
@@ -199,14 +192,6 @@ class TextField extends React.Component {
 
     this.onClickCB = util.callback(this, 'onClick');
   }
-
-  static propTypes = {
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object
-    ]),
-    floatingLabel: PropTypes.bool
-  };
 
   static defaultProps = {
     className: '',

@@ -6,7 +6,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 
 /**
@@ -14,10 +13,6 @@ import PropTypes from 'prop-types';
  * @class
  */
 class Container extends React.Component {
-  static propTypes = {
-    fluid: PropTypes.bool
-  };
-
   static defaultProps = {
     className: '',
     fluid: false
