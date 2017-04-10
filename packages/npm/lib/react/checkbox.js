@@ -20,13 +20,10 @@ var util = babelHelpers.interopRequireWildcard(_util);
 
 var _helpers = require('./_helpers');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Checkbox constructor
  * @class
  */
-
 var Checkbox = function (_React$Component) {
   babelHelpers.inherits(Checkbox, _React$Component);
 
@@ -88,9 +85,6 @@ var Checkbox = function (_React$Component) {
 /** Define module API */
 
 
-Checkbox.propTypes = {
-  label: PropTypes.string
-};
 Checkbox.defaultProps = {
   className: '',
   label: null

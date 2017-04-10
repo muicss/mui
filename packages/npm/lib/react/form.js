@@ -55,9 +55,6 @@ var Form = function (_React$Component) {
 /** Define module API */
 
 
-Form.propTypes = {
-  inline: _react2.default.PropTypes.bool
-};
 Form.defaultProps = {
   className: '',
   inline: false

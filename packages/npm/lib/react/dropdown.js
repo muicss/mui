@@ -33,8 +33,7 @@ var _util = require('../js/lib/util');
 var util = babelHelpers.interopRequireWildcard(_util);
 
 
-var PropTypes = _react2.default.PropTypes,
-    dropdownClass = 'mui-dropdown',
+var dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
     openClass = 'mui--is-open',
     rightClass = 'mui-dropdown__menu--right';
@@ -224,16 +223,6 @@ var Dropdown = function (_React$Component) {
 /** Define module API */
 
 
-Dropdown.propTypes = {
-  color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-  size: PropTypes.oneOf(['default', 'small', 'large']),
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  alignMenu: PropTypes.oneOf(['left', 'right']),
-  onClick: PropTypes.func,
-  onSelect: PropTypes.func,
-  disabled: PropTypes.bool
-};
 Dropdown.defaultProps = {
   className: '',
   color: 'default',

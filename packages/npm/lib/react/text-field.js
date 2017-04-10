@@ -25,13 +25,10 @@ var util = babelHelpers.interopRequireWildcard(_util);
 
 var _helpers = require('./_helpers');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Input constructor
  * @class
  */
-
 var Input = function (_React$Component) {
   babelHelpers.inherits(Input, _React$Component);
 
@@ -162,11 +159,6 @@ var Input = function (_React$Component) {
  */
 
 
-Input.propTypes = {
-  hint: PropTypes.string,
-  invalid: PropTypes.bool,
-  rows: PropTypes.number
-};
 Input.defaultProps = {
   hint: null,
   invalid: false,
@@ -308,10 +300,6 @@ var TextField = function (_React$Component3) {
 /** Define module API */
 
 
-TextField.propTypes = {
-  label: PropTypes.oneOfType([PropTypes.string, _react2.default.PropTypes.object]),
-  floatingLabel: PropTypes.bool
-};
 TextField.defaultProps = {
   className: '',
   label: null,

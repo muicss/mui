@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.15 - April 10, 2017
+
+* Upgraded to React 15.5.0
+
 ## 0.9.14 - April, 8 2017
 
 * Fixed issue with CSS/JS DOM insertion CSS causing animation flash on disabled

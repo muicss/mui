@@ -16,13 +16,10 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _textField = require('./text-field');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Input constructor
  * @class
  */
-
 var Input = function (_React$Component) {
   babelHelpers.inherits(Input, _React$Component);
 
@@ -40,9 +37,6 @@ var Input = function (_React$Component) {
   return Input;
 }(_react2.default.Component);
 
-Input.propTypes = {
-  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'password'])
-};
 Input.defaultProps = {
   type: 'text'
 };

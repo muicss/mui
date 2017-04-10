@@ -28,13 +28,10 @@ var util = babelHelpers.interopRequireWildcard(_util);
 
 var _helpers = require('./_helpers');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Option constructor
  * @class
  */
-
 var Option = function (_React$Component) {
   babelHelpers.inherits(Option, _React$Component);
 
@@ -65,9 +62,6 @@ var Option = function (_React$Component) {
 /** Define module API */
 
 
-Option.propTypes = {
-  label: PropTypes.string
-};
 Option.defaultProps = {
   className: '',
   label: null

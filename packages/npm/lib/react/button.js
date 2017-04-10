@@ -23,8 +23,7 @@ var _util = require('../js/lib/util');
 var util = babelHelpers.interopRequireWildcard(_util);
 
 
-var PropTypes = _react2.default.PropTypes,
-    btnClass = 'mui-btn',
+var btnClass = 'mui-btn',
     btnAttrs = { color: 1, variant: 1, size: 1 };
 
 /**
@@ -220,11 +219,6 @@ var Button = function (_React$Component) {
 /** Define module API */
 
 
-Button.propTypes = {
-  color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-  size: PropTypes.oneOf(['default', 'small', 'large']),
-  variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab'])
-};
 Button.defaultProps = {
   className: '',
   color: 'default',

@@ -14,13 +14,10 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Radio constructor
  * @class
  */
-
 var Radio = function (_React$Component) {
   babelHelpers.inherits(Radio, _React$Component);
 
@@ -82,9 +79,6 @@ var Radio = function (_React$Component) {
 /** Define module API */
 
 
-Radio.propTypes = {
-  label: PropTypes.string
-};
 Radio.defaultProps = {
   className: '',
   label: null

@@ -20,14 +20,10 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
-
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * DropdownItem constructor
  * @class
  */
-
 var DropdownItem = function (_React$Component) {
   babelHelpers.inherits(DropdownItem, _React$Component);
 
@@ -70,10 +66,5 @@ var DropdownItem = function (_React$Component) {
 /** Define module API */
 
 
-DropdownItem.propTypes = {
-  link: PropTypes.string,
-  target: PropTypes.string,
-  onClick: PropTypes.func
-};
 exports.default = DropdownItem;
 module.exports = exports['default'];

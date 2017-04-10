@@ -25,8 +25,7 @@ var _util = require('../js/lib/util');
 var util = babelHelpers.interopRequireWildcard(_util);
 
 
-var PropTypes = _react2.default.PropTypes,
-    tabsBarClass = 'mui-tabs__bar',
+var tabsBarClass = 'mui-tabs__bar',
     tabsBarJustifiedClass = 'mui-tabs__bar--justified',
     tabsPaneClass = 'mui-tabs__pane',
     isActiveClass = 'mui--is-active';
@@ -153,16 +152,6 @@ var Tabs = function (_React$Component) {
 /** Define module API */
 
 
-Tabs.propTypes = {
-  defaultSelectedIndex: PropTypes.number,
-  /* 
-   * @deprecated
-   */
-  initialSelectedIndex: PropTypes.number,
-  justified: PropTypes.bool,
-  onChange: PropTypes.func,
-  selectedIndex: PropTypes.number
-};
 Tabs.defaultProps = {
   className: '',
   defaultSelectedIndex: 0,

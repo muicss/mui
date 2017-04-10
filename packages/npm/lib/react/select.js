@@ -28,13 +28,10 @@ var util = babelHelpers.interopRequireWildcard(_util);
 
 var _helpers = require('./_helpers');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Select constructor
  * @class
  */
-
 var Select = function (_React$Component) {
   babelHelpers.inherits(Select, _React$Component);
 
@@ -256,17 +253,6 @@ var Select = function (_React$Component) {
  */
 
 
-Select.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  name: PropTypes.string,
-  defaultValue: PropTypes.string,
-  readOnly: PropTypes.bool,
-  useDefault: PropTypes.bool,
-  onChange: PropTypes.func,
-  onClick: PropTypes.func,
-  onKeyDown: PropTypes.func
-};
 Select.defaultProps = {
   className: '',
   name: '',

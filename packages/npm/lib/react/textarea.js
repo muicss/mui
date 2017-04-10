@@ -16,13 +16,10 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _textField = require('./text-field');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Textarea constructor
  * @class
  */
-
 var Textarea = function (_React$Component) {
   babelHelpers.inherits(Textarea, _React$Component);
 
