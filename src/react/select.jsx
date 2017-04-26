@@ -204,6 +204,7 @@ class Select extends React.Component {
           readOnly={this.props.readOnly}
           onChange={this.onInnerChangeCB}
           onMouseDown={this.onInnerMouseDownCB}
+          required={this.props.required}
         >
           {children}
         </select>
