@@ -163,6 +163,37 @@ describe('react/select', function() {
   });
 
 
+  it('renders required attribute properly', function() {
+    // true
+    let testElem = (
+      <Select required={true}>
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.refs.selectEl;
+
+    assert.equal(selectEl.required, true);
+
+    // false
+    testElem = (
+      <Select required={false}>
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
+      </Select>
+    );
+
+    instance = ReactUtils.renderIntoDocument(testElem);
+    selectEl = instance.refs.selectEl;
+
+    assert.equal(selectEl.required, false);
+  });
+
+
   it('handles default undefined value', function() {
     let testElem = (
       <Select>
