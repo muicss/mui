@@ -191,6 +191,22 @@ describe('react/select', function() {
     selectEl = instance.refs.selectEl;
 
     assert.equal(selectEl.required, false);
+    assert.equal(selectEl.hasAttribute('required'), false);
+
+    // undefined
+    testElem = (
+      <Select>
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
+      </Select>
+    );
+
+    instance = ReactUtils.renderIntoDocument(testElem);
+    selectEl = instance.refs.selectEl;
+
+    assert.equal(selectEl.required, false);
+    assert.equal(selectEl.hasAttribute('required'), false);
   });
 
 

@@ -231,7 +231,8 @@ var Select = function (_React$Component) {
             defaultValue: defaultValue,
             readOnly: this.props.readOnly,
             onChange: this.onInnerChangeCB,
-            onMouseDown: this.onInnerMouseDownCB
+            onMouseDown: this.onInnerMouseDownCB,
+            required: this.props.required
           },
           children
         ),
