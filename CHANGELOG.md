@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.17 - June 14, 2017
+
+* Upgraded devDependencies
+* Upgraded to React 15.6.0
+
 ## 0.9.16 - April 26, 2017
 
 * Added support for `required` property to MUI React Select component
