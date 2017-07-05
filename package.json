@@ -24,8 +24,8 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "angular": "^1.6.4",
-    "angular-mocks": "^1.6.4",
+    "angular": "^1.6.5",
+    "angular-mocks": "^1.6.5",
     "array-equal": "^1.0.0",
     "autoprefixer-core": "^6.0.1",
     "babel-core": "^6.25.0",
@@ -59,7 +59,7 @@
     "gulp-rtlcss": "1.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
-    "jsdom": "^11.0.0",
+    "jsdom": "^11.1.0",
     "jsdom-global": "^3.0.2",
     "jshint": "^2.9.5",
     "merge-stream": "^1.0.1",
@@ -76,7 +76,9 @@
     "whatwg-url-compat": "^0.6.5",
     "xmlhttprequest": "^1.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "http-server": "^0.10.0"
+  },
   "engines": {
     "npm": ">=3.3.12"
   },
