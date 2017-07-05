@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/css-switch.js"></script>
+    <script>
+      window.addEventListener('load', function() {
+        var s = document.createElement('script');
+        s.src = "../assets/mui/js/mui.js";
+        document.head.appendChild(s);
+
+        var el = document.getElementsByTagName('select')[0];
+
+        el.onchange = function() {
+          console.log('select onchange');
+        };
+
+        el.addEventListener('change', function() {
+          console.log('select change');
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h2>Inputs and Textareas</h2>
+      <div class="mui-panel">
+        <h3>Form with placeholders</h3>
+        <form>
+          <div class="mui-textfield">
+            <input type="text" placeholder="Placeholder 1">
+          </div>
+          <div class="mui-textfield">
+            <input type="text" placeholder="Placeholder 2">
+          </div>
+          <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+        </form>
+
+        <h3>Form with fixed labels</h3>
+        <form>
+          <div class="mui-textfield">
+            <input type="text">
+            <label>Input 1</label>
+          </div>
+          <div class="mui-textfield">
+            <input type="text">
+            <label>Input 2</label>
+          </div>
+          <div class="mui-textfield">
+            <textarea></textarea>
+            <label>Textarea</label>
+          </div>
+          <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+        </form>
+        
+        <h3>Form with floating labels</h3>
+        <form>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" autofocus>
+            <label>Auto focused</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text">
+            <label>Placeholder</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" value="Value on load">
+            <label>Placeholder</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <textarea>Value on load</textarea>
+            <label>Placeholder</label>
+          </div>
+          <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+        </form>
+
+        <h3>Label overflow</h3>
+        <form>
+          <div class="mui-textfield mui-textfield--wrap-label">
+            <input type="text">
+            <label>Very long long long long long long label</label>
+          </div>
+          <div class="mui-textfield">
+            <input type="text">
+            <label>Very long long long long long long label</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text">
+            <label>Very long long long long long long label</label>
+          </div>
+        </form>
+      </div>
+
+      <h2>Form Validation</h2>
+      <div class="mui-panel">
+        <form>
+          <div class="mui-textfield">
+            <input type="email">
+            <label>Email address (should turn red on invalid input)</label>
+          </div>
+          <div class="mui-textfield">
+            <input type="email" value="err">
+            <label>Email address (should be red on load)</label>
+          </div>
+          <div class="mui-textfield">
+            <input type="email" required>
+            <label>Required email address (should turn red after focus or invalid input)</label>
+          </div>
+          <div class="mui-textfield">
+            <input type="text" required>
+            <label>Required text (should turn red after focus)</label>
+          </div>
+          <div class="mui-textfield">
+            <input type="text" value="val" required>
+            <label>Required text (should turn red after deletion)</label>
+          </div>
+          <div class="mui-textfield">
+            <input type="text" value="val" class="mui--is-invalid">
+            <label>mui--is-invalid (should be red on load)</label>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </body>
+</html>

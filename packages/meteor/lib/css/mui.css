@@ -1,149 +1,193 @@
-/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 /**
- * 1. Set default font family to sans-serif.
- * 2. Prevent iOS and IE text size adjust after device orientation change,
- *    without disabling user zoom.
+ * MUI Colors module
  */
+/**
+ * MUI Globals
+ */
+/*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+/**
+ * 1. Change the default font family in all browsers (opinionated).
+ * 2. Correct the line height in all browsers.
+ * 3. Prevent adjustments of font size after orientation changes in
+ *    IE on Windows Phone and in iOS.
+ */
+/* Document
+   ========================================================================== */
 html {
   font-family: sans-serif;
   /* 1 */
+  line-height: 1.15;
+  /* 2 */
   -ms-text-size-adjust: 100%;
-  /* 2 */
+  /* 3 */
   -webkit-text-size-adjust: 100%;
-  /* 2 */
+  /* 3 */
 }
 
+/* Sections
+   ========================================================================== */
 /**
- * Remove default margin.
+ * Remove the margin in all browsers (opinionated).
  */
 body {
   margin: 0;
 }
 
-/* HTML5 display definitions
-   ========================================================================== */
 /**
- * Correct `block` display not defined for any HTML5 element in IE 8/9.
- * Correct `block` display not defined for `details` or `summary` in IE 10/11
- * and Firefox.
- * Correct `block` display not defined for `main` in IE 11.
+ * Add the correct display in IE 9-.
  */
 article,
 aside,
-details,
-figcaption,
-figure,
 footer,
 header,
-hgroup,
-main,
-menu,
 nav,
-section,
-summary {
+section {
   display: block;
 }
 
 /**
- * 1. Correct `inline-block` display not defined in IE 8/9.
- * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
- */
-audio,
-canvas,
-progress,
-video {
-  display: inline-block;
-  /* 1 */
-  vertical-align: baseline;
-  /* 2 */
-}
-
-/**
- * Prevent modern browsers from displaying `audio` without controls.
- * Remove excess height in iOS 5 devices.
- */
-audio:not([controls]) {
-  display: none;
-  height: 0;
-}
-
-/**
- * Address `[hidden]` styling not present in IE 8/9/10.
- * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
- */
-[hidden],
-template {
-  display: none;
-}
-
-/* Links
-   ========================================================================== */
-/**
- * Remove the gray background color from active links in IE 10.
- */
-a {
-  background-color: transparent;
-}
-
-/**
- * Improve readability of focused elements when they are also in an
- * active/hover state.
- */
-a:active,
-a:hover {
-  outline: 0;
-}
-
-/* Text-level semantics
-   ========================================================================== */
-/**
- * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
- */
-abbr[title] {
-  border-bottom: 1px dotted;
-}
-
-/**
- * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
- */
-b,
-strong {
-  font-weight: bold;
-}
-
-/**
- * Address styling not present in Safari and Chrome.
- */
-dfn {
-  font-style: italic;
-}
-
-/**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari, and Chrome.
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
  */
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
 
+/* Grouping content
+   ========================================================================== */
 /**
- * Address styling not present in IE 8/9.
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in IE.
+ */
+figcaption,
+figure,
+main {
+  /* 1 */
+  display: block;
+}
+
+/**
+ * Add the correct margin in IE 8.
+ */
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ */
+a {
+  background-color: transparent;
+  /* 1 */
+  -webkit-text-decoration-skip: objects;
+  /* 2 */
+}
+
+/**
+ * Remove the outline on focused links when they are also active or hovered
+ * in all browsers (opinionated).
+ */
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+/**
+ * 1. Remove the bottom border in Firefox 39-.
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none;
+  /* 1 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */
+}
+
+/**
+ * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+ */
+b,
+strong {
+  font-weight: inherit;
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/**
+ * Add the correct font style in Android 4.3-.
+ */
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Add the correct background and color in IE 9-.
  */
 mark {
-  background: #ff0;
+  background-color: #ff0;
   color: #000;
 }
 
 /**
- * Address inconsistent and variable font size in all browsers.
+ * Add the correct font size in all browsers.
  */
 small {
   font-size: 80%;
 }
 
 /**
- * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
  */
 sub,
 sup {
@@ -153,198 +197,123 @@ sup {
   vertical-align: baseline;
 }
 
-sup {
-  top: -0.5em;
-}
-
 sub {
   bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
 }
 
 /* Embedded content
    ========================================================================== */
 /**
- * Remove border when inside `a` element in IE 8/9/10.
+ * Add the correct display in IE 9-.
  */
-img {
-  border: 0;
+audio,
+video {
+  display: inline-block;
 }
 
 /**
- * Correct overflow not hidden in IE 9/10/11.
+ * Add the correct display in iOS 4-7.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Remove the border on images inside links in IE 10-.
+ */
+img {
+  border-style: none;
+}
+
+/**
+ * Hide the overflow in IE.
  */
 svg:not(:root) {
   overflow: hidden;
 }
 
-/* Grouping content
-   ========================================================================== */
-/**
- * Address margin not present in IE 8/9 and Safari.
- */
-figure {
-  margin: 1em 40px;
-}
-
-/**
- * Address differences between Firefox and other browsers.
- */
-hr {
-  box-sizing: content-box;
-  height: 0;
-}
-
-/**
- * Contain overflow in all browsers.
- */
-pre {
-  overflow: auto;
-}
-
-/**
- * Address odd `em`-unit font size rendering in all browsers.
- */
-code,
-kbd,
-pre,
-samp {
-  font-family: monospace, monospace;
-  font-size: 1em;
-}
-
 /* Forms
    ========================================================================== */
 /**
- * Known limitation: by default, Chrome and Safari on OS X allow very limited
- * styling of `select`, unless a `border` property is set.
- */
-/**
- * 1. Correct color not being inherited.
- *    Known issue: affects color of disabled elements.
- * 2. Correct font properties not being inherited.
- * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ * 1. Change the font styles in all browsers (opinionated).
+ * 2. Remove the margin in Firefox and Safari.
  */
 button,
 input,
 optgroup,
 select,
 textarea {
-  color: inherit;
+  font-family: sans-serif;
   /* 1 */
-  font: inherit;
-  /* 2 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
   margin: 0;
-  /* 3 */
+  /* 2 */
 }
 
 /**
- * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
  */
-button {
+button,
+input {
+  /* 1 */
   overflow: visible;
 }
 
 /**
- * Address inconsistent `text-transform` inheritance for `button` and `select`.
- * All other form control elements do not inherit `text-transform` values.
- * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
- * Correct `select` style inheritance in Firefox.
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
  */
 button,
 select {
+  /* 1 */
   text-transform: none;
 }
 
 /**
- * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
- *    and `video` controls.
- * 2. Correct inability to style clickable `input` types in iOS.
- * 3. Improve usability and consistency of cursor style between image-type
- *    `input` and others.
+ * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+ *    controls in Android 4.
+ * 2. Correct the inability to style clickable types in iOS and Safari.
  */
 button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+html [type="button"],
+[type="reset"],
+[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
-  cursor: pointer;
-  /* 3 */
 }
 
 /**
- * Re-set default cursor for disabled elements.
- */
-button[disabled],
-html input[disabled] {
-  cursor: default;
-}
-
-/**
- * Remove inner padding and border in Firefox 4+.
+ * Remove the inner border and padding in Firefox.
  */
 button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
   padding: 0;
 }
 
 /**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
- * the UA stylesheet.
+ * Restore the focus styles unset by the previous rule.
  */
-input {
-  line-height: normal;
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
 }
 
 /**
- * It's recommended that you don't attempt to style these elements.
- * Firefox's implementation doesn't respect box-sizing, padding, or width.
- *
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- */
-input[type="checkbox"],
-input[type="radio"] {
-  box-sizing: border-box;
-  /* 1 */
-  padding: 0;
-  /* 2 */
-}
-
-/**
- * Fix the cursor style for Chrome's increment/decrement buttons. For certain
- * `font-size` values of the `input`, it causes the cursor style of the
- * decrement button to change from `default` to `text`.
- */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-}
-
-/**
- * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
- */
-input[type="search"] {
-  -webkit-appearance: textfield;
-  /* 1 */
-  box-sizing: content-box;
-  /* 2 */
-}
-
-/**
- * Remove inner padding and search cancel button in Safari and Chrome on OS X.
- * Safari (but not Chrome) clips the cancel button when the search input has
- * padding (and `textfield` appearance).
- */
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-/**
- * Define consistent border, margin, and padding.
+ * Change the border, margin, and padding in all browsers (opinionated).
  */
 fieldset {
   border: 1px solid #c0c0c0;
@@ -353,59 +322,137 @@ fieldset {
 }
 
 /**
- * 1. Correct `color` not being inherited in IE 8/9/10/11.
- * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
  */
 legend {
-  border: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
   /* 1 */
   padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */
+}
+
+/**
+ * 1. Add the correct display in IE 9-.
+ * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
   /* 2 */
 }
 
 /**
- * Remove default vertical scrollbar in IE 8/9/10/11.
+ * Remove the default vertical scrollbar in IE.
  */
 textarea {
   overflow: auto;
 }
 
 /**
- * Don't inherit the `font-weight` (applied by a rule above).
- * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-.
  */
-optgroup {
-  font-weight: bold;
+[type="checkbox"],
+[type="radio"] {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
 }
 
-/* Tables
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
+}
+
+/**
+ * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+ */
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in Edge, IE, and Firefox.
+ */
+details,
+menu {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item;
+}
+
+/* Scripting
    ========================================================================== */
 /**
- * Remove most spacing between table cells.
+ * Add the correct display in IE 9-.
  */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-td,
-th {
-  padding: 0;
+canvas {
+  display: inline-block;
 }
 
 /**
- * MUI Colors module
+ * Add the correct display in IE.
  */
-/**
- * MUI Reboot
- */
-* {
-  box-sizing: border-box;
+template {
+  display: none;
 }
 
-*:before,
-*:after {
-  box-sizing: border-box;
+/* Hidden
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10-.
+ */
+[hidden] {
+  display: none;
 }
 
 html {
@@ -422,22 +469,12 @@ body {
   background-color: #FFF;
 }
 
-input,
-button,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
 a {
   color: #2196F3;
   text-decoration: none;
 }
 
 a:hover, a:focus {
-  color: #1976D2;
   text-decoration: underline;
 }
 
@@ -457,49 +494,12 @@ ol {
   margin-bottom: 10px;
 }
 
-figure {
-  margin: 0;
-}
-
-img {
-  vertical-align: middle;
-}
-
 hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.12);
-}
-
-legend {
-  display: block;
-  width: 100%;
-  padding: 0;
-  margin-bottom: 10px;
-  font-size: 21px;
-  color: rgba(0, 0, 0, 0.87);
-  line-height: inherit;
-  border: 0;
-}
-
-input[type="search"] {
-  box-sizing: border-box;
-  -webkit-appearance: none;
-}
-
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-input[type="radio"]:disabled,
-input[type="checkbox"]:disabled {
-  cursor: not-allowed;
 }
 
 strong {
@@ -579,20 +579,18 @@ h4, h5, h6 {
  * MUI Buttons
  */
 .mui-btn {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.87);
   background-color: #FFF;
+  -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   display: inline-block;
   height: 36px;
   padding: 0 26px;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin: 6px 0;
   border: none;
   border-radius: 2px;
   cursor: pointer;
@@ -608,6 +606,7 @@ h4, h5, h6 {
   -ms-user-select: none;
   user-select: none;
   font-size: 14px;
+  font-family: inherit;
   letter-spacing: 0.03em;
   position: relative;
   overflow: hidden;
@@ -645,22 +644,40 @@ h4, h5, h6 {
 }
 
 .mui-btn:hover, .mui-btn:focus {
+  -webkit-box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .mui-btn:hover, .mui-btn:focus {
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
   }
 }
 
-.mui-btn:active {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+@supports (-ms-ime-align: auto) {
+  .mui-btn:hover, .mui-btn:focus {
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.mui-btn:active:hover {
+  -webkit-box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .mui-btn:active {
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  .mui-btn:active:hover {
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .mui-btn:active:hover {
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -668,6 +685,7 @@ h4, h5, h6 {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.60;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -679,28 +697,47 @@ h4, h5, h6 {
   background-color: transparent;
 }
 
-.mui-btn--flat:hover, .mui-btn--flat:focus, .mui-btn--flat:active {
+.mui-btn--flat:hover, .mui-btn--flat:focus, .mui-btn--flat:active, .mui-btn--flat:active:hover {
+  -webkit-box-shadow: none;
   box-shadow: none;
   background-color: #f2f2f2;
 }
 
 .mui-btn--raised, .mui-btn--fab {
+  -webkit-box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .mui-btn--raised, .mui-btn--fab {
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .mui-btn--raised, .mui-btn--fab {
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
   }
 }
 
 .mui-btn--raised:active, .mui-btn--fab:active {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  -webkit-box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .mui-btn--raised:active, .mui-btn--fab:active {
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .mui-btn--raised:active, .mui-btn--fab:active {
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -880,6 +917,18 @@ h4, h5, h6 {
   cursor: pointer;
 }
 
+.mui-radio input:disabled,
+.mui-checkbox input:disabled {
+  cursor: not-allowed;
+}
+
+.mui-radio input:focus,
+.mui-checkbox input:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
 .mui-radio > label > input[type="radio"],
 .mui-radio--inline > label > input[type="radio"],
 .mui-checkbox > label > input[type="checkbox"],
@@ -926,6 +975,8 @@ h4, h5, h6 {
  * MUI Container module
  */
 .mui-container {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -966,6 +1017,8 @@ h4, h5, h6 {
 }
 
 .mui-container-fluid {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -1015,8 +1068,6 @@ h4, h5, h6 {
 }
 
 [data-mui-toggle="dropdown"] {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
   outline: 0;
 }
 
@@ -1037,6 +1088,20 @@ h4, h5, h6 {
   background-clip: padding-box;
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-dropdown__menu {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .mui-dropdown__menu {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
 .mui-dropdown__menu.mui--is-open {
   display: block;
 }
@@ -1048,6 +1113,7 @@ h4, h5, h6 {
   font-weight: normal;
   line-height: 1.429;
   color: rgba(0, 0, 0, 0.87);
+  text-decoration: none;
   white-space: nowrap;
 }
 
@@ -1076,31 +1142,49 @@ h4, h5, h6 {
 /**
  * MUI Form Component
  */
+.mui-form legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 21px;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: inherit;
+  border: 0;
+}
+
+.mui-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
 @media (min-width: 544px) {
-  .mui-form--inline > .mui-textfield {
+  .mui-form--inline .mui-textfield {
     display: inline-block;
+    vertical-align: bottom;
     margin-bottom: 0;
   }
-  .mui-form--inline > .mui-radio,
-  .mui-form--inline > .mui-checkbox {
+  .mui-form--inline .mui-radio,
+  .mui-form--inline .mui-checkbox {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     vertical-align: middle;
   }
-  .mui-form--inline > .mui-radio > label,
-  .mui-form--inline > .mui-checkbox > label {
+  .mui-form--inline .mui-radio > label,
+  .mui-form--inline .mui-checkbox > label {
     padding-left: 0;
   }
-  .mui-form--inline > .mui-radio > label > input[type="radio"],
-  .mui-form--inline > .mui-checkbox > label > input[type="checkbox"] {
+  .mui-form--inline .mui-radio > label > input[type="radio"],
+  .mui-form--inline .mui-checkbox > label > input[type="checkbox"] {
     position: relative;
     margin-left: 0;
   }
-  .mui-form--inline > .mui-select {
+  .mui-form--inline .mui-select {
     display: inline-block;
   }
-  .mui-form--inline > .mui-btn {
+  .mui-form--inline .mui-btn {
     margin-bottom: 0;
     margin-top: 0;
     vertical-align: bottom;
@@ -1125,6 +1209,8 @@ h4, h5, h6 {
 }
 
 .mui-col-xs-1, .mui-col-sm-1, .mui-col-md-1, .mui-col-lg-1, .mui-col-xs-2, .mui-col-sm-2, .mui-col-md-2, .mui-col-lg-2, .mui-col-xs-3, .mui-col-sm-3, .mui-col-md-3, .mui-col-lg-3, .mui-col-xs-4, .mui-col-sm-4, .mui-col-md-4, .mui-col-lg-4, .mui-col-xs-5, .mui-col-sm-5, .mui-col-md-5, .mui-col-lg-5, .mui-col-xs-6, .mui-col-sm-6, .mui-col-md-6, .mui-col-lg-6, .mui-col-xs-7, .mui-col-sm-7, .mui-col-md-7, .mui-col-lg-7, .mui-col-xs-8, .mui-col-sm-8, .mui-col-md-8, .mui-col-lg-8, .mui-col-xs-9, .mui-col-sm-9, .mui-col-md-9, .mui-col-lg-9, .mui-col-xs-10, .mui-col-sm-10, .mui-col-md-10, .mui-col-lg-10, .mui-col-xs-11, .mui-col-sm-11, .mui-col-md-11, .mui-col-lg-11, .mui-col-xs-12, .mui-col-sm-12, .mui-col-md-12, .mui-col-lg-12 {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -1566,6 +1652,7 @@ h4, h5, h6 {
   margin-bottom: 20px;
   border-radius: 0;
   background-color: #FFF;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -1580,6 +1667,14 @@ h4, h5, h6 {
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .mui-panel {
+    -webkit-box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .mui-panel {
+    -webkit-box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
   }
 }
@@ -1606,8 +1701,6 @@ h4, h5, h6 {
 }
 
 .mui-select > select {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
   display: block;
   height: 32px;
   width: 100%;
@@ -1618,6 +1711,7 @@ h4, h5, h6 {
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.26);
   border-radius: 0px;
+  -webkit-box-shadow: none;
   box-shadow: none;
   background-color: transparent;
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==");
@@ -1626,6 +1720,8 @@ h4, h5, h6 {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.87);
   font-size: 16px;
+  font-family: inherit;
+  line-height: inherit;
   padding: 0 25px 0 0;
 }
 
@@ -1648,6 +1744,35 @@ h4, h5, h6 {
   opacity: 1;
 }
 
+.mui-select > select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+.mui-select > select:focus::-ms-value {
+  background: none;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.mui-select > label {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mui-select:focus > label,
+.mui-select > select:focus ~ label {
+  color: #2196F3;
+}
+
 .mui-select__menu {
   position: absolute;
   z-index: 2;
@@ -1665,6 +1790,13 @@ h4, h5, h6 {
   }
 }
 
+@supports (-ms-ime-align: auto) {
+  .mui-select__menu {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+
 .mui-select__menu > div {
   padding: 0 22px;
   height: 42px;
@@ -1673,25 +1805,41 @@ h4, h5, h6 {
   white-space: nowrap;
 }
 
-.mui-select__menu > div:hover {
+.mui-select__menu > div.mui--is-selected {
+  background-color: #EEEEEE;
+}
+
+.mui-select__menu > div.mui--is-disabled {
+  color: rgba(0, 0, 0, 0.38);
+  cursor: not-allowed;
+}
+
+.mui-select__menu > div:not(.mui-optgroup__label):not(.mui--is-disabled):hover {
   background-color: #E0E0E0;
 }
 
-.mui-select__menu > div.mui--is-selected {
-  background-color: #EEEEEE;
+.mui-optgroup__option {
+  text-indent: 1em;
+}
+
+.mui-optgroup__label {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 0.9em;
 }
 
 /**
  * MUI Table Component
  */
-th {
-  text-align: left;
-}
-
 .mui-table {
   width: 100%;
   max-width: 100%;
   margin-bottom: 20px;
+}
+
+.mui-table > thead > tr > th,
+.mui-table > tbody > tr > th,
+.mui-table > tfoot > tr > th {
+  text-align: left;
 }
 
 .mui-table > thead > tr > th,
@@ -1787,11 +1935,6 @@ th {
   display: block;
 }
 
-[data-mui-toggle="tab"] {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
-}
-
 /**
  * MUI Textfield Component
  */
@@ -1820,11 +1963,6 @@ th {
   padding-top: 5px;
 }
 
-.mui-textfield > input,
-.mui-textfield > textarea {
-  display: block;
-}
-
 .mui-textfield > input:focus ~ label,
 .mui-textfield > textarea:focus ~ label {
   color: #2196F3;
@@ -1832,6 +1970,7 @@ th {
 
 .mui-textfield--float-label > label {
   position: absolute;
+  -webkit-transform: translate(0px, 15px);
   transform: translate(0px, 15px);
   font-size: 16px;
   line-height: 32px;
@@ -1843,6 +1982,7 @@ th {
 
 .mui-textfield--float-label > input:focus ~ label,
 .mui-textfield--float-label > textarea:focus ~ label {
+  -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
   font-size: 12px;
   line-height: 15px;
@@ -1856,6 +1996,7 @@ th {
   color: rgba(0, 0, 0, 0.54);
   font-size: 12px;
   line-height: 15px;
+  -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
   text-overflow: ellipsis;
 }
@@ -1875,8 +2016,8 @@ th {
 
 .mui-textfield > input,
 .mui-textfield > textarea {
-  animation-duration: 0.0001s;
-  animation-name: mui-node-inserted;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   display: block;
   background-color: transparent;
   color: rgba(0, 0, 0, 0.87);
@@ -1884,10 +2025,13 @@ th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.26);
   outline: none;
   width: 100%;
-  font-size: 16px;
   padding: 0;
+  -webkit-box-shadow: none;
   box-shadow: none;
   border-radius: 0px;
+  font-size: 16px;
+  font-family: inherit;
+  line-height: inherit;
   background-image: none;
 }
 
@@ -1915,12 +2059,6 @@ th {
 
 .mui-textfield > input::-webkit-input-placeholder,
 .mui-textfield > textarea::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.26);
-  opacity: 1;
-}
-
-.mui-textfield > input::-moz-placeholder,
-.mui-textfield > textarea::-moz-placeholder {
   color: rgba(0, 0, 0, 0.26);
   opacity: 1;
 }
@@ -1959,72 +2097,64 @@ th {
   margin-bottom: -1px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-touched, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:invalid:not(:focus):not(:required),
 .mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty,
-.mui-textfield > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,
+.mui-textfield > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-touched,
 .mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:not(:required),
 .mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty,
-.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-touched,
 .mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:not(:focus).mui--is-invalid:not(:required),
 .mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-touched,
 .mui-textfield > textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   border-color: #F44336;
   border-width: 2px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
+.mui-textfield > input:invalid:not(:focus):not(:required), .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty, .mui-textfield > input:invalid:not(:focus):required.mui--is-empty.mui--is-touched, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:not(:required),
 .mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty,
-.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,
+.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-touched,
 .mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
 .mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
   height: 33px;
   margin-bottom: -1px;
 }
 
-.mui-textfield > input:invalid:not(:focus):not(:required) ~ label, .mui-textfield > input:invalid:not(:focus):required.mui--is-not-empty ~ label, .mui-textfield > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label, .mui-textfield > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:invalid:not(:focus):not(:required) ~ label,
-.mui-textfield > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label,
-.mui-textfield > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:not(:required) ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:required.mui--is-not-empty ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:not(:required) ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
-.mui-textfield > textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
+.mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):not(:required) ~ label, .mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):required.mui--is-not-empty ~ label, .mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label, .mui-textfield.mui-textfield--float-label > input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):not(:required) ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) ~ label,
+.mui-textfield.mui-textfield--float-label > textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) ~ label {
   color: #F44336;
 }
 
-.mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield:not(.mui-textfield--float-label) > input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty ~ label,
-.mui-textfield:not(.mui-textfield--float-label) > textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty ~ label {
+.mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):not(:required) ~ label, .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-empty.mui--is-touched ~ label, .mui-textfield:not(.mui-textfield--float-label) > input:invalid:not(:focus):required.mui--is-not-empty ~ label,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):not(:required) ~ label,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-empty.mui--is-touched ~ label,
+.mui-textfield:not(.mui-textfield--float-label) > textarea:invalid:not(:focus):required.mui--is-not-empty ~ label {
+  color: #F44336;
+}
+
+.mui-textfield.mui-textfield--float-label > .mui--is-invalid.mui--is-not-empty:not(:focus) ~ label {
+  color: #F44336;
+}
+
+.mui-textfield:not(.mui-textfield--float-label) > .mui--is-invalid:not(:focus) ~ label {
   color: #F44336;
 }
 
 /**
  * MUI Helpers module
  */
-@keyframes mui-node-inserted {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .mui--no-transition {
+  -webkit-transition: none !important;
   transition: none !important;
 }
 
@@ -2130,6 +2260,34 @@ th {
   color: #F44336;
 }
 
+.mui--bg-primary {
+  background-color: #2196F3;
+}
+
+.mui--bg-primary-dark {
+  background-color: #1976D2;
+}
+
+.mui--bg-primary-light {
+  background-color: #BBDEFB;
+}
+
+.mui--bg-accent {
+  background-color: #FF4081;
+}
+
+.mui--bg-accent-dark {
+  background-color: #F50057;
+}
+
+.mui--bg-accent-light {
+  background-color: #FF80AB;
+}
+
+.mui--bg-danger {
+  background-color: #F44336;
+}
+
 .mui-list--unstyled {
   padding-left: 0;
   list-style: none;
@@ -2148,22 +2306,27 @@ th {
 }
 
 .mui--z1, .mui-dropdown__menu, .mui-select__menu {
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .mui--z2 {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .mui--z3 {
+  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .mui--z4 {
+  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .mui--z5 {
+  -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
@@ -2381,8 +2544,12 @@ th {
   }
 }
 
-body.mui-body--scroll-lock {
-  overflow: hidden !important;
+.mui-scrlock--showbar-y {
+  overflow-y: scroll !important;
+}
+
+.mui-scrlock--showbar-x {
+  overflow-x: scroll !important;
 }
 
 /**
@@ -2402,46 +2569,63 @@ body.mui-body--scroll-lock {
 /**
  * MUI Ripple module
  */
-.mui-ripple-effect {
+.mui-btn__ripple-container {
   position: absolute;
-  border-radius: 50%;
+  top: 0;
+  left: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
   pointer-events: none;
+}
+
+.mui-ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
   opacity: 0;
-  animation: mui-ripple-animation 2s;
+  pointer-events: none;
+  -webkit-transform: scale(0.0001, 0.0001);
+  transform: scale(0.0001, 0.0001);
 }
 
-@keyframes mui-ripple-animation {
-  from {
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  to {
-    transform: scale(100);
-    opacity: 0;
-  }
+.mui-ripple.mui--is-animating {
+  -webkit-transform: none;
+  transform: none;
+  -webkit-transition: width 0.3s cubic-bezier(0, 0, 0.2, 1), height 0.3s cubic-bezier(0, 0, 0.2, 1), opacity 0.3s cubic-bezier(0, 0, 0.2, 1), -webkit-transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+  transition: width 0.3s cubic-bezier(0, 0, 0.2, 1), height 0.3s cubic-bezier(0, 0, 0.2, 1), opacity 0.3s cubic-bezier(0, 0, 0.2, 1), -webkit-transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1), width 0.3s cubic-bezier(0, 0, 0.2, 1), height 0.3s cubic-bezier(0, 0, 0.2, 1), opacity 0.3s cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1), width 0.3s cubic-bezier(0, 0, 0.2, 1), height 0.3s cubic-bezier(0, 0, 0.2, 1), opacity 0.3s cubic-bezier(0, 0, 0.2, 1), -webkit-transform 0.3s cubic-bezier(0, 0, 0.2, 1);
 }
 
-.mui-btn > .mui-ripple-effect {
+.mui-ripple.mui--is-visible {
+  opacity: 0.3;
+}
+
+.mui-btn .mui-ripple {
   background-color: #a6a6a6;
 }
 
-.mui-btn--primary > .mui-ripple-effect {
+.mui-btn--primary .mui-ripple {
   background-color: #FFF;
 }
 
-.mui-btn--dark > .mui-ripple-effect {
+.mui-btn--dark .mui-ripple {
   background-color: #FFF;
 }
 
-.mui-btn--danger > .mui-ripple-effect {
+.mui-btn--danger .mui-ripple {
   background-color: #FFF;
 }
 
-.mui-btn--accent > .mui-ripple-effect {
+.mui-btn--accent .mui-ripple {
   background-color: #FFF;
 }
 
-.mui-btn--flat > .mui-ripple-effect {
+.mui-btn--flat .mui-ripple {
   background-color: #a6a6a6;
 }
 

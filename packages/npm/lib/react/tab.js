@@ -16,19 +16,16 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Tab constructor
  * @class
  */
-
 var Tab = function (_React$Component) {
   babelHelpers.inherits(Tab, _React$Component);
 
   function Tab() {
     babelHelpers.classCallCheck(this, Tab);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tab).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Tab, [{
@@ -43,11 +40,6 @@ var Tab = function (_React$Component) {
 /** Define module API */
 
 
-Tab.propTypes = {
-  value: PropTypes.any,
-  label: PropTypes.string,
-  onActive: PropTypes.func
-};
 Tab.defaultProps = {
   value: null,
   label: '',

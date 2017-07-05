@@ -1,7 +1,7 @@
 var babelHelpers = require('./babel-helpers.js');
 /**
  * MUI React TextInput Component
- * @module react/text-input
+ * @module react/text-field
  */
 
 'use strict';
@@ -15,43 +15,47 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+
 var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
 var _helpers = require('./_helpers');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Input constructor
  * @class
  */
-
 var Input = function (_React$Component) {
   babelHelpers.inherits(Input, _React$Component);
 
   function Input(props) {
     babelHelpers.classCallCheck(this, Input);
 
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+    var _this = babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
     var value = props.value;
     var innerValue = value || props.defaultValue;
 
+    if (innerValue === undefined) innerValue = '';
+
     _this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue)
+      isTouched: false,
+      isPristine: true
     };
 
     // warn if value defined but onChange is not
-    if (value !== undefined && props.onChange === null) {
+    if (value !== undefined && !props.onChange) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
     var cb = util.callback;
+    _this.onBlurCB = cb(_this, 'onBlur');
     _this.onChangeCB = cb(_this, 'onChange');
-    _this.onFocusCB = cb(_this, 'onFocus');
     return _this;
   }
 
@@ -62,17 +66,35 @@ var Input = function (_React$Component) {
       this.refs.inputEl._muiTextfield = true;
     }
   }, {
-    key: 'onChange',
-    value: function onChange(ev) {
-      this.setState({ innerValue: ev.target.value });
-
-      var fn = this.props.onChange;
-      if (fn) fn(ev);
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      // update innerValue when new value is received to handle programmatic
+      // changes to input box
+      if ('value' in nextProps) this.setState({ innerValue: nextProps.value });
     }
   }, {
-    key: 'onFocus',
-    value: function onFocus(ev) {
-      this.setState({ isDirty: true });
+    key: 'onBlur',
+    value: function onBlur(ev) {
+      // ignore if event is a window blur
+      if (document.activeElement !== this.refs.inputEl) {
+        this.setState({ isTouched: true });
+      }
+
+      // execute callback
+      var fn = this.props.onBlur;
+      fn && fn(ev);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(ev) {
+      this.setState({
+        innerValue: ev.target.value,
+        isPristine: false
+      });
+
+      // execute callback
+      var fn = this.props.onChange;
+      fn && fn(ev);
     }
   }, {
     key: 'triggerFocus',
@@ -84,46 +106,44 @@ var Input = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = {},
-          isNotEmpty = Boolean(this.state.innerValue),
+          isNotEmpty = Boolean(this.state.innerValue.toString()),
           inputEl = void 0;
 
+      var _props = this.props,
+          hint = _props.hint,
+          invalid = _props.invalid,
+          rows = _props.rows,
+          type = _props.type,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['hint', 'invalid', 'rows', 'type']);
+
+
+      cls['mui--is-touched'] = this.state.isTouched;
+      cls['mui--is-untouched'] = !this.state.isTouched;
+      cls['mui--is-pristine'] = this.state.isPristine;
+      cls['mui--is-dirty'] = !this.state.isPristine;
       cls['mui--is-empty'] = !isNotEmpty;
       cls['mui--is-not-empty'] = isNotEmpty;
-      cls['mui--is-dirty'] = this.state.isDirty;
-      cls['mui--is-invalid'] = this.props.invalid;
+      cls['mui--is-invalid'] = invalid;
 
       cls = util.classNames(cls);
 
-      var _props = this.props;
-      var children = _props.children;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-
-      if (this.props.type === 'textarea') {
-        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, other, {
+      if (type === 'textarea') {
+        inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, reactProps, {
           ref: 'inputEl',
           className: cls,
-          rows: this.props.rows,
-          placeholder: this.props.hint,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
-          autoFocus: this.props.autoFocus,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
+          rows: rows,
+          placeholder: hint,
+          onBlur: this.onBlurCB,
+          onChange: this.onChangeCB
         }));
       } else {
-        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, other, {
+        inputEl = _react2.default.createElement('input', babelHelpers.extends({}, reactProps, {
           ref: 'inputEl',
           className: cls,
-          type: this.props.type,
-          value: this.props.value,
-          defaultValue: this.props.defaultValue,
+          type: type,
           placeholder: this.props.hint,
-          autoFocus: this.props.autofocus,
-          onChange: this.onChangeCB,
-          onFocus: this.onFocusCB,
-          required: this.props.required
+          onBlur: this.onBlurCB,
+          onChange: this.onChangeCB
         }));
       }
 
@@ -139,25 +159,17 @@ var Input = function (_React$Component) {
  */
 
 
-Input.propTypes = {
-  hint: PropTypes.string,
-  value: PropTypes.string,
-  type: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  onChange: PropTypes.func
-};
 Input.defaultProps = {
   hint: null,
-  type: null,
-  autoFocus: false,
-  onChange: null
+  invalid: false,
+  rows: 2
 };
 
 var Label = function (_React$Component2) {
   babelHelpers.inherits(Label, _React$Component2);
 
   function Label() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this2, _ret;
 
@@ -167,7 +179,7 @@ var Label = function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Label)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this2), _this2.state = {
+    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_ref = Label.__proto__ || Object.getPrototypeOf(Label)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
       style: {}
     }, _temp), babelHelpers.possibleConstructorReturn(_this2, _ret);
   }
@@ -231,7 +243,7 @@ var TextField = function (_React$Component3) {
   function TextField(props) {
     babelHelpers.classCallCheck(this, TextField);
 
-    var _this4 = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(TextField).call(this, props));
+    var _this4 = babelHelpers.possibleConstructorReturn(this, (TextField.__proto__ || Object.getPrototypeOf(TextField)).call(this, props));
 
     _this4.onClickCB = util.callback(_this4, 'onClick');
     return _this4;
@@ -252,21 +264,32 @@ var TextField = function (_React$Component3) {
       var cls = {},
           labelEl = void 0;
 
-      if (this.props.label.length) {
-        labelEl = _react2.default.createElement(Label, {
-          text: this.props.label,
-          onClick: this.onClickCB
-        });
+      var _props2 = this.props,
+          children = _props2.children,
+          className = _props2.className,
+          style = _props2.style,
+          label = _props2.label,
+          floatingLabel = _props2.floatingLabel,
+          other = babelHelpers.objectWithoutProperties(_props2, ['children', 'className', 'style', 'label', 'floatingLabel']);
+
+
+      var type = jqLite.type(label);
+
+      if (type === 'string' && label.length || type === 'object') {
+        labelEl = _react2.default.createElement(Label, { text: label, onClick: this.onClickCB });
       }
 
       cls['mui-textfield'] = true;
-      cls['mui-textfield--float-label'] = this.props.floatingLabel;
+      cls['mui-textfield--float-label'] = floatingLabel;
       cls = util.classNames(cls);
 
       return _react2.default.createElement(
         'div',
-        { className: cls },
-        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, this.props)),
+        {
+          className: cls + ' ' + className,
+          style: style
+        },
+        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, other)),
         labelEl
       );
     }
@@ -277,12 +300,9 @@ var TextField = function (_React$Component3) {
 /** Define module API */
 
 
-TextField.propTypes = {
-  label: PropTypes.string,
-  floatingLabel: PropTypes.bool
-};
 TextField.defaultProps = {
-  label: '',
+  className: '',
+  label: null,
   floatingLabel: false
 };
 exports.TextField = TextField;

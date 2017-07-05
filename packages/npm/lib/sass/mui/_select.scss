@@ -23,8 +23,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   }
 
   > select {
-    @include mui-node-inserted();
-
     // Layout
     display: block;
     height: $mui-input-height;
@@ -48,6 +46,9 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     // Typography
     color: $mui-input-font-color;
     font-size: $mui-input-font-size;
+    font-family: inherit;
+    line-height: inherit;
+
     padding: 0 25px 0 0;
 
     &::-ms-expand {
@@ -68,7 +69,28 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
       background-color: $mui-input-bg-color-disabled;
       opacity: 1;  // iOS fix for unreadable disabled content
     }
+
+    // disable focus ring in Firefox
+    &:-moz-focusring {
+      color: transparent;
+      text-shadow: 0 0 0 #000;
+    }
+
+    // prevent IE background color
+    &:focus::-ms-value {
+      background: none;
+      color: $mui-text-dark;
+    }
   }
+
+  > label {
+    @include form-label();
+  }
+}
+
+.mui-select:focus > label,
+.mui-select > select:focus ~ label {
+  color: $mui-input-border-color-focus;
 }
 
 .mui-select__menu {
@@ -93,6 +115,12 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     border-top: 1px solid mui-color('black-alpha-12');
   }
 
+  // Edge bugfix
+  @supports (-ms-ime-align:auto) {
+    border-left: 1px solid mui-color('black-alpha-12');
+    border-top: 1px solid mui-color('black-alpha-12');
+  }
+
   > div {
     padding: 0 22px;
     height: $mui-input-font-size + 26px;
@@ -100,12 +128,26 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     cursor: pointer;
     white-space: nowrap;
 
-    &:hover {
-      background-color: mui-color('grey', '300');
-    }
-
     &.mui--is-selected {
       background-color: mui-color('grey', '200');
     }
+
+    &.mui--is-disabled {
+      color: $mui-text-dark-hint;
+      cursor: $mui-cursor-disabled;
+    }
+
+    &:not(.mui-optgroup__label):not(.mui--is-disabled):hover {
+      background-color: mui-color('grey', '300');
+    }
   }
+}
+
+.mui-optgroup__option {
+  text-indent: 1em;
+}
+
+.mui-optgroup__label {
+  color: $mui-text-dark-secondary;
+  font-size: 0.9em;
 }

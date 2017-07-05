@@ -6,6 +6,7 @@ var fs = require('fs');
 var babelCore = require('babel-core'),
     gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
+    mergeStream = require('merge-stream'),
     stringify = require('stringify');
 
 var reactBabelHelpers = [
@@ -75,6 +76,14 @@ gulp.task('build-all', gulp.parallel(
 ));
 
 
+gulp.task('watch', function() {
+  gulp.watch('./src/**/*', gulp.parallel(
+    'examples:build',
+    'e2e-tests:build'
+  ));
+});
+
+
 
 // ============================================================================
 // PRIVATE TASKS
@@ -112,7 +121,8 @@ function buildCdn(dirname) {
     buildCdnAngular(dirname + '/angular'),
     buildCdnEmailInline(dirname + '/email'),
     buildCdnEmailStyletag(dirname + '/email'),
-    buildCdnColors(dirname + '/extra')
+    buildCdnColors(dirname + '/extra'),
+    buildCdnNoGlobals(dirname + '/extra')
   );
 
   var t2 = gulp.parallel(
@@ -128,18 +138,13 @@ function buildCdn(dirname) {
 
 function buildCdnCss(dirname) {
   return makeTask('build-cdn-css: ' + dirname, function() {
-    return gulp.src('./src/sass/mui.scss')
-      .pipe(plugins.sass({outputStyle: 'expanded'}))
-      .pipe(plugins.autoprefixer({
-        browsers: ['last 2 versions'],
-        cascade: false
-      }))
-      .on('error', function(err) {console.log(err.message);})
-      .pipe(plugins.rename('mui.css'))
-      .pipe(gulp.dest(dirname))
-      .pipe(plugins.cssmin({advanced: false}))
-      .pipe(plugins.rename('mui.min.css'))
-      .pipe(gulp.dest(dirname));
+    return cssStream('mui.scss', dirname);
+    
+    // build versions with and without globals
+    //return mergeStream(
+    //cssStream('mui.scss'),
+    //cssStream('mui-noglobals.scss')
+    //);
   });
 }
 
@@ -165,7 +170,7 @@ function buildCdnReact(dirname) {
   return makeTask('build-cdn-react: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-react.js')
       .pipe(plugins.browserify({
-        transform: [babelify.configure({plugins: ['external-helpers-2']})],
+        transform: [babelify.configure({plugins: ['external-helpers']})],
         paths: ['./', './node_modules'],
         external: ['react'],
         extensions: ['.jsx']
@@ -187,7 +192,7 @@ function buildCdnAngular(dirname) {
   return makeTask('build-cdn-angular: ' + dirname, function() {
     return gulp.src('./build-targets/cdn-angular.js')
       .pipe(plugins.browserify({
-        transform: [babelify.configure({plugins: ['external-helpers-2']})],
+        transform: [babelify.configure({plugins: ['external-helpers']})],
         paths: ['./', './node_modules/'],
         external: ['angular']
       }))
@@ -205,9 +210,19 @@ function buildCdnAngular(dirname) {
 
 function buildCdnEmailInline(dirname) {
   return makeTask('build-cdn-email-inline: ' + dirname, function() {
+    // handles ltr and rtl directions
     return gulp.src('./src/email/mui-email-inline.scss')
       .pipe(plugins.sass({outputStyle: 'expanded'}))
       .pipe(plugins.rename('mui-email-inline.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.rtlcss())
+      .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
+        // switch right and left
+        if (match.endsWith('-left')) return match.replace('left', 'right')
+        else return match.replace('right', 'left');
+      }))
+      .pipe(plugins.injectString.append('html,body,.mui-body{direction:rtl;}'))
+      .pipe(plugins.rename('mui-email-inline-rtl.css'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -215,9 +230,13 @@ function buildCdnEmailInline(dirname) {
 
 function buildCdnEmailStyletag(dirname) {
   return makeTask('build-cdn-email-styletag: ' + dirname, function() {
+    // ltr and rtl
     return gulp.src('./src/email/mui-email-styletag.scss')
       .pipe(plugins.sass({outputStyle: 'expanded'}))
       .pipe(plugins.rename('mui-email-styletag.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.rtlcss())
+      .pipe(plugins.rename('mui-email-styletag-rtl.css'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -232,7 +251,7 @@ function buildCdnWebcomponents(dirname, cssdir) {
       }))
       .pipe(plugins.rename('mui-webcomponents.js'))
       .pipe(gulp.dest(dirname))
-      .pipe(plugins.uglify())
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
       .pipe(plugins.rename('mui-webcomponents.min.js'))
       .pipe(gulp.dest(dirname));
   });
@@ -243,9 +262,18 @@ function buildCdnColors(dirname) {
   return makeTask('build-cdn-colors: ' + dirname, function() {
     return gulp.src('./src/sass/mui-colors.scss')
       .pipe(plugins.sass({outputStyle: 'expanded'}))
-      .pipe(plugins.cssmin())
       .pipe(plugins.rename('mui-colors.css'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.cssmin())
+      .pipe(plugins.rename('mui-colors.min.css'))
       .pipe(gulp.dest(dirname));
+  });
+}
+
+
+function buildCdnNoGlobals(dirname) {
+  return makeTask('build-cdn-noglobals: ' + dirname, function() {
+    return cssStream('mui-noglobals.scss', dirname);
   });
 }
 
@@ -257,8 +285,10 @@ function buildCdnJsCombined(dirname, cssDir) {
         transform: [stringify(['.css'])],
         paths: ['./', cssDir]
       }))
-      .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-combined.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
+      .pipe(plugins.rename('mui-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -271,7 +301,7 @@ function buildCdnReactCombined(dirname, cssDir) {
     return gulp.src('./build-targets/cdn-react-combined.js')
       .pipe(plugins.browserify({
         transform: [
-          babelify.configure({plugins: ['external-helpers-2']}),
+          babelify.configure({plugins: ['external-helpers']}),
           stringify(['.css'])
         ],
         paths: ['./', cssDir, './node_modules'],
@@ -280,8 +310,10 @@ function buildCdnReactCombined(dirname, cssDir) {
       }))
       .pipe(plugins.replace("require('react')", "window.React"))
       .pipe(plugins.injectString.prepend(s))
-      .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-react-combined.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
+      .pipe(plugins.rename('mui-react-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -294,7 +326,7 @@ function buildCdnAngularCombined(dirname, cssDir) {
     return gulp.src('./build-targets/cdn-angular-combined.js')
       .pipe(plugins.browserify({
         transform: [
-          babelify.configure({plugins: ['external-helpers-2']}),
+          babelify.configure({plugins: ['external-helpers']}),
           stringify(['.css'])
         ],
         paths: ['./', './node_modules/', cssDir],
@@ -303,8 +335,10 @@ function buildCdnAngularCombined(dirname, cssDir) {
       .pipe(plugins.replace("require('angular')", "window.angular"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.ngAnnotate())
-      .pipe(plugins.uglify())
       .pipe(plugins.rename('mui-angular-combined.js'))
+      .pipe(gulp.dest(dirname))
+      .pipe(plugins.uglify({output: {max_line_len: null}}))
+      .pipe(plugins.rename('mui-angular-combined.min.js'))
       .pipe(gulp.dest(dirname));
   });
 }
@@ -320,7 +354,7 @@ function buildE2eTests() {
 
   return gulp.src('./build-targets/e2e-tests.js')
     .pipe(plugins.browserify({
-      transform: [babelify.configure({plugins: ['external-helpers-2']})],
+      transform: [babelify.configure({plugins: ['external-helpers']})],
       extensions: ['.jsx']
     }))
     .pipe(plugins.injectString.prepend(s))
@@ -366,13 +400,14 @@ function buildMeteor() {
 }
 
 
+
 // ----------------------------------------------------------------------------
 // NPM TASKS
 // ----------------------------------------------------------------------------
 
 function buildNpm() {
   var t1 = gulp.parallel(
-    buildCdnCss('./packages/npm/lib/css'),
+    buildCdn('./packages/npm/dist'),
     buildNpmSass(),
     buildNpmJs(),
     buildNpmReact(),
@@ -415,7 +450,7 @@ function buildNpmReact() {
 
     return gulp.src('./src/react/**/*')
       .pipe(plugins.babel({
-        plugins: ['external-helpers-2']
+        plugins: ['external-helpers']
       }))
       .pipe(plugins.injectString.prepend(s))
       .pipe(gulp.dest('./packages/npm/lib/react'));
@@ -429,7 +464,7 @@ function buildNpmAngular() {
 
     return gulp.src('./src/angular/**/*')
       .pipe(plugins.babel({
-        plugins: ['external-helpers-2']
+        plugins: ['external-helpers']
       }))
       .pipe(plugins.injectString.prepend(s))
       .pipe(gulp.dest('./packages/npm/lib/angular'));
@@ -454,4 +489,51 @@ function buildNpmBabelHelpersAngular() {
 
     done();
   });
+}
+
+
+
+// ----------------------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------------------
+
+function cssStream(filename, dirname) {
+  var basename = filename.split('.')[0],
+      rtlGlobalStr = 'html,body{direction:rtl;}';
+  
+  if (filename.indexOf('noglobals') >= 0) rtlGlobalStr = '';
+
+  // base stream
+  var baseStream = gulp.src('./src/sass/' + filename)
+    .pipe(plugins.sass({outputStyle: 'expanded'}))
+    .pipe(plugins.autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .on('error', function(err) {console.log(err.message);})
+    .pipe(plugins.rename(basename + '.css'))
+    .pipe(gulp.dest(dirname));
+  
+  // left-to-right
+  var stream1 = baseStream
+    .pipe(plugins.cssmin({advanced: false}))
+    .pipe(plugins.rename(basename + '.min.css'))
+    .pipe(gulp.dest(dirname));
+  
+  // right-to-left
+  var stream2 = baseStream
+    .pipe(plugins.rtlcss())
+    .pipe(plugins.replace(/mui--divider-(left|right)/g, function(match) {
+      // switch right and left
+      if (match.endsWith('-left')) return match.replace('left', 'right')
+      else return match.replace('right', 'left');
+    }))
+    .pipe(plugins.injectString.append(rtlGlobalStr))
+    .pipe(plugins.rename(basename + '-rtl.css'))
+    .pipe(gulp.dest(dirname))
+    .pipe(plugins.cssmin({advanced: false}))
+    .pipe(plugins.rename(basename + '-rtl.min.css'))
+    .pipe(gulp.dest(dirname));
+  
+  return mergeStream(stream1, stream2);
 }

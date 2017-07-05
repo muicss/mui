@@ -6,7 +6,7 @@
 import assert from 'assert';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactUtils from 'react-addons-test-utils';
+import ReactUtils from 'react-dom/test-utils';
 
 import Row from '../../src/react/row';
 

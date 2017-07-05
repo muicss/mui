@@ -8,10 +8,10 @@
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
-    btnClass = 'mui-btn',
-    btnFABClass = 'mui-btn--fab',
-    rippleClass = 'mui-ripple-effect',
-    animationName = 'mui-btn-inserted';
+    animationHelpers = require('./lib/animationHelpers'),
+    supportsTouch = 'ontouchstart' in document.documentElement,
+    mouseDownEvents = (supportsTouch) ? 'touchstart' : 'mousedown',
+    mouseUpEvents = (supportsTouch) ? 'touchend' : 'mouseup mouseleave';
 
 
 /**
@@ -27,62 +27,81 @@ function initialize(buttonEl) {
   if (buttonEl.tagName === 'INPUT') return;
 
   // attach event handler
-  jqLite.on(buttonEl, 'touchstart', eventHandler);
-  jqLite.on(buttonEl, 'mousedown', eventHandler);
+  jqLite.on(buttonEl, mouseDownEvents, mouseDownHandler);
 }
 
 
 /**
- * Event handler
+ * MouseDown Event handler.
  * @param {Event} ev - The DOM event
  */
-function eventHandler(ev) {
+function mouseDownHandler(ev) {
   // only left clicks
-  if (ev.button !== 0) return;
+  if (ev.type === 'mousedown' && ev.button !== 0) return;
 
-  var buttonEl = this;
+  var buttonEl = this,
+      rippleEl = buttonEl._rippleEl;
 
   // exit if button is disabled
-  if (buttonEl.disabled === true) return;
+  if (buttonEl.disabled) return;
 
-  // de-dupe touchstart and mousedown with 100msec flag
-  if (buttonEl.touchFlag === true) {
-    return;
-  } else {
-    buttonEl.touchFlag = true;
-    setTimeout(function() {
-      buttonEl.touchFlag = false;
-    }, 100);
+  if (!rippleEl) {
+    // add ripple container (to avoid https://github.com/muicss/mui/issues/169)
+    var el = document.createElement('span');
+    el.className = 'mui-btn__ripple-container';
+    el.innerHTML = '<span class="mui-ripple"></span>';
+    buttonEl.appendChild(el);
+
+    // cache reference to ripple element
+    rippleEl = buttonEl._rippleEl = el.children[0];
+
+    // add mouseup handler on first-click
+    jqLite.on(buttonEl, mouseUpEvents, mouseUpHandler);
   }
 
-  var rippleEl = document.createElement('div');
-  rippleEl.className = rippleClass;
-
+  // get ripple element offset values and (x, y) position of click
   var offset = jqLite.offset(buttonEl),
-      xPos = ev.pageX - offset.left,
-      yPos = ev.pageY - offset.top,
-      diameter,
-      radius;
+      clickEv = (ev.type === 'touchstart') ? ev.touches[0] : ev,
+      radius,
+      diameter;
 
-  // get height
-  if (jqLite.hasClass(buttonEl, btnFABClass)) diameter = offset.height / 2;
-  else diameter = offset.height;
+  // calculate radius
+  radius = Math.sqrt(offset.height * offset.height + 
+                     offset.width * offset.width);
 
-  radius = diameter / 2;
-  
+  diameter = radius * 2 + 'px';
+
+  // set position and dimensions
   jqLite.css(rippleEl, {
-    height: diameter + 'px',
-    width: diameter + 'px',
-    top: yPos - radius + 'px',
-    left: xPos - radius + 'px'
+    width: diameter,
+    height: diameter,
+    top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
+    left: Math.round(clickEv.pageX - offset.left - radius) + 'px'
   });
 
-  buttonEl.appendChild(rippleEl);
-  
-  window.setTimeout(function() {
-    var parentNode = rippleEl.parentNode;
-    if (parentNode) parentNode.removeChild(rippleEl);
-  }, 2000);
+  jqLite.removeClass(rippleEl, 'mui--is-animating');
+  jqLite.addClass(rippleEl, 'mui--is-visible');
+
+  // start animation
+  util.requestAnimationFrame(function() {
+    jqLite.addClass(rippleEl, 'mui--is-animating');
+  });
+}
+
+
+/**
+ * MouseUp event handler.
+ * @param {Event} ev - The DOM event
+ */
+function mouseUpHandler(ev) {
+  // get ripple element
+  var rippleEl = this._rippleEl;
+
+  // allow a repaint to occur before removing class so animation shows for
+  // tap events
+  util.requestAnimationFrame(function() {
+    jqLite.removeClass(rippleEl, 'mui--is-visible');
+  });
 }
 
 
@@ -90,15 +109,14 @@ function eventHandler(ev) {
 module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
-    var doc = document;
-
     // markup elements available when method is called
-    var elList = doc.getElementsByClassName(btnClass);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = document.getElementsByClassName('mui-btn'),
+        i = elList.length;
+    while (i--) initialize(elList[i]);
 
     // listen for new elements
-    util.onNodeInserted(function(el) {
-      if (jqLite.hasClass(el, btnClass)) initialize(el);
+    animationHelpers.onAnimationStart('mui-btn-inserted', function(ev) {
+      initialize(ev.target);
     });
   }
 };

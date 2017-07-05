@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- for example only -->
-    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
+    <script src="../assets/vendor/angular/1.6.0/angular.js"></script>
     <!-- end -->
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
@@ -16,17 +16,53 @@
     <mui-container>
       <h1>Form</h1>
       <mui-panel>
-        <form name="form1">
+        <mui-form name="form1">
+          <legend>Title</legend>
           <mui-input name="inputA1" ng-model="form1.inputA"></mui-input>
           <mui-button color="primary">submit</mui-button>
-        </form>
+        </mui-form>
       </mui-panel>
+
       <mui-panel>
-        <form name="form2" mui-form-inline>
+        <mui-form name="form2">
+          <fieldset>
+            <legend>Fieldset1</legend>
+            <mui-input name="inputC1x" ng-model="form3.inputC1"></mui-input>
+            <mui-input name="inputC2x" ng-model="form3.inputC2"></mui-input>
+          </fieldset>
+          <fieldset>
+            <legend>Fieldset2</legend>
+            <mui-input name="inputC3x" ng-model="form3.inputC4"></mui-input>
+            <mui-input name="inputC4x" ng-model="form3.inputC4"></mui-input>
+          </fieldset>
+          <mui-button color="primary">submit</mui-button>
+        </mui-form>
+      </mui-panel>
+
+      <mui-panel>
+        <mui-form name="form3" inline>
+          <legend>Title</legend>
           <mui-input name="inputB1" ng-model="form2.inputB"></mui-input>
           <mui-button color="primary">submit</mui-button>
-        </form>
+        </mui-form>
       </mui-panel>
+
+      <mui-panel>
+        <mui-form name="form4" inline>
+          <fieldset>
+            <legend>Fieldset1</legend>
+            <mui-input name="inputC1x" ng-model="form3.inputC1"></mui-input>
+            <mui-input name="inputC2x" ng-model="form3.inputC2"></mui-input>
+          </fieldset>
+          <fieldset>
+            <legend>Fieldset2</legend>
+            <mui-input name="inputC3x" ng-model="form3.inputC4"></mui-input>
+            <mui-input name="inputC4x" ng-model="form3.inputC4"></mui-input>
+          </fieldset>
+          <mui-button color="primary">submit</mui-button>
+        </mui-form>
+      </mui-panel>
+
     </mui-container>
   </body>
 </html>

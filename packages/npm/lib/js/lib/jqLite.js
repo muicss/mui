@@ -105,72 +105,81 @@ function jqLiteType(somevar) {
 /**
  * Attach an event handler to a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOn(element, type, callback, useCapture) {
+function jqLiteOn(element, events, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
-  // add to DOM
-  element.addEventListener(type, callback, useCapture);
+  var cache = element._muiEventCache = element._muiEventCache || {};  
 
-  // add to cache
-  var cache = element._muiEventCache = element._muiEventCache || {};
-  cache[type] = cache[type] || [];
-  cache[type].push([callback, useCapture]);
+  events.split(' ').map(function(event) {
+    // add to DOM
+    element.addEventListener(event, callback, useCapture);
+
+    // add to cache
+    cache[event] = cache[event] || [];
+    cache[event].push([callback, useCapture]);
+  });
 }
 
 
 /**
  * Remove an event handler from a DOM element
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOff(element, type, callback, useCapture) {
+function jqLiteOff(element, events, callback, useCapture) {
   useCapture = (useCapture === undefined) ? false : useCapture;
 
   // remove from cache
   var cache = element._muiEventCache = element._muiEventCache || {},
-      argsList = cache[type] || [],
+      argsList,
       args,
       i;
 
-  i = argsList.length;
-  while (i--) {
-    args = argsList[i];
+  events.split(' ').map(function(event) {
+    argsList = cache[event] || [];
 
-    // remove all events if callback is undefined
-    if (callback === undefined ||
-        (args[0] === callback && args[1] === useCapture)) {
+    i = argsList.length;
+    while (i--) {
+      args = argsList[i];
 
-      // remove from cache
-      argsList.splice(i, 1);
-      
-      // remove from DOM
-      element.removeEventListener(type, args[0], args[1]);
+      // remove all events if callback is undefined
+      if (callback === undefined ||
+          (args[0] === callback && args[1] === useCapture)) {
+
+        // remove from cache
+        argsList.splice(i, 1);
+        
+        // remove from DOM
+        element.removeEventListener(event, args[0], args[1]);
+      }
     }
-  }
+  });
 }
 
 
 /**
- * Attach an event hander which will only execute once
+ * Attach an event hander which will only execute once per element per event
  * @param {Element} element - The DOM element.
- * @param {string} type - The event type name.
+ * @param {string} events - Space separated event names.
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOne(element, type, callback, useCapture) {
-  jqLiteOn(element, type, function onFn(ev) {
-    // execute callback
-    if (callback) callback.apply(this, arguments);
+function jqLiteOne(element, events, callback, useCapture) {
+  events.split(' ').map(function(event) {
+    jqLiteOn(element, event, function onFn(ev) {
+      // execute callback
+      if (callback) callback.apply(this, arguments);
 
-    // remove wrapper
-    jqLiteOff(element, type, onFn);
-  }, useCapture);
+      // remove wrapper
+      jqLiteOff(element, event, onFn, useCapture);
+    }, useCapture);
+  });
 }
 
 
@@ -311,19 +320,7 @@ function jqLiteRemoveClass(element, cssClasses) {
 // ------------------------------
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
-    ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g,
-    BOOLEAN_ATTRS;
-
-
-BOOLEAN_ATTRS = {
-  multiple: true,
-  selected: true,
-  checked: true,
-  disabled: true,
-  readonly: true,
-  required: true,
-  open: true
-}
+    ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g;
 
 
 function _getExistingClasses(element) {

@@ -18,12 +18,14 @@ class Appbar extends React.Component {
   };
 
   render() {
+    const { children, ...reactProps } = this.props;
+
     return (
       <div
-        { ...this.props }
+        { ...reactProps }
         className={'mui-appbar ' + this.props.className}
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }

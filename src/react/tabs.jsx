@@ -13,8 +13,7 @@ import Tab from './tab';
 import * as util from '../js/lib/util';
 
 
-const PropTypes = React.PropTypes,
-      tabsBarClass = 'mui-tabs__bar',
+const tabsBarClass = 'mui-tabs__bar',
       tabsBarJustifiedClass = 'mui-tabs__bar--justified',
       tabsPaneClass = 'mui-tabs__pane',
       isActiveClass = 'mui--is-active';
@@ -26,25 +25,45 @@ const PropTypes = React.PropTypes,
  */
 class Tabs extends React.Component {
   constructor(props) {
+    /*
+     * The following code exists only to warn about deprecating props.initialSelectedIndex in favor of props.defaultSelectedIndex.
+     * It can be removed once support for props.initialSelectedIndex is officially dropped.
+     */
+    let defaultSelectedIndex;
+    if (typeof props.initialSelectedIndex === 'number') {
+      defaultSelectedIndex = props.initialSelectedIndex;
+      if (console && process && process.env && process.NODE_ENV !== 'production') {
+        console.warn(
+          'MUICSS DEPRECATION WARNING: '
+          + 'property "initialSelectedIndex" on the muicss Tabs component is deprecated in favor of "defaultSelectedIndex". '
+          + 'It will be removed in a future release.'
+        );
+      }
+    }
+    else {
+      defaultSelectedIndex = props.defaultSelectedIndex;
+    }
+    /*
+     * End deprecation warning
+     */
     super(props);
-    this.state = {currentSelectedIndex: props.initialSelectedIndex};
+    this.state = {currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex};
   }
-
-  static propTypes = {
-    initialSelectedIndex: PropTypes.number,
-    justified: PropTypes.bool,
-    onChange: PropTypes.func
-  };
 
   static defaultProps = {
     className: '',
-    initialSelectedIndex: 0,
+    defaultSelectedIndex: 0,
+    /*
+     * @deprecated
+     */
+    initialSelectedIndex: null,
     justified: false,
-    onChange: null
+    onChange: null,
+    selectedIndex: null
   };
 
   onClick(i, tab, ev) {
-    if (i !== this.state.currentSelectedIndex) {
+    if ((typeof this.props.selectedIndex === 'number' && i !== this.props.selectedIndex) || i !== this.state.currentSelectedIndex) {
       this.setState({currentSelectedIndex: i});
 
       // onActive callback
@@ -58,24 +77,26 @@ class Tabs extends React.Component {
   }
 
   render() {
-    let { children, ...other } = this.props;
+    const { children, defaultSelectedIndex, initialSelectedIndex, justified, selectedIndex,
+      ...reactProps } = this.props;
 
+    let tabs = React.Children.toArray(children);
     let tabEls = [],
         paneEls = [],
-        m = children.length,
-        selectedIndex = this.state.currentSelectedIndex % m,
+        m = tabs.length,
+        currentSelectedIndex = (typeof selectedIndex === 'number' ? selectedIndex : this.state.currentSelectedIndex) % m,
         isActive,
         item,
         cls,
         i;
 
     for (i=0; i < m; i++) {
-      item = children[i];
+      item = tabs[i];
 
       // only accept MUITab elements
       if (item.type !== Tab) util.raiseError('Expecting MUITab React Element');
 
-      isActive = (i === selectedIndex) ? true : false;
+      isActive = (i === currentSelectedIndex) ? true : false;
 
       // tab element
       tabEls.push(
@@ -98,10 +119,10 @@ class Tabs extends React.Component {
     }
 
     cls = tabsBarClass;
-    if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+    if (justified) cls += ' ' + tabsBarJustifiedClass;
 
     return (
-      <div { ...other }>
+      <div { ...reactProps }>
         <ul className={cls}>
           {tabEls}
         </ul>

@@ -20,50 +20,40 @@ var _util = require('../js/lib/util');
 
 var util = babelHelpers.interopRequireWildcard(_util);
 
-
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * DropdownItem constructor
  * @class
  */
-
 var DropdownItem = function (_React$Component) {
   babelHelpers.inherits(DropdownItem, _React$Component);
 
-  function DropdownItem(props) {
+  function DropdownItem() {
     babelHelpers.classCallCheck(this, DropdownItem);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(DropdownItem).call(this, props));
-
-    _this.onClickCB = util.callback(_this, 'onClick');
-    return _this;
+    return babelHelpers.possibleConstructorReturn(this, (DropdownItem.__proto__ || Object.getPrototypeOf(DropdownItem)).apply(this, arguments));
   }
 
   babelHelpers.createClass(DropdownItem, [{
-    key: 'onClick',
-    value: function onClick(ev) {
-      if (this.props.onClick) this.props.onClick(this, ev);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var onClick = _props.onClick;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onClick']);
+      var _props = this.props,
+          children = _props.children,
+          link = _props.link,
+          target = _props.target,
+          value = _props.value,
+          onClick = _props.onClick,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
 
 
       return _react2.default.createElement(
         'li',
-        other,
+        reactProps,
         _react2.default.createElement(
           'a',
           {
-            href: this.props.link,
-            target: this.props.target,
-            'data-mui-value': this.props.value,
-            onClick: this.onClickCB
+            href: link,
+            target: target,
+            'data-mui-value': value,
+            onClick: onClick
           },
           children
         )
@@ -76,10 +66,5 @@ var DropdownItem = function (_React$Component) {
 /** Define module API */
 
 
-DropdownItem.propTypes = {
-  link: PropTypes.string,
-  target: PropTypes.string,
-  onClick: PropTypes.func
-};
 exports.default = DropdownItem;
 module.exports = exports['default'];

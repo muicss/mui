@@ -18,12 +18,12 @@ class Divider extends React.Component {
   };
 
   render() {
-    let { children, ...other } = this.props;
+    const { children, className, ...reactProps } = this.props;
 
     return (
       <div
-        { ...other }
-        className={'mui-divider ' + this.props.className }
+        { ...reactProps }
+        className={'mui-divider ' + className }
       >
       </div>
     );

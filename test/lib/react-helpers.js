@@ -3,7 +3,7 @@
  * @module test/react-tests/react-helpers
  */
 
-import { createRenderer } from 'react-addons-test-utils';
+import { createRenderer } from 'react-test-renderer/shallow';
 
 
 export function getShallowRendererOutput(reactElem) {

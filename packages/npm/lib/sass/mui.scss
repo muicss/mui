@@ -1,16 +1,12 @@
-// Normalizer
-@import
-"normalize-3.0.3";
-
 // Core variables and mixins
 @import
 "mui/colors",
 "mui/variables",
 "mui/mixins";
 
-// CSS Reboot
+// Globals
 @import
-"mui/reboot";
+"mui/globals";
 
 // Components
 @import

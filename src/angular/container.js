@@ -15,7 +15,7 @@ angular.module(moduleName, [])
       restrict: 'AE',
       template: '<div class="mui-container"></div>',
       transclude: true,
-      scope : true,
+      scope: true,
       replace: true,
       link: function(scope, element, attrs, controller, transcludeFn) {
         // use transcludeFn to pass ng-controller on parent element

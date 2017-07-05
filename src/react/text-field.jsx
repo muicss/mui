@@ -1,17 +1,15 @@
 /**
  * MUI React TextInput Component
- * @module react/text-input
+ * @module react/text-field
  */
 
 'use strict';
 
 import React from 'react';
 
+import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
 import { controlledMessage } from './_helpers';
-
-
-const PropTypes = React.PropTypes;
 
 
 /**
@@ -25,34 +23,28 @@ class Input extends React.Component {
     let value = props.value;
     let innerValue = value || props.defaultValue;
 
+    if (innerValue === undefined) innerValue = '';
+
     this.state = {
       innerValue: innerValue,
-      isDirty: Boolean(innerValue)
+      isTouched: false,
+      isPristine: true
     };
 
     // warn if value defined but onChange is not
-    if (value !== undefined && props.onChange === null) {
+    if (value !== undefined && !props.onChange) {
       util.raiseError(controlledMessage, true);
     }
 
     let cb = util.callback;
+    this.onBlurCB = cb(this, 'onBlur');
     this.onChangeCB = cb(this, 'onChange');
-    this.onFocusCB = cb(this, 'onFocus');
   }
-
-  static propTypes = {
-    hint: PropTypes.string,
-    value: PropTypes.string,
-    type: PropTypes.string,
-    autoFocus: PropTypes.bool,
-    onChange: PropTypes.func
-  };
 
   static defaultProps = {
     hint: null,
-    type: null,
-    autoFocus: false,
-    onChange: null
+    invalid: false,
+    rows: 2
   };
 
   componentDidMount() {
@@ -60,15 +52,32 @@ class Input extends React.Component {
     this.refs.inputEl._muiTextfield = true;
   }
 
-  onChange(ev) {
-    this.setState({innerValue: ev.target.value});
-
-    let fn = this.props.onChange;
-    if (fn) fn(ev);
+  componentWillReceiveProps(nextProps) {
+    // update innerValue when new value is received to handle programmatic
+    // changes to input box
+    if ('value' in nextProps) this.setState({innerValue: nextProps.value});
   }
 
-  onFocus(ev) {
-    this.setState({isDirty: true});
+  onBlur(ev) {
+    // ignore if event is a window blur
+    if (document.activeElement !== this.refs.inputEl) {
+      this.setState({isTouched: true});
+    }
+
+    // execute callback
+    let fn = this.props.onBlur;
+    fn && fn(ev);
+  }
+
+  onChange(ev) {
+    this.setState({
+      innerValue: ev.target.value,
+      isPristine: false
+    });
+
+    // execute callback
+    let fn = this.props.onChange;
+    fn && fn(ev);
   }
 
   triggerFocus() {
@@ -78,48 +87,43 @@ class Input extends React.Component {
 
   render() {
     let cls = {},
-        isNotEmpty = Boolean(this.state.innerValue),
+        isNotEmpty = Boolean(this.state.innerValue.toString()),
         inputEl;
 
+    const { hint, invalid, rows, type, ...reactProps } = this.props;
+
+    cls['mui--is-touched'] = this.state.isTouched;
+    cls['mui--is-untouched'] = !this.state.isTouched;
+    cls['mui--is-pristine'] = this.state.isPristine;
+    cls['mui--is-dirty'] = !this.state.isPristine;
     cls['mui--is-empty'] = !isNotEmpty;
     cls['mui--is-not-empty'] = isNotEmpty;
-    cls['mui--is-dirty'] = this.state.isDirty;
-    cls['mui--is-invalid'] = this.props.invalid;
+    cls['mui--is-invalid'] = invalid;
 
     cls = util.classNames(cls);
 
-    let { children, ...other } = this.props;
-
-    if (this.props.type === 'textarea') {
+    if (type === 'textarea') {
       inputEl = (
         <textarea
-          { ...other }
+          { ...reactProps }
           ref="inputEl"
           className={cls}
-          rows={this.props.rows}
-          placeholder={this.props.hint}
-          value={this.props.value}
-          defaultValue={this.props.defaultValue}
-          autoFocus={this.props.autoFocus}
+          rows={rows}
+          placeholder={hint}
+          onBlur={this.onBlurCB}
           onChange={this.onChangeCB}
-          onFocus={this.onFocusCB}
-          required={this.props.required}
         />
       );
     } else {
       inputEl = (
         <input
-          { ...other }
+          { ...reactProps }
           ref="inputEl"
           className={cls}
-          type={this.props.type}
-          value={this.props.value}
-          defaultValue={this.props.defaultValue}
+          type={type}
           placeholder={this.props.hint}
-          autoFocus={this.props.autofocus}
+          onBlur={this.onBlurCB}
           onChange={this.onChangeCB}
-          onFocus={this.onFocusCB}
-          required={this.props.required}
         />
       );
     }
@@ -189,13 +193,9 @@ class TextField extends React.Component {
     this.onClickCB = util.callback(this, 'onClick');
   }
 
-  static propTypes = {
-    label: PropTypes.string,
-    floatingLabel: PropTypes.bool
-  };
-
   static defaultProps = {
-    label: '',
+    className: '',
+    label: null,
     floatingLabel: false
   };
 
@@ -211,22 +211,25 @@ class TextField extends React.Component {
     let cls = {},
         labelEl;
 
-    if (this.props.label.length) {
-      labelEl = (
-        <Label
-          text={this.props.label}
-          onClick={this.onClickCB}
-        />
-      );
+    const { children, className, style, label, floatingLabel,
+      ...other } = this.props;
+
+    const type = jqLite.type(label);
+
+    if ((type === 'string' && label.length) || type === 'object') {
+      labelEl = <Label text={label} onClick={this.onClickCB} />;
     }
 
     cls['mui-textfield'] = true;
-    cls['mui-textfield--float-label'] = this.props.floatingLabel;
+    cls['mui-textfield--float-label'] = floatingLabel;
     cls = util.classNames(cls);
 
     return (
-      <div className={cls}>
-        <Input ref="inputEl" { ...this.props } />
+      <div
+        className={cls + ' ' + className}
+        style={style}
+      >
+        <Input ref="inputEl" { ...other } />
         {labelEl}
       </div>
     );

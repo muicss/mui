@@ -4,9 +4,10 @@
  */
 
 import assert from 'assert';
+import createClass from 'create-react-class';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactUtils from 'react-addons-test-utils';
+import ReactUtils from 'react-dom/test-utils';
 
 import Checkbox from '../../src/react/checkbox';
 
@@ -63,7 +64,7 @@ describe('react/checkbox', function() {
 
 
   it('can be used as a controlled component', function() {
-    var TestApp = React.createClass({
+    var TestApp = createClass({
       getInitialState: function() {
         return {checked: this.props.checked};
       },

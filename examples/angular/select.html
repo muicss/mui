@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- for example only -->
-    <script src="../assets/vendor/angular/1.5.3/angular.js"></script>
+    <script src="../assets/vendor/angular/1.6.0/angular.js"></script>
     <!-- end -->
     
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
@@ -18,6 +18,8 @@
         $scope.valA = 'opt2';
         $scope.valB = 'opt4';
         $scope.valC = 'opt3';
+        $scope.valD = 'opt2';
+        $scope.valE = 'opt2';
       });
     </script>
   </head>
@@ -27,7 +29,11 @@
       <mui-panel>
         <form method="get" action="test">
           <strong>Should have value "Option 2"</strong>
-          <mui-select name="exampleA" ng-model="valA">
+          <mui-select
+            name="exampleA"
+            ng-model="valA"
+            label="Label 1"
+          >
             <mui-option label="Option 1" value="opt1"></mui-option>
             <mui-option label="Option 2" value="opt2"></mui-option>
             <mui-option label="Option 3" value="opt3"></mui-option>
@@ -60,6 +66,28 @@
             <mui-option label="Option 6" value="opt6"></mui-option>
             <mui-option label="Option 7" value="opt7"></mui-option>
             <mui-option label="Option 8" value="opt8"></mui-option>
+          </mui-select>
+
+          <strong>Should have value "Option 2"</strong>
+          <mui-select name="exampleD" ng-model="valD">
+            <mui-option label="Option 1" value="opt1"></mui-option>
+            <mui-option label="Option 2" value="opt2"></mui-option>
+            <mui-option label="Option 3" value="opt3"></mui-option>
+            <mui-option label="Option 4" value="opt4"></mui-option>
+            <mui-option label="Option 5" value="opt5"></mui-option>
+            <mui-option label="Option 6" value="opt6"></mui-option>
+            <mui-option label="Option 7" value="opt7"></mui-option>
+            <mui-option label="Option 8" value="opt8"></mui-option>
+          </mui-select>
+
+          <strong>Should jump to item as you type</strong>
+          <mui-select name="exampleE" ng-model="valE">
+            <mui-option label="A" value="opt1"></mui-option>
+            <mui-option label="B" value="opt2"></mui-option>
+            <mui-option label="Ba" value="opt3"></mui-option>
+            <mui-option label="Bb" value="opt4"></mui-option>
+            <mui-option label="C" value="opt5"></mui-option>
+            <mui-option label="6" value="opt6"></mui-option>
           </mui-select>
 
           <mui-button variant="raised">submit</mui-button>

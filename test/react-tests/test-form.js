@@ -16,7 +16,7 @@ describe('react/form', function() {
     let result = getShallowRendererOutput(<Form></Form>);
 
     assert.equal(result.type, 'form');
-    assert.equal(result.props.className, ' ');
+    assert.equal(result.props.className, 'mui-form ');
   });
 
 
@@ -27,7 +27,7 @@ describe('react/form', function() {
       </Form>
     );
 
-    assert.equal(result.props.className, ' additional');
+    assert.equal(result.props.className, 'mui-form additional');
   });
 
 
@@ -46,6 +46,6 @@ describe('react/form', function() {
     let result = getShallowRendererOutput(<Form inline={ true }></Form>);
 
     assert.equal(result.type, 'form');
-    assert.equal(result.props.className, 'mui-form--inline ')
+    assert.equal(result.props.className, 'mui-form mui-form--inline ')
   });
 });

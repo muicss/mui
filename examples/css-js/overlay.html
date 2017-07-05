@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/js/mui.js"></script>
+    <script src="../assets/css-switch.js"></script>
     <script>
       window.addEventListener('load', function() {
         var buttonEl = document.getElementsByClassName('mui-btn')[0];
@@ -24,11 +25,13 @@
     </script>
   </head>
   <body>
+    <header style="position:fixed;top:0;left:0;right:0;height:50px;z-index:2;background-color:blue;"></header>
     <div class="mui-container">
       <h1>Overlay</h1>
       <div class="mui-panel">
         <button class="mui-btn mui-btn--primary">Activate</button>
       </div>
     </div>
+    <div style="width:10px;height:1000px;background-color:red;">
   </body>
 </html>

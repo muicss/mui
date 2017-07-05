@@ -3,7 +3,7 @@
 1. Build packages
 
   ```bash
-  $ ./node_modules/.bin/gulp build-packages
+  $ npm run build-all
   ```
 
 1. Add release notes to CHANGELOG.md

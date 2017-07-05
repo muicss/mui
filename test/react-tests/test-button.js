@@ -5,9 +5,11 @@
 
 import assert from 'assert';
 import React from 'react';
-import ReactUtils from 'react-addons-test-utils';
 import ReactDOM from 'react-dom';
+import ReactUtils from 'react-dom/test-utils';
 
+import { requestAnimationFrame } from '../../src/js/lib/util';
+import jqLite from '../../src/js/lib/jqLite';
 import Button from '../../src/react/button';
 
 import { getShallowRendererOutput } from '../lib/react-helpers';
@@ -81,60 +83,72 @@ describe('react/button', function() {
   });
 
 
-  it('supports click callbacks', function(done) {
-    // define callback
-    let fn = function() {
-      done();
-    }
+  it('supports click, mouse and touch events', function() {
+    let executedEvents = [],
+        triggeredEvents = [];
 
-    let node = ReactUtils.renderIntoDocument(
-      <Button onClick={ fn }>test</Button>
+    // define callback
+    const fn = function(ev) {executedEvents.push(ev.type);};
+
+    // define props
+    const props = {
+      onClick: fn,
+      onMouseDown: fn,
+      onMouseUp: fn,
+      onMouseLeave: fn,
+      onTouchStart: fn,
+      onTouchEnd: fn
+    };
+
+    const node = ReactUtils.renderIntoDocument(
+      <Button { ...props }>test</Button>
     );
 
-    // click on button
-    ReactUtils.Simulate.click(node.refs.buttonEl);
+    // trigger events
+    let k, eventName, eventType;
+
+    for (k in props) {
+      // remove 'on' and lowercase first letter
+      eventName = k.charAt(2).toLowerCase() + k.substr(3, k.length);
+      eventType = eventName.toLowerCase();
+
+      // trigger event
+      ReactUtils.Simulate[eventName](node.refs.buttonEl, {type: eventType});
+      triggeredEvents.push(eventType);
+    }
+
+    // check that events were executed
+    assert.deepEqual(triggeredEvents, executedEvents);
   });
 
 
-  it('renders ripples on click', function() {
-    let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
-    let buttonEl = node.refs.buttonEl;
+  it('renders ripples on click', function(done) {
+    let node = ReactUtils.renderIntoDocument(<Button>test</Button>),
+        buttonEl = node.refs.buttonEl,
+        rippleEl = node.refs.rippleEl;
 
-    // check state before ripple
-    assert.equal(Object.keys(node.state.ripples).length, 0);
-    assert.equal(buttonEl.children.length, 0);
+    // check state before click
+    assert.equal(node.state.ripple, null);
+    assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), false);
 
     // trigger ripple
     ReactUtils.Simulate.mouseDown(buttonEl);
 
-    // check state after ripple
-    assert.equal(Object.keys(node.state.ripples).length, 1);
-    assert.equal(buttonEl.children.length, 1);
-    assert.equal(buttonEl.children[0].className, 'mui-ripple-effect');
+    // check state after click
+    assert.notEqual(node.state.ripple, null)
+    assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), true);
+    assert.equal(jqLite.hasClass(rippleEl, 'mui--is-animating'), false);
 
-    // add another ripple
-    ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
-    assert.equal(Object.keys(node.state.ripples).length, 2);
-  });
+    // check animation
+    requestAnimationFrame(function() {
+      assert.equal(jqLite.hasClass(rippleEl, 'mui--is-animating'), true);
 
+      // remove ripple
+      ReactUtils.Simulate.mouseUp(node.refs.buttonEl);
+      assert.equal(node.state.ripple, null);
+      assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), false);
 
-  it('removes ripples after two seconds', function(done) {
-    this.timeout(2050);
-
-    let node = ReactUtils.renderIntoDocument(<Button>test</Button>);
-
-    ReactUtils.Simulate.mouseDown(node.refs.buttonEl);
-    assert.equal(Object.keys(node.state.ripples).length, 1);
-
-    setTimeout(function() {
-      // check that ripple is still there
-      assert.equal(Object.keys(node.state.ripples).length, 1);
-    }, 1000);
-
-    setTimeout(function() {
-      // check that ripple has been removed
-      assert.equal(Object.keys(node.state.ripples).length, 0);
       done();
-    }, 2001);
+    });
   });
 });

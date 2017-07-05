@@ -10,9 +10,7 @@ import React from 'react';
 import * as formlib from '../js/lib/forms';
 import * as jqLite from '../js/lib/jqLite';
 import * as util from '../js/lib/util';
-
-
-const PropTypes = React.PropTypes;
+import { getReactProps } from './_helpers';
 
 
 /**
@@ -20,24 +18,15 @@ const PropTypes = React.PropTypes;
  * @class
  */
 class Option extends React.Component {
-  static propTypes = {
-    value: PropTypes.string,
-    label: PropTypes.string
-  };
-
   static defaultProps = {
-    value: null,
+    className: '',
     label: null
   };
 
   render() {
-    let { children, ...other } = this.props;
+    const { children, label, ...reactProps } = this.props;
 
-    return (
-      <option { ...other } value={this.props.value}>
-        {this.props.label}
-      </option>
-    );
+    return <option { ...reactProps }>{label}</option>;
   }
 }
 

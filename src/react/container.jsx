@@ -13,27 +13,25 @@ import React from 'react';
  * @class
  */
 class Container extends React.Component {
-  static propTypes = {
-    fluid: React.PropTypes.bool
-  };
-
   static defaultProps = {
     className: '',
     fluid: false
   };
 
   render() {
+    const { children, className, fluid, ...reactProps } = this.props;
+
     let cls = 'mui-container';
 
     // fluid containers
-    if (this.props.fluid) cls += '-fluid';
-
+    if (fluid) cls += '-fluid';
+    
     return (
       <div
-        { ...this.props }
-        className={cls + ' ' + this.props.className}
+        { ...reactProps }
+        className={cls + ' ' + className}
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }

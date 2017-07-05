@@ -5,30 +5,34 @@
 
 import assert from 'assert';
 
-var helpers = require('./angular-helper');
-var ngModule = helpers.module;
-var inject = helpers.inject;
+let helpers = require('./angular-helper'),
+    ngModule = helpers.module,
+    inject = helpers.inject,
+    jqLite = helpers.jqLite;
+
 require('../../src/angular/appbar.js');
 
-var compile, scope, directiveElem;
 
 describe('angular/appbar', function() {
+  let compile, scope;
+
+
   beforeEach(function() {
     ngModule('mui.appbar');
-    inject(function($compile, $rootScope){
+    inject(function($compile, $rootScope) {
       compile = $compile;
       scope = $rootScope.$new();
     });
   });
 
-  afterEach(function () {
+
+  afterEach(function() {
     scope.$destroy();
   });
 
-  it('renders properly', function() {
-    //appbar directive with attribute ```replace: true```.
-    var compiled = compile('<mui-appbar></mui-appbar>')(scope);
 
-    assert.equal(!!~compiled.attr('class').indexOf('mui-appbar'), true);
+  it('renders properly', function() {
+    let wrapperEl = compile('<mui-appbar></mui-appbar>')(scope)[0];
+    assert.equal(jqLite.hasClass(wrapperEl, 'mui-appbar'), true);
   });
 });

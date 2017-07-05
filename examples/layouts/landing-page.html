@@ -19,7 +19,7 @@
       body,
       input,
       textarea,
-      buttons {
+      button {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
@@ -45,15 +45,12 @@
        color: white;
       }
 
-      header a:hover {
-       color: white;
-      }
-
 
       /**
        * Content CSS
        */
       #content-wrapper {
+        box-sizing: border-box;
         min-height: 100%;
         margin-bottom: -80px;
         padding-bottom: 80px;
@@ -64,6 +61,7 @@
        * Footer CSS
        */
       footer {
+        box-sizing: border-box;
         height: 80px;
         background-color: #eee;
         border-top: 1px solid #e0e0e0;

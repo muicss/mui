@@ -18,29 +18,35 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Container constructor
  * @class
  */
-
 var Container = function (_React$Component) {
   babelHelpers.inherits(Container, _React$Component);
 
   function Container() {
     babelHelpers.classCallCheck(this, Container);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Container).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Container, [{
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          fluid = _props.fluid,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
+
+
       var cls = 'mui-container';
 
       // fluid containers
-      if (this.props.fluid) cls += '-fluid';
+      if (fluid) cls += '-fluid';
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: cls + ' ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: cls + ' ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);
@@ -50,9 +56,6 @@ var Container = function (_React$Component) {
 /** Define module API */
 
 
-Container.propTypes = {
-  fluid: _react2.default.PropTypes.bool
-};
 Container.defaultProps = {
   className: '',
   fluid: false

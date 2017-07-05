@@ -4,9 +4,10 @@
  */
 
 import assert from 'assert';
+import createClass from 'create-react-class';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactUtils from 'react-addons-test-utils';
+import ReactUtils from 'react-dom/test-utils';
 
 import Input from '../../src/react/input';
 
@@ -31,36 +32,163 @@ describe('react/input', function() {
     let wrapperEl = ReactDOM.findDOMNode(instance);
 
     assert.equal(wrapperEl.tagName, 'DIV');
-    assert.equal(wrapperEl.className, 'mui-textfield');
+    assert.equal(wrapperEl.className.trim(), 'mui-textfield');
   });
 
 
-  it('renders native input element', function() {
+  it('renders component with defaultValue properly', function() {
     let elem = <Input defaultValue="my input"></Input>;
     let instance = ReactUtils.renderIntoDocument(elem);
     let inputEl = ReactUtils
       .findRenderedDOMComponentWithTag(instance, 'input');
 
+    // check input element value
     assert.equal(inputEl.value, 'my input');
+
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
 
 
-  it('adds dirty class on focus', function() {
+  it('renders component with integer defaultValue', function() {
+    let elem = <Input defaultValue={0}></Input>;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let inputEl = ReactUtils
+      .findRenderedDOMComponentWithTag(instance, 'input');
+
+    // check input element value
+    assert.equal(inputEl.value, 0);
+
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+  });
+
+
+  it('renders component with defaultValue received by update', function() {
+    const ParentClass = createClass({
+      getInitialState() {
+        return { testState: 'init' };
+      },
+      render() {
+        return <Input defaultValue="my input"></Input>;
+      },
+    });
+    
+    const parentElem = <ParentClass></ParentClass>;
+    const parentInstance = ReactUtils.renderIntoDocument(parentElem);
+    const instance = ReactUtils.findRenderedComponentWithType(parentInstance,
+                                                              Input);
+    const inputEl = ReactUtils.findRenderedDOMComponentWithTag(instance,
+                                                               'input');
+    
+    // check input element value
+    assert.equal(inputEl.value, 'my input');
+    
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+    
+    // changing state calls componentWillReceiveProps()
+    parentInstance.setState({ testState: 'new' });
+    
+    // check input element value
+    assert.equal(inputEl.value, 'my input');
+    
+    // check empty/not-empty classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+  });
+
+
+  it('properly renders instance classes', function() {
     let instance = ReactUtils.renderIntoDocument(<Input></Input>);
     let inputEl = ReactUtils
       .findRenderedDOMComponentWithTag(instance, 'input');
 
-    // starts with empty class
-    assert.equal(inputEl.className, 'mui--is-empty');
+    // starts with empty|pristine|untouched classes
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-untouched/.test(inputEl.className), true);
+    assert.equal(/mui--is-touched/.test(inputEl.className), false);
+    assert.equal(/mui--is-pristine/.test(inputEl.className), true);
+    assert.equal(/mui--is-dirty/.test(inputEl.className), false);
 
-    // adds dirty class on focus
-    ReactUtils.Simulate.focus(inputEl);
+    // replaces `untouched` with `touched` on blur
+    ReactUtils.Simulate.blur(inputEl);
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-untouched/.test(inputEl.className), false);
+    assert.equal(/mui--is-touched/.test(inputEl.className), true);
+    assert.equal(/mui--is-pristine/.test(inputEl.className), true);
+    assert.equal(/mui--is-dirty/.test(inputEl.className), false);
+
+    // replaces `pristine` with `dirty` on user input
+    ReactUtils.Simulate.change(inputEl);
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-untouched/.test(inputEl.className), false);
+    assert.equal(/mui--is-touched/.test(inputEl.className), true);
+    assert.equal(/mui--is-pristine/.test(inputEl.className), false);
     assert.equal(/mui--is-dirty/.test(inputEl.className), true);
+  });
+
+
+  it('executes onBlur callback', function(done) {
+    let callbackFn = function(ev) {
+      done();
+    };
+
+    let instance = ReactUtils.renderIntoDocument(
+        <Input onBlur={callbackFn}>
+        </Input>
+    );
+
+    let inputEl = ReactUtils
+      .findRenderedDOMComponentWithTag(instance, 'input');
+
+    // simulate blur
+    ReactUtils.Simulate.blur(inputEl);
+  });
+
+
+  it('adds and removes mui--is-empty classes', function() {
+    var TestApp = createClass({
+      getInitialState: function() {
+        return {value: this.props.value};
+      },
+      onChange: function(ev) {
+        this.setState({value: ev.target.value});
+      },
+      render: function() {
+        return (
+          <Input
+            value={this.state.value}
+            onChange={this.onChange}
+          />
+        );
+      }
+    });
+
+    let elem = <TestApp value="" />;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let findComponent = ReactUtils.findRenderedDOMComponentWithTag;
+    let inputEl = findComponent(instance, 'input');
+
+    // check empty classes
     assert.equal(/mui--is-empty/.test(inputEl.className), true);
     assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
 
-    // modify input
-    ReactUtils.Simulate.change(inputEl);
+    // add input value and check classes
+    instance.setState({value: 'test'});
+    assert.equal(/mui--is-empty/.test(inputEl.className), false);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), true);
+
+    // remove input classes and check classes
+    instance.setState({value: ''});
+    assert.equal(/mui--is-empty/.test(inputEl.className), true);
+    assert.equal(/mui--is-not-empty/.test(inputEl.className), false);
   });
 
 
@@ -77,7 +205,7 @@ describe('react/input', function() {
 
 
   it('can be used as controlled component', function() {
-    var TestApp = React.createClass({
+    var TestApp = createClass({
       getInitialState: function() {
         return {value: this.props.value};
       },

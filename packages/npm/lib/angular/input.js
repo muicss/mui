@@ -10,12 +10,18 @@ var _angular = require('angular');
 var _angular2 = babelHelpers.interopRequireDefault(_angular);
 
 var moduleName = 'mui.input',
+    touchedClass = 'mui--is-touched',
+    // hasn't lost focus yet
+untouchedClass = 'mui--is-untouched',
+    pristineClass = 'mui--is-pristine',
+    // user hasn't interacted yet
+dirtyClass = 'mui--is-dirty',
     emptyClass = 'mui--is-empty',
-    notEmptyClass = 'mui--is-not-empty',
-    dirtyClass = 'mui--is-dirty';
+    // control is empty
+notEmptyClass = 'mui--is-not-empty';
 
 /**
- * Handle empty/not-empty/dirty classes.
+ * Handle empty/not-emptyclasses.
  * @param {Element} elem - The angular-wrapped DOM element.
  */
 /**
@@ -32,11 +38,7 @@ function handleEmptyClasses(inputEl, value) {
  * @param {Boolean} isTextArea
  */
 function inputFactory(isTextArea) {
-  var emptyClass = 'mui--is-empty',
-      notEmptyClass = 'mui--is-not-empty',
-      dirtyClass = 'mui--is-dirty',
-      scopeArgs,
-      template;
+  var scopeArgs, template;
 
   // defaults
   scopeArgs = {
@@ -98,7 +100,7 @@ function inputFactory(isTextArea) {
         // invalid
         if (!isUndef(attrs.invalid)) inputEl.addClass('mui--is-invalid');
 
-        // set is-empty|is-no-empty
+        // set is-empty|is-not-empty
         handleEmptyClasses(inputEl, scope.ngModel);
 
         // float-label
@@ -116,6 +118,24 @@ function inputFactory(isTextArea) {
           }, 150);
         }
 
+        // seed with `untouched`, `pristine` classes
+        inputEl.addClass(untouchedClass + ' ' + pristineClass);
+
+        // replace `untouched` with `touched` when control loses focus
+        inputEl.on('blur', function blurHandler() {
+          // ignore if event is a window blur
+          if (document.activeElement === inputEl[0]) return;
+
+          // replace class and remove event handler
+          inputEl.removeClass(untouchedClass).addClass(touchedClass);
+          inputEl.off('blur', blurHandler);
+        });
+
+        // replace `pristine` with `dirty` when user interacts with control
+        inputEl.one('input change', function () {
+          inputEl.removeClass(pristineClass).addClass(dirtyClass);
+        });
+
         // handle changes
         scope.onChange = function () {
           var val = scope.ngModel;
@@ -125,14 +145,6 @@ function inputFactory(isTextArea) {
 
           // set is-empty|is-no-empty
           handleEmptyClasses(inputEl, val);
-
-          // add is-dirty
-          inputEl.addClass(dirtyClass);
-        };
-
-        // handle focus event
-        scope.onFocus = function () {
-          inputEl.addClass(dirtyClass);
         };
       }
     };

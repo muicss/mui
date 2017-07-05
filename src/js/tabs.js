@@ -8,6 +8,7 @@
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',
@@ -134,12 +135,12 @@ module.exports = {
   /** Initialize module listeners */
   initListeners: function() {
     // markup elements available when method is called
-    var elList = document.querySelectorAll(attrSelector);
-    for (var i=elList.length - 1; i >= 0; i--) initialize(elList[i]);
+    var elList = document.querySelectorAll(attrSelector),
+        i = elList.length;
+    while (i--) {initialize(elList[i]);}
     
-    // TODO: listen for new elements
-    util.onNodeInserted(function(el) {
-      if (el.getAttribute(attrKey) === 'tab') initialize(el);
+    animationHelpers.onAnimationStart('mui-tab-inserted', function(ev) {
+      initialize(ev.target);
     });
   },
   

@@ -6,6 +6,9 @@
   }
 
   #{$list} {
+    // box sizing
+    box-sizing: border-box;
+
     // Prevent columns from collapsing when empty
     min-height: 1px;
 

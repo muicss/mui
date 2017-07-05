@@ -16,19 +16,16 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _textField = require('./text-field');
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Textarea constructor
  * @class
  */
-
 var Textarea = function (_React$Component) {
   babelHelpers.inherits(Textarea, _React$Component);
 
   function Textarea() {
     babelHelpers.classCallCheck(this, Textarea);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Textarea).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Textarea.__proto__ || Object.getPrototypeOf(Textarea)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Textarea, [{
@@ -40,12 +37,8 @@ var Textarea = function (_React$Component) {
   return Textarea;
 }(_react2.default.Component);
 
-Textarea.propTypes = {
-  rows: PropTypes.number
-};
 Textarea.defaultProps = {
-  type: 'textarea',
-  rows: 2
+  type: 'textarea'
 };
 exports.default = Textarea;
 module.exports = exports['default'];

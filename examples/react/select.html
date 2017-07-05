@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- for example only -->   
-    <script src="../assets/vendor/react/15.0.1/react.js"></script>
-    <script src="../assets/vendor/react/15.0.1/react-dom.js"></script>
-    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <script src="../assets/vendor/react/15.5.0/react.js"></script>
+    <script src="../assets/vendor/react/15.5.0/react-dom.js"></script>
+    <script src="../assets/vendor/babel-standalone/6.24.0/babel.min.js"></script>
     <!-- end -->
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/react/mui-react.js"></script>
+    <style>
+      .i-am-red {
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <div class="mui-container">
@@ -23,6 +28,8 @@
           <div id="example2"></div>
           <div id="example3"></div>
           <div id="example4"></div>
+          <div id="example5"></div>
+          <div id="example6"></div>
           <button class="mui-btn mui-btn--raised">submit</button>
         </form>
       </div>
@@ -34,21 +41,32 @@
 
       // Example 1
       class Example1 extends React.Component {
-        onChange(value) {
-          console.log('[Example1] onchange: ' + value);
+        onBlur(ev) {
+          console.log('[Example 1] onblur: ' + ev.target);
+        }
+
+        onChange(ev) {
+          console.log('[Example 1] onchange: ' + ev.target.value);
+        }
+
+        onFocus(ev) {
+          console.log('[Example 1] onfocus: ' + ev.target);
         }
 
         render() {
           return (
             <Select
+              label="Select Box 1"
               name="example1"
               defaultValue="opt2"
+              onBlur={this.onBlur}
               onChange={this.onChange}
+              onFocus={this.onFocus}
             >
               <Option label="Option 1" value="opt1" />
               <Option label="Option 2" value="opt2" />
               <Option label="Option 3" value="opt3" />
-              <Option label="Option 4" value="opt4" />
+              <Option className="i-am-red" label="Option 4" value="opt4" />
               <Option label="Option 5" value="opt5" />
               <Option label="Option 6" value="opt6" />
               <Option label="Option 7" value="opt7" />
@@ -61,16 +79,27 @@
      
       // Example 2
       class Example2 extends React.Component {
-        onChange(value) {
-          console.log('[Example2] onchange: ' + value);
+        onBlur(ev) {
+          console.log('[Example 2] onblur: ' + ev.target);
+        }
+
+        onChange(ev) {
+          console.log('[Example 2] onchange: ' + ev.target.value);
+        }
+
+        onFocus(ev) {
+          console.log('[Example 2] onfocus: ' + ev.target);
         }
 
         render() {
           return (
             <Select
               name="example2"
+              label="Select Box 2"
               value="opt3"
+              onBlur={this.onBlur}
               onChange={this.onChange}
+              onFocus={this.onFocus}
               autoFocus={true}
             >
               <Option label="Option 1" value="opt1" />
@@ -89,17 +118,28 @@
 
       // Example 3
       class Example3 extends React.Component {
-        onChange(value) {
-          console.log('[Example3] onchange: ' + value);
+        onBlur(ev) {
+          console.log('[Example 3] onblur: ' + ev.target);
+        }
+
+        onChange(ev) {
+          console.log('[Example3] onchange: ' + ev.target.value);
+        }
+
+        onFocus(ev) {
+          console.log('[Example 3] onfocus: ' + ev.target);
         }
 
         render() {
           return (
             <Select
               name="example3"
+              label="Select Box 3"
               value="opt4"
               useDefault={true}
+              onBlur={this.onBlur}
               onChange={this.onChange}
+              onFocus={this.onFocus}
             >
               <Option label="Option 1" value="opt1" />
               <Option label="Option 2" value="opt2" />
@@ -132,11 +172,54 @@
         }
       }
 
+
+      // Example5
+      class Example5 extends React.Component {
+        render() {
+          return (
+            <Select label="Example 5">
+              <Option label="A" value="opt1" />
+              <Option label="B" value="opt2" />
+              <Option label="Ba" value="opt3" />
+              <Option label="Bb" value="opt4" />
+              <Option label="C" value="opt5" />
+              <Option label="F" value="opt6" />
+              <Option label="G" value="opt7" />
+              <Option label="H" value="opt8" />
+              <Option label="6" value="opt9" />
+            </Select>
+          );
+        }
+      }
+
+
+      // Example 6
+      class Example6 extends React.Component {
+        render() {
+          return (
+            <Select label="Example 6" required={true}>
+              <Option label="A" value="opt1" />
+              <Option label="B" value="opt2" />
+              <Option label="Ba" value="opt3" />
+              <Option label="Bb" value="opt4" />
+              <Option label="C" value="opt5" />
+              <Option label="F" value="opt6" />
+              <Option label="G" value="opt7" />
+              <Option label="H" value="opt8" />
+              <Option label="6" value="opt9" />
+            </Select>
+          );
+        }
+      }
+
+
       // Render examples
       ReactDOM.render(<Example1 />, document.getElementById('example1'));
       ReactDOM.render(<Example2 />, document.getElementById('example2'));
       ReactDOM.render(<Example3 />, document.getElementById('example3'));
       ReactDOM.render(<Example4 />, document.getElementById('example4'));
+      ReactDOM.render(<Example5 />, document.getElementById('example5'));
+      ReactDOM.render(<Example6 />, document.getElementById('example6'));
     </script>
   </body>
 </html>

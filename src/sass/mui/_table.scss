@@ -2,11 +2,6 @@
  * MUI Table Component
  */
 
-// Global styles
-th {
-  text-align: left;
-}
-
 // Table style
 .mui-table {
   width: 100%;
@@ -18,6 +13,10 @@ th {
   > tbody,
   > tfoot {
     > tr {
+      > th {
+        text-align: left;
+      }
+
       > th,
       > td {
         padding: $mui-table-cell-padding;

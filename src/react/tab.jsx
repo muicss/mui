@@ -10,20 +10,11 @@
 import React from 'react';
 
 
-const PropTypes = React.PropTypes;
-
-
 /**
  * Tab constructor
  * @class
  */
 class Tab extends React.Component {
-  static propTypes = {
-    value: PropTypes.any,
-    label: PropTypes.string,
-    onActive: PropTypes.func
-  };
-
   static defaultProps = {
     value: null,
     label: '',

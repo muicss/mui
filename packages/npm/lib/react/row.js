@@ -31,18 +31,24 @@ var Row = function (_React$Component) {
 
   function Row() {
     babelHelpers.classCallCheck(this, Row);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Row).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Row, [{
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+
+
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: 'mui-row ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-row ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);

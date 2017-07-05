@@ -6,25 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- for example only -->   
-    <script src="../assets/vendor/react/15.0.1/react.js"></script>
-    <script src="../assets/vendor/react/15.0.1/react-dom.js"></script>
-    <script src="../assets/vendor/babel-core/5.8.23/browser.min.js"></script>
+    <script src="../assets/vendor/react/15.5.0/react.js"></script>
+    <script src="../assets/vendor/react/15.5.0/react-dom.js"></script>
+    <script src="../assets/vendor/babel-standalone/6.24.0/babel.min.js"></script>
     <!-- end -->
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
     <script src="../assets/mui/react/mui-react.js"></script>
   </head>
   <body>
-    <h1>Form</h1>
-    <div class="mui-panel">
-      <div id="example1"></div>
-      <div id="example2"></div>
+    <div class="mui-container">
+      <h1>Form</h1>
+      <div class="mui-panel">
+        <div id="example1"></div>
+      </div>
+      <div class="mui-panel">
+        <div id="example2"></div>
+      </div>
+      <div class="mui-panel">
+        <div id="example3"></div>
+      </div>
+      <div class="mui-panel">
+        <div id="example4"></div>
+      </div>
     </div>
     <script type="text/babel">
       let Form = mui.react.Form;
 
       ReactDOM.render(
         <Form>
+          <legend>Title</legend>
           <div className="mui-textfield"><input type="text" /></div>
           <button className="mui-btn">Button</button>
         </Form>,
@@ -32,12 +43,47 @@
       );
 
       ReactDOM.render(
-        <Form inline={true}>
-          <div className="mui-textfield"><input type="text" /></div>
+        <Form>
+          <fieldset>
+            <legend>Fieldset1</legend>
+            <div className="mui-textfield"><input type="text" /></div>
+            <div className="mui-textfield"><input type="text" /></div>
+          </fieldset>
+          <fieldset>
+            <legend>Fieldset2</legend>
+            <div className="mui-textfield"><input type="text" /></div>
+            <div className="mui-textfield"><input type="text" /></div>
+          </fieldset>
           <button className="mui-btn">Button</button>
         </Form>,
         document.getElementById('example2')
+      );      
+
+      ReactDOM.render(
+        <Form inline={true}>
+          <legend>Title</legend>
+          <div className="mui-textfield"><input type="text" /></div>
+          <button className="mui-btn">Button</button>
+        </Form>,
+        document.getElementById('example3')
       );
+
+      ReactDOM.render(
+        <Form inline={true}>
+          <fieldset>
+            <legend>Fieldset1</legend>
+            <div className="mui-textfield"><input type="text" /></div>
+            <div className="mui-textfield"><input type="text" /></div>
+          </fieldset>
+          <fieldset>
+            <legend>Fieldset2</legend>
+            <div className="mui-textfield"><input type="text" /></div>
+            <div className="mui-textfield"><input type="text" /></div>
+          </fieldset>
+          <button className="mui-btn">Button</button>
+        </Form>,
+        document.getElementById('example4')
+      );      
     </script>
   </body>
 </html>

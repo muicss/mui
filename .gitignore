@@ -8,3 +8,4 @@ bower_components
 examples/assets/mui
 examples/email-inlined
 *.sublime-*
+.idea/

@@ -8,11 +8,19 @@
 
 var config = require('../config'),
     jqLite = require('./jqLite'),
-    nodeInsertedCallbacks = [],
     scrollLock = 0,
-    scrollLockCls = 'mui-body--scroll-lock',
+    scrollLockCls = 'mui-scroll-lock',
     scrollLockPos,
+    scrollStyleEl,
+    scrollEventHandler,
+    _scrollBarWidth,
     _supportsPointerEvents;
+
+
+scrollEventHandler = function(ev) {
+  // stop propagation on window scroll events
+  if (!ev.target.tagName) ev.stopImmediatePropagation();
+}
 
 
 /**
@@ -20,7 +28,7 @@ var config = require('../config'),
  */
 function logFn() {
   var win = window;
-
+  
   if (config.debug && typeof win.console !== "undefined") {
     try {
       win.console.log.apply(win.console, arguments);
@@ -39,7 +47,7 @@ function logFn() {
 function loadStyleFn(cssText) {
   var doc = document,
       head;
-
+  
   // copied from jQuery 
   head = doc.head ||
     doc.getElementsByTagName('head')[0] ||
@@ -47,13 +55,13 @@ function loadStyleFn(cssText) {
   
   var e = doc.createElement('style');
   e.type = 'text/css';
-    
+  
   if (e.styleSheet) e.styleSheet.cssText = cssText;
   else e.appendChild(doc.createTextNode(cssText));
   
   // add to document
   head.insertBefore(e, head.firstChild);
-
+  
   return e;
 }
 
@@ -67,43 +75,6 @@ function raiseErrorFn(msg, useConsole) {
     if (typeof console !== 'undefined') console.error('MUI Warning: ' + msg);
   } else {
     throw new Error('MUI: ' + msg);
-  }
-}
-
-
-/**
- * Register callbacks on muiNodeInserted event
- * @param {function} callbackFn - The callback function.
- */
-function onNodeInsertedFn(callbackFn) {
-  nodeInsertedCallbacks.push(callbackFn);
-
-  // initalize listeners
-  if (nodeInsertedCallbacks._initialized === undefined) {
-    var doc = document;
-
-    jqLite.on(doc, 'animationstart', animationHandlerFn);
-    jqLite.on(doc, 'mozAnimationStart', animationHandlerFn);
-    jqLite.on(doc, 'webkitAnimationStart', animationHandlerFn);
-
-    nodeInsertedCallbacks._initialized = true;
-  }
-}
-
-
-/**
- * Execute muiNodeInserted callbacks
- * @param {Event} ev - The DOM event.
- */
-function animationHandlerFn(ev) {
-  // check animation name
-  if (ev.animationName !== 'mui-node-inserted') return;
-
-  var el = ev.target;
-
-  // iterate through callbacks
-  for (var i=nodeInsertedCallbacks.length - 1; i >= 0; i--) {
-    nodeInsertedCallbacks[i](el);
   }
 }
 
@@ -158,17 +129,17 @@ function callbackFn(instance, funcName) {
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-      cancelable = (cancelable !== undefined) ? cancelable : true,
-      k;
-  
-  ev.initEvent(eventType, bubbles, cancelable);
+       cancelable = (cancelable !== undefined) ? cancelable : true,
+       k;
 
+  ev.initEvent(eventType, bubbles, cancelable);
+  
   // add data to event object
   if (data) for (k in data) ev[k] = data[k];
-
+  
   // dispatch
   if (element) element.dispatchEvent(ev);
-
+  
   return ev;
 }
 
@@ -178,38 +149,108 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
  */
 function enableScrollLockFn() {
   // increment counter
-  scrollLock += 1
-
+  scrollLock += 1;
+  
   // add lock
   if (scrollLock === 1) {
-    var win = window,
-        doc = document;
+    var doc = document,
+        win = window,
+        htmlEl = doc.documentElement,
+        bodyEl = doc.body,
+        scrollBarWidth = getScrollBarWidth(),
+        cssProps,
+        cssStr,
+        x;
 
+    // define scroll lock class dynamically
+    cssProps = ['overflow:hidden'];
+
+    if (scrollBarWidth) {
+      // scrollbar-y
+      if (htmlEl.scrollHeight > htmlEl.clientHeight) {
+        x = parseInt(jqLite.css(bodyEl, 'padding-right')) + scrollBarWidth;
+        cssProps.push('padding-right:' + x + 'px');
+      }
+    
+      // scrollbar-x
+      if (htmlEl.scrollWidth > htmlEl.clientWidth) {
+        x = parseInt(jqLite.css(bodyEl, 'padding-bottom')) + scrollBarWidth;
+        cssProps.push('padding-bottom:' + x + 'px');
+      }
+    }
+
+    // define css class dynamically
+    cssStr = '.' + scrollLockCls + '{';
+    cssStr += cssProps.join(' !important;') + ' !important;}';
+    scrollStyleEl = loadStyleFn(cssStr);
+
+    // cancel 'scroll' event listener callbacks
+    jqLite.on(win, 'scroll', scrollEventHandler, true);
+
+    // add scroll lock
     scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
-    jqLite.addClass(doc.body, scrollLockCls);
-    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    jqLite.addClass(bodyEl, scrollLockCls);
   }
 }
 
 
 /**
  * Turn off window scroll lock.
+ * @param {Boolean} resetPos - Reset scroll position to original value.
  */
-function disableScrollLockFn() {
+function disableScrollLockFn(resetPos) {
   // ignore
   if (scrollLock === 0) return;
 
   // decrement counter
-  scrollLock -= 1
+  scrollLock -= 1;
 
   // remove lock 
   if (scrollLock === 0) {
-    var win = window,
-        doc = document;
+    // remove scroll lock and delete style element
+    jqLite.removeClass(document.body, scrollLockCls);
+    scrollStyleEl.parentNode.removeChild(scrollStyleEl);
 
-    jqLite.removeClass(doc.body, scrollLockCls);
-    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    // restore scroll position
+    if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top);
+
+    // restore scroll event listeners
+    jqLite.off(window, 'scroll', scrollEventHandler, true);
   }
+}
+
+/**
+ * Return scroll bar width.
+ */
+var getScrollBarWidth = function() {
+  // check cache
+  if (_scrollBarWidth !== undefined) return _scrollBarWidth;
+  
+  // calculate scroll bar width
+  var doc = document,
+      bodyEl = doc.body,
+      el = doc.createElement('div');
+
+  el.innerHTML = '<div style="width:50px;height:50px;position:absolute;' + 
+    'left:-50px;top:-50px;overflow:auto;"><div style="width:1px;' + 
+    'height:100px;"></div></div>';
+  el = el.firstChild;
+  bodyEl.appendChild(el);
+  _scrollBarWidth = el.offsetWidth - el.clientWidth;
+  bodyEl.removeChild(el);
+
+  return _scrollBarWidth;
+}
+
+
+/**
+ * requestAnimationFrame polyfilled
+ * @param {Function} callback - The callback function
+ */
+function requestAnimationFrameFn(callback) {
+  var fn = window.requestAnimationFrame;
+  if (fn) fn(callback);
+  else setTimeout(callback, 0);
 }
 
 
@@ -238,11 +279,11 @@ module.exports = {
   /** Load CSS text as new stylesheet */
   loadStyle: loadStyleFn,
 
-  /** Register muiNodeInserted handler */
-  onNodeInserted: onNodeInsertedFn,
-
   /** Raise MUI error */
   raiseError: raiseErrorFn,
+
+  /** Request animation frame */
+  requestAnimationFrame: requestAnimationFrameFn,
 
   /** Support Pointer Events check */
   supportsPointerEvents: supportsPointerEventsFn

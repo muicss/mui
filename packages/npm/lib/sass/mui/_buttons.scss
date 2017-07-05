@@ -13,18 +13,34 @@
                 0 0px 2px rgba(mui-color('black'), 0.12),
                 0 2px 2px rgba(mui-color('black'), 0.20);
   }
+
+  // Edge
+  @supports (-ms-ime-align:auto) {
+    box-shadow: 0 -1px 2px rgba(mui-color('black'), 0.12),
+                -1px 0px 2px rgba(mui-color('black'), 0.12),
+                0 0px 2px rgba(mui-color('black'), 0.12),
+                0 2px 2px rgba(mui-color('black'), 0.20);
+  }
 }
 
 @mixin x-btn-box-shadow-active() {
-  box-shadow: 0 10px 20px rgba(mui-color('black'), 0.19),
-              0 6px 6px rgba(mui-color('black'), 0.23);
-
+  box-shadow: 0 0px 4px rgba(mui-color('black'), 0.12),
+              1px 3px 4px rgba(mui-color('black'), 0.20);
+  
   // IE10+
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     box-shadow: 0 -1px 2px rgba(mui-color('black'), 0.12),
                 -1px 0px 2px rgba(mui-color('black'), 0.12),
-                0 10px 20px rgba(mui-color('black'), 0.19),
-                0 6px 6px rgba(mui-color('black'), 0.23);
+                0 0px 4px rgba(mui-color('black'), 0.12),
+                1px 3px 4px rgba(mui-color('black'), 0.20);
+  }
+
+  // Edge
+  @supports (-ms-ime-align:auto) {
+    box-shadow: 0 -1px 2px rgba(mui-color('black'), 0.12),
+                -1px 0px 2px rgba(mui-color('black'), 0.12),
+                0 0px 4px rgba(mui-color('black'), 0.12),
+                1px 3px 4px rgba(mui-color('black'), 0.20);
   }
 }
 
@@ -33,7 +49,6 @@
 // ============================================================================
 
 .mui-btn {
-  @include mui-node-inserted();
   @include mui-text("button");
 
   @include button-variant(
@@ -50,8 +65,7 @@
   display: inline-block;
   height: $mui-btn-height;
   padding: 0 $mui-btn-padding-horizontal;
-  margin-top: $mui-btn-margin-vertical;
-  margin-bottom: $mui-btn-margin-vertical;
+  margin: $mui-btn-margin-vertical 0;
   
   // Look and feel
   border: none;
@@ -67,6 +81,7 @@
   white-space: nowrap;
   user-select: none;
   font-size: $mui-btn-font-size;
+  font-family: inherit;
   letter-spacing: 0.03em;
 
   // For ripples
@@ -84,13 +99,12 @@
   &:hover,
   &:focus {
     @include x-btn-box-shadow-raised();
-
   }
   
-  &:active {
+  &:active:hover {
     @include x-btn-box-shadow-active();
   }
-  
+
   &:disabled,
   &.mui--is-disabled {
     cursor: $mui-cursor-disabled;
@@ -120,7 +134,8 @@
 
   &:hover,
   &:focus,
-  &:active {
+  &:active,
+  &:active:hover {
     box-shadow: none;
     background-color: $mui-btn-flat-bg-color-hover;
   }

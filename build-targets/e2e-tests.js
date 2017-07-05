@@ -1,6 +1,9 @@
 (function() {
+  // css-js
   require('../test/cssjs-tests/test-jqlite');
   require('../test/cssjs-tests/test-util');
+
+  // react
   require('../test/react-tests/test-appbar');
   require('../test/react-tests/test-button');
   require('../test/react-tests/test-caret');

@@ -31,7 +31,7 @@ var Col = function (_React$Component) {
 
   function Col() {
     babelHelpers.classCallCheck(this, Col);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Col).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Col.__proto__ || Object.getPrototypeOf(Col)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Col, [{
@@ -59,7 +59,13 @@ var Col = function (_React$Component) {
           val = void 0,
           baseCls = void 0;
 
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+
       // add mui-col classes
+
       for (i = breakpoints.length - 1; i > -1; i--) {
         bk = breakpoints[i];
         baseCls = 'mui-col-' + bk;
@@ -71,16 +77,20 @@ var Col = function (_React$Component) {
         // add mui-col-{bk}-offset-{val}
         val = this.props[bk + '-offset'];
         if (val) cls[baseCls + '-offset-' + val] = true;
+
+        // remove from reactProps
+        delete reactProps[bk];
+        delete reactProps[bk + '-offset'];
       }
 
       cls = util.classNames(cls);
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: cls + ' ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: cls + ' ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);

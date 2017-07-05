@@ -1,0 +1,157 @@
+/**
+ * MUI Globals
+ */
+
+@if $mui-include-globals == true {
+  @include normalizecss();
+
+  // Body reset
+  html {
+    font-size: 10px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  body {
+    font-family: $mui-base-font-family;
+    font-size: $mui-base-font-size;
+    font-weight: $mui-base-font-weight;
+    line-height: $mui-base-line-height;
+    color: $mui-base-font-color;
+    background-color: $mui-body-bg-color;
+  }
+
+  // Links
+  a {
+    color: $mui-link-font-color;
+    text-decoration: $mui-link-text-decoration;
+    
+    &:hover,
+    &:focus {
+      text-decoration: $mui-link-text-decoration-hover;
+    }
+    
+    &:focus {
+      @include mui-tab-focus();
+    }
+  }
+
+  // paragraphs
+  p {
+    margin: 0 0 ($mui-base-line-height-computed / 2);
+  }
+  
+  // lists
+  ul,
+  ol {
+    margin-top: 0;
+    margin-bottom: ($mui-base-line-height-computed / 2);
+  }
+
+  // Horizontal rules
+  hr {
+    margin-top: $mui-base-line-height-computed;
+    margin-bottom: $mui-base-line-height-computed;
+    border: 0;
+    height: 1px;
+    background-color: $mui-hr-color;
+  }
+
+  // Strong
+  strong {
+    font-weight: 700;
+  }
+  
+  // Abbreviations
+  abbr[title] {
+    cursor: help;
+    border-bottom: 1px dotted $mui-abbr-border-color;
+  }
+  
+  // headers
+  h1 {
+    @extend .mui--text-display1;
+  }
+  
+  h2 {
+    @extend .mui--text-headline;
+  }
+  
+  h3 {
+    @extend .mui--text-title;
+  }
+  
+  h4 {
+    @extend .mui--text-subhead;
+  }
+  
+  h5 {
+    @extend .mui--text-body2;
+  }
+  
+  h1, h2, h3 {
+    margin-top: $mui-base-line-height-computed;
+    margin-bottom: ($mui-base-line-height-computed / 2);
+  }
+  
+  h4, h5, h6 {
+    margin-top: ($mui-base-line-height-computed / 2);
+    margin-bottom: ($mui-base-line-height-computed / 2);
+  }
+} @else {
+  // Cherry pick from normalize.css
+  
+  // remove margin in Firefox and Safari
+  .mui-textfield > input,
+  .mui-textfield > textarea,
+  .mui-select > select {
+    margin: 0;
+  }
+  
+  // show the overflow in Edge
+  .mui-textfield > input {
+    overflow: visible;
+  }
+  
+  // remove inner border and padding in Firefox
+  button.mui-btn::-moz-focus-inner,
+  .mui-btn[type="button"]::-moz-focus-inner,
+  .mui-btn[type="reset"]::-moz-focus-inner,
+  .mui-btn[type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;    
+  }
+  
+  // restore focus styles unset by previous role
+  button.mui-btn:-moz-focusring,
+  .mui-btn[type="button"]:-moz-focusring,
+  .mui-btn[type="reset"]:-moz-focusring,
+  .mui-btn[type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText;
+  }
+  
+  // remove default vertical scrollbar in IE
+  .mui-textfield > textarea {
+    overflow: auto;
+  }
+  
+  // add correct box sizing and padding in IE10-
+  .mui-radio,
+  .mui-checkbox {
+    input {
+      box-sizing: border-box;
+      padding: 0;
+    }
+  }
+}
+
+@if $mui-base-font-smoothing == true {
+  html,
+  body,
+  button,  // safari issue
+  input,  // safari issue
+  textarea {  // safari issue
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  }
+}

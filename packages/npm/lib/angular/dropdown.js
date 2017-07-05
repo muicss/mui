@@ -81,7 +81,7 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
         $event.preventDefault();
         $event.stopPropagation();
 
-        // toggle open
+        // toggle open 
         if (scope.open) scope.open = false;else scope.open = true;
       };
     }

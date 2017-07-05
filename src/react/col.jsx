@@ -40,6 +40,8 @@ class Col extends React.Component {
         val,
         baseCls;
 
+    let { children, className, ...reactProps } = this.props;
+
     // add mui-col classes
     for (i=breakpoints.length - 1; i > -1; i--) {
       bk = breakpoints[i];
@@ -52,16 +54,20 @@ class Col extends React.Component {
       // add mui-col-{bk}-offset-{val}
       val = this.props[bk + '-offset'];
       if (val) cls[baseCls + '-offset-' + val] = true;
+
+      // remove from reactProps
+      delete reactProps[bk];
+      delete reactProps[bk + '-offset'];
     }
 
     cls = util.classNames(cls);
-
+    
     return (
       <div
-        { ...this.props }
-        className={cls + ' ' + this.props.className }
+        { ...reactProps }
+        className={cls + ' ' + className }
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }

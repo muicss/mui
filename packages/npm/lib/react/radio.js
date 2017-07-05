@@ -14,34 +14,42 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
-var PropTypes = _react2.default.PropTypes;
-
 /**
  * Radio constructor
  * @class
  */
-
 var Radio = function (_React$Component) {
   babelHelpers.inherits(Radio, _React$Component);
 
   function Radio() {
     babelHelpers.classCallCheck(this, Radio);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Radio).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Radio.__proto__ || Object.getPrototypeOf(Radio)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Radio, [{
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var children = _props.children;
-      var onChange = _props.onChange;
-      var other = babelHelpers.objectWithoutProperties(_props, ['children', 'onChange']);
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          label = _props.label,
+          autoFocus = _props.autoFocus,
+          checked = _props.checked,
+          defaultChecked = _props.defaultChecked,
+          defaultValue = _props.defaultValue,
+          disabled = _props.disabled,
+          form = _props.form,
+          name = _props.name,
+          required = _props.required,
+          value = _props.value,
+          onChange = _props.onChange,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
 
 
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, other, {
-          className: 'mui-radio ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-radio ' + className
         }),
         _react2.default.createElement(
           'label',
@@ -49,14 +57,18 @@ var Radio = function (_React$Component) {
           _react2.default.createElement('input', {
             ref: 'inputEl',
             type: 'radio',
-            name: this.props.name,
-            value: this.props.value,
-            checked: this.props.checked,
-            defaultChecked: this.props.defaultChecked,
-            disabled: this.props.disabled,
-            onChange: this.props.onChange
+            autoFocus: autoFocus,
+            checked: checked,
+            defaultChecked: defaultChecked,
+            defaultValue: defaultValue,
+            disabled: disabled,
+            form: form,
+            name: name,
+            required: required,
+            value: value,
+            onChange: onChange
           }),
-          this.props.label
+          label
         )
       );
     }
@@ -67,21 +79,9 @@ var Radio = function (_React$Component) {
 /** Define module API */
 
 
-Radio.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  value: PropTypes.string,
-  checked: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func
-};
 Radio.defaultProps = {
   className: '',
-  name: null,
-  label: null,
-  disabled: false,
-  onChange: null
+  label: null
 };
 exports.default = Radio;
 module.exports = exports['default'];

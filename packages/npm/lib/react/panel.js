@@ -18,24 +18,29 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
  * Panel constructor
  * @class
  */
-
 var Panel = function (_React$Component) {
   babelHelpers.inherits(Panel, _React$Component);
 
   function Panel() {
     babelHelpers.classCallCheck(this, Panel);
-    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Panel).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
   }
 
   babelHelpers.createClass(Panel, [{
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          children = _props.children,
+          className = _props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
+
+
       return _react2.default.createElement(
         'div',
-        babelHelpers.extends({}, this.props, {
-          className: 'mui-panel ' + this.props.className
+        babelHelpers.extends({}, reactProps, {
+          className: 'mui-panel ' + className
         }),
-        this.props.children
+        children
       );
     }
   }]);

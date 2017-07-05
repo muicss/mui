@@ -10,21 +10,13 @@ import React from 'react';
 import { TextField } from './text-field';
 
 
-const PropTypes = React.PropTypes;
-
-
 /**
  * Textarea constructor
  * @class
  */
 class Textarea extends React.Component {
-  static propTypes = {
-    rows: PropTypes.number
-  };
-
   static defaultProps = {
-    type: 'textarea',
-    rows: 2
+    type: 'textarea'
   };
 
   render() {
