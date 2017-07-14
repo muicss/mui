@@ -10,29 +10,39 @@ const moduleName = 'mui.checkbox';
 
 
 angular.module(moduleName, [])
-  .directive('muiCheckbox', function() {
+  .directive('muiCheckbox', ['$parse', function() {
     return {
       restrict: 'AE',
       replace: true,
-      require: ['?ngModel'],
       scope: {
         label: '@',
         name: '@',
         value: '@',
-        ngModel: '=',
-        ngDisabled: '='
+        ngChecked: '=',
+        ngDisabled: '=',
+        ngModel: '='
       },
-      template: '<div class="mui-checkbox">' +
-        '<label>' +
-        '<input type="checkbox" ' +
-        'name={{name}} ' +
-        'value={{value}} ' +
-        'ng-model="ngModel" ' +
-        'ng-disabled="ngDisabled" ' +
-        '>{{label}}</label> ' +
-        '</div>'
+      template: function(tElement, tAttrs) {
+        var isUndef = angular.isUndefined,
+            html = '';
+
+        html += '<div class="mui-checkbox"><label><input type="checkbox" ';
+
+        // input attributes
+        html += 'name={{name}} ';
+        html += 'value={{value}} ';
+        html += 'ng-disabled="ngDisabled" ';
+
+        // handle ngChecked and ngModel
+        if (!isUndef(tAttrs.ngChecked)) html += 'ng-checked="ngChecked" ';
+        if (!isUndef(tAttrs.ngModel)) html += 'ng-model="ngModel" ';
+
+        html += '>{{label}}</label></div>';
+
+        return html;
+      }
     }
-  });
+  }]);
 
 
 /** Define module API */

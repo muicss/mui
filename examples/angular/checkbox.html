@@ -19,7 +19,11 @@
           select1: true,
           select2: false,
           select3: true,
-          select4: true
+          select4: true,
+          select5: true,
+          select6: false,
+          select7: true,
+          select8: false
         };
       });
     </script>
@@ -30,28 +34,28 @@
       <mui-panel>
         <form method="get" action="">
           <mui-checkbox
-              label="checkbox1"
+              label="Should be checked"
               name="box1"
               value="select1"
               ng-model="check.select1"
           >
           </mui-checkbox>
           <mui-checkbox
-              label="checkbox2"
+              label="Should be empty"
               name="box2"
               value="select2"
               ng-model="check.select2"
           >
           </mui-checkbox>
           <mui-checkbox
-              label="checkbox3"
+              label="Should be checked"
               name="box3"
               value="select3"
               ng-model="check.select3"
           >
           </mui-checkbox>
           <mui-checkbox
-              label="checkbox4"
+              label="Should be checked and disabled"
               name="box4"
               value="select4"
               ng-model="check.select4"
@@ -62,6 +66,72 @@
           <p>checkbox2: {{check.select2}}</p>
           <p>checkbox3: {{check.select3}}</p>
           <p>checkbox4: {{check.select4}}</p>
+          
+          <hr>
+
+          <mui-checkbox
+              label="Should be empty"
+              name="box5"
+              value="select5"
+              ng-model="check.select5"
+              ng-checked="false"
+          >
+          </mui-checkbox>
+          <mui-checkbox
+              label="Should be checked"
+              name="box6"
+              value="select6"
+              ng-model="check.select6"
+              ng-checked="true"
+          >
+          </mui-checkbox>
+
+          <hr>
+
+          <div>
+            <label>
+              <input
+                  type="checkbox"
+                  name="box7"
+                  value="select7"
+                  ng-model="check.select7"
+                  ng-checked="false"
+              />
+              Should be empty    
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                  type="checkbox"
+                  name="box8"
+                  value="select8"
+                  ng-model="check.select8"
+                  ng-checked="true"
+              />
+              Should be checked
+            </label>
+          </div>
+          
+          <hr>
+
+          <mui-checkbox
+              label="Should be checked"
+              name="box9"
+              value="select9"
+              ng-checked="true"
+          >
+          </mui-checkbox>
+          <mui-checkbox
+              label="Should be empty"
+              name="box10"
+              value="select10"
+              ng-checked="false"
+          >
+          </mui-checkbox>
+
+          <hr>
+
           <mui-button color="primary">submit</mui-button>
         </form>
       </mui-panel>
