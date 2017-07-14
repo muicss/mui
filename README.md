@@ -13,8 +13,8 @@ MUI is a lightweight CSS framework that follows Google's Material Design guideli
 **Use From the CDN:**
 
 ```html
-<link href="//cdn.muicss.com/mui-0.9.17/css/mui.min.css" rel="stylesheet" type="text/css" />
-<script src="//cdn.muicss.com/mui-0.9.17/js/mui.min.js"></script>
+<link href="//cdn.muicss.com/mui-0.9.18/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.9.18/js/mui.min.js"></script>
 ```
 
 Or for development you can use the latest:
@@ -148,6 +148,10 @@ cdn/
 │   ├── mui-colors.min.css
 │   ├── mui-combined.js
 │   ├── mui-combined.min.js
+│   ├── mui-noglobals.css
+│   ├── mui-noglobals.min.css
+│   ├── mui-noglobals-rtl.css
+│   ├── mui-noglobals-rtl.min.css
 │   ├── mui-react-combined.js
 │   └── mui-react-combined.min.js
 ├── js

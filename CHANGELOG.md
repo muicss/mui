@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.18 - July 13, 2017
+
+* Added ng-checked support to MUI Angular Checkbox and Radio components
+
 ## 0.9.17 - June 14, 2017
 
 * Upgraded devDependencies

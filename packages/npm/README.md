@@ -437,6 +437,10 @@ muicss
 │   ├── css
 │   │   ├── mui.css
 │   │   ├── mui.min.css
+│   │   ├── mui-noglobals.css
+│   │   ├── mui-noglobals.min.css
+│   │   ├── mui-noglobals-rtl.css
+│   │   ├── mui-noglobals-rtl.min.css
 │   │   ├── mui-rtl.css
 │   │   └── mui-rtl.min.css
 │   ├── email
@@ -451,6 +455,10 @@ muicss
 │   │   ├── mui-colors.min.css
 │   │   ├── mui-combined.js
 │   │   ├── mui-combined.min.js
+│   │   ├── mui-noglobals.css
+│   │   ├── mui-noglobals.min.css
+│   │   ├── mui-noglobals-rtl.css
+│   │   ├── mui-noglobals-rtl.min.css
 │   │   ├── mui-react-combined.js
 │   │   └── mui-react-combined.min.js
 │   ├── js
@@ -522,6 +530,7 @@ muicss
 │       │   ├── _divider.scss
 │       │   ├── _dropdown.scss
 │       │   ├── _form.scss
+│       │   ├── _globals.scss
 │       │   ├── _grid.scss
 │       │   ├── _helpers.scss
 │       │   ├── mixins
@@ -533,7 +542,6 @@ muicss
 │       │   ├── _mixins.scss
 │       │   ├── _overlay.scss
 │       │   ├── _panel.scss
-│       │   ├── _reboot.scss
 │       │   ├── _ripple.scss
 │       │   ├── _select.scss
 │       │   ├── _table.scss
@@ -542,8 +550,8 @@ muicss
 │       │   ├── _typography.scss
 │       │   └── _variables.scss
 │       ├── mui-colors.scss
-│       ├── mui.scss
-│       └── normalize-3.0.3.scss
+│       ├── mui-noglobals.scss
+│       └── mui.scss
 ├── LICENSE.txt
 ├── package.json
 ├── react.js
