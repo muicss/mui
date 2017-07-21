@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.20 - July 21, 2017
+
+* Removed http-server from npm dependencies
+
 ## 0.9.19 - July 21, 2017
 
 * Improved smoothness of MUI React Button ripple effect (https://github.com/muicss/mui/issues/217)
