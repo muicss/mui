@@ -135,7 +135,6 @@ describe('react/button', function() {
     ReactUtils.Simulate.mouseDown(buttonEl);
 
     // check state after click
-    assert.notEqual(node.state.ripple, null)
     assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), true);
     assert.equal(jqLite.hasClass(rippleEl, 'mui--is-animating'), false);
 
@@ -145,10 +144,10 @@ describe('react/button', function() {
 
       // remove ripple
       ReactUtils.Simulate.mouseUp(node.refs.buttonEl);
-      assert.equal(node.state.ripple, null);
-      assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), false);
-
-      done();
+      requestAnimationFrame(function() {
+        assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), false);
+        done();
+      });
     });
   });
 });

@@ -32,7 +32,8 @@ class Button extends React.Component {
   }
 
   state = {
-    ripple: null
+    rippleStyle: {},
+    rippleIsVisible: false
   };
 
   static defaultProps = {
@@ -106,64 +107,59 @@ class Button extends React.Component {
     let radius = Math.sqrt(offset.width * offset.width +
       offset.height * offset.height);
 
+    let diameterPx = radius * 2 + 'px';
+
     // add ripple to state
     this.setState({
-      ripple: {
+      rippleStyle: {
         top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
         left: Math.round(clickEv.pageX - offset.left - radius) + 'px',
-        diameter: radius * 2 + 'px'
-      }
+        width: diameterPx,
+        height: diameterPx
+      },
+      rippleIsVisible: true
     });
   }
 
   hideRipple(ev) {
-    this.setState({
-      ripple: null
-    });
+    this.setState({rippleIsVisible: false});
   }
 
   componentDidUpdate(prevProps, prevState) {
-    let ripple = this.state.ripple;
+    let state = this.state,
+        rippleEl = this.refs.rippleEl;
 
-    // trigger ripple animation
-    if (ripple && !prevState.ripple) {
+    // show ripple
+    if (state.rippleIsVisible && !prevState.rippleIsVisible) {
+      jqLite.removeClass(rippleEl, 'mui--is-animating');
+      jqLite.addClass(rippleEl, 'mui--is-visible');
+
       util.requestAnimationFrame(() => {
-        ripple.isAnimating = true;
-        this.setState({ ripple });
+        jqLite.addClass(rippleEl, 'mui--is-animating');
+      });
+    }
+
+    // hide ripple
+    if (!state.rippleIsVisible && prevState.rippleIsVisible) {
+      // allow a repaint to occur before removing class so animation shows for
+      // tap events
+      util.requestAnimationFrame(() => {
+        jqLite.removeClass(rippleEl, 'mui--is-visible');
       });
     }
   }
 
   render() {
     let cls = btnClass,
-        rippleCls = 'mui-ripple',
-        rippleStyle,
         k,
         v;
 
-    const ripple = this.state.ripple;
     const { color, size, variant, ...reactProps } = this.props;
 
     // button attributes
     for (k in btnAttrs) {
       v = this.props[k];
       if (v !== 'default') cls += ' ' + btnClass + '--' + v;
-    }
-
-    // ripple attributes
-    if (ripple) {
-      rippleCls += ' mui--is-visible';
-
-      // handle animation
-      if (ripple.isAnimating) rippleCls += ' mui--is-animating';
-
-      // style attrs
-      rippleStyle = {
-        width: ripple.diameter,
-        height: ripple.diameter,
-        top: ripple.top,
-        left: ripple.left
-      }
     }
 
     return (
@@ -179,7 +175,11 @@ class Button extends React.Component {
       >
         {this.props.children}
         <span className="mui-btn__ripple-container">
-          <span ref="rippleEl" className={rippleCls} style={rippleStyle}>
+          <span
+            ref="rippleEl"
+            className="mui-ripple"
+            style={this.state.rippleStyle}
+          >
           </span>
         </span>
       </button>
