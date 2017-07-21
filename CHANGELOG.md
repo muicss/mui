@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.19 - July 21, 2017
+
+* Improved smoothness of MUI React Button ripple effect (https://github.com/muicss/mui/issues/217)
+
 ## 0.9.18 - July 13, 2017
 
 * Added ng-checked support to MUI Angular Checkbox and Radio components

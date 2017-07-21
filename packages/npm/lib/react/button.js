@@ -40,7 +40,8 @@ var Button = function (_React$Component) {
     var _this = babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, props));
 
     _this.state = {
-      ripple: null
+      rippleStyle: {},
+      rippleIsVisible: false
     };
 
 
@@ -123,34 +124,46 @@ var Button = function (_React$Component) {
       // calculate radius
       var radius = Math.sqrt(offset.width * offset.width + offset.height * offset.height);
 
+      var diameterPx = radius * 2 + 'px';
+
       // add ripple to state
       this.setState({
-        ripple: {
+        rippleStyle: {
           top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
           left: Math.round(clickEv.pageX - offset.left - radius) + 'px',
-          diameter: radius * 2 + 'px'
-        }
+          width: diameterPx,
+          height: diameterPx
+        },
+        rippleIsVisible: true
       });
     }
   }, {
     key: 'hideRipple',
     value: function hideRipple(ev) {
-      this.setState({
-        ripple: null
-      });
+      this.setState({ rippleIsVisible: false });
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      var _this2 = this;
+      var state = this.state,
+          rippleEl = this.refs.rippleEl;
 
-      var ripple = this.state.ripple;
+      // show ripple
+      if (state.rippleIsVisible && !prevState.rippleIsVisible) {
+        jqLite.removeClass(rippleEl, 'mui--is-animating');
+        jqLite.addClass(rippleEl, 'mui--is-visible');
 
-      // trigger ripple animation
-      if (ripple && !prevState.ripple) {
         util.requestAnimationFrame(function () {
-          ripple.isAnimating = true;
-          _this2.setState({ ripple: ripple });
+          jqLite.addClass(rippleEl, 'mui--is-animating');
+        });
+      }
+
+      // hide ripple
+      if (!state.rippleIsVisible && prevState.rippleIsVisible) {
+        // allow a repaint to occur before removing class so animation shows for
+        // tap events
+        util.requestAnimationFrame(function () {
+          jqLite.removeClass(rippleEl, 'mui--is-visible');
         });
       }
     }
@@ -158,12 +171,9 @@ var Button = function (_React$Component) {
     key: 'render',
     value: function render() {
       var cls = btnClass,
-          rippleCls = 'mui-ripple',
-          rippleStyle = void 0,
           k = void 0,
           v = void 0;
 
-      var ripple = this.state.ripple;
       var _props = this.props,
           color = _props.color,
           size = _props.size,
@@ -175,22 +185,6 @@ var Button = function (_React$Component) {
       for (k in btnAttrs) {
         v = this.props[k];
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
-      }
-
-      // ripple attributes
-      if (ripple) {
-        rippleCls += ' mui--is-visible';
-
-        // handle animation
-        if (ripple.isAnimating) rippleCls += ' mui--is-animating';
-
-        // style attrs
-        rippleStyle = {
-          width: ripple.diameter,
-          height: ripple.diameter,
-          top: ripple.top,
-          left: ripple.left
-        };
       }
 
       return _react2.default.createElement(
@@ -208,7 +202,11 @@ var Button = function (_React$Component) {
         _react2.default.createElement(
           'span',
           { className: 'mui-btn__ripple-container' },
-          _react2.default.createElement('span', { ref: 'rippleEl', className: rippleCls, style: rippleStyle })
+          _react2.default.createElement('span', {
+            ref: 'rippleEl',
+            className: 'mui-ripple',
+            style: this.state.rippleStyle
+          })
         )
       );
     }
