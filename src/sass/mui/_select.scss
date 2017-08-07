@@ -105,6 +105,9 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   overflow-y: auto;
   padding: 8px 0;
 
+  // box-sizing
+  box-sizing: border-box;
+
   // Other
   background-color: mui-color('white');
   font-size: $mui-input-font-size;
