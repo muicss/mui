@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.9.21 - August 7, 2017
+
+* Fixed `mui-form--inline` styling issue (https://github.com/muicss/mui/issues/223)
+* Added `box-sizing: border-box` to Select component menu wrapper to fix sizing
+  issue
+
 ## 0.9.20 - July 21, 2017
 
 * Removed http-server from npm dependencies

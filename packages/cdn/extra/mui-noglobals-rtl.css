@@ -702,6 +702,8 @@ button.mui-btn:-moz-focusring,
   }
   .mui-form--inline .mui-select {
     display: inline-block;
+    vertical-align: bottom;
+    margin-bottom: 0;
   }
   .mui-form--inline .mui-btn {
     margin-bottom: 0;
@@ -1298,6 +1300,8 @@ button.mui-btn:-moz-focusring,
   min-width: 100%;
   overflow-y: auto;
   padding: 8px 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   background-color: #FFF;
   font-size: 16px;
 }
