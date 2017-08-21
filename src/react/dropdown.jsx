@@ -134,7 +134,7 @@ class Dropdown extends React.Component {
 
     buttonEl = (
       <Button
-        ref={(el) => { this.buttonElRef = el }}
+        ref={el => { this.buttonElRef = el }}
         type="button"
         onClick={this.onClickCB}
         color={color}
@@ -156,7 +156,7 @@ class Dropdown extends React.Component {
 
       menuEl = (
         <ul
-          ref={(el) => { this.menuElRef = el }}
+          ref={el => { this.menuElRef = el }}
           className={cs}
           style={{ top: this.state.menuTop }}
           onClick={this.selectCB}
@@ -171,7 +171,7 @@ class Dropdown extends React.Component {
     return (
       <div
         { ...reactProps }
-        ref={(el) => { this.wrapperElRef = el }}
+        ref={el => { this.wrapperElRef = el }}
         className={dropdownClass + ' ' + className}
       >
         {buttonEl}

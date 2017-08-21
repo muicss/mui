@@ -229,7 +229,7 @@ class TextField extends React.Component {
         className={cls + ' ' + className}
         style={style}
       >
-        <Input ref={el => { this.inputElRef }} { ...other } />
+        <Input ref={el => { this.inputElRef = el }} { ...other } />
         {labelEl}
       </div>
     );

@@ -164,7 +164,7 @@ class Button extends React.Component {
     return (
       <button
         { ...reactProps }
-        ref={(el) => { this.buttonElRef = el }}
+        ref={el => { this.buttonElRef = el }}
         className={cls + ' ' + this.props.className}
         onMouseUp={this.onMouseUpCB}
         onMouseDown={this.onMouseDownCB}
@@ -175,7 +175,7 @@ class Button extends React.Component {
         {this.props.children}
         <span className="mui-btn__ripple-container">
           <span
-            ref={(el) => { this.rippleElRef = el }}
+            ref={el => { this.rippleElRef = el }}
             className="mui-ripple"
             style={this.state.rippleStyle}
           >
