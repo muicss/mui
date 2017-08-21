@@ -1172,7 +1172,7 @@ function hasOwnProperty(obj, prop) {
   require('../test/react-tests/test-tabs');
   require('../test/react-tests/test-textarea');
 })();
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZha2VfNDkxYTU2ZTYuanMiXSwibmFtZXMiOlsicmVxdWlyZSJdLCJtYXBwaW5ncyI6Ijs7QUFBQSxDQUFDLFlBQVc7QUFDVjtBQUNBQSxVQUFRLGlDQUFSO0FBQ0FBLFVBQVEsK0JBQVI7O0FBRUE7QUFDQUEsVUFBUSxpQ0FBUjtBQUNBQSxVQUFRLGlDQUFSO0FBQ0FBLFVBQVEsZ0NBQVI7QUFDQUEsVUFBUSxtQ0FBUjtBQUNBQSxVQUFRLDhCQUFSO0FBQ0FBLFVBQVEsb0NBQVI7QUFDQUEsVUFBUSxrQ0FBUjtBQUNBQSxVQUFRLG1DQUFSO0FBQ0FBLFVBQVEsK0JBQVI7QUFDQUEsVUFBUSxnQ0FBUjtBQUNBQSxVQUFRLGdDQUFSO0FBQ0FBLFVBQVEsZ0NBQVI7QUFDQUEsVUFBUSw4QkFBUjtBQUNBQSxVQUFRLGlDQUFSO0FBQ0FBLFVBQVEsK0JBQVI7QUFDQUEsVUFBUSxtQ0FBUjtBQUNELENBdEJEIiwiZmlsZSI6ImZha2VfNDkxYTU2ZTYuanMiLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24oKSB7XG4gIC8vIGNzcy1qc1xuICByZXF1aXJlKCcuLi90ZXN0L2Nzc2pzLXRlc3RzL3Rlc3QtanFsaXRlJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvY3NzanMtdGVzdHMvdGVzdC11dGlsJyk7XG5cbiAgLy8gcmVhY3RcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LWFwcGJhcicpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtYnV0dG9uJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1jYXJldCcpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtY2hlY2tib3gnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LWNvbCcpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtY29udGFpbmVyJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1kaXZpZGVyJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1kcm9wZG93bicpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtZm9ybScpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtaW5wdXQnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LXBhbmVsJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1yYWRpbycpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3Qtcm93Jyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1zZWxlY3QnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LXRhYnMnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LXRleHRhcmVhJyk7XG59KSgpO1xuIl19
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZha2VfYWFlNzY2NDMuanMiXSwibmFtZXMiOlsicmVxdWlyZSJdLCJtYXBwaW5ncyI6Ijs7QUFBQSxDQUFDLFlBQVc7QUFDVjtBQUNBQSxVQUFRLGlDQUFSO0FBQ0FBLFVBQVEsK0JBQVI7O0FBRUE7QUFDQUEsVUFBUSxpQ0FBUjtBQUNBQSxVQUFRLGlDQUFSO0FBQ0FBLFVBQVEsZ0NBQVI7QUFDQUEsVUFBUSxtQ0FBUjtBQUNBQSxVQUFRLDhCQUFSO0FBQ0FBLFVBQVEsb0NBQVI7QUFDQUEsVUFBUSxrQ0FBUjtBQUNBQSxVQUFRLG1DQUFSO0FBQ0FBLFVBQVEsK0JBQVI7QUFDQUEsVUFBUSxnQ0FBUjtBQUNBQSxVQUFRLGdDQUFSO0FBQ0FBLFVBQVEsZ0NBQVI7QUFDQUEsVUFBUSw4QkFBUjtBQUNBQSxVQUFRLGlDQUFSO0FBQ0FBLFVBQVEsK0JBQVI7QUFDQUEsVUFBUSxtQ0FBUjtBQUNELENBdEJEIiwiZmlsZSI6ImZha2VfYWFlNzY2NDMuanMiLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24oKSB7XG4gIC8vIGNzcy1qc1xuICByZXF1aXJlKCcuLi90ZXN0L2Nzc2pzLXRlc3RzL3Rlc3QtanFsaXRlJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvY3NzanMtdGVzdHMvdGVzdC11dGlsJyk7XG5cbiAgLy8gcmVhY3RcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LWFwcGJhcicpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtYnV0dG9uJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1jYXJldCcpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtY2hlY2tib3gnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LWNvbCcpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtY29udGFpbmVyJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1kaXZpZGVyJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1kcm9wZG93bicpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtZm9ybScpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3QtaW5wdXQnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LXBhbmVsJyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1yYWRpbycpO1xuICByZXF1aXJlKCcuLi90ZXN0L3JlYWN0LXRlc3RzL3Rlc3Qtcm93Jyk7XG4gIHJlcXVpcmUoJy4uL3Rlc3QvcmVhY3QtdGVzdHMvdGVzdC1zZWxlY3QnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LXRhYnMnKTtcbiAgcmVxdWlyZSgnLi4vdGVzdC9yZWFjdC10ZXN0cy90ZXN0LXRleHRhcmVhJyk7XG59KSgpO1xuIl19
 },{"../test/cssjs-tests/test-jqlite":267,"../test/cssjs-tests/test-util":268,"../test/react-tests/test-appbar":270,"../test/react-tests/test-button":271,"../test/react-tests/test-caret":272,"../test/react-tests/test-checkbox":273,"../test/react-tests/test-col":274,"../test/react-tests/test-container":275,"../test/react-tests/test-divider":276,"../test/react-tests/test-dropdown":277,"../test/react-tests/test-form":278,"../test/react-tests/test-input":279,"../test/react-tests/test-panel":280,"../test/react-tests/test-radio":281,"../test/react-tests/test-row":282,"../test/react-tests/test-select":283,"../test/react-tests/test-tabs":284,"../test/react-tests/test-textarea":285}],7:[function(require,module,exports){
 (function (process){
 /**
@@ -2087,18 +2087,11 @@ module.exports = factory(
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @typechecks
  */
@@ -3154,45 +3147,43 @@ var emptyFunction = require('./emptyFunction');
 var warning = emptyFunction;
 
 if (process.env.NODE_ENV !== 'production') {
-  (function () {
-    var printWarning = function printWarning(format) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
+  var printWarning = function printWarning(format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  warning = function warning(condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+
+    if (format.indexOf('Failed Composite propType: ') === 0) {
+      return; // Ignore CompositeComponent proptype check.
+    }
+
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
       }
 
-      var argIndex = 0;
-      var message = 'Warning: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
-    };
-
-    warning = function warning(condition, format) {
-      if (format === undefined) {
-        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-      }
-
-      if (format.indexOf('Failed Composite propType: ') === 0) {
-        return; // Ignore CompositeComponent proptype check.
-      }
-
-      if (!condition) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-          args[_key2 - 2] = arguments[_key2];
-        }
-
-        printWarning.apply(undefined, [format].concat(args));
-      }
-    };
-  })();
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
 }
 
 module.exports = warning;
