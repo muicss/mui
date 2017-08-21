@@ -76,7 +76,7 @@ function inputFactory(isTextArea) {
       replace: true,
       template: template,
       link: function(scope, element, attrs, controllers) {
-        var inputEl = element.find('input') || element.find('textarea'),
+        var inputEl = element.find(isTextArea ? 'textarea' : 'input'),
             labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],

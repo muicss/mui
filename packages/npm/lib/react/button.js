@@ -44,7 +44,6 @@ var Button = function (_React$Component) {
       rippleIsVisible: false
     };
 
-
     var cb = util.callback;
     _this.onMouseDownCB = cb(_this, 'onMouseDown');
     _this.onMouseUpCB = cb(_this, 'onMouseUp');
@@ -58,7 +57,7 @@ var Button = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // disable MUI js
-      var el = this.refs.buttonEl;
+      var el = this.buttonElRef;
       el._muiDropdown = true;
       el._muiRipple = true;
     }
@@ -110,13 +109,13 @@ var Button = function (_React$Component) {
   }, {
     key: 'showRipple',
     value: function showRipple(ev) {
-      var buttonEl = this.refs.buttonEl;
+      var buttonEl = this.buttonElRef;
 
       // de-dupe touch events
       if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return;
 
       // get (x, y) position of click
-      var offset = jqLite.offset(this.refs.buttonEl),
+      var offset = jqLite.offset(this.buttonElRef),
           clickEv = void 0;
 
       if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev;
@@ -146,7 +145,7 @@ var Button = function (_React$Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
       var state = this.state,
-          rippleEl = this.refs.rippleEl;
+          rippleEl = this.rippleElRef;
 
       // show ripple
       if (state.rippleIsVisible && !prevState.rippleIsVisible) {
@@ -170,6 +169,8 @@ var Button = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var cls = btnClass,
           k = void 0,
           v = void 0;
@@ -190,7 +191,9 @@ var Button = function (_React$Component) {
       return _react2.default.createElement(
         'button',
         babelHelpers.extends({}, reactProps, {
-          ref: 'buttonEl',
+          ref: function ref(el) {
+            _this2.buttonElRef = el;
+          },
           className: cls + ' ' + this.props.className,
           onMouseUp: this.onMouseUpCB,
           onMouseDown: this.onMouseDownCB,
@@ -203,7 +206,9 @@ var Button = function (_React$Component) {
           'span',
           { className: 'mui-btn__ripple-container' },
           _react2.default.createElement('span', {
-            ref: 'rippleEl',
+            ref: function ref(el) {
+              _this2.rippleElRef = el;
+            },
             className: 'mui-ripple',
             style: this.state.rippleStyle
           })

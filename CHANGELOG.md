@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.9.22 - August 20, 2017
+
+* Improvements and bugfixes to MUI Angular Input component
+* Switched from string 'refs' in MUI React to methods
+* Upgraded devDependencies
+
 ## 0.9.21 - August 7, 2017
 
 * Fixed `mui-form--inline` styling issue (https://github.com/muicss/mui/issues/223)

@@ -29,6 +29,8 @@ var Radio = function (_React$Component) {
   babelHelpers.createClass(Radio, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           children = _props.children,
           className = _props.className,
@@ -55,7 +57,9 @@ var Radio = function (_React$Component) {
           'label',
           null,
           _react2.default.createElement('input', {
-            ref: 'inputEl',
+            ref: function ref(el) {
+              _this2.inputElRef = el;
+            },
             type: 'radio',
             autoFocus: autoFocus,
             checked: checked,

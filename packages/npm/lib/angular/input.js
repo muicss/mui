@@ -9,57 +9,49 @@ var _angular = require('angular');
 
 var _angular2 = babelHelpers.interopRequireDefault(_angular);
 
-var moduleName = 'mui.input',
-    touchedClass = 'mui--is-touched',
-    // hasn't lost focus yet
-untouchedClass = 'mui--is-untouched',
-    pristineClass = 'mui--is-pristine',
-    // user hasn't interacted yet
-dirtyClass = 'mui--is-dirty',
-    emptyClass = 'mui--is-empty',
-    // control is empty
-notEmptyClass = 'mui--is-not-empty';
+var moduleName = 'mui.input';
 
 /**
- * Handle empty/not-emptyclasses.
- * @param {Element} elem - The angular-wrapped DOM element.
+ * Build directive function.
+ * @param {Boolean} isTextArea
  */
 /**
  * MUI Angular Input and Textarea Components
  * @module angular/input
  */
 
-function handleEmptyClasses(inputEl, value) {
-  if (value) inputEl.removeClass(emptyClass).addClass(notEmptyClass);else inputEl.removeClass(notEmptyClass).addClass(emptyClass);
-}
-
-/**
- * Build directive function.
- * @param {Boolean} isTextArea
- */
 function inputFactory(isTextArea) {
-  var scopeArgs, template;
+  var scopeArgs, template, ngClassStr, attrs;
 
   // defaults
   scopeArgs = {
     floatLabel: '@',
     hint: '@',
     label: '@',
+    name: '@',
     ngDisabled: '=',
+    ngMaxlength: '@',
+    ngMinlength: '@',
     ngModel: '='
   };
 
   template = '<div class="mui-textfield">';
 
+  ngClassStr = '{' + ["'mui--is-touched': inputCtrl.$touched", // hasn't lost focus yet
+  "'mui--is-untouched': inputCtrl.$untouched", "'mui--is-pristine': inputCtrl.$pristine", // user hasn't interacted yet
+  "'mui--is-dirty': inputCtrl.$dirty", "'mui--is-empty': inputCtrl.$isEmpty(inputCtrl.$viewValue)", "'mui--is-not-empty': !inputCtrl.$isEmpty(inputCtrl.$viewValue)", "'mui--is-invalid': inputCtrl.$invalid"].join(',') + '}';
+
+  attrs = ['name={{name}}', 'placeholder={{hint}}', 'ng-class="' + ngClassStr + '"', 'ng-disabled="ngDisabled"', 'ng-maxlength={{ngMaxlength}}', 'ng-minlength={{ngMinlength}}', 'ng-model="ngModel"'];
+
   // element-specific
   if (!isTextArea) {
     scopeArgs.type = '@';
-
-    template += '<input ' + 'placeholder={{hint}} ' + 'type={{type}} ' + 'ng-change="onChange()" ' + 'ng-disabled="ngDisabled" ' + 'ng-focus="onFocus()" ' + 'ng-model="ngModel" ' + '>';
+    attrs.push('type={{type}}');
+    template += '<input ' + attrs.join(' ') + '>';
   } else {
     scopeArgs.rows = '@';
-
-    template += '<textarea ' + 'placeholder={{hint}} ' + 'rows={{rows}} ' + 'ng-change="onChange()" ' + 'ng-disabled="ngDisabled" ' + 'ng-focus="onFocus()" ' + 'ng-model="ngModel" ' + '></textarea>';
+    attrs.push('rows={{rows}}');
+    template += '<textarea ' + attrs.join(' ') + '></textarea>';
   }
 
   // update template
@@ -74,12 +66,15 @@ function inputFactory(isTextArea) {
       replace: true,
       template: template,
       link: function link(scope, element, attrs, controllers) {
-        var inputEl = element.find('input') || element.find('textarea'),
+        var inputEl = element.find(isTextArea ? 'textarea' : 'input'),
             labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],
             isUndef = _angular2.default.isUndefined,
             el = inputEl[0];
+
+        // add inputCrl to scope
+        scope.inputCtrl = inputEl.controller('ngModel');
 
         // disable MUI js
         if (el) el._muiTextfield = true;
@@ -87,6 +82,8 @@ function inputFactory(isTextArea) {
         // remove attributes from wrapper
         element.removeAttr('ng-change');
         element.removeAttr('ng-model');
+        element.removeAttr('ng-minlength');
+        element.removeAttr('ng-maxlength');
 
         // scope defaults
         if (!isTextArea) scope.type = scope.type || 'text';else scope.rows = scope.rows || 2;
@@ -99,9 +96,6 @@ function inputFactory(isTextArea) {
 
         // invalid
         if (!isUndef(attrs.invalid)) inputEl.addClass('mui--is-invalid');
-
-        // set is-empty|is-not-empty
-        handleEmptyClasses(inputEl, scope.ngModel);
 
         // float-label
         if (!isUndef(scope.floatLabel)) {
@@ -118,33 +112,10 @@ function inputFactory(isTextArea) {
           }, 150);
         }
 
-        // seed with `untouched`, `pristine` classes
-        inputEl.addClass(untouchedClass + ' ' + pristineClass);
-
-        // replace `untouched` with `touched` when control loses focus
-        inputEl.on('blur', function blurHandler() {
-          // ignore if event is a window blur
-          if (document.activeElement === inputEl[0]) return;
-
-          // replace class and remove event handler
-          inputEl.removeClass(untouchedClass).addClass(touchedClass);
-          inputEl.off('blur', blurHandler);
-        });
-
-        // replace `pristine` with `dirty` when user interacts with control
-        inputEl.one('input change', function () {
-          inputEl.removeClass(pristineClass).addClass(dirtyClass);
-        });
-
         // handle changes
         scope.onChange = function () {
-          var val = scope.ngModel;
-
-          // trigger ng-change
-          if (ngModelCtrl) ngModelCtrl.$setViewValue(val);
-
-          // set is-empty|is-no-empty
-          handleEmptyClasses(inputEl, val);
+          // trigger ng-change on parent
+          if (ngModelCtrl) ngModelCtrl.$setViewValue(scope.ngModel);
         };
       }
     };

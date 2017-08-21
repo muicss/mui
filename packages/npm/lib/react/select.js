@@ -68,7 +68,7 @@ var Select = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // disable MUI CSS/JS
-      this.refs.selectEl._muiSelect = true;
+      this.selectElRef._muiSelect = true;
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -103,7 +103,7 @@ var Select = function (_React$Component) {
     key: 'onOuterClick',
     value: function onOuterClick(ev) {
       // only left clicks, return if <select> is disabled
-      if (ev.button !== 0 || this.refs.selectEl.disabled) return;
+      if (ev.button !== 0 || this.selectElRef.disabled) return;
 
       // execute callback
       var fn = this.props.onClick;
@@ -113,7 +113,7 @@ var Select = function (_React$Component) {
       if (ev.defaultPrevented || this.props.useDefault) return;
 
       // focus wrapper
-      this.refs.wrapperEl.focus();
+      this.wrapperElRef.focus();
 
       // open custom menu
       this.showMenu();
@@ -165,7 +165,7 @@ var Select = function (_React$Component) {
       this.setState({ showMenu: false });
 
       // refocus
-      this.refs.wrapperEl.focus();
+      this.wrapperElRef.focus();
     }
   }, {
     key: 'onMenuChange',
@@ -173,18 +173,20 @@ var Select = function (_React$Component) {
       if (this.props.readOnly) return;
 
       // update inner <select> and dispatch 'change' event
-      this.refs.selectEl.value = value;
-      util.dispatchEvent(this.refs.selectEl, 'change');
+      this.selectElRef.value = value;
+      util.dispatchEvent(this.selectElRef, 'change');
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var menuElem = void 0;
 
       if (this.state.showMenu) {
         menuElem = _react2.default.createElement(Menu, {
-          optionEls: this.refs.selectEl.children,
-          wrapperEl: this.refs.wrapperEl,
+          optionEls: this.selectElRef.children,
+          wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
           onClose: this.hideMenuCB
         });
@@ -214,7 +216,9 @@ var Select = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         babelHelpers.extends({}, reactProps, {
-          ref: 'wrapperEl',
+          ref: function ref(el) {
+            _this2.wrapperElRef = el;
+          },
           tabIndex: tabIndexWrapper,
           style: style,
           className: 'mui-select ' + className,
@@ -224,7 +228,9 @@ var Select = function (_React$Component) {
         _react2.default.createElement(
           'select',
           {
-            ref: 'selectEl',
+            ref: function ref(el) {
+              _this2.selectElRef = el;
+            },
             name: name,
             tabIndex: tabIndexInner,
             value: this.state.value,
@@ -270,19 +276,19 @@ var Menu = function (_React$Component2) {
   function Menu(props) {
     babelHelpers.classCallCheck(this, Menu);
 
-    var _this2 = babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+    var _this3 = babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
-    _this2.state = {
+    _this3.state = {
       origIndex: null,
       currentIndex: null
     };
 
 
-    _this2.onKeyDownCB = util.callback(_this2, 'onKeyDown');
-    _this2.onKeyPressCB = util.callback(_this2, 'onKeyPress');
-    _this2.q = '';
-    _this2.qTimeout = null;
-    return _this2;
+    _this3.onKeyDownCB = util.callback(_this3, 'onKeyDown');
+    _this3.onKeyPressCB = util.callback(_this3, 'onKeyPress');
+    _this3.q = '';
+    _this3.qTimeout = null;
+    return _this3;
   }
 
   babelHelpers.createClass(Menu, [{
@@ -307,7 +313,7 @@ var Menu = function (_React$Component2) {
       // set position
       var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.optionEls.length, this.state.currentIndex);
 
-      var el = this.refs.wrapperEl;
+      var el = this.wrapperElRef;
       jqLite.css(el, props);
       jqLite.scrollTop(el, props.scrollTop);
 
@@ -405,6 +411,8 @@ var Menu = function (_React$Component2) {
   }, {
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       var menuItems = [],
           optionEls = this.props.optionEls,
           m = optionEls.length,
@@ -432,7 +440,9 @@ var Menu = function (_React$Component2) {
 
       return _react2.default.createElement(
         'div',
-        { ref: 'wrapperEl', className: 'mui-select__menu' },
+        { ref: function ref(el) {
+            _this4.wrapperElRef = el;
+          }, className: 'mui-select__menu' },
         menuItems
       );
     }

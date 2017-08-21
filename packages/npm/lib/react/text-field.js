@@ -63,7 +63,7 @@ var Input = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // disable MUI js
-      this.refs.inputEl._muiTextfield = true;
+      this.inputElRef._muiTextfield = true;
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -76,7 +76,7 @@ var Input = function (_React$Component) {
     key: 'onBlur',
     value: function onBlur(ev) {
       // ignore if event is a window blur
-      if (document.activeElement !== this.refs.inputEl) {
+      if (document.activeElement !== this.inputElRef) {
         this.setState({ isTouched: true });
       }
 
@@ -100,11 +100,13 @@ var Input = function (_React$Component) {
     key: 'triggerFocus',
     value: function triggerFocus() {
       // hack to enable IE10 pointer-events shim
-      this.refs.inputEl.focus();
+      this.inputElRef.focus();
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var cls = {},
           isNotEmpty = Boolean(this.state.innerValue.toString()),
           inputEl = void 0;
@@ -129,7 +131,9 @@ var Input = function (_React$Component) {
 
       if (type === 'textarea') {
         inputEl = _react2.default.createElement('textarea', babelHelpers.extends({}, reactProps, {
-          ref: 'inputEl',
+          ref: function ref(el) {
+            _this2.inputElRef = el;
+          },
           className: cls,
           rows: rows,
           placeholder: hint,
@@ -138,7 +142,9 @@ var Input = function (_React$Component) {
         }));
       } else {
         inputEl = _react2.default.createElement('input', babelHelpers.extends({}, reactProps, {
-          ref: 'inputEl',
+          ref: function ref(el) {
+            _this2.inputElRef = el;
+          },
           className: cls,
           type: type,
           placeholder: this.props.hint,
@@ -171,7 +177,7 @@ var Label = function (_React$Component2) {
   function Label() {
     var _ref;
 
-    var _temp, _this2, _ret;
+    var _temp, _this3, _ret;
 
     babelHelpers.classCallCheck(this, Label);
 
@@ -179,15 +185,15 @@ var Label = function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this2 = babelHelpers.possibleConstructorReturn(this, (_ref = Label.__proto__ || Object.getPrototypeOf(Label)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
+    return _ret = (_temp = (_this3 = babelHelpers.possibleConstructorReturn(this, (_ref = Label.__proto__ || Object.getPrototypeOf(Label)).call.apply(_ref, [this].concat(args))), _this3), _this3.state = {
       style: {}
-    }, _temp), babelHelpers.possibleConstructorReturn(_this2, _ret);
+    }, _temp), babelHelpers.possibleConstructorReturn(_this3, _ret);
   }
 
   babelHelpers.createClass(Label, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.styleTimer = setTimeout(function () {
         var s = '.15s ease-out';
@@ -201,7 +207,7 @@ var Label = function (_React$Component2) {
           msTransform: s
         };
 
-        _this3.setState({ style: style });
+        _this4.setState({ style: style });
       }, 150);
     }
   }, {
@@ -243,10 +249,10 @@ var TextField = function (_React$Component3) {
   function TextField(props) {
     babelHelpers.classCallCheck(this, TextField);
 
-    var _this4 = babelHelpers.possibleConstructorReturn(this, (TextField.__proto__ || Object.getPrototypeOf(TextField)).call(this, props));
+    var _this5 = babelHelpers.possibleConstructorReturn(this, (TextField.__proto__ || Object.getPrototypeOf(TextField)).call(this, props));
 
-    _this4.onClickCB = util.callback(_this4, 'onClick');
-    return _this4;
+    _this5.onClickCB = util.callback(_this5, 'onClick');
+    return _this5;
   }
 
   babelHelpers.createClass(TextField, [{
@@ -255,12 +261,14 @@ var TextField = function (_React$Component3) {
       // pointer-events shim
       if (util.supportsPointerEvents() === false) {
         ev.target.style.cursor = 'text';
-        this.refs.inputEl.triggerFocus();
+        this.inputElRef.triggerFocus();
       }
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this6 = this;
+
       var cls = {},
           labelEl = void 0;
 
@@ -289,7 +297,9 @@ var TextField = function (_React$Component3) {
           className: cls + ' ' + className,
           style: style
         },
-        _react2.default.createElement(Input, babelHelpers.extends({ ref: 'inputEl' }, other)),
+        _react2.default.createElement(Input, babelHelpers.extends({ ref: function ref(el) {
+            _this6.inputElRef = el;
+          } }, other)),
         labelEl
       );
     }

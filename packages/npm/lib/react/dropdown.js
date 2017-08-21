@@ -55,7 +55,6 @@ var Dropdown = function (_React$Component) {
       opened: false,
       menuTop: 0
     };
-
     var cb = util.callback;
     _this.selectCB = cb(_this, 'select');
     _this.onClickCB = cb(_this, 'onClick');
@@ -104,10 +103,10 @@ var Dropdown = function (_React$Component) {
     key: 'open',
     value: function open() {
       // position menu element below toggle button
-      var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
+      var wrapperRect = this.wrapperElRef.getBoundingClientRect(),
           toggleRect = void 0;
 
-      toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
+      toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
 
       this.setState({
         opened: true,
@@ -133,12 +132,14 @@ var Dropdown = function (_React$Component) {
   }, {
     key: 'onOutsideClick',
     value: function onOutsideClick(ev) {
-      var isClickInside = this.refs.wrapperEl.contains(ev.target);
+      var isClickInside = this.wrapperElRef.contains(ev.target);
       if (!isClickInside) this.close();
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var buttonEl = void 0,
           menuEl = void 0,
           labelEl = void 0;
@@ -173,7 +174,9 @@ var Dropdown = function (_React$Component) {
       buttonEl = _react2.default.createElement(
         _button2.default,
         {
-          ref: 'button',
+          ref: function ref(el) {
+            _this2.buttonElRef = el;
+          },
           type: 'button',
           onClick: this.onClickCB,
           color: color,
@@ -195,7 +198,9 @@ var Dropdown = function (_React$Component) {
         menuEl = _react2.default.createElement(
           'ul',
           {
-            ref: 'menuEl',
+            ref: function ref(el) {
+              _this2.menuElRef = el;
+            },
             className: cs,
             style: { top: this.state.menuTop },
             onClick: this.selectCB
@@ -209,7 +214,9 @@ var Dropdown = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         babelHelpers.extends({}, reactProps, {
-          ref: 'wrapperEl',
+          ref: function ref(el) {
+            _this2.wrapperElRef = el;
+          },
           className: dropdownClass + ' ' + className
         }),
         buttonEl,
