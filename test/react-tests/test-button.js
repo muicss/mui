@@ -113,7 +113,7 @@ describe('react/button', function () {
       eventType = eventName.toLowerCase();
 
       // trigger event
-      ReactUtils.Simulate[eventName](node.elRefs.buttonEl, { type: eventType });
+      ReactUtils.Simulate[eventName](node.buttonElRef, { type: eventType });
       triggeredEvents.push(eventType);
     }
 
@@ -124,8 +124,8 @@ describe('react/button', function () {
 
   it('renders ripples on click', function (done) {
     let node = ReactUtils.renderIntoDocument(<Button>test</Button>),
-      buttonEl = node.elRefs.buttonEl,
-      rippleEl = node.elRefs.rippleEl;
+      buttonEl = node.buttonElRef,
+      rippleEl = node.rippleElRef;
 
     // check state before click
     assert.equal(node.state.ripple, null);
@@ -143,7 +143,7 @@ describe('react/button', function () {
       assert.equal(jqLite.hasClass(rippleEl, 'mui--is-animating'), true);
 
       // remove ripple
-      ReactUtils.Simulate.mouseUp(node.elRefs.buttonEl);
+      ReactUtils.Simulate.mouseUp(node.buttonElRef);
       requestAnimationFrame(function () {
         assert.equal(jqLite.hasClass(rippleEl, 'mui--is-visible'), false);
         done();

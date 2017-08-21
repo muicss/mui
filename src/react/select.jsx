@@ -29,7 +29,7 @@ class Select extends React.Component {
     }
 
     this.state.value = props.value;
-    this.elRefs = {};
+
     // bind callback function
     let cb = util.callback;
 
@@ -59,7 +59,7 @@ class Select extends React.Component {
 
   componentDidMount() {
     // disable MUI CSS/JS
-    this.elRefs.selectEl._muiSelect = true;
+    this.selectElRef._muiSelect = true;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -89,7 +89,7 @@ class Select extends React.Component {
 
   onOuterClick(ev) {
     // only left clicks, return if <select> is disabled
-    if (ev.button !== 0 || this.elRefs.selectEl.disabled) return;
+    if (ev.button !== 0 || this.selectElRef.disabled) return;
 
     // execute callback
     const fn = this.props.onClick;
@@ -99,7 +99,7 @@ class Select extends React.Component {
     if (ev.defaultPrevented || this.props.useDefault) return;
 
     // focus wrapper
-    this.elRefs.wrapperEl.focus();
+    this.wrapperElRef.focus();
 
     // open custom menu
     this.showMenu();
@@ -148,15 +148,15 @@ class Select extends React.Component {
     this.setState({ showMenu: false });
 
     // refocus
-    this.elRefs.wrapperEl.focus();
+    this.wrapperElRef.focus();
   }
 
   onMenuChange(value) {
     if (this.props.readOnly) return;
 
     // update inner <select> and dispatch 'change' event
-    this.elRefs.selectEl.value = value;
-    util.dispatchEvent(this.elRefs.selectEl, 'change');
+    this.selectElRef.value = value;
+    util.dispatchEvent(this.selectElRef, 'change');
   }
 
   render() {
@@ -165,8 +165,8 @@ class Select extends React.Component {
     if (this.state.showMenu) {
       menuElem = (
         <Menu
-          optionEls={this.elRefs.selectEl.children}
-          wrapperEl={this.elRefs.wrapperEl}
+          optionEls={this.selectElRef.children}
+          wrapperEl={this.wrapperElRef}
           onChange={this.onMenuChangeCB}
           onClose={this.hideMenuCB}
         />
@@ -188,7 +188,7 @@ class Select extends React.Component {
     return (
       <div
         { ...reactProps }
-        ref={el => { this.elRefs.wrapperEl = el }}
+        ref={el => { this.wrapperElRef = el }}
         tabIndex={tabIndexWrapper}
         style={style}
         className={'mui-select ' + className}
@@ -196,7 +196,7 @@ class Select extends React.Component {
         onKeyDown={this.onOuterKeyDownCB}
       >
         <select
-          ref={el => { this.elRefs.selectEl = el }}
+          ref={el => { this.selectElRef = el }}
           name={name}
           tabIndex={tabIndexInner}
           value={this.state.value}
@@ -224,7 +224,6 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
-    this.elRefs = {};
     this.onKeyDownCB = util.callback(this, 'onKeyDown');
     this.onKeyPressCB = util.callback(this, 'onKeyPress');
     this.q = '';
@@ -265,7 +264,7 @@ class Menu extends React.Component {
       this.state.currentIndex
     );
 
-    let el = this.elRefs.wrapperEl;
+    let el = this.wrapperElRef;
     jqLite.css(el, props);
     jqLite.scrollTop(el, props.scrollTop);
 
@@ -380,7 +379,7 @@ class Menu extends React.Component {
       );
     }
 
-    return <div ref={el => { this.elRefs.wrapperEl = el }} className="mui-select__menu">{menuItems}</div>;
+    return <div ref={el => { this.wrapperElRef = el }} className="mui-select__menu">{menuItems}</div>;
   }
 }
 

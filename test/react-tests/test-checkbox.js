@@ -84,7 +84,7 @@ describe('react/checkbox', function () {
 
     let elem = <TestApp checked={false} />;
     let instance = ReactUtils.renderIntoDocument(elem);
-    let inputEl = instance.refs.refEl.elRefs.inputEl;
+    let inputEl = instance.refs.refEl.inputElRef;
 
     // check default value
     assert.equal(inputEl.checked, false);

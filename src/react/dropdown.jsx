@@ -33,7 +33,6 @@ class Dropdown extends React.Component {
       opened: false,
       menuTop: 0
     }
-    this.elRefs = {}
     let cb = util.callback;
     this.selectCB = cb(this, 'select');
     this.onClickCB = cb(this, 'onClick');
@@ -88,10 +87,10 @@ class Dropdown extends React.Component {
 
   open() {
     // position menu element below toggle button
-    let wrapperRect = this.elRefs.wrapperEl.getBoundingClientRect(),
+    let wrapperRect = this.wrapperElRef.getBoundingClientRect(),
       toggleRect;
 
-    toggleRect = this.elRefs.button.elRefs.buttonEl.getBoundingClientRect();
+    toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
 
     this.setState({
       opened: true,
@@ -114,7 +113,7 @@ class Dropdown extends React.Component {
   }
 
   onOutsideClick(ev) {
-    let isClickInside = this.elRefs.wrapperEl.contains(ev.target);
+    let isClickInside = this.wrapperElRef.contains(ev.target);
     if (!isClickInside) this.close();
   }
 
@@ -135,7 +134,7 @@ class Dropdown extends React.Component {
 
     buttonEl = (
       <Button
-        ref={(el) => { this.elRefs.button = el }}
+        ref={(el) => { this.buttonElRef = el }}
         type="button"
         onClick={this.onClickCB}
         color={color}
@@ -157,7 +156,7 @@ class Dropdown extends React.Component {
 
       menuEl = (
         <ul
-          ref={(el) => { this.elRefs.menuEl = el }}
+          ref={(el) => { this.menuElRef = el }}
           className={cs}
           style={{ top: this.state.menuTop }}
           onClick={this.selectCB}
@@ -172,7 +171,7 @@ class Dropdown extends React.Component {
     return (
       <div
         { ...reactProps }
-        ref={(el) => { this.elRefs.wrapperEl = el }}
+        ref={(el) => { this.wrapperElRef = el }}
         className={dropdownClass + ' ' + className}
       >
         {buttonEl}

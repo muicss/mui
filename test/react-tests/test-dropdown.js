@@ -62,16 +62,16 @@ describe('react/dropdown', function () {
     let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
 
     // check menu is hidden
-    assert.equal(node.elRefs.menuEl, undefined);
+    assert.equal(node.menuElRef, undefined);
 
     // click to render menu
     return ReactUtils.Simulate.click(buttonEl, { button: 0 });
     let cls = 'mui-dropdown__menu mui--is-open';
-    assert.equal(node.elRefs.menuEl.className, cls);
+    assert.equal(node.menuElRef.className, cls);
 
     // click again to hide
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
-    assert.equal(node.elRefs.menuEl, undefined);
+    assert.equal(node.menuElRef, undefined);
   });
 
 
@@ -83,7 +83,7 @@ describe('react/dropdown', function () {
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // check menu
-    let menuEl = node.elRefs.menuEl;
+    let menuEl = node.menuElRef;
     assert.equal(menuEl.children.length, 3);
 
     // check content
@@ -160,7 +160,7 @@ describe('react/dropdown', function () {
     ReactUtils.Simulate.click(anchorEl);
 
     // check that menu has closed
-    assert.equal(node.elRefs.menuEl, undefined);
+    assert.equal(node.menuElRef, undefined);
   });
 
 

@@ -76,10 +76,9 @@ describe('react/radio', function () {
         this.setState({ checked: ev.target.checked });
       },
       render: function () {
-        this.elRefs = this.elRefs || {};
         return (
           <Radio
-            ref={el => { this.elRefs.refEl = el; }}
+            ref={el => { this.refElRef = el; }}
             checked={this.state.checked}
             onChange={this.onChange}
           />
@@ -89,7 +88,7 @@ describe('react/radio', function () {
 
     let elem = <TestApp checked={false} />;
     let instance = ReactUtils.renderIntoDocument(elem);
-    let inputEl = instance.elRefs.refEl.elRefs.inputEl;
+    let inputEl = instance.refElRef.inputElRef;
 
     // check default value
     assert.equal(inputEl.checked, false);

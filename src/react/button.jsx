@@ -22,7 +22,6 @@ const btnClass = 'mui-btn',
 class Button extends React.Component {
   constructor(props) {
     super(props);
-    this.elRefs = {}
     let cb = util.callback;
     this.onMouseDownCB = cb(this, 'onMouseDown');
     this.onMouseUpCB = cb(this, 'onMouseUp');
@@ -45,7 +44,7 @@ class Button extends React.Component {
 
   componentDidMount() {
     // disable MUI js
-    let el = this.elRefs.buttonEl;
+    let el = this.buttonElRef;
     el._muiDropdown = true;
     el._muiRipple = true;
   }
@@ -91,13 +90,13 @@ class Button extends React.Component {
   }
 
   showRipple(ev) {
-    let buttonEl = this.elRefs.buttonEl;
+    let buttonEl = this.buttonElRef;
 
     // de-dupe touch events
     if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return;
 
     // get (x, y) position of click
-    let offset = jqLite.offset(this.elRefs.buttonEl),
+    let offset = jqLite.offset(this.buttonElRef),
       clickEv;
 
     if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];
@@ -127,7 +126,7 @@ class Button extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     let state = this.state,
-      rippleEl = this.elRefs.rippleEl;
+      rippleEl = this.rippleElRef;
 
     // show ripple
     if (state.rippleIsVisible && !prevState.rippleIsVisible) {
@@ -165,7 +164,7 @@ class Button extends React.Component {
     return (
       <button
         { ...reactProps }
-        ref={(el) => { this.elRefs.buttonEl = el }}
+        ref={(el) => { this.buttonElRef = el }}
         className={cls + ' ' + this.props.className}
         onMouseUp={this.onMouseUpCB}
         onMouseDown={this.onMouseDownCB}
@@ -176,7 +175,7 @@ class Button extends React.Component {
         {this.props.children}
         <span className="mui-btn__ripple-container">
           <span
-            ref={(el) => { this.elRefs.rippleEl = el }}
+            ref={(el) => { this.rippleElRef = el }}
             className="mui-ripple"
             style={this.state.rippleStyle}
           >
