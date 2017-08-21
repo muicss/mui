@@ -17,9 +17,14 @@
       myApp.controller('ExampleController', ['$scope', function($scope) {
         $scope.inputA_1_1 = 'on load';
         $scope.inputA_4_2 = 'on load';
+
         $scope.inputC_1_2 = 'err';
         $scope.inputC_1_5 = 'val';
         $scope.inputC_1_6 = 'val';
+
+        $scope.inputC_2_2 = 'err';
+        $scope.inputC_2_5 = 'val';
+        $scope.inputC_2_6 = 'val';
         
         $scope.change = function(name) {
           console.log(name);
@@ -87,6 +92,17 @@
               label="Label 2"
               ng-model="inputA_4_2"
               float-label
+          >
+          </mui-input>
+          <mui-button variant="raised">submit</mui-button>
+        </form>
+
+        <h3>ng-maxlength</h3>
+        <form>
+          <mui-input
+              label="Label"
+              ng-maxlength="3"
+              ng-model="inputA_5_1"
           >
           </mui-input>
           <mui-button variant="raised">submit</mui-button>
@@ -209,6 +225,59 @@
             label="Is invalid (should be red on load)"
             type="text"
             ng-model="inputC_1_6"
+            invalid
+        >
+        </mui-input>
+      </mui-panel>
+
+      <br>
+      <br>
+
+      <h2>Form Validation with Floating Labels</h2>
+      <mui-panel>
+        <mui-input
+            label="Email address (should be red on invalid input)"
+            type="email"
+            ng-model="inputC_2_1"
+            float-label
+        >
+        </mui-input>
+        <mui-input
+            label="Email address (should be red on load)"
+            type="email"
+            ng-model="inputC_2_2"
+            float-label
+        >
+        </mui-input>
+        <mui-input
+            label="Required email address (should turn red after focus or invalid input)"
+            type="email"
+            ng-model="inputC_2_3"
+            float-label
+            required
+        >
+        </mui-input>
+        <mui-input
+            label="Required text (should be red after focus)"
+            type="text"
+            ng-model="inputC_2_4"
+            float-label
+            required
+        >
+        </mui-input>
+        <mui-input
+            label="Required text (should be red after deletion)"
+            type="text"
+            ng-model="inputC_2_5"
+            float-label
+            required
+        >
+        </mui-input>
+        <mui-input
+            label="Is invalid (should be red on load)"
+            type="text"
+            ng-model="inputC_2_6"
+            float-label
             invalid
         >
         </mui-input>

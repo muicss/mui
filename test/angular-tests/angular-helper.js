@@ -12,10 +12,12 @@ require('angular-mocks');
 
 global.angular = window.angular;
 
-let jqLite = require('../../src/js/lib/jqLite');
+let jqLite = require('../../src/js/lib/jqLite'),
+    util = require('../../src/js/lib/util');
 
 module.exports = {
   inject: angular.mock.inject,
   module: angular.mock.module,
-  jqLite: jqLite
+  jqLite: jqLite,
+  util: util
 };
