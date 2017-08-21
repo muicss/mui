@@ -14,16 +14,16 @@ import Checkbox from '../../src/react/checkbox';
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/checkbox', function() {
+describe('react/checkbox', function () {
   let elem;
 
 
-  beforeEach(function() {
+  beforeEach(function () {
     elem = <Checkbox label="My Label"></Checkbox>;
   });
 
 
-  it('renders wrapper properly', function() {
+  it('renders wrapper properly', function () {
     let result = getShallowRendererOutput(elem);
 
     assert.equal(result.type, 'div');
@@ -31,7 +31,7 @@ describe('react/checkbox', function() {
   });
 
 
-  it('renders properly with additional classNames', function() {
+  it('renders properly with additional classNames', function () {
     let result = getShallowRendererOutput(
       <Checkbox className="additional" label="test" />
     );
@@ -40,16 +40,16 @@ describe('react/checkbox', function() {
   });
 
 
-  it('renders properly with additional styles', function() {
+  it('renders properly with additional styles', function () {
     let result = getShallowRendererOutput(
-      <Checkbox style={{additonal: 'style'}} label="test" />
+      <Checkbox style={{ additonal: 'style' }} label="test" />
     );
 
     assert.equal(result.props.style.additonal, 'style');
   });
 
 
-  it('renders content properly', function() {
+  it('renders content properly', function () {
     let instance = ReactUtils.renderIntoDocument(elem);
     let wrapperEl = ReactDOM.findDOMNode(instance);
 
@@ -63,15 +63,15 @@ describe('react/checkbox', function() {
   });
 
 
-  it('can be used as a controlled component', function() {
+  it('can be used as a controlled component', function () {
     var TestApp = createClass({
-      getInitialState: function() {
-        return {checked: this.props.checked};
+      getInitialState: function () {
+        return { checked: this.props.checked };
       },
-      onChange: function(ev) {
-        this.setState({checked: ev.target.checked});
+      onChange: function (ev) {
+        this.setState({ checked: ev.target.checked });
       },
-      render: function() {
+      render: function () {
         return (
           <Checkbox
             ref="refEl"
@@ -84,13 +84,13 @@ describe('react/checkbox', function() {
 
     let elem = <TestApp checked={false} />;
     let instance = ReactUtils.renderIntoDocument(elem);
-    let inputEl = instance.refs.refEl.refs.inputEl
+    let inputEl = instance.refs.refEl.inputElRef;
 
     // check default value
     assert.equal(inputEl.checked, false);
 
     // update TestApp and check inputEl value
-    instance.setState({checked: true});
+    instance.setState({ checked: true });
     assert.equal(inputEl.checked, true);
 
     // update inputEl and check state
@@ -100,10 +100,10 @@ describe('react/checkbox', function() {
   });
 
 
-  it('supports onChange method', function(done) {
+  it('supports onChange method', function (done) {
     let counter = 0;
 
-    let onChangeFn = function() {
+    let onChangeFn = function () {
       counter += 1;
     };
 
@@ -116,7 +116,7 @@ describe('react/checkbox', function() {
     ReactUtils.Simulate.change(inputEl);
 
     // test conditions
-    setTimeout(function() {
+    setTimeout(function () {
       // one onChange event (https://github.com/muicss/mui/issues/94)
       assert.equal(counter, 1);
 

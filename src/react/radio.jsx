@@ -19,6 +19,7 @@ class Radio extends React.Component {
   };
 
   render() {
+
     const { children, className, label, autoFocus, checked, defaultChecked,
       defaultValue, disabled, form, name, required, value, onChange,
       ...reactProps } = this.props;
@@ -30,7 +31,7 @@ class Radio extends React.Component {
       >
         <label>
           <input
-            ref="inputEl"
+            ref={el => { this.inputElRef = el }}
             type="radio"
             autoFocus={autoFocus}
             checked={checked}

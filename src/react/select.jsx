@@ -23,8 +23,8 @@ class Select extends React.Component {
 
     // warn if value defined but onChange is not
     if (props.readOnly === false &&
-        props.value !== undefined &&
-        props.onChange === null) {
+      props.value !== undefined &&
+      props.onChange === null) {
       util.raiseError(controlledMessage, true);
     }
 
@@ -59,11 +59,11 @@ class Select extends React.Component {
 
   componentDidMount() {
     // disable MUI CSS/JS
-    this.refs.selectEl._muiSelect = true;
+    this.selectElRef._muiSelect = true;
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({value: nextProps.value});
+    this.setState({ value: nextProps.value });
   }
 
   componentWillUnmount() {
@@ -71,14 +71,14 @@ class Select extends React.Component {
     jqLite.off(window, 'resize', this.hideMenuCB);
     jqLite.off(document, 'click', this.hideMenuCB);
   }
-  
+
   onInnerChange(ev) {
     let value = ev.target.value;
 
     // update state
     this.setState({ value });
   }
-  
+
   onInnerMouseDown(ev) {
     // only left clicks & check flag
     if (ev.button !== 0 || this.props.useDefault) return;
@@ -89,7 +89,7 @@ class Select extends React.Component {
 
   onOuterClick(ev) {
     // only left clicks, return if <select> is disabled
-    if (ev.button !== 0 || this.refs.selectEl.disabled) return;
+    if (ev.button !== 0 || this.selectElRef.disabled) return;
 
     // execute callback
     const fn = this.props.onClick;
@@ -99,8 +99,8 @@ class Select extends React.Component {
     if (ev.defaultPrevented || this.props.useDefault) return;
 
     // focus wrapper
-    this.refs.wrapperEl.focus();
-    
+    this.wrapperElRef.focus();
+
     // open custom menu
     this.showMenu();
   }
@@ -112,15 +112,15 @@ class Select extends React.Component {
 
     // exit if preventDevault() was called or useDefault is true
     if (ev.defaultPrevented || this.props.useDefault) return;
-        
+
     if (this.state.showMenu === false) {
       let keyCode = ev.keyCode;
-    
+
       // spacebar, down, up
       if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
         // prevent default browser action
         ev.preventDefault();
-        
+
         // open custom menu
         this.showMenu();
       }
@@ -136,7 +136,7 @@ class Select extends React.Component {
     jqLite.on(document, 'click', this.hideMenuCB);
 
     // re-draw
-    this.setState({showMenu: true});
+    this.setState({ showMenu: true });
   }
 
   hideMenu() {
@@ -145,18 +145,18 @@ class Select extends React.Component {
     jqLite.off(document, 'click', this.hideMenuCB);
 
     // re-draw
-    this.setState({showMenu: false});
+    this.setState({ showMenu: false });
 
     // refocus
-    this.refs.wrapperEl.focus();
+    this.wrapperElRef.focus();
   }
 
   onMenuChange(value) {
     if (this.props.readOnly) return;
 
     // update inner <select> and dispatch 'change' event
-    this.refs.selectEl.value = value;
-    util.dispatchEvent(this.refs.selectEl, 'change');
+    this.selectElRef.value = value;
+    util.dispatchEvent(this.selectElRef, 'change');
   }
 
   render() {
@@ -165,8 +165,8 @@ class Select extends React.Component {
     if (this.state.showMenu) {
       menuElem = (
         <Menu
-          optionEls={this.refs.selectEl.children}
-          wrapperEl={this.refs.wrapperEl}
+          optionEls={this.selectElRef.children}
+          wrapperEl={this.wrapperElRef}
           onChange={this.onMenuChangeCB}
           onClose={this.hideMenuCB}
         />
@@ -175,7 +175,7 @@ class Select extends React.Component {
 
     // set tab index so user can focus wrapper element
     let tabIndexWrapper = '-1',
-        tabIndexInner = '0';
+      tabIndexInner = '0';
 
     if (this.props.useDefault === false) {
       tabIndexWrapper = '0';
@@ -188,7 +188,7 @@ class Select extends React.Component {
     return (
       <div
         { ...reactProps }
-        ref="wrapperEl"
+        ref={el => { this.wrapperElRef = el }}
         tabIndex={tabIndexWrapper}
         style={style}
         className={'mui-select ' + className}
@@ -196,7 +196,7 @@ class Select extends React.Component {
         onKeyDown={this.onOuterKeyDownCB}
       >
         <select
-          ref="selectEl"
+          ref={el => { this.selectElRef = el }}
           name={name}
           tabIndex={tabIndexInner}
           value={this.state.value}
@@ -244,13 +244,13 @@ class Menu extends React.Component {
 
   componentWillMount() {
     let optionEls = this.props.optionEls,
-        m = optionEls.length,
-        selectedPos = 0,
-        i;
+      m = optionEls.length,
+      selectedPos = 0,
+      i;
 
     // get current selected position
-    for (i=m - 1; i > -1; i--) if (optionEls[i].selected) selectedPos = i;
-    this.setState({origIndex: selectedPos, currentIndex: selectedPos});
+    for (i = m - 1; i > -1; i--) if (optionEls[i].selected) selectedPos = i;
+    this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
   }
 
   componentDidMount() {
@@ -264,7 +264,7 @@ class Menu extends React.Component {
       this.state.currentIndex
     );
 
-    let el = this.refs.wrapperEl;
+    let el = this.wrapperElRef;
     jqLite.css(el, props);
     jqLite.scrollTop(el, props.scrollTop);
 
@@ -310,18 +310,18 @@ class Menu extends React.Component {
     let self = this;
     clearTimeout(this.qTimeout);
     this.q += ev.key;
-    this.qTimeout = setTimeout(function() {self.q = '';}, 300);
+    this.qTimeout = setTimeout(function () { self.q = ''; }, 300);
 
     // select first match alphabetically
     let prefixRegex = new RegExp('^' + this.q, 'i'),
-        optionEls = this.props.optionEls,
-        m = optionEls.length,
-        i;
+      optionEls = this.props.optionEls,
+      m = optionEls.length,
+      i;
 
-    for (i=0; i < m; i++) {
+    for (i = 0; i < m; i++) {
       // select item if code matches
       if (prefixRegex.test(optionEls[i].innerText)) {
-        this.setState({currentIndex: i});
+        this.setState({ currentIndex: i });
         break;
       }
     }
@@ -329,12 +329,12 @@ class Menu extends React.Component {
 
   increment() {
     if (this.state.currentIndex === this.props.optionEls.length - 1) return;
-    this.setState({currentIndex: this.state.currentIndex + 1});
+    this.setState({ currentIndex: this.state.currentIndex + 1 });
   }
 
   decrement() {
     if (this.state.currentIndex === 0) return;
-    this.setState({currentIndex: this.state.currentIndex - 1});
+    this.setState({ currentIndex: this.state.currentIndex - 1 });
   }
 
   selectAndDestroy(pos) {
@@ -355,14 +355,14 @@ class Menu extends React.Component {
 
   render() {
     let menuItems = [],
-        optionEls = this.props.optionEls,
-        m = optionEls.length,
-        optionEl,
-        cls,
-        i;
+      optionEls = this.props.optionEls,
+      m = optionEls.length,
+      optionEl,
+      cls,
+      i;
 
     // define menu items
-    for (i=0; i < m; i++) {
+    for (i = 0; i < m; i++) {
       cls = (i === this.state.currentIndex) ? 'mui--is-selected ' : '';
 
       // add custom css class from <Option> component
@@ -379,7 +379,7 @@ class Menu extends React.Component {
       );
     }
 
-    return <div ref="wrapperEl" className="mui-select__menu">{menuItems}</div>;
+    return <div ref={el => { this.wrapperElRef = el }} className="mui-select__menu">{menuItems}</div>;
   }
 }
 

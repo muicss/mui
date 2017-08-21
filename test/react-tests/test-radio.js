@@ -14,16 +14,16 @@ import Radio from '../../src/react/radio';
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
-describe('react/radio', function() {
+describe('react/radio', function () {
   let elem;
 
 
-  beforeEach(function() {
+  beforeEach(function () {
     elem = <Radio>My Label</Radio>;
   });
 
 
-  it('renders wrapper properly', function() {
+  it('renders wrapper properly', function () {
     let result = getShallowRendererOutput(elem);
 
     assert.equal(result.type, 'div');
@@ -31,7 +31,7 @@ describe('react/radio', function() {
   });
 
 
-  it('renders content properly', function() {
+  it('renders content properly', function () {
     let node = ReactUtils.renderIntoDocument(elem);
     let wrapperEl = ReactDOM.findDOMNode(node);
 
@@ -45,7 +45,7 @@ describe('react/radio', function() {
   });
 
 
-  it('renders properly with additional classNames', function() {
+  it('renders properly with additional classNames', function () {
     let result = getShallowRendererOutput(
       <Radio className="additional">
         test
@@ -56,9 +56,9 @@ describe('react/radio', function() {
   });
 
 
-  it('renders properly with additional styles', function() {
+  it('renders properly with additional styles', function () {
     let result = getShallowRendererOutput(
-      <Radio style={{additonal: 'style'}}>
+      <Radio style={{ additonal: 'style' }}>
         test
       </Radio>
     );
@@ -67,18 +67,18 @@ describe('react/radio', function() {
   });
 
 
-  it('can be used as a controlled component', function() {
+  it('can be used as a controlled component', function () {
     var TestApp = createClass({
-      getInitialState: function() {
-        return {checked: this.props.checked};
+      getInitialState: function () {
+        return { checked: this.props.checked };
       },
-      onChange: function(ev) {
-        this.setState({checked: ev.target.checked});
+      onChange: function (ev) {
+        this.setState({ checked: ev.target.checked });
       },
-      render: function() {
+      render: function () {
         return (
           <Radio
-            ref="refEl"
+            ref={el => { this.refElRef = el; }}
             checked={this.state.checked}
             onChange={this.onChange}
           />
@@ -88,13 +88,13 @@ describe('react/radio', function() {
 
     let elem = <TestApp checked={false} />;
     let instance = ReactUtils.renderIntoDocument(elem);
-    let inputEl = instance.refs.refEl.refs.inputEl
+    let inputEl = instance.refElRef.inputElRef;
 
     // check default value
     assert.equal(inputEl.checked, false);
 
     // update TestApp and check inputEl value
-    instance.setState({checked: true});
+    instance.setState({ checked: true });
     assert.equal(inputEl.checked, true);
 
     // update inputEl and check state
@@ -104,15 +104,15 @@ describe('react/radio', function() {
   });
 
 
-  it('supports onChange method', function(done) {
+  it('supports onChange method', function (done) {
     let counter = 0;
 
-    let onChangeFn = function() {
+    let onChangeFn = function () {
       counter += 1;
     };
 
     let node = ReactUtils.renderIntoDocument(
-        <Radio onChange={onChangeFn} />
+      <Radio onChange={onChangeFn} />
     );
 
     // change checkbox
@@ -120,7 +120,7 @@ describe('react/radio', function() {
     ReactUtils.Simulate.change(inputEl);
 
     // test conditions
-    setTimeout(function() {
+    setTimeout(function () {
       // one onChange event (https://github.com/muicss/mui/issues/94)
       assert.equal(counter, 1);
 

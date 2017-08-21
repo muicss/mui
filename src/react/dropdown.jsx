@@ -16,9 +16,9 @@ import * as util from '../js/lib/util';
 
 
 const dropdownClass = 'mui-dropdown',
-      menuClass = 'mui-dropdown__menu',
-      openClass = 'mui--is-open',
-      rightClass = 'mui-dropdown__menu--right';
+  menuClass = 'mui-dropdown__menu',
+  openClass = 'mui--is-open',
+  rightClass = 'mui-dropdown__menu--right';
 
 
 /**
@@ -33,7 +33,6 @@ class Dropdown extends React.Component {
       opened: false,
       menuTop: 0
     }
-
     let cb = util.callback;
     this.selectCB = cb(this, 'select');
     this.onClickCB = cb(this, 'onClick');
@@ -88,10 +87,10 @@ class Dropdown extends React.Component {
 
   open() {
     // position menu element below toggle button
-    let wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
-        toggleRect;
+    let wrapperRect = this.wrapperElRef.getBoundingClientRect(),
+      toggleRect;
 
-    toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
+    toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
 
     this.setState({
       opened: true,
@@ -100,7 +99,7 @@ class Dropdown extends React.Component {
   }
 
   close() {
-    this.setState({opened: false});
+    this.setState({ opened: false });
   }
 
   select(ev) {
@@ -114,14 +113,14 @@ class Dropdown extends React.Component {
   }
 
   onOutsideClick(ev) {
-    let isClickInside = this.refs.wrapperEl.contains(ev.target);
+    let isClickInside = this.wrapperElRef.contains(ev.target);
     if (!isClickInside) this.close();
   }
 
   render() {
     let buttonEl,
-        menuEl,
-        labelEl;
+      menuEl,
+      labelEl;
 
     const { children, className, color, variant, size, label, alignMenu,
       onClick, onSelect, disabled, ...reactProps } = this.props;
@@ -135,7 +134,7 @@ class Dropdown extends React.Component {
 
     buttonEl = (
       <Button
-        ref="button"
+        ref={el => { this.buttonElRef = el }}
         type="button"
         onClick={this.onClickCB}
         color={color}
@@ -157,9 +156,9 @@ class Dropdown extends React.Component {
 
       menuEl = (
         <ul
-          ref="menuEl"
+          ref={el => { this.menuElRef = el }}
           className={cs}
-          style={{top: this.state.menuTop}}
+          style={{ top: this.state.menuTop }}
           onClick={this.selectCB}
         >
           {children}
@@ -172,7 +171,7 @@ class Dropdown extends React.Component {
     return (
       <div
         { ...reactProps }
-        ref="wrapperEl"
+        ref={el => { this.wrapperElRef = el }}
         className={dropdownClass + ' ' + className}
       >
         {buttonEl}

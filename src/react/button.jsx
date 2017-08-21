@@ -12,7 +12,7 @@ import * as util from '../js/lib/util';
 
 
 const btnClass = 'mui-btn',
-      btnAttrs = {color: 1, variant: 1, size: 1};
+  btnAttrs = { color: 1, variant: 1, size: 1 };
 
 
 /**
@@ -22,7 +22,6 @@ const btnClass = 'mui-btn',
 class Button extends React.Component {
   constructor(props) {
     super(props);
-
     let cb = util.callback;
     this.onMouseDownCB = cb(this, 'onMouseDown');
     this.onMouseUpCB = cb(this, 'onMouseUp');
@@ -45,7 +44,7 @@ class Button extends React.Component {
 
   componentDidMount() {
     // disable MUI js
-    let el = this.refs.buttonEl;
+    let el = this.buttonElRef;
     el._muiDropdown = true;
     el._muiRipple = true;
   }
@@ -60,7 +59,7 @@ class Button extends React.Component {
 
   onMouseUp(ev) {
     this.hideRipple(ev);
-    
+
     // execute callback
     const fn = this.props.onMouseUp;
     fn && fn(ev);
@@ -76,7 +75,7 @@ class Button extends React.Component {
 
   onTouchStart(ev) {
     this.showRipple(ev);
-    
+
     // execute callback
     const fn = this.props.onTouchStart;
     fn && fn(ev);
@@ -91,14 +90,14 @@ class Button extends React.Component {
   }
 
   showRipple(ev) {
-    let buttonEl = this.refs.buttonEl;
+    let buttonEl = this.buttonElRef;
 
     // de-dupe touch events
     if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return;
 
     // get (x, y) position of click
-    let offset = jqLite.offset(this.refs.buttonEl),
-        clickEv;
+    let offset = jqLite.offset(this.buttonElRef),
+      clickEv;
 
     if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];
     else clickEv = ev;
@@ -122,12 +121,12 @@ class Button extends React.Component {
   }
 
   hideRipple(ev) {
-    this.setState({rippleIsVisible: false});
+    this.setState({ rippleIsVisible: false });
   }
 
   componentDidUpdate(prevProps, prevState) {
     let state = this.state,
-        rippleEl = this.refs.rippleEl;
+      rippleEl = this.rippleElRef;
 
     // show ripple
     if (state.rippleIsVisible && !prevState.rippleIsVisible) {
@@ -151,8 +150,8 @@ class Button extends React.Component {
 
   render() {
     let cls = btnClass,
-        k,
-        v;
+      k,
+      v;
 
     const { color, size, variant, ...reactProps } = this.props;
 
@@ -165,7 +164,7 @@ class Button extends React.Component {
     return (
       <button
         { ...reactProps }
-        ref="buttonEl"
+        ref={el => { this.buttonElRef = el }}
         className={cls + ' ' + this.props.className}
         onMouseUp={this.onMouseUpCB}
         onMouseDown={this.onMouseDownCB}
@@ -176,7 +175,7 @@ class Button extends React.Component {
         {this.props.children}
         <span className="mui-btn__ripple-container">
           <span
-            ref="rippleEl"
+            ref={el => { this.rippleElRef = el }}
             className="mui-ripple"
             style={this.state.rippleStyle}
           >

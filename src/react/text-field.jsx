@@ -49,19 +49,19 @@ class Input extends React.Component {
 
   componentDidMount() {
     // disable MUI js
-    this.refs.inputEl._muiTextfield = true;
+    this.inputElRef._muiTextfield = true;
   }
 
   componentWillReceiveProps(nextProps) {
     // update innerValue when new value is received to handle programmatic
     // changes to input box
-    if ('value' in nextProps) this.setState({innerValue: nextProps.value});
+    if ('value' in nextProps) this.setState({ innerValue: nextProps.value });
   }
 
   onBlur(ev) {
     // ignore if event is a window blur
-    if (document.activeElement !== this.refs.inputEl) {
-      this.setState({isTouched: true});
+    if (document.activeElement !== this.inputElRef) {
+      this.setState({ isTouched: true });
     }
 
     // execute callback
@@ -82,13 +82,13 @@ class Input extends React.Component {
 
   triggerFocus() {
     // hack to enable IE10 pointer-events shim
-    this.refs.inputEl.focus();
+    this.inputElRef.focus();
   }
 
   render() {
     let cls = {},
-        isNotEmpty = Boolean(this.state.innerValue.toString()),
-        inputEl;
+      isNotEmpty = Boolean(this.state.innerValue.toString()),
+      inputEl;
 
     const { hint, invalid, rows, type, ...reactProps } = this.props;
 
@@ -106,7 +106,7 @@ class Input extends React.Component {
       inputEl = (
         <textarea
           { ...reactProps }
-          ref="inputEl"
+          ref={el => { this.inputElRef = el }}
           className={cls}
           rows={rows}
           placeholder={hint}
@@ -118,7 +118,7 @@ class Input extends React.Component {
       inputEl = (
         <input
           { ...reactProps }
-          ref="inputEl"
+          ref={el => { this.inputElRef = el }}
           className={cls}
           type={type}
           placeholder={this.props.hint}
@@ -160,7 +160,7 @@ class Label extends React.Component {
         msTransform: s
       };
 
-      this.setState({style});
+      this.setState({ style });
     }, 150);
   }
 
@@ -203,13 +203,13 @@ class TextField extends React.Component {
     // pointer-events shim
     if (util.supportsPointerEvents() === false) {
       ev.target.style.cursor = 'text';
-      this.refs.inputEl.triggerFocus();
+      this.inputElRef.triggerFocus();
     }
   }
 
   render() {
     let cls = {},
-        labelEl;
+      labelEl;
 
     const { children, className, style, label, floatingLabel,
       ...other } = this.props;
@@ -229,7 +229,7 @@ class TextField extends React.Component {
         className={cls + ' ' + className}
         style={style}
       >
-        <Input ref="inputEl" { ...other } />
+        <Input ref={el => { this.inputElRef = el }} { ...other } />
         {labelEl}
       </div>
     );
