@@ -59,7 +59,7 @@ class Select extends React.Component {
 
   componentDidMount() {
     // disable MUI CSS/JS
-    this.selectElRef._muiSelect = true;
+    this.controlEl._muiSelect = true;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -89,7 +89,7 @@ class Select extends React.Component {
 
   onOuterClick(ev) {
     // only left clicks, return if <select> is disabled
-    if (ev.button !== 0 || this.selectElRef.disabled) return;
+    if (ev.button !== 0 || this.controlEl.disabled) return;
 
     // execute callback
     const fn = this.props.onClick;
@@ -155,8 +155,8 @@ class Select extends React.Component {
     if (this.props.readOnly) return;
 
     // update inner <select> and dispatch 'change' event
-    this.selectElRef.value = value;
-    util.dispatchEvent(this.selectElRef, 'change');
+    this.controlEl.value = value;
+    util.dispatchEvent(this.controlEl, 'change');
   }
 
   render() {
@@ -165,7 +165,7 @@ class Select extends React.Component {
     if (this.state.showMenu) {
       menuElem = (
         <Menu
-          optionEls={this.selectElRef.children}
+          optionEls={this.controlEl.children}
           wrapperEl={this.wrapperElRef}
           onChange={this.onMenuChangeCB}
           onClose={this.hideMenuCB}
@@ -196,7 +196,7 @@ class Select extends React.Component {
         onKeyDown={this.onOuterKeyDownCB}
       >
         <select
-          ref={el => { this.selectElRef = el }}
+          ref={el => { this.controlEl = el; }}
           name={name}
           tabIndex={tabIndexInner}
           value={this.state.value}

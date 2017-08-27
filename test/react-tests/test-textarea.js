@@ -101,4 +101,15 @@ describe('react/textarea', function() {
     ReactUtils.Simulate.change(inputEl);
     assert.equal(instance.state.value, 'test3');
   });
+
+
+  it('can be used as an uncontrolled component', function() {
+    let elem = <Textarea defaultValue="mydefaultvalue" />;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let findComponent = ReactUtils.findRenderedDOMComponentWithTag;
+    let inputEl = findComponent(instance, 'textarea');
+
+    assert.equal(inputEl, instance.controlEl);
+    assert.equal(instance.controlEl.value, 'mydefaultvalue');
+  });
 });

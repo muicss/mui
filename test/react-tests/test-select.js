@@ -136,14 +136,14 @@ describe('react/select', function () {
     // useDefault is false
     instance = ReactUtils.renderIntoDocument(<Select></Select>);
     assert.equal(instance.wrapperElRef.tabIndex, 0);
-    assert.equal(instance.selectElRef.tabIndex, -1);
+    assert.equal(instance.controlEl.tabIndex, -1);
 
     // useDefault is true
     instance = ReactUtils.renderIntoDocument(
       <Select useDefault={true}></Select>
     );
     assert.equal(instance.wrapperElRef.tabIndex, -1);
-    assert.equal(instance.selectElRef.tabIndex, 0);
+    assert.equal(instance.controlEl.tabIndex, 0);
   });
 
 
@@ -157,7 +157,7 @@ describe('react/select', function () {
     );
 
     let instance = ReactUtils.renderIntoDocument(testElem);
-    let selectEl = instance.selectElRef;
+    let selectEl = instance.controlEl;
 
     assert.equal(selectEl.name, 'my-name');
   });
@@ -174,7 +174,7 @@ describe('react/select', function () {
     );
 
     let instance = ReactUtils.renderIntoDocument(testElem);
-    let selectEl = instance.selectElRef;
+    let selectEl = instance.controlEl;
 
     assert.equal(selectEl.required, true);
 
@@ -188,7 +188,7 @@ describe('react/select', function () {
     );
 
     instance = ReactUtils.renderIntoDocument(testElem);
-    selectEl = instance.selectElRef;
+    selectEl = instance.controlEl;
 
     assert.equal(selectEl.required, false);
     assert.equal(selectEl.hasAttribute('required'), false);
@@ -203,7 +203,7 @@ describe('react/select', function () {
     );
 
     instance = ReactUtils.renderIntoDocument(testElem);
-    selectEl = instance.selectElRef;
+    selectEl = instance.controlEl;
 
     assert.equal(selectEl.required, false);
     assert.equal(selectEl.hasAttribute('required'), false);
@@ -220,7 +220,7 @@ describe('react/select', function () {
     );
 
     let instance = ReactUtils.renderIntoDocument(testElem);
-    let selectEl = instance.selectElRef;
+    let selectEl = instance.controlEl;
 
     assert.equal(selectEl.value, 'value1');
   });
@@ -236,7 +236,7 @@ describe('react/select', function () {
     );
 
     let instance = ReactUtils.renderIntoDocument(testElem);
-    let selectEl = instance.selectElRef;
+    let selectEl = instance.controlEl;
 
     assert.equal(selectEl.value, 'value2');
   });
@@ -285,11 +285,11 @@ describe('react/select', function () {
 
     // update outer and check <select> element
     instance.setState({ value: 'option-1' });
-    assert.equal(innerEl.selectElRef.value, 'option-1');
+    assert.equal(innerEl.controlEl.value, 'option-1');
 
     // update <select> element and trigger 'change' event
-    innerEl.selectElRef.value = 'option-2';
-    ReactUtils.Simulate.change(innerEl.selectElRef);
+    innerEl.controlEl.value = 'option-2';
+    ReactUtils.Simulate.change(innerEl.controlEl);
     assert.equal(instance.state.value, 'option-2');
   });
 
@@ -313,7 +313,7 @@ describe('react/select', function () {
   it('handles change event on <select> properly', function (done) {
     let checkChangeFn = function (ev) {
       assert.equal(ev.type, 'change');
-      assert.equal(ev.target, instance.selectElRef);
+      assert.equal(ev.target, instance.controlEl);
       assert.equal(ev.target.value, "value2");
       done();
     };
@@ -326,14 +326,14 @@ describe('react/select', function () {
     );
 
     // trigger 'change' on inner <select> element
-    ReactUtils.Simulate.change(instance.selectElRef);
+    ReactUtils.Simulate.change(instance.controlEl);
   });
 
 
   it('handles click on inner <select> properly', function (done) {
     let onClick = function (ev) {
       assert.equal(ev.type, 'click');
-      assert.equal(ev.target, instance.selectElRef);
+      assert.equal(ev.target, instance.controlEl);
       done();
     };
 
@@ -342,14 +342,14 @@ describe('react/select', function () {
     );
 
     // trigger 'click' on inner <select> element
-    ReactUtils.Simulate.click(instance.selectElRef, { button: 0 });
+    ReactUtils.Simulate.click(instance.controlEl, { button: 0 });
   });
 
 
   it('handles focus on inner <select> properly', function (done) {
     let onFocus = function (ev) {
       assert.equal(ev.type, 'focus');
-      assert.equal(ev.target, instance.selectElRef);
+      assert.equal(ev.target, instance.controlEl);
       done();
     };
 
@@ -358,7 +358,7 @@ describe('react/select', function () {
     );
 
     // trigger 'focus' on inner <select> element
-    ReactUtils.Simulate.focus(instance.selectElRef);
+    ReactUtils.Simulate.focus(instance.controlEl);
   });
 
 
@@ -381,7 +381,7 @@ describe('react/select', function () {
   it('handles keydown on inner <select> properly', function (done) {
     let onKeyDown = function (ev) {
       assert.equal(ev.type, 'keydown');
-      assert.equal(ev.target, instance.selectElRef);
+      assert.equal(ev.target, instance.controlEl);
       done();
     };
 
@@ -390,7 +390,7 @@ describe('react/select', function () {
     );
 
     // trigger 'keydown' on inner <select> element
-    ReactUtils.Simulate.keyDown(instance.selectElRef);
+    ReactUtils.Simulate.keyDown(instance.controlEl);
   });
 
 
@@ -413,7 +413,7 @@ describe('react/select', function () {
   it('handles keypress on inner <select> properly', function (done) {
     let onKeyPress = function (ev) {
       assert.equal(ev.type, 'keypress');
-      assert.equal(ev.target, instance.selectElRef);
+      assert.equal(ev.target, instance.controlEl);
       done();
     };
 
@@ -422,7 +422,7 @@ describe('react/select', function () {
     );
 
     // trigger 'keypress' on inner <select> element
-    ReactUtils.Simulate.keyPress(instance.selectElRef);
+    ReactUtils.Simulate.keyPress(instance.controlEl);
   });
 
 
@@ -453,14 +453,14 @@ describe('react/select', function () {
     );
 
     // trigger 'mousedown' on inner <select> element
-    ReactUtils.Simulate.mouseDown(instance.selectElRef, { button: 0 });
+    ReactUtils.Simulate.mouseDown(instance.controlEl, { button: 0 });
   });
 
 
   it('shows custom menu on click', function () {
     let instance = ReactUtils.renderIntoDocument(elem);
     let wrapperEl = instance.wrapperElRef;
-    let selectEl = instance.selectElRef;
+    let selectEl = instance.controlEl;
 
     // check before and after click
     let numBefore = wrapperEl.children.length;
@@ -478,7 +478,7 @@ describe('react/select', function () {
 
     // check before and after 'click' on inner <select> element
     let numBefore = wrapperEl.children.length;
-    ReactUtils.Simulate.click(instance.selectElRef, { button: 0 });
+    ReactUtils.Simulate.click(instance.controlEl, { button: 0 });
     assert.equal(wrapperEl.children.length, numBefore);
   });
 
@@ -491,7 +491,7 @@ describe('react/select', function () {
       </Select>
     );
 
-    let selectEl = instance.selectElRef;
+    let selectEl = instance.controlEl;
 
     // check option element custom class
     let optionEl = selectEl.children[1];

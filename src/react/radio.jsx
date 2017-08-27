@@ -31,7 +31,7 @@ class Radio extends React.Component {
       >
         <label>
           <input
-            ref={el => { this.inputElRef = el }}
+            ref={el => { this.controlEl = el; }}
             type="radio"
             autoFocus={autoFocus}
             checked={checked}

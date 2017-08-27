@@ -88,7 +88,7 @@ describe('react/radio', function () {
 
     let elem = <TestApp checked={false} />;
     let instance = ReactUtils.renderIntoDocument(elem);
-    let inputEl = instance.refElRef.inputElRef;
+    let inputEl = instance.refElRef.controlEl;
 
     // check default value
     assert.equal(inputEl.checked, false);

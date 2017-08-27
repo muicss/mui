@@ -83,6 +83,7 @@ describe('react/input', function() {
     const inputEl = ReactUtils.findRenderedDOMComponentWithTag(instance,
                                                                'input');
     
+
     // check input element value
     assert.equal(inputEl.value, 'my input');
     
@@ -92,7 +93,7 @@ describe('react/input', function() {
     
     // changing state calls componentWillReceiveProps()
     parentInstance.setState({ testState: 'new' });
-    
+
     // check input element value
     assert.equal(inputEl.value, 'my input');
     
@@ -238,6 +239,17 @@ describe('react/input', function() {
     inputEl.value = 'test3';
     ReactUtils.Simulate.change(inputEl);
     assert.equal(instance.state.value, 'test3');
+  });
+
+
+  it('can be used as an uncontrolled component', function() {
+    let elem = <Input defaultValue="mydefaultvalue" />;
+    let instance = ReactUtils.renderIntoDocument(elem);
+    let findComponent = ReactUtils.findRenderedDOMComponentWithTag;
+    let inputEl = findComponent(instance, 'input');
+
+    assert.equal(inputEl, instance.controlEl);
+    assert.equal(instance.controlEl.value, 'mydefaultvalue');
   });
 
 

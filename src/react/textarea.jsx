@@ -20,7 +20,12 @@ class Textarea extends React.Component {
   };
 
   render() {
-    return <TextField { ...this.props } />;
+    return (
+      <TextField
+        { ...this.props }
+        ref={el => { if (el) this.controlEl = el.inputElRef.inputElRef; }}
+      />
+    );
   }
 }
 

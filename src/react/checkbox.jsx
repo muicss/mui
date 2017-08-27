@@ -34,7 +34,7 @@ class Checkbox extends React.Component {
       >
         <label>
           <input
-            ref={el => { this.inputElRef = el }}
+            ref={el => { this.controlEl = el; }}
             type="checkbox"
             autoFocus={autoFocus}
             checked={checked}
