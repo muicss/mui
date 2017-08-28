@@ -31,7 +31,13 @@ var Textarea = function (_React$Component) {
   babelHelpers.createClass(Textarea, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_textField.TextField, this.props);
+      var _this2 = this;
+
+      return _react2.default.createElement(_textField.TextField, babelHelpers.extends({}, this.props, {
+        ref: function ref(el) {
+          if (el) _this2.controlEl = el.inputElRef.inputElRef;
+        }
+      }));
     }
   }]);
   return Textarea;

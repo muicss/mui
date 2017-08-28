@@ -64,7 +64,7 @@ var Checkbox = function (_React$Component) {
           null,
           _react2.default.createElement('input', {
             ref: function ref(el) {
-              _this2.inputElRef = el;
+              _this2.controlEl = el;
             },
             type: 'checkbox',
             autoFocus: autoFocus,

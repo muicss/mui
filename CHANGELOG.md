@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.23 - August 27, 2017
+
+* Added `controlEl` attribute reference to inner control elements in React
+  Checkbox/Input/Radio/Select/Textarea components
+
 ## 0.9.22 - August 20, 2017
 
 * Improvements and bugfixes to MUI Angular Input component

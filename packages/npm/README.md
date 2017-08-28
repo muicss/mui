@@ -93,11 +93,13 @@ Read more: https://www.muicss.com/docs/v1/react/buttons
 import Checkbox from 'muicss/lib/react/checkbox';
 
 <Checkbox />
-  * {String} label
-  * {String} value
   * {Boolean} checked
   * {Boolean} defaultChecked
+  * {String} defaultValue
   * {Boolean} disabled=false|true
+  * {String} label
+  * {String} name
+  * {String} value
 ```
 
 Read more: https://www.muicss.com/docs/v1/react/forms
@@ -208,10 +210,14 @@ import Input from 'muicss/lib/react/input';
 
 <Input />
   * {String} defaultValue
+  * {Boolean} floatingLabel
   * {String} hint
-  * {String} value
+  * {Boolean} invalid
+  * {String} label
+  * {String} name
+  * {Boolean} required
   * {String} type=text|email|url|tel|password
-  * {Boolean} autoFocus
+  * {String} value
   * {Function} onChange
 ```
 
@@ -251,15 +257,13 @@ import Select from 'muicss/lib/react/select';
 
 <Select />
   * {String} defaultValue
-  * {String} label
-  * {String} name
-  * {String} value
-  * {Boolean} autoFocus=false|true
   * {Boolean} disabled=false|true
-  * {Boolean} multiple=false|true
+  * {String} name
+  * {String} label
   * {Boolean} readOnly=false|true
   * {Boolean} required=false|true
   * {Boolean} useDefault=false|true
+  * {String} value
   * {Function} onChange
 ```
 
@@ -313,10 +317,14 @@ import Textarea from 'muicss/lib/react/textarea';
 
 <Textarea />
   * {String} defaultValue
+  * {Boolean} floatingLabel
   * {String} hint
+  * {Boolean} invalid
+  * {String} label
+  * {String} name
+  * {Boolean} required
+  * {Number} rows
   * {String} value
-  * {Integer} rows
-  * {Boolean} autoFocus
   * {Function} onChange
 ```
 

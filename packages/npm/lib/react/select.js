@@ -68,7 +68,7 @@ var Select = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // disable MUI CSS/JS
-      this.selectElRef._muiSelect = true;
+      this.controlEl._muiSelect = true;
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -103,7 +103,7 @@ var Select = function (_React$Component) {
     key: 'onOuterClick',
     value: function onOuterClick(ev) {
       // only left clicks, return if <select> is disabled
-      if (ev.button !== 0 || this.selectElRef.disabled) return;
+      if (ev.button !== 0 || this.controlEl.disabled) return;
 
       // execute callback
       var fn = this.props.onClick;
@@ -173,8 +173,8 @@ var Select = function (_React$Component) {
       if (this.props.readOnly) return;
 
       // update inner <select> and dispatch 'change' event
-      this.selectElRef.value = value;
-      util.dispatchEvent(this.selectElRef, 'change');
+      this.controlEl.value = value;
+      util.dispatchEvent(this.controlEl, 'change');
     }
   }, {
     key: 'render',
@@ -185,7 +185,7 @@ var Select = function (_React$Component) {
 
       if (this.state.showMenu) {
         menuElem = _react2.default.createElement(Menu, {
-          optionEls: this.selectElRef.children,
+          optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
           onClose: this.hideMenuCB
@@ -229,7 +229,7 @@ var Select = function (_React$Component) {
           'select',
           {
             ref: function ref(el) {
-              _this2.selectElRef = el;
+              _this2.controlEl = el;
             },
             name: name,
             tabIndex: tabIndexInner,
