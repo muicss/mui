@@ -1,5 +1,11 @@
 # MUI Changelog
 
+## 0.9.24 - August 29, 2017
+
+* Fixed bug VanillaJS Select component preventing first item from being
+  selected when no other items are checked
+  (https://github.com/muicss/mui/issues/228)
+
 ## 0.9.23 - August 27, 2017
 
 * Added `controlEl` attribute reference to inner control elements in React
