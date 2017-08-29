@@ -247,6 +247,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       childEls = selectEl.children,
       itemArray = this.itemArray,
       itemPos = 0,
+      origPos = -1,
       selectedPos = 0,
       selectedRow = 0,
       docFrag = document.createDocumentFragment(),  // for speed
@@ -299,8 +300,8 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
 
         // handle selected options
         if (loopEl.selected) {
-          jqLite.addClass(rowEl, selectedClass);
           selectedRow = menuEl.children.length;
+          origPos = itemPos;
           selectedPos = itemPos;
         }
 
@@ -317,8 +318,11 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   menuEl.appendChild(docFrag);
 
   // save indices
-  this.origPos = selectedPos;
+  this.origPos = origPos;
   this.currentPos = selectedPos;
+
+  // paint selectedPos
+  if (itemArray.length) jqLite.addClass(itemArray[selectedPos], selectedClass);
 
   // set position
   var props = formlib.getMenuPositionalCSS(
