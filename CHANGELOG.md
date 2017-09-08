@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.25 - September 7, 2017
+
+* Added MUI Email SCSS files to `muicss` NPM package
+* Upgraded devDependencies
+
 ## 0.9.24 - August 29, 2017
 
 * Fixed bug VanillaJS Select component preventing first item from being

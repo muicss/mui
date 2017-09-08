@@ -1,0 +1,13 @@
+/**
+ * MUI Email Panel
+ */
+
+.mui-panel {
+  padding: $mui-panel-padding;
+  border-radius: $mui-panel-border-radius;
+  background-color: $mui-panel-bg;
+  border-top: 1px solid darken(mui-color('white'), 7%);
+  border-left: 1px solid darken(mui-color('white'), 10%);
+  border-right: 1px solid darken(mui-color('white'), 10%);
+  border-bottom: 2px solid darken(mui-color('white'), 17%);
+}

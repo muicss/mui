@@ -409,6 +409,7 @@ function buildNpm() {
   var t1 = gulp.parallel(
     buildCdn('./packages/npm/dist'),
     buildNpmSass(),
+    buildNpmEmail(),
     buildNpmJs(),
     buildNpmReact(),
     buildNpmAngular()
@@ -426,6 +427,14 @@ function buildNpmSass() {
   return makeTask('build-npm-sass', function() {
     return gulp.src('./src/sass/**/*')
       .pipe(plugins.copy('./packages/npm/lib/sass', {prefix: 2}));
+  });
+}
+
+
+function buildNpmEmail() {
+  return makeTask('build-npm-email', function() {
+    return gulp.src('./src/email/**/*')
+      .pipe(plugins.copy('./packages/npm/lib/email', {prefix: 2}));
   });
 }
 

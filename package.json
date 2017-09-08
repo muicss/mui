@@ -1,5 +1,5 @@
 {
-  "version": "0.9.24",
+  "version": "0.9.25",
   "license": "MIT",
   "description": "Source code for MUI",
   "homepage": "https://www.muicss.com",
@@ -46,7 +46,7 @@
     "gulp-browserify": "^0.5.1",
     "gulp-chain": "^2.0.1",
     "gulp-concat": "^2.6.1",
-    "gulp-copy": "1.0.0",
+    "gulp-copy": "1.0.1",
     "gulp-cssmin": "^0.2.0",
     "gulp-inject-string": "^1.1.0",
     "gulp-inline-css": "^3.1.0",

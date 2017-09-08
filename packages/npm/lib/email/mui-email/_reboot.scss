@@ -1,0 +1,66 @@
+/**
+ * MUI Email Reboot
+ */
+
+body {
+  color: $mui-base-font-color;
+  font-family: $mui-base-font-family;
+  font-weight: $mui-base-font-weight;
+  font-size: $mui-base-font-size;
+  line-height: $mui-base-line-height;
+  letter-spacing: $mui-base-letter-spacing;
+  
+  @if $mui-body-bg-color {
+    background-color: $mui-body-bg-color;
+  }
+}
+
+a {
+  color: $mui-link-font-color;
+  text-decoration: $mui-link-text-decoration;
+}
+
+p {
+  margin: 0 0 ($mui-base-line-height-computed / 2);
+}
+
+hr {
+  color: $mui-hr-color;
+  background-color: $mui-hr-color;
+  height: 1px;
+  border: none;
+}
+
+strong {
+  font-weight: 700;
+}
+
+h1 {
+  @extend .mui--text-display1;
+}
+
+h2 {
+  @extend .mui--text-headline;
+}
+
+h3 {
+  @extend .mui--text-title;
+}
+
+h4 {
+  @extend .mui--text-subhead;
+}
+
+h5 {
+  @extend .mui--text-body2;
+}
+
+h1, h2, h3 {
+  margin-top: $mui-base-line-height-computed;
+  margin-bottom: ($mui-base-line-height-computed / 2);
+}
+
+h4, h5, h6 {
+  margin-top: ($mui-base-line-height-computed / 2);
+  margin-bottom: ($mui-base-line-height-computed / 2);
+}

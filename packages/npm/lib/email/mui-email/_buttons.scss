@@ -1,0 +1,250 @@
+/**
+ * MUI Email Buttons
+ */
+
+// ============================================================================
+// MODULE VARIABLES
+// ============================================================================
+
+$x-font-weight: 500;
+$x-letter-spacing: 0.03em;
+$x-border-width: 1px;
+
+$x-padding-horizontal-computed:
+  $mui-btn-padding-horizontal - $x-border-width;
+$x-padding-vertical-computed:
+  ($mui-btn-height - $mui-btn-font-size) / 2 - $x-border-width;
+
+$x-padding-horizontal-sm-computed:
+  $mui-btn-padding-horizontal-sm - $x-border-width;
+$x-padding-vertical-sm-computed:
+  ($mui-btn-height-sm - $mui-btn-font-size-sm) / 2 - $x-border-width;
+
+$x-padding-horizontal-lg-computed:
+  $mui-btn-padding-horizontal-lg - $x-border-width;
+$x-padding-vertical-lg-computed:
+  ($mui-btn-height-lg - $mui-btn-font-size-lg) / 2 - $x-border-width;
+
+
+
+
+// ============================================================================
+// MIXINS
+// ============================================================================
+
+@mixin button-text-styles() {
+  font-weight: $x-font-weight;
+  font-size: $mui-btn-font-size;
+  color: $mui-base-font-color;
+  line-height: $mui-btn-font-size;
+  letter-spacing: $x-letter-spacing;
+  text-transform: uppercase;
+}
+
+@mixin button-flat-color($font-color, $bg-color) {
+  $flat-font-color: null;
+  
+  @if $bg-color == #FFF {
+    $flat-font-color: $mui-btn-default-font-color
+  } @else {
+    $flat-font-color: $bg-color;
+  }
+
+  color: $flat-font-color;
+}
+
+@mixin button-borders($bg-color, $btn-style: "normal") {
+  @if $btn-style == 'raised' {
+    $color1: null;
+    $color2: null;
+    $color3: null;
+    
+    @if $bg-color == #FFF {
+      $color1: darken($bg-color, 5%);
+      $color2: darken($bg-color, 10%);
+      $color3: darken($bg-color, 27%);
+    } @else {
+      $color1: lighten($bg-color, 10%);
+      $color2: $bg-color;
+      $color3: darken($bg-color, 15%);
+    }
+
+    border-top: $x-border-width solid $color1;
+    border-left: $x-border-width solid $color2;
+    border-right: $x-border-width solid $color2;
+    border-bottom: 2px solid $color3;
+  } @else {
+    $border-color: $bg-color;
+    
+    border-top: $x-border-width solid $border-color;
+    border-left: $x-border-width solid $border-color;
+    border-right: $x-border-width solid $border-color;
+    border-bottom: $x-border-width solid $border-color;
+  }
+}
+
+@mixin button-anchor-variant($font-color, $bg-color) {
+  @include button-borders($bg-color);
+
+  color: $font-color;
+  background-color: $bg-color;
+  
+  // raised
+  &.mui-btn--raised {
+    @include button-borders($bg-color, "raised");
+  }
+
+  // flat
+  &.mui-btn--flat {
+    background-color: $mui-btn-flat-bg-color;
+    @include button-flat-color($font-color, $bg-color);
+    @include button-borders($mui-btn-flat-bg-color);
+  }
+}
+
+@mixin button-table-variant($font-color, $bg-color) {
+  > tr > td,
+  > tbody > tr > td {
+    background-color: $bg-color;
+    
+    > a {
+      color: $font-color;
+      @include button-borders($bg-color);
+    }
+  }
+
+  // raised
+  &.mui-btn--raised {
+    > tr > td,
+    > tbody > tr > td {
+      > a {
+        @include button-borders($bg-color, "raised");
+      }
+    }
+  }
+
+  // flat
+  &.mui-btn--flat {
+    > tr > td,
+    > tbody > tr > td {
+      background-color: $mui-btn-flat-bg-color;
+
+      > a {
+        @include button-flat-color($font-color, $bg-color);
+        @include button-borders($mui-btn-flat-bg-color);
+      }
+    }
+  }
+}
+
+
+
+
+// ============================================================================
+// BUTTON COMPONENT
+// ============================================================================
+
+// shared btn styles
+.mui-btn {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+
+// <a> btn styles
+a.mui-btn {
+  @include button-text-styles();
+  @include button-borders(transparent);
+  @include button-anchor-variant($mui-btn-default-font-color,
+                                 $mui-btn-default-bg-color);
+
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: $mui-btn-border-radius;
+  padding: $x-padding-vertical-computed
+           $x-padding-horizontal-computed;
+  background-color: transparent;
+
+  &.mui-btn--primary {
+    @include button-anchor-variant($mui-btn-primary-font-color,
+                                   $mui-btn-primary-bg-color);
+  }
+
+  &.mui-btn--danger {
+    @include button-anchor-variant($mui-btn-danger-font-color,
+                                   $mui-btn-danger-bg-color);
+  }
+
+  &.mui-btn--dark {
+    @include button-anchor-variant($mui-btn-dark-font-color,
+                                   $mui-btn-dark-bg-color);
+  }
+
+  &.mui-btn--accent {
+    @include button-anchor-variant($mui-btn-accent-font-color,
+                                   $mui-btn-accent-bg-color);
+  }
+}
+
+// <table> btn styles
+table.mui-btn {
+  @include button-table-variant($mui-btn-default-font-color,
+                                $mui-btn-default-bg-color);
+
+  > tr > td,
+  > tbody > tr > td {
+    border-radius: $mui-btn-border-radius;
+    
+    > a {
+      @include button-text-styles();
+      @include button-borders(transparent);
+
+      display: inline-block;
+      text-decoration: none;
+      text-align: center;
+      border-radius: $mui-btn-border-radius;
+      padding: $x-padding-vertical-computed
+               $x-padding-horizontal-computed;
+      background-color: transparent;
+    }
+  }
+
+  &.mui-btn--primary {
+    @include button-table-variant($mui-btn-primary-font-color,
+                                  $mui-btn-primary-bg-color);
+  }
+
+  &.mui-btn--danger {
+    @include button-table-variant($mui-btn-danger-font-color,
+                                  $mui-btn-danger-bg-color);
+  }
+
+  &.mui-btn--dark {
+    @include button-table-variant($mui-btn-dark-font-color,
+                                   $mui-btn-dark-bg-color);
+  }
+
+  &.mui-btn--accent {
+    @include button-table-variant($mui-btn-accent-font-color,
+                                  $mui-btn-accent-bg-color);
+  }
+}
+
+// small buttons
+a.mui-btn--small,
+table.mui-btn--small > tr > td > a,
+table.mui-btn--small > tbody > tr > td > a {
+  font-size: $mui-btn-font-size-sm;
+  padding: $x-padding-vertical-sm-computed
+           $x-padding-horizontal-sm-computed;
+}
+
+// large buttons
+a.mui-btn--large,
+table.mui-btn--large > tr > td > a,
+table.mui-btn--large > tbody > tr > td > a {
+  font-size: $mui-btn-font-size-lg;
+  padding: $x-padding-vertical-lg-computed
+           $x-padding-horizontal-lg-computed;
+}

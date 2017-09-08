@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+// Normalizer
+@import
+"mui-email/normalize";
+
+// Core variables and mixins
+@import
+"../sass/mui/colors",
+"../sass/mui/mixins",
+"mui-email/variables";
+
+// CSS Reboot
+@import
+"mui-email/reboot";
+
+// Components
+@import
+"mui-email/body",
+"mui-email/buttons",
+"mui-email/containers",
+"mui-email/divider",
+"mui-email/panel";
+
+// Miscellaneous
+@import
+"mui-email/helpers",
+"mui-email/typography";

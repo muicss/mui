@@ -1,0 +1,20 @@
+/**
+ * MUI Email Body Component
+ */
+
+.mui-body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  color: $mui-base-font-color;
+  font-family: $mui-base-font-family;
+  font-weight: $mui-base-font-weight;
+  font-size: $mui-base-font-size;
+  line-height: $mui-base-line-height;
+  letter-spacing: $mui-base-letter-spacing;
+  
+  @if $mui-body-bg-color {
+    background-color: $mui-body-bg-color;
+  }
+}

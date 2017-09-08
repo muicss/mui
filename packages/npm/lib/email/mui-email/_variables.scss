@@ -1,0 +1,135 @@
+// ============================================================================
+// COLORS
+// ============================================================================
+
+$mui-primary-color:             mui-color('blue', '500') !default;
+$mui-primary-color-dark:        mui-color('blue', '700') !default;
+$mui-primary-color-light:       mui-color('blue', '100') !default;
+
+$mui-accent-color:              mui-color('pink', 'A200') !default;
+$mui-accent-color-dark:         mui-color('pink', 'A100') !default;
+$mui-accent-color-light:        mui-color('pink', 'A400') !default;
+
+$mui-danger-color:              mui-color('red', '500') !default;
+
+
+
+
+// ============================================================================
+// LAYOUT
+// ============================================================================
+
+$mui-container-max-width:            600px !default;
+$mui-container-padding-horizontal:   15px !default;
+
+
+
+
+// ============================================================================
+// SCAFFOLDING
+// ============================================================================
+
+$mui-body-bg-color:             mui-color('white') !default;
+$mui-link-font-color:           $mui-primary-color !default;
+$mui-link-text-decoration:      none !default;
+$mui-hr-color:                  lighten(mui-color('black'), 88%) !default;
+
+
+
+// ============================================================================
+// TYPOGRAPHY
+// ============================================================================
+
+$mui-base-font-color:           lighten(mui-color('black'), 13%) !default;
+$mui-base-font-family:          "Helvetica Neue", Helvetica, Arial, Verdana, "Trebuchet MS" !default;
+$mui-base-font-size:            14px !default;
+$mui-base-font-weight:          400 !default;
+$mui-base-line-height:          1.429 !default;
+$mui-base-letter-spacing:       0.001em !default;
+
+
+
+// ============================================================================
+// TEXT COLORS
+// ============================================================================
+
+$mui-text-dark:             lighten(mui-color('black'), 13%) !default;
+$mui-text-dark-secondary:   lighten(mui-color('black'), 46%) !default;
+$mui-text-dark-hint:        lighten(mui-color('black'), 62%) !default;
+
+$mui-text-light:            mui-color('white') !default;
+$mui-text-light-secondary:  darken(mui-color('white'), 30%) !default;
+$mui-text-light-hint:       darken(mui-color('white'), 50%) !default;
+
+$mui-text-accent:           $mui-accent-color !default;
+$mui-text-accent-secondary: lighten($mui-accent-color, 13%) !default;
+$mui-text-accent-hint:      lighten($mui-accent-color, 20%) !default;
+
+$mui-text-danger:          $mui-danger-color !default;
+
+
+
+// ============================================================================
+// BUTTONS
+// ============================================================================
+
+$mui-btn-height:                     36px !default;
+$mui-btn-height-sm:                  $mui-btn-height * 0.85 !default;
+$mui-btn-height-lg:                  $mui-btn-height * 1.5 !default;
+
+$mui-btn-border-radius:              3px !default;
+
+$mui-btn-padding-horizontal:         26px !default;
+$mui-btn-padding-horizontal-sm:      16px !default;
+$mui-btn-padding-horizontal-lg:      $mui-btn-padding-horizontal !default;
+
+$mui-btn-font-size:                  14px !default;
+$mui-btn-font-size-sm:               13px !default;
+$mui-btn-font-size-lg:               $mui-btn-font-size !default;
+
+$mui-btn-default-bg-color:           mui-color('white') !default;
+$mui-btn-default-font-color:         $mui-base-font-color !default;
+
+$mui-btn-primary-bg-color:           $mui-primary-color !default;
+$mui-btn-primary-font-color:         mui-color('white') !default;
+
+$mui-btn-danger-bg-color:            $mui-danger-color !default;
+$mui-btn-danger-font-color:          mui-color('white') !default;
+
+$mui-btn-dark-bg-color:              mui-color('grey', '800') !default;
+$mui-btn-dark-font-color:            mui-color('white') !default;
+
+$mui-btn-accent-bg-color:            $mui-accent-color !default;
+$mui-btn-accent-font-color:          mui-color('white') !default;
+
+$mui-btn-flat-bg-color:              transparent !default;
+
+
+
+
+// ============================================================================
+// PANELS
+// ============================================================================
+
+$mui-panel-bg:                       mui-color('white') !default;
+$mui-panel-padding:                  15px !default;
+$mui-panel-border-radius:            0 !default;
+
+
+
+
+// ============================================================================
+// DIVIDERS
+// ============================================================================
+
+$mui-divider-color: lighten(mui-color('black'), 88%) !default;
+
+
+
+
+// ============================================================================
+// INTERNAL VARIABLES
+// ============================================================================
+
+$mui-base-line-height-computed:
+  floor(($mui-base-font-size * $mui-base-line-height));

@@ -1,0 +1,53 @@
+/**
+ * MUI Email Styletag
+ */
+
+// ============================================================================
+// OUTLOOK
+// ============================================================================
+
+// add view in browser option
+#outlook a {
+  padding: 0;
+}
+
+
+
+
+// ============================================================================
+// HOTMAIL
+// ============================================================================
+
+.ReadMsgBody{
+  width: 100%;
+}
+
+.ExternalClass {
+  width: 100%;  // display emails at full width
+
+  &,
+  & p,
+  & span,
+  & font,
+  & td,
+  & div {
+    line-height: 100%;  // display normal line spacing
+  }
+}
+
+
+
+
+// ============================================================================
+// MISCELLANEOUS
+// ============================================================================
+
+.mui-container-fixed {
+  width: $mui-container-max-width;
+  display: block;
+  margin: 0 auto;
+  clear: both;
+  text-align: left;
+  padding-left: $mui-container-padding-horizontal;
+  padding-right: $mui-container-padding-horizontal;
+}
