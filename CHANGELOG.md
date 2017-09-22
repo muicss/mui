@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.26 - September 21, 2017
+
+* Fixed bug in React Input component triggered by using `preact`
+* Added configuration options for Select component CSS
+
 ## 0.9.25 - September 7, 2017
 
 * Added MUI Email SCSS files to `muicss` NPM package

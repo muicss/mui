@@ -35,7 +35,7 @@ var Input = function (_React$Component) {
 
       return _react2.default.createElement(_textField.TextField, babelHelpers.extends({}, this.props, {
         ref: function ref(el) {
-          if (el) _this2.controlEl = el.inputElRef.inputElRef;
+          if (el && el.inputElRef) _this2.controlEl = el.inputElRef.inputElRef;
         }
       }));
     }
