@@ -23,7 +23,7 @@ class Textarea extends React.Component {
     return (
       <TextField
         { ...this.props }
-        ref={el => { if (el) this.controlEl = el.inputElRef.inputElRef; }}
+        ref={el => { if (el && el.inputElRef) this.controlEl = el.inputElRef.inputElRef; }}
       />
     );
   }
