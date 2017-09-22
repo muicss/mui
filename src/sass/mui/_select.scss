@@ -109,8 +109,8 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   box-sizing: border-box;
 
   // Other
-  background-color: mui-color('white');
-  font-size: $mui-input-font-size;
+  background-color: $mui-select-menu-bg-color;
+  font-size: $mui-select-menu-font-size;
 
   // IE10+ bugfix
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -126,13 +126,13 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
   > div {
     padding: 0 22px;
-    height: $mui-input-font-size + 26px;
-    line-height: $mui-input-font-size + 26px;
+    height: $mui-select-menu-font-size + 26px;
+    line-height: $mui-select-menu-font-size + 26px;
     cursor: pointer;
     white-space: nowrap;
 
     &.mui--is-selected {
-      background-color: mui-color('grey', '200');
+      background-color: $mui-select-menu-item-bg-color-selected;
     }
 
     &.mui--is-disabled {
@@ -141,7 +141,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     }
 
     &:not(.mui-optgroup__label):not(.mui--is-disabled):hover {
-      background-color: mui-color('grey', '300');
+      background-color: $mui-select-menu-item-bg-color-hover;
     }
   }
 }
