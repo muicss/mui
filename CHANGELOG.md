@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.27 - September 28, 2017
+
+* Fixed issue with MUI React Col component in React 16
+* Switched to console.warn for MUI React warnings instead of console.error
+
 ## 0.9.26 - September 21, 2017
 
 * Fixed bug in React Input component triggered by using `preact`

@@ -35,22 +35,6 @@ var Col = function (_React$Component) {
   }
 
   babelHelpers.createClass(Col, [{
-    key: 'defaultProps',
-    value: function defaultProps() {
-      var props = { className: '' },
-          i = void 0,
-          v = void 0;
-
-      // add {breakpoint}, {breakpoint}-offset to props
-      for (i = breakpoints.length - 1; i > -1; i--) {
-        v = breakpoints[i];
-        props[v] = null;
-        props[v + '-offset'] = null;
-      }
-
-      return props;
-    }
-  }, {
     key: 'render',
     value: function render() {
       var cls = {},
@@ -100,5 +84,18 @@ var Col = function (_React$Component) {
 /** Define module API */
 
 
+Col.defaultProps = {
+  className: '',
+  xs: null,
+  sm: null,
+  md: null,
+  lg: null,
+  xl: null,
+  'xs-offset': null,
+  'sm-offset': null,
+  'md-offset': null,
+  'lg-offset': null,
+  'xl-offset': null
+};
 exports.default = Col;
 module.exports = exports['default'];

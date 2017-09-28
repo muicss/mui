@@ -708,7 +708,7 @@ function loadStyleFn(cssText) {
  */
 function raiseErrorFn(msg, useConsole) {
   if (useConsole) {
-    if (typeof console !== 'undefined') console.error('MUI Warning: ' + msg);
+    if (typeof console !== 'undefined') console.warn('MUI Warning: ' + msg);
   } else {
     throw new Error('MUI: ' + msg);
   }
