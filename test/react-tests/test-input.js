@@ -13,17 +13,16 @@ import Input from '../../src/react/input';
 
 
 describe('react/input', function() {
-  let errFn;
+  let warnFn;
 
 
   before(function() {
-    errFn = console.error;
-    console.error = function(msg) {throw Error(msg);};
+    warnFn = console.warn;
   });
 
 
   after(function() {
-    console.error = errFn;
+    console.warn = warnFn;
   });
 
 
@@ -193,15 +192,15 @@ describe('react/input', function() {
   });
 
 
-  it('does controlled component validation', function() {
+  it('does controlled component validation', function(done) {
+    console.warn = function (msg) {
+      assert.equal(/MUI Warning/.test(msg), true);
+      done();
+    }
+
     // raises error when `value` defined and `onChange missing
-    assert.throws(
-      function() {
-        let elem = <Input value="my value"></Input>;
-        let instance = ReactUtils.renderIntoDocument(elem);
-      },
-      /MUI Warning/
-    );
+    let elem = <Input value="my value"></Input>;
+    let instance = ReactUtils.renderIntoDocument(elem);
   });
 
 

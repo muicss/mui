@@ -15,17 +15,16 @@ import { getShallowRendererOutput } from '../lib/react-helpers';
 
 
 describe('react/select', function () {
-  let elem, errFn;
+  let elem, warnFn;
 
 
   before(function () {
-    errFn = console.error;
-    console.error = function (msg) { throw Error(msg); };
+    warnFn = console.warn;
   });
 
 
   after(function () {
-    console.error = errFn;
+    console.warn = warnFn;
   });
 
 
@@ -242,15 +241,15 @@ describe('react/select', function () {
   });
 
 
-  it('does controlled component validation', function () {
-    // raises error when `value` defined and `onChange missing
-    assert.throws(
-      function () {
-        let elem = <Select value="my value"></Select>;
-        let instance = ReactUtils.renderIntoDocument(elem);
-      },
-      /MUI Warning/
-    );
+  it('does controlled component validation', function (done) {
+    console.warn = function (msg) {
+      assert.equal(/MUI Warning/.test(msg), true);
+      done();
+    }
+
+    // warns when `value` defined and `onChange missing
+    let elem = <Select value="my value"></Select>;
+    let instance = ReactUtils.renderIntoDocument(elem);
   });
 
 

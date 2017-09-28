@@ -18,19 +18,18 @@ const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
  * @class
  */
 class Col extends React.Component {
-  defaultProps() {
-    let props = {className: ''},
-        i,
-        v;
-
-    // add {breakpoint}, {breakpoint}-offset to props
-    for (i=breakpoints.length - 1; i > -1; i--) {
-      v = breakpoints[i];
-      props[v] = null;
-      props[v + '-offset'] = null;
-    }
-
-    return props;
+  static defaultProps = {
+    className: '',
+    xs: null,
+    sm: null,
+    md: null,
+    lg: null,
+    xl: null,
+    'xs-offset': null,
+    'sm-offset': null,
+    'md-offset': null,
+    'lg-offset': null,
+    'xl-offset': null
   }
 
   render() {
