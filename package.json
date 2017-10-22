@@ -63,7 +63,7 @@
     "jsdom-global": "^3.0.2",
     "jshint": "^2.9.5",
     "merge-stream": "^1.0.1",
-    "mocha": "^3.5.3",
+    "mocha": "^4.0.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-test-renderer": "^16.0.0",
