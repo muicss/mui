@@ -5,29 +5,29 @@
 
 'use strict';
 
-var wrapperPadding = 15,  // from CSS
-    inputHeight = 32,  // from CSS
-    rowHeight = 42,  // from CSS
-    menuPadding = 8;  // from CSS
+var jqLite = require('./jqLite');
 
 
 /**
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
  */
-function getMenuPositionalCSSFn(wrapperEl, numRows, selectedRow) {
-  var viewHeight = document.documentElement.clientHeight;
+function getMenuPositionalCSSFn(wrapperEl, menuEl, selectedRow) {
+  var viewHeight = document.documentElement.clientHeight,
+      numRows = menuEl.children.length;
 
-  // determine 'height'
-  var h = numRows * rowHeight + 2 * menuPadding,
+  // determine menu height
+  var h = parseInt(menuEl.offsetHeight),
       height = Math.min(h, viewHeight);
+
+  // determine row height
+  var p = parseInt(jqLite.css(menuEl, 'padding-top')),
+      rowHeight = (h - 2 * p) / numRows;
 
   // determine 'top'
   var top, initTop, minTop, maxTop;
 
-  initTop = (menuPadding + rowHeight) - (wrapperPadding + inputHeight);
-  initTop -= selectedRow * rowHeight;
-
+  initTop = -1 * selectedRow * rowHeight;
   minTop = -1 * wrapperEl.getBoundingClientRect().top;
   maxTop = (viewHeight - height) + minTop;
 
@@ -39,9 +39,8 @@ function getMenuPositionalCSSFn(wrapperEl, numRows, selectedRow) {
       scrollMax;
 
   if (h > viewHeight) {
-    scrollIdeal = (menuPadding + (selectedRow + 1) * rowHeight) -
-      (-1 * top + wrapperPadding + inputHeight);
-    scrollMax = numRows * rowHeight + 2 * menuPadding - height;
+    scrollIdeal = top + p + selectedRow * rowHeight;
+    scrollMax = numRows * rowHeight + 2 * p - height;
     scrollTop = Math.min(scrollIdeal, scrollMax);
   }
 

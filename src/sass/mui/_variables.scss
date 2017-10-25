@@ -191,8 +191,9 @@ $mui-form-group-margin-bottom:    20px !default;
 // SELECT
 // ============================================================================
 
-$mui-select-menu-font-size:              $mui-input-font-size !default;
-$mui-select-menu-bg-color:               mui-color('white') !default;
+$mui-select-menu-font-size:       $mui-input-font-size !default;
+$mui-select-menu-bg-color:        mui-color('white') !default;
+$mui-select-menu-item-height:     $mui-select-menu-font-size + 26px !default;
 $mui-select-menu-item-bg-color-selected: mui-color('grey', '200') !default;
 $mui-select-menu-item-bg-color-hover:    mui-color('grey', '300') !default;
 

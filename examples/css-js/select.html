@@ -28,24 +28,7 @@
     <div class="mui-container">
       <div><button class="mui-btn mui-btn--raised" onclick="toggleAll()">Toggle elements</button></div>
       <br>
-      <div class="mui-select">
-        <select
-          onblur="console.log('[Example 1] onblur')"
-          onchange="console.log('[Example 1] onchange: ' + event.target.value)"
-          onfocus="console.log('[Example 1]: onfocus')"
-        >
-          <option>Option 1</option>
-          <option selected>Option 2</option>
-          <option>Option 3</option>
-          <option>Option 4</option>
-          <option>Option 5</option>
-          <option disabled>Option 6</option>
-          <option>Option 7</option>
-          <option>Option 8</option>
-        </select>
-        <label>Example 1</label>
-      </div>
-
+      <strong>Should have value "Option 2" selected</strong>
       <div class="mui-select">
         <select
           onblur="console.log('[Example 2] onblur')"
@@ -64,6 +47,26 @@
         <label>Example 2</label>
       </div>
 
+      <strong>Should have value "Option 2" selected and "Option 6" disabled</strong>
+      <div class="mui-select">
+        <select
+          onblur="console.log('[Example 1] onblur')"
+          onchange="console.log('[Example 1] onchange: ' + event.target.value)"
+          onfocus="console.log('[Example 1]: onfocus')"
+        >
+          <option>Option 1</option>
+          <option selected>Option 2</option>
+          <option>Option 3</option>
+          <option>Option 4</option>
+          <option>Option 5</option>
+          <option disabled>Option 6</option>
+          <option>Option 7</option>
+          <option>Option 8</option>
+        </select>
+        <label>Label</label>
+      </div>
+
+      <strong>Should have value "Option 3" and be disabled</strong>
       <div class="mui-select">
         <select
           onblur="console.log('[Example 3] onblur')"
@@ -80,9 +83,10 @@
           <option>Option 7</option>
           <option>Option 8</option>
         </select>
-        <label>Example 3 (Should be disabled)</label>
+        <label>Label</label>
       </div>
 
+      <strong>Should have "Option 1" selected and present nested options. "Option 2" should be disabled"</strong>
       <div class="mui-select">
         <select
           onblur="console.log('[Example 4] onblur')"
@@ -102,23 +106,10 @@
             <option>Option 6</option>
           </optgroup>
         </select>
-        <label>Example 4</label>
+        <label>Label</label>
       </div>
 
-      <label>Example 5</label>
-      <div>
-        <select
-          onblur="console.log('[Example 5] onblur')"
-          onchange="console.log('[Example 5] onchange: ' + event.target.value)"
-          onfocus="console.log('[Example 5]: onfocus')"
-        >
-          <option>Option 1</option>
-          <option>Option 2</option>
-        </select>
-      </div>
-      <br>
-      <br>
-
+      <strong>Should jump to item as you type</strong>
       <div class="mui-select">
         <select
           onblur="console.log('[Example 6] onblur')"
@@ -137,10 +128,8 @@
           <option>H</option>
           <option>5</option>
         </select>
-        <label>Example 6</label>
+        <label>Label</label>
       </div>
-
-
     </div>
   </body>
 </html>

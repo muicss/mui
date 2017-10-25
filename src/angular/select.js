@@ -286,18 +286,24 @@ angular.module(moduleName, [])
               }
             }
 
-            // set position of custom menu
-            var props = formlib.getMenuPositionalCSS(
-              element[0],
-              scope.options.length,
-              scope.menuIndex
-            );
+            menuEl.css({
+              height: 'auto',
+              visible: 'hidden'
+            });
 
-            menuEl.css(props);
-            jqLite.scrollTop(menuEl[0], props.scrollTop);
-
-            // attach event handlers
             $timeout(function() {
+              // set position of custom menu
+              var props = formlib.getMenuPositionalCSS(
+                element[0],
+                menuEl[0],
+                scope.menuIndex
+              );
+              
+              props.hidden = 'visible';
+              menuEl.css(props);
+              jqLite.scrollTop(menuEl[0], props.scrollTop);
+              
+              // attach event handlers
               jqLite.on(document, 'click', closeMenuFn);
               jqLite.on(window, 'resize', closeMenuFn);
             });

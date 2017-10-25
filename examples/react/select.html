@@ -8,7 +8,7 @@
     <!-- for example only -->   
     <script src="../assets/vendor/react/16.0.0/react.js"></script>
     <script src="../assets/vendor/react/16.0.0/react-dom.js"></script>
-    <script src="../assets/vendor/babel-standalone/6.24.0/babel.min.js"></script>
+    <script src="../assets/vendor/babel-standalone/6.26.0/babel.min.js"></script>
     <!-- end -->
 
     <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
@@ -24,12 +24,20 @@
       <h1>Select</h1>
       <div class="mui-panel">
         <form>
+          <strong>
+            Should have "Option 2" selected and "Option 4" should be red
+          </strong>
           <div id="example1"></div>
+
+          <strong>Should have "Option 3" selected</strong>
           <div id="example2"></div>
+
+          <strong>Should have "Option 4" selected and use default UI</strong>
           <div id="example3"></div>
+
+          <strong>Should jump to item as you type</strong>
           <div id="example4"></div>
           <div id="example5"></div>
-          <div id="example6"></div>
           <button class="mui-btn mui-btn--raised">submit</button>
         </form>
       </div>
@@ -56,7 +64,7 @@
         render() {
           return (
             <Select
-              label="Select Box 1"
+              label="Label"
               name="example1"
               defaultValue="opt2"
               onBlur={this.onBlur}
@@ -95,7 +103,7 @@
           return (
             <Select
               name="example2"
-              label="Select Box 2"
+              label="Label"
               value="opt3"
               onBlur={this.onBlur}
               onChange={this.onChange}
@@ -134,7 +142,7 @@
           return (
             <Select
               name="example3"
-              label="Select Box 3"
+              label="Label"
               value="opt4"
               useDefault={true}
               onBlur={this.onBlur}
@@ -155,29 +163,11 @@
       }
 
 
-      // Example4
+      // Example 4
       class Example4 extends React.Component {
-        onChange(ev) {
-          console.log('[Example4] onchange: ' + ev.target.value);
-        }
-
         render() {
           return (
-            <select value="opt2" onChange={this.onChange}>
-              <option value="opt1">Option 1</option>
-              <option value="opt2">Option 2</option>
-              <option value="opt3">Option 3</option>
-            </select>
-          );
-        }
-      }
-
-
-      // Example5
-      class Example5 extends React.Component {
-        render() {
-          return (
-            <Select label="Example 5">
+            <Select label="Label">
               <Option label="A" value="opt1" />
               <Option label="B" value="opt2" />
               <Option label="Ba" value="opt3" />
@@ -193,11 +183,11 @@
       }
 
 
-      // Example 6
-      class Example6 extends React.Component {
+      // Example 5
+      class Example5 extends React.Component {
         render() {
           return (
-            <Select label="Example 6" required={true}>
+            <Select label="Label" required={true}>
               <Option label="A" value="opt1" />
               <Option label="B" value="opt2" />
               <Option label="Ba" value="opt3" />
@@ -219,7 +209,6 @@
       ReactDOM.render(<Example3 />, document.getElementById('example3'));
       ReactDOM.render(<Example4 />, document.getElementById('example4'));
       ReactDOM.render(<Example5 />, document.getElementById('example5'));
-      ReactDOM.render(<Example6 />, document.getElementById('example6'));
     </script>
   </body>
 </html>

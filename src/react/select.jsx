@@ -257,16 +257,17 @@ class Menu extends React.Component {
     // prevent scrolling
     util.enableScrollLock();
 
+    let menuEl = this.wrapperElRef;
+
     // set position
     let props = formlib.getMenuPositionalCSS(
       this.props.wrapperEl,
-      this.props.optionEls.length,
+      menuEl,
       this.state.currentIndex
     );
 
-    let el = this.wrapperElRef;
-    jqLite.css(el, props);
-    jqLite.scrollTop(el, props.scrollTop);
+    jqLite.css(menuEl, props);
+    jqLite.scrollTop(menuEl, props.scrollTop);
 
     // attach keydown handler
     jqLite.on(document, 'keydown', this.onKeyDownCB);

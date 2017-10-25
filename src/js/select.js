@@ -216,7 +216,9 @@ function Menu(wrapperEl, selectEl, wrapperCallbackFn) {
   this.currentPos = null;
   this.selectEl = selectEl;
   this.wrapperEl = wrapperEl;
-  this.menuEl = this._createMenuEl(wrapperEl, selectEl);
+
+  var res = this._createMenuEl(wrapperEl, selectEl),
+      menuEl = this.menuEl = res[0];
 
   var cb = util.callback;
 
@@ -226,11 +228,20 @@ function Menu(wrapperEl, selectEl, wrapperCallbackFn) {
 
   // add to DOM
   wrapperEl.appendChild(this.menuEl);
-  jqLite.scrollTop(this.menuEl, this.menuEl._scrollTop);
+
+  // set position
+  var props = formlib.getMenuPositionalCSS(
+    wrapperEl,
+    menuEl,
+    res[1]
+  );
+  
+  jqLite.css(menuEl, props);
+  jqLite.scrollTop(menuEl, props.scrollTop);
 
   // attach event handlers
   var destroyCB = this.destroyCB;
-  jqLite.on(this.menuEl, 'click', this.onClickCB);
+  jqLite.on(menuEl, 'click', this.onClickCB);
   jqLite.on(win, 'resize', destroyCB);
 
   // attach event handler after current event loop exits
@@ -250,6 +261,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       origPos = -1,
       selectedPos = 0,
       selectedRow = 0,
+      numRows = 0,
       docFrag = document.createDocumentFragment(),  // for speed
       loopEl,
       rowEl,
@@ -300,7 +312,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
 
         // handle selected options
         if (loopEl.selected) {
-          selectedRow = menuEl.children.length;
+          selectedRow = numRows;
           origPos = itemPos;
           selectedPos = itemPos;
         }
@@ -311,6 +323,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       }
 
       docFrag.appendChild(rowEl);
+      numRows += 1;
     }
   }
 
@@ -324,17 +337,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   // paint selectedPos
   if (itemArray.length) jqLite.addClass(itemArray[selectedPos], selectedClass);
 
-  // set position
-  var props = formlib.getMenuPositionalCSS(
-    wrapperEl,
-    menuEl.children.length,
-    selectedRow
-  );
-
-  jqLite.css(menuEl, props);
-  menuEl._scrollTop = props.scrollTop;
-
-  return menuEl;
+  return [menuEl, selectedRow];
 }
 
 
