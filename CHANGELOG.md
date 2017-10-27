@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.28 - October 27, 2017
+
+* Added support for Select menu row height SASS variable
+* Upgraded devDependencies
+
 ## 0.9.27 - September 28, 2017
 
 * Fixed issue with MUI React Col component in React 16

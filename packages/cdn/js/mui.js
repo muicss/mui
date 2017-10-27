@@ -161,29 +161,29 @@ module.exports = {
 
 'use strict';
 
-var wrapperPadding = 15,  // from CSS
-    inputHeight = 32,  // from CSS
-    rowHeight = 42,  // from CSS
-    menuPadding = 8;  // from CSS
+var jqLite = require('./jqLite');
 
 
 /**
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
  */
-function getMenuPositionalCSSFn(wrapperEl, numRows, selectedRow) {
-  var viewHeight = document.documentElement.clientHeight;
+function getMenuPositionalCSSFn(wrapperEl, menuEl, selectedRow) {
+  var viewHeight = document.documentElement.clientHeight,
+      numRows = menuEl.children.length;
 
-  // determine 'height'
-  var h = numRows * rowHeight + 2 * menuPadding,
+  // determine menu height
+  var h = parseInt(menuEl.offsetHeight),
       height = Math.min(h, viewHeight);
+
+  // determine row height
+  var p = parseInt(jqLite.css(menuEl, 'padding-top')),
+      rowHeight = (h - 2 * p) / numRows;
 
   // determine 'top'
   var top, initTop, minTop, maxTop;
 
-  initTop = (menuPadding + rowHeight) - (wrapperPadding + inputHeight);
-  initTop -= selectedRow * rowHeight;
-
+  initTop = -1 * selectedRow * rowHeight;
   minTop = -1 * wrapperEl.getBoundingClientRect().top;
   maxTop = (viewHeight - height) + minTop;
 
@@ -195,9 +195,8 @@ function getMenuPositionalCSSFn(wrapperEl, numRows, selectedRow) {
       scrollMax;
 
   if (h > viewHeight) {
-    scrollIdeal = (menuPadding + (selectedRow + 1) * rowHeight) -
-      (-1 * top + wrapperPadding + inputHeight);
-    scrollMax = numRows * rowHeight + 2 * menuPadding - height;
+    scrollIdeal = top + p + selectedRow * rowHeight;
+    scrollMax = numRows * rowHeight + 2 * p - height;
     scrollTop = Math.min(scrollIdeal, scrollMax);
   }
 
@@ -214,7 +213,7 @@ module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
 
-},{}],5:[function(require,module,exports){
+},{"./jqLite":5}],5:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -1574,7 +1573,9 @@ function Menu(wrapperEl, selectEl, wrapperCallbackFn) {
   this.currentPos = null;
   this.selectEl = selectEl;
   this.wrapperEl = wrapperEl;
-  this.menuEl = this._createMenuEl(wrapperEl, selectEl);
+
+  var res = this._createMenuEl(wrapperEl, selectEl),
+      menuEl = this.menuEl = res[0];
 
   var cb = util.callback;
 
@@ -1584,11 +1585,20 @@ function Menu(wrapperEl, selectEl, wrapperCallbackFn) {
 
   // add to DOM
   wrapperEl.appendChild(this.menuEl);
-  jqLite.scrollTop(this.menuEl, this.menuEl._scrollTop);
+
+  // set position
+  var props = formlib.getMenuPositionalCSS(
+    wrapperEl,
+    menuEl,
+    res[1]
+  );
+  
+  jqLite.css(menuEl, props);
+  jqLite.scrollTop(menuEl, props.scrollTop);
 
   // attach event handlers
   var destroyCB = this.destroyCB;
-  jqLite.on(this.menuEl, 'click', this.onClickCB);
+  jqLite.on(menuEl, 'click', this.onClickCB);
   jqLite.on(win, 'resize', destroyCB);
 
   // attach event handler after current event loop exits
@@ -1608,6 +1618,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       origPos = -1,
       selectedPos = 0,
       selectedRow = 0,
+      numRows = 0,
       docFrag = document.createDocumentFragment(),  // for speed
       loopEl,
       rowEl,
@@ -1658,7 +1669,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
 
         // handle selected options
         if (loopEl.selected) {
-          selectedRow = menuEl.children.length;
+          selectedRow = numRows;
           origPos = itemPos;
           selectedPos = itemPos;
         }
@@ -1669,6 +1680,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       }
 
       docFrag.appendChild(rowEl);
+      numRows += 1;
     }
   }
 
@@ -1682,17 +1694,7 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   // paint selectedPos
   if (itemArray.length) jqLite.addClass(itemArray[selectedPos], selectedClass);
 
-  // set position
-  var props = formlib.getMenuPositionalCSS(
-    wrapperEl,
-    menuEl.children.length,
-    selectedRow
-  );
-
-  jqLite.css(menuEl, props);
-  menuEl._scrollTop = props.scrollTop;
-
-  return menuEl;
+  return [menuEl, selectedRow];
 }
 
 

@@ -126,8 +126,8 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
   > div {
     padding: 0 22px;
-    height: $mui-select-menu-font-size + 26px;
-    line-height: $mui-select-menu-font-size + 26px;
+    height: $mui-select-menu-item-height;
+    line-height: $mui-select-menu-item-height;
     cursor: pointer;
     white-space: nowrap;
 

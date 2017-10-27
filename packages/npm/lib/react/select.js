@@ -310,12 +310,13 @@ var Menu = function (_React$Component2) {
       // prevent scrolling
       util.enableScrollLock();
 
-      // set position
-      var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, this.props.optionEls.length, this.state.currentIndex);
+      var menuEl = this.wrapperElRef;
 
-      var el = this.wrapperElRef;
-      jqLite.css(el, props);
-      jqLite.scrollTop(el, props.scrollTop);
+      // set position
+      var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, menuEl, this.state.currentIndex);
+
+      jqLite.css(menuEl, props);
+      jqLite.scrollTop(menuEl, props.scrollTop);
 
       // attach keydown handler
       jqLite.on(document, 'keydown', this.onKeyDownCB);
