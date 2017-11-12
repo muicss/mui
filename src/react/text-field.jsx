@@ -174,6 +174,7 @@ class Label extends React.Component {
       <label
         style={this.state.style}
         onClick={this.props.onClick}
+        htmlFor={this.props.htmlFor}
       >
         {this.props.text}
       </label>
@@ -211,13 +212,13 @@ class TextField extends React.Component {
     let cls = {},
       labelEl;
 
-    const { children, className, style, label, floatingLabel,
+    const { children, className, style, label, floatingLabel, labelFor,
       ...other } = this.props;
 
     const type = jqLite.type(label);
 
     if ((type === 'string' && label.length) || type === 'object') {
-      labelEl = <Label text={label} onClick={this.onClickCB} />;
+      labelEl = <Label text={label} onClick={this.onClickCB} htmlFor={labelFor} />;
     }
 
     cls['mui-textfield'] = true;
