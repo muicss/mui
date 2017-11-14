@@ -36,6 +36,9 @@ function initialize(selectEl) {
 
   var wrapperEl = selectEl.parentNode;
 
+  // exit if use-default
+  if (jqLite.hasClass(wrapperEl, 'mui-select--use-default')) return;
+
   // initialize variables
   wrapperEl._selectEl = selectEl;
   wrapperEl._menu = null;
@@ -63,13 +66,15 @@ function initialize(selectEl) {
 
   // handle 'disabled' add/remove
   jqLite.on(el, animationHelpers.animationEvents, function(ev) {
+    var parentEl = ev.target.parentNode;
+
     // no need to propagate
     ev.stopPropagation();
 
     if (ev.animationName === 'mui-node-disabled') {
-      ev.target.parentNode.removeAttribute('tabIndex');
+      parentEl.removeAttribute('tabIndex');
     } else {
-      ev.target.parentNode.tabIndex = 0;
+      parentEl.tabIndex = 0;
     }    
   });
 }
@@ -82,7 +87,7 @@ function initialize(selectEl) {
 function onInnerMouseDown(ev) {
   // only left clicks
   if (ev.button !== 0) return;
-
+  
   // prevent built-in menu from opening
   ev.preventDefault();
 }
