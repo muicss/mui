@@ -218,7 +218,13 @@ class TextField extends React.Component {
     const type = jqLite.type(label);
 
     if ((type === 'string' && label.length) || type === 'object') {
-      labelEl = <Label text={label} onClick={this.onClickCB} htmlFor={this.props.id} />;
+      labelEl = (
+        <Label
+          text={label}
+          onClick={this.onClickCB}
+          htmlFor={this.props.id}
+        />
+      );
     }
 
     cls['mui-textfield'] = true;
