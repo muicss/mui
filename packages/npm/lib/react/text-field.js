@@ -223,7 +223,8 @@ var Label = function (_React$Component2) {
         'label',
         {
           style: this.state.style,
-          onClick: this.props.onClick
+          onClick: this.props.onClick,
+          htmlFor: this.props.htmlFor
         },
         this.props.text
       );
@@ -284,7 +285,11 @@ var TextField = function (_React$Component3) {
       var type = jqLite.type(label);
 
       if (type === 'string' && label.length || type === 'object') {
-        labelEl = _react2.default.createElement(Label, { text: label, onClick: this.onClickCB });
+        labelEl = _react2.default.createElement(Label, {
+          text: label,
+          onClick: this.onClickCB,
+          htmlFor: this.props.id
+        });
       }
 
       cls['mui-textfield'] = true;

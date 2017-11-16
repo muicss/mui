@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.29 - November 16, 2017
+
+* Fixed scroll lock issue in Firefox Quantum
+* Added support for use-default to CSS/JS Select component
+
 ## 0.9.28 - October 27, 2017
 
 * Added support for Select menu row height SASS variable

@@ -844,13 +844,17 @@ function disableScrollLockFn(resetPos) {
   if (scrollLock === 0) {
     // remove scroll lock and delete style element
     jqLite.removeClass(document.body, scrollLockCls);
-    scrollStyleEl.parentNode.removeChild(scrollStyleEl);
 
     // restore scroll position
     if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top);
 
     // restore scroll event listeners
     jqLite.off(window, 'scroll', scrollEventHandler, true);
+
+    // delete style element (deferred for Firefox Quantum bugfix)
+    setTimeout(function() {
+      scrollStyleEl.parentNode.removeChild(scrollStyleEl);      
+    }, 0);
   }
 }
 
@@ -1417,6 +1421,9 @@ function initialize(selectEl) {
 
   var wrapperEl = selectEl.parentNode;
 
+  // exit if use-default
+  if (jqLite.hasClass(wrapperEl, 'mui-select--use-default')) return;
+
   // initialize variables
   wrapperEl._selectEl = selectEl;
   wrapperEl._menu = null;
@@ -1444,13 +1451,15 @@ function initialize(selectEl) {
 
   // handle 'disabled' add/remove
   jqLite.on(el, animationHelpers.animationEvents, function(ev) {
+    var parentEl = ev.target.parentNode;
+
     // no need to propagate
     ev.stopPropagation();
 
     if (ev.animationName === 'mui-node-disabled') {
-      ev.target.parentNode.removeAttribute('tabIndex');
+      parentEl.removeAttribute('tabIndex');
     } else {
-      ev.target.parentNode.tabIndex = 0;
+      parentEl.tabIndex = 0;
     }    
   });
 }
@@ -1463,7 +1472,7 @@ function initialize(selectEl) {
 function onInnerMouseDown(ev) {
   // only left clicks
   if (ev.button !== 0) return;
-
+  
   // prevent built-in menu from opening
   ev.preventDefault();
 }

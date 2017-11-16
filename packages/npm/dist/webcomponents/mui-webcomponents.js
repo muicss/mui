@@ -752,13 +752,17 @@ function disableScrollLockFn(resetPos) {
   if (scrollLock === 0) {
     // remove scroll lock and delete style element
     jqLite.removeClass(document.body, scrollLockCls);
-    scrollStyleEl.parentNode.removeChild(scrollStyleEl);
 
     // restore scroll position
     if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top);
 
     // restore scroll event listeners
     jqLite.off(window, 'scroll', scrollEventHandler, true);
+
+    // delete style element (deferred for Firefox Quantum bugfix)
+    setTimeout(function() {
+      scrollStyleEl.parentNode.removeChild(scrollStyleEl);      
+    }, 0);
   }
 }
 
