@@ -7,27 +7,17 @@
 
 import React from 'react';
 
-import { TextField } from './text-field';
-
+import { textfieldWrapper } from './_textfieldHelpers';
 
 /**
  * Input constructor
  * @class
  */
-class Input extends React.Component {
-  static defaultProps = {
-    type: 'text'
-  };
-
-  render() {
-    return (
-      <TextField
-        { ...this.props }
-        ref={el => { if (el && el.inputElRef) this.controlEl = el.inputElRef.inputElRef; }}
-      />
-    );
-  }
-}
+const Input = textfieldWrapper(props => {
+  const { inputRef, ...rest } = props;
+  return <input ref={inputRef} {...rest} />;
+});
 
 
+/** Module API */
 export default Input;

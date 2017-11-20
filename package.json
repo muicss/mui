@@ -64,9 +64,10 @@
     "jshint": "^2.9.5",
     "merge-stream": "^1.0.1",
     "mocha": "^4.0.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-test-renderer": "^16.0.0",
+    "react": "^16.1.1",
+    "react-addons-shallow-compare": "^15.6.2",
+    "react-dom": "^16.1.1",
+    "react-test-renderer": "^16.1.1",
     "reactify": "^1.1.1",
     "readable-wrap": "^1.0.0",
     "streamqueue": "^1.1.1",
@@ -77,6 +78,7 @@
     "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {
+    "http-server": "^0.10.0"
   },
   "engines": {
     "npm": ">=3.3.12"
