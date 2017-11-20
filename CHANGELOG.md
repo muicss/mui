@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.30 - November 20, 2017
+
+* Re-implemented MUI React textfield components using HOC pattern
+  (fixes https://github.com/muicss/mui/issues/246)
+
 ## 0.9.29 - November 16, 2017
 
 * Fixed scroll lock issue in Firefox Quantum
