@@ -208,7 +208,7 @@ class Select extends React.Component {
         >
           {children}
         </select>
-        <label>{label}</label>
+        <label tabindex="-1">{label}</label>
         {menuElem}
       </div>
     );

@@ -40,7 +40,7 @@ angular.module(moduleName, [])
         '>' +
         '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' +
         '</select>' +
-        '<label>{{label}}</label>' +
+        '<label tabindex="-1">{{label}}</label>' +
         '<div ' +
         'class="mui-select__menu"' +
         'ng-show="!useDefault && isOpen"> ' +
