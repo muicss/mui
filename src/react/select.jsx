@@ -315,9 +315,9 @@ class Menu extends React.Component {
 
     // select first match alphabetically
     let prefixRegex = new RegExp('^' + this.q, 'i'),
-      optionEls = this.props.optionEls,
-      m = optionEls.length,
-      i;
+        optionEls = this.props.optionEls,
+        m = optionEls.length,
+        i;
 
     for (i = 0; i < m; i++) {
       // select item if code matches
@@ -352,6 +352,24 @@ class Menu extends React.Component {
 
   destroy() {
     this.props.onClose();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // scroll menu (if necessary)
+    if (this.state.currentIndex != prevState.currentIndex) {
+      var menuEl = this.wrapperElRef,
+          itemEl = menuEl.children[this.state.currentIndex],
+          itemRect = itemEl.getBoundingClientRect();
+
+      if (itemRect.top < 0) {
+        // menu item is hidden above visible window
+        menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+      } else if (itemRect.top > window.innerHeight) {
+        // menu item is hidden below visible window
+        menuEl.scrollTop = menuEl.scrollTop +
+        (itemRect.top + itemRect.height - window.innerHeight) + 5;
+      }
+    }
   }
 
   render() {

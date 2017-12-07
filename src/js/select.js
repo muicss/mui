@@ -421,7 +421,21 @@ Menu.prototype.selectPos = function(pos) {
 
   // select new row
   this.currentPos = pos;
-  jqLite.addClass(this.itemArray[pos], selectedClass);
+  var itemEl = this.itemArray[pos];
+  jqLite.addClass(itemEl, selectedClass);
+
+  // scroll (if necessary)
+  var menuEl = this.menuEl,
+      itemRect = itemEl.getBoundingClientRect();
+
+  if (itemRect.top < 0) {
+    // menu item is hidden above visible window
+    menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+  } else if (itemRect.top > window.innerHeight) {
+    // menu item is hidden below visible window
+    menuEl.scrollTop = menuEl.scrollTop + 
+      (itemRect.top + itemRect.height - window.innerHeight) + 5;
+  }
 }
 
 
