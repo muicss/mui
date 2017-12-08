@@ -321,6 +321,32 @@ angular.module(moduleName, [])
           }
         });
 
+
+        /**
+         * Scroll to menu items (if hidden)
+         */
+        scope.$watch('menuIndex', function(newVal, oldVal) {
+          // skip initialization
+          if (newVal === oldVal) return;
+
+          // scroll menu after rendering is finished
+          $timeout(function() {
+            var itemEl = element[0].querySelector('.mui--is-selected'),
+                itemRect = itemEl.getBoundingClientRect(),
+                menuEl = itemEl.parentNode;
+
+            if (itemRect.top < 0) {
+              // menu item is hidden above visible window
+              menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+            } else if (itemRect.top > window.innerHeight) {
+              // menu item is hidden below visible window
+              menuEl.scrollTop = menuEl.scrollTop +
+                (itemRect.top + itemRect.height - window.innerHeight) + 5;
+            }
+          });
+        });
+
+
         scope.$watch('ngDisabled', function(newVal) {
           if (newVal === true) wrapperEl.prop('tabIndex', '-1');
           else if (!scope.useDefault) wrapperEl.prop('tabIndex', '0');
