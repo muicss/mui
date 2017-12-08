@@ -39,7 +39,7 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
     },
     replace: true,
     transclude: true,
-    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)" ' + 'ng-keypress="onWrapperKeypress($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + '>' + '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' + '</select>' + '<label>{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-show="!useDefault && isOpen"> ' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in options track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' + '</div>' + '</div>',
+    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)" ' + 'ng-keypress="onWrapperKeypress($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + '>' + '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' + '</select>' + '<label tabindex="-1">{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-show="!useDefault && isOpen"> ' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in options track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' + '</div>' + '</div>',
     link: function link(scope, element, attrs, controller, transcludeFn) {
       var wrapperEl = element,
           menuEl = element.find('div'),
@@ -289,6 +289,29 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           jqLite.off(document, 'click', closeMenuFn);
           jqLite.off(window, 'resize', closeMenuFn);
         }
+      });
+
+      /**
+       * Scroll to menu items (if hidden)
+       */
+      scope.$watch('menuIndex', function (newVal, oldVal) {
+        // skip initialization
+        if (newVal === oldVal) return;
+
+        // scroll menu after rendering is finished
+        $timeout(function () {
+          var itemEl = element[0].querySelector('.mui--is-selected'),
+              itemRect = itemEl.getBoundingClientRect(),
+              menuEl = itemEl.parentNode;
+
+          if (itemRect.top < 0) {
+            // menu item is hidden above visible window
+            menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+          } else if (itemRect.top > window.innerHeight) {
+            // menu item is hidden below visible window
+            menuEl.scrollTop = menuEl.scrollTop + (itemRect.top + itemRect.height - window.innerHeight) + 5;
+          }
+        });
       });
 
       scope.$watch('ngDisabled', function (newVal) {

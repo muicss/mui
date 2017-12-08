@@ -55,7 +55,7 @@ function inputFactory(isTextArea) {
   }
 
   // update template
-  template += '<label>{{label}}</label></div>';
+  template += '<label tabindex="-1">{{label}}</label></div>';
 
   // directive function
   return ['$timeout', function ($timeout) {

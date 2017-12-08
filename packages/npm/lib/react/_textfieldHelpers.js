@@ -246,7 +246,8 @@ var Label = function (_React$Component2) {
         {
           style: this.state.style,
           onClick: this.props.onClick,
-          htmlFor: this.props.htmlFor
+          htmlFor: this.props.htmlFor,
+          tabindex: '-1' // firefox bugfix (see #252)
         },
         this.props.text
       );

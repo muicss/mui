@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.9.31 - December 9, 2017
+
+* Fixed tab-focus issue affecting Input, Textarea and Select components with
+  labels in Firefox 57 (https://github.com/muicss/mui/issues/252)
+* Added support for automatic scroll after keypress events in Select component
+  menu (https://github.com/muicss/mui/issues/203)
+
 ## 0.9.30 - November 20, 2017
 
 * Re-implemented MUI React textfield components using HOC pattern

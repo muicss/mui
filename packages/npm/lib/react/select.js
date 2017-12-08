@@ -244,7 +244,7 @@ var Select = function (_React$Component) {
         ),
         _react2.default.createElement(
           'label',
-          null,
+          { tabindex: '-1' },
           label
         ),
         menuElem
@@ -408,6 +408,24 @@ var Menu = function (_React$Component2) {
     key: 'destroy',
     value: function destroy() {
       this.props.onClose();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      // scroll menu (if necessary)
+      if (this.state.currentIndex != prevState.currentIndex) {
+        var menuEl = this.wrapperElRef,
+            itemEl = menuEl.children[this.state.currentIndex],
+            itemRect = itemEl.getBoundingClientRect();
+
+        if (itemRect.top < 0) {
+          // menu item is hidden above visible window
+          menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+        } else if (itemRect.top > window.innerHeight) {
+          // menu item is hidden below visible window
+          menuEl.scrollTop = menuEl.scrollTop + (itemRect.top + itemRect.height - window.innerHeight) + 5;
+        }
+      }
     }
   }, {
     key: 'render',
