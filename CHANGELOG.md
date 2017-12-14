@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.32 - December 14, 2017
+
+* Fixed typo in `tabIndex` attribute used in MUI React Input, Textarea and
+  Select component
+
 ## 0.9.31 - December 9, 2017
 
 * Fixed tab-focus issue affecting Input, Textarea and Select components with

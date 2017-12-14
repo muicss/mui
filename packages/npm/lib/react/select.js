@@ -244,7 +244,7 @@ var Select = function (_React$Component) {
         ),
         _react2.default.createElement(
           'label',
-          { tabindex: '-1' },
+          { tabIndex: '-1' },
           label
         ),
         menuElem
