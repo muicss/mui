@@ -407,7 +407,7 @@ Menu.prototype.selectCurrent = function() {
     this.selectEl.selectedIndex = this.itemArray[this.currentPos]._muiIndex;
 
     // trigger change event
-    util.dispatchEvent(this.selectEl, 'change', false, false);
+    util.dispatchEvent(this.selectEl, 'change', true, false);
   }
 }
 
