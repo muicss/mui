@@ -163,6 +163,20 @@ describe('react/dropdown', function () {
     assert.equal(node.menuElRef, undefined);
   });
 
+  it('closes menu after Escape key press', function () {
+    let node = ReactUtils.renderIntoDocument(elem);
+
+    // open menu
+    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    ReactUtils.Simulate.click(buttonEl, { button: 0 });
+
+    // press Escape
+    ReactUtils.Simulate.keyDown(window.document, { key: 'Escape', keyCode: 27 });
+
+    // check that menu has closed
+    assert.equal(node.menuElRef, undefined);
+  });
+
 
   it('handles onSelect method on dropdown', function (done) {
     let onSelectFn = function (value) {

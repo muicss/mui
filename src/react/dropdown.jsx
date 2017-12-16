@@ -37,6 +37,7 @@ class Dropdown extends React.Component {
     this.selectCB = cb(this, 'select');
     this.onClickCB = cb(this, 'onClick');
     this.onOutsideClickCB = cb(this, 'onOutsideClick');
+    this.onKeyCB = cb(this, 'onKey');
   }
 
   static defaultProps = {
@@ -53,10 +54,12 @@ class Dropdown extends React.Component {
 
   componentDidMount() {
     document.addEventListener('click', this.onOutsideClickCB);
+    document.addEventListener('keydown', this.onKeyCB);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.onOutsideClickCB);
+    document.removeEventListener('keydown', this.onKeyCB);
   }
 
   onClick(ev) {
@@ -115,6 +118,12 @@ class Dropdown extends React.Component {
   onOutsideClick(ev) {
     let isClickInside = this.wrapperElRef.contains(ev.target);
     if (!isClickInside) this.close();
+  }
+
+  onKey(ev) {
+    if (ev.key === 'Escape') {
+      this.close();
+    }
   }
 
   render() {
