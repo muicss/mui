@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.35 - December 17, 2017
+
+* Added close-on-escape support to Dropdown components in MUI CSS/JS, React and
+  Angular libraries.
+
 ## 0.9.34 - December 16, 2017
 
 * Added `input` event trigger to CSS/JS Select component
