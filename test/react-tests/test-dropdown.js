@@ -12,6 +12,8 @@ import DropdownItem from '../../src/react/dropdown-item';
 
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
+import * as util from '../../src/js/lib/util';
+
 
 describe('react/dropdown', function () {
   let elem;
@@ -171,7 +173,7 @@ describe('react/dropdown', function () {
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // press Escape
-    ReactUtils.Simulate.keyDown(window.document, { key: 'Escape', keyCode: 27 });
+    util.dispatchEvent(document, 'keydown', true, false, {key: 'Escape'});
 
     // check that menu has closed
     assert.equal(node.menuElRef, undefined);
