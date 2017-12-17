@@ -66,14 +66,23 @@ angular.module(moduleName, [])
           scope.$apply();
         }
 
+        function handleKeyDownFn(ev) {
+          // close dropdown on escape key
+          var key = ev.key;
+          if (key === 'Escape' || key === 'Esc') closeDropdownFn();
+        }
+
         // handle menu open
         scope.$watch('open', function(newValue) {
+          var doc = document;
           if (newValue === true) {
             menuEl.addClass(openClass);
-            document.addEventListener('click', closeDropdownFn);
+            doc.addEventListener('click', closeDropdownFn);
+            doc.addEventListener('keydown', handleKeyDownFn);
           } else if (newValue === false) {
             menuEl.removeClass(openClass);
-            document.removeEventListener('click', closeDropdownFn);
+            doc.removeEventListener('click', closeDropdownFn);
+            doc.removeEventListener('keydown', handleKeyDownFn);
           }
         });
 
