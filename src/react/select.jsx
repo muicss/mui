@@ -202,7 +202,7 @@ class Select extends React.Component {
           tabIndex={tabIndexInner}
           value={this.state.value}
           defaultValue={defaultValue}
-          readOnly={this.props.readOnly}
+          readOnly={readOnly}
           onChange={this.onInnerChangeCB}
           onMouseDown={this.onInnerMouseDownCB}
           required={this.props.required}
