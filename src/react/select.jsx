@@ -182,7 +182,7 @@ class Select extends React.Component {
       tabIndexInner = '-1';
     }
 
-    const { children, className, style, label, defaultValue, readOnly,
+    const { children, className, style, label, defaultValue, readOnly, disabled
       useDefault, name, ...reactProps } = this.props;
 
     return (
@@ -198,10 +198,11 @@ class Select extends React.Component {
         <select
           ref={el => { this.controlEl = el; }}
           name={name}
+          disabled={disabled}
           tabIndex={tabIndexInner}
           value={this.state.value}
           defaultValue={defaultValue}
-          readOnly={this.props.readOnly}
+          readOnly={readOnly}
           onChange={this.onInnerChangeCB}
           onMouseDown={this.onInnerMouseDownCB}
           required={this.props.required}
