@@ -182,8 +182,8 @@ class Select extends React.Component {
       tabIndexInner = '-1';
     }
 
-    const { children, className, style, label, defaultValue, readOnly, disabled
-      useDefault, name, ...reactProps } = this.props;
+    const { children, className, style, label, defaultValue, readOnly,
+      disabled, useDefault, name, ...reactProps } = this.props;
 
     return (
       <div

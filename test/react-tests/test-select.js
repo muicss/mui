@@ -162,6 +162,22 @@ describe('react/select', function () {
   });
 
 
+  it('renders disabled attribute properly', function () {
+    let testElem = (
+      <Select disabled>
+        <Option value="value1" label="Option 1" />
+        <Option value="value2" label="Option 2" />
+        <Option value="value3" label="Option 3" />
+      </Select>
+    );
+
+    let instance = ReactUtils.renderIntoDocument(testElem);
+    let selectEl = instance.controlEl;
+
+    assert.equal(selectEl.disabled, true);
+  });
+
+
   it('renders required attribute properly', function () {
     // true
     let testElem = (
