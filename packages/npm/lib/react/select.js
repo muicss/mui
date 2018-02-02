@@ -208,9 +208,10 @@ var Select = function (_React$Component) {
           label = _props.label,
           defaultValue = _props.defaultValue,
           readOnly = _props.readOnly,
+          disabled = _props.disabled,
           useDefault = _props.useDefault,
           name = _props.name,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault', 'name']);
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'disabled', 'useDefault', 'name']);
 
 
       return _react2.default.createElement(
@@ -232,10 +233,11 @@ var Select = function (_React$Component) {
               _this2.controlEl = el;
             },
             name: name,
+            disabled: disabled,
             tabIndex: tabIndexInner,
             value: this.state.value,
             defaultValue: defaultValue,
-            readOnly: this.props.readOnly,
+            readOnly: readOnly,
             onChange: this.onInnerChangeCB,
             onMouseDown: this.onInnerMouseDownCB,
             required: this.props.required
