@@ -2,8 +2,13 @@
 <html>
   <head>
     <!-- for example only -->   
+    <!--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
+    -->
+    <script src="../assets/vendor/react/16.0.0/react.js"></script>
+    <script src="../assets/vendor/react/16.0.0/react-dom.js"></script>
+    <script src="../assets/vendor/babel-standalone/6.26.0/babel.min.js"></script>
     <!-- end -->
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,34 +20,53 @@
       <h1>Dropdowns</h1>
       <div id="dropdowns"></div>
     </div>
-    <script type="text/jsx">
-      var Dropdown = React.createClass({
-        render: function() {
+    <script type="text/babel">
+      let Dropdown = mui.react.Dropdown,
+          DropdownItem = mui.react.DropdownItem;
+
+
+      class Example1 extends React.Component {
+        render() {
           return (
-            <MUIDropdown type="primary" label="Dropdown" onClick={ function (ref, ev) { console.log('option selected') } }>
-              <MUIDropdownItem link="#/link1">Option    1</MUIDropdownItem>
-              <MUIDropdownItem>Option     2</MUIDropdownItem>
-              <MUIDropdownItem>Option     3</MUIDropdownItem>
-              <MUIDropdownItem onClick={ function (ref, ev) { alert("Option 4 selected"); } }>Option     4</MUIDropdownItem>
-            </MUIDropdown>
+            <Dropdown
+              color="primary"
+              label="Dropdown"
+              onClick={function() {console.log('option selected');}}
+            >
+              <DropdownItem link="#/link1">Option 1</DropdownItem>
+              <DropdownItem>Option 2</DropdownItem>
+              <DropdownItem>Option 3</DropdownItem>
+              <DropdownItem onclick={function() {alert('Option 4 selected');}}>
+                Option 4
+              </DropdownItem>
+            </Dropdown>
           );
         }
-      });
+      }
 
-      var DropdownRight = React.createClass({
-        render: function() {
+
+      class Example2 extends React.Component {
+        render() {
           return (
-            <MUIDropdown right={ true } type="primary" label="Dropdown">
-              <MUIDropdownItem>Option     1</MUIDropdownItem>
-              <MUIDropdownItem>Option     2</MUIDropdownItem>
-              <MUIDropdownItem>Option     3</MUIDropdownItem>
-              <MUIDropdownItem>Option     4</MUIDropdownItem>
-            </MUIDropdown>
+            <Dropdown alignMenu="right" color="primary" label="Dropdown">
+              <DropdownItem>Option 1</DropdownItem>
+              <DropdownItem>Option 2</DropdownItem>
+              <DropdownItem>Option 3</DropdownItem>
+              <DropdownItem>Option 4</DropdownItem>
+            </Dropdown>
           );
         }
-      });
+      }
 
-      React.render((<div className="mui-panel"><h2>React</h2><Dropdown /><DropdownRight /></div>), document.getElementById('dropdowns'));
+
+      ReactDOM.render(
+        <div className="mui-panel">
+          <h2>React</h2>
+          <Example1 />
+          <Example2 />
+        </div>,
+        document.getElementById('dropdowns')
+      );
     </script>
   </body>
 </html>
