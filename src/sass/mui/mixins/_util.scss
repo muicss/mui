@@ -36,8 +36,12 @@
   outline: thin dotted;
 
   // WebKit
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
+  outline: mui-rem(5px) auto -webkit-focus-ring-color;
+  outline-offset: mui-rem(-2px);
+}
+
+@function mui-rem($px) {
+  @return ($px / 16px) * 1rem;
 }
 
 @mixin normalizecss() {

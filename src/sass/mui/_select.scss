@@ -2,7 +2,7 @@
  * MUI Select Component
  */
 
-$xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
+$xFormLabelLineHeight: $mui-label-font-size * 1.25;
 
 
 .mui-select {
@@ -15,7 +15,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     outline: 0;
 
     > select {
-      height: $mui-input-height + 1px;
+      height: calc(#{$mui-input-height} + 1px);
       margin-bottom: -1px;
       border-color: $mui-input-border-color-focus;
       border-width: 2px;
@@ -49,7 +49,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     font-family: inherit;
     line-height: inherit;
 
-    padding: 0 25px 0 0;
+    padding: 0 mui-rem(25px) 0 0;
 
     &::-ms-expand {
       display: none;  // For IE
@@ -57,7 +57,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
     &:focus {
       outline: 0;
-      height: $mui-input-height + 1px;
+      height: calc(#{$mui-input-height} + 1px);
       margin-bottom: -1px;
       border-color: $mui-input-border-color-focus;
       border-width: 2px;
@@ -103,7 +103,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   // Display
   min-width: 100%;
   overflow-y: auto;
-  padding: 8px 0;
+  padding: mui-rem(8px) 0;
 
   // box-sizing
   box-sizing: border-box;
@@ -125,7 +125,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   }
 
   > div {
-    padding: 0 22px;
+    padding: 0 mui-rem(22px);
     height: $mui-select-menu-item-height;
     line-height: $mui-select-menu-item-height;
     cursor: pointer;
