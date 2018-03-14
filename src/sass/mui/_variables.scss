@@ -1,3 +1,7 @@
+@import "mixins/util";
+
+
+
 // ============================================================================
 // COLORS
 // ============================================================================
@@ -21,19 +25,20 @@ $mui-danger-color:             mui-color('red', '500') !default;
 
 $mui-include-globals:            true !default;
 
-$mui-body-font-family:           Arial, Verdana, Tahoma !default;
-$mui-body-font-color:            mui-color('black-alpha-87') !default;
-$mui-body-font-size:             mui-rem(14px) !default;
-$mui-body-font-weight:           400 !default;
-$mui-body-line-height:           1.429 !default;
 $mui-body-bg-color:              mui-color('white') !default;
+
+$mui-base-font-family:           Arial, Verdana, Tahoma !default;
+$mui-base-font-color:            mui-color('black-alpha-87') !default;
+$mui-base-font-size:             mui-rem(14px) !default;
+$mui-base-font-weight:           400 !default;
+$mui-base-line-height:           1.429 !default;
+$mui-base-font-smoothing:        false !default;
 
 $mui-link-font-color:            $mui-primary-color !default;
 $mui-link-text-decoration:       none !default;
 $mui-link-font-color-hover:      $mui-primary-color-dark !default;
 $mui-link-text-decoration-hover: underline !default;
 
-$mui-base-font-smoothing:        false !default;
 $mui-cursor-disabled:            not-allowed !default;
 $mui-border-radius-default:      2px !default;
 
@@ -131,7 +136,7 @@ $mui-btn-spacing-horizontal:          mui-rem(8px) !default;
 // ----------------------------------------------------------------------------
 
 $mui-btn-default-bg-color:            mui-color('white') !default;
-$mui-btn-default-font-color:          $mui-body-font-color !default;
+$mui-btn-default-font-color:          $mui-base-font-color !default;
 $mui-btn-default-ripple-color:        darken(mui-color('white'), 35%) !default;
 
 $mui-btn-primary-bg-color:            $mui-primary-color !default;
@@ -163,7 +168,7 @@ $mui-btn-flat-ripple-color:           darken(mui-color('white'), 35%) !default;
 
 $mui-input-bg-color:              transparent !default;
 $mui-input-bg-color-disabled:     transparent !default;
-$mui-input-font-color:            $mui-body-font-color !default;
+$mui-input-font-color:            $mui-base-font-color !default;
 $mui-input-font-size:             mui-rem(16px) !default;
 $mui-input-height:                mui-rem(32px) !default;
 
@@ -178,9 +183,9 @@ $mui-label-font-size:             mui-rem(12px) !default;
 $mui-label-font-color:            mui-color('black-alpha-54') !default;
 $mui-label-margin-bottom:         mui-rem(3px) !default;
 
-$mui-form-legend-font-size:       $mui-body-font-size * 1.5 !default;
+$mui-form-legend-font-size:       $mui-base-font-size * 1.5 !default;
 $mui-form-legend-margin-bottom:   $mui-form-legend-font-size / 2 !default;
-$mui-form-legend-font-color:      $mui-body-font-color !default;
+$mui-form-legend-font-color:      $mui-base-font-color !default;
 $mui-form-group-margin-bottom:    mui-rem(20px) !default;
 
 
@@ -227,7 +232,7 @@ $mui-dropdown-bg-color:                 mui-color('white') !default;
 $mui-dropdown-border-color:             $mui-divider-color !default;
 $mui-dropdown-border-radius:            $mui-border-radius-default !default;
 
-$mui-dropdown-link-font-color:          $mui-body-font-color !default;
+$mui-dropdown-link-font-color:          $mui-base-font-color !default;
 $mui-dropdown-link-font-color-hover:    darken($mui-dropdown-link-font-color, 5%) !default;
 $mui-dropdown-link-font-color-active:   $mui-accent-color !default;
 $mui-dropdown-link-font-color-disabled: mui-color('grey', '200') !default;
@@ -266,7 +271,7 @@ $mui-table-border-color:         $mui-divider-color !default;
 // TABS
 // ============================================================================
 
-$mui-tab-font-color:             $mui-body-font-color !default;
+$mui-tab-font-color:             $mui-base-font-color !default;
 $mui-tab-font-color-active:      $mui-primary-color !default;
 $mui-tab-border-color-active:    $mui-primary-color !default;
 
@@ -295,7 +300,7 @@ $mui-overlay-bg-color:           rgba(mui-color('black'), 0.20) !default;
 // INTERNAL VARIABLES
 // ============================================================================
 
-$mui-base-line-height-computed: floor(($mui-body-font-size * $mui-body-line-height));
+$mui-base-line-height-computed: floor(($mui-base-font-size * $mui-base-line-height));
 $mui-screen-xs-max: ($mui-screen-sm-min - 1);
 $mui-screen-sm-max: ($mui-screen-md-min - 1);
 $mui-screen-md-max: ($mui-screen-lg-min - 1);
