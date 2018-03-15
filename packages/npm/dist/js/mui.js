@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 /**
  * MUI CSS/JS main module
  * @module main
@@ -36,7 +36,7 @@
   });
 })(window);
 
-},{"src/js/dropdown":7,"src/js/lib/jqLite":8,"src/js/overlay":9,"src/js/ripple":10,"src/js/select":11,"src/js/tabs":12,"src/js/textfield":13}],2:[function(require,module,exports){
+},{"src/js/dropdown":3,"src/js/lib/jqLite":6,"src/js/overlay":8,"src/js/ripple":9,"src/js/select":10,"src/js/tabs":11,"src/js/textfield":12}],2:[function(require,module,exports){
 /**
  * MUI config module
  * @module config
@@ -49,6 +49,133 @@ module.exports = {
 };
 
 },{}],3:[function(require,module,exports){
+/**
+ * MUI CSS/JS dropdown module
+ * @module dropdowns
+ */
+
+'use strict';
+
+
+var jqLite = require('./lib/jqLite'),
+    util = require('./lib/util'),
+    animationHelpers = require('./lib/animationHelpers'),
+    attrKey = 'data-mui-toggle',
+    attrSelector = '[data-mui-toggle="dropdown"]',
+    openClass = 'mui--is-open',
+    menuClass = 'mui-dropdown__menu';
+
+
+/**
+ * Initialize toggle element.
+ * @param {Element} toggleEl - The toggle element.
+ */
+function initialize(toggleEl) {
+  // check flag
+  if (toggleEl._muiDropdown === true) return;
+  else toggleEl._muiDropdown = true;
+
+  // use type "button" to prevent form submission by default
+  var tagName = toggleEl.tagName;
+  if ((tagName === 'INPUT' || tagName === 'BUTTON')
+      && !toggleEl.hasAttribute('type')) {
+    toggleEl.type = 'button';
+  }
+
+  // attach click handler
+  jqLite.on(toggleEl, 'click', clickHandler);
+}
+
+
+/**
+ * Handle click events on dropdown toggle element.
+ * @param {Event} ev - The DOM event
+ */
+function clickHandler(ev) {
+  // only left clicks
+  if (ev.button !== 0) return;
+
+  var toggleEl = this;
+  
+  // exit if toggle button is disabled
+  if (toggleEl.getAttribute('disabled') !== null) return;
+
+  // toggle dropdown
+  toggleDropdown(toggleEl);
+}
+
+
+/**
+ * Toggle the dropdown.
+ * @param {Element} toggleEl - The dropdown toggle element.
+ */
+function toggleDropdown(toggleEl) {
+  var wrapperEl = toggleEl.parentNode,
+      menuEl = toggleEl.nextElementSibling,
+      doc = wrapperEl.ownerDocument;
+
+  // exit if no menu element
+  if (!menuEl || !jqLite.hasClass(menuEl, menuClass)) {
+    return util.raiseError('Dropdown menu element not found');
+  }
+
+  // method to close dropdown
+  function closeDropdownFn() {
+    jqLite.removeClass(menuEl, openClass);
+      
+    // remove event handlers
+    jqLite.off(doc, 'click', closeDropdownFn);
+    jqLite.off(doc, 'keydown', handleKeyDownFn);
+  }
+
+  // close dropdown on escape key press
+  function handleKeyDownFn(ev) {
+    var key = ev.key;
+    if (key === 'Escape' || key === 'Esc') closeDropdownFn();
+  }
+
+  // method to open dropdown
+  function openDropdownFn() {
+    // position menu element below toggle button
+    var wrapperRect = wrapperEl.getBoundingClientRect(),
+        toggleRect = toggleEl.getBoundingClientRect();
+
+    var top = toggleRect.top - wrapperRect.top + toggleRect.height;
+    jqLite.css(menuEl, 'top', top + 'px');
+
+    // add open class to wrapper
+    jqLite.addClass(menuEl, openClass);
+
+    setTimeout(function() {
+      // close dropdown when user clicks outside of menu or hits escape key
+      jqLite.on(doc, 'click', closeDropdownFn);
+      jqLite.on(doc, 'keydown', handleKeyDownFn);
+    }, 0);
+  }
+
+  // toggle dropdown
+  if (jqLite.hasClass(menuEl, openClass)) closeDropdownFn();
+  else openDropdownFn();
+}
+
+  
+/** Define module API */
+module.exports = {
+  /** Initialize module listeners */
+  initListeners: function() {
+    // markup elements available when method is called
+    var elList = document.querySelectorAll(attrSelector),
+        i = elList.length;
+    while (i--) {initialize(elList[i]);}
+
+    // listen for new elements
+    animationHelpers.onAnimationStart('mui-dropdown-inserted', function(ev) {
+      initialize(ev.target);
+    });
+  }
+};
+
+},{"./lib/animationHelpers":4,"./lib/jqLite":6,"./lib/util":7}],4:[function(require,module,exports){
 /**
  * MUI CSS/JS animation helper module
  * @module lib/animationHelpers
@@ -153,7 +280,7 @@ module.exports = {
   onAnimationStart: onAnimationStartFn
 }
 
-},{"./jqLite":5,"./util":6}],4:[function(require,module,exports){
+},{"./jqLite":6,"./util":7}],5:[function(require,module,exports){
 /**
  * MUI CSS/JS form helpers module
  * @module lib/forms.py
@@ -213,7 +340,7 @@ module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
 
-},{"./jqLite":5}],5:[function(require,module,exports){
+},{"./jqLite":6}],6:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -613,7 +740,7 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -909,136 +1036,7 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config":2,"./jqLite":5}],7:[function(require,module,exports){
-/**
- * MUI CSS/JS dropdown module
- * @module dropdowns
- */
-
-'use strict';
-
-
-var jqLite = require('./lib/jqLite'),
-    util = require('./lib/util'),
-    animationHelpers = require('./lib/animationHelpers'),
-    attrKey = 'data-mui-toggle',
-    attrSelector = '[data-mui-toggle="dropdown"]',
-    openClass = 'mui--is-open',
-    menuClass = 'mui-dropdown__menu';
-
-
-/**
- * Initialize toggle element.
- * @param {Element} toggleEl - The toggle element.
- */
-function initialize(toggleEl) {
-  // check flag
-  if (toggleEl._muiDropdown === true) return;
-  else toggleEl._muiDropdown = true;
-
-  // use type "button" to prevent form submission by default
-  var tagName = toggleEl.tagName;
-  if ((tagName === 'INPUT' || tagName === 'BUTTON')
-      && !toggleEl.hasAttribute('type')) {
-    toggleEl.type = 'button';
-  }
-
-  // attach click handler
-  jqLite.on(toggleEl, 'click', clickHandler);
-}
-
-
-/**
- * Handle click events on dropdown toggle element.
- * @param {Event} ev - The DOM event
- */
-function clickHandler(ev) {
-  // only left clicks
-  if (ev.button !== 0) return;
-
-  var toggleEl = this;
-  
-  // exit if toggle button is disabled
-  if (toggleEl.getAttribute('disabled') !== null) return;
-
-  // toggle dropdown
-  toggleDropdown(toggleEl);
-}
-
-
-/**
- * Toggle the dropdown.
- * @param {Element} toggleEl - The dropdown toggle element.
- */
-function toggleDropdown(toggleEl) {
-  var wrapperEl = toggleEl.parentNode,
-      menuEl = toggleEl.nextElementSibling,
-      doc = wrapperEl.ownerDocument;
-
-  // exit if no menu element
-  if (!menuEl || !jqLite.hasClass(menuEl, menuClass)) {
-    return util.raiseError('Dropdown menu element not found');
-  }
-
-  // method to close dropdown
-  function closeDropdownFn() {
-    jqLite.removeClass(menuEl, openClass);
-      
-    // remove event handlers
-    jqLite.off(doc, 'click', closeDropdownFn);
-    jqLite.off(doc, 'keydown', handleKeyDownFn);
-  }
-
-  // close dropdown on escape key press
-  function handleKeyDownFn(ev) {
-    var key = ev.key;
-    if (key === 'Escape' || key === 'Esc') closeDropdownFn();
-  }
-
-  // method to open dropdown
-  function openDropdownFn() {
-    // position menu element below toggle button
-    var wrapperRect = wrapperEl.getBoundingClientRect(),
-        toggleRect = toggleEl.getBoundingClientRect();
-
-    var top = toggleRect.top - wrapperRect.top + toggleRect.height;
-    jqLite.css(menuEl, 'top', top + 'px');
-
-    // add open class to wrapper
-    jqLite.addClass(menuEl, openClass);
-
-    setTimeout(function() {
-      // close dropdown when user clicks outside of menu or hits escape key
-      jqLite.on(doc, 'click', closeDropdownFn);
-      jqLite.on(doc, 'keydown', handleKeyDownFn);
-    }, 0);
-  }
-
-  // toggle dropdown
-  if (jqLite.hasClass(menuEl, openClass)) closeDropdownFn();
-  else openDropdownFn();
-}
-
-  
-/** Define module API */
-module.exports = {
-  /** Initialize module listeners */
-  initListeners: function() {
-    // markup elements available when method is called
-    var elList = document.querySelectorAll(attrSelector),
-        i = elList.length;
-    while (i--) {initialize(elList[i]);}
-
-    // listen for new elements
-    animationHelpers.onAnimationStart('mui-dropdown-inserted', function(ev) {
-      initialize(ev.target);
-    });
-  }
-};
-
-},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}],8:[function(require,module,exports){
-module.exports=require(5)
-},{}],9:[function(require,module,exports){
+},{"../config":2,"./jqLite":6}],8:[function(require,module,exports){
 /**
  * MUI CSS/JS overlay module
  * @module overlay
@@ -1244,7 +1242,7 @@ function onClick(ev) {
 /** Define module API */
 module.exports = overlayFn;
 
-},{"./lib/jqLite":5,"./lib/util":6}],10:[function(require,module,exports){
+},{"./lib/jqLite":6,"./lib/util":7}],9:[function(require,module,exports){
 /**
  * MUI CSS/JS ripple module
  * @module ripple
@@ -1368,7 +1366,7 @@ module.exports = {
   }
 };
 
-},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}],11:[function(require,module,exports){
+},{"./lib/animationHelpers":4,"./lib/jqLite":6,"./lib/util":7}],10:[function(require,module,exports){
 /**
  * MUI CSS/JS select module
  * @module forms/select
@@ -1848,7 +1846,7 @@ module.exports = {
   }
 };
 
-},{"./lib/animationHelpers":3,"./lib/forms":4,"./lib/jqLite":5,"./lib/util":6}],12:[function(require,module,exports){
+},{"./lib/animationHelpers":4,"./lib/forms":5,"./lib/jqLite":6,"./lib/util":7}],11:[function(require,module,exports){
 /**
  * MUI CSS/JS tabs module
  * @module tabs
@@ -2010,7 +2008,7 @@ module.exports = {
   }
 };
 
-},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}],13:[function(require,module,exports){
+},{"./lib/animationHelpers":4,"./lib/jqLite":6,"./lib/util":7}],12:[function(require,module,exports){
 /**
  * MUI CSS/JS form-control module
  * @module forms/form-control
@@ -2151,4 +2149,4 @@ module.exports = {
   }
 };
 
-},{"./lib/animationHelpers":3,"./lib/jqLite":5,"./lib/util":6}]},{},[1])
+},{"./lib/animationHelpers":4,"./lib/jqLite":6,"./lib/util":7}]},{},[1]);

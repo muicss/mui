@@ -40,9 +40,9 @@
   top: 100%;
   left: 0;
   display: none;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;  // override default ul
+  min-width: mui-rem(160px);
+  padding: mui-rem(5px) 0;
+  margin: mui-rem(2px) 0 0;  // override default ul
   list-style: none;
   font-size: $mui-base-font-size;
   text-align: left;
@@ -59,7 +59,7 @@
   // links within the dropdown menu
   > li > a {
     display: block;
-    padding: 3px 20px;
+    padding: mui-rem(3px) mui-rem(20px);
     clear: both;
     font-weight: normal;
     line-height: $mui-base-line-height;

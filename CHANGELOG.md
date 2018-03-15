@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.37 - March 15, 2018
+
+* Switched to using 'rem' instead of 'px' for most CSS dimensions
+
 ## 0.9.36 - February 2, 2018
 
 * Added support for `disabled` attribute to React Select component
