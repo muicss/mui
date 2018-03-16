@@ -1,4 +1,20 @@
-@import "mixins/util";
+// =============================================================================
+// Settings
+// =============================================================================
+
+$mui-include-globals: true !default;
+$mui-use-rem:         true !default;
+
+@function mui-rem($px) {
+  $x: $px;
+
+  @if $mui-use-rem == true {
+    $x: ($px / 16px) * 1rem;
+    $x: round(1000 * $x) / 1000;
+  }
+  
+  @return $x;
+}  
 
 
 
@@ -22,8 +38,6 @@ $mui-danger-color:             mui-color('red', '500') !default;
 // ============================================================================
 // GLOBAL VARIABLES
 // ============================================================================
-
-$mui-include-globals:            true !default;
 
 $mui-body-bg-color:              mui-color('white') !default;
 
@@ -300,7 +314,14 @@ $mui-overlay-bg-color:           rgba(mui-color('black'), 0.20) !default;
 // INTERNAL VARIABLES
 // ============================================================================
 
-$mui-base-line-height-computed: floor(($mui-base-font-size * $mui-base-line-height));
+$mui-base-line-height-computed: $mui-base-font-size * $mui-base-line-height;
+
+@if unit($mui-base-line-height-computed) == 'px' {
+  $mui-base-line-height-computed: floor($mui-base-line-height-computed);
+} @else {
+  $mui-base-line-height-computed: round(1000 * $mui-base-line-height-computed) / 1000;
+}
+
 $mui-screen-xs-max: ($mui-screen-sm-min - 1);
 $mui-screen-sm-max: ($mui-screen-md-min - 1);
 $mui-screen-md-max: ($mui-screen-lg-min - 1);
