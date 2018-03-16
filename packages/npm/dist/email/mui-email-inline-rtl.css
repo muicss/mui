@@ -614,74 +614,74 @@ table.mui-btn--large > tbody > tr > td > a {
  */
 .mui--text-display4 {
   font-weight: 300;
-  font-size: 7rem;
-  line-height: 7rem;
+  font-size: mui-rem(112px);
+  line-height: mui-rem(112px);
 }
 
 .mui--text-display3 {
   font-weight: 400;
-  font-size: 3.5rem;
-  line-height: 3.5rem;
+  font-size: mui-rem(56px);
+  line-height: mui-rem(56px);
 }
 
 .mui--text-display2 {
   font-weight: 400;
-  font-size: 2.8125rem;
-  line-height: 3rem;
+  font-size: mui-rem(45px);
+  line-height: mui-rem(48px);
 }
 
 .mui--text-display1, h1 {
   font-weight: 400;
-  font-size: 2.125rem;
-  line-height: 2.5rem;
+  font-size: mui-rem(34px);
+  line-height: mui-rem(40px);
 }
 
 .mui--text-headline, h2 {
   font-weight: 400;
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: mui-rem(24px);
+  line-height: mui-rem(32px);
 }
 
 .mui--text-title, h3 {
   font-weight: 400;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+  font-size: mui-rem(20px);
+  line-height: mui-rem(28px);
 }
 
 .mui--text-subhead, h4 {
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: mui-rem(16px);
+  line-height: mui-rem(24px);
 }
 
 .mui--text-body2, h5 {
   font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.5rem;
+  font-size: mui-rem(14px);
+  line-height: mui-rem(24px);
 }
 
 .mui--text-body1 {
   font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: mui-rem(14px);
+  line-height: mui-rem(20px);
 }
 
 .mui--text-caption {
   font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: mui-rem(12px);
+  line-height: mui-rem(16px);
 }
 
 .mui--text-menu {
   font-weight: 500;
-  font-size: 0.8125rem;
-  line-height: 1.0625rem;
+  font-size: mui-rem(13px);
+  line-height: mui-rem(17px);
 }
 
 .mui--text-button {
   font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.125rem;
+  font-size: mui-rem(14px);
+  line-height: mui-rem(18px);
   text-transform: uppercase;
 }
 html,body,.mui-body{direction:rtl;}

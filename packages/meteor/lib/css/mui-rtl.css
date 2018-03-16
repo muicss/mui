@@ -364,23 +364,23 @@ a:hover, a:focus {
 
 a:focus {
   outline: thin dotted;
-  outline: 0.3125rem auto -webkit-focus-ring-color;
+  outline: 0.313rem auto -webkit-focus-ring-color;
   outline-offset: -0.125rem;
 }
 
 p {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.625rem;
 }
 
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.625rem;
 }
 
 hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
   border: 0;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.12);
@@ -392,17 +392,18 @@ strong {
 
 abbr[title] {
   cursor: help;
-  border-bottom: 1px dotted #2196F3;
+  -webkit-text-decoration-color: #2196F3;
+  text-decoration-color: #2196F3;
 }
 
 h1, h2, h3 {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.625rem;
 }
 
 h4, h5, h6 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
 }
 
 /**
@@ -628,9 +629,9 @@ h4, h5, h6 {
 .mui-btn--fab {
   position: relative;
   padding: 0;
-  width: 3.4375rem;
-  height: 3.4375rem;
-  line-height: 3.4375rem;
+  width: 3.438rem;
+  height: 3.438rem;
+  line-height: 3.438rem;
   border-radius: 50%;
   z-index: 1;
 }
@@ -759,7 +760,7 @@ h4, h5, h6 {
   height: 1.9125rem;
   line-height: 1.9125rem;
   padding: 0 1rem;
-  font-size: 0.8125rem;
+  font-size: 0.813rem;
 }
 
 .mui-btn--large {
@@ -776,9 +777,9 @@ h4, h5, h6 {
 }
 
 .mui-btn--fab.mui-btn--large {
-  width: 4.6875rem;
-  height: 4.6875rem;
-  line-height: 4.6875rem;
+  width: 4.688rem;
+  height: 4.688rem;
+  line-height: 4.688rem;
 }
 
 /**
@@ -794,7 +795,7 @@ h4, h5, h6 {
 
 .mui-radio > label,
 .mui-checkbox > label {
-  min-height: 1rem;
+  min-height: 1.25rem;
   padding-right: 20px;
   margin-bottom: 0;
   font-weight: normal;
@@ -809,7 +810,7 @@ h4, h5, h6 {
 .mui-radio input:focus,
 .mui-checkbox input:focus {
   outline: thin dotted;
-  outline: 0.3125rem auto -webkit-focus-ring-color;
+  outline: 0.313rem auto -webkit-focus-ring-color;
   outline-offset: -0.125rem;
 }
 
@@ -824,7 +825,7 @@ h4, h5, h6 {
 
 .mui-radio + .mui-radio,
 .mui-checkbox + .mui-checkbox {
-  margin-top: -0.3125rem;
+  margin-top: -0.313rem;
 }
 
 .mui-radio--inline,
@@ -961,7 +962,7 @@ h4, h5, h6 {
   right: 0;
   display: none;
   min-width: 10rem;
-  padding: 0.3125rem 0;
+  padding: 0.313rem 0;
   margin: 0.125rem 0 0;
   list-style: none;
   font-size: 0.875rem;
@@ -992,7 +993,7 @@ h4, h5, h6 {
 
 .mui-dropdown__menu > li > a {
   display: block;
-  padding: 0.1875rem 1.25rem;
+  padding: 0.188rem 1.25rem;
   clear: both;
   font-weight: normal;
   line-height: 1.429;
@@ -1030,7 +1031,7 @@ h4, h5, h6 {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.625rem;
   font-size: 1.3125rem;
   color: rgba(0, 0, 0, 0.87);
   line-height: inherit;
@@ -1535,7 +1536,7 @@ h4, h5, h6 {
  */
 .mui-panel {
   padding: 15px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   border-radius: 0;
   background-color: #FFF;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
@@ -1608,7 +1609,7 @@ h4, h5, h6 {
   font-size: 1rem;
   font-family: inherit;
   line-height: inherit;
-  padding: 0 0 0 1.5625rem;
+  padding: 0 0 0 1.563rem;
 }
 
 .mui-select > select::-ms-expand {
@@ -1721,7 +1722,7 @@ h4, h5, h6 {
 .mui-table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .mui-table > thead > tr > th,
@@ -1848,7 +1849,7 @@ h4, h5, h6 {
 }
 
 .mui-textfield > textarea {
-  padding-top: 0.3125rem;
+  padding-top: 0.313rem;
 }
 
 .mui-textfield > input:focus ~ label,
@@ -2190,13 +2191,13 @@ h4, h5, h6 {
 .mui-list--inline {
   padding-right: 0;
   list-style: none;
-  margin-right: -0.3125rem;
+  margin-right: -0.313rem;
 }
 
 .mui-list--inline > li {
   display: inline-block;
-  padding-right: 0.3125rem;
-  padding-left: 0.3125rem;
+  padding-right: 0.313rem;
+  padding-left: 0.313rem;
 }
 
 .mui--z1, .mui-dropdown__menu, .mui-select__menu {
@@ -2540,7 +2541,7 @@ h4, h5, h6 {
 
 .mui--text-display2 {
   font-weight: 400;
-  font-size: 2.8125rem;
+  font-size: 2.813rem;
   line-height: 3rem;
 }
 
@@ -2588,8 +2589,8 @@ h4, h5, h6 {
 
 .mui--text-menu {
   font-weight: 500;
-  font-size: 0.8125rem;
-  line-height: 1.0625rem;
+  font-size: 0.813rem;
+  line-height: 1.063rem;
 }
 
 .mui--text-button {

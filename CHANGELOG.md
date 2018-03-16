@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.9.38 - March 16, 2018
+
+* Added `$mui-use-rem` SASS option to choose 'px' or 'rem'
+* Added pre-compiled px-only version of MUI CSS to extras
+* Fixed double underline issue with `<abbr>` tag caused by latest version of
+  Normalize CSS
+
 ## 0.9.37 - March 15, 2018
 
 * Switched to using 'rem' instead of 'px' for most CSS dimensions
