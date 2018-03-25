@@ -1,5 +1,55 @@
 # MUI Changelog
 
+## 0.9.38 - March 16, 2018
+
+* Added `$mui-use-rem` SASS option to choose 'px' or 'rem'
+* Added pre-compiled px-only version of MUI CSS to extras
+* Fixed double underline issue with `<abbr>` tag caused by latest version of
+  Normalize CSS
+
+## 0.9.37 - March 15, 2018
+
+* Switched to using 'rem' instead of 'px' for most CSS dimensions
+
+## 0.9.36 - February 2, 2018
+
+* Added support for `disabled` attribute to React Select component
+
+## 0.9.35 - December 17, 2017
+
+* Added close-on-escape support to Dropdown components in MUI CSS/JS, React and
+  Angular libraries.
+
+## 0.9.34 - December 16, 2017
+
+* Added `input` event trigger to CSS/JS Select component
+
+## 0.9.33 - December 15, 2017
+
+* Set bubbles=true for `change` event on CSS/JS Select component
+
+## 0.9.32 - December 14, 2017
+
+* Fixed typo in `tabIndex` attribute used in MUI React Input, Textarea and
+  Select component
+
+## 0.9.31 - December 9, 2017
+
+* Fixed tab-focus issue affecting Input, Textarea and Select components with
+  labels in Firefox 57 (https://github.com/muicss/mui/issues/252)
+* Added support for automatic scroll after keypress events in Select component
+  menu (https://github.com/muicss/mui/issues/203)
+
+## 0.9.30 - November 20, 2017
+
+* Re-implemented MUI React textfield components using HOC pattern
+  (fixes https://github.com/muicss/mui/issues/246)
+
+## 0.9.29 - November 16, 2017
+
+* Fixed scroll lock issue in Firefox Quantum
+* Added support for use-default to CSS/JS Select component
+
 ## 0.9.28 - October 27, 2017
 
 * Added support for Select menu row height SASS variable

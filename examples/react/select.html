@@ -38,6 +38,10 @@
           <strong>Should jump to item as you type</strong>
           <div id="example4"></div>
           <div id="example5"></div>
+
+          <strong>Should be disabled</strong>
+          <div id="example6"></div>
+
           <button class="mui-btn mui-btn--raised">submit</button>
         </form>
       </div>
@@ -203,12 +207,27 @@
       }
 
 
+      // Example 6
+      class Example6 extends React.Component {
+        render() {
+          return (
+            <Select label="Label" disabled={true}>
+              <Option label="A" value="opt1" />
+              <Option label="B" value="opt2" />
+              <Option label="C" value="opt3" />
+            </Select>
+          );
+        }
+      }
+
+
       // Render examples
       ReactDOM.render(<Example1 />, document.getElementById('example1'));
       ReactDOM.render(<Example2 />, document.getElementById('example2'));
       ReactDOM.render(<Example3 />, document.getElementById('example3'));
       ReactDOM.render(<Example4 />, document.getElementById('example4'));
       ReactDOM.render(<Example5 />, document.getElementById('example5'));
+      ReactDOM.render(<Example6 />, document.getElementById('example6'));
     </script>
   </body>
 </html>

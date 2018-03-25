@@ -6,8 +6,8 @@
 .mui-checkbox {
   position: relative;
   display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: mui-rem(10px);
+  margin-bottom: mui-rem(10px);
 
   > label {
     min-height: $mui-base-line-height-computed;
@@ -32,13 +32,13 @@
 .mui-checkbox--inline > label > input[type="checkbox"] {
   position: absolute;
   margin-left: -20px;
-  margin-top: 4px;
+  margin-top: mui-rem(4px);
 }
 
 .mui-radio + .mui-radio,
 .mui-checkbox + .mui-checkbox {
   // Move up sibling radios or checkboxes for tighter spacing
-  margin-top: -5px;
+  margin-top: mui-rem(-5px);
 }
 
 .mui-radio--inline,
@@ -55,7 +55,7 @@
   > input[type="checkbox"],
   > label > input[type="radio"],
   > label > input[type="checkbox"] {
-    margin: 4px 0 0;
+    margin: mui-rem(4px) 0 0;
     line-height: normal;
   }
 }

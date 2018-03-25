@@ -18,13 +18,13 @@
       white-space: nowrap;
       text-transform: uppercase;
       font-weight: 500;
-      font-size: 14px;
+      font-size: mui-rem(14px);
       color: $mui-tab-font-color;
       cursor: default;
-      height: 48px;
-      line-height: 48px;
-      padding-left: 24px;
-      padding-right: 24px;
+      height: mui-rem(48px);
+      line-height: mui-rem(48px);
+      padding-left: mui-rem(24px);
+      padding-right: mui-rem(24px);
       user-select: none;
 
       &:hover {

@@ -36,6 +36,9 @@ function initialize(selectEl) {
 
   var wrapperEl = selectEl.parentNode;
 
+  // exit if use-default
+  if (jqLite.hasClass(wrapperEl, 'mui-select--use-default')) return;
+
   // initialize variables
   wrapperEl._selectEl = selectEl;
   wrapperEl._menu = null;
@@ -63,13 +66,15 @@ function initialize(selectEl) {
 
   // handle 'disabled' add/remove
   jqLite.on(el, animationHelpers.animationEvents, function(ev) {
+    var parentEl = ev.target.parentNode;
+
     // no need to propagate
     ev.stopPropagation();
 
     if (ev.animationName === 'mui-node-disabled') {
-      ev.target.parentNode.removeAttribute('tabIndex');
+      parentEl.removeAttribute('tabIndex');
     } else {
-      ev.target.parentNode.tabIndex = 0;
+      parentEl.tabIndex = 0;
     }    
   });
 }
@@ -82,7 +87,7 @@ function initialize(selectEl) {
 function onInnerMouseDown(ev) {
   // only left clicks
   if (ev.button !== 0) return;
-
+  
   // prevent built-in menu from opening
   ev.preventDefault();
 }
@@ -401,8 +406,9 @@ Menu.prototype.selectCurrent = function() {
   if (this.currentPos !== this.origPos) {
     this.selectEl.selectedIndex = this.itemArray[this.currentPos]._muiIndex;
 
-    // trigger change event
-    util.dispatchEvent(this.selectEl, 'change', false, false);
+    // trigger change and input events
+    util.dispatchEvent(this.selectEl, 'change', true, false);
+    util.dispatchEvent(this.selectEl, 'input', true, false);
   }
 }
 
@@ -416,7 +422,21 @@ Menu.prototype.selectPos = function(pos) {
 
   // select new row
   this.currentPos = pos;
-  jqLite.addClass(this.itemArray[pos], selectedClass);
+  var itemEl = this.itemArray[pos];
+  jqLite.addClass(itemEl, selectedClass);
+
+  // scroll (if necessary)
+  var menuEl = this.menuEl,
+      itemRect = itemEl.getBoundingClientRect();
+
+  if (itemRect.top < 0) {
+    // menu item is hidden above visible window
+    menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+  } else if (itemRect.top > window.innerHeight) {
+    // menu item is hidden below visible window
+    menuEl.scrollTop = menuEl.scrollTop + 
+      (itemRect.top + itemRect.height - window.innerHeight) + 5;
+  }
 }
 
 

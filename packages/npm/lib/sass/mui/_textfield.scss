@@ -2,7 +2,7 @@
  * MUI Textfield Component
  */
 
-$xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
+$xFormLabelLineHeight: $mui-label-font-size * 1.25;
 
 
 
@@ -21,7 +21,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   }
 
   > textarea {
-    padding-top: 5px;
+    padding-top: mui-rem(5px);
   }
 
   > input,
@@ -134,7 +134,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
   // Compensate for height change on focus
   &:focus {
-    height: $mui-input-height + 1px;
+    height: calc(#{$mui-input-height} + 1px);
     margin-bottom: -1px;
   }
 }
@@ -150,7 +150,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
 .mui-textfield > input:focus {
   // Compensate for height change on focus
-  height: $mui-input-height + 1px;
+  height: calc(#{$mui-input-height} + 1px);
   margin-bottom: -1px;
 }
 
@@ -183,7 +183,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   &:required.mui--is-empty.mui--is-touched,
   &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
-    height: $mui-input-height + 1px;
+    height: calc(#{$mui-input-height} + 1px);
     margin-bottom: -1px;
   }
 }

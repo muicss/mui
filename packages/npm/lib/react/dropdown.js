@@ -59,18 +59,29 @@ var Dropdown = function (_React$Component) {
     _this.selectCB = cb(_this, 'select');
     _this.onClickCB = cb(_this, 'onClick');
     _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
+    _this.onKeyDownCB = cb(_this, 'onKeyDown');
     return _this;
   }
 
   babelHelpers.createClass(Dropdown, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      document.addEventListener('click', this.onOutsideClickCB);
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate(nextProps, nextState) {
+      var doc = document;
+
+      if (!this.state.opened && nextState.opened) {
+        doc.addEventListener('click', this.onOutsideClickCB);
+        doc.addEventListener('keydown', this.onKeyDownCB);
+      } else if (this.state.opened && !nextState.opened) {
+        doc.removeEventListener('click', this.onOutsideClickCB);
+        doc.removeEventListener('keydown', this.onKeyDownCB);
+      }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      document.removeEventListener('click', this.onOutsideClickCB);
+      var doc = document;
+      doc.removeEventListener('click', this.onOutsideClickCB);
+      doc.removeEventListener('keydown', this.onKeyDownCB);
     }
   }, {
     key: 'onClick',
@@ -134,6 +145,13 @@ var Dropdown = function (_React$Component) {
     value: function onOutsideClick(ev) {
       var isClickInside = this.wrapperElRef.contains(ev.target);
       if (!isClickInside) this.close();
+    }
+  }, {
+    key: 'onKeyDown',
+    value: function onKeyDown(ev) {
+      // close menu on escape key
+      var key = ev.key;
+      if (key === 'Escape' || key === 'Esc') this.close();
     }
   }, {
     key: 'render',

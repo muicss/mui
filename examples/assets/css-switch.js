@@ -18,6 +18,13 @@ window.addEventListener('load', function() {
     '<option value="extra/mui-noglobals.min.css">mui-noglobals.min.css</option>',
     '<option value="extra/mui-noglobals-rtl.css">mui-noglobals-rtl.css</option>',
     '<option value="extra/mui-noglobals-rtl.min.css">mui-noglobals-rtl.min.css</option>',
+    '</optgroup>',
+
+    '<optgroup label="PX">',
+    '<option value="extra/mui-px.css">mui-px.css</option>',
+    '<option value="extra/mui-px.min.css">mui-px.min.css</option>',
+    '<option value="extra/mui-px-rtl.css">mui-px-rtl.css</option>',
+    '<option value="extra/mui-px-rtl.min.css">mui-px-rtl.min.css</option>',
     '</optgroup>'
   ].join('');
 

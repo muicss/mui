@@ -263,4 +263,16 @@ describe('react/input', function() {
     //       successfully?
     assert.equal(true, true);
   });
+
+
+  it('sets id for control and label elements', function() {
+    let elem = <Input id="myId" label="label" defaultValue="defaultValue"></Input>,
+        instance = ReactUtils.renderIntoDocument(elem),
+        findComponent = ReactUtils.findRenderedDOMComponentWithTag,
+        inputEl = instance.controlEl,
+        labelEl = findComponent(instance, 'label');
+
+    assert.equal(inputEl.id, 'myId');
+    assert.equal(labelEl.getAttribute('for'), 'myId');
+  });
 });

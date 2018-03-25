@@ -211,7 +211,7 @@ import Input from 'muicss/lib/react/input';
 <Input />
   * {String} defaultValue
   * {Boolean} floatingLabel
-  * {String} hint
+  * {String} placeholder
   * {Boolean} invalid
   * {String} label
   * {String} name
@@ -318,7 +318,7 @@ import Textarea from 'muicss/lib/react/textarea';
 <Textarea />
   * {String} defaultValue
   * {Boolean} floatingLabel
-  * {String} hint
+  * {String} placeholder
   * {Boolean} invalid
   * {String} label
   * {String} name

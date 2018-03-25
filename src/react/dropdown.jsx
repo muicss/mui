@@ -16,9 +16,9 @@ import * as util from '../js/lib/util';
 
 
 const dropdownClass = 'mui-dropdown',
-  menuClass = 'mui-dropdown__menu',
-  openClass = 'mui--is-open',
-  rightClass = 'mui-dropdown__menu--right';
+      menuClass = 'mui-dropdown__menu',
+      openClass = 'mui--is-open',
+      rightClass = 'mui-dropdown__menu--right';
 
 
 /**
@@ -37,6 +37,7 @@ class Dropdown extends React.Component {
     this.selectCB = cb(this, 'select');
     this.onClickCB = cb(this, 'onClick');
     this.onOutsideClickCB = cb(this, 'onOutsideClick');
+    this.onKeyDownCB = cb(this, 'onKeyDown');
   }
 
   static defaultProps = {
@@ -51,12 +52,22 @@ class Dropdown extends React.Component {
     disabled: false
   };
 
-  componentDidMount() {
-    document.addEventListener('click', this.onOutsideClickCB);
+  componentWillUpdate(nextProps, nextState) {
+    let doc = document;
+
+    if (!this.state.opened && nextState.opened) {
+      doc.addEventListener('click', this.onOutsideClickCB);
+      doc.addEventListener('keydown', this.onKeyDownCB);
+    } else if (this.state.opened && !nextState.opened) {
+      doc.removeEventListener('click', this.onOutsideClickCB);
+      doc.removeEventListener('keydown', this.onKeyDownCB);
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.onOutsideClickCB);
+    let doc = document;
+    doc.removeEventListener('click', this.onOutsideClickCB);
+    doc.removeEventListener('keydown', this.onKeyDownCB);
   }
 
   onClick(ev) {
@@ -117,10 +128,16 @@ class Dropdown extends React.Component {
     if (!isClickInside) this.close();
   }
 
+  onKeyDown(ev) {
+    // close menu on escape key
+    let key = ev.key;
+    if (key === 'Escape' || key === 'Esc') this.close();
+  }
+
   render() {
     let buttonEl,
-      menuEl,
-      labelEl;
+        menuEl,
+        labelEl;
 
     const { children, className, color, variant, size, label, alignMenu,
       onClick, onSelect, disabled, ...reactProps } = this.props;

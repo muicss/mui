@@ -12,6 +12,8 @@ import DropdownItem from '../../src/react/dropdown-item';
 
 import { getShallowRendererOutput } from '../lib/react-helpers';
 
+import * as util from '../../src/js/lib/util';
+
 
 describe('react/dropdown', function () {
   let elem;
@@ -158,6 +160,20 @@ describe('react/dropdown', function () {
     // click on first menu item
     let anchorEl = ReactUtils.scryRenderedDOMComponentsWithTag(node, 'a')[0];
     ReactUtils.Simulate.click(anchorEl);
+
+    // check that menu has closed
+    assert.equal(node.menuElRef, undefined);
+  });
+
+  it('closes menu after Escape key press', function () {
+    let node = ReactUtils.renderIntoDocument(elem);
+
+    // open menu
+    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    ReactUtils.Simulate.click(buttonEl, { button: 0 });
+
+    // press Escape
+    util.dispatchEvent(document, 'keydown', true, false, {key: 'Escape'});
 
     // check that menu has closed
     assert.equal(node.menuElRef, undefined);

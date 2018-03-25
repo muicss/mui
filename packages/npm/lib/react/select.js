@@ -208,9 +208,10 @@ var Select = function (_React$Component) {
           label = _props.label,
           defaultValue = _props.defaultValue,
           readOnly = _props.readOnly,
+          disabled = _props.disabled,
           useDefault = _props.useDefault,
           name = _props.name,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'useDefault', 'name']);
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'disabled', 'useDefault', 'name']);
 
 
       return _react2.default.createElement(
@@ -232,10 +233,11 @@ var Select = function (_React$Component) {
               _this2.controlEl = el;
             },
             name: name,
+            disabled: disabled,
             tabIndex: tabIndexInner,
             value: this.state.value,
             defaultValue: defaultValue,
-            readOnly: this.props.readOnly,
+            readOnly: readOnly,
             onChange: this.onInnerChangeCB,
             onMouseDown: this.onInnerMouseDownCB,
             required: this.props.required
@@ -244,7 +246,7 @@ var Select = function (_React$Component) {
         ),
         _react2.default.createElement(
           'label',
-          null,
+          { tabIndex: '-1' },
           label
         ),
         menuElem
@@ -408,6 +410,24 @@ var Menu = function (_React$Component2) {
     key: 'destroy',
     value: function destroy() {
       this.props.onClose();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      // scroll menu (if necessary)
+      if (this.state.currentIndex != prevState.currentIndex) {
+        var menuEl = this.wrapperElRef,
+            itemEl = menuEl.children[this.state.currentIndex],
+            itemRect = itemEl.getBoundingClientRect();
+
+        if (itemRect.top < 0) {
+          // menu item is hidden above visible window
+          menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+        } else if (itemRect.top > window.innerHeight) {
+          // menu item is hidden below visible window
+          menuEl.scrollTop = menuEl.scrollTop + (itemRect.top + itemRect.height - window.innerHeight) + 5;
+        }
+      }
     }
   }, {
     key: 'render',

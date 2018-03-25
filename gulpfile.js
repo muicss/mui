@@ -1,13 +1,10 @@
 'use strict';
 
 
-var fs = require('fs');
-
 var babelCore = require('babel-core'),
     gulp = require('gulp'),
-    plugins = require('gulp-load-plugins')(),
-    mergeStream = require('merge-stream'),
-    stringify = require('stringify');
+    plugins = require('gulp-load-plugins')();
+
 
 var reactBabelHelpers = [
   'inherits',
@@ -89,8 +86,14 @@ gulp.task('watch', function() {
 // PRIVATE TASKS
 // ============================================================================
 
-var del = require('del'),
-    babelify = require('babelify');
+var babelify = require('babelify'),
+    browserify = require('browserify'),
+    buffer = require('vinyl-buffer'),
+    del = require('del'),
+    fs = require('fs'),
+    mergeStream = require('merge-stream'),
+    source = require('vinyl-source-stream'),
+    stringify = require('stringify');
 
 
 function makeTask(displayName, fn) {
@@ -105,6 +108,32 @@ function clean(dirname) {
   });
 }
 
+
+function browserifyStream(pathname, opts) {
+  var opts = opts || {};
+
+  // init browserify
+  var b = browserify({
+    entries: [pathname],
+    paths: ['./'].concat(opts.paths || []),
+    extensions: [].concat(opts.extensions || [])
+  });
+  
+  // apply methods
+  ['external', 'transform'].forEach(function(method) {
+    if (!opts[method]) return;
+
+    [].concat(opts[method]).forEach(function(args) {
+      b[method].apply(b, [].concat(args));
+    });
+  });
+
+  // return stream
+  return b
+    .bundle()
+    .pipe(source('tmpfile'))
+    .pipe(buffer());
+}
 
 
 // ----------------------------------------------------------------------------
@@ -122,7 +151,8 @@ function buildCdn(dirname) {
     buildCdnEmailInline(dirname + '/email'),
     buildCdnEmailStyletag(dirname + '/email'),
     buildCdnColors(dirname + '/extra'),
-    buildCdnNoGlobals(dirname + '/extra')
+    buildCdnNoGlobals(dirname + '/extra'),
+    buildCdnPx(dirname + '/extra')
   );
 
   var t2 = gulp.parallel(
@@ -139,22 +169,13 @@ function buildCdn(dirname) {
 function buildCdnCss(dirname) {
   return makeTask('build-cdn-css: ' + dirname, function() {
     return cssStream('mui.scss', dirname);
-    
-    // build versions with and without globals
-    //return mergeStream(
-    //cssStream('mui.scss'),
-    //cssStream('mui-noglobals.scss')
-    //);
   });
 }
 
 
 function buildCdnJs(dirname) {
   return makeTask('build-cdn-js: ' + dirname, function() {
-    return gulp.src('./build-targets/cdn-js.js')
-      .pipe(plugins.browserify({
-        paths: ['./']
-      }))
+    return browserifyStream('./build-targets/cdn-js.js')
       .pipe(plugins.rename('mui.js'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.uglify())
@@ -168,13 +189,13 @@ function buildCdnReact(dirname) {
   var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'global');
 
   return makeTask('build-cdn-react: ' + dirname, function() {
-    return gulp.src('./build-targets/cdn-react.js')
-      .pipe(plugins.browserify({
-        transform: [babelify.configure({plugins: ['external-helpers']})],
-        paths: ['./', './node_modules'],
+    return browserifyStream(
+      './build-targets/cdn-react.js',
+      {
+        extensions: ['.jsx'],
         external: ['react'],
-        extensions: ['.jsx']
-      }))
+        transform: [babelify.configure({plugins: ['external-helpers']})]
+      })
       .pipe(plugins.replace("require('react')", "window.React"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.rename('mui-react.js'))
@@ -190,12 +211,12 @@ function buildCdnAngular(dirname) {
   var s = babelCore.buildExternalHelpers(angularBabelHelpers, 'global');
 
   return makeTask('build-cdn-angular: ' + dirname, function() {
-    return gulp.src('./build-targets/cdn-angular.js')
-      .pipe(plugins.browserify({
-        transform: [babelify.configure({plugins: ['external-helpers']})],
-        paths: ['./', './node_modules/'],
-        external: ['angular']
-      }))
+    return browserifyStream(
+      './build-targets/cdn-angular.js',
+      {
+        external: ['angular'],
+        transform: [babelify.configure({plugins: ['external-helpers']})]
+      })
       .pipe(plugins.replace("require('angular')", "window.angular"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.concat('mui-angular.js'))
@@ -244,11 +265,12 @@ function buildCdnEmailStyletag(dirname) {
 
 function buildCdnWebcomponents(dirname, cssdir) {
   return makeTask('build-cdn-webcomponents: ' + dirname, function() {
-    return gulp.src('./build-targets/cdn-webcomponents.js')
-      .pipe(plugins.browserify({
-        transform: [stringify(['.css'])],
-        paths: ['./', cssdir]
-      }))
+    return browserifyStream(
+      './build-targets/cdn-webcomponents.js',
+      {
+        paths: [cssdir],
+        transform: [stringify(['.css'])]
+      })
       .pipe(plugins.rename('mui-webcomponents.js'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.uglify({output: {max_line_len: null}}))
@@ -278,13 +300,21 @@ function buildCdnNoGlobals(dirname) {
 }
 
 
+function buildCdnPx(dirname) {
+  return makeTask('build-cdn-px: ' + dirname, function() {
+    return cssStream('mui-px.scss', dirname);
+  });
+}
+
+
 function buildCdnJsCombined(dirname, cssDir) {
   return makeTask('build-cdn-js-combined: ' + dirname, function() {
-    return gulp.src('./build-targets/cdn-js-combined.js')
-      .pipe(plugins.browserify({
-        transform: [stringify(['.css'])],
-        paths: ['./', cssDir]
-      }))
+    return browserifyStream(
+      './build-targets/cdn-js-combined.js',
+      {
+        paths: [cssDir],
+        transform: [stringify(['.css'])]
+      })
       .pipe(plugins.rename('mui-combined.js'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.uglify({output: {max_line_len: null}}))
@@ -298,16 +328,17 @@ function buildCdnReactCombined(dirname, cssDir) {
   var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'global');
 
   return makeTask('build-cdn-react-combined: ' + dirname, function(done) {
-    return gulp.src('./build-targets/cdn-react-combined.js')
-      .pipe(plugins.browserify({
+    return browserifyStream(
+      './build-targets/cdn-react-combined.js',
+      {
+        paths: [cssDir],
+        extensions: ['.jsx'],
+        external: ['react'],
         transform: [
           babelify.configure({plugins: ['external-helpers']}),
           stringify(['.css'])
-        ],
-        paths: ['./', cssDir, './node_modules'],
-        external: ['react'],
-        extensions: ['.jsx']
-      }))
+        ]
+      })
       .pipe(plugins.replace("require('react')", "window.React"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.rename('mui-react-combined.js'))
@@ -323,15 +354,16 @@ function buildCdnAngularCombined(dirname, cssDir) {
   var s = babelCore.buildExternalHelpers(angularBabelHelpers, 'global');
 
   return makeTask('build-cdn-angular-combined: ' + dirname, function() {
-    return gulp.src('./build-targets/cdn-angular-combined.js')
-      .pipe(plugins.browserify({
+    return browserifyStream(
+      './build-targets/cdn-angular-combined.js',
+      {
+        paths: [cssDir],
+        external: ['angular'],
         transform: [
           babelify.configure({plugins: ['external-helpers']}),
           stringify(['.css'])
-        ],
-        paths: ['./', './node_modules/', cssDir],
-        external: ['angular']
-      }))
+        ]
+      })
       .pipe(plugins.replace("require('angular')", "window.angular"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.ngAnnotate())
@@ -352,11 +384,12 @@ function buildCdnAngularCombined(dirname, cssDir) {
 function buildE2eTests() {
   var s = babelCore.buildExternalHelpers(reactBabelHelpers, 'global');
 
-  return gulp.src('./build-targets/e2e-tests.js')
-    .pipe(plugins.browserify({
+  return browserifyStream(
+    './build-targets/e2e-tests.js',
+    {
+      extensions: ['.jsx'],
       transform: [babelify.configure({plugins: ['external-helpers']})],
-      extensions: ['.jsx']
-    }))
+    })
     .pipe(plugins.injectString.prepend(s))
     .pipe(plugins.rename('tests.js'))
     .pipe(gulp.dest('./e2e-tests'));

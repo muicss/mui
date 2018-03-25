@@ -31,7 +31,7 @@
   display: inline-block;
   width: 0;
   height: 0;
-  margin-left: 2px;
+  margin-left: mui-rem(2px);
   vertical-align: middle;
   border-top:   $mui-caret-width solid;
   border-right: $mui-caret-width solid transparent;
@@ -116,12 +116,12 @@
 .mui-list--inline {
   @include x-list-unstyled();
 
-  margin-left: -5px;
+  margin-left: mui-rem(-5px);
 
   > li {
     display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: mui-rem(5px);
+    padding-right: mui-rem(5px);
   }
 }
 

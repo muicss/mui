@@ -14,37 +14,22 @@ var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
 
-var _textField = require('./text-field');
+var _textfieldHelpers = require('./_textfieldHelpers');
 
 /**
  * Textarea constructor
  * @class
  */
-var Textarea = function (_React$Component) {
-  babelHelpers.inherits(Textarea, _React$Component);
+var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
+  var inputRef = props.inputRef,
+      rest = babelHelpers.objectWithoutProperties(props, ['inputRef']);
 
-  function Textarea() {
-    babelHelpers.classCallCheck(this, Textarea);
-    return babelHelpers.possibleConstructorReturn(this, (Textarea.__proto__ || Object.getPrototypeOf(Textarea)).apply(this, arguments));
-  }
+  // default number of rows
 
-  babelHelpers.createClass(Textarea, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
+  if (!'rows' in rest) rest.rows = 2;
 
-      return _react2.default.createElement(_textField.TextField, babelHelpers.extends({}, this.props, {
-        ref: function ref(el) {
-          if (el && el.inputElRef) _this2.controlEl = el.inputElRef.inputElRef;
-        }
-      }));
-    }
-  }]);
-  return Textarea;
-}(_react2.default.Component);
+  return _react2.default.createElement('textarea', babelHelpers.extends({ ref: inputRef }, rest));
+});
 
-Textarea.defaultProps = {
-  type: 'textarea'
-};
 exports.default = Textarea;
 module.exports = exports['default'];

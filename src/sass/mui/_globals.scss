@@ -7,7 +7,6 @@
 
   // Body reset
   html {
-    font-size: 10px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
@@ -64,7 +63,7 @@
   // Abbreviations
   abbr[title] {
     cursor: help;
-    border-bottom: 1px dotted $mui-abbr-border-color;
+    text-decoration-color: $mui-abbr-border-color;
   }
   
   // headers

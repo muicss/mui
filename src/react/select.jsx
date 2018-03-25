@@ -183,7 +183,7 @@ class Select extends React.Component {
     }
 
     const { children, className, style, label, defaultValue, readOnly,
-      useDefault, name, ...reactProps } = this.props;
+      disabled, useDefault, name, ...reactProps } = this.props;
 
     return (
       <div
@@ -198,17 +198,18 @@ class Select extends React.Component {
         <select
           ref={el => { this.controlEl = el; }}
           name={name}
+          disabled={disabled}
           tabIndex={tabIndexInner}
           value={this.state.value}
           defaultValue={defaultValue}
-          readOnly={this.props.readOnly}
+          readOnly={readOnly}
           onChange={this.onInnerChangeCB}
           onMouseDown={this.onInnerMouseDownCB}
           required={this.props.required}
         >
           {children}
         </select>
-        <label>{label}</label>
+        <label tabIndex="-1">{label}</label>
         {menuElem}
       </div>
     );
@@ -315,9 +316,9 @@ class Menu extends React.Component {
 
     // select first match alphabetically
     let prefixRegex = new RegExp('^' + this.q, 'i'),
-      optionEls = this.props.optionEls,
-      m = optionEls.length,
-      i;
+        optionEls = this.props.optionEls,
+        m = optionEls.length,
+        i;
 
     for (i = 0; i < m; i++) {
       // select item if code matches
@@ -352,6 +353,24 @@ class Menu extends React.Component {
 
   destroy() {
     this.props.onClose();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // scroll menu (if necessary)
+    if (this.state.currentIndex != prevState.currentIndex) {
+      var menuEl = this.wrapperElRef,
+          itemEl = menuEl.children[this.state.currentIndex],
+          itemRect = itemEl.getBoundingClientRect();
+
+      if (itemRect.top < 0) {
+        // menu item is hidden above visible window
+        menuEl.scrollTop = menuEl.scrollTop + itemRect.top - 5;
+      } else if (itemRect.top > window.innerHeight) {
+        // menu item is hidden below visible window
+        menuEl.scrollTop = menuEl.scrollTop +
+        (itemRect.top + itemRect.height - window.innerHeight) + 5;
+      }
+    }
   }
 
   render() {
