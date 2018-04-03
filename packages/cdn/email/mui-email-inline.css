@@ -614,73 +614,73 @@ table.mui-btn--large > tbody > tr > td > a {
  */
 .mui--text-display4 {
   font-weight: 300;
-  font-size: mui-rem(112px);
-  line-height: mui-rem(112px);
+  font-size: 112px;
+  line-height: 112px;
 }
 
 .mui--text-display3 {
   font-weight: 400;
-  font-size: mui-rem(56px);
-  line-height: mui-rem(56px);
+  font-size: 56px;
+  line-height: 56px;
 }
 
 .mui--text-display2 {
   font-weight: 400;
-  font-size: mui-rem(45px);
-  line-height: mui-rem(48px);
+  font-size: 45px;
+  line-height: 48px;
 }
 
 .mui--text-display1, h1 {
   font-weight: 400;
-  font-size: mui-rem(34px);
-  line-height: mui-rem(40px);
+  font-size: 34px;
+  line-height: 40px;
 }
 
 .mui--text-headline, h2 {
   font-weight: 400;
-  font-size: mui-rem(24px);
-  line-height: mui-rem(32px);
+  font-size: 24px;
+  line-height: 32px;
 }
 
 .mui--text-title, h3 {
   font-weight: 400;
-  font-size: mui-rem(20px);
-  line-height: mui-rem(28px);
+  font-size: 20px;
+  line-height: 28px;
 }
 
 .mui--text-subhead, h4 {
   font-weight: 400;
-  font-size: mui-rem(16px);
-  line-height: mui-rem(24px);
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .mui--text-body2, h5 {
   font-weight: 500;
-  font-size: mui-rem(14px);
-  line-height: mui-rem(24px);
+  font-size: 14px;
+  line-height: 24px;
 }
 
 .mui--text-body1 {
   font-weight: 400;
-  font-size: mui-rem(14px);
-  line-height: mui-rem(20px);
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .mui--text-caption {
   font-weight: 400;
-  font-size: mui-rem(12px);
-  line-height: mui-rem(16px);
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .mui--text-menu {
   font-weight: 500;
-  font-size: mui-rem(13px);
-  line-height: mui-rem(17px);
+  font-size: 13px;
+  line-height: 17px;
 }
 
 .mui--text-button {
   font-weight: 500;
-  font-size: mui-rem(14px);
-  line-height: mui-rem(18px);
+  font-size: 14px;
+  line-height: 18px;
   text-transform: uppercase;
 }

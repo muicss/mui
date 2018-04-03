@@ -1,5 +1,13 @@
 # MUI Changelog
 
+## 0.9.39-rc1 - April 3, 2018
+
+* [CSS] Reverted dimentions to use 'px' by default
+* [CSS] Added pre-compiled 'rem' version to extras
+* [REACT] Fixed issue preventing use of duplicate values in select options
+* [REACT] Added support for placeholder to Select component
+* [ANGULAR] Added support for placeholder to mui-select component
+
 ## 0.9.38 - March 16, 2018
 
 * Added `$mui-use-rem` SASS option to choose 'px' or 'rem'

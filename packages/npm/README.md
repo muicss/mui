@@ -260,6 +260,7 @@ import Select from 'muicss/lib/react/select';
   * {Boolean} disabled=false|true
   * {String} name
   * {String} label
+  * {String} placeholder
   * {Boolean} readOnly=false|true
   * {Boolean} required=false|true
   * {Boolean} useDefault=false|true

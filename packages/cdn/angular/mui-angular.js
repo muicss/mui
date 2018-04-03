@@ -35,10 +35,10 @@
   // return if library has been loaded already
   if (win._muiAngularLoaded) return;else win._muiAngularLoaded = true;
 
-  win.angular.module('mui', [require('src/angular/appbar'), require('src/angular/button'), require('src/angular/caret'), require('src/angular/container'), require('src/angular/divider'), require('src/angular/dropdown'), require('src/angular/dropdown-item'), require('src/angular/panel'), require('src/angular/input'), require('src/angular/row'), require('src/angular/col'), require('src/angular/tabs'), require('src/angular/radio'), require('src/angular/checkbox'), require('src/angular/select'), require('src/angular/form')]);
+  win.angular.module('mui', [require('src/angular/appbar'), require('src/angular/button'), require('src/angular/caret'), require('src/angular/container'), require('src/angular/divider'), require('src/angular/dropdown'), require('src/angular/dropdown-item'), require('src/angular/panel'), require('src/angular/input'), require('src/angular/row'), require('src/angular/col'), require('src/angular/tabs'), require('src/angular/radio'), require('src/angular/checkbox'), require('src/angular/option'), require('src/angular/select'), require('src/angular/form')]);
 })(window);
 
-},{"src/angular/appbar":2,"src/angular/button":3,"src/angular/caret":4,"src/angular/checkbox":5,"src/angular/col":6,"src/angular/container":7,"src/angular/divider":8,"src/angular/dropdown":10,"src/angular/dropdown-item":9,"src/angular/form":11,"src/angular/input":12,"src/angular/panel":13,"src/angular/radio":14,"src/angular/row":15,"src/angular/select":16,"src/angular/tabs":17}],2:[function(require,module,exports){
+},{"src/angular/appbar":2,"src/angular/button":3,"src/angular/caret":4,"src/angular/checkbox":5,"src/angular/col":6,"src/angular/container":7,"src/angular/divider":8,"src/angular/dropdown":10,"src/angular/dropdown-item":9,"src/angular/form":11,"src/angular/input":12,"src/angular/option":13,"src/angular/panel":14,"src/angular/radio":15,"src/angular/row":16,"src/angular/select":17,"src/angular/tabs":18}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -206,7 +206,7 @@ function mouseUpHandler(ev) {
 exports.default = moduleName;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":20,"../js/lib/util":21,"angular":"angular"}],4:[function(require,module,exports){
+},{"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -731,6 +731,68 @@ var _angular = window.angular;
 
 var _angular2 = babelHelpers.interopRequireDefault(_angular);
 
+var _forms = require('../js/lib/forms');
+
+var formlib = babelHelpers.interopRequireWildcard(_forms);
+
+var _util = require('../js/lib/util');
+
+var util = babelHelpers.interopRequireWildcard(_util);
+
+var _jqLite = require('../js/lib/jqLite');
+
+var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
+/**
+ * MUI Angular Select Component
+ * @module angular/select
+ */
+
+var moduleName = 'mui.option';
+
+_angular2.default.module(moduleName, []).directive('muiOption', function () {
+  return {
+    restrict: 'AE',
+    replace: true,
+    //require: '^muiSelect',
+    scope: {
+      label: '@',
+      value: '@',
+      ngDisabled: '='
+    },
+    template: '<option>{{label}}</option>',
+    link: function link(scope, element, attrs, controller) {
+      /*
+      // register
+      controller.addMenuItem({
+        label: attrs.label,
+        value: attrs.value,
+        disabled: scope.ngDisabled,
+        hidden: attrs.hidden
+      });
+       // destroy hook
+      scope.$on('$destroy', function() {
+        controller.removeMenuItem(attrs.value);
+      });
+      */
+    }
+  };
+});
+
+/** Define module API */
+exports.default = moduleName;
+module.exports = exports['default'];
+
+},{"../js/lib/forms":20,"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _angular = window.angular;
+
+var _angular2 = babelHelpers.interopRequireDefault(_angular);
+
 var moduleName = 'mui.panel'; /**
                                * MUI Angular Panel Component
                                * @module angular/panel
@@ -755,7 +817,7 @@ _angular2.default.module(moduleName, []).directive('muiPanel', function () {
 exports.default = moduleName;
 module.exports = exports['default'];
 
-},{"angular":"angular"}],14:[function(require,module,exports){
+},{"angular":"angular"}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -809,7 +871,7 @@ _angular2.default.module(moduleName, []).directive('muiRadio', function () {
 exports.default = moduleName;
 module.exports = exports['default'];
 
-},{"angular":"angular"}],15:[function(require,module,exports){
+},{"angular":"angular"}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -844,7 +906,7 @@ _angular2.default.module('mui.row', []).directive('muiRow', function () {
 exports.default = moduleName;
 module.exports = exports['default'];
 
-},{"angular":"angular"}],16:[function(require,module,exports){
+},{"angular":"angular"}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -880,24 +942,25 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
     scope: {
       label: '@',
       name: '@',
+      placeholder: '@',
       ngDisabled: '=',
-      ngModel: '='
+      ngModel: '=',
+      ngRequired: '='
     },
     replace: true,
     transclude: true,
-    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)" ' + 'ng-keypress="onWrapperKeypress($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + '>' + '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' + '</select>' + '<label tabindex="-1">{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-show="!useDefault && isOpen"> ' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in options track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' + '</div>' + '</div>',
+    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)" ' + 'ng-keypress="onWrapperKeypress($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-class=\'{"mui--text-placeholder": placeholder && ngModel == ""}\' ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + 'ng-required="ngRequired" ' + '>' + '<option ng-if="placeholder" value="" placeholder>{{placeholder}}</option>' + '</select>' + '<label tabindex="-1">{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-if="!useDefault && isOpen">' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in selectEl.children() track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex, "mui--text-placeholder": option.hasAttribute("placeholder"), "mui--is-disabled": option.disabled}\' ' + 'ng-disabled="option.disabled" ' + 'ng-hide="option.hidden" ' + '>{{option.innerText}}</div>' + '</div>' + '</div>',
     link: function link(scope, element, attrs, controller, transcludeFn) {
       var wrapperEl = element,
-          menuEl = element.find('div'),
           selectEl = element.find('select'),
           isUndef = _angular2.default.isUndefined,
-          cacheIndex;
+          origValue;
 
       // disable MUI js
       selectEl[0]._muiSelect = true;
 
       // init scope
-      scope.options = [];
+      scope.selectEl = selectEl;
       scope.isOpen = false;
       scope.useDefault = 'ontouchstart' in document.documentElement ? true : false;
       scope.origTabIndex = selectEl[0].tabIndex;
@@ -917,23 +980,23 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
         selectEl.prop('tabIndex', '0');
       }
 
-      // extract <option> elements from children
+      // add <option> tags to <select>
       transcludeFn(function (clone) {
-        var el, k;
-
-        // iterate through children
-        for (k in clone) {
-          el = clone[k];
-
-          // add option to scope
-          if (el.tagName === 'MUI-OPTION') {
-            scope.options.push({
-              value: el.getAttribute('value'),
-              label: el.getAttribute('label')
-            });
-          }
-        }
+        selectEl.append(clone);
       });
+
+      function dispatchChange(option) {
+        selectEl[0].selectedIndex = option.index;
+
+        if (option.value !== origValue) {
+          scope.ngModel = option.value;
+
+          // trigger change event
+          $timeout(function () {
+            util.dispatchEvent(selectEl[0], 'change', true, false);
+          });
+        }
+      }
 
       /**
        * Handle blur and focus events on wrapper <div> element.
@@ -991,20 +1054,42 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
             $event.preventDefault();
           }
 
+          var options = selectEl.children(),
+              nextIndex = null,
+              i;
+
           if (keyCode === 27) {
             // escape -> close
             scope.isOpen = false;
           } else if (keyCode === 40) {
-            // up -> increment
-            if (scope.menuIndex < scope.options.length - 1) {
-              scope.menuIndex += 1;
+            // down -> increment
+            i = scope.menuIndex + 1;
+            while (i < options.length) {
+              // exit if option not disabled
+              if (!options[i].disabled && !options[i].hidden) {
+                nextIndex = i;
+                break;
+              }
+              i += 1;
             }
+
+            if (nextIndex !== null) scope.menuIndex = nextIndex;
           } else if (keyCode === 38) {
-            // down -> decrement
-            if (scope.menuIndex > 0) scope.menuIndex -= 1;
+            // up -> decrement
+            i = scope.menuIndex - 1;
+            while (i > -1) {
+              // exit if option not disabled
+              if (!options[i].disabled && !options[i].hidden) {
+                nextIndex = i;
+                break;
+              }
+              i -= 1;
+            }
+
+            if (nextIndex !== null) scope.menuIndex = nextIndex;
           } else if (keyCode === 13) {
             // enter -> choose and close
-            scope.ngModel = scope.options[scope.menuIndex].value;
+            dispatchChange(options[scope.menuIndex]);
             scope.isOpen = false;
           }
         }
@@ -1026,17 +1111,19 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
         scope.q += $event.key;
         scope.qTimeout = setTimeout(function () {
           scope.q = '';
-        }, 300);
+        }, 600);
 
         // select first match alphabetically
         var prefixRegex = new RegExp('^' + scope.q, 'i'),
-            options = scope.options,
+            options = selectEl.children(),
             m = options.length,
+            option,
             i;
 
         for (i = 0; i < m; i++) {
-          if (prefixRegex.test(options[i].label)) {
-            scope.menuIndex = i;
+          option = options[i];
+          if (!option.hidden && !option.disabled && prefixRegex.test(option.innerText)) {
+            scope.menuIndex = option.index;
             break;
           }
         }
@@ -1062,7 +1149,13 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
         // prevent bubbling
         $event.stopImmediatePropagation();
 
-        scope.ngModel = option.value;
+        // ignore disabled
+        if (option.disabled) return;
+
+        // dispatch change
+        dispatchChange(option);
+
+        // close menu
         scope.isOpen = false;
       };
 
@@ -1095,28 +1188,20 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           util.enableScrollLock();
 
           // init menuIndex
-          var value = scope.ngModel,
-              options = scope.options,
+          var menuEl = element.find('div'),
+              value = scope.ngModel,
+              options = selectEl.children(),
               m = options.length,
               i;
 
-          for (i = 0; i < m; i++) {
-            if (options[i].value === value) {
-              scope.menuIndex = i;
-              break;
-            }
-          }
-
-          menuEl.css({
-            height: 'auto',
-            visible: 'hidden'
-          });
+          origValue = scope.ngModel;
+          scope.menuIndex = scope.menuIndex;
 
           $timeout(function () {
             // set position of custom menu
             var props = formlib.getMenuPositionalCSS(element[0], menuEl[0], scope.menuIndex);
 
-            props.hidden = 'visible';
+            props.height = 'auto';
             menuEl.css(props);
             jqLite.scrollTop(menuEl[0], props.scrollTop);
 
@@ -1146,7 +1231,7 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
 
         // scroll menu after rendering is finished
         $timeout(function () {
-          var itemEl = element[0].querySelector('.mui--is-selected'),
+          var itemEl = selectEl.children()[scope.menuIndex],
               itemRect = itemEl.getBoundingClientRect(),
               menuEl = itemEl.parentNode;
 
@@ -1171,7 +1256,7 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
 exports.default = moduleName;
 module.exports = exports['default'];
 
-},{"../js/lib/forms":19,"../js/lib/jqLite":20,"../js/lib/util":21,"angular":"angular"}],17:[function(require,module,exports){
+},{"../js/lib/forms":20,"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1300,7 +1385,7 @@ _angular2.default.module(moduleName, []).directive('muiTabs', function () {
 exports.default = moduleName;
 module.exports = exports['default'];
 
-},{"../js/lib/jqLite":20,"angular":"angular"}],18:[function(require,module,exports){
+},{"../js/lib/jqLite":21,"angular":"angular"}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1314,7 +1399,7 @@ module.exports = {
   debug: true
 };
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * MUI CSS/JS form helpers module
  * @module lib/forms.py
@@ -1372,7 +1457,7 @@ module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
 
-},{"./jqLite":20}],20:[function(require,module,exports){
+},{"./jqLite":21}],21:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -1757,7 +1842,7 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -2036,4 +2121,4 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config":18,"./jqLite":20}]},{},[1]);
+},{"../config":19,"./jqLite":21}]},{},[1]);

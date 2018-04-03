@@ -98,72 +98,41 @@
     return call && (typeof call === "object" || typeof call === "function") ? call : self;
   };
 })(typeof global === "undefined" ? self : global);(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- * 
- */
-
-/*eslint-disable no-self-compare */
-
 'use strict';
 
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
 /**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ * MUI React main module
+ * @module react/main
  */
-function is(x, y) {
-  // SameValue algorithm
-  if (x === y) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    // Added the nonzero y check to make Flow happy, but it is redundant
-    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-  } else {
-    // Step 6.a: NaN == NaN
-    return x !== x && y !== y;
-  }
-}
 
-/**
- * Performs equality by iterating through keys on an object and returning false
- * when any key has values which are not strictly equal between the arguments.
- * Returns true when the values of all keys are strictly equal.
- */
-function shallowEqual(objA, objB) {
-  if (is(objA, objB)) {
-    return true;
-  }
+(function (win) {
+  // return if library has been loaded already
+  if (win._muiReactLoaded) return;else win._muiReactLoaded = true;
 
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-    return false;
-  }
+  var mui = win.mui = win.mui || [],
+      react = mui.react = {},
+      lib;
 
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
+  react.Appbar = require('src/react/appbar');
+  react.Button = require('src/react/button');
+  react.Caret = require('src/react/caret');
+  react.Checkbox = require('src/react/checkbox');
+  react.Col = require('src/react/col');
+  react.Container = require('src/react/container');
+  react.Divider = require('src/react/divider');
+  react.Dropdown = require('src/react/dropdown'), react.DropdownItem = require('src/react/dropdown-item'), react.Form = require('src/react/form');
+  react.Input = require('src/react/input');
+  react.Option = require('src/react/option');
+  react.Panel = require('src/react/panel');
+  react.Radio = require('src/react/radio');
+  react.Row = require('src/react/row');
+  react.Select = require('src/react/select');
+  react.Tab = require('src/react/tab');
+  react.Tabs = require('src/react/tabs');
+  react.Textarea = require('src/react/textarea');
+})(window);
 
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  // Test for A's keys different from B.
-  for (var i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-module.exports = shallowEqual;
-},{}],2:[function(require,module,exports){
+},{"src/react/appbar":11,"src/react/button":12,"src/react/caret":13,"src/react/checkbox":14,"src/react/col":15,"src/react/container":16,"src/react/divider":17,"src/react/dropdown":19,"src/react/dropdown-item":18,"src/react/form":20,"src/react/input":21,"src/react/option":22,"src/react/panel":23,"src/react/radio":24,"src/react/row":25,"src/react/select":26,"src/react/tab":27,"src/react/tabs":28,"src/react/textarea":29}],2:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -377,42 +346,73 @@ function shallowCompare(instance, nextProps, nextState) {
 
 module.exports = shallowCompare;
 
-},{"fbjs/lib/shallowEqual":1}],4:[function(require,module,exports){
-'use strict';
-
+},{"fbjs/lib/shallowEqual":4}],4:[function(require,module,exports){
 /**
- * MUI React main module
- * @module react/main
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ * 
  */
 
-(function (win) {
-  // return if library has been loaded already
-  if (win._muiReactLoaded) return;else win._muiReactLoaded = true;
+/*eslint-disable no-self-compare */
 
-  var mui = win.mui = win.mui || [],
-      react = mui.react = {},
-      lib;
+'use strict';
 
-  react.Appbar = require('src/react/appbar');
-  react.Button = require('src/react/button');
-  react.Caret = require('src/react/caret');
-  react.Checkbox = require('src/react/checkbox');
-  react.Col = require('src/react/col');
-  react.Container = require('src/react/container');
-  react.Divider = require('src/react/divider');
-  react.Dropdown = require('src/react/dropdown'), react.DropdownItem = require('src/react/dropdown-item'), react.Form = require('src/react/form');
-  react.Input = require('src/react/input');
-  react.Option = require('src/react/option');
-  react.Panel = require('src/react/panel');
-  react.Radio = require('src/react/radio');
-  react.Row = require('src/react/row');
-  react.Select = require('src/react/select');
-  react.Tab = require('src/react/tab');
-  react.Tabs = require('src/react/tabs');
-  react.Textarea = require('src/react/textarea');
-})(window);
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-},{"src/react/appbar":11,"src/react/button":12,"src/react/caret":13,"src/react/checkbox":14,"src/react/col":15,"src/react/container":16,"src/react/divider":17,"src/react/dropdown":19,"src/react/dropdown-item":18,"src/react/form":20,"src/react/input":21,"src/react/option":22,"src/react/panel":23,"src/react/radio":24,"src/react/row":25,"src/react/select":26,"src/react/tab":27,"src/react/tabs":28,"src/react/textarea":29}],5:[function(require,module,exports){
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+
+/**
+ * Performs equality by iterating through keys on an object and returning false
+ * when any key has values which are not strictly equal between the arguments.
+ * Returns true when the values of all keys are strictly equal.
+ */
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) {
+    return true;
+  }
+
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  // Test for A's keys different from B.
+  for (var i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = shallowEqual;
+},{}],5:[function(require,module,exports){
 "use strict";
 
 /**
@@ -2904,10 +2904,8 @@ var Select = function (_React$Component) {
   }, {
     key: 'onInnerChange',
     value: function onInnerChange(ev) {
-      var value = ev.target.value;
-
       // update state
-      this.setState({ value: value });
+      this.setState({ value: ev.target.value });
     }
   }, {
     key: 'onInnerMouseDown',
@@ -2975,7 +2973,10 @@ var Select = function (_React$Component) {
     }
   }, {
     key: 'hideMenu',
-    value: function hideMenu() {
+    value: function hideMenu(ev) {
+      // check default prevented
+      if (ev && ev.defaultPrevented) return;
+
       // remove event listeners
       jqLite.off(window, 'resize', this.hideMenuCB);
       jqLite.off(document, 'click', this.hideMenuCB);
@@ -2988,11 +2989,11 @@ var Select = function (_React$Component) {
     }
   }, {
     key: 'onMenuChange',
-    value: function onMenuChange(value) {
+    value: function onMenuChange(index) {
       if (this.props.readOnly) return;
 
       // update inner <select> and dispatch 'change' event
-      this.controlEl.value = value;
+      this.controlEl.selectedIndex = index;
       util.dispatchEvent(this.controlEl, 'change');
     }
   }, {
@@ -3000,7 +3001,11 @@ var Select = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var menuElem = void 0;
+      var value = this.state.value,
+          valueArgs = {},
+          menuElem = void 0,
+          placeholderElem = void 0,
+          selectCls = void 0;
 
       if (this.state.showMenu) {
         menuElem = _react2.default.createElement(Menu, {
@@ -3030,8 +3035,27 @@ var Select = function (_React$Component) {
           disabled = _props.disabled,
           useDefault = _props.useDefault,
           name = _props.name,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'disabled', 'useDefault', 'name']);
+          placeholder = _props.placeholder,
+          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'disabled', 'useDefault', 'name', 'placeholder']);
 
+      // build value arguments
+
+      if (this.props.value !== undefined) valueArgs.value = value; // controlled
+      if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue;
+
+      // handle placeholder
+      if (placeholder) {
+        placeholderElem = _react2.default.createElement(
+          'option',
+          { className: 'mui--text-placeholder', value: '' },
+          placeholder
+        );
+
+        // apply class if value is empty
+        if (value === '' || value === undefined && !defaultValue) {
+          selectCls = 'mui--text-placeholder';
+        }
+      }
 
       return _react2.default.createElement(
         'div',
@@ -3047,20 +3071,20 @@ var Select = function (_React$Component) {
         }),
         _react2.default.createElement(
           'select',
-          {
+          babelHelpers.extends({}, valueArgs, {
             ref: function ref(el) {
               _this2.controlEl = el;
             },
+            className: selectCls,
             name: name,
             disabled: disabled,
             tabIndex: tabIndexInner,
-            value: this.state.value,
-            defaultValue: defaultValue,
             readOnly: readOnly,
             onChange: this.onInnerChangeCB,
             onMouseDown: this.onInnerMouseDownCB,
             required: this.props.required
-          },
+          }),
+          placeholderElem,
           children
         ),
         _react2.default.createElement(
@@ -3084,6 +3108,7 @@ var Select = function (_React$Component) {
 Select.defaultProps = {
   className: '',
   name: '',
+  placeholder: null,
   readOnly: false,
   useDefault: typeof document !== 'undefined' && 'ontouchstart' in document.documentElement ? true : false,
   onChange: null,
@@ -3101,7 +3126,7 @@ var Menu = function (_React$Component2) {
 
     _this3.state = {
       origIndex: null,
-      currentIndex: null
+      currentIndex: 0
     };
 
 
@@ -3109,21 +3134,34 @@ var Menu = function (_React$Component2) {
     _this3.onKeyPressCB = util.callback(_this3, 'onKeyPress');
     _this3.q = '';
     _this3.qTimeout = null;
+    _this3.availOptionEls = [];
+
+    // extract selectable options
+    var optionEls = props.optionEls,
+        el = void 0,
+        i = void 0;
+
+    for (i = 0; i < optionEls.length; i++) {
+      el = optionEls[i];
+      if (!el.disabled && !el.hidden) _this3.availOptionEls.push(el);
+    }
     return _this3;
   }
 
   babelHelpers.createClass(Menu, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var optionEls = this.props.optionEls,
+      var optionEls = this.availOptionEls,
           m = optionEls.length,
-          selectedPos = 0,
+          selectedPos = null,
           i = void 0;
 
       // get current selected position
       for (i = m - 1; i > -1; i--) {
         if (optionEls[i].selected) selectedPos = i;
-      }this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
+      }if (selectedPos !== null) {
+        this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
+      }
     }
   }, {
     key: 'componentDidMount',
@@ -3157,8 +3195,9 @@ var Menu = function (_React$Component2) {
     key: 'onClick',
     value: function onClick(pos, ev) {
       // don't allow events to bubble
-      ev.stopPropagation();
-      this.selectAndDestroy(pos);
+      //ev.stopPropagation();
+      ev.preventDefault();
+      if (pos !== null) this.selectAndDestroy(pos);
     }
   }, {
     key: 'onKeyDown',
@@ -3188,7 +3227,7 @@ var Menu = function (_React$Component2) {
 
       // select first match alphabetically
       var prefixRegex = new RegExp('^' + this.q, 'i'),
-          optionEls = this.props.optionEls,
+          optionEls = this.availOptionEls,
           m = optionEls.length,
           i = void 0;
 
@@ -3203,7 +3242,7 @@ var Menu = function (_React$Component2) {
   }, {
     key: 'increment',
     value: function increment() {
-      if (this.state.currentIndex === this.props.optionEls.length - 1) return;
+      if (this.state.currentIndex === this.availOptionEls.length - 1) return;
       this.setState({ currentIndex: this.state.currentIndex + 1 });
     }
   }, {
@@ -3219,7 +3258,7 @@ var Menu = function (_React$Component2) {
 
       // handle onChange
       if (pos !== this.state.origIndex) {
-        this.props.onChange(this.props.optionEls[pos].value);
+        this.props.onChange(this.availOptionEls[pos].index);
       }
 
       // close menu
@@ -3256,33 +3295,51 @@ var Menu = function (_React$Component2) {
       var menuItems = [],
           optionEls = this.props.optionEls,
           m = optionEls.length,
+          pos = 0,
           optionEl = void 0,
           cls = void 0,
+          val = void 0,
           i = void 0;
 
       // define menu items
       for (i = 0; i < m; i++) {
-        cls = i === this.state.currentIndex ? 'mui--is-selected ' : '';
+        optionEl = optionEls[i];
+
+        // handle hidden
+        if (optionEl.hidden) continue;
+
+        // handle disabled
+        if (optionEl.disabled) {
+          cls = 'mui--is-disabled ';
+          val = null;
+        } else {
+          cls = pos === this.state.currentIndex ? 'mui--is-selected ' : '';
+          val = pos;
+          pos += 1;
+        }
 
         // add custom css class from <Option> component
-        cls += optionEls[i].className;
+        cls += optionEl.className;
 
         menuItems.push(_react2.default.createElement(
           'div',
           {
             key: i,
             className: cls,
-            onClick: this.onClick.bind(this, i)
+            onClick: this.onClick.bind(this, val)
           },
-          optionEls[i].textContent
+          optionEl.textContent
         ));
       }
 
       return _react2.default.createElement(
         'div',
-        { ref: function ref(el) {
+        {
+          ref: function ref(el) {
             _this4.wrapperElRef = el;
-          }, className: 'mui-select__menu' },
+          },
+          className: 'mui-select__menu'
+        },
         menuItems
       );
     }
@@ -3558,4 +3615,4 @@ var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
 exports.default = Textarea;
 module.exports = exports['default'];
 
-},{"./_textfieldHelpers":10,"react":"react"}]},{},[4]);
+},{"./_textfieldHelpers":10,"react":"react"}]},{},[1]);

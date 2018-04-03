@@ -1641,6 +1641,10 @@ h4, h5, h6 {
   color: rgba(0, 0, 0, 0.87);
 }
 
+.mui-select > select.mui--text-placeholder {
+  color: rgba(0, 0, 0, 0.26);
+}
+
 .mui-select > label {
   position: absolute;
   top: 0;
@@ -2153,6 +2157,10 @@ h4, h5, h6 {
 
 .mui--text-danger {
   color: #F44336;
+}
+
+.mui--text-placeholder {
+  color: rgba(0, 0, 0, 0.26);
 }
 
 .mui--bg-primary {

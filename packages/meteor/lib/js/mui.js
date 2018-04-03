@@ -872,8 +872,8 @@ function callbackFn(instance, funcName) {
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-       cancelable = (cancelable !== undefined) ? cancelable : true,
-       k;
+      cancelable = (cancelable !== undefined) ? cancelable : true,
+      k;
 
   ev.initEvent(eventType, bubbles, cancelable);
   
@@ -1676,7 +1676,9 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
       // handle optgroup options
       if (inGroup) jqLite.addClass(rowEl, 'mui-optgroup__option');
 
-      if (loopEl.disabled) {
+      if (loopEl.hidden) {
+        continue;
+      } else if (loopEl.disabled) {
         // do not attach muiIndex to disable <option> elements to make them
         // unselectable.
         jqLite.addClass(rowEl, disabledClass);

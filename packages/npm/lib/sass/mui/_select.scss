@@ -81,6 +81,11 @@ $xFormLabelLineHeight: $mui-label-font-size * 1.25;
       background: none;
       color: $mui-text-dark;
     }
+
+    // placeholder
+    &.mui--text-placeholder {
+      color: $mui-input-placeholder-color;
+    }
   }
 
   > label {

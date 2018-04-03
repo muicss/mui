@@ -34,24 +34,25 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
     scope: {
       label: '@',
       name: '@',
+      placeholder: '@',
       ngDisabled: '=',
-      ngModel: '='
+      ngModel: '=',
+      ngRequired: '='
     },
     replace: true,
     transclude: true,
-    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)" ' + 'ng-keypress="onWrapperKeypress($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + '>' + '<option ng-repeat="option in options" value="{{option.value}}">{{option.label}}</option>' + '</select>' + '<label tabindex="-1">{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-show="!useDefault && isOpen"> ' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in options track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex}\'>{{option.label}}</div>' + '</div>' + '</div>',
+    template: '<div class="mui-select" ' + 'ng-blur="onWrapperBlurOrFocus($event)" ' + 'ng-click="onWrapperClick($event)" ' + 'ng-focus="onWrapperBlurOrFocus($event)" ' + 'ng-keydown="onWrapperKeydown($event)" ' + 'ng-keypress="onWrapperKeypress($event)">' + '<select ' + 'name="{{name}}" ' + 'ng-class=\'{"mui--text-placeholder": placeholder && ngModel == ""}\' ' + 'ng-disabled="ngDisabled" ' + 'ng-model="ngModel" ' + 'ng-mousedown="onInnerMousedown($event)" ' + 'ng-required="ngRequired" ' + '>' + '<option ng-if="placeholder" value="" placeholder>{{placeholder}}</option>' + '</select>' + '<label tabindex="-1">{{label}}</label>' + '<div ' + 'class="mui-select__menu"' + 'ng-if="!useDefault && isOpen">' + '<div ' + 'ng-click="chooseOption($event, option)" ' + 'ng-repeat="option in selectEl.children() track by $index" ' + 'ng-class=\'{"mui--is-selected": $index === menuIndex, "mui--text-placeholder": option.hasAttribute("placeholder"), "mui--is-disabled": option.disabled}\' ' + 'ng-disabled="option.disabled" ' + 'ng-hide="option.hidden" ' + '>{{option.innerText}}</div>' + '</div>' + '</div>',
     link: function link(scope, element, attrs, controller, transcludeFn) {
       var wrapperEl = element,
-          menuEl = element.find('div'),
           selectEl = element.find('select'),
           isUndef = _angular2.default.isUndefined,
-          cacheIndex;
+          origValue;
 
       // disable MUI js
       selectEl[0]._muiSelect = true;
 
       // init scope
-      scope.options = [];
+      scope.selectEl = selectEl;
       scope.isOpen = false;
       scope.useDefault = 'ontouchstart' in document.documentElement ? true : false;
       scope.origTabIndex = selectEl[0].tabIndex;
@@ -71,23 +72,23 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
         selectEl.prop('tabIndex', '0');
       }
 
-      // extract <option> elements from children
+      // add <option> tags to <select>
       transcludeFn(function (clone) {
-        var el, k;
-
-        // iterate through children
-        for (k in clone) {
-          el = clone[k];
-
-          // add option to scope
-          if (el.tagName === 'MUI-OPTION') {
-            scope.options.push({
-              value: el.getAttribute('value'),
-              label: el.getAttribute('label')
-            });
-          }
-        }
+        selectEl.append(clone);
       });
+
+      function dispatchChange(option) {
+        selectEl[0].selectedIndex = option.index;
+
+        if (option.value !== origValue) {
+          scope.ngModel = option.value;
+
+          // trigger change event
+          $timeout(function () {
+            util.dispatchEvent(selectEl[0], 'change', true, false);
+          });
+        }
+      }
 
       /**
        * Handle blur and focus events on wrapper <div> element.
@@ -145,20 +146,42 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
             $event.preventDefault();
           }
 
+          var options = selectEl.children(),
+              nextIndex = null,
+              i;
+
           if (keyCode === 27) {
             // escape -> close
             scope.isOpen = false;
           } else if (keyCode === 40) {
-            // up -> increment
-            if (scope.menuIndex < scope.options.length - 1) {
-              scope.menuIndex += 1;
+            // down -> increment
+            i = scope.menuIndex + 1;
+            while (i < options.length) {
+              // exit if option not disabled
+              if (!options[i].disabled && !options[i].hidden) {
+                nextIndex = i;
+                break;
+              }
+              i += 1;
             }
+
+            if (nextIndex !== null) scope.menuIndex = nextIndex;
           } else if (keyCode === 38) {
-            // down -> decrement
-            if (scope.menuIndex > 0) scope.menuIndex -= 1;
+            // up -> decrement
+            i = scope.menuIndex - 1;
+            while (i > -1) {
+              // exit if option not disabled
+              if (!options[i].disabled && !options[i].hidden) {
+                nextIndex = i;
+                break;
+              }
+              i -= 1;
+            }
+
+            if (nextIndex !== null) scope.menuIndex = nextIndex;
           } else if (keyCode === 13) {
             // enter -> choose and close
-            scope.ngModel = scope.options[scope.menuIndex].value;
+            dispatchChange(options[scope.menuIndex]);
             scope.isOpen = false;
           }
         }
@@ -180,17 +203,19 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
         scope.q += $event.key;
         scope.qTimeout = setTimeout(function () {
           scope.q = '';
-        }, 300);
+        }, 600);
 
         // select first match alphabetically
         var prefixRegex = new RegExp('^' + scope.q, 'i'),
-            options = scope.options,
+            options = selectEl.children(),
             m = options.length,
+            option,
             i;
 
         for (i = 0; i < m; i++) {
-          if (prefixRegex.test(options[i].label)) {
-            scope.menuIndex = i;
+          option = options[i];
+          if (!option.hidden && !option.disabled && prefixRegex.test(option.innerText)) {
+            scope.menuIndex = option.index;
             break;
           }
         }
@@ -216,7 +241,13 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
         // prevent bubbling
         $event.stopImmediatePropagation();
 
-        scope.ngModel = option.value;
+        // ignore disabled
+        if (option.disabled) return;
+
+        // dispatch change
+        dispatchChange(option);
+
+        // close menu
         scope.isOpen = false;
       };
 
@@ -249,28 +280,20 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           util.enableScrollLock();
 
           // init menuIndex
-          var value = scope.ngModel,
-              options = scope.options,
+          var menuEl = element.find('div'),
+              value = scope.ngModel,
+              options = selectEl.children(),
               m = options.length,
               i;
 
-          for (i = 0; i < m; i++) {
-            if (options[i].value === value) {
-              scope.menuIndex = i;
-              break;
-            }
-          }
-
-          menuEl.css({
-            height: 'auto',
-            visible: 'hidden'
-          });
+          origValue = scope.ngModel;
+          scope.menuIndex = scope.menuIndex;
 
           $timeout(function () {
             // set position of custom menu
             var props = formlib.getMenuPositionalCSS(element[0], menuEl[0], scope.menuIndex);
 
-            props.hidden = 'visible';
+            props.height = 'auto';
             menuEl.css(props);
             jqLite.scrollTop(menuEl[0], props.scrollTop);
 
@@ -300,7 +323,7 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
 
         // scroll menu after rendering is finished
         $timeout(function () {
-          var itemEl = element[0].querySelector('.mui--is-selected'),
+          var itemEl = selectEl.children()[scope.menuIndex],
               itemRect = itemEl.getBoundingClientRect(),
               menuEl = itemEl.parentNode;
 
