@@ -23,6 +23,7 @@
     require('src/angular/tabs'),
     require('src/angular/radio'),
     require('src/angular/checkbox'),
+    require('src/angular/option'),
     require('src/angular/select'),
     require('src/angular/form')
   ]);

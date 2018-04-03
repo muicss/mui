@@ -20,6 +20,44 @@
         $scope.valC = 'opt3';
         $scope.valD = 'opt2';
         $scope.valE = 'opt2';
+        $scope.valF = 'opt1';
+        $scope.valG = 'opt1';
+        $scope.valH = '';
+        $scope.valI = '0';
+        $scope.valJ = {value: 'value'};
+
+        var counter = 0
+        $scope.optionsI = [counter];
+        
+        $scope.addOptionI = function() {
+          $scope.optionsI.push(counter + 1);
+          counter += 1;
+        };
+        
+        $scope.delOptionI = function() {
+          $scope.optionsI.splice(-1, 1);
+        };
+        
+        $scope.revOptionsI = function() {
+          console.log($scope.optionsI);
+          $scope.optionsI.reverse();
+          console.log($scope.optionsI);
+        };
+        
+        $scope.onChangeJ = function() {
+          console.log('onChangeJ: ' + $scope.valJ.value);
+        };
+        $scope.$watch('valJ.value', function(v1, v2) {
+          console.log('watch: ' + v1);
+        });
+        
+        $scope.selectedName = {value: 'Name2'};
+        $scope.nameChange = function() {
+          console.log('change: ' + $scope.selectedName.value);
+        };
+        $scope.$watch('selectedName.value', function(v1, v2) {
+          if (v1 !== v2) console.log('watch: ' + v1);
+        });
       });
     </script>
   </head>
@@ -31,8 +69,9 @@
           <strong>Should have value "Option 2"</strong>
           <mui-select
             name="exampleA"
-            ng-model="valA"
             label="Label 1"
+            ng-model="valA"
+            ng-change="onChangeA()"
           >
             <mui-option label="Option 1" value="opt1"></mui-option>
             <mui-option label="Option 2" value="opt2"></mui-option>
@@ -90,6 +129,80 @@
             <mui-option label="6" value="opt6"></mui-option>
           </mui-select>
 
+          <strong>Should have a disabled option</strong>
+          <mui-select name="exampleF" ng-model="valF">
+            <mui-option label="A" value="opt1"></mui-option>
+            <mui-option label="B" value="opt2" ng-disabled="true"></mui-option>
+            <mui-option label="C" value="opt3"></mui-option>
+          </mui-select>
+
+          <strong>Should have a hidden option</strong>
+          <mui-select name="exampleG" ng-model="valG">
+            <mui-option label="A" value="opt1"></mui-option>
+            <mui-option label="B" value="opt2" hidden></mui-option>
+            <mui-option label="C" value="opt3"></mui-option>
+          </mui-select>
+
+          <strong>Placeholder</strong>
+          <mui-select
+            name="exampleH"
+            placeholder="Placeholder"
+            ng-model="valH"
+          >
+            <mui-option label="Option 1" value="option1"></mui-option>
+            <mui-option label="Option 2" value="option2"></mui-option>
+            <mui-option label="Option 3" value="option3"></mui-option>
+          </mui-select>
+
+          <strong>Variable number of options</strong>
+          <button type="button" ng-click="addOptionI()">+</button>
+          <button type="button" ng-click="delOptionI()">-</button>
+          <button type="button" ng-click="revOptionsI()">⟳</button>
+          <mui-select name="exampleI" ng-model="valI">
+            <mui-option
+              ng-repeat="v in optionsI track by $index"
+              label="{{v}}"
+              value="{{v}}"
+            >
+            </mui-option>
+          </mui-select>
+
+          <mui-select ng-model="valJ.value" ng-change="onChangeJ()">
+            <mui-option label="Option 1" value="value"></mui-option>
+            <mui-option label="Option 2" value="value"></mui-option>
+            <mui-option label="Option 3" value="value"></mui-option>
+            <mui-option label="Option X" value="valueX"></mui-option>
+          </mui-select>
+          
+          <select id="myselect">
+            <option value="value">Option 1</option>
+            <option value="value" selected>Option 2</option>
+            <option value="value">Option 3</option>
+          </select>
+          <div><a onclick="change()">click me</a></div>
+          <script>
+           setTimeout(function() {
+             var el = document.getElementById('myselect');
+             el.addEventListener('change', function(ev) {
+               console.log(el.selectedIndex);
+             });
+
+             window.change = function() {
+               el.selectedIndex = 2;
+               console.log('change');
+             };
+           });
+          </script>
+
+          <select
+              ng-model="selectedName.value"
+              ng-change="nameChange()"
+          >
+            <option value="Name1">Name1</option>
+            <option value="Name2">Name2</option>
+            <option value="Name3">Name3</option>
+          </select>
+          
           <mui-button variant="raised">submit</mui-button>
         </form>
       </mui-panel>

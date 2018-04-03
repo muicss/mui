@@ -129,8 +129,8 @@ function callbackFn(instance, funcName) {
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-       cancelable = (cancelable !== undefined) ? cancelable : true,
-       k;
+      cancelable = (cancelable !== undefined) ? cancelable : true,
+      k;
 
   ev.initEvent(eventType, bubbles, cancelable);
   

@@ -44,12 +44,13 @@ class Select extends React.Component {
   }
 
   state = {
-    showMenu: false
+   showMenu: false
   };
 
   static defaultProps = {
     className: '',
     name: '',
+    placeholder: null,
     readOnly: false,
     useDefault: (typeof document !== 'undefined' && 'ontouchstart' in document.documentElement) ? true : false,
     onChange: null,
@@ -73,10 +74,8 @@ class Select extends React.Component {
   }
 
   onInnerChange(ev) {
-    let value = ev.target.value;
-
     // update state
-    this.setState({ value });
+    this.setState({value: ev.target.value});
   }
 
   onInnerMouseDown(ev) {
@@ -139,7 +138,10 @@ class Select extends React.Component {
     this.setState({ showMenu: true });
   }
 
-  hideMenu() {
+  hideMenu(ev) {
+    // check default prevented
+    if (ev && ev.defaultPrevented) return;
+
     // remove event listeners
     jqLite.off(window, 'resize', this.hideMenuCB);
     jqLite.off(document, 'click', this.hideMenuCB);
@@ -151,16 +153,20 @@ class Select extends React.Component {
     this.wrapperElRef.focus();
   }
 
-  onMenuChange(value) {
+  onMenuChange(index) {
     if (this.props.readOnly) return;
 
     // update inner <select> and dispatch 'change' event
-    this.controlEl.value = value;
+    this.controlEl.selectedIndex = index;
     util.dispatchEvent(this.controlEl, 'change');
   }
 
   render() {
-    let menuElem;
+    let value = this.state.value,
+        valueArgs = {},
+        menuElem,
+        placeholderElem,
+        selectCls;
 
     if (this.state.showMenu) {
       menuElem = (
@@ -183,8 +189,26 @@ class Select extends React.Component {
     }
 
     const { children, className, style, label, defaultValue, readOnly,
-      disabled, useDefault, name, ...reactProps } = this.props;
+      disabled, useDefault, name, placeholder, ...reactProps } = this.props;
 
+    // build value arguments
+    if (this.props.value !== undefined) valueArgs.value = value;  // controlled
+    if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue;
+    
+    // handle placeholder
+    if (placeholder) {
+      placeholderElem = (
+        <option className="mui--text-placeholder" value="">
+          {placeholder}
+        </option>
+      );
+
+      // apply class if value is empty
+      if (value === '' || (value === undefined && !defaultValue)) {
+        selectCls = 'mui--text-placeholder';
+      }
+    }
+    
     return (
       <div
         { ...reactProps }
@@ -196,17 +220,18 @@ class Select extends React.Component {
         onKeyDown={this.onOuterKeyDownCB}
       >
         <select
+          { ...valueArgs }
           ref={el => { this.controlEl = el; }}
+          className={selectCls}
           name={name}
           disabled={disabled}
           tabIndex={tabIndexInner}
-          value={this.state.value}
-          defaultValue={defaultValue}
           readOnly={readOnly}
           onChange={this.onInnerChangeCB}
           onMouseDown={this.onInnerMouseDownCB}
           required={this.props.required}
         >
+          {placeholderElem}
           {children}
         </select>
         <label tabIndex="-1">{label}</label>
@@ -229,11 +254,22 @@ class Menu extends React.Component {
     this.onKeyPressCB = util.callback(this, 'onKeyPress');
     this.q = '';
     this.qTimeout = null;
+    this.availOptionEls = [];
+
+    // extract selectable options
+    let optionEls = props.optionEls,
+        el,
+        i;
+    
+    for (i=0; i < optionEls.length; i++) {
+      el = optionEls[i];
+      if (!el.disabled && !el.hidden) this.availOptionEls.push(el);
+    }
   }
 
   state = {
     origIndex: null,
-    currentIndex: null
+    currentIndex: 0
   };
 
   static defaultProps = {
@@ -244,14 +280,17 @@ class Menu extends React.Component {
   };
 
   componentWillMount() {
-    let optionEls = this.props.optionEls,
-      m = optionEls.length,
-      selectedPos = 0,
-      i;
+    let optionEls = this.availOptionEls,
+        m = optionEls.length,
+        selectedPos = null,
+        i;
 
     // get current selected position
     for (i = m - 1; i > -1; i--) if (optionEls[i].selected) selectedPos = i;
-    this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
+
+    if (selectedPos !== null) {
+      this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
+    }
   }
 
   componentDidMount() {
@@ -286,8 +325,9 @@ class Menu extends React.Component {
 
   onClick(pos, ev) {
     // don't allow events to bubble
-    ev.stopPropagation();
-    this.selectAndDestroy(pos);
+    //ev.stopPropagation();
+    ev.preventDefault();
+    if (pos !== null) this.selectAndDestroy(pos);
   }
 
   onKeyDown(ev) {
@@ -316,7 +356,7 @@ class Menu extends React.Component {
 
     // select first match alphabetically
     let prefixRegex = new RegExp('^' + this.q, 'i'),
-        optionEls = this.props.optionEls,
+        optionEls = this.availOptionEls,
         m = optionEls.length,
         i;
 
@@ -330,7 +370,7 @@ class Menu extends React.Component {
   }
 
   increment() {
-    if (this.state.currentIndex === this.props.optionEls.length - 1) return;
+    if (this.state.currentIndex === this.availOptionEls.length - 1) return;
     this.setState({ currentIndex: this.state.currentIndex + 1 });
   }
 
@@ -344,7 +384,7 @@ class Menu extends React.Component {
 
     // handle onChange
     if (pos !== this.state.origIndex) {
-      this.props.onChange(this.props.optionEls[pos].value);
+      this.props.onChange(this.availOptionEls[pos].index);
     }
 
     // close menu
@@ -375,31 +415,53 @@ class Menu extends React.Component {
 
   render() {
     let menuItems = [],
-      optionEls = this.props.optionEls,
-      m = optionEls.length,
-      optionEl,
-      cls,
-      i;
+        optionEls = this.props.optionEls,
+        m = optionEls.length,
+        pos = 0,
+        optionEl,
+        cls,
+        val,
+        i;
 
     // define menu items
     for (i = 0; i < m; i++) {
-      cls = (i === this.state.currentIndex) ? 'mui--is-selected ' : '';
+      optionEl = optionEls[i];
 
+      // handle hidden
+      if (optionEl.hidden) continue;
+      
+      // handle disabled
+      if (optionEl.disabled) {
+        cls = 'mui--is-disabled ';
+        val = null;
+      } else {
+        cls = (pos === this.state.currentIndex) ? 'mui--is-selected ' : '';
+        val = pos;
+        pos += 1;
+      }
+      
       // add custom css class from <Option> component
-      cls += optionEls[i].className;
+      cls += optionEl.className;
 
       menuItems.push(
         <div
           key={i}
           className={cls}
-          onClick={this.onClick.bind(this, i)}
+          onClick={this.onClick.bind(this, val)}
         >
-          {optionEls[i].textContent}
+          {optionEl.textContent}
         </div>
       );
     }
 
-    return <div ref={el => { this.wrapperElRef = el }} className="mui-select__menu">{menuItems}</div>;
+    return (
+      <div
+        ref={el => { this.wrapperElRef = el }}
+        className="mui-select__menu"
+      >
+        {menuItems}
+      </div>
+    );
   }
 }
 

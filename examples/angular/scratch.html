@@ -14,25 +14,149 @@
     <script>
       var myApp = angular.module('myApp', ['mui']);
 
+      myApp.directive('innerTag', function() {
+        return {
+          restrict: 'AE',
+          replace: true,
+          require: '^outerTag',
+          scope: {
+            label: '@'
+          },
+          template: '<option>{{label}}</option>',
+          link: function(scope, element, attrs, controller) {
+            controller.addItem({
+              label: attrs.label,
+              value: attrs.value
+            });
+          }
+        };
+      });
+
+      myApp.directive('outerTag', ['$compile', function($compile) {
+        return {
+          restrict: 'AE',
+          replace: true,
+          transclude: true,
+          scope: {
+            ngModel: '='
+          },
+          template: '<div>' +
+                    '<div><a ng-click="onClick()">click me</a></div>' + 
+                    '<select ' +
+                    'ng-model="ngModel" ' +
+                    'ng-click="onClick($event)" ' +
+                    '>' +
+                    '</select>' +
+                    '<select-menu></select-menu>' +
+                    '<div><a ng-click="showMenu()">click me</a></div>' +
+                    '</div>',
+          controller: ['$scope', function($scope) {
+            $scope.items = [];
+            
+            this.addItem = function(item) {
+              $scope.items.push(item);
+            };
+            
+            this.removeItem = function(itemId) {
+              // pass
+            };
+          }],
+          link: function(scope, element, attrs, controller, transcludeFn) {
+            var selectEl = element.find('select');
+
+            scope.onClick = function() {
+              console.log(selectEl.children());
+            };
+
+            scope.showMenu = function() {
+              var menuEl = element.find('select-menu');
+              
+              var template = '<div ' +
+                             'ng-repeat="option in options" ' +
+                             '>' +
+                             '{{option.label}}' + 
+                             '</div>';
+
+              var newScope = scope.$new();
+              newScope.options = [];
+              
+              angular.forEach(selectEl.children(), function(optionEl) {
+                newScope.options.push({
+                  label: optionEl.innerText
+                });
+              });
+              
+              menuEl.html(template);
+              var content = $compile(menuEl)(newScope);
+            };
+            
+            transcludeFn(function(clone) {
+              element.find('select').append(clone);
+            });
+          }
+        };
+      }]);
+     
       myApp.controller('ExampleController', ['$scope', function($scope) {
-        $scope.valueA = 'loadA';
-        $scope.changeA = function() {
-          console.log($scope.valueA);
+        var counter = 2;
+
+        $scope.options = [
+          {value: '0', label: 'Option 0'},
+          {value: '1', label: 'Option 1'}
+        ];
+        $scope.selectVal = '1';
+
+        $scope.add = function() {
+          $scope.options.push({
+            value: counter.toString(),
+            label: 'Option ' + counter
+          });
+          counter += 1;
         };
 
-        $scope.valueB = 'loadB';
-        $scope.changeB = function() {
-          console.log($scope.valueB);
+        $scope.del = function() {
+          $scope.options.pop();
+        };
+
+        $scope.rev = function() {
+          $scope.options.reverse();
         };
       }]);
     </script>
   </head>
-  <body>
-    <form ng-controller="ExampleController">
-      <mui-input ng-model="valueA" ng-change="changeA()"></mui-input>
-      <input type="text" ng-model="valueB" ng-change="changeB()">
-      <div>valueA: {{valueA}}</div>
-      <div>valueB: {{valueB}}</div>
-    </form>
+  <body ng-controller="ExampleController">
+    <button type="button" ng-click="add()">+</button>
+    <button type="button" ng-click="del()">-</button>
+    <button type="button" ng-click="rev()">⟳</button>
+    <outer-tag ng-model="selectVal">
+      <inner-tag
+        ng-repeat="option in options"
+        value="{{option.value}}"
+        label="{{option.label}}"
+      >
+      </inner-tag>
+    </outer-tag>
+    <select id="myselect">
+      <option value="flower">Tulip</option>
+      <option value="car">Mazda</option>
+      <option value="car">Porsche</option>
+      <option value="flower" hidden>Orchid</option>
+      <option value="car" disabled">Ford</option>
+      <option value="flower">Rose</option>
+    </select>
+    <script>
+     function displayInfo() {
+       var selectEl = document.getElementById('myselect'),
+           optionEl;
+       
+       console.log('selectedIndex: ' + selectEl.selectedIndex);
+
+       for (var i=0; i < selectEl.children.length; i++) {
+         optionEl = selectEl.children[i];
+         console.log(' ' + optionEl.value + ': ' + optionEl.index);
+       }
+     }
+    </script>
+    <div><a onclick="displayInfo()">click me</a></div>
   </body>
 </html>

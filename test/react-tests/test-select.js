@@ -521,4 +521,56 @@ describe('react/select', function () {
     let itemEl = menuEl.children[1];
     assert.equal(itemEl.className, 'my-custom-class');
   });
+
+
+  it('supports placeholder property', function() {
+    let instance = ReactUtils.renderIntoDocument(
+      <Select placeholder="Placeholder">
+        <Option label="Option 1" value="option1" />
+        <Option label="Option 2" value="option2" />
+      </Select>
+    );
+
+    let selectEl = instance.controlEl;
+
+    // check additional option
+    assert.equal(selectEl.children.length, 3);
+
+    let optionEl = selectEl.children[0];
+    assert.equal(optionEl.innerHTML, 'Placeholder');
+    assert.equal(optionEl.value, '');
+
+    // check classes
+    assert.equal(selectEl.className, 'mui--text-placeholder');
+    assert.equal(optionEl.className, 'mui--text-placeholder');
+
+    // select different option and check class again
+    selectEl.value = 'option2';
+    ReactUtils.Simulate.change(selectEl);
+    assert.equal(selectEl.className, '');
+
+    // re-select placeholder and check class again
+    selectEl.value = '';
+    ReactUtils.Simulate.change(selectEl);
+    assert.equal(selectEl.className, 'mui--text-placeholder');
+  });
+
+
+  it('handles multiple options with same value', function() {
+    let instance = ReactUtils.renderIntoDocument(
+      <Select>
+        <Option label="Apple" value="fruit" />
+        <Option label="Banana" value="fruit" />
+        <Option label="Ford" value="car" />
+        <Option label="Toyota" value="car" />
+      </Select>
+    );
+
+    let selectEl = instance.controlEl;
+    
+    selectEl.selectedIndex = 3;
+    ReactUtils.Simulate.change(selectEl);
+    assert.equal(selectEl.value, 'car');
+    assert.equal(selectEl.selectedIndex, 3);
+  });
 });

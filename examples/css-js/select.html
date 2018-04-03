@@ -141,7 +141,21 @@
           <option>E</option>
         </select>
         <label>Label</label>
-      </div>      
+      </div>
+
+      <strong>Placeholder hack</strong>
+      <style>
+        select:invalid {
+          color: #ccc;
+        }
+      </style>
+      <div class="mui-select">
+        <select required>
+          <option value="" selected disabled hidden>Placeholder</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+        </select>
+      </div>
     </div>
   </body>
 </html>

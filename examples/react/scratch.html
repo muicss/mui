@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->   
+    <script src="../assets/vendor/react/16.0.0/react.js"></script>
+    <script src="../assets/vendor/react/16.0.0/react-dom.js"></script>
+    <script src="../assets/vendor/babel-standalone/6.26.0/babel.min.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/react/mui-react.js"></script>
+    <style>
+      .i-am-red {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mui-container">
+      <h1>Scratch</h1>
+      <div class="mui-panel">
+        <form>
+          <div id="example1"></div>
+          <div id="example2"></div>
+          <div id="example3"></div>
+          <div id="example4"></div>
+          <div id="example5"></div>
+          <button class="mui-btn mui-btn--raised">submit</button>
+        </form>
+      </div>
+    </div>
+    <script type="text/babel">
+     let Select = mui.react.Select,
+         Option = mui.react.Option;
+
+     
+     class Example1 extends React.Component {
+       render() {
+         return (
+           <select defaultValue="car">
+             <option value="fruit">apple</option>
+             <option value="fruit">banana</option>
+             <option value="car">ford</option>
+             <option value="car">toyota</option>
+           </select>
+         );
+       }
+     }
+
+     
+     class Example2 extends React.Component {
+       state = {
+         value: "car"
+       };
+
+       onChange(ev) {
+         this.setState({value: ev.target.value});
+       }
+       
+       render() {
+         return (
+           <select
+             value={this.state.value}
+             onChange={this.onChange.bind(this)}
+           >
+             <option value="fruit">apple</option>
+             <option value="fruit">banana</option>
+             <option value="car">ford</option>
+             <option value="car">toyota</option>
+           </select>
+         );
+       }
+     }
+
+
+     class Example3 extends React.Component {
+       render() {
+         return (
+           <Select defaultValue="car">
+             <Option value="fruit" label="apple" />
+             <Option value="fruit" label="banana" />
+             <Option value="car" label="ford" />
+             <Option value="car" label="toyota" />
+           </Select>
+         );
+       }
+     }
+
+     
+     class Example4 extends React.Component {
+       state = {
+         value: "car"
+       };
+
+       onChange(ev) {
+         this.setState({value: ev.target.value});
+       }
+              
+       render() {
+         return (
+           <Select
+             value={this.state.value}
+             onChange={this.onChange.bind(this)}
+           >
+             <Option value="fruit" label="apple" />
+             <Option value="fruit" label="banana" />
+             <Option value="car" label="ford" />
+             <Option value="car" label="toyota" />
+           </Select>
+         );
+       }
+     }
+
+
+     class Example5 extends React.Component {
+       render() {
+         return (
+           <Select placeholder="Placeholder">
+             <Option value="fruit" label="apple" />
+             <Option value="fruit" label="banana" />
+             <Option value="car" label="ford" />
+             <Option value="car" label="toyota" />
+           </Select>
+         );
+       }
+     }
+
+     
+     // Render examples
+     ReactDOM.render(<Example1 />, document.getElementById('example1'));
+     ReactDOM.render(<Example2 />, document.getElementById('example2'));
+     ReactDOM.render(<Example3 />, document.getElementById('example3'));
+     ReactDOM.render(<Example4 />, document.getElementById('example4'));
+     ReactDOM.render(<Example5 />, document.getElementById('example5'));
+    </script>
+  </body>
+</html>

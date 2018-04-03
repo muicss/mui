@@ -1,0 +1,89 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for example only -->
+    <script src="../assets/vendor/angular/1.6.0/angular.js"></script>
+    <!-- end -->
+
+    <link rel="stylesheet" type="text/css" href="../assets/mui/css/mui.css"/>
+    <script src="../assets/mui/angular/mui-angular.js"></script>
+    <script>
+     var myApp = angular.module('myApp', ['mui']);
+
+     myApp.directive('mySelect', ['$timeout', function($timeout) {
+       return {
+         restrict: 'E',
+         replace: false,
+         scope: {
+           ngModel: '=',
+           ngChange: '&'
+         },
+         template: '<div>' +
+                   '<select ng-model="ngModel" ng-change="onChange()">' +
+                   '<option value="option">Option</option>' +
+                   '<option value="option">Option</option>' +
+                   '<option value="optionX">Option X</option>' +
+                   '</select>' +
+                   '</div>',
+         link: function(scope, elem, attrs, ctrl, transcludeFn) {
+           var selectEl = elem.find('select');
+           
+           scope.onChange = function() {
+             $timeout(function() {
+               scope.ngChange();
+
+               //var ev = document.createEvent('HTMLEvents');
+               //ev.initEvent('change', true, false);
+               //selectEl[0].dispatchEvent(ev);
+             });
+           };
+         }
+       };
+     }]);
+
+     myApp.controller('ExampleController', ['$scope', function($scope) {
+       $scope.values = {
+         valA: 'optionX',
+         valB: 'optionX'
+       };
+
+       $scope.onChange = function(x) {
+         console.log('change' + x + ': ' + $scope.values['val' + x]);
+       };
+     }]);
+
+     function changeHandler(ev) {
+       console.log(ev);
+     }
+    </script>
+  </head>
+  <body ng-controller="ExampleController">
+    <select
+        ng-model="values.valA"
+        ng-change="onChange('A')"
+        onchange="changeHandler"
+    >
+      <option value="option">Option</option>
+      <option value="option">Option</option>
+      <option value="optionX">Option X</option>
+    </select>
+    <div id="my-wrapper" onchange="changeHandler">
+      <my-select
+          ng-model="values.valB"
+          ng-change="onChange('B')"
+      >
+      </my-select>
+    </div>
+    <script>
+     var el = document.getElementsByTagName('select')[0];
+     el.addEventListener('change', function(ev) {console.log(ev);});
+
+     el = document.getElementById('my-wrapper');
+     el.addEventListener('change', function(ev) {console.log(ev);});
+    </script>
+  </body>
+</html>

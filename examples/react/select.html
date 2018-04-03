@@ -41,6 +41,15 @@
 
           <strong>Should be disabled</strong>
           <div id="example6"></div>
+          
+          <strong>Placeholder</strong>
+          <div id="example7"></div>
+
+          <strong>Placeholder</strong>
+          <div id="example8"></div>
+
+          <strong>Multiple options with same value</strong>
+          <div id="example9"></div>
 
           <button class="mui-btn mui-btn--raised">submit</button>
         </form>
@@ -221,6 +230,67 @@
       }
 
 
+      // Example 7
+      class Example7 extends React.Component {
+        state = {
+          numOptions: 3
+        }
+        
+        onClick() {
+          this.setState({numOptions: this.state.numOptions + 1});
+        }
+
+        render() {
+          let optionEls = [];
+          
+          for (let i=0; i < this.state.numOptions; i++) {
+            optionEls.push(
+              <Option label={"Option " + i} value={i} />
+            )
+          }
+          
+          return (
+            <div>
+              <Select label="Label" required>
+                <Option label="Placeholder" value="" selected disabled hidden />
+                {optionEls}
+              </Select>
+              <a onClick={this.onClick.bind(this)}>Add option</a>
+            </div>
+          );
+        }
+      }
+
+
+      // Example 8
+      class Example8 extends React.Component {
+        render() {
+          return (
+            <Select label="Label" placeholder="Placeholder">
+              <Option label="Option 1" value="option1" />
+              <Option label="Option 2" value="option2" />
+              <Option label="Option 3" value="option3" />
+            </Select>
+          );
+        }
+      }
+
+
+      // Example 9
+      class Example9 extends React.Component {
+        render() {
+          return (
+            <Select label="Label">
+              <Option label="Apple" value="fruit" />
+              <Option label="Banana" value="fruit" />
+              <Option label="Ford" value="car" />
+              <Option label="Toyota" value="car" />
+            </Select>
+          );
+        }
+      }
+
+
       // Render examples
       ReactDOM.render(<Example1 />, document.getElementById('example1'));
       ReactDOM.render(<Example2 />, document.getElementById('example2'));
@@ -228,6 +298,9 @@
       ReactDOM.render(<Example4 />, document.getElementById('example4'));
       ReactDOM.render(<Example5 />, document.getElementById('example5'));
       ReactDOM.render(<Example6 />, document.getElementById('example6'));
+      ReactDOM.render(<Example7 />, document.getElementById('example7'));
+      ReactDOM.render(<Example8 />, document.getElementById('example8'));
+      ReactDOM.render(<Example9 />, document.getElementById('example9'));
     </script>
   </body>
 </html>
