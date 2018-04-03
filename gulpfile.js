@@ -152,7 +152,8 @@ function buildCdn(dirname) {
     buildCdnEmailStyletag(dirname + '/email'),
     buildCdnColors(dirname + '/extra'),
     buildCdnNoGlobals(dirname + '/extra'),
-    buildCdnPx(dirname + '/extra')
+    buildCdnPx(dirname + '/extra'),
+    buildCdnRem(dirname + '/extra')
   );
 
   var t2 = gulp.parallel(
@@ -303,6 +304,13 @@ function buildCdnNoGlobals(dirname) {
 function buildCdnPx(dirname) {
   return makeTask('build-cdn-px: ' + dirname, function() {
     return cssStream('mui-px.scss', dirname);
+  });
+}
+
+
+function buildCdnRem(dirname) {
+  return makeTask('build-cdn-rem: ' + dirname, function() {
+    return cssStream('mui-rem.scss', dirname);
   });
 }
 
