@@ -38,8 +38,7 @@ angular.module(moduleName, [])
             rightClass = 'mui-dropdown__menu--right',
             isUndef = angular.isUndefined,
             menuEl,
-            buttonEl,
-            marginTop;
+            buttonEl;
 
         // save references
         menuEl = angular.element(element[0].querySelector('.' + menuClass));
