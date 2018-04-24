@@ -30,9 +30,9 @@ class Dropdown extends React.Component {
     super(props);
 
     this.state = {
-      opened: false,
-      menuTop: 0
-    }
+      opened: false
+    };
+    
     let cb = util.callback;
     this.selectCB = cb(this, 'select');
     this.onClickCB = cb(this, 'onClick');
@@ -97,16 +97,7 @@ class Dropdown extends React.Component {
   }
 
   open() {
-    // position menu element below toggle button
-    let wrapperRect = this.wrapperElRef.getBoundingClientRect(),
-      toggleRect;
-
-    toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
-
-    this.setState({
-      opened: true,
-      menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
-    });
+    this.setState({ opened: true });
   }
 
   close() {
@@ -175,7 +166,6 @@ class Dropdown extends React.Component {
         <ul
           ref={el => { this.menuElRef = el }}
           className={cs}
-          style={{ top: this.state.menuTop }}
           onClick={this.selectCB}
         >
           {children}

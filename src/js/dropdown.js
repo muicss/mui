@@ -85,13 +85,6 @@ function toggleDropdown(toggleEl) {
 
   // method to open dropdown
   function openDropdownFn() {
-    // position menu element below toggle button
-    var wrapperRect = wrapperEl.getBoundingClientRect(),
-        toggleRect = toggleEl.getBoundingClientRect();
-
-    var top = toggleRect.top - wrapperRect.top + toggleRect.height;
-    jqLite.css(menuEl, 'top', top + 'px');
-
     // add open class to wrapper
     jqLite.addClass(menuEl, openClass);
 

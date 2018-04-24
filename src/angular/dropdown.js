@@ -38,13 +38,12 @@ angular.module(moduleName, [])
             rightClass = 'mui-dropdown__menu--right',
             isUndef = angular.isUndefined,
             menuEl,
-            buttonEl;
+            buttonEl,
+            marginTop;
 
         // save references
         menuEl = angular.element(element[0].querySelector('.' + menuClass));
         buttonEl = angular.element(element[0].querySelector('.mui-btn'));
-
-        menuEl.css('margin-top', '-3px');
 
         // handle is-open
         if (!isUndef(attrs.open)) scope.open = true;

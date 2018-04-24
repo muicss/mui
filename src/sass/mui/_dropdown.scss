@@ -94,6 +94,11 @@
   }
 }
 
+// margin after mui-btn
+.mui-btn + .mui-dropdown__menu {
+  margin-top: -4px;
+}
+
 // right align
 .mui-dropdown__menu--right {
   left: auto;
