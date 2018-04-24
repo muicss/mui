@@ -42,7 +42,7 @@
   display: none;
   min-width: mui-rem(160px);
   padding: mui-rem(5px) 0;
-  margin: mui-rem(2px) 0 0;  // override default ul
+  margin: 0;  // override default ul
   list-style: none;
   font-size: $mui-base-font-size;
   text-align: left;
