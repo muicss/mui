@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.39 - April 27, 2018
+
+* Release of 0.9.39-rc1
+
 ## 0.9.39-rc1 - April 3, 2018
 
 * [CSS] Reverted dimentions to use 'px' by default
