@@ -7,7 +7,7 @@ MUI is a lightweight CSS framework that follows Google's Material Design guideli
 [![Join the chat at https://gitter.im/muicss/mui](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/muicss/mui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/muicss/mui.svg?branch=master)](https://travis-ci.org/muicss/mui)
 [![Dependency Status](https://david-dm.org/muicss/mui.svg)](https://david-dm.org/muicss/mui)
-[![devDependency Status](https://david-dm.org/muicss/mui/dev-status.svg)](https://david-dm.org/muicss/mui#info=devDependencies)
+[![devDependency Status](https://david-dm.org/muicss/mui/dev-status.svg)](https://david-dm.org/muicss/mui?type=dev)
 [![CDNJS](https://img.shields.io/cdnjs/v/muicss.svg)](https://cdnjs.com/libraries/muicss)
 
 **Use From the CDN:**
