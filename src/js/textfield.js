@@ -8,7 +8,7 @@
 
 var jqLite = require('./lib/jqLite'),
     util = require('./lib/util'),
-    animationHelpers = require('./lib/animationHelpers'),
+    animlib = require('./lib/animationHelpers'),
     cssSelector = '.mui-textfield > input, .mui-textfield > textarea',
     floatingLabelClass = 'mui-textfield--float-label';
 
@@ -74,18 +74,6 @@ function inputHandler() {
 }
 
 
-/**
- * Handle autofill events.
- */
-function autofillHandler(inputEl) {
-  // exit if not under css/js control
-  if (inputEl._muiTextfield !== true) return;
-
-  // execute inputHandler
-  inputHandler.call(inputEl);
-}
-
-
 /** Define module API */
 module.exports = {
   /** Initialize input elements */
@@ -101,7 +89,7 @@ module.exports = {
     while (i--) initialize(elList[i]);
 
     // listen for new elements
-    animationHelpers.onAnimationStart('mui-textfield-inserted', function(ev) {
+    animlib.onAnimationStart('mui-textfield-inserted', function(ev) {
       initialize(ev.target);
     });
 
@@ -117,11 +105,6 @@ module.exports = {
       
       util.loadStyle(css);
     }, 150);
-
-    // listen for autofill events
-    animationHelpers.onAnimationStart('mui-textfield-autofill', function(ev) {
-      autofillHandler(ev.target);
-    });
 
     // pointer-events shim for floating labels
     if (util.supportsPointerEvents() === false) {
