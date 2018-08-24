@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.40 - August 24, 2018
+
+* [CSS] Added autofill support to floating labels 
+
 ## 0.9.39 - April 27, 2018
 
 * Release of 0.9.39-rc1

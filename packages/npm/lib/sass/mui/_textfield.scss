@@ -53,6 +53,7 @@ $xFormLabelLineHeight: $mui-label-font-size * 1.25;
 
   > input,
   > textarea {
+    &:-webkit-autofill ~ label,
     &:focus ~ label {
       transform: translate(0px, 0px);
       font-size: $mui-label-font-size;
