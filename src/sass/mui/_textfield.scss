@@ -53,7 +53,14 @@ $xFormLabelLineHeight: $mui-label-font-size * 1.25;
 
   > input,
   > textarea {
-    &:-webkit-autofill ~ label,
+    // these css blocks are copied to deal with Firefox bug
+    &:-webkit-autofill ~ label {
+      transform: translate(0px, 0px);
+      font-size: $mui-label-font-size;
+      line-height: $xFormLabelLineHeight;
+      text-overflow: ellipsis;
+    }
+    
     &:focus ~ label {
       transform: translate(0px, 0px);
       font-size: $mui-label-font-size;
