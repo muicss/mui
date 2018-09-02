@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.9.41 - September 2, 2018
+
+* [CSS] Fixed bug with autofill pseudo selector preventing floating labels from
+  working properly in Firefox
+
 ## 0.9.40 - August 24, 2018
 
 * [CSS] Added autofill support to floating labels 

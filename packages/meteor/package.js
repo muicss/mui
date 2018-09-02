@@ -1,6 +1,6 @@
 Package.describe({
   name: 'muicss:mui',
-  version: '0.9.40',
+  version: '0.9.41',
   // Brief, one-line summary of the package.
   summary: 'MUI is a lightweight CSS framework based on Google\'s Material Design guidelines',
   // URL to the Git repository containing the source code for this package.

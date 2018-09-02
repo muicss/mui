@@ -1508,8 +1508,15 @@ button.mui-btn:-moz-focusring,
 }
 
 .mui-textfield--float-label > input:-webkit-autofill ~ label,
+.mui-textfield--float-label > textarea:-webkit-autofill ~ label {
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+  font-size: 12px;
+  line-height: 15px;
+  text-overflow: ellipsis;
+}
+
 .mui-textfield--float-label > input:focus ~ label,
-.mui-textfield--float-label > textarea:-webkit-autofill ~ label,
 .mui-textfield--float-label > textarea:focus ~ label {
   -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
