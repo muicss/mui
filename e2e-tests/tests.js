@@ -116,6 +116,7 @@
   require('../test/react-tests/test-dropdown');
   require('../test/react-tests/test-form');
   require('../test/react-tests/test-input');
+  require('../test/react-tests/test-option');
   require('../test/react-tests/test-panel');
   require('../test/react-tests/test-radio');
   require('../test/react-tests/test-row');
@@ -124,7 +125,7 @@
   require('../test/react-tests/test-textarea');
 })();
 
-},{"../test/cssjs-tests/test-jqlite":74,"../test/cssjs-tests/test-util":75,"../test/react-tests/test-appbar":77,"../test/react-tests/test-button":78,"../test/react-tests/test-caret":79,"../test/react-tests/test-checkbox":80,"../test/react-tests/test-col":81,"../test/react-tests/test-container":82,"../test/react-tests/test-divider":83,"../test/react-tests/test-dropdown":84,"../test/react-tests/test-form":85,"../test/react-tests/test-input":86,"../test/react-tests/test-panel":87,"../test/react-tests/test-radio":88,"../test/react-tests/test-row":89,"../test/react-tests/test-select":90,"../test/react-tests/test-tabs":91,"../test/react-tests/test-textarea":92}],2:[function(require,module,exports){
+},{"../test/cssjs-tests/test-jqlite":74,"../test/cssjs-tests/test-util":75,"../test/react-tests/test-appbar":77,"../test/react-tests/test-button":78,"../test/react-tests/test-caret":79,"../test/react-tests/test-checkbox":80,"../test/react-tests/test-col":81,"../test/react-tests/test-container":82,"../test/react-tests/test-divider":83,"../test/react-tests/test-dropdown":84,"../test/react-tests/test-form":85,"../test/react-tests/test-input":86,"../test/react-tests/test-option":87,"../test/react-tests/test-panel":88,"../test/react-tests/test-radio":89,"../test/react-tests/test-row":90,"../test/react-tests/test-select":91,"../test/react-tests/test-tabs":92,"../test/react-tests/test-textarea":93}],2:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -31836,6 +31837,58 @@ var _assert = require('assert');
 
 var _assert2 = babelHelpers.interopRequireDefault(_assert);
 
+var _createReactClass = require('create-react-class');
+
+var _createReactClass2 = babelHelpers.interopRequireDefault(_createReactClass);
+
+var _react = require('react');
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _testUtils = require('react-dom/test-utils');
+
+var _testUtils2 = babelHelpers.interopRequireDefault(_testUtils);
+
+var _option = require('../../src/react/option');
+
+var _option2 = babelHelpers.interopRequireDefault(_option);
+
+var _reactHelpers = require('../lib/react-helpers');
+
+/**
+ * MUI test react option library
+ * @module test/react-tests/test-option
+ */
+
+describe('react/option', function () {
+
+  it('renders element properly', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_option2.default, { label: 'Option 1' }));
+
+    _assert2.default.equal(result.type, 'option');
+    _assert2.default.equal(result.props.children, 'Option 1');
+  });
+
+  it('renders properly with additional classNames', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_option2.default, { className: 'additional' }));
+
+    _assert2.default.equal(result.props.className, 'additional');
+  });
+
+  it('renders properly with additional styles', function () {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react2.default.createElement(_option2.default, { style: { additional: 'style' } }));
+
+    _assert2.default.equal(result.props.style.additional, 'style');
+  });
+});
+
+},{"../../src/react/option":66,"../lib/react-helpers":76,"assert":2,"create-react-class":4,"react":42,"react-dom/test-utils":33}],88:[function(require,module,exports){
+'use strict';
+
+var _assert = require('assert');
+
+var _assert2 = babelHelpers.interopRequireDefault(_assert);
+
 var _react = require('react');
 
 var _react2 = babelHelpers.interopRequireDefault(_react);
@@ -31885,7 +31938,7 @@ describe('react/panel', function () {
   });
 });
 
-},{"../../src/react/panel":67,"../lib/react-helpers":76,"assert":2,"react":42}],88:[function(require,module,exports){
+},{"../../src/react/panel":67,"../lib/react-helpers":76,"assert":2,"react":42}],89:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -32029,7 +32082,7 @@ describe('react/radio', function () {
      * @module test/react-tests/test-radio
      */
 
-},{"../../src/react/radio":68,"../lib/react-helpers":76,"assert":2,"create-react-class":4,"react":42,"react-dom":31,"react-dom/test-utils":33}],89:[function(require,module,exports){
+},{"../../src/react/radio":68,"../lib/react-helpers":76,"assert":2,"create-react-class":4,"react":42,"react-dom":31,"react-dom/test-utils":33}],90:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -32099,7 +32152,7 @@ describe('react/grid', function () {
   });
 });
 
-},{"../../src/react/row":69,"../lib/react-helpers":76,"assert":2,"react":42,"react-dom":31,"react-dom/test-utils":33}],90:[function(require,module,exports){
+},{"../../src/react/row":69,"../lib/react-helpers":76,"assert":2,"react":42,"react-dom":31,"react-dom/test-utils":33}],91:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -32637,7 +32690,7 @@ describe('react/select', function () {
      * @module test/react-tests/test-select
      */
 
-},{"../../src/react/option":66,"../../src/react/select":70,"../lib/react-helpers":76,"assert":2,"create-react-class":4,"react":42,"react-dom/test-utils":33}],91:[function(require,module,exports){
+},{"../../src/react/option":66,"../../src/react/select":70,"../lib/react-helpers":76,"assert":2,"create-react-class":4,"react":42,"react-dom/test-utils":33}],92:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');
@@ -32833,7 +32886,7 @@ describe('react/tabs', function () {
   });
 });
 
-},{"../../src/react/tab":71,"../../src/react/tabs":72,"../lib/react-helpers":76,"assert":2,"create-react-class":4,"react":42,"react-dom/server":32,"react-dom/test-utils":33}],92:[function(require,module,exports){
+},{"../../src/react/tab":71,"../../src/react/tabs":72,"../lib/react-helpers":76,"assert":2,"create-react-class":4,"react":42,"react-dom/server":32,"react-dom/test-utils":33}],93:[function(require,module,exports){
 'use strict';
 
 var _assert = require('assert');

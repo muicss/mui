@@ -14,6 +14,7 @@
   require('../test/react-tests/test-dropdown');
   require('../test/react-tests/test-form');
   require('../test/react-tests/test-input');
+  require('../test/react-tests/test-option');
   require('../test/react-tests/test-panel');
   require('../test/react-tests/test-radio');
   require('../test/react-tests/test-row');
