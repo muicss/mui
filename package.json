@@ -60,7 +60,7 @@
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
-    "jsdom": "^12.1.0",
+    "jsdom": "^12.2.0",
     "jsdom-global": "^3.0.2",
     "jshint": "^2.9.6",
     "merge-stream": "^1.0.1",
