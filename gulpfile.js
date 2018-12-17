@@ -1,20 +1,25 @@
 'use strict';
 
 
-var babelCore = require('babel-core'),
+var babelCore = require('@babel/core'),
     gulp = require('gulp'),
     plugins = require('gulp-load-plugins')();
 
 
 var reactBabelHelpers = [
-  'inherits',
+  'assertThisInitialized',
   'createClass',
   'classCallCheck',
-  'possibleConstructorReturn',
+  'defineProperty',
+  'extends',
+  'getPrototypeOf',
+  'inherits',
   'interopRequireDefault',
   'interopRequireWildcard',
-  'extends',
-  'objectWithoutProperties'
+  'objectWithoutProperties',
+  'objectWithoutPropertiesLoose',
+  'possibleConstructorReturn',
+  'setPrototypeOf'
 ];
 
 var angularBabelHelpers = [
@@ -22,6 +27,8 @@ var angularBabelHelpers = [
   'interopRequireWildcard'
 ];
 
+var requireReactRegex = /require\(('react'|"react")\)/g,
+    requireAngularRegex = /require\(('angular'|"angular")\)/g;
 
 
 // ============================================================================
@@ -132,6 +139,8 @@ function browserifyStream(pathname, opts) {
   return b
     .bundle()
     .pipe(source('tmpfile'))
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('default', {verbose: true}))
     .pipe(buffer());
 }
 
@@ -195,9 +204,9 @@ function buildCdnReact(dirname) {
       {
         extensions: ['.jsx'],
         external: ['react'],
-        transform: [babelify.configure({plugins: ['external-helpers']})]
+        transform: [babelify.configure({plugins: ['@babel/external-helpers']})]
       })
-      .pipe(plugins.replace("require('react')", "window.React"))
+      .pipe(plugins.replace(requireReactRegex, "window.React"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.rename('mui-react.js'))
       .pipe(gulp.dest(dirname))
@@ -216,9 +225,9 @@ function buildCdnAngular(dirname) {
       './build-targets/cdn-angular.js',
       {
         external: ['angular'],
-        transform: [babelify.configure({plugins: ['external-helpers']})]
+        transform: [babelify.configure({plugins: ['@babel/external-helpers']})]
       })
-      .pipe(plugins.replace("require('angular')", "window.angular"))
+      .pipe(plugins.replace(requireAngularRegex, "window.angular"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.concat('mui-angular.js'))
       .pipe(gulp.dest(dirname))
@@ -343,11 +352,11 @@ function buildCdnReactCombined(dirname, cssDir) {
         extensions: ['.jsx'],
         external: ['react'],
         transform: [
-          babelify.configure({plugins: ['external-helpers']}),
+          babelify.configure({plugins: ['@babel/external-helpers']}),
           stringify(['.css'])
         ]
       })
-      .pipe(plugins.replace("require('react')", "window.React"))
+      .pipe(plugins.replace(requireReactRegex, "window.React"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.rename('mui-react-combined.js'))
       .pipe(gulp.dest(dirname))
@@ -368,11 +377,11 @@ function buildCdnAngularCombined(dirname, cssDir) {
         paths: [cssDir],
         external: ['angular'],
         transform: [
-          babelify.configure({plugins: ['external-helpers']}),
+          babelify.configure({plugins: ['@babel/external-helpers']}),
           stringify(['.css'])
         ]
       })
-      .pipe(plugins.replace("require('angular')", "window.angular"))
+      .pipe(plugins.replace(requireAngularRegex, "window.angular"))
       .pipe(plugins.injectString.prepend(s))
       .pipe(plugins.ngAnnotate())
       .pipe(plugins.rename('mui-angular-combined.js'))
@@ -396,7 +405,7 @@ function buildE2eTests() {
     './build-targets/e2e-tests.js',
     {
       extensions: ['.jsx'],
-      transform: [babelify.configure({plugins: ['external-helpers']})],
+      transform: [babelify.configure({plugins: ['@babel/external-helpers']})],
     })
     .pipe(plugins.injectString.prepend(s))
     .pipe(plugins.rename('tests.js'))
@@ -500,7 +509,7 @@ function buildNpmReact() {
 
     return gulp.src('./src/react/**/*')
       .pipe(plugins.babel({
-        plugins: ['external-helpers']
+        plugins: ['@babel/external-helpers']
       }))
       .pipe(plugins.injectString.prepend(s))
       .pipe(gulp.dest('./packages/npm/lib/react'));
@@ -514,7 +523,7 @@ function buildNpmAngular() {
 
     return gulp.src('./src/angular/**/*')
       .pipe(plugins.babel({
-        plugins: ['external-helpers']
+        plugins: ['@babel/external-helpers']
       }))
       .pipe(plugins.injectString.prepend(s))
       .pipe(gulp.dest('./packages/npm/lib/angular'));

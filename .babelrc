@@ -1,4 +1,4 @@
 {
-	"presets": ["env", "stage-0", "react"],
-	"plugins": ["add-module-exports"]
+  "presets": ["@babel/env", "@babel/react"],
+  "plugins": ["@babel/plugin-proposal-class-properties", "add-module-exports"]
 }
