@@ -30,6 +30,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "@babel/standalone": "^7.2.5",
     "angular": "^1.7.5",
     "angular-mocks": "^1.7.5",
     "array-equal": "^1.0.0",
