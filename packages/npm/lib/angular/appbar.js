@@ -1,20 +1,20 @@
 var babelHelpers = require('./babel-helpers.js');
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = require('angular');
+var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Appbar Component
+ * @module angular/appbar
+ */
+var moduleName = 'mui.appbar';
 
-var moduleName = 'mui.appbar'; /**
-                                * MUI Angular Appbar Component
-                                * @module angular/appbar
-                                */
-
-_angular2.default.module(moduleName, []).directive('muiAppbar', function () {
+_angular["default"].module(moduleName, []).directive('muiAppbar', function () {
   return {
     restrict: 'AE',
     transclude: true,
@@ -28,7 +28,9 @@ _angular2.default.module(moduleName, []).directive('muiAppbar', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;

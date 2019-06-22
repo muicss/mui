@@ -3,50 +3,48 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React Caret Module
  * @module react/caret
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
 /**
  * Caret constructor
  * @class
  */
-var Caret = function (_React$Component) {
+var Caret =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Caret, _React$Component);
 
   function Caret() {
     babelHelpers.classCallCheck(this, Caret);
-    return babelHelpers.possibleConstructorReturn(this, (Caret.__proto__ || Object.getPrototypeOf(Caret)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Caret).apply(this, arguments));
   }
 
   babelHelpers.createClass(Caret, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-
-      return _react2.default.createElement('span', babelHelpers.extends({}, reactProps, {
+      var _this$props = this.props,
+          children = _this$props.children,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
+      return _react["default"].createElement("span", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-caret ' + this.props.className
       }));
     }
   }]);
   return Caret;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Caret.defaultProps = {
+babelHelpers.defineProperty(Caret, "defaultProps", {
   className: ''
-};
-exports.default = Caret;
-module.exports = exports['default'];
+});
+var _default = Caret;
+exports["default"] = _default;
+module.exports = exports.default;

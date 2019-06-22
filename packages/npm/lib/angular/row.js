@@ -1,20 +1,20 @@
 var babelHelpers = require('./babel-helpers.js');
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = require('angular');
+var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Grid/Row Module
+ * @module angular/row.js
+ */
+var moduleName = 'mui.row';
 
-var moduleName = 'mui.row'; /**
-                             * MUI Angular Grid/Row Module
-                             * @module angular/row.js
-                             */
-
-_angular2.default.module('mui.row', []).directive('muiRow', function () {
+_angular["default"].module('mui.row', []).directive('muiRow', function () {
   return {
     restrict: 'AE',
     scope: true,
@@ -28,7 +28,9 @@ _angular2.default.module('mui.row', []).directive('muiRow', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;

@@ -1,20 +1,20 @@
 var babelHelpers = require('./babel-helpers.js');
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = require('angular');
+var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Dropdown Component
+ * @module angular/dropdown
+ */
+var moduleName = 'mui.dropdown';
 
-var moduleName = 'mui.dropdown'; /**
-                                  * MUI Angular Dropdown Component
-                                  * @module angular/dropdown
-                                  */
-
-_angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '$compile', function ($timeout, $compile) {
+_angular["default"].module(moduleName, []).directive('muiDropdown', ['$timeout', '$compile', function ($timeout, $compile) {
   return {
     restrict: 'AE',
     transclude: true,
@@ -32,28 +32,23 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
           menuClass = 'mui-dropdown__menu',
           openClass = 'mui--is-open',
           rightClass = 'mui-dropdown__menu--right',
-          isUndef = _angular2.default.isUndefined,
+          isUndef = _angular["default"].isUndefined,
           menuEl,
-          buttonEl;
+          buttonEl; // save references
 
-      // save references
-      menuEl = _angular2.default.element(element[0].querySelector('.' + menuClass));
-      buttonEl = _angular2.default.element(element[0].querySelector('.mui-btn'));
+      menuEl = _angular["default"].element(element[0].querySelector('.' + menuClass));
+      buttonEl = _angular["default"].element(element[0].querySelector('.mui-btn'));
+      menuEl.css('margin-top', '-3px'); // handle is-open
 
-      menuEl.css('margin-top', '-3px');
+      if (!isUndef(attrs.open)) scope.open = true; // handle disabled
 
-      // handle is-open
-      if (!isUndef(attrs.open)) scope.open = true;
-
-      // handle disabled
       if (!isUndef(attrs.disabled)) {
         buttonEl.attr('disabled', true);
-      }
+      } // handle right-align
 
-      // handle right-align
-      if (!isUndef(attrs.rightAlign)) menuEl.addClass(rightClass);
 
-      // handle no-caret
+      if (!isUndef(attrs.rightAlign)) menuEl.addClass(rightClass); // handle no-caret
+
       if (!isUndef(attrs.noCaret)) buttonEl.html(attrs.label);else buttonEl.html(attrs.label + ' <mui-caret></mui-caret>');
 
       function closeDropdownFn() {
@@ -65,11 +60,12 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
         // close dropdown on escape key
         var key = ev.key;
         if (key === 'Escape' || key === 'Esc') closeDropdownFn();
-      }
+      } // handle menu open
 
-      // handle menu open
+
       scope.$watch('open', function (newValue) {
         var doc = document;
+
         if (newValue === true) {
           menuEl.addClass(openClass);
           doc.addEventListener('click', closeDropdownFn);
@@ -79,24 +75,23 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
           doc.removeEventListener('click', closeDropdownFn);
           doc.removeEventListener('keydown', handleKeyDownFn);
         }
-      });
+      }); // click handler
 
-      // click handler
       scope.onClick = function ($event) {
         // exit if disabled
-        if (scope.disabled) return;
+        if (scope.disabled) return; // prevent form submission
 
-        // prevent form submission
         $event.preventDefault();
-        $event.stopPropagation();
+        $event.stopPropagation(); // toggle open 
 
-        // toggle open 
         if (scope.open) scope.open = false;else scope.open = true;
       };
     }
   };
 }]);
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;

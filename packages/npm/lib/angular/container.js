@@ -1,20 +1,20 @@
 var babelHelpers = require('./babel-helpers.js');
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = require('angular');
+var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Container Component
+ * @module angular/container
+ */
+var moduleName = 'mui.container';
 
-var moduleName = 'mui.container'; /**
-                                   * MUI Angular Container Component
-                                   * @module angular/container
-                                   */
-
-_angular2.default.module(moduleName, []).directive('muiContainer', function () {
+_angular["default"].module(moduleName, []).directive('muiContainer', function () {
   return {
     restrict: 'AE',
     template: '<div class="mui-container"></div>',
@@ -25,16 +25,17 @@ _angular2.default.module(moduleName, []).directive('muiContainer', function () {
       // use transcludeFn to pass ng-controller on parent element
       transcludeFn(scope, function (clone) {
         element.append(clone);
-      });
+      }); // handle fluid containers
 
-      // handle fluid containers
-      if (!_angular2.default.isUndefined(attrs.fluid)) {
+      if (!_angular["default"].isUndefined(attrs.fluid)) {
         element.removeClass('mui-container').addClass('mui-container-fluid');
       }
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;

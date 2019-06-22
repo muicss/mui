@@ -3,55 +3,49 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React layout module
  * @module react/layout
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
 /**
  * Panel constructor
  * @class
  */
-var Panel = function (_React$Component) {
+var Panel =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Panel, _React$Component);
 
   function Panel() {
     babelHelpers.classCallCheck(this, Panel);
-    return babelHelpers.possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Panel).apply(this, arguments));
   }
 
   babelHelpers.createClass(Panel, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-panel ' + className
-        }),
-        children
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-panel ' + className
+      }), children);
     }
   }]);
   return Panel;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Panel.defaultProps = {
+babelHelpers.defineProperty(Panel, "defaultProps", {
   className: ''
-};
-exports.default = Panel;
-module.exports = exports['default'];
+});
+var _default = Panel;
+exports["default"] = _default;
+module.exports = exports.default;

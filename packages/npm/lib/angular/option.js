@@ -1,33 +1,24 @@
 var babelHelpers = require('./babel-helpers.js');
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = require('angular');
+var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+var formlib = babelHelpers.interopRequireWildcard(require("../js/lib/forms"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
 /**
  * MUI Angular Select Component
  * @module angular/select
  */
-
 var moduleName = 'mui.option';
 
-_angular2.default.module(moduleName, []).directive('muiOption', function () {
+_angular["default"].module(moduleName, []).directive('muiOption', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -55,7 +46,9 @@ _angular2.default.module(moduleName, []).directive('muiOption', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;

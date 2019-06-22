@@ -1,20 +1,20 @@
 var babelHelpers = require('./babel-helpers.js');
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = require('angular');
+var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Panel Component
+ * @module angular/panel
+ */
+var moduleName = 'mui.panel';
 
-var moduleName = 'mui.panel'; /**
-                               * MUI Angular Panel Component
-                               * @module angular/panel
-                               */
-
-_angular2.default.module(moduleName, []).directive('muiPanel', function () {
+_angular["default"].module(moduleName, []).directive('muiPanel', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -28,7 +28,9 @@ _angular2.default.module(moduleName, []).directive('muiPanel', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;

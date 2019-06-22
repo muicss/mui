@@ -1,20 +1,20 @@
 var babelHelpers = require('./babel-helpers.js');
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = require('angular');
+var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Checkbox Component
+ * @module angular/checkox
+ */
+var moduleName = 'mui.checkbox';
 
-var moduleName = 'mui.checkbox'; /**
-                                  * MUI Angular Checkbox Component
-                                  * @module angular/checkox
-                                  */
-
-_angular2.default.module(moduleName, []).directive('muiCheckbox', ['$parse', function () {
+_angular["default"].module(moduleName, []).directive('muiCheckbox', ['$parse', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -27,27 +27,24 @@ _angular2.default.module(moduleName, []).directive('muiCheckbox', ['$parse', fun
       ngModel: '='
     },
     template: function template(tElement, tAttrs) {
-      var isUndef = _angular2.default.isUndefined,
+      var isUndef = _angular["default"].isUndefined,
           html = '';
+      html += '<div class="mui-checkbox"><label><input type="checkbox" '; // input attributes
 
-      html += '<div class="mui-checkbox"><label><input type="checkbox" ';
-
-      // input attributes
       html += 'name={{name}} ';
       html += 'value={{value}} ';
-      html += 'ng-disabled="ngDisabled" ';
+      html += 'ng-disabled="ngDisabled" '; // handle ngChecked and ngModel
 
-      // handle ngChecked and ngModel
       if (!isUndef(tAttrs.ngChecked)) html += 'ng-checked="ngChecked" ';
       if (!isUndef(tAttrs.ngModel)) html += 'ng-model="ngModel" ';
-
       html += '>{{label}}</label></div>';
-
       return html;
     }
   };
 }]);
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;

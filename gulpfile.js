@@ -566,7 +566,6 @@ function cssStream(filename, dirname) {
   var baseStream = gulp.src('./src/sass/' + filename)
     .pipe(plugins.sass({outputStyle: 'expanded'}))
     .pipe(plugins.autoprefixer({
-      browsers: ['last 2 versions'],
       cascade: false
     }))
     .on('error', function(err) {console.log(err.message);})

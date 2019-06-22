@@ -1,67 +1,115 @@
 (function (global) {
   var babelHelpers = global.babelHelpers = {};
 
-  babelHelpers.classCallCheck = function (instance, Constructor) {
+  function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
     }
-  };
+  }
 
-  babelHelpers.createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
+  babelHelpers.classCallCheck = _classCallCheck;
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  babelHelpers.createClass = _createClass;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
     }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+    return obj;
+  }
 
-  babelHelpers.extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
+  babelHelpers.defineProperty = _defineProperty;
 
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
+  function _extends() {
+    babelHelpers.extends = _extends = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
         }
       }
-    }
 
-    return target;
-  };
+      return target;
+    };
 
-  babelHelpers.inherits = function (subClass, superClass) {
+    return _extends.apply(this, arguments);
+  }
+
+  babelHelpers.extends = _extends;
+
+  function _inherits(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+      throw new TypeError("Super expression must either be null or a function");
     }
 
     subClass.prototype = Object.create(superClass && superClass.prototype, {
       constructor: {
         value: subClass,
-        enumerable: false,
         writable: true,
         configurable: true
       }
     });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  };
+    if (superClass) babelHelpers.setPrototypeOf(subClass, superClass);
+  }
 
-  babelHelpers.interopRequireDefault = function (obj) {
+  babelHelpers.inherits = _inherits;
+
+  function _getPrototypeOf(o) {
+    babelHelpers.getPrototypeOf = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
+  babelHelpers.getPrototypeOf = _getPrototypeOf;
+
+  function _setPrototypeOf(o, p) {
+    babelHelpers.setPrototypeOf = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  babelHelpers.setPrototypeOf = _setPrototypeOf;
+
+  function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
       default: obj
     };
-  };
+  }
 
-  babelHelpers.interopRequireWildcard = function (obj) {
+  babelHelpers.interopRequireDefault = _interopRequireDefault;
+
+  function _interopRequireWildcard(obj) {
     if (obj && obj.__esModule) {
       return obj;
     } else {
@@ -69,50 +117,95 @@
 
       if (obj != null) {
         for (var key in obj) {
-          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+          if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};
+
+            if (desc.get || desc.set) {
+              Object.defineProperty(newObj, key, desc);
+            } else {
+              newObj[key] = obj[key];
+            }
+          }
         }
       }
 
       newObj.default = obj;
       return newObj;
     }
-  };
+  }
 
-  babelHelpers.objectWithoutProperties = function (obj, keys) {
+  babelHelpers.interopRequireWildcard = _interopRequireWildcard;
+
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
     var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
 
-    for (var i in obj) {
-      if (keys.indexOf(i) >= 0) continue;
-      if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-      target[i] = obj[i];
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      target[key] = source[key];
     }
 
     return target;
-  };
+  }
 
-  babelHelpers.possibleConstructorReturn = function (self, call) {
-    if (!self) {
+  babelHelpers.objectWithoutPropertiesLoose = _objectWithoutPropertiesLoose;
+
+  function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+    var target = babelHelpers.objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+
+    if (Object.getOwnPropertySymbols) {
+      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+      for (i = 0; i < sourceSymbolKeys.length; i++) {
+        key = sourceSymbolKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+        target[key] = source[key];
+      }
+    }
+
+    return target;
+  }
+
+  babelHelpers.objectWithoutProperties = _objectWithoutProperties;
+
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
 
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  };
+    return self;
+  }
+
+  babelHelpers.assertThisInitialized = _assertThisInitialized;
+
+  function _possibleConstructorReturn(self, call) {
+    if (call && (typeof call === "object" || typeof call === "function")) {
+      return call;
+    }
+
+    return babelHelpers.assertThisInitialized(self);
+  }
+
+  babelHelpers.possibleConstructorReturn = _possibleConstructorReturn;
 })(typeof global === "undefined" ? self : global);(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-'use strict';
+"use strict";
 
 /**
  * MUI React main module
  * @module react/main
  */
-
 (function (win) {
   // return if library has been loaded already
   if (win._muiReactLoaded) return;else win._muiReactLoaded = true;
-
   var mui = win.mui = win.mui || [],
       react = mui.react = {},
       lib;
-
   react.Appbar = require('src/react/appbar');
   react.Button = require('src/react/button');
   react.Caret = require('src/react/caret');
@@ -431,37 +524,31 @@ module.exports = {
  * MUI CSS/JS form helpers module
  * @module lib/forms.py
  */
-
 'use strict';
 
 var jqLite = require('./jqLite');
-
 /**
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
  */
+
+
 function getMenuPositionalCSSFn(wrapperEl, menuEl, selectedRow) {
   var viewHeight = document.documentElement.clientHeight,
-      numRows = menuEl.children.length;
+      numRows = menuEl.children.length; // determine menu height
 
-  // determine menu height
   var h = parseInt(menuEl.offsetHeight),
-      height = Math.min(h, viewHeight);
+      height = Math.min(h, viewHeight); // determine row height
 
-  // determine row height
   var p = parseInt(jqLite.css(menuEl, 'padding-top')),
-      rowHeight = (h - 2 * p) / numRows;
+      rowHeight = (h - 2 * p) / numRows; // determine 'top'
 
-  // determine 'top'
   var top, initTop, minTop, maxTop;
-
   initTop = -1 * selectedRow * rowHeight;
   minTop = -1 * wrapperEl.getBoundingClientRect().top;
   maxTop = viewHeight - height + minTop;
+  top = Math.min(Math.max(initTop, minTop), maxTop); // determine 'scrollTop'
 
-  top = Math.min(Math.max(initTop, minTop), maxTop);
-
-  // determine 'scrollTop'
   var scrollTop = 0,
       scrollIdeal,
       scrollMax;
@@ -478,8 +565,9 @@ function getMenuPositionalCSSFn(wrapperEl, menuEl, selectedRow) {
     'scrollTop': scrollTop
   };
 }
-
 /** Define module API */
+
+
 module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
@@ -489,9 +577,7 @@ module.exports = {
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
  */
-
 'use strict';
-
 /**
  * Add a class to an element.
  * @param {Element} element - The DOM element.
@@ -507,6 +593,7 @@ function jqLiteAddClass(element, cssClasses) {
 
   for (var i = 0; i < splitClasses.length; i++) {
     cssClass = splitClasses[i].trim();
+
     if (existingClasses.indexOf(' ' + cssClass + ' ') === -1) {
       existingClasses += cssClass + ' ';
     }
@@ -514,40 +601,40 @@ function jqLiteAddClass(element, cssClasses) {
 
   element.setAttribute('class', existingClasses.trim());
 }
-
 /**
  * Get or set CSS properties.
  * @param {Element} element - The DOM element.
  * @param {string} [name] - The property name.
  * @param {string} [value] - The property value.
  */
+
+
 function jqLiteCss(element, name, value) {
   // Return full style object
   if (name === undefined) {
     return getComputedStyle(element);
   }
 
-  var nameType = jqLiteType(name);
+  var nameType = jqLiteType(name); // Set multiple values
 
-  // Set multiple values
   if (nameType === 'object') {
     for (var key in name) {
       element.style[_camelCase(key)] = name[key];
-    }return;
-  }
+    }
 
-  // Set a single value
+    return;
+  } // Set a single value
+
+
   if (nameType === 'string' && value !== undefined) {
     element.style[_camelCase(name)] = value;
   }
 
   var styleObj = getComputedStyle(element),
-      isArray = jqLiteType(name) === 'array';
+      isArray = jqLiteType(name) === 'array'; // Read single value
 
-  // Read single value
-  if (!isArray) return _getCurrCssProp(element, name, styleObj);
+  if (!isArray) return _getCurrCssProp(element, name, styleObj); // Read multiple values
 
-  // Read multiple values
   var outObj = {},
       key;
 
@@ -558,34 +645,35 @@ function jqLiteCss(element, name, value) {
 
   return outObj;
 }
-
 /**
  * Check if element has class.
  * @param {Element} element - The DOM element.
  * @param {string} cls - The class name string.
  */
+
+
 function jqLiteHasClass(element, cls) {
   if (!cls || !element.getAttribute) return false;
   return _getExistingClasses(element).indexOf(' ' + cls + ' ') > -1;
 }
-
 /**
  * Return the type of a variable.
  * @param {} somevar - The JavaScript variable.
  */
+
+
 function jqLiteType(somevar) {
   // handle undefined
-  if (somevar === undefined) return 'undefined';
+  if (somevar === undefined) return 'undefined'; // handle others (of type [object <Type>])
 
-  // handle others (of type [object <Type>])
   var typeStr = Object.prototype.toString.call(somevar);
+
   if (typeStr.indexOf('[object ') === 0) {
     return typeStr.slice(8, -1).toLowerCase();
   } else {
     throw new Error("MUI: Could not understand type: " + typeStr);
   }
 }
-
 /**
  * Attach an event handler to a DOM element
  * @param {Element} element - The DOM element.
@@ -593,21 +681,19 @@ function jqLiteType(somevar) {
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
+
+
 function jqLiteOn(element, events, callback, useCapture) {
   useCapture = useCapture === undefined ? false : useCapture;
-
   var cache = element._muiEventCache = element._muiEventCache || {};
-
   events.split(' ').map(function (event) {
     // add to DOM
-    element.addEventListener(event, callback, useCapture);
+    element.addEventListener(event, callback, useCapture); // add to cache
 
-    // add to cache
     cache[event] = cache[event] || [];
     cache[event].push([callback, useCapture]);
   });
 }
-
 /**
  * Remove an event handler from a DOM element
  * @param {Element} element - The DOM element.
@@ -615,35 +701,31 @@ function jqLiteOn(element, events, callback, useCapture) {
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOff(element, events, callback, useCapture) {
-  useCapture = useCapture === undefined ? false : useCapture;
 
-  // remove from cache
+
+function jqLiteOff(element, events, callback, useCapture) {
+  useCapture = useCapture === undefined ? false : useCapture; // remove from cache
+
   var cache = element._muiEventCache = element._muiEventCache || {},
       argsList,
       args,
       i;
-
   events.split(' ').map(function (event) {
     argsList = cache[event] || [];
-
     i = argsList.length;
+
     while (i--) {
-      args = argsList[i];
+      args = argsList[i]; // remove all events if callback is undefined
 
-      // remove all events if callback is undefined
       if (callback === undefined || args[0] === callback && args[1] === useCapture) {
-
         // remove from cache
-        argsList.splice(i, 1);
+        argsList.splice(i, 1); // remove from DOM
 
-        // remove from DOM
         element.removeEventListener(event, args[0], args[1]);
       }
     }
   });
 }
-
 /**
  * Attach an event hander which will only execute once per element per event
  * @param {Element} element - The DOM element.
@@ -651,27 +733,28 @@ function jqLiteOff(element, events, callback, useCapture) {
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
+
+
 function jqLiteOne(element, events, callback, useCapture) {
   events.split(' ').map(function (event) {
     jqLiteOn(element, event, function onFn(ev) {
       // execute callback
-      if (callback) callback.apply(this, arguments);
+      if (callback) callback.apply(this, arguments); // remove wrapper
 
-      // remove wrapper
       jqLiteOff(element, event, onFn, useCapture);
     }, useCapture);
   });
 }
-
 /**
  * Get or set horizontal scroll position
  * @param {Element} element - The DOM element
  * @param {number} [value] - The scroll position
  */
-function jqLiteScrollLeft(element, value) {
-  var win = window;
 
-  // get
+
+function jqLiteScrollLeft(element, value) {
+  var win = window; // get
+
   if (value === undefined) {
     if (element === win) {
       var docEl = document.documentElement;
@@ -679,21 +762,21 @@ function jqLiteScrollLeft(element, value) {
     } else {
       return element.scrollLeft;
     }
-  }
+  } // set
 
-  // set
+
   if (element === win) win.scrollTo(value, jqLiteScrollTop(win));else element.scrollLeft = value;
 }
-
 /**
  * Get or set vertical scroll position
  * @param {Element} element - The DOM element
  * @param {number} value - The scroll position
  */
-function jqLiteScrollTop(element, value) {
-  var win = window;
 
-  // get
+
+function jqLiteScrollTop(element, value) {
+  var win = window; // get
+
   if (value === undefined) {
     if (element === win) {
       var docEl = document.documentElement;
@@ -701,22 +784,22 @@ function jqLiteScrollTop(element, value) {
     } else {
       return element.scrollTop;
     }
-  }
+  } // set
 
-  // set
+
   if (element === win) win.scrollTo(jqLiteScrollLeft(win), value);else element.scrollTop = value;
 }
-
 /**
  * Return object representing top/left offset and element height/width.
  * @param {Element} element - The DOM element.
  */
+
+
 function jqLiteOffset(element) {
   var win = window,
       rect = element.getBoundingClientRect(),
       scrollTop = jqLiteScrollTop(win),
       scrollLeft = jqLiteScrollLeft(win);
-
   return {
     top: rect.top + scrollTop,
     left: rect.left + scrollLeft,
@@ -724,11 +807,12 @@ function jqLiteOffset(element) {
     width: rect.width
   };
 }
-
 /**
  * Attach a callback to the DOM ready event listener
  * @param {Function} fn - The callback function.
  */
+
+
 function jqLiteReady(fn) {
   var done = false,
       top = true,
@@ -752,8 +836,10 @@ function jqLiteReady(fn) {
     try {
       root.doScroll('left');
     } catch (e) {
-      setTimeout(poll, 50);return;
+      setTimeout(poll, 50);
+      return;
     }
+
     init('poll');
   };
 
@@ -764,19 +850,22 @@ function jqLiteReady(fn) {
       try {
         top = !win.frameElement;
       } catch (e) {}
+
       if (top) poll();
     }
+
     doc[add](pre + 'DOMContentLoaded', init, false);
     doc[add](pre + 'readystatechange', init, false);
     win[add](pre + 'load', init, false);
   }
 }
-
 /**
  * Remove classes from a DOM element
  * @param {Element} element - The DOM element.
  * @param {string} cssClasses - Space separated list of class names.
  */
+
+
 function jqLiteRemoveClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;
 
@@ -786,17 +875,18 @@ function jqLiteRemoveClass(element, cssClasses) {
 
   for (var i = 0; i < splitClasses.length; i++) {
     cssClass = splitClasses[i].trim();
+
     while (existingClasses.indexOf(' ' + cssClass + ' ') >= 0) {
       existingClasses = existingClasses.replace(' ' + cssClass + ' ', ' ');
     }
   }
 
   element.setAttribute('class', existingClasses.trim());
-}
-
-// ------------------------------
+} // ------------------------------
 // Utilities
 // ------------------------------
+
+
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
     ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g;
@@ -817,20 +907,18 @@ function _escapeRegExp(string) {
 }
 
 function _getCurrCssProp(elem, name, computed) {
-  var ret;
+  var ret; // try computed style
 
-  // try computed style
-  ret = computed.getPropertyValue(name);
+  ret = computed.getPropertyValue(name); // try style attribute (if element is not attached to document)
 
-  // try style attribute (if element is not attached to document)
   if (ret === '' && !elem.ownerDocument) ret = elem.style[_camelCase(name)];
-
   return ret;
 }
-
 /**
  * Module API
  */
+
+
 module.exports = {
   /** Add classes */
   addClass: jqLiteAddClass,
@@ -874,7 +962,6 @@ module.exports = {
  * MUI CSS/JS utilities module
  * @module lib/util
  */
-
 'use strict';
 
 var config = require('../config'),
@@ -891,10 +978,11 @@ scrollEventHandler = function scrollEventHandler(ev) {
   // stop propagation on window scroll events
   if (!ev.target.tagName) ev.stopImmediatePropagation();
 };
-
 /**
  * Logging function
  */
+
+
 function logFn() {
   var win = window;
 
@@ -907,33 +995,30 @@ function logFn() {
     }
   }
 }
-
 /**
  * Load CSS text in new stylesheet
  * @param {string} cssText - The css text.
  */
+
+
 function loadStyleFn(cssText) {
   var doc = document,
-      head;
+      head; // copied from jQuery 
 
-  // copied from jQuery 
   head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
-
   var e = doc.createElement('style');
   e.type = 'text/css';
+  if (e.styleSheet) e.styleSheet.cssText = cssText;else e.appendChild(doc.createTextNode(cssText)); // add to document
 
-  if (e.styleSheet) e.styleSheet.cssText = cssText;else e.appendChild(doc.createTextNode(cssText));
-
-  // add to document
   head.insertBefore(e, head.firstChild);
-
   return e;
 }
-
 /**
  * Raise an error
  * @param {string} msg - The error message.
  */
+
+
 function raiseErrorFn(msg, useConsole) {
   if (useConsole) {
     if (typeof console !== 'undefined') console.warn('MUI Warning: ' + msg);
@@ -941,45 +1026,48 @@ function raiseErrorFn(msg, useConsole) {
     throw new Error('MUI: ' + msg);
   }
 }
-
 /**
  * Convert Classname object, with class as key and true/false as value, to an
  * class string.
  * @param  {Object} classes The classes
  * @return {String}         class string
  */
+
+
 function classNamesFn(classes) {
   var cs = '';
+
   for (var i in classes) {
     cs += classes[i] ? i + ' ' : '';
   }
+
   return cs.trim();
 }
-
 /**
  * Check if client supports pointer events.
  */
+
+
 function supportsPointerEventsFn() {
   // check cache
   if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-
   var element = document.createElement('x');
   element.style.cssText = 'pointer-events:auto';
   _supportsPointerEvents = element.style.pointerEvents === 'auto';
   return _supportsPointerEvents;
 }
-
 /**
  * Create callback closure.
  * @param {Object} instance - The object instance.
  * @param {String} funcName - The name of the callback function.
  */
+
+
 function callbackFn(instance, funcName) {
   return function () {
     instance[funcName].apply(instance, arguments);
   };
 }
-
 /**
  * Dispatch event.
  * @param {Element} element - The DOM element.
@@ -988,31 +1076,31 @@ function callbackFn(instance, funcName) {
  * @param {Boolean} cancelable=true = If true, event is cancelable
  * @param {Object} [data] - Data to add to event object
  */
+
+
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = bubbles !== undefined ? bubbles : true,
       cancelable = cancelable !== undefined ? cancelable : true,
       k;
+  ev.initEvent(eventType, bubbles, cancelable); // add data to event object
 
-  ev.initEvent(eventType, bubbles, cancelable);
-
-  // add data to event object
   if (data) for (k in data) {
     ev[k] = data[k];
   } // dispatch
-  if (element) element.dispatchEvent(ev);
 
+  if (element) element.dispatchEvent(ev);
   return ev;
 }
-
 /**
  * Turn on window scroll lock.
  */
+
+
 function enableScrollLockFn() {
   // increment counter
-  scrollLock += 1;
+  scrollLock += 1; // add lock
 
-  // add lock
   if (scrollLock === 1) {
     var doc = document,
         win = window,
@@ -1021,9 +1109,8 @@ function enableScrollLockFn() {
         scrollBarWidth = getScrollBarWidth(),
         cssProps,
         cssStr,
-        x;
+        x; // define scroll lock class dynamically
 
-    // define scroll lock class dynamically
     cssProps = ['overflow:hidden'];
 
     if (scrollBarWidth) {
@@ -1031,91 +1118,88 @@ function enableScrollLockFn() {
       if (htmlEl.scrollHeight > htmlEl.clientHeight) {
         x = parseInt(jqLite.css(bodyEl, 'padding-right')) + scrollBarWidth;
         cssProps.push('padding-right:' + x + 'px');
-      }
+      } // scrollbar-x
 
-      // scrollbar-x
+
       if (htmlEl.scrollWidth > htmlEl.clientWidth) {
         x = parseInt(jqLite.css(bodyEl, 'padding-bottom')) + scrollBarWidth;
         cssProps.push('padding-bottom:' + x + 'px');
       }
-    }
+    } // define css class dynamically
 
-    // define css class dynamically
+
     cssStr = '.' + scrollLockCls + '{';
     cssStr += cssProps.join(' !important;') + ' !important;}';
-    scrollStyleEl = loadStyleFn(cssStr);
+    scrollStyleEl = loadStyleFn(cssStr); // cancel 'scroll' event listener callbacks
 
-    // cancel 'scroll' event listener callbacks
-    jqLite.on(win, 'scroll', scrollEventHandler, true);
+    jqLite.on(win, 'scroll', scrollEventHandler, true); // add scroll lock
 
-    // add scroll lock
-    scrollLockPos = { left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win) };
+    scrollLockPos = {
+      left: jqLite.scrollLeft(win),
+      top: jqLite.scrollTop(win)
+    };
     jqLite.addClass(bodyEl, scrollLockCls);
   }
 }
-
 /**
  * Turn off window scroll lock.
  * @param {Boolean} resetPos - Reset scroll position to original value.
  */
+
+
 function disableScrollLockFn(resetPos) {
   // ignore
-  if (scrollLock === 0) return;
+  if (scrollLock === 0) return; // decrement counter
 
-  // decrement counter
-  scrollLock -= 1;
+  scrollLock -= 1; // remove lock 
 
-  // remove lock 
   if (scrollLock === 0) {
     // remove scroll lock and delete style element
-    jqLite.removeClass(document.body, scrollLockCls);
+    jqLite.removeClass(document.body, scrollLockCls); // restore scroll position
 
-    // restore scroll position
-    if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top); // restore scroll event listeners
 
-    // restore scroll event listeners
-    jqLite.off(window, 'scroll', scrollEventHandler, true);
+    jqLite.off(window, 'scroll', scrollEventHandler, true); // delete style element (deferred for Firefox Quantum bugfix)
 
-    // delete style element (deferred for Firefox Quantum bugfix)
     setTimeout(function () {
       scrollStyleEl.parentNode.removeChild(scrollStyleEl);
     }, 0);
   }
 }
-
 /**
  * Return scroll bar width.
  */
+
+
 var getScrollBarWidth = function getScrollBarWidth() {
   // check cache
-  if (_scrollBarWidth !== undefined) return _scrollBarWidth;
+  if (_scrollBarWidth !== undefined) return _scrollBarWidth; // calculate scroll bar width
 
-  // calculate scroll bar width
   var doc = document,
       bodyEl = doc.body,
       el = doc.createElement('div');
-
   el.innerHTML = '<div style="width:50px;height:50px;position:absolute;' + 'left:-50px;top:-50px;overflow:auto;"><div style="width:1px;' + 'height:100px;"></div></div>';
   el = el.firstChild;
   bodyEl.appendChild(el);
   _scrollBarWidth = el.offsetWidth - el.clientWidth;
   bodyEl.removeChild(el);
-
   return _scrollBarWidth;
 };
-
 /**
  * requestAnimationFrame polyfilled
  * @param {Function} callback - The callback function
  */
+
+
 function requestAnimationFrameFn(callback) {
   var fn = window.requestAnimationFrame;
   if (fn) fn(callback);else setTimeout(callback, 0);
 }
-
 /**
  * Define the module API
  */
+
+
 module.exports = {
   /** Create callback closures */
   callback: callbackFn,
@@ -1153,44 +1237,35 @@ module.exports = {
  * MUI React helpers
  * @module react/_helpers
  */
-
 'use strict';
 
 var controlledMessage = 'You provided a `value` prop to a form field ' + 'without an `OnChange` handler. Please see React documentation on ' + 'controlled components';
-
 /** Module export */
-module.exports = { controlledMessage: controlledMessage };
+
+module.exports = {
+  controlledMessage: controlledMessage
+};
 
 },{}],10:[function(require,module,exports){
 /**
  * MUI React Textfield Helpers
  * @module react/_textfieldHelpers
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.textfieldWrapper = undefined;
+exports.textfieldWrapper = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _reactAddonsShallowCompare = babelHelpers.interopRequireDefault(require("react-addons-shallow-compare"));
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
-var _reactAddonsShallowCompare2 = babelHelpers.interopRequireDefault(_reactAddonsShallowCompare);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _helpers = require('./_helpers');
+var _helpers = require("./_helpers");
 
 /**
  * Textfield Wrapper
@@ -1199,60 +1274,62 @@ var _helpers = require('./_helpers');
 var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
   var _class, _temp;
 
-  return _temp = _class = function (_React$Component) {
+  return _temp = _class =
+  /*#__PURE__*/
+  function (_React$Component) {
     babelHelpers.inherits(_class, _React$Component);
 
     function _class(props) {
-      babelHelpers.classCallCheck(this, _class);
+      var _this;
 
-      // set initial state
-      var _this = babelHelpers.possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+      babelHelpers.classCallCheck(this, _class);
+      _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(_class).call(this, props)); // set initial state
 
       _this.state = {
         isEmpty: isEmpty('value' in props ? props.value : props.defaultValue),
         isTouched: false,
         isPristine: true
-      };
+      }; // warn if value defined but onChange is not
 
-      // warn if value defined but onChange is not
       if ('value' in props && !props.onChange) {
         util.raiseError(_helpers.controlledMessage, true);
-      }
+      } // callbacks
 
-      // callbacks
+
       var cb = util.callback;
-      _this.onBlurCB = cb(_this, 'onBlur');
-      _this.onChangeCB = cb(_this, 'onChange');
-      _this.onLabelClickCB = cb(_this, 'onLabelClick');
+      _this.onBlurCB = cb(babelHelpers.assertThisInitialized(_this), 'onBlur');
+      _this.onChangeCB = cb(babelHelpers.assertThisInitialized(_this), 'onChange');
+      _this.onLabelClickCB = cb(babelHelpers.assertThisInitialized(_this), 'onLabelClick');
       return _this;
     }
 
     babelHelpers.createClass(_class, [{
-      key: 'onBlur',
+      key: "onBlur",
       value: function onBlur(ev) {
         // ignore if event is a window blur
         if (document.activeElement !== this.controlEl) {
-          this.setState({ isTouched: true });
-        }
+          this.setState({
+            isTouched: true
+          });
+        } // execute callback
 
-        // execute callback
+
         var fn = this.props.onBlur;
         fn && fn(ev);
       }
     }, {
-      key: 'onChange',
+      key: "onChange",
       value: function onChange(ev) {
         this.setState({
           isEmpty: isEmpty(ev.target.value),
           isPristine: false
-        });
+        }); // execute callback
 
-        // execute callback
         var fn = this.props.onChange;
         fn && fn(ev);
       }
     }, {
-      key: 'onLabelClick',
+      key: "onLabelClick",
       value: function onLabelClick(ev) {
         // pointer-events shim
         if (util.supportsPointerEvents() === false) {
@@ -1261,47 +1338,46 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         }
       }
     }, {
-      key: 'componentWillReceiveProps',
+      key: "componentWillReceiveProps",
       value: function componentWillReceiveProps(nextProps) {
         if ('value' in nextProps) {
-          this.setState({ isEmpty: isEmpty(nextProps.value) });
+          this.setState({
+            isEmpty: isEmpty(nextProps.value)
+          });
         }
       }
     }, {
-      key: 'shouldComponentUpdate',
+      key: "shouldComponentUpdate",
       value: function shouldComponentUpdate(nextProps, nextState) {
-        return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+        return (0, _reactAddonsShallowCompare["default"])(this, nextProps, nextState);
       }
     }, {
-      key: 'componentDidMount',
+      key: "componentDidMount",
       value: function componentDidMount() {
         // disable MUI js
         this.controlEl._muiTextfield = true;
       }
     }, {
-      key: 'render',
+      key: "render",
       value: function render() {
         var _this2 = this;
 
         var wrapperCls = {},
             inputCls = {},
-            labelEl = void 0;
-
-        var _props = this.props,
-            children = _props.children,
-            className = _props.className,
-            style = _props.style,
-            hint = _props.hint,
-            invalid = _props.invalid,
-            label = _props.label,
-            floatingLabel = _props.floatingLabel,
-            other = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'hint', 'invalid', 'label', 'floatingLabel']);
-
-
+            labelEl;
+        var _this$props = this.props,
+            children = _this$props.children,
+            className = _this$props.className,
+            style = _this$props.style,
+            hint = _this$props.hint,
+            invalid = _this$props.invalid,
+            label = _this$props.label,
+            floatingLabel = _this$props.floatingLabel,
+            other = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "style", "hint", "invalid", "label", "floatingLabel"]);
         var labelType = jqLite.type(label);
 
         if (labelType == 'string' && label.length || labelType == 'object') {
-          labelEl = _react2.default.createElement(Label, {
+          labelEl = _react["default"].createElement(Label, {
             text: label,
             onClick: this.onClickCB,
             htmlFor: this.props.id
@@ -1311,7 +1387,6 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         wrapperCls['mui-textfield'] = true;
         wrapperCls['mui-textfield--float-label'] = floatingLabel;
         wrapperCls = util.classNames(wrapperCls);
-
         inputCls['mui--is-touched'] = this.state.isTouched;
         inputCls['mui--is-untouched'] = !this.state.isTouched;
         inputCls['mui--is-pristine'] = this.state.isPristine;
@@ -1320,70 +1395,69 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         inputCls['mui--is-not-empty'] = !this.state.isEmpty;
         inputCls['mui--is-invalid'] = invalid;
         inputCls = util.classNames(inputCls);
-
-        return _react2.default.createElement(
-          'div',
-          {
-            className: wrapperCls + ' ' + className,
-            style: style
+        return _react["default"].createElement("div", {
+          className: wrapperCls + ' ' + className,
+          style: style
+        }, _react["default"].createElement(TextfieldComponent, babelHelpers["extends"]({
+          className: inputCls,
+          inputRef: function inputRef(el) {
+            _this2.controlEl = el;
           },
-          _react2.default.createElement(TextfieldComponent, babelHelpers.extends({
-            className: inputCls,
-            inputRef: function inputRef(el) {
-              _this2.controlEl = el;
-            },
-            placeholder: hint
-          }, other, {
-            onBlur: this.onBlurCB,
-            onChange: this.onChangeCB
-          })),
-          labelEl
-        );
+          placeholder: hint
+        }, other, {
+          onBlur: this.onBlurCB,
+          onChange: this.onChangeCB
+        })), labelEl);
       }
     }]);
     return _class;
-  }(_react2.default.Component), _class.defaultProps = {
+  }(_react["default"].Component), babelHelpers.defineProperty(_class, "defaultProps", {
     className: '',
     hint: null,
     invalid: false,
     label: null,
     floatingLabel: false
-  }, _temp;
+  }), _temp;
 };
-
 /**
  * Label constructor
  * @class
  */
 
-var Label = function (_React$Component2) {
+
+exports.textfieldWrapper = textfieldWrapper;
+
+var Label =
+/*#__PURE__*/
+function (_React$Component2) {
   babelHelpers.inherits(Label, _React$Component2);
 
   function Label() {
-    var _ref;
+    var _babelHelpers$getProt;
 
-    var _temp2, _this3, _ret;
+    var _this3;
 
     babelHelpers.classCallCheck(this, Label);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp2 = (_this3 = babelHelpers.possibleConstructorReturn(this, (_ref = Label.__proto__ || Object.getPrototypeOf(Label)).call.apply(_ref, [this].concat(args))), _this3), _this3.state = {
+    _this3 = babelHelpers.possibleConstructorReturn(this, (_babelHelpers$getProt = babelHelpers.getPrototypeOf(Label)).call.apply(_babelHelpers$getProt, [this].concat(args)));
+    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this3), "state", {
       style: {}
-    }, _temp2), babelHelpers.possibleConstructorReturn(_this3, _ret);
+    });
+    return _this3;
   }
 
   babelHelpers.createClass(Label, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       var _this4 = this;
 
       this.styleTimer = setTimeout(function () {
         var s = '.15s ease-out';
-        var style = void 0;
-
+        var style;
         style = {
           transition: s,
           WebkitTransition: s,
@@ -1392,164 +1466,150 @@ var Label = function (_React$Component2) {
           msTransform: s
         };
 
-        _this4.setState({ style: style });
+        _this4.setState({
+          style: style
+        });
       }, 150);
     }
   }, {
-    key: 'componentWillUnmount',
+    key: "componentWillUnmount",
     value: function componentWillUnmount() {
       // clear timer
       clearTimeout(this.styleTimer);
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      return _react2.default.createElement(
-        'label',
-        {
-          style: this.state.style,
-          onClick: this.props.onClick,
-          htmlFor: this.props.htmlFor,
-          tabIndex: '-1' // firefox bugfix (see #252)
-        },
-        this.props.text
-      );
+      return _react["default"].createElement("label", {
+        style: this.state.style,
+        onClick: this.props.onClick,
+        htmlFor: this.props.htmlFor,
+        tabIndex: "-1" // firefox bugfix (see #252)
+
+      }, this.props.text);
     }
   }]);
   return Label;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /**
  * isEmpty helper
  * @function
  */
 
 
-Label.defaultProps = {
+babelHelpers.defineProperty(Label, "defaultProps", {
   text: '',
   onClick: null
-};
+});
+
 function isEmpty(value) {
   return value === undefined || value === null || value === '';
 }
-
 /** Define module API */
-exports.textfieldWrapper = textfieldWrapper;
 
 },{"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react","react-addons-shallow-compare":4}],11:[function(require,module,exports){
 /**
  * MUI React Appbar Module
  * @module react/appbar
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Appbar constructor
  * @class
  */
-var Appbar = function (_React$Component) {
+var Appbar =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Appbar, _React$Component);
 
   function Appbar() {
     babelHelpers.classCallCheck(this, Appbar);
-    return babelHelpers.possibleConstructorReturn(this, (Appbar.__proto__ || Object.getPrototypeOf(Appbar)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Appbar).apply(this, arguments));
   }
 
   babelHelpers.createClass(Appbar, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-appbar ' + this.props.className
-        }),
-        children
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-appbar ' + this.props.className
+      }), children);
     }
   }]);
   return Appbar;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Appbar.defaultProps = {
+babelHelpers.defineProperty(Appbar, "defaultProps", {
   className: ''
-};
-exports.default = Appbar;
-module.exports = exports['default'];
+});
+var _default = Appbar;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],12:[function(require,module,exports){
 /**
  * MUI React button module
  * @module react/button
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var btnClass = 'mui-btn',
-    btnAttrs = { color: 1, variant: 1, size: 1 };
-
+    btnAttrs = {
+  color: 1,
+  variant: 1,
+  size: 1
+};
 /**
  * Button element
  * @class
  */
 
-var Button = function (_React$Component) {
+var Button =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Button, _React$Component);
 
   function Button(props) {
+    var _this;
+
     babelHelpers.classCallCheck(this, Button);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, props));
-
-    _this.state = {
+    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Button).call(this, props));
+    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "state", {
       rippleStyle: {},
       rippleIsVisible: false
-    };
-
+    });
     var cb = util.callback;
-    _this.onMouseDownCB = cb(_this, 'onMouseDown');
-    _this.onMouseUpCB = cb(_this, 'onMouseUp');
-    _this.onMouseLeaveCB = cb(_this, 'onMouseLeave');
-    _this.onTouchStartCB = cb(_this, 'onTouchStart');
-    _this.onTouchEndCB = cb(_this, 'onTouchEnd');
+    _this.onMouseDownCB = cb(babelHelpers.assertThisInitialized(_this), 'onMouseDown');
+    _this.onMouseUpCB = cb(babelHelpers.assertThisInitialized(_this), 'onMouseUp');
+    _this.onMouseLeaveCB = cb(babelHelpers.assertThisInitialized(_this), 'onMouseLeave');
+    _this.onTouchStartCB = cb(babelHelpers.assertThisInitialized(_this), 'onTouchStart');
+    _this.onTouchEndCB = cb(babelHelpers.assertThisInitialized(_this), 'onTouchEnd');
     return _this;
   }
 
   babelHelpers.createClass(Button, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       // disable MUI js
       var el = this.buttonElRef;
@@ -1557,70 +1617,59 @@ var Button = function (_React$Component) {
       el._muiRipple = true;
     }
   }, {
-    key: 'onMouseDown',
+    key: "onMouseDown",
     value: function onMouseDown(ev) {
-      this.showRipple(ev);
+      this.showRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onMouseDown;
       fn && fn(ev);
     }
   }, {
-    key: 'onMouseUp',
+    key: "onMouseUp",
     value: function onMouseUp(ev) {
-      this.hideRipple(ev);
+      this.hideRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onMouseUp;
       fn && fn(ev);
     }
   }, {
-    key: 'onMouseLeave',
+    key: "onMouseLeave",
     value: function onMouseLeave(ev) {
-      this.hideRipple(ev);
+      this.hideRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onMouseLeave;
       fn && fn(ev);
     }
   }, {
-    key: 'onTouchStart',
+    key: "onTouchStart",
     value: function onTouchStart(ev) {
-      this.showRipple(ev);
+      this.showRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onTouchStart;
       fn && fn(ev);
     }
   }, {
-    key: 'onTouchEnd',
+    key: "onTouchEnd",
     value: function onTouchEnd(ev) {
-      this.hideRipple(ev);
+      this.hideRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onTouchEnd;
       fn && fn(ev);
     }
   }, {
-    key: 'showRipple',
+    key: "showRipple",
     value: function showRipple(ev) {
-      var buttonEl = this.buttonElRef;
+      var buttonEl = this.buttonElRef; // de-dupe touch events
 
-      // de-dupe touch events
-      if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return;
+      if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return; // get (x, y) position of click
 
-      // get (x, y) position of click
       var offset = jqLite.offset(this.buttonElRef),
-          clickEv = void 0;
+          clickEv;
+      if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev; // calculate radius
 
-      if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev;
-
-      // calculate radius
       var radius = Math.sqrt(offset.width * offset.width + offset.height * offset.height);
+      var diameterPx = radius * 2 + 'px'; // add ripple to state
 
-      var diameterPx = radius * 2 + 'px';
-
-      // add ripple to state
       this.setState({
         rippleStyle: {
           top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
@@ -1632,27 +1681,27 @@ var Button = function (_React$Component) {
       });
     }
   }, {
-    key: 'hideRipple',
+    key: "hideRipple",
     value: function hideRipple(ev) {
-      this.setState({ rippleIsVisible: false });
+      this.setState({
+        rippleIsVisible: false
+      });
     }
   }, {
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
       var state = this.state,
-          rippleEl = this.rippleElRef;
+          rippleEl = this.rippleElRef; // show ripple
 
-      // show ripple
       if (state.rippleIsVisible && !prevState.rippleIsVisible) {
         jqLite.removeClass(rippleEl, 'mui--is-animating');
         jqLite.addClass(rippleEl, 'mui--is-visible');
-
         util.requestAnimationFrame(function () {
           jqLite.addClass(rippleEl, 'mui--is-animating');
         });
-      }
+      } // hide ripple
 
-      // hide ripple
+
       if (!state.rippleIsVisible && prevState.rippleIsVisible) {
         // allow a repaint to occur before removing class so animation shows for
         // tap events
@@ -1662,308 +1711,266 @@ var Button = function (_React$Component) {
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this2 = this;
 
       var cls = btnClass,
-          k = void 0,
-          v = void 0;
-
-      var _props = this.props,
-          color = _props.color,
-          size = _props.size,
-          variant = _props.variant,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['color', 'size', 'variant']);
-
-      // button attributes
+          k,
+          v;
+      var _this$props = this.props,
+          color = _this$props.color,
+          size = _this$props.size,
+          variant = _this$props.variant,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["color", "size", "variant"]); // button attributes
 
       for (k in btnAttrs) {
         v = this.props[k];
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react2.default.createElement(
-        'button',
-        babelHelpers.extends({}, reactProps, {
-          ref: function ref(el) {
-            _this2.buttonElRef = el;
-          },
-          className: cls + ' ' + this.props.className,
-          onMouseUp: this.onMouseUpCB,
-          onMouseDown: this.onMouseDownCB,
-          onMouseLeave: this.onMouseLeaveCB,
-          onTouchStart: this.onTouchStartCB,
-          onTouchEnd: this.onTouchEndCB
-        }),
-        this.props.children,
-        _react2.default.createElement(
-          'span',
-          { className: 'mui-btn__ripple-container' },
-          _react2.default.createElement('span', {
-            ref: function ref(el) {
-              _this2.rippleElRef = el;
-            },
-            className: 'mui-ripple',
-            style: this.state.rippleStyle
-          })
-        )
-      );
+      return _react["default"].createElement("button", babelHelpers["extends"]({}, reactProps, {
+        ref: function ref(el) {
+          _this2.buttonElRef = el;
+        },
+        className: cls + ' ' + this.props.className,
+        onMouseUp: this.onMouseUpCB,
+        onMouseDown: this.onMouseDownCB,
+        onMouseLeave: this.onMouseLeaveCB,
+        onTouchStart: this.onTouchStartCB,
+        onTouchEnd: this.onTouchEndCB
+      }), this.props.children, _react["default"].createElement("span", {
+        className: "mui-btn__ripple-container"
+      }, _react["default"].createElement("span", {
+        ref: function ref(el) {
+          _this2.rippleElRef = el;
+        },
+        className: "mui-ripple",
+        style: this.state.rippleStyle
+      })));
     }
   }]);
   return Button;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Button.defaultProps = {
+babelHelpers.defineProperty(Button, "defaultProps", {
   className: '',
   color: 'default',
   size: 'default',
   variant: 'default'
-};
-exports.default = Button;
-module.exports = exports['default'];
+});
+var _default = Button;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/jqLite":7,"../js/lib/util":8,"react":"react"}],13:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Caret constructor
  * @class
  */
-var Caret = function (_React$Component) {
+var Caret =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Caret, _React$Component);
 
   function Caret() {
     babelHelpers.classCallCheck(this, Caret);
-    return babelHelpers.possibleConstructorReturn(this, (Caret.__proto__ || Object.getPrototypeOf(Caret)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Caret).apply(this, arguments));
   }
 
   babelHelpers.createClass(Caret, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-
-      return _react2.default.createElement('span', babelHelpers.extends({}, reactProps, {
+      var _this$props = this.props,
+          children = _this$props.children,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
+      return _react["default"].createElement("span", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-caret ' + this.props.className
       }));
     }
   }]);
   return Caret;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Caret.defaultProps = {
+babelHelpers.defineProperty(Caret, "defaultProps", {
   className: ''
-};
-exports.default = Caret;
-module.exports = exports['default'];
+});
+var _default = Caret;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],14:[function(require,module,exports){
 /**
  * MUI React checkbox module
  * @module react/checkbox
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _helpers = require('./_helpers');
+var _helpers = require("./_helpers");
 
 /**
  * Checkbox constructor
  * @class
  */
-var Checkbox = function (_React$Component) {
+var Checkbox =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Checkbox, _React$Component);
 
   function Checkbox() {
     babelHelpers.classCallCheck(this, Checkbox);
-    return babelHelpers.possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Checkbox).apply(this, arguments));
   }
 
   babelHelpers.createClass(Checkbox, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          label = _props.label,
-          autoFocus = _props.autoFocus,
-          checked = _props.checked,
-          defaultChecked = _props.defaultChecked,
-          defaultValue = _props.defaultValue,
-          disabled = _props.disabled,
-          form = _props.form,
-          name = _props.name,
-          required = _props.required,
-          value = _props.value,
-          onChange = _props.onChange,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-checkbox ' + className
-        }),
-        _react2.default.createElement(
-          'label',
-          null,
-          _react2.default.createElement('input', {
-            ref: function ref(el) {
-              _this2.controlEl = el;
-            },
-            type: 'checkbox',
-            autoFocus: autoFocus,
-            checked: checked,
-            defaultChecked: defaultChecked,
-            defaultValue: defaultValue,
-            disabled: disabled,
-            form: form,
-            name: name,
-            required: required,
-            value: value,
-            onChange: onChange
-          }),
-          label
-        )
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          label = _this$props.label,
+          autoFocus = _this$props.autoFocus,
+          checked = _this$props.checked,
+          defaultChecked = _this$props.defaultChecked,
+          defaultValue = _this$props.defaultValue,
+          disabled = _this$props.disabled,
+          form = _this$props.form,
+          name = _this$props.name,
+          required = _this$props.required,
+          value = _this$props.value,
+          onChange = _this$props.onChange,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-checkbox ' + className
+      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
+        ref: function ref(el) {
+          _this.controlEl = el;
+        },
+        type: "checkbox",
+        autoFocus: autoFocus,
+        checked: checked,
+        defaultChecked: defaultChecked,
+        defaultValue: defaultValue,
+        disabled: disabled,
+        form: form,
+        name: name,
+        required: required,
+        value: value,
+        onChange: onChange
+      }), label));
     }
   }]);
   return Checkbox;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Checkbox.defaultProps = {
+babelHelpers.defineProperty(Checkbox, "defaultProps", {
   className: '',
   label: null
-};
-exports.default = Checkbox;
-module.exports = exports['default'];
+});
+var _default = Checkbox;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/util":8,"./_helpers":9,"react":"react"}],15:[function(require,module,exports){
 /**
  * MUI React Col Component
  * @module react/col
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
-
 /**
  * Col constructor
  * @class
  */
 
-var Col = function (_React$Component) {
+var Col =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Col, _React$Component);
 
   function Col() {
     babelHelpers.classCallCheck(this, Col);
-    return babelHelpers.possibleConstructorReturn(this, (Col.__proto__ || Object.getPrototypeOf(Col)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Col).apply(this, arguments));
   }
 
   babelHelpers.createClass(Col, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var cls = {},
-          i = void 0,
-          bk = void 0,
-          val = void 0,
-          baseCls = void 0;
-
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
-
-      // add mui-col classes
+          i,
+          bk,
+          val,
+          baseCls;
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]); // add mui-col classes
 
       for (i = breakpoints.length - 1; i > -1; i--) {
         bk = breakpoints[i];
-        baseCls = 'mui-col-' + bk;
+        baseCls = 'mui-col-' + bk; // add mui-col-{bk}-{val}
 
-        // add mui-col-{bk}-{val}
         val = this.props[bk];
-        if (val) cls[baseCls + '-' + val] = true;
+        if (val) cls[baseCls + '-' + val] = true; // add mui-col-{bk}-offset-{val}
 
-        // add mui-col-{bk}-offset-{val}
         val = this.props[bk + '-offset'];
-        if (val) cls[baseCls + '-offset-' + val] = true;
+        if (val) cls[baseCls + '-offset-' + val] = true; // remove from reactProps
 
-        // remove from reactProps
         delete reactProps[bk];
         delete reactProps[bk + '-offset'];
       }
 
       cls = util.classNames(cls);
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: cls + ' ' + className
-        }),
-        children
-      );
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: cls + ' ' + className
+      }), children);
     }
   }]);
   return Col;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Col.defaultProps = {
+babelHelpers.defineProperty(Col, "defaultProps", {
   className: '',
   xs: null,
   sm: null,
@@ -1975,267 +1982,236 @@ Col.defaultProps = {
   'md-offset': null,
   'lg-offset': null,
   'xl-offset': null
-};
-exports.default = Col;
-module.exports = exports['default'];
+});
+var _default = Col;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/util":8,"react":"react"}],16:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Container constructor
  * @class
  */
-var Container = function (_React$Component) {
+var Container =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Container, _React$Component);
 
   function Container() {
     babelHelpers.classCallCheck(this, Container);
-    return babelHelpers.possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Container).apply(this, arguments));
   }
 
   babelHelpers.createClass(Container, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          fluid = _props.fluid,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'fluid']);
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          fluid = _this$props.fluid,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "fluid"]);
+      var cls = 'mui-container'; // fluid containers
 
-
-      var cls = 'mui-container';
-
-      // fluid containers
       if (fluid) cls += '-fluid';
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: cls + ' ' + className
-        }),
-        children
-      );
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: cls + ' ' + className
+      }), children);
     }
   }]);
   return Container;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Container.defaultProps = {
+babelHelpers.defineProperty(Container, "defaultProps", {
   className: '',
   fluid: false
-};
-exports.default = Container;
-module.exports = exports['default'];
+});
+var _default = Container;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],17:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Divider constructor
  * @class
  */
-var Divider = function (_React$Component) {
+var Divider =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Divider, _React$Component);
 
   function Divider() {
     babelHelpers.classCallCheck(this, Divider);
-    return babelHelpers.possibleConstructorReturn(this, (Divider.__proto__ || Object.getPrototypeOf(Divider)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Divider).apply(this, arguments));
   }
 
   babelHelpers.createClass(Divider, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
-
-
-      return _react2.default.createElement('div', babelHelpers.extends({}, reactProps, {
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-divider ' + className
       }));
     }
   }]);
   return Divider;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Divider.defaultProps = {
+babelHelpers.defineProperty(Divider, "defaultProps", {
   className: ''
-};
-exports.default = Divider;
-module.exports = exports['default'];
+});
+var _default = Divider;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],18:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
  */
+
 /* jshint quotmark:false */
 // jscs:disable validateQuoteMarks
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 /**
  * DropdownItem constructor
  * @class
  */
-var DropdownItem = function (_React$Component) {
+var DropdownItem =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(DropdownItem, _React$Component);
 
   function DropdownItem() {
     babelHelpers.classCallCheck(this, DropdownItem);
-    return babelHelpers.possibleConstructorReturn(this, (DropdownItem.__proto__ || Object.getPrototypeOf(DropdownItem)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(DropdownItem).apply(this, arguments));
   }
 
   babelHelpers.createClass(DropdownItem, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          link = _props.link,
-          target = _props.target,
-          value = _props.value,
-          onClick = _props.onClick,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'link', 'target', 'value', 'onClick']);
-
-
-      return _react2.default.createElement(
-        'li',
-        reactProps,
-        _react2.default.createElement(
-          'a',
-          {
-            href: link,
-            target: target,
-            'data-mui-value': value,
-            onClick: onClick
-          },
-          children
-        )
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          link = _this$props.link,
+          target = _this$props.target,
+          value = _this$props.value,
+          onClick = _this$props.onClick,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "link", "target", "value", "onClick"]);
+      return _react["default"].createElement("li", reactProps, _react["default"].createElement("a", {
+        href: link,
+        target: target,
+        "data-mui-value": value,
+        onClick: onClick
+      }, children));
     }
   }]);
   return DropdownItem;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-exports.default = DropdownItem;
-module.exports = exports['default'];
+var _default = DropdownItem;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/util":8,"react":"react"}],19:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
  */
+
 /* jshint quotmark:false */
 // jscs:disable validateQuoteMarks
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _button = babelHelpers.interopRequireDefault(require("./button"));
 
-var _button = require('./button');
+var _caret = babelHelpers.interopRequireDefault(require("./caret"));
 
-var _button2 = babelHelpers.interopRequireDefault(_button);
-
-var _caret = require('./caret');
-
-var _caret2 = babelHelpers.interopRequireDefault(_caret);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
     openClass = 'mui--is-open',
     rightClass = 'mui-dropdown__menu--right';
-
 /**
  * Dropdown constructor
  * @class
  */
 
-var Dropdown = function (_React$Component) {
+var Dropdown =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Dropdown, _React$Component);
 
   function Dropdown(props) {
+    var _this;
+
     babelHelpers.classCallCheck(this, Dropdown);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this, props));
-
+    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Dropdown).call(this, props));
     _this.state = {
       opened: false,
       menuTop: 0
     };
     var cb = util.callback;
-    _this.selectCB = cb(_this, 'select');
-    _this.onClickCB = cb(_this, 'onClick');
-    _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
-    _this.onKeyDownCB = cb(_this, 'onKeyDown');
+    _this.selectCB = cb(babelHelpers.assertThisInitialized(_this), 'select');
+    _this.onClickCB = cb(babelHelpers.assertThisInitialized(_this), 'onClick');
+    _this.onOutsideClickCB = cb(babelHelpers.assertThisInitialized(_this), 'onOutsideClick');
+    _this.onKeyDownCB = cb(babelHelpers.assertThisInitialized(_this), 'onKeyDown');
     return _this;
   }
 
   babelHelpers.createClass(Dropdown, [{
-    key: 'componentWillUpdate',
+    key: "componentWillUpdate",
     value: function componentWillUpdate(nextProps, nextState) {
       var doc = document;
 
@@ -2248,31 +2224,29 @@ var Dropdown = function (_React$Component) {
       }
     }
   }, {
-    key: 'componentWillUnmount',
+    key: "componentWillUnmount",
     value: function componentWillUnmount() {
       var doc = document;
       doc.removeEventListener('click', this.onOutsideClickCB);
       doc.removeEventListener('keydown', this.onKeyDownCB);
     }
   }, {
-    key: 'onClick',
+    key: "onClick",
     value: function onClick(ev) {
       // only left clicks
-      if (ev.button !== 0) return;
+      if (ev.button !== 0) return; // exit if toggle button is disabled
 
-      // exit if toggle button is disabled
       if (this.props.disabled) return;
 
       if (!ev.defaultPrevented) {
-        this.toggle();
+        this.toggle(); // execute <Dropdown> onClick method
 
-        // execute <Dropdown> onClick method
         var fn = this.props.onClick;
         fn && fn(ev);
       }
     }
   }, {
-    key: 'toggle',
+    key: "toggle",
     value: function toggle() {
       // exit if no menu element
       if (!this.props.children) {
@@ -2282,144 +2256,119 @@ var Dropdown = function (_React$Component) {
       if (this.state.opened) this.close();else this.open();
     }
   }, {
-    key: 'open',
+    key: "open",
     value: function open() {
       // position menu element below toggle button
       var wrapperRect = this.wrapperElRef.getBoundingClientRect(),
-          toggleRect = void 0;
-
+          toggleRect;
       toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
-
       this.setState({
         opened: true,
         menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
       });
     }
   }, {
-    key: 'close',
+    key: "close",
     value: function close() {
-      this.setState({ opened: false });
+      this.setState({
+        opened: false
+      });
     }
   }, {
-    key: 'select',
+    key: "select",
     value: function select(ev) {
       // onSelect callback
       if (this.props.onSelect && ev.target.tagName === 'A') {
         this.props.onSelect(ev.target.getAttribute('data-mui-value'));
-      }
+      } // close menu
 
-      // close menu
+
       if (!ev.defaultPrevented) this.close();
     }
   }, {
-    key: 'onOutsideClick',
+    key: "onOutsideClick",
     value: function onOutsideClick(ev) {
       var isClickInside = this.wrapperElRef.contains(ev.target);
       if (!isClickInside) this.close();
     }
   }, {
-    key: 'onKeyDown',
+    key: "onKeyDown",
     value: function onKeyDown(ev) {
       // close menu on escape key
       var key = ev.key;
       if (key === 'Escape' || key === 'Esc') this.close();
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this2 = this;
 
-      var buttonEl = void 0,
-          menuEl = void 0,
-          labelEl = void 0;
-
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          color = _props.color,
-          variant = _props.variant,
-          size = _props.size,
-          label = _props.label,
-          alignMenu = _props.alignMenu,
-          onClick = _props.onClick,
-          onSelect = _props.onSelect,
-          disabled = _props.disabled,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'color', 'variant', 'size', 'label', 'alignMenu', 'onClick', 'onSelect', 'disabled']);
-
-      // build label
+      var buttonEl, menuEl, labelEl;
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          color = _this$props.color,
+          variant = _this$props.variant,
+          size = _this$props.size,
+          label = _this$props.label,
+          alignMenu = _this$props.alignMenu,
+          onClick = _this$props.onClick,
+          onSelect = _this$props.onSelect,
+          disabled = _this$props.disabled,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
 
       if (jqLite.type(label) === 'string') {
-        labelEl = _react2.default.createElement(
-          'span',
-          null,
-          label,
-          ' ',
-          _react2.default.createElement(_caret2.default, null)
-        );
+        labelEl = _react["default"].createElement("span", null, label, " ", _react["default"].createElement(_caret["default"], null));
       } else {
         labelEl = label;
       }
 
-      buttonEl = _react2.default.createElement(
-        _button2.default,
-        {
-          ref: function ref(el) {
-            _this2.buttonElRef = el;
-          },
-          type: 'button',
-          onClick: this.onClickCB,
-          color: color,
-          variant: variant,
-          size: size,
-          disabled: disabled
+      buttonEl = _react["default"].createElement(_button["default"], {
+        ref: function ref(el) {
+          _this2.buttonElRef = el;
         },
-        labelEl
-      );
+        type: "button",
+        onClick: this.onClickCB,
+        color: color,
+        variant: variant,
+        size: size,
+        disabled: disabled
+      }, labelEl);
 
       if (this.state.opened) {
         var cs = {};
-
         cs[menuClass] = true;
         cs[openClass] = this.state.opened;
         cs[rightClass] = alignMenu === 'right';
         cs = util.classNames(cs);
-
-        menuEl = _react2.default.createElement(
-          'ul',
-          {
-            ref: function ref(el) {
-              _this2.menuElRef = el;
-            },
-            className: cs,
-            style: { top: this.state.menuTop },
-            onClick: this.selectCB
+        menuEl = _react["default"].createElement("ul", {
+          ref: function ref(el) {
+            _this2.menuElRef = el;
           },
-          children
-        );
+          className: cs,
+          style: {
+            top: this.state.menuTop
+          },
+          onClick: this.selectCB
+        }, children);
       } else {
-        menuEl = _react2.default.createElement('div', null);
+        menuEl = _react["default"].createElement("div", null);
       }
 
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          ref: function ref(el) {
-            _this2.wrapperElRef = el;
-          },
-          className: dropdownClass + ' ' + className
-        }),
-        buttonEl,
-        menuEl
-      );
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        ref: function ref(el) {
+          _this2.wrapperElRef = el;
+        },
+        className: dropdownClass + ' ' + className
+      }), buttonEl, menuEl);
     }
   }]);
   return Dropdown;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Dropdown.defaultProps = {
+babelHelpers.defineProperty(Dropdown, "defaultProps", {
   className: '',
   color: 'default',
   variant: 'default',
@@ -2429,91 +2378,83 @@ Dropdown.defaultProps = {
   onClick: null,
   onSelect: null,
   disabled: false
-};
-exports.default = Dropdown;
-module.exports = exports['default'];
+});
+var _default = Dropdown;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/jqLite":7,"../js/lib/util":8,"./button":12,"./caret":13,"react":"react"}],20:[function(require,module,exports){
 /**
  * MUI React form module
  * @module react/form
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Form constructor
  * @class
  */
-var Form = function (_React$Component) {
+var Form =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Form, _React$Component);
 
   function Form() {
     babelHelpers.classCallCheck(this, Form);
-    return babelHelpers.possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Form).apply(this, arguments));
   }
 
   babelHelpers.createClass(Form, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          inline = _props.inline,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          inline = _this$props.inline,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "inline"]);
+      var cls = 'mui-form'; // inline form
 
-      var cls = 'mui-form';
-
-      // inline form
       if (inline) cls += ' mui-form--inline';
-
-      return _react2.default.createElement(
-        'form',
-        babelHelpers.extends({}, reactProps, {
-          className: cls + ' ' + className
-        }),
-        children
-      );
+      return _react["default"].createElement("form", babelHelpers["extends"]({}, reactProps, {
+        className: cls + ' ' + className
+      }), children);
     }
   }]);
   return Form;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Form.defaultProps = {
+babelHelpers.defineProperty(Form, "defaultProps", {
   className: '',
   inline: false
-};
-exports.default = Form;
-module.exports = exports['default'];
+});
+var _default = Form;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],21:[function(require,module,exports){
 /**                                                                            
  * MUI React Input Component
  * @module react/input
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _textfieldHelpers = require('./_textfieldHelpers');
+var _textfieldHelpers = require("./_textfieldHelpers");
 
 /**
  * Input constructor
@@ -2521,502 +2462,445 @@ var _textfieldHelpers = require('./_textfieldHelpers');
  */
 var Input = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
   var inputRef = props.inputRef,
-      rest = babelHelpers.objectWithoutProperties(props, ['inputRef']);
-
-  return _react2.default.createElement('input', babelHelpers.extends({ ref: inputRef }, rest));
+      rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]);
+  return _react["default"].createElement("input", babelHelpers["extends"]({
+    ref: inputRef
+  }, rest));
 });
-
 /** Module API */
-exports.default = Input;
-module.exports = exports['default'];
+
+var _default = Input;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"./_textfieldHelpers":10,"react":"react"}],22:[function(require,module,exports){
 /**
  * MUI React options module
  * @module react/option
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var formlib = babelHelpers.interopRequireWildcard(require("../js/lib/forms"));
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _helpers = require('./_helpers');
+var _helpers = require("./_helpers");
 
 /**
  * Option constructor
  * @class
  */
-var Option = function (_React$Component) {
+var Option =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Option, _React$Component);
 
   function Option() {
     babelHelpers.classCallCheck(this, Option);
-    return babelHelpers.possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Option).apply(this, arguments));
   }
 
   babelHelpers.createClass(Option, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          label = _props.label,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
-
-
-      return _react2.default.createElement(
-        'option',
-        reactProps,
-        label
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          label = _this$props.label,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "label"]);
+      return _react["default"].createElement("option", reactProps, label);
     }
   }]);
   return Option;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Option.defaultProps = {
+babelHelpers.defineProperty(Option, "defaultProps", {
   className: '',
   label: null
-};
-exports.default = Option;
-module.exports = exports['default'];
+});
+var _default = Option;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/forms":6,"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react"}],23:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Panel constructor
  * @class
  */
-var Panel = function (_React$Component) {
+var Panel =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Panel, _React$Component);
 
   function Panel() {
     babelHelpers.classCallCheck(this, Panel);
-    return babelHelpers.possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Panel).apply(this, arguments));
   }
 
   babelHelpers.createClass(Panel, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-panel ' + className
-        }),
-        children
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-panel ' + className
+      }), children);
     }
   }]);
   return Panel;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Panel.defaultProps = {
+babelHelpers.defineProperty(Panel, "defaultProps", {
   className: ''
-};
-exports.default = Panel;
-module.exports = exports['default'];
+});
+var _default = Panel;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],24:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Radio constructor
  * @class
  */
-var Radio = function (_React$Component) {
+var Radio =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Radio, _React$Component);
 
   function Radio() {
     babelHelpers.classCallCheck(this, Radio);
-    return babelHelpers.possibleConstructorReturn(this, (Radio.__proto__ || Object.getPrototypeOf(Radio)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Radio).apply(this, arguments));
   }
 
   babelHelpers.createClass(Radio, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          label = _props.label,
-          autoFocus = _props.autoFocus,
-          checked = _props.checked,
-          defaultChecked = _props.defaultChecked,
-          defaultValue = _props.defaultValue,
-          disabled = _props.disabled,
-          form = _props.form,
-          name = _props.name,
-          required = _props.required,
-          value = _props.value,
-          onChange = _props.onChange,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'label', 'autoFocus', 'checked', 'defaultChecked', 'defaultValue', 'disabled', 'form', 'name', 'required', 'value', 'onChange']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-radio ' + className
-        }),
-        _react2.default.createElement(
-          'label',
-          null,
-          _react2.default.createElement('input', {
-            ref: function ref(el) {
-              _this2.controlEl = el;
-            },
-            type: 'radio',
-            autoFocus: autoFocus,
-            checked: checked,
-            defaultChecked: defaultChecked,
-            defaultValue: defaultValue,
-            disabled: disabled,
-            form: form,
-            name: name,
-            required: required,
-            value: value,
-            onChange: onChange
-          }),
-          label
-        )
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          label = _this$props.label,
+          autoFocus = _this$props.autoFocus,
+          checked = _this$props.checked,
+          defaultChecked = _this$props.defaultChecked,
+          defaultValue = _this$props.defaultValue,
+          disabled = _this$props.disabled,
+          form = _this$props.form,
+          name = _this$props.name,
+          required = _this$props.required,
+          value = _this$props.value,
+          onChange = _this$props.onChange,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-radio ' + className
+      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
+        ref: function ref(el) {
+          _this.controlEl = el;
+        },
+        type: "radio",
+        autoFocus: autoFocus,
+        checked: checked,
+        defaultChecked: defaultChecked,
+        defaultValue: defaultValue,
+        disabled: disabled,
+        form: form,
+        name: name,
+        required: required,
+        value: value,
+        onChange: onChange
+      }), label));
     }
   }]);
   return Radio;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Radio.defaultProps = {
+babelHelpers.defineProperty(Radio, "defaultProps", {
   className: '',
   label: null
-};
-exports.default = Radio;
-module.exports = exports['default'];
+});
+var _default = Radio;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],25:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var breakpoints = ['xs', 'sm', 'md', 'lg'];
-
 /**
  * Row constructor
  * @class
  */
 
-var Row = function (_React$Component) {
+var Row =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Row, _React$Component);
 
   function Row() {
     babelHelpers.classCallCheck(this, Row);
-    return babelHelpers.possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Row).apply(this, arguments));
   }
 
   babelHelpers.createClass(Row, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-row ' + className
-        }),
-        children
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-row ' + className
+      }), children);
     }
   }]);
   return Row;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Row.defaultProps = {
+babelHelpers.defineProperty(Row, "defaultProps", {
   className: ''
-};
-exports.default = Row;
-module.exports = exports['default'];
+});
+var _default = Row;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/util":8,"react":"react"}],26:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var formlib = babelHelpers.interopRequireWildcard(require("../js/lib/forms"));
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _helpers = require('./_helpers');
+var _helpers = require("./_helpers");
 
 /**
  * Select constructor
  * @class
  */
-var Select = function (_React$Component) {
+var Select =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Select, _React$Component);
 
   function Select(props) {
+    var _this;
+
     babelHelpers.classCallCheck(this, Select);
+    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Select).call(this, props)); // warn if value defined but onChange is not
 
-    // warn if value defined but onChange is not
-    var _this = babelHelpers.possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
-
-    _this.state = {
+    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "state", {
       showMenu: false
-    };
+    });
+
     if (props.readOnly === false && props.value !== undefined && props.onChange === null) {
       util.raiseError(_helpers.controlledMessage, true);
     }
 
-    _this.state.value = props.value;
+    _this.state.value = props.value; // bind callback function
 
-    // bind callback function
     var cb = util.callback;
-
-    _this.onInnerChangeCB = cb(_this, 'onInnerChange');
-    _this.onInnerMouseDownCB = cb(_this, 'onInnerMouseDown');
-
-    _this.onOuterClickCB = cb(_this, 'onOuterClick');
-    _this.onOuterKeyDownCB = cb(_this, 'onOuterKeyDown');
-
-    _this.hideMenuCB = cb(_this, 'hideMenu');
-    _this.onMenuChangeCB = cb(_this, 'onMenuChange');
+    _this.onInnerChangeCB = cb(babelHelpers.assertThisInitialized(_this), 'onInnerChange');
+    _this.onInnerMouseDownCB = cb(babelHelpers.assertThisInitialized(_this), 'onInnerMouseDown');
+    _this.onOuterClickCB = cb(babelHelpers.assertThisInitialized(_this), 'onOuterClick');
+    _this.onOuterKeyDownCB = cb(babelHelpers.assertThisInitialized(_this), 'onOuterKeyDown');
+    _this.hideMenuCB = cb(babelHelpers.assertThisInitialized(_this), 'hideMenu');
+    _this.onMenuChangeCB = cb(babelHelpers.assertThisInitialized(_this), 'onMenuChange');
     return _this;
   }
 
   babelHelpers.createClass(Select, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       // disable MUI CSS/JS
       this.controlEl._muiSelect = true;
     }
   }, {
-    key: 'componentWillReceiveProps',
+    key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
-      this.setState({ value: nextProps.value });
+      this.setState({
+        value: nextProps.value
+      });
     }
   }, {
-    key: 'componentWillUnmount',
+    key: "componentWillUnmount",
     value: function componentWillUnmount() {
       // ensure that doc event listners have been removed
       jqLite.off(window, 'resize', this.hideMenuCB);
       jqLite.off(document, 'click', this.hideMenuCB);
     }
   }, {
-    key: 'onInnerChange',
+    key: "onInnerChange",
     value: function onInnerChange(ev) {
       // update state
-      this.setState({ value: ev.target.value });
+      this.setState({
+        value: ev.target.value
+      });
     }
   }, {
-    key: 'onInnerMouseDown',
+    key: "onInnerMouseDown",
     value: function onInnerMouseDown(ev) {
       // only left clicks & check flag
-      if (ev.button !== 0 || this.props.useDefault) return;
+      if (ev.button !== 0 || this.props.useDefault) return; // prevent built-in menu from opening
 
-      // prevent built-in menu from opening
       ev.preventDefault();
     }
   }, {
-    key: 'onOuterClick',
+    key: "onOuterClick",
     value: function onOuterClick(ev) {
       // only left clicks, return if <select> is disabled
-      if (ev.button !== 0 || this.controlEl.disabled) return;
+      if (ev.button !== 0 || this.controlEl.disabled) return; // execute callback
 
-      // execute callback
       var fn = this.props.onClick;
-      fn && fn(ev);
+      fn && fn(ev); // exit if preventDefault() was called
 
-      // exit if preventDefault() was called
-      if (ev.defaultPrevented || this.props.useDefault) return;
+      if (ev.defaultPrevented || this.props.useDefault) return; // focus wrapper
 
-      // focus wrapper
-      this.wrapperElRef.focus();
+      this.wrapperElRef.focus(); // open custom menu
 
-      // open custom menu
       this.showMenu();
     }
   }, {
-    key: 'onOuterKeyDown',
+    key: "onOuterKeyDown",
     value: function onOuterKeyDown(ev) {
       // execute callback
       var fn = this.props.onKeyDown;
-      fn && fn(ev);
+      fn && fn(ev); // exit if preventDevault() was called or useDefault is true
 
-      // exit if preventDevault() was called or useDefault is true
       if (ev.defaultPrevented || this.props.useDefault) return;
 
       if (this.state.showMenu === false) {
-        var keyCode = ev.keyCode;
+        var keyCode = ev.keyCode; // spacebar, down, up
 
-        // spacebar, down, up
         if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
           // prevent default browser action
-          ev.preventDefault();
+          ev.preventDefault(); // open custom menu
 
-          // open custom menu
           this.showMenu();
         }
       }
     }
   }, {
-    key: 'showMenu',
+    key: "showMenu",
     value: function showMenu() {
       // check useDefault flag
-      if (this.props.useDefault) return;
+      if (this.props.useDefault) return; // add event listeners
 
-      // add event listeners
       jqLite.on(window, 'resize', this.hideMenuCB);
-      jqLite.on(document, 'click', this.hideMenuCB);
+      jqLite.on(document, 'click', this.hideMenuCB); // re-draw
 
-      // re-draw
-      this.setState({ showMenu: true });
+      this.setState({
+        showMenu: true
+      });
     }
   }, {
-    key: 'hideMenu',
+    key: "hideMenu",
     value: function hideMenu(ev) {
       // check default prevented
-      if (ev && ev.defaultPrevented) return;
+      if (ev && ev.defaultPrevented) return; // remove event listeners
 
-      // remove event listeners
       jqLite.off(window, 'resize', this.hideMenuCB);
-      jqLite.off(document, 'click', this.hideMenuCB);
+      jqLite.off(document, 'click', this.hideMenuCB); // re-draw
 
-      // re-draw
-      this.setState({ showMenu: false });
+      this.setState({
+        showMenu: false
+      }); // refocus
 
-      // refocus
       this.wrapperElRef.focus();
     }
   }, {
-    key: 'onMenuChange',
+    key: "onMenuChange",
     value: function onMenuChange(index) {
-      if (this.props.readOnly) return;
+      if (this.props.readOnly) return; // update inner <select> and dispatch 'change' event
 
-      // update inner <select> and dispatch 'change' event
       this.controlEl.selectedIndex = index;
       util.dispatchEvent(this.controlEl, 'change');
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this2 = this;
 
       var value = this.state.value,
           valueArgs = {},
-          menuElem = void 0,
-          placeholderElem = void 0,
-          selectCls = void 0;
+          menuElem,
+          placeholderElem,
+          selectCls;
 
       if (this.state.showMenu) {
-        menuElem = _react2.default.createElement(Menu, {
+        menuElem = _react["default"].createElement(Menu, {
           optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
           onClose: this.hideMenuCB
         });
-      }
+      } // set tab index so user can focus wrapper element
 
-      // set tab index so user can focus wrapper element
+
       var tabIndexWrapper = '-1',
           tabIndexInner = '0';
 
@@ -3025,87 +2909,69 @@ var Select = function (_React$Component) {
         tabIndexInner = '-1';
       }
 
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          style = _props.style,
-          label = _props.label,
-          defaultValue = _props.defaultValue,
-          readOnly = _props.readOnly,
-          disabled = _props.disabled,
-          useDefault = _props.useDefault,
-          name = _props.name,
-          placeholder = _props.placeholder,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'style', 'label', 'defaultValue', 'readOnly', 'disabled', 'useDefault', 'name', 'placeholder']);
-
-      // build value arguments
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          style = _this$props.style,
+          label = _this$props.label,
+          defaultValue = _this$props.defaultValue,
+          readOnly = _this$props.readOnly,
+          disabled = _this$props.disabled,
+          useDefault = _this$props.useDefault,
+          name = _this$props.name,
+          placeholder = _this$props.placeholder,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "style", "label", "defaultValue", "readOnly", "disabled", "useDefault", "name", "placeholder"]); // build value arguments
 
       if (this.props.value !== undefined) valueArgs.value = value; // controlled
-      if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue;
 
-      // handle placeholder
+      if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue; // handle placeholder
+
       if (placeholder) {
-        placeholderElem = _react2.default.createElement(
-          'option',
-          { className: 'mui--text-placeholder', value: '' },
-          placeholder
-        );
+        placeholderElem = _react["default"].createElement("option", {
+          className: "mui--text-placeholder",
+          value: ""
+        }, placeholder); // apply class if value is empty
 
-        // apply class if value is empty
         if (value === '' || value === undefined && !defaultValue) {
           selectCls = 'mui--text-placeholder';
         }
       }
 
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          ref: function ref(el) {
-            _this2.wrapperElRef = el;
-          },
-          tabIndex: tabIndexWrapper,
-          style: style,
-          className: 'mui-select ' + className,
-          onClick: this.onOuterClickCB,
-          onKeyDown: this.onOuterKeyDownCB
-        }),
-        _react2.default.createElement(
-          'select',
-          babelHelpers.extends({}, valueArgs, {
-            ref: function ref(el) {
-              _this2.controlEl = el;
-            },
-            className: selectCls,
-            name: name,
-            disabled: disabled,
-            tabIndex: tabIndexInner,
-            readOnly: readOnly,
-            onChange: this.onInnerChangeCB,
-            onMouseDown: this.onInnerMouseDownCB,
-            required: this.props.required
-          }),
-          placeholderElem,
-          children
-        ),
-        _react2.default.createElement(
-          'label',
-          { tabIndex: '-1' },
-          label
-        ),
-        menuElem
-      );
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        ref: function ref(el) {
+          _this2.wrapperElRef = el;
+        },
+        tabIndex: tabIndexWrapper,
+        style: style,
+        className: 'mui-select ' + className,
+        onClick: this.onOuterClickCB,
+        onKeyDown: this.onOuterKeyDownCB
+      }), _react["default"].createElement("select", babelHelpers["extends"]({}, valueArgs, {
+        ref: function ref(el) {
+          _this2.controlEl = el;
+        },
+        className: selectCls,
+        name: name,
+        disabled: disabled,
+        tabIndex: tabIndexInner,
+        readOnly: readOnly,
+        onChange: this.onInnerChangeCB,
+        onMouseDown: this.onInnerMouseDownCB,
+        required: this.props.required
+      }), placeholderElem, children), _react["default"].createElement("label", {
+        tabIndex: "-1"
+      }, label), menuElem);
     }
   }]);
   return Select;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /**
  * Menu constructor
  * @class
  */
 
 
-Select.defaultProps = {
+babelHelpers.defineProperty(Select, "defaultProps", {
   className: '',
   name: '',
   placeholder: null,
@@ -3114,85 +2980,84 @@ Select.defaultProps = {
   onChange: null,
   onClick: null,
   onKeyDown: null
-};
+});
 
-var Menu = function (_React$Component2) {
+var Menu =
+/*#__PURE__*/
+function (_React$Component2) {
   babelHelpers.inherits(Menu, _React$Component2);
 
   function Menu(props) {
+    var _this3;
+
     babelHelpers.classCallCheck(this, Menu);
-
-    var _this3 = babelHelpers.possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
-
-    _this3.state = {
+    _this3 = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Menu).call(this, props));
+    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this3), "state", {
       origIndex: null,
       currentIndex: 0
-    };
-
-
-    _this3.onKeyDownCB = util.callback(_this3, 'onKeyDown');
-    _this3.onKeyPressCB = util.callback(_this3, 'onKeyPress');
+    });
+    _this3.onKeyDownCB = util.callback(babelHelpers.assertThisInitialized(_this3), 'onKeyDown');
+    _this3.onKeyPressCB = util.callback(babelHelpers.assertThisInitialized(_this3), 'onKeyPress');
     _this3.q = '';
     _this3.qTimeout = null;
-    _this3.availOptionEls = [];
+    _this3.availOptionEls = []; // extract selectable options
 
-    // extract selectable options
     var optionEls = props.optionEls,
-        el = void 0,
-        i = void 0;
+        el,
+        i;
 
     for (i = 0; i < optionEls.length; i++) {
       el = optionEls[i];
       if (!el.disabled && !el.hidden) _this3.availOptionEls.push(el);
     }
+
     return _this3;
   }
 
   babelHelpers.createClass(Menu, [{
-    key: 'componentWillMount',
+    key: "componentWillMount",
     value: function componentWillMount() {
       var optionEls = this.availOptionEls,
           m = optionEls.length,
           selectedPos = null,
-          i = void 0;
+          i; // get current selected position
 
-      // get current selected position
       for (i = m - 1; i > -1; i--) {
         if (optionEls[i].selected) selectedPos = i;
-      }if (selectedPos !== null) {
-        this.setState({ origIndex: selectedPos, currentIndex: selectedPos });
+      }
+
+      if (selectedPos !== null) {
+        this.setState({
+          origIndex: selectedPos,
+          currentIndex: selectedPos
+        });
       }
     }
   }, {
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       // prevent scrolling
       util.enableScrollLock();
+      var menuEl = this.wrapperElRef; // set position
 
-      var menuEl = this.wrapperElRef;
-
-      // set position
       var props = formlib.getMenuPositionalCSS(this.props.wrapperEl, menuEl, this.state.currentIndex);
-
       jqLite.css(menuEl, props);
-      jqLite.scrollTop(menuEl, props.scrollTop);
+      jqLite.scrollTop(menuEl, props.scrollTop); // attach keydown handler
 
-      // attach keydown handler
       jqLite.on(document, 'keydown', this.onKeyDownCB);
       jqLite.on(document, 'keypress', this.onKeyPressCB);
     }
   }, {
-    key: 'componentWillUnmount',
+    key: "componentWillUnmount",
     value: function componentWillUnmount() {
       // remove scroll lock
-      util.disableScrollLock(true);
+      util.disableScrollLock(true); // remove keydown handler
 
-      // remove keydown handler
       jqLite.off(document, 'keydown', this.onKeyDownCB);
       jqLite.off(document, 'keypress', this.onKeyPressCB);
     }
   }, {
-    key: 'onClick',
+    key: "onClick",
     value: function onClick(pos, ev) {
       // don't allow events to bubble
       //ev.stopPropagation();
@@ -3200,14 +3065,12 @@ var Menu = function (_React$Component2) {
       if (pos !== null) this.selectAndDestroy(pos);
     }
   }, {
-    key: 'onKeyDown',
+    key: "onKeyDown",
     value: function onKeyDown(ev) {
-      var keyCode = ev.keyCode;
+      var keyCode = ev.keyCode; // tab
 
-      // tab
-      if (keyCode === 9) return this.destroy();
+      if (keyCode === 9) return this.destroy(); // escape | up | down | enter
 
-      // escape | up | down | enter
       if (keyCode === 27 || keyCode === 40 || keyCode === 38 || keyCode === 13) {
         ev.preventDefault();
       }
@@ -3215,7 +3078,7 @@ var Menu = function (_React$Component2) {
       if (keyCode === 27) this.destroy();else if (keyCode === 40) this.increment();else if (keyCode === 38) this.decrement();else if (keyCode === 13) this.selectAndDestroy();
     }
   }, {
-    key: 'onKeyPress',
+    key: "onKeyPress",
     value: function onKeyPress(ev) {
       // handle query timer
       var self = this;
@@ -3223,54 +3086,58 @@ var Menu = function (_React$Component2) {
       this.q += ev.key;
       this.qTimeout = setTimeout(function () {
         self.q = '';
-      }, 300);
+      }, 300); // select first match alphabetically
 
-      // select first match alphabetically
       var prefixRegex = new RegExp('^' + this.q, 'i'),
           optionEls = this.availOptionEls,
           m = optionEls.length,
-          i = void 0;
+          i;
 
       for (i = 0; i < m; i++) {
         // select item if code matches
         if (prefixRegex.test(optionEls[i].innerText)) {
-          this.setState({ currentIndex: i });
+          this.setState({
+            currentIndex: i
+          });
           break;
         }
       }
     }
   }, {
-    key: 'increment',
+    key: "increment",
     value: function increment() {
       if (this.state.currentIndex === this.availOptionEls.length - 1) return;
-      this.setState({ currentIndex: this.state.currentIndex + 1 });
+      this.setState({
+        currentIndex: this.state.currentIndex + 1
+      });
     }
   }, {
-    key: 'decrement',
+    key: "decrement",
     value: function decrement() {
       if (this.state.currentIndex === 0) return;
-      this.setState({ currentIndex: this.state.currentIndex - 1 });
+      this.setState({
+        currentIndex: this.state.currentIndex - 1
+      });
     }
   }, {
-    key: 'selectAndDestroy',
+    key: "selectAndDestroy",
     value: function selectAndDestroy(pos) {
-      pos = pos === undefined ? this.state.currentIndex : pos;
+      pos = pos === undefined ? this.state.currentIndex : pos; // handle onChange
 
-      // handle onChange
       if (pos !== this.state.origIndex) {
         this.props.onChange(this.availOptionEls[pos].index);
-      }
+      } // close menu
 
-      // close menu
+
       this.destroy();
     }
   }, {
-    key: 'destroy',
+    key: "destroy",
     value: function destroy() {
       this.props.onClose();
     }
   }, {
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
       // scroll menu (if necessary)
       if (this.state.currentIndex != prevState.currentIndex) {
@@ -3288,7 +3155,7 @@ var Menu = function (_React$Component2) {
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this4 = this;
 
@@ -3296,19 +3163,16 @@ var Menu = function (_React$Component2) {
           optionEls = this.props.optionEls,
           m = optionEls.length,
           pos = 0,
-          optionEl = void 0,
-          cls = void 0,
-          val = void 0,
-          i = void 0;
+          optionEl,
+          cls,
+          val,
+          i; // define menu items
 
-      // define menu items
       for (i = 0; i < m; i++) {
-        optionEl = optionEls[i];
+        optionEl = optionEls[i]; // handle hidden
 
-        // handle hidden
-        if (optionEl.hidden) continue;
+        if (optionEl.hidden) continue; // handle disabled
 
-        // handle disabled
         if (optionEl.disabled) {
           cls = 'mui--is-disabled ';
           val = null;
@@ -3316,98 +3180,90 @@ var Menu = function (_React$Component2) {
           cls = pos === this.state.currentIndex ? 'mui--is-selected ' : '';
           val = pos;
           pos += 1;
-        }
+        } // add custom css class from <Option> component
 
-        // add custom css class from <Option> component
+
         cls += optionEl.className;
-
-        menuItems.push(_react2.default.createElement(
-          'div',
-          {
-            key: i,
-            className: cls,
-            onClick: this.onClick.bind(this, val)
-          },
-          optionEl.textContent
-        ));
+        menuItems.push(_react["default"].createElement("div", {
+          key: i,
+          className: cls,
+          onClick: this.onClick.bind(this, val)
+        }, optionEl.textContent));
       }
 
-      return _react2.default.createElement(
-        'div',
-        {
-          ref: function ref(el) {
-            _this4.wrapperElRef = el;
-          },
-          className: 'mui-select__menu'
+      return _react["default"].createElement("div", {
+        ref: function ref(el) {
+          _this4.wrapperElRef = el;
         },
-        menuItems
-      );
+        className: "mui-select__menu"
+      }, menuItems);
     }
   }]);
   return Menu;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Menu.defaultProps = {
+babelHelpers.defineProperty(Menu, "defaultProps", {
   optionEls: [],
   wrapperEl: null,
   onChange: null,
   onClose: null
-};
-exports.default = Select;
-module.exports = exports['default'];
+});
+var _default = Select;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/forms":6,"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react"}],27:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
  */
+
 /* jshint quotmark:false */
 // jscs:disable validateQuoteMarks
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(window.React);
 
 /**
  * Tab constructor
  * @class
  */
-var Tab = function (_React$Component) {
+var Tab =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Tab, _React$Component);
 
   function Tab() {
     babelHelpers.classCallCheck(this, Tab);
-    return babelHelpers.possibleConstructorReturn(this, (Tab.__proto__ || Object.getPrototypeOf(Tab)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Tab).apply(this, arguments));
   }
 
   babelHelpers.createClass(Tab, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return null;
     }
   }]);
   return Tab;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Tab.defaultProps = {
+babelHelpers.defineProperty(Tab, "defaultProps", {
   value: null,
   label: '',
   onActive: null
-};
-exports.default = Tab;
-module.exports = exports['default'];
+});
+var _default = Tab;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"react":"react"}],28:[function(require,module,exports){
 (function (process){
@@ -3415,51 +3271,49 @@ module.exports = exports['default'];
  * MUI React tabs module
  * @module react/tabs
  */
+
 /* jshint quotmark:false */
 // jscs:disable validateQuoteMarks
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _tab = babelHelpers.interopRequireDefault(require("./tab"));
 
-var _tab = require('./tab');
-
-var _tab2 = babelHelpers.interopRequireDefault(_tab);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var tabsBarClass = 'mui-tabs__bar',
     tabsBarJustifiedClass = 'mui-tabs__bar--justified',
     tabsPaneClass = 'mui-tabs__pane',
     isActiveClass = 'mui--is-active';
-
 /**
  * Tabs constructor
  * @class
  */
 
-var Tabs = function (_React$Component) {
+var Tabs =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Tabs, _React$Component);
 
   function Tabs(props) {
+    var _this;
+
     babelHelpers.classCallCheck(this, Tabs);
 
     /*
      * The following code exists only to warn about deprecating props.initialSelectedIndex in favor of props.defaultSelectedIndex.
      * It can be removed once support for props.initialSelectedIndex is officially dropped.
      */
-    var defaultSelectedIndex = void 0;
+    var defaultSelectedIndex;
+
     if (typeof props.initialSelectedIndex === 'number') {
       defaultSelectedIndex = props.initialSelectedIndex;
+
       if (console && process && process.env && process.NODE_ENV !== 'production') {
         console.warn('MUICSS DEPRECATION WARNING: ' + 'property "initialSelectedIndex" on the muicss Tabs component is deprecated in favor of "defaultSelectedIndex". ' + 'It will be removed in a future release.');
       }
@@ -3470,103 +3324,88 @@ var Tabs = function (_React$Component) {
      * End deprecation warning
      */
 
-    var _this = babelHelpers.possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
 
-    _this.state = { currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex };
+    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Tabs).call(this, props));
+    _this.state = {
+      currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex
+    };
     return _this;
   }
 
   babelHelpers.createClass(Tabs, [{
-    key: 'onClick',
+    key: "onClick",
     value: function onClick(i, tab, ev) {
       if (typeof this.props.selectedIndex === 'number' && i !== this.props.selectedIndex || i !== this.state.currentSelectedIndex) {
-        this.setState({ currentSelectedIndex: i });
+        this.setState({
+          currentSelectedIndex: i
+        }); // onActive callback
 
-        // onActive callback
-        if (tab.props.onActive) tab.props.onActive(tab);
+        if (tab.props.onActive) tab.props.onActive(tab); // onChange callback
 
-        // onChange callback
         if (this.props.onChange) {
           this.props.onChange(i, tab.props.value, tab, ev);
         }
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          defaultSelectedIndex = _props.defaultSelectedIndex,
-          initialSelectedIndex = _props.initialSelectedIndex,
-          justified = _props.justified,
-          selectedIndex = _props.selectedIndex,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'defaultSelectedIndex', 'initialSelectedIndex', 'justified', 'selectedIndex']);
+      var _this$props = this.props,
+          children = _this$props.children,
+          defaultSelectedIndex = _this$props.defaultSelectedIndex,
+          initialSelectedIndex = _this$props.initialSelectedIndex,
+          justified = _this$props.justified,
+          selectedIndex = _this$props.selectedIndex,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "defaultSelectedIndex", "initialSelectedIndex", "justified", "selectedIndex"]);
 
+      var tabs = _react["default"].Children.toArray(children);
 
-      var tabs = _react2.default.Children.toArray(children);
       var tabEls = [],
           paneEls = [],
           m = tabs.length,
           currentSelectedIndex = (typeof selectedIndex === 'number' ? selectedIndex : this.state.currentSelectedIndex) % m,
-          isActive = void 0,
-          item = void 0,
-          cls = void 0,
-          i = void 0;
+          isActive,
+          item,
+          cls,
+          i;
 
       for (i = 0; i < m; i++) {
-        item = tabs[i];
+        item = tabs[i]; // only accept MUITab elements
 
-        // only accept MUITab elements
-        if (item.type !== _tab2.default) util.raiseError('Expecting MUITab React Element');
+        if (item.type !== _tab["default"]) util.raiseError('Expecting MUITab React Element');
+        isActive = i === currentSelectedIndex ? true : false; // tab element
 
-        isActive = i === currentSelectedIndex ? true : false;
+        tabEls.push(_react["default"].createElement("li", {
+          key: i,
+          className: isActive ? isActiveClass : ''
+        }, _react["default"].createElement("a", {
+          onClick: this.onClick.bind(this, i, item)
+        }, item.props.label))); // pane element
 
-        // tab element
-        tabEls.push(_react2.default.createElement(
-          'li',
-          { key: i, className: isActive ? isActiveClass : '' },
-          _react2.default.createElement(
-            'a',
-            { onClick: this.onClick.bind(this, i, item) },
-            item.props.label
-          )
-        ));
-
-        // pane element
         cls = tabsPaneClass + ' ';
         if (isActive) cls += isActiveClass;
-
-        paneEls.push(_react2.default.createElement(
-          'div',
-          { key: i, className: cls },
-          item.props.children
-        ));
+        paneEls.push(_react["default"].createElement("div", {
+          key: i,
+          className: cls
+        }, item.props.children));
       }
 
       cls = tabsBarClass;
       if (justified) cls += ' ' + tabsBarJustifiedClass;
-
-      return _react2.default.createElement(
-        'div',
-        reactProps,
-        _react2.default.createElement(
-          'ul',
-          { className: cls },
-          tabEls
-        ),
-        paneEls
-      );
+      return _react["default"].createElement("div", reactProps, _react["default"].createElement("ul", {
+        className: cls
+      }, tabEls), paneEls);
     }
   }]);
   return Tabs;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Tabs.defaultProps = {
+babelHelpers.defineProperty(Tabs, "defaultProps", {
   className: '',
   defaultSelectedIndex: 0,
+
   /*
    * @deprecated
    */
@@ -3574,9 +3413,10 @@ Tabs.defaultProps = {
   justified: false,
   onChange: null,
   selectedIndex: null
-};
-exports.default = Tabs;
-module.exports = exports['default'];
+});
+var _default = Tabs;
+exports["default"] = _default;
+module.exports = exports.default;
 
 }).call(this,require('_process'))
 },{"../js/lib/util":8,"./tab":27,"_process":3,"react":"react"}],29:[function(require,module,exports){
@@ -3584,18 +3424,16 @@ module.exports = exports['default'];
  * MUI React Textarea Component
  * @module react/textarea
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = window.React;
+var _react = babelHelpers.interopRequireDefault(window.React);
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _textfieldHelpers = require('./_textfieldHelpers');
+var _textfieldHelpers = require("./_textfieldHelpers");
 
 /**
  * Textarea constructor
@@ -3603,16 +3441,15 @@ var _textfieldHelpers = require('./_textfieldHelpers');
  */
 var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
   var inputRef = props.inputRef,
-      rest = babelHelpers.objectWithoutProperties(props, ['inputRef']);
-
-  // default number of rows
+      rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]); // default number of rows
 
   if (!'rows' in rest) rest.rows = 2;
-
-  return _react2.default.createElement('textarea', babelHelpers.extends({ ref: inputRef }, rest));
+  return _react["default"].createElement("textarea", babelHelpers["extends"]({
+    ref: inputRef
+  }, rest));
 });
-
-exports.default = Textarea;
-module.exports = exports['default'];
+var _default = Textarea;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"./_textfieldHelpers":10,"react":"react"}]},{},[1]);

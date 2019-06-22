@@ -3,88 +3,71 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React Col Component
  * @module react/col
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
-
 /**
  * Col constructor
  * @class
  */
 
-var Col = function (_React$Component) {
+var Col =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Col, _React$Component);
 
   function Col() {
     babelHelpers.classCallCheck(this, Col);
-    return babelHelpers.possibleConstructorReturn(this, (Col.__proto__ || Object.getPrototypeOf(Col)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Col).apply(this, arguments));
   }
 
   babelHelpers.createClass(Col, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var cls = {},
-          i = void 0,
-          bk = void 0,
-          val = void 0,
-          baseCls = void 0;
-
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
-
-      // add mui-col classes
+          i,
+          bk,
+          val,
+          baseCls;
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]); // add mui-col classes
 
       for (i = breakpoints.length - 1; i > -1; i--) {
         bk = breakpoints[i];
-        baseCls = 'mui-col-' + bk;
+        baseCls = 'mui-col-' + bk; // add mui-col-{bk}-{val}
 
-        // add mui-col-{bk}-{val}
         val = this.props[bk];
-        if (val) cls[baseCls + '-' + val] = true;
+        if (val) cls[baseCls + '-' + val] = true; // add mui-col-{bk}-offset-{val}
 
-        // add mui-col-{bk}-offset-{val}
         val = this.props[bk + '-offset'];
-        if (val) cls[baseCls + '-offset-' + val] = true;
+        if (val) cls[baseCls + '-offset-' + val] = true; // remove from reactProps
 
-        // remove from reactProps
         delete reactProps[bk];
         delete reactProps[bk + '-offset'];
       }
 
       cls = util.classNames(cls);
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: cls + ' ' + className
-        }),
-        children
-      );
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: cls + ' ' + className
+      }), children);
     }
   }]);
   return Col;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Col.defaultProps = {
+babelHelpers.defineProperty(Col, "defaultProps", {
   className: '',
   xs: null,
   sm: null,
@@ -96,6 +79,7 @@ Col.defaultProps = {
   'md-offset': null,
   'lg-offset': null,
   'xl-offset': null
-};
-exports.default = Col;
-module.exports = exports['default'];
+});
+var _default = Col;
+exports["default"] = _default;
+module.exports = exports.default;

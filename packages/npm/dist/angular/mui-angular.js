@@ -1,13 +1,15 @@
 (function (global) {
   var babelHelpers = global.babelHelpers = {};
 
-  babelHelpers.interopRequireDefault = function (obj) {
+  function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
       default: obj
     };
-  };
+  }
 
-  babelHelpers.interopRequireWildcard = function (obj) {
+  babelHelpers.interopRequireDefault = _interopRequireDefault;
+
+  function _interopRequireWildcard(obj) {
     if (obj && obj.__esModule) {
       return obj;
     } else {
@@ -15,46 +17,54 @@
 
       if (obj != null) {
         for (var key in obj) {
-          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+          if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};
+
+            if (desc.get || desc.set) {
+              Object.defineProperty(newObj, key, desc);
+            } else {
+              newObj[key] = obj[key];
+            }
+          }
         }
       }
 
       newObj.default = obj;
       return newObj;
     }
-  };
+  }
+
+  babelHelpers.interopRequireWildcard = _interopRequireWildcard;
 })(typeof global === "undefined" ? self : global);(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-'use strict';
+"use strict";
 
 /**
  * MUI Angular main module
  * @module angular/main
  */
-
 (function (win) {
   // return if library has been loaded already
   if (win._muiAngularLoaded) return;else win._muiAngularLoaded = true;
-
   win.angular.module('mui', [require('src/angular/appbar'), require('src/angular/button'), require('src/angular/caret'), require('src/angular/container'), require('src/angular/divider'), require('src/angular/dropdown'), require('src/angular/dropdown-item'), require('src/angular/panel'), require('src/angular/input'), require('src/angular/row'), require('src/angular/col'), require('src/angular/tabs'), require('src/angular/radio'), require('src/angular/checkbox'), require('src/angular/option'), require('src/angular/select'), require('src/angular/form')]);
 })(window);
 
 },{"src/angular/appbar":2,"src/angular/button":3,"src/angular/caret":4,"src/angular/checkbox":5,"src/angular/col":6,"src/angular/container":7,"src/angular/divider":8,"src/angular/dropdown":10,"src/angular/dropdown-item":9,"src/angular/form":11,"src/angular/input":12,"src/angular/option":13,"src/angular/panel":14,"src/angular/radio":15,"src/angular/row":16,"src/angular/select":17,"src/angular/tabs":18}],2:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Appbar Component
+ * @module angular/appbar
+ */
+var moduleName = 'mui.appbar';
 
-var moduleName = 'mui.appbar'; /**
-                                * MUI Angular Appbar Component
-                                * @module angular/appbar
-                                */
-
-_angular2.default.module(moduleName, []).directive('muiAppbar', function () {
+_angular["default"].module(moduleName, []).directive('muiAppbar', function () {
   return {
     restrict: 'AE',
     transclude: true,
@@ -68,60 +78,54 @@ _angular2.default.module(moduleName, []).directive('muiAppbar', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],3:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+/**
+ * MUI Angular Button Component
+ * @module angular/button
+ */
 var moduleName = 'mui.button',
     supportsTouch = 'ontouchstart' in document.documentElement,
     mouseDownEvents = supportsTouch ? 'touchstart' : 'mousedown',
-    mouseUpEvents = supportsTouch ? 'touchend' : 'mouseup mouseleave'; /**
-                                                                        * MUI Angular Button Component
-                                                                        * @module angular/button
-                                                                        */
+    mouseUpEvents = supportsTouch ? 'touchend' : 'mouseup mouseleave';
 
-_angular2.default.module(moduleName, []).directive('muiButton', function () {
+_angular["default"].module(moduleName, []).directive('muiButton', function () {
   return {
     restrict: 'AE',
     replace: true,
     template: '<button class="mui-btn" mui-ripple>' + '<ng-transclude></ng-transclude>' + '<span class="mui-btn__ripple-container">' + '<span class="mui-ripple"></span>' + '</span>' + '</button>',
     transclude: true,
     link: function link(scope, element, attrs) {
-      var isUndef = _angular2.default.isUndefined,
-          el = element[0];
+      var isUndef = _angular["default"].isUndefined,
+          el = element[0]; // disable MUI js
 
-      // disable MUI js
       el._muiDropdown = true;
-      el._muiRipple = true;
+      el._muiRipple = true; // handle disabled attribute
 
-      // handle disabled attribute
       if (!isUndef(attrs.disabled) && isUndef(attrs.ngDisabled)) {
         element.prop('disabled', true);
-      }
+      } // set button styles        
 
-      // set button styles        
-      _angular2.default.forEach(['variant', 'color', 'size'], function (attrName) {
+
+      _angular["default"].forEach(['variant', 'color', 'size'], function (attrName) {
         var attrVal = attrs[attrName];
         if (attrVal) element.addClass('mui-btn--' + attrVal);
       });
@@ -131,126 +135,122 @@ _angular2.default.module(moduleName, []).directive('muiButton', function () {
   return {
     restrict: 'A',
     link: function link(scope, element, attrs) {
-      var buttonEl = element[0];
+      var buttonEl = element[0]; // cache reference to ripple element
 
-      // cache reference to ripple element
-      buttonEl._rippleEl = buttonEl.querySelector('.mui-ripple');
+      buttonEl._rippleEl = buttonEl.querySelector('.mui-ripple'); // add mousedown and mouseup event ripple effect handlers
 
-      // add mousedown and mouseup event ripple effect handlers
       element.on(mouseDownEvents, mouseDownHandler);
     }
   };
 }]);
-
 /**
  * MouseDown event handler.
  * @param {Event} ev - The DOM event
  */
+
+
 function mouseDownHandler(ev) {
   var buttonEl = this,
-      rippleEl = buttonEl._rippleEl;
+      rippleEl = buttonEl._rippleEl; // exit if disabled
 
-  // exit if disabled
-  if (buttonEl.disabled) return;
+  if (buttonEl.disabled) return; // add mouseup handler on first-click
 
-  // add mouseup handler on first-click
   if (!rippleEl._init) {
     jqLite.on(buttonEl, mouseUpEvents, mouseUpHandler);
     rippleEl._init = true;
-  }
+  } // get (x, y) position of click
 
-  // get (x, y) position of click
+
   var offset = jqLite.offset(buttonEl),
       clickEv = ev.type === 'touchstart' ? ev.touches[0] : ev,
       radius,
-      diameter;
+      diameter; // calculate radius
 
-  // calculate radius
   radius = Math.sqrt(offset.width * offset.width + offset.height * offset.height);
+  diameter = radius * 2 + 'px'; // set position and dimensions
 
-  diameter = radius * 2 + 'px';
-
-  // set position and dimensions
   jqLite.css(rippleEl, {
     width: diameter,
     height: diameter,
     top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
     left: Math.round(clickEv.pageX - offset.left - radius) + 'px'
   });
-
   jqLite.removeClass(rippleEl, 'mui--is-animating');
-  jqLite.addClass(rippleEl, 'mui--is-visible');
+  jqLite.addClass(rippleEl, 'mui--is-visible'); // start animation
 
-  // start animation
   util.requestAnimationFrame(function () {
     jqLite.addClass(rippleEl, 'mui--is-animating');
   });
 }
-
 /**
  * MouseUp event handler.
  * @param {Event} ev - The DOM event
  */
+
+
 function mouseUpHandler(ev) {
   // get ripple element
-  var rippleEl = this._rippleEl;
-
-  // allow a repaint to occur before removing class so animation shows for
+  var rippleEl = this._rippleEl; // allow a repaint to occur before removing class so animation shows for
   // tap events
+
   util.requestAnimationFrame(function () {
     jqLite.removeClass(rippleEl, 'mui--is-visible');
   });
 }
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],4:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Caret Component
+ * @module angular/caret
+ */
+var moduleName = 'mui.caret';
 
-var moduleName = 'mui.caret'; /**
-                               * MUI Angular Caret Component
-                               * @module angular/caret
-                               */
-
-_angular2.default.module(moduleName, []).directive('muiCaret', function () {
+_angular["default"].module(moduleName, []).directive('muiCaret', function () {
   return {
     restrict: 'AE',
     replace: true,
     template: '<span class="mui-caret"></span>'
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],5:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Checkbox Component
+ * @module angular/checkox
+ */
+var moduleName = 'mui.checkbox';
 
-var moduleName = 'mui.checkbox'; /**
-                                  * MUI Angular Checkbox Component
-                                  * @module angular/checkox
-                                  */
-
-_angular2.default.module(moduleName, []).directive('muiCheckbox', ['$parse', function () {
+_angular["default"].module(moduleName, []).directive('muiCheckbox', ['$parse', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -263,48 +263,45 @@ _angular2.default.module(moduleName, []).directive('muiCheckbox', ['$parse', fun
       ngModel: '='
     },
     template: function template(tElement, tAttrs) {
-      var isUndef = _angular2.default.isUndefined,
+      var isUndef = _angular["default"].isUndefined,
           html = '';
+      html += '<div class="mui-checkbox"><label><input type="checkbox" '; // input attributes
 
-      html += '<div class="mui-checkbox"><label><input type="checkbox" ';
-
-      // input attributes
       html += 'name={{name}} ';
       html += 'value={{value}} ';
-      html += 'ng-disabled="ngDisabled" ';
+      html += 'ng-disabled="ngDisabled" '; // handle ngChecked and ngModel
 
-      // handle ngChecked and ngModel
       if (!isUndef(tAttrs.ngChecked)) html += 'ng-checked="ngChecked" ';
       if (!isUndef(tAttrs.ngModel)) html += 'ng-model="ngModel" ';
-
       html += '>{{label}}</label></div>';
-
       return html;
     }
   };
 }]);
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],6:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Col (Grid) Component
+ * @module angular/col
+ */
+var moduleName = 'mui.col';
 
-var moduleName = 'mui.col'; /**
-                             * MUI Angular Col (Grid) Component
-                             * @module angular/col
-                             */
-
-_angular2.default.module(moduleName, []).directive('muiCol', function () {
+_angular["default"].module(moduleName, []).directive('muiCol', function () {
   return {
     restrict: 'AE',
     scope: true,
@@ -315,9 +312,8 @@ _angular2.default.module(moduleName, []).directive('muiCol', function () {
       // use transcludeFn to pass ng-controller on parent element
       transcludeFn(scope, function (clone) {
         element.append(clone);
-      });
+      }); // iterate through breakpoints
 
-      // iterate through breakpoints
       var breakpoints = {
         'xs': 'mui-col-xs-',
         'sm': 'mui-col-sm-',
@@ -331,35 +327,37 @@ _angular2.default.module(moduleName, []).directive('muiCol', function () {
         'xl-offset': 'mui-col-xl-offset-'
       };
 
-      _angular2.default.forEach(breakpoints, function (value, key) {
+      _angular["default"].forEach(breakpoints, function (value, key) {
         var attrVal = attrs[attrs.$normalize(key)];
         if (attrVal) element.addClass(value + attrVal);
       });
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],7:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Container Component
+ * @module angular/container
+ */
+var moduleName = 'mui.container';
 
-var moduleName = 'mui.container'; /**
-                                   * MUI Angular Container Component
-                                   * @module angular/container
-                                   */
-
-_angular2.default.module(moduleName, []).directive('muiContainer', function () {
+_angular["default"].module(moduleName, []).directive('muiContainer', function () {
   return {
     restrict: 'AE',
     template: '<div class="mui-container"></div>',
@@ -370,37 +368,38 @@ _angular2.default.module(moduleName, []).directive('muiContainer', function () {
       // use transcludeFn to pass ng-controller on parent element
       transcludeFn(scope, function (clone) {
         element.append(clone);
-      });
+      }); // handle fluid containers
 
-      // handle fluid containers
-      if (!_angular2.default.isUndefined(attrs.fluid)) {
+      if (!_angular["default"].isUndefined(attrs.fluid)) {
         element.removeClass('mui-container').addClass('mui-container-fluid');
       }
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],8:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Divider Component
+ * @module angular/divider
+ */
+var moduleName = 'mui.divider';
 
-var moduleName = 'mui.divider'; /**
-                                 * MUI Angular Divider Component
-                                 * @module angular/divider
-                                 */
-
-_angular2.default.module(moduleName, []).directive('muiDivider', function () {
+_angular["default"].module(moduleName, []).directive('muiDivider', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -409,28 +408,30 @@ _angular2.default.module(moduleName, []).directive('muiDivider', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],9:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular DropdownItem Component
+ * @module angular/dropdown-item
+ */
+var moduleName = 'mui.dropdown-item';
 
-var moduleName = 'mui.dropdown-item'; /**
-                                       * MUI Angular DropdownItem Component
-                                       * @module angular/dropdown-item
-                                       */
-
-_angular2.default.module(moduleName, []).directive('muiDropdownItem', function () {
+_angular["default"].module(moduleName, []).directive('muiDropdownItem', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -441,28 +442,30 @@ _angular2.default.module(moduleName, []).directive('muiDropdownItem', function (
     template: '<li><a href="{{link}}" ng-transclude></a></li>'
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],10:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Dropdown Component
+ * @module angular/dropdown
+ */
+var moduleName = 'mui.dropdown';
 
-var moduleName = 'mui.dropdown'; /**
-                                  * MUI Angular Dropdown Component
-                                  * @module angular/dropdown
-                                  */
-
-_angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '$compile', function ($timeout, $compile) {
+_angular["default"].module(moduleName, []).directive('muiDropdown', ['$timeout', '$compile', function ($timeout, $compile) {
   return {
     restrict: 'AE',
     transclude: true,
@@ -480,28 +483,23 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
           menuClass = 'mui-dropdown__menu',
           openClass = 'mui--is-open',
           rightClass = 'mui-dropdown__menu--right',
-          isUndef = _angular2.default.isUndefined,
+          isUndef = _angular["default"].isUndefined,
           menuEl,
-          buttonEl;
+          buttonEl; // save references
 
-      // save references
-      menuEl = _angular2.default.element(element[0].querySelector('.' + menuClass));
-      buttonEl = _angular2.default.element(element[0].querySelector('.mui-btn'));
+      menuEl = _angular["default"].element(element[0].querySelector('.' + menuClass));
+      buttonEl = _angular["default"].element(element[0].querySelector('.mui-btn'));
+      menuEl.css('margin-top', '-3px'); // handle is-open
 
-      menuEl.css('margin-top', '-3px');
+      if (!isUndef(attrs.open)) scope.open = true; // handle disabled
 
-      // handle is-open
-      if (!isUndef(attrs.open)) scope.open = true;
-
-      // handle disabled
       if (!isUndef(attrs.disabled)) {
         buttonEl.attr('disabled', true);
-      }
+      } // handle right-align
 
-      // handle right-align
-      if (!isUndef(attrs.rightAlign)) menuEl.addClass(rightClass);
 
-      // handle no-caret
+      if (!isUndef(attrs.rightAlign)) menuEl.addClass(rightClass); // handle no-caret
+
       if (!isUndef(attrs.noCaret)) buttonEl.html(attrs.label);else buttonEl.html(attrs.label + ' <mui-caret></mui-caret>');
 
       function closeDropdownFn() {
@@ -513,11 +511,12 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
         // close dropdown on escape key
         var key = ev.key;
         if (key === 'Escape' || key === 'Esc') closeDropdownFn();
-      }
+      } // handle menu open
 
-      // handle menu open
+
       scope.$watch('open', function (newValue) {
         var doc = document;
+
         if (newValue === true) {
           menuEl.addClass(openClass);
           doc.addEventListener('click', closeDropdownFn);
@@ -527,45 +526,44 @@ _angular2.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '
           doc.removeEventListener('click', closeDropdownFn);
           doc.removeEventListener('keydown', handleKeyDownFn);
         }
-      });
+      }); // click handler
 
-      // click handler
       scope.onClick = function ($event) {
         // exit if disabled
-        if (scope.disabled) return;
+        if (scope.disabled) return; // prevent form submission
 
-        // prevent form submission
         $event.preventDefault();
-        $event.stopPropagation();
+        $event.stopPropagation(); // toggle open 
 
-        // toggle open 
         if (scope.open) scope.open = false;else scope.open = true;
       };
     }
   };
 }]);
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],11:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Form Directive
+ * @module angular/form
+ */
+var moduleName = 'mui.form';
 
-var moduleName = 'mui.form'; /**
-                              * MUI Angular Form Directive
-                              * @module angular/form
-                              */
-
-_angular2.default.module(moduleName, []).directive('muiForm', function () {
+_angular["default"].module(moduleName, []).directive('muiForm', function () {
   return {
     restrict: 'AE',
     template: '<form class="mui-form"></form>',
@@ -576,46 +574,44 @@ _angular2.default.module(moduleName, []).directive('muiForm', function () {
       // use transcludeFn to pass ng-controller on parent element
       transcludeFn(scope, function (clone) {
         element.append(clone);
-      });
+      }); // handle inline forms
 
-      // handle inline forms
-      if (!_angular2.default.isUndefined(attrs.inline)) {
+      if (!_angular["default"].isUndefined(attrs.inline)) {
         element.addClass('mui-form--inline');
       }
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],12:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
-
-var moduleName = 'mui.input';
-
-/**
- * Build directive function.
- * @param {Boolean} isTextArea
- */
 /**
  * MUI Angular Input and Textarea Components
  * @module angular/input
  */
+var moduleName = 'mui.input';
+/**
+ * Build directive function.
+ * @param {Boolean} isTextArea
+ */
 
 function inputFactory(isTextArea) {
-  var scopeArgs, template, ngClassStr, attrs;
+  var scopeArgs, template, ngClassStr, attrs; // defaults
 
-  // defaults
   scopeArgs = {
     floatLabel: '@',
     hint: '@',
@@ -626,16 +622,12 @@ function inputFactory(isTextArea) {
     ngMinlength: '@',
     ngModel: '='
   };
-
   template = '<div class="mui-textfield">';
-
   ngClassStr = '{' + ["'mui--is-touched': inputCtrl.$touched", // hasn't lost focus yet
   "'mui--is-untouched': inputCtrl.$untouched", "'mui--is-pristine': inputCtrl.$pristine", // user hasn't interacted yet
   "'mui--is-dirty': inputCtrl.$dirty", "'mui--is-empty': inputCtrl.$isEmpty(inputCtrl.$viewValue)", "'mui--is-not-empty': !inputCtrl.$isEmpty(inputCtrl.$viewValue)", "'mui--is-invalid': inputCtrl.$invalid"].join(',') + '}';
+  attrs = ['name={{name}}', 'placeholder={{hint}}', 'ng-class="' + ngClassStr + '"', 'ng-disabled="ngDisabled"', 'ng-maxlength={{ngMaxlength}}', 'ng-minlength={{ngMinlength}}', 'ng-model="ngModel"']; // element-specific
 
-  attrs = ['name={{name}}', 'placeholder={{hint}}', 'ng-class="' + ngClassStr + '"', 'ng-disabled="ngDisabled"', 'ng-maxlength={{ngMaxlength}}', 'ng-minlength={{ngMinlength}}', 'ng-model="ngModel"'];
-
-  // element-specific
   if (!isTextArea) {
     scopeArgs.type = '@';
     attrs.push('type={{type}}');
@@ -644,12 +636,11 @@ function inputFactory(isTextArea) {
     scopeArgs.rows = '@';
     attrs.push('rows={{rows}}');
     template += '<textarea ' + attrs.join(' ') + '></textarea>';
-  }
+  } // update template
 
-  // update template
-  template += '<label tabindex="-1">{{label}}</label></div>';
 
-  // directive function
+  template += '<label tabindex="-1">{{label}}</label></div>'; // directive function
+
   return ['$timeout', function ($timeout) {
     return {
       restrict: 'AE',
@@ -662,37 +653,28 @@ function inputFactory(isTextArea) {
             labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],
-            isUndef = _angular2.default.isUndefined,
-            el = inputEl[0];
+            isUndef = _angular["default"].isUndefined,
+            el = inputEl[0]; // add inputCrl to scope
 
-        // add inputCrl to scope
-        scope.inputCtrl = inputEl.controller('ngModel');
+        scope.inputCtrl = inputEl.controller('ngModel'); // disable MUI js
 
-        // disable MUI js
-        if (el) el._muiTextfield = true;
+        if (el) el._muiTextfield = true; // remove attributes from wrapper
 
-        // remove attributes from wrapper
         element.removeAttr('ng-change');
         element.removeAttr('ng-model');
         element.removeAttr('ng-minlength');
-        element.removeAttr('ng-maxlength');
+        element.removeAttr('ng-maxlength'); // scope defaults
 
-        // scope defaults
-        if (!isTextArea) scope.type = scope.type || 'text';else scope.rows = scope.rows || 2;
+        if (!isTextArea) scope.type = scope.type || 'text';else scope.rows = scope.rows || 2; // autofocus
 
-        // autofocus
-        if (!isUndef(attrs.autofocus)) inputEl[0].focus();
+        if (!isUndef(attrs.autofocus)) inputEl[0].focus(); // required
 
-        // required
-        if (!isUndef(attrs.required)) inputEl.prop('required', true);
+        if (!isUndef(attrs.required)) inputEl.prop('required', true); // invalid
 
-        // invalid
-        if (!isUndef(attrs.invalid)) inputEl.addClass('mui--is-invalid');
+        if (!isUndef(attrs.invalid)) inputEl.addClass('mui--is-invalid'); // float-label
 
-        // float-label
         if (!isUndef(scope.floatLabel)) {
           element.addClass('mui-textfield--float-label');
-
           $timeout(function () {
             labelEl.css({
               'transition': '.15s ease-out',
@@ -702,9 +684,9 @@ function inputFactory(isTextArea) {
               '-ms-transition': '.15s ease-out'
             });
           }, 150);
-        }
+        } // handle changes
 
-        // handle changes
+
         scope.onChange = function () {
           // trigger ng-change on parent
           if (ngModelCtrl) ngModelCtrl.$setViewValue(scope.ngModel);
@@ -714,42 +696,35 @@ function inputFactory(isTextArea) {
   }];
 }
 
-_angular2.default.module(moduleName, []).directive('muiInput', inputFactory(false)).directive('muiTextarea', inputFactory(true));
-
+_angular["default"].module(moduleName, []).directive('muiInput', inputFactory(false)).directive('muiTextarea', inputFactory(true));
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],13:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+var formlib = babelHelpers.interopRequireWildcard(require("../js/lib/forms"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
 /**
  * MUI Angular Select Component
  * @module angular/select
  */
-
 var moduleName = 'mui.option';
 
-_angular2.default.module(moduleName, []).directive('muiOption', function () {
+_angular["default"].module(moduleName, []).directive('muiOption', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -777,28 +752,30 @@ _angular2.default.module(moduleName, []).directive('muiOption', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/forms":20,"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],14:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Panel Component
+ * @module angular/panel
+ */
+var moduleName = 'mui.panel';
 
-var moduleName = 'mui.panel'; /**
-                               * MUI Angular Panel Component
-                               * @module angular/panel
-                               */
-
-_angular2.default.module(moduleName, []).directive('muiPanel', function () {
+_angular["default"].module(moduleName, []).directive('muiPanel', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -812,28 +789,30 @@ _angular2.default.module(moduleName, []).directive('muiPanel', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],15:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Radio Component
+ * @module angular/radio
+ */
+var moduleName = 'mui.radio';
 
-var moduleName = 'mui.radio'; /**
-                               * MUI Angular Radio Component
-                               * @module angular/radio
-                               */
-
-_angular2.default.module(moduleName, []).directive('muiRadio', function () {
+_angular["default"].module(moduleName, []).directive('muiRadio', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -846,48 +825,45 @@ _angular2.default.module(moduleName, []).directive('muiRadio', function () {
       ngModel: '='
     },
     template: function template(tElement, tAttrs) {
-      var isUndef = _angular2.default.isUndefined,
+      var isUndef = _angular["default"].isUndefined,
           html = '';
+      html += '<div class="mui-radio"><label><input type="radio" '; // input attributes
 
-      html += '<div class="mui-radio"><label><input type="radio" ';
-
-      // input attributes
       html += 'name={{name}} ';
       html += 'value={{value}} ';
-      html += 'ng-disabled="ngDisabled" ';
+      html += 'ng-disabled="ngDisabled" '; // handle ngChecked and ngModel
 
-      // handle ngChecked and ngModel
       if (!isUndef(tAttrs.ngChecked)) html += 'ng-checked="ngChecked" ';
       if (!isUndef(tAttrs.ngModel)) html += 'ng-model="ngModel" ';
-
       html += '>{{label}}</label></div>';
-
       return html;
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],16:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+/**
+ * MUI Angular Grid/Row Module
+ * @module angular/row.js
+ */
+var moduleName = 'mui.row';
 
-var moduleName = 'mui.row'; /**
-                             * MUI Angular Grid/Row Module
-                             * @module angular/row.js
-                             */
-
-_angular2.default.module('mui.row', []).directive('muiRow', function () {
+_angular["default"].module('mui.row', []).directive('muiRow', function () {
   return {
     restrict: 'AE',
     scope: true,
@@ -901,41 +877,34 @@ _angular2.default.module('mui.row', []).directive('muiRow', function () {
     }
   };
 });
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"angular":"angular"}],17:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+var formlib = babelHelpers.interopRequireWildcard(require("../js/lib/forms"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
 /**
  * MUI Angular Select Component
  * @module angular/select
  */
-
 var moduleName = 'mui.select';
 
-_angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', function ($timeout) {
+_angular["default"].module(moduleName, []).directive('muiSelect', ['$timeout', function ($timeout) {
   return {
     restrict: 'AE',
     require: ['ngModel'],
@@ -953,34 +922,30 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
     link: function link(scope, element, attrs, controller, transcludeFn) {
       var wrapperEl = element,
           selectEl = element.find('select'),
-          isUndef = _angular2.default.isUndefined,
-          origValue;
+          isUndef = _angular["default"].isUndefined,
+          origValue; // disable MUI js
 
-      // disable MUI js
-      selectEl[0]._muiSelect = true;
+      selectEl[0]._muiSelect = true; // init scope
 
-      // init scope
       scope.selectEl = selectEl;
       scope.isOpen = false;
       scope.useDefault = 'ontouchstart' in document.documentElement ? true : false;
       scope.origTabIndex = selectEl[0].tabIndex;
       scope.menuIndex = 0;
       scope.q = '';
-      scope.qTimeout = null;
+      scope.qTimeout = null; // handle `use-default` attribute
 
-      // handle `use-default` attribute
-      if (!isUndef(attrs.useDefault)) scope.useDefault = true;
+      if (!isUndef(attrs.useDefault)) scope.useDefault = true; // use tabIndex to make wrapper or inner focusable
 
-      // use tabIndex to make wrapper or inner focusable
       if (scope.useDefault === false) {
         wrapperEl.prop('tabIndex', '0');
         selectEl.prop('tabIndex', '-1');
       } else {
         wrapperEl.prop('tabIndex', '-1');
         selectEl.prop('tabIndex', '0');
-      }
+      } // add <option> tags to <select>
 
-      // add <option> tags to <select>
+
       transcludeFn(function (clone) {
         selectEl.append(clone);
       });
@@ -989,67 +954,64 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
         selectEl[0].selectedIndex = option.index;
 
         if (option.value !== origValue) {
-          scope.ngModel = option.value;
+          scope.ngModel = option.value; // trigger change event
 
-          // trigger change event
           $timeout(function () {
             util.dispatchEvent(selectEl[0], 'change', true, false);
           });
         }
       }
-
       /**
        * Handle blur and focus events on wrapper <div> element.
        * @param {Event} $event - Angular event instance
        */
+
+
       scope.onWrapperBlurOrFocus = function ($event) {
         // ignore events that bubbled up
         if (document.activeElement !== wrapperEl[0]) return;
-
         util.dispatchEvent(selectEl[0], $event.type, false, false);
       };
-
       /**
        * Handle click event on wrapper <div> element.
        * @param {Event} $event - Angular event instance
        */
+
+
       scope.onWrapperClick = function ($event) {
         // only left click, check default prevented and useDefault
         if ($event.button !== 0 || $event.defaultPrevented || scope.useDefault || selectEl[0].disabled) {
           return;
-        }
+        } // focus wrapper
 
-        // focus wrapper
-        wrapperEl[0].focus();
 
-        // open custom menu
+        wrapperEl[0].focus(); // open custom menu
+
         scope.isOpen = true;
       };
-
       /**
        * Handle keydown event on wrapper element.
        * @param {Event} $event - Angular event instance
        */
+
+
       scope.onWrapperKeydown = function ($event) {
         // exit if preventDefault() was called or useDefault is true
         if ($event.defaultPrevented || scope.useDefault) return;
-
         var keyCode = $event.keyCode;
 
         if (scope.isOpen === false) {
           // spacebar, down, up
           if (keyCode === 32 || keyCode === 38 || keyCode === 40) {
             // prevent win scroll
-            $event.preventDefault();
+            $event.preventDefault(); // open menu
 
-            // open menu
             scope.isOpen = true;
           }
         } else {
           // tab
-          if (keyCode === 9) return scope.isOpen = false;
+          if (keyCode === 9) return scope.isOpen = false; // escape | up | down | enter
 
-          // escape | up | down | enter
           if (keyCode === 27 || keyCode === 40 || keyCode === 38 || keyCode === 13) {
             $event.preventDefault();
           }
@@ -1064,12 +1026,14 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           } else if (keyCode === 40) {
             // down -> increment
             i = scope.menuIndex + 1;
+
             while (i < options.length) {
               // exit if option not disabled
               if (!options[i].disabled && !options[i].hidden) {
                 nextIndex = i;
                 break;
               }
+
               i += 1;
             }
 
@@ -1077,12 +1041,14 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           } else if (keyCode === 38) {
             // up -> decrement
             i = scope.menuIndex - 1;
+
             while (i > -1) {
               // exit if option not disabled
               if (!options[i].disabled && !options[i].hidden) {
                 nextIndex = i;
                 break;
               }
+
               i -= 1;
             }
 
@@ -1094,26 +1060,26 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           }
         }
       };
-
       /**
        * Handle keypress event on wrapper element.
        * @param {Event} $event - Angular event instance
        */
+
+
       scope.onWrapperKeypress = function ($event) {
         // exit if preventDefault() was called or useDefault is true or
         // menu is closed
         if ($event.defaultPrevented || scope.useDefault || !scope.isOpen) {
           return;
-        }
+        } // handle query timer
 
-        // handle query timer
+
         clearTimeout(scope.qTimeout);
         scope.q += $event.key;
         scope.qTimeout = setTimeout(function () {
           scope.q = '';
-        }, 600);
+        }, 600); // select first match alphabetically
 
-        // select first match alphabetically
         var prefixRegex = new RegExp('^' + scope.q, 'i'),
             options = selectEl.children(),
             m = options.length,
@@ -1122,114 +1088,102 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
 
         for (i = 0; i < m; i++) {
           option = options[i];
+
           if (!option.hidden && !option.disabled && prefixRegex.test(option.innerText)) {
             scope.menuIndex = option.index;
             break;
           }
         }
       };
-
       /**
        * Handle mousedown event on Inner <select> element
        * @param {Event} $event - Angular event instance
        */
+
+
       scope.onInnerMousedown = function ($event) {
         // check flag
-        if ($event.button !== 0 || scope.useDefault === true) return;
+        if ($event.button !== 0 || scope.useDefault === true) return; // prevent built-in menu from opening
 
-        // prevent built-in menu from opening
         $event.preventDefault();
       };
-
       /**
        * Choose option the user selected.
        * @param {Object} option - The option selected.
        */
+
+
       scope.chooseOption = function ($event, option) {
         // prevent bubbling
-        $event.stopImmediatePropagation();
+        $event.stopImmediatePropagation(); // ignore disabled
 
-        // ignore disabled
-        if (option.disabled) return;
+        if (option.disabled) return; // dispatch change
 
-        // dispatch change
-        dispatchChange(option);
+        dispatchChange(option); // close menu
 
-        // close menu
         scope.isOpen = false;
-      };
+      }; // function to close menu on window resize and document click
 
-      // function to close menu on window resize and document click
+
       function closeMenuFn() {
-        scope.isOpen = false;
+        scope.isOpen = false; // disable scroll lock
 
-        // disable scroll lock
-        util.disableScrollLock(true);
+        util.disableScrollLock(true); // remove event handlers
 
-        // remove event handlers
         jqLite.off(document, 'click', closeMenuFn);
         jqLite.off(window, 'resize', closeMenuFn);
-
         scope.$digest();
       }
-
       /**
        * Open/Close custom select menu
        */
+
+
       scope.$watch('isOpen', function (isOpen, oldVal) {
         // ignore first call
-        if (isOpen === oldVal) return;
+        if (isOpen === oldVal) return; // exit if use-default is true
 
-        // exit if use-default is true
         if (scope.useDefault === true) return;
 
         if (isOpen === true) {
           // enable scroll lock
-          util.enableScrollLock();
+          util.enableScrollLock(); // init menuIndex
 
-          // init menuIndex
           var menuEl = element.find('div'),
               value = scope.ngModel,
               options = selectEl.children(),
               m = options.length,
               i;
-
           origValue = scope.ngModel;
           scope.menuIndex = scope.menuIndex;
-
           $timeout(function () {
             // set position of custom menu
             var props = formlib.getMenuPositionalCSS(element[0], menuEl[0], scope.menuIndex);
-
             props.height = 'auto';
             menuEl.css(props);
-            jqLite.scrollTop(menuEl[0], props.scrollTop);
+            jqLite.scrollTop(menuEl[0], props.scrollTop); // attach event handlers
 
-            // attach event handlers
             jqLite.on(document, 'click', closeMenuFn);
             jqLite.on(window, 'resize', closeMenuFn);
           });
         } else {
           // focus select element
-          selectEl[0].focus();
+          selectEl[0].focus(); // disable scroll lock
 
-          // disable scroll lock
-          util.disableScrollLock(true);
+          util.disableScrollLock(true); // remove event handlers
 
-          // remove event handlers
           jqLite.off(document, 'click', closeMenuFn);
           jqLite.off(window, 'resize', closeMenuFn);
         }
       });
-
       /**
        * Scroll to menu items (if hidden)
        */
+
       scope.$watch('menuIndex', function (newVal, oldVal) {
         // skip initialization
-        if (newVal === oldVal) return;
+        if (newVal === oldVal) return; // scroll menu after rendering is finished
 
-        // scroll menu after rendering is finished
         $timeout(function () {
           var itemEl = selectEl.children()[scope.menuIndex],
               itemRect = itemEl.getBoundingClientRect(),
@@ -1244,40 +1198,38 @@ _angular2.default.module(moduleName, []).directive('muiSelect', ['$timeout', fun
           }
         });
       });
-
       scope.$watch('ngDisabled', function (newVal) {
         if (newVal === true) wrapperEl.prop('tabIndex', '-1');else if (!scope.useDefault) wrapperEl.prop('tabIndex', '0');
       });
     }
   };
 }]);
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/forms":20,"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],18:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _angular = window.angular;
+var _angular = babelHelpers.interopRequireDefault(window.angular);
 
-var _angular2 = babelHelpers.interopRequireDefault(_angular);
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
 /**
  * MUI Angular Tabs Component
  * @module angular/tabs
  */
-
 var moduleName = 'mui.tabs';
 
-_angular2.default.module(moduleName, []).directive('muiTabs', function () {
+_angular["default"].module(moduleName, []).directive('muiTabs', function () {
   return {
     restrict: 'EA',
     transclude: true,
@@ -1287,50 +1239,42 @@ _angular2.default.module(moduleName, []).directive('muiTabs', function () {
     },
     template: '' + '<ul ' + 'class="mui-tabs__bar" ' + 'ng-class=\'{"mui-tabs__bar--justified": justified}\'>' + '<li ' + 'ng-repeat="tab in tabs track by $index" ' + 'ng-class=\'{"mui--is-active": $index === selectedId}\'>' + '<a ng-click="onClick($index)">{{tab.label}}</a>' + '</li>' + '</ul>',
     controller: ['$scope', function ($scope) {
-      var counter = 0;
+      var counter = 0; // init scope
 
-      // init scope
-      $scope.tabs = [];
+      $scope.tabs = []; // add tab
 
-      // add tab
       this.addTab = function (args) {
         // user counter for tab id
         var tabId = counter;
-        counter += 1;
+        counter += 1; // update tabs list
 
-        // update tabs list
-        $scope.tabs.push({ label: args.label });
+        $scope.tabs.push({
+          label: args.label
+        }); // handle active tabs
 
-        // handle active tabs
-        if (args.isActive) $scope.selectedId = tabId;
+        if (args.isActive) $scope.selectedId = tabId; // return id
 
-        // return id
         return tabId;
       };
     }],
     link: function link(scope, element, attrs, ctrl, transcludeFn) {
-      var isUndef = _angular2.default.isUndefined;
+      var isUndef = _angular["default"].isUndefined; // init scope
 
-      // init scope
       if (isUndef(scope.selectedId)) scope.selectedId = 0;
-      scope.justified = false;
+      scope.justified = false; // justified
 
-      // justified
-      if (!isUndef(attrs.justified)) scope.justified = true;
+      if (!isUndef(attrs.justified)) scope.justified = true; // click handler
 
-      // click handler
       scope.onClick = function (tabId) {
         // check current tab
-        if (tabId === scope.selectedId) return;
+        if (tabId === scope.selectedId) return; // update active tab
 
-        // update active tab
-        scope.selectedId = tabId;
+        scope.selectedId = tabId; // execute onChange callback
 
-        // execute onChange callback
         if (scope.onChange) scope.$$postDigest(scope.onChange);
-      };
+      }; // use transcludeFn to pass ng-controller on parent element
 
-      // use transcludeFn to pass ng-controller on parent element
+
       transcludeFn(scope, function (clone) {
         element.append(clone);
       });
@@ -1349,41 +1293,38 @@ _angular2.default.module(moduleName, []).directive('muiTabs', function () {
     link: function link(scope, element, attrs, ctrl, transcludeFn) {
       var onSelectFn = $parse(attrs.onSelect),
           onDeselectFn = $parse(attrs.onDeselect),
-          origScope = scope.$parent.$parent;
+          origScope = scope.$parent.$parent; // init scope
 
-      // init scope
-      scope.tabId = null;
+      scope.tabId = null; // add to parent controller
 
-      // add to parent controller
       if (ctrl) {
         scope.tabId = ctrl.addTab({
           label: scope.label,
           isActive: Boolean(scope.active)
         });
-      }
+      } // use transcludeFn to pass ng-controller on parent element
 
-      // use transcludeFn to pass ng-controller on parent element
+
       transcludeFn(scope, function (clone) {
         element.find('div').append(clone);
       });
-
       scope.$parent.$watch('selectedId', function (newVal, oldVal) {
         // ignore initial load
-        if (newVal === oldVal) return;
+        if (newVal === oldVal) return; // execute onSelect
 
-        // execute onSelect
-        if (newVal === scope.tabId) onSelectFn(origScope);
+        if (newVal === scope.tabId) onSelectFn(origScope); // execute onDeselect
 
-        // execute onDeselect
         if (oldVal === scope.tabId) onDeselectFn(origScope);
       });
     }
   };
 }]);
-
 /** Define module API */
-exports.default = moduleName;
-module.exports = exports['default'];
+
+
+var _default = moduleName;
+exports["default"] = _default;
+module.exports = exports.default;
 
 },{"../js/lib/jqLite":21,"angular":"angular"}],19:[function(require,module,exports){
 "use strict";
@@ -1404,37 +1345,31 @@ module.exports = {
  * MUI CSS/JS form helpers module
  * @module lib/forms.py
  */
-
 'use strict';
 
 var jqLite = require('./jqLite');
-
 /**
  * Menu position/size/scroll helper
  * @returns {Object} Object with keys 'height', 'top', 'scrollTop'
  */
+
+
 function getMenuPositionalCSSFn(wrapperEl, menuEl, selectedRow) {
   var viewHeight = document.documentElement.clientHeight,
-      numRows = menuEl.children.length;
+      numRows = menuEl.children.length; // determine menu height
 
-  // determine menu height
   var h = parseInt(menuEl.offsetHeight),
-      height = Math.min(h, viewHeight);
+      height = Math.min(h, viewHeight); // determine row height
 
-  // determine row height
   var p = parseInt(jqLite.css(menuEl, 'padding-top')),
-      rowHeight = (h - 2 * p) / numRows;
+      rowHeight = (h - 2 * p) / numRows; // determine 'top'
 
-  // determine 'top'
   var top, initTop, minTop, maxTop;
-
   initTop = -1 * selectedRow * rowHeight;
   minTop = -1 * wrapperEl.getBoundingClientRect().top;
   maxTop = viewHeight - height + minTop;
+  top = Math.min(Math.max(initTop, minTop), maxTop); // determine 'scrollTop'
 
-  top = Math.min(Math.max(initTop, minTop), maxTop);
-
-  // determine 'scrollTop'
   var scrollTop = 0,
       scrollIdeal,
       scrollMax;
@@ -1451,8 +1386,9 @@ function getMenuPositionalCSSFn(wrapperEl, menuEl, selectedRow) {
     'scrollTop': scrollTop
   };
 }
-
 /** Define module API */
+
+
 module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
@@ -1462,9 +1398,7 @@ module.exports = {
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
  */
-
 'use strict';
-
 /**
  * Add a class to an element.
  * @param {Element} element - The DOM element.
@@ -1480,6 +1414,7 @@ function jqLiteAddClass(element, cssClasses) {
 
   for (var i = 0; i < splitClasses.length; i++) {
     cssClass = splitClasses[i].trim();
+
     if (existingClasses.indexOf(' ' + cssClass + ' ') === -1) {
       existingClasses += cssClass + ' ';
     }
@@ -1487,40 +1422,40 @@ function jqLiteAddClass(element, cssClasses) {
 
   element.setAttribute('class', existingClasses.trim());
 }
-
 /**
  * Get or set CSS properties.
  * @param {Element} element - The DOM element.
  * @param {string} [name] - The property name.
  * @param {string} [value] - The property value.
  */
+
+
 function jqLiteCss(element, name, value) {
   // Return full style object
   if (name === undefined) {
     return getComputedStyle(element);
   }
 
-  var nameType = jqLiteType(name);
+  var nameType = jqLiteType(name); // Set multiple values
 
-  // Set multiple values
   if (nameType === 'object') {
     for (var key in name) {
       element.style[_camelCase(key)] = name[key];
-    }return;
-  }
+    }
 
-  // Set a single value
+    return;
+  } // Set a single value
+
+
   if (nameType === 'string' && value !== undefined) {
     element.style[_camelCase(name)] = value;
   }
 
   var styleObj = getComputedStyle(element),
-      isArray = jqLiteType(name) === 'array';
+      isArray = jqLiteType(name) === 'array'; // Read single value
 
-  // Read single value
-  if (!isArray) return _getCurrCssProp(element, name, styleObj);
+  if (!isArray) return _getCurrCssProp(element, name, styleObj); // Read multiple values
 
-  // Read multiple values
   var outObj = {},
       key;
 
@@ -1531,34 +1466,35 @@ function jqLiteCss(element, name, value) {
 
   return outObj;
 }
-
 /**
  * Check if element has class.
  * @param {Element} element - The DOM element.
  * @param {string} cls - The class name string.
  */
+
+
 function jqLiteHasClass(element, cls) {
   if (!cls || !element.getAttribute) return false;
   return _getExistingClasses(element).indexOf(' ' + cls + ' ') > -1;
 }
-
 /**
  * Return the type of a variable.
  * @param {} somevar - The JavaScript variable.
  */
+
+
 function jqLiteType(somevar) {
   // handle undefined
-  if (somevar === undefined) return 'undefined';
+  if (somevar === undefined) return 'undefined'; // handle others (of type [object <Type>])
 
-  // handle others (of type [object <Type>])
   var typeStr = Object.prototype.toString.call(somevar);
+
   if (typeStr.indexOf('[object ') === 0) {
     return typeStr.slice(8, -1).toLowerCase();
   } else {
     throw new Error("MUI: Could not understand type: " + typeStr);
   }
 }
-
 /**
  * Attach an event handler to a DOM element
  * @param {Element} element - The DOM element.
@@ -1566,21 +1502,19 @@ function jqLiteType(somevar) {
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
+
+
 function jqLiteOn(element, events, callback, useCapture) {
   useCapture = useCapture === undefined ? false : useCapture;
-
   var cache = element._muiEventCache = element._muiEventCache || {};
-
   events.split(' ').map(function (event) {
     // add to DOM
-    element.addEventListener(event, callback, useCapture);
+    element.addEventListener(event, callback, useCapture); // add to cache
 
-    // add to cache
     cache[event] = cache[event] || [];
     cache[event].push([callback, useCapture]);
   });
 }
-
 /**
  * Remove an event handler from a DOM element
  * @param {Element} element - The DOM element.
@@ -1588,35 +1522,31 @@ function jqLiteOn(element, events, callback, useCapture) {
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
-function jqLiteOff(element, events, callback, useCapture) {
-  useCapture = useCapture === undefined ? false : useCapture;
 
-  // remove from cache
+
+function jqLiteOff(element, events, callback, useCapture) {
+  useCapture = useCapture === undefined ? false : useCapture; // remove from cache
+
   var cache = element._muiEventCache = element._muiEventCache || {},
       argsList,
       args,
       i;
-
   events.split(' ').map(function (event) {
     argsList = cache[event] || [];
-
     i = argsList.length;
+
     while (i--) {
-      args = argsList[i];
+      args = argsList[i]; // remove all events if callback is undefined
 
-      // remove all events if callback is undefined
       if (callback === undefined || args[0] === callback && args[1] === useCapture) {
-
         // remove from cache
-        argsList.splice(i, 1);
+        argsList.splice(i, 1); // remove from DOM
 
-        // remove from DOM
         element.removeEventListener(event, args[0], args[1]);
       }
     }
   });
 }
-
 /**
  * Attach an event hander which will only execute once per element per event
  * @param {Element} element - The DOM element.
@@ -1624,27 +1554,28 @@ function jqLiteOff(element, events, callback, useCapture) {
  * @param {Function} callback - The callback function.
  * @param {Boolean} useCapture - Use capture flag.
  */
+
+
 function jqLiteOne(element, events, callback, useCapture) {
   events.split(' ').map(function (event) {
     jqLiteOn(element, event, function onFn(ev) {
       // execute callback
-      if (callback) callback.apply(this, arguments);
+      if (callback) callback.apply(this, arguments); // remove wrapper
 
-      // remove wrapper
       jqLiteOff(element, event, onFn, useCapture);
     }, useCapture);
   });
 }
-
 /**
  * Get or set horizontal scroll position
  * @param {Element} element - The DOM element
  * @param {number} [value] - The scroll position
  */
-function jqLiteScrollLeft(element, value) {
-  var win = window;
 
-  // get
+
+function jqLiteScrollLeft(element, value) {
+  var win = window; // get
+
   if (value === undefined) {
     if (element === win) {
       var docEl = document.documentElement;
@@ -1652,21 +1583,21 @@ function jqLiteScrollLeft(element, value) {
     } else {
       return element.scrollLeft;
     }
-  }
+  } // set
 
-  // set
+
   if (element === win) win.scrollTo(value, jqLiteScrollTop(win));else element.scrollLeft = value;
 }
-
 /**
  * Get or set vertical scroll position
  * @param {Element} element - The DOM element
  * @param {number} value - The scroll position
  */
-function jqLiteScrollTop(element, value) {
-  var win = window;
 
-  // get
+
+function jqLiteScrollTop(element, value) {
+  var win = window; // get
+
   if (value === undefined) {
     if (element === win) {
       var docEl = document.documentElement;
@@ -1674,22 +1605,22 @@ function jqLiteScrollTop(element, value) {
     } else {
       return element.scrollTop;
     }
-  }
+  } // set
 
-  // set
+
   if (element === win) win.scrollTo(jqLiteScrollLeft(win), value);else element.scrollTop = value;
 }
-
 /**
  * Return object representing top/left offset and element height/width.
  * @param {Element} element - The DOM element.
  */
+
+
 function jqLiteOffset(element) {
   var win = window,
       rect = element.getBoundingClientRect(),
       scrollTop = jqLiteScrollTop(win),
       scrollLeft = jqLiteScrollLeft(win);
-
   return {
     top: rect.top + scrollTop,
     left: rect.left + scrollLeft,
@@ -1697,11 +1628,12 @@ function jqLiteOffset(element) {
     width: rect.width
   };
 }
-
 /**
  * Attach a callback to the DOM ready event listener
  * @param {Function} fn - The callback function.
  */
+
+
 function jqLiteReady(fn) {
   var done = false,
       top = true,
@@ -1725,8 +1657,10 @@ function jqLiteReady(fn) {
     try {
       root.doScroll('left');
     } catch (e) {
-      setTimeout(poll, 50);return;
+      setTimeout(poll, 50);
+      return;
     }
+
     init('poll');
   };
 
@@ -1737,19 +1671,22 @@ function jqLiteReady(fn) {
       try {
         top = !win.frameElement;
       } catch (e) {}
+
       if (top) poll();
     }
+
     doc[add](pre + 'DOMContentLoaded', init, false);
     doc[add](pre + 'readystatechange', init, false);
     win[add](pre + 'load', init, false);
   }
 }
-
 /**
  * Remove classes from a DOM element
  * @param {Element} element - The DOM element.
  * @param {string} cssClasses - Space separated list of class names.
  */
+
+
 function jqLiteRemoveClass(element, cssClasses) {
   if (!cssClasses || !element.setAttribute) return;
 
@@ -1759,17 +1696,18 @@ function jqLiteRemoveClass(element, cssClasses) {
 
   for (var i = 0; i < splitClasses.length; i++) {
     cssClass = splitClasses[i].trim();
+
     while (existingClasses.indexOf(' ' + cssClass + ' ') >= 0) {
       existingClasses = existingClasses.replace(' ' + cssClass + ' ', ' ');
     }
   }
 
   element.setAttribute('class', existingClasses.trim());
-}
-
-// ------------------------------
+} // ------------------------------
 // Utilities
 // ------------------------------
+
+
 var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g,
     MOZ_HACK_REGEXP = /^moz([A-Z])/,
     ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g;
@@ -1790,20 +1728,18 @@ function _escapeRegExp(string) {
 }
 
 function _getCurrCssProp(elem, name, computed) {
-  var ret;
+  var ret; // try computed style
 
-  // try computed style
-  ret = computed.getPropertyValue(name);
+  ret = computed.getPropertyValue(name); // try style attribute (if element is not attached to document)
 
-  // try style attribute (if element is not attached to document)
   if (ret === '' && !elem.ownerDocument) ret = elem.style[_camelCase(name)];
-
   return ret;
 }
-
 /**
  * Module API
  */
+
+
 module.exports = {
   /** Add classes */
   addClass: jqLiteAddClass,
@@ -1847,7 +1783,6 @@ module.exports = {
  * MUI CSS/JS utilities module
  * @module lib/util
  */
-
 'use strict';
 
 var config = require('../config'),
@@ -1864,10 +1799,11 @@ scrollEventHandler = function scrollEventHandler(ev) {
   // stop propagation on window scroll events
   if (!ev.target.tagName) ev.stopImmediatePropagation();
 };
-
 /**
  * Logging function
  */
+
+
 function logFn() {
   var win = window;
 
@@ -1880,33 +1816,30 @@ function logFn() {
     }
   }
 }
-
 /**
  * Load CSS text in new stylesheet
  * @param {string} cssText - The css text.
  */
+
+
 function loadStyleFn(cssText) {
   var doc = document,
-      head;
+      head; // copied from jQuery 
 
-  // copied from jQuery 
   head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
-
   var e = doc.createElement('style');
   e.type = 'text/css';
+  if (e.styleSheet) e.styleSheet.cssText = cssText;else e.appendChild(doc.createTextNode(cssText)); // add to document
 
-  if (e.styleSheet) e.styleSheet.cssText = cssText;else e.appendChild(doc.createTextNode(cssText));
-
-  // add to document
   head.insertBefore(e, head.firstChild);
-
   return e;
 }
-
 /**
  * Raise an error
  * @param {string} msg - The error message.
  */
+
+
 function raiseErrorFn(msg, useConsole) {
   if (useConsole) {
     if (typeof console !== 'undefined') console.warn('MUI Warning: ' + msg);
@@ -1914,45 +1847,48 @@ function raiseErrorFn(msg, useConsole) {
     throw new Error('MUI: ' + msg);
   }
 }
-
 /**
  * Convert Classname object, with class as key and true/false as value, to an
  * class string.
  * @param  {Object} classes The classes
  * @return {String}         class string
  */
+
+
 function classNamesFn(classes) {
   var cs = '';
+
   for (var i in classes) {
     cs += classes[i] ? i + ' ' : '';
   }
+
   return cs.trim();
 }
-
 /**
  * Check if client supports pointer events.
  */
+
+
 function supportsPointerEventsFn() {
   // check cache
   if (_supportsPointerEvents !== undefined) return _supportsPointerEvents;
-
   var element = document.createElement('x');
   element.style.cssText = 'pointer-events:auto';
   _supportsPointerEvents = element.style.pointerEvents === 'auto';
   return _supportsPointerEvents;
 }
-
 /**
  * Create callback closure.
  * @param {Object} instance - The object instance.
  * @param {String} funcName - The name of the callback function.
  */
+
+
 function callbackFn(instance, funcName) {
   return function () {
     instance[funcName].apply(instance, arguments);
   };
 }
-
 /**
  * Dispatch event.
  * @param {Element} element - The DOM element.
@@ -1961,31 +1897,31 @@ function callbackFn(instance, funcName) {
  * @param {Boolean} cancelable=true = If true, event is cancelable
  * @param {Object} [data] - Data to add to event object
  */
+
+
 function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = bubbles !== undefined ? bubbles : true,
       cancelable = cancelable !== undefined ? cancelable : true,
       k;
+  ev.initEvent(eventType, bubbles, cancelable); // add data to event object
 
-  ev.initEvent(eventType, bubbles, cancelable);
-
-  // add data to event object
   if (data) for (k in data) {
     ev[k] = data[k];
   } // dispatch
-  if (element) element.dispatchEvent(ev);
 
+  if (element) element.dispatchEvent(ev);
   return ev;
 }
-
 /**
  * Turn on window scroll lock.
  */
+
+
 function enableScrollLockFn() {
   // increment counter
-  scrollLock += 1;
+  scrollLock += 1; // add lock
 
-  // add lock
   if (scrollLock === 1) {
     var doc = document,
         win = window,
@@ -1994,9 +1930,8 @@ function enableScrollLockFn() {
         scrollBarWidth = getScrollBarWidth(),
         cssProps,
         cssStr,
-        x;
+        x; // define scroll lock class dynamically
 
-    // define scroll lock class dynamically
     cssProps = ['overflow:hidden'];
 
     if (scrollBarWidth) {
@@ -2004,91 +1939,88 @@ function enableScrollLockFn() {
       if (htmlEl.scrollHeight > htmlEl.clientHeight) {
         x = parseInt(jqLite.css(bodyEl, 'padding-right')) + scrollBarWidth;
         cssProps.push('padding-right:' + x + 'px');
-      }
+      } // scrollbar-x
 
-      // scrollbar-x
+
       if (htmlEl.scrollWidth > htmlEl.clientWidth) {
         x = parseInt(jqLite.css(bodyEl, 'padding-bottom')) + scrollBarWidth;
         cssProps.push('padding-bottom:' + x + 'px');
       }
-    }
+    } // define css class dynamically
 
-    // define css class dynamically
+
     cssStr = '.' + scrollLockCls + '{';
     cssStr += cssProps.join(' !important;') + ' !important;}';
-    scrollStyleEl = loadStyleFn(cssStr);
+    scrollStyleEl = loadStyleFn(cssStr); // cancel 'scroll' event listener callbacks
 
-    // cancel 'scroll' event listener callbacks
-    jqLite.on(win, 'scroll', scrollEventHandler, true);
+    jqLite.on(win, 'scroll', scrollEventHandler, true); // add scroll lock
 
-    // add scroll lock
-    scrollLockPos = { left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win) };
+    scrollLockPos = {
+      left: jqLite.scrollLeft(win),
+      top: jqLite.scrollTop(win)
+    };
     jqLite.addClass(bodyEl, scrollLockCls);
   }
 }
-
 /**
  * Turn off window scroll lock.
  * @param {Boolean} resetPos - Reset scroll position to original value.
  */
+
+
 function disableScrollLockFn(resetPos) {
   // ignore
-  if (scrollLock === 0) return;
+  if (scrollLock === 0) return; // decrement counter
 
-  // decrement counter
-  scrollLock -= 1;
+  scrollLock -= 1; // remove lock 
 
-  // remove lock 
   if (scrollLock === 0) {
     // remove scroll lock and delete style element
-    jqLite.removeClass(document.body, scrollLockCls);
+    jqLite.removeClass(document.body, scrollLockCls); // restore scroll position
 
-    // restore scroll position
-    if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    if (resetPos) window.scrollTo(scrollLockPos.left, scrollLockPos.top); // restore scroll event listeners
 
-    // restore scroll event listeners
-    jqLite.off(window, 'scroll', scrollEventHandler, true);
+    jqLite.off(window, 'scroll', scrollEventHandler, true); // delete style element (deferred for Firefox Quantum bugfix)
 
-    // delete style element (deferred for Firefox Quantum bugfix)
     setTimeout(function () {
       scrollStyleEl.parentNode.removeChild(scrollStyleEl);
     }, 0);
   }
 }
-
 /**
  * Return scroll bar width.
  */
+
+
 var getScrollBarWidth = function getScrollBarWidth() {
   // check cache
-  if (_scrollBarWidth !== undefined) return _scrollBarWidth;
+  if (_scrollBarWidth !== undefined) return _scrollBarWidth; // calculate scroll bar width
 
-  // calculate scroll bar width
   var doc = document,
       bodyEl = doc.body,
       el = doc.createElement('div');
-
   el.innerHTML = '<div style="width:50px;height:50px;position:absolute;' + 'left:-50px;top:-50px;overflow:auto;"><div style="width:1px;' + 'height:100px;"></div></div>';
   el = el.firstChild;
   bodyEl.appendChild(el);
   _scrollBarWidth = el.offsetWidth - el.clientWidth;
   bodyEl.removeChild(el);
-
   return _scrollBarWidth;
 };
-
 /**
  * requestAnimationFrame polyfilled
  * @param {Function} callback - The callback function
  */
+
+
 function requestAnimationFrameFn(callback) {
   var fn = window.requestAnimationFrame;
   if (fn) fn(callback);else setTimeout(callback, 0);
 }
-
 /**
  * Define the module API
  */
+
+
 module.exports = {
   /** Create callback closures */
   callback: callbackFn,

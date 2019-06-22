@@ -1,6 +1,6 @@
 {
   "name": "muicss",
-  "version": "0.9.41",
+  "version": "0.9.42",
   "license": "MIT",
   "description": "Lightweight CSS framework based on Google's Material Design guidelines",
   "keywords": [
@@ -11,6 +11,9 @@
     "React"
   ],
   "homepage": "https://www.muicss.com",
+  "browserslist": [
+    "last 2 versions"
+  ],
   "bugs": {
     "url": "https://github.com/muicss/mui/issues",
     "email": "contact@muicss.com"

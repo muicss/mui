@@ -3,61 +3,54 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React form module
  * @module react/form
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
 /**
  * Form constructor
  * @class
  */
-var Form = function (_React$Component) {
+var Form =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Form, _React$Component);
 
   function Form() {
     babelHelpers.classCallCheck(this, Form);
-    return babelHelpers.possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Form).apply(this, arguments));
   }
 
   babelHelpers.createClass(Form, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          inline = _props.inline,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className', 'inline']);
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          inline = _this$props.inline,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "inline"]);
+      var cls = 'mui-form'; // inline form
 
-      var cls = 'mui-form';
-
-      // inline form
       if (inline) cls += ' mui-form--inline';
-
-      return _react2.default.createElement(
-        'form',
-        babelHelpers.extends({}, reactProps, {
-          className: cls + ' ' + className
-        }),
-        children
-      );
+      return _react["default"].createElement("form", babelHelpers["extends"]({}, reactProps, {
+        className: cls + ' ' + className
+      }), children);
     }
   }]);
   return Form;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Form.defaultProps = {
+babelHelpers.defineProperty(Form, "defaultProps", {
   className: '',
   inline: false
-};
-exports.default = Form;
-module.exports = exports['default'];
+});
+var _default = Form;
+exports["default"] = _default;
+module.exports = exports.default;

@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.9.42 - June 22, 2019
+
+* Updated devDependencies and rebuilt packages
+
 ## 0.9.41 - September 2, 2018
 
 * [CSS] Fixed bug with autofill pseudo selector preventing floating labels from

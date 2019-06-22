@@ -3,54 +3,48 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React Appbar Module
  * @module react/appbar
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
 /**
  * Appbar constructor
  * @class
  */
-var Appbar = function (_React$Component) {
+var Appbar =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Appbar, _React$Component);
 
   function Appbar() {
     babelHelpers.classCallCheck(this, Appbar);
-    return babelHelpers.possibleConstructorReturn(this, (Appbar.__proto__ || Object.getPrototypeOf(Appbar)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Appbar).apply(this, arguments));
   }
 
   babelHelpers.createClass(Appbar, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-appbar ' + this.props.className
-        }),
-        children
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-appbar ' + this.props.className
+      }), children);
     }
   }]);
   return Appbar;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Appbar.defaultProps = {
+babelHelpers.defineProperty(Appbar, "defaultProps", {
   className: ''
-};
-exports.default = Appbar;
-module.exports = exports['default'];
+});
+var _default = Appbar;
+exports["default"] = _default;
+module.exports = exports.default;

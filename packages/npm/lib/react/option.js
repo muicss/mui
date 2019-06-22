@@ -3,68 +3,54 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React options module
  * @module react/option
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
+var formlib = babelHelpers.interopRequireWildcard(require("../js/lib/forms"));
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
-var _forms = require('../js/lib/forms');
-
-var formlib = babelHelpers.interopRequireWildcard(_forms);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-var _helpers = require('./_helpers');
+var _helpers = require("./_helpers");
 
 /**
  * Option constructor
  * @class
  */
-var Option = function (_React$Component) {
+var Option =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Option, _React$Component);
 
   function Option() {
     babelHelpers.classCallCheck(this, Option);
-    return babelHelpers.possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Option).apply(this, arguments));
   }
 
   babelHelpers.createClass(Option, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          label = _props.label,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'label']);
-
-
-      return _react2.default.createElement(
-        'option',
-        reactProps,
-        label
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          label = _this$props.label,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "label"]);
+      return _react["default"].createElement("option", reactProps, label);
     }
   }]);
   return Option;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Option.defaultProps = {
+babelHelpers.defineProperty(Option, "defaultProps", {
   className: '',
   label: null
-};
-exports.default = Option;
-module.exports = exports['default'];
+});
+var _default = Option;
+exports["default"] = _default;
+module.exports = exports.default;

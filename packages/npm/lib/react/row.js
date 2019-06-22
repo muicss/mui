@@ -3,63 +3,52 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React Row Component
  * @module react/row
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var breakpoints = ['xs', 'sm', 'md', 'lg'];
-
 /**
  * Row constructor
  * @class
  */
 
-var Row = function (_React$Component) {
+var Row =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Row, _React$Component);
 
   function Row() {
     babelHelpers.classCallCheck(this, Row);
-    return babelHelpers.possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).apply(this, arguments));
+    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Row).apply(this, arguments));
   }
 
   babelHelpers.createClass(Row, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          children = _props.children,
-          className = _props.className,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['children', 'className']);
-
-
-      return _react2.default.createElement(
-        'div',
-        babelHelpers.extends({}, reactProps, {
-          className: 'mui-row ' + className
-        }),
-        children
-      );
+      var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+        className: 'mui-row ' + className
+      }), children);
     }
   }]);
   return Row;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Row.defaultProps = {
+babelHelpers.defineProperty(Row, "defaultProps", {
   className: ''
-};
-exports.default = Row;
-module.exports = exports['default'];
+});
+var _default = Row;
+exports["default"] = _default;
+module.exports = exports.default;

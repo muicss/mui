@@ -3,58 +3,53 @@ var babelHelpers = require('./babel-helpers.js');
  * MUI React button module
  * @module react/button
  */
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
+var _react = babelHelpers.interopRequireDefault(require("react"));
 
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _jqLite = require('../js/lib/jqLite');
-
-var jqLite = babelHelpers.interopRequireWildcard(_jqLite);
-
-var _util = require('../js/lib/util');
-
-var util = babelHelpers.interopRequireWildcard(_util);
-
-
+var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
+var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var btnClass = 'mui-btn',
-    btnAttrs = { color: 1, variant: 1, size: 1 };
-
+    btnAttrs = {
+  color: 1,
+  variant: 1,
+  size: 1
+};
 /**
  * Button element
  * @class
  */
 
-var Button = function (_React$Component) {
+var Button =
+/*#__PURE__*/
+function (_React$Component) {
   babelHelpers.inherits(Button, _React$Component);
 
   function Button(props) {
+    var _this;
+
     babelHelpers.classCallCheck(this, Button);
-
-    var _this = babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, props));
-
-    _this.state = {
+    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Button).call(this, props));
+    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "state", {
       rippleStyle: {},
       rippleIsVisible: false
-    };
-
+    });
     var cb = util.callback;
-    _this.onMouseDownCB = cb(_this, 'onMouseDown');
-    _this.onMouseUpCB = cb(_this, 'onMouseUp');
-    _this.onMouseLeaveCB = cb(_this, 'onMouseLeave');
-    _this.onTouchStartCB = cb(_this, 'onTouchStart');
-    _this.onTouchEndCB = cb(_this, 'onTouchEnd');
+    _this.onMouseDownCB = cb(babelHelpers.assertThisInitialized(_this), 'onMouseDown');
+    _this.onMouseUpCB = cb(babelHelpers.assertThisInitialized(_this), 'onMouseUp');
+    _this.onMouseLeaveCB = cb(babelHelpers.assertThisInitialized(_this), 'onMouseLeave');
+    _this.onTouchStartCB = cb(babelHelpers.assertThisInitialized(_this), 'onTouchStart');
+    _this.onTouchEndCB = cb(babelHelpers.assertThisInitialized(_this), 'onTouchEnd');
     return _this;
   }
 
   babelHelpers.createClass(Button, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       // disable MUI js
       var el = this.buttonElRef;
@@ -62,70 +57,59 @@ var Button = function (_React$Component) {
       el._muiRipple = true;
     }
   }, {
-    key: 'onMouseDown',
+    key: "onMouseDown",
     value: function onMouseDown(ev) {
-      this.showRipple(ev);
+      this.showRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onMouseDown;
       fn && fn(ev);
     }
   }, {
-    key: 'onMouseUp',
+    key: "onMouseUp",
     value: function onMouseUp(ev) {
-      this.hideRipple(ev);
+      this.hideRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onMouseUp;
       fn && fn(ev);
     }
   }, {
-    key: 'onMouseLeave',
+    key: "onMouseLeave",
     value: function onMouseLeave(ev) {
-      this.hideRipple(ev);
+      this.hideRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onMouseLeave;
       fn && fn(ev);
     }
   }, {
-    key: 'onTouchStart',
+    key: "onTouchStart",
     value: function onTouchStart(ev) {
-      this.showRipple(ev);
+      this.showRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onTouchStart;
       fn && fn(ev);
     }
   }, {
-    key: 'onTouchEnd',
+    key: "onTouchEnd",
     value: function onTouchEnd(ev) {
-      this.hideRipple(ev);
+      this.hideRipple(ev); // execute callback
 
-      // execute callback
       var fn = this.props.onTouchEnd;
       fn && fn(ev);
     }
   }, {
-    key: 'showRipple',
+    key: "showRipple",
     value: function showRipple(ev) {
-      var buttonEl = this.buttonElRef;
+      var buttonEl = this.buttonElRef; // de-dupe touch events
 
-      // de-dupe touch events
-      if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return;
+      if ('ontouchstart' in buttonEl && ev.type === 'mousedown') return; // get (x, y) position of click
 
-      // get (x, y) position of click
       var offset = jqLite.offset(this.buttonElRef),
-          clickEv = void 0;
+          clickEv;
+      if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev; // calculate radius
 
-      if (ev.type === 'touchstart' && ev.touches) clickEv = ev.touches[0];else clickEv = ev;
-
-      // calculate radius
       var radius = Math.sqrt(offset.width * offset.width + offset.height * offset.height);
+      var diameterPx = radius * 2 + 'px'; // add ripple to state
 
-      var diameterPx = radius * 2 + 'px';
-
-      // add ripple to state
       this.setState({
         rippleStyle: {
           top: Math.round(clickEv.pageY - offset.top - radius) + 'px',
@@ -137,27 +121,27 @@ var Button = function (_React$Component) {
       });
     }
   }, {
-    key: 'hideRipple',
+    key: "hideRipple",
     value: function hideRipple(ev) {
-      this.setState({ rippleIsVisible: false });
+      this.setState({
+        rippleIsVisible: false
+      });
     }
   }, {
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
       var state = this.state,
-          rippleEl = this.rippleElRef;
+          rippleEl = this.rippleElRef; // show ripple
 
-      // show ripple
       if (state.rippleIsVisible && !prevState.rippleIsVisible) {
         jqLite.removeClass(rippleEl, 'mui--is-animating');
         jqLite.addClass(rippleEl, 'mui--is-visible');
-
         util.requestAnimationFrame(function () {
           jqLite.addClass(rippleEl, 'mui--is-animating');
         });
-      }
+      } // hide ripple
 
-      // hide ripple
+
       if (!state.rippleIsVisible && prevState.rippleIsVisible) {
         // allow a repaint to occur before removing class so animation shows for
         // tap events
@@ -167,66 +151,56 @@ var Button = function (_React$Component) {
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this2 = this;
 
       var cls = btnClass,
-          k = void 0,
-          v = void 0;
-
-      var _props = this.props,
-          color = _props.color,
-          size = _props.size,
-          variant = _props.variant,
-          reactProps = babelHelpers.objectWithoutProperties(_props, ['color', 'size', 'variant']);
-
-      // button attributes
+          k,
+          v;
+      var _this$props = this.props,
+          color = _this$props.color,
+          size = _this$props.size,
+          variant = _this$props.variant,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["color", "size", "variant"]); // button attributes
 
       for (k in btnAttrs) {
         v = this.props[k];
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react2.default.createElement(
-        'button',
-        babelHelpers.extends({}, reactProps, {
-          ref: function ref(el) {
-            _this2.buttonElRef = el;
-          },
-          className: cls + ' ' + this.props.className,
-          onMouseUp: this.onMouseUpCB,
-          onMouseDown: this.onMouseDownCB,
-          onMouseLeave: this.onMouseLeaveCB,
-          onTouchStart: this.onTouchStartCB,
-          onTouchEnd: this.onTouchEndCB
-        }),
-        this.props.children,
-        _react2.default.createElement(
-          'span',
-          { className: 'mui-btn__ripple-container' },
-          _react2.default.createElement('span', {
-            ref: function ref(el) {
-              _this2.rippleElRef = el;
-            },
-            className: 'mui-ripple',
-            style: this.state.rippleStyle
-          })
-        )
-      );
+      return _react["default"].createElement("button", babelHelpers["extends"]({}, reactProps, {
+        ref: function ref(el) {
+          _this2.buttonElRef = el;
+        },
+        className: cls + ' ' + this.props.className,
+        onMouseUp: this.onMouseUpCB,
+        onMouseDown: this.onMouseDownCB,
+        onMouseLeave: this.onMouseLeaveCB,
+        onTouchStart: this.onTouchStartCB,
+        onTouchEnd: this.onTouchEndCB
+      }), this.props.children, _react["default"].createElement("span", {
+        className: "mui-btn__ripple-container"
+      }, _react["default"].createElement("span", {
+        ref: function ref(el) {
+          _this2.rippleElRef = el;
+        },
+        className: "mui-ripple",
+        style: this.state.rippleStyle
+      })));
     }
   }]);
   return Button;
-}(_react2.default.Component);
-
+}(_react["default"].Component);
 /** Define module API */
 
 
-Button.defaultProps = {
+babelHelpers.defineProperty(Button, "defaultProps", {
   className: '',
   color: 'default',
   size: 'default',
   variant: 'default'
-};
-exports.default = Button;
-module.exports = exports['default'];
+});
+var _default = Button;
+exports["default"] = _default;
+module.exports = exports.default;

@@ -2986,7 +2986,7 @@ module.exports = shallowCompare;
 
 },{"fbjs/lib/shallowEqual":11}],18:[function(require,module,exports){
 (function (process){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-dom-server.browser.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -3054,7 +3054,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 // TODO: this is special because it gets imported during build.
 
-var ReactVersion = '16.8.4';
+var ReactVersion = '16.8.6';
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -3348,11 +3348,11 @@ var enableSuspenseServerRenderer = false; // TODO: true? Here it might just be f
 // Control this behavior with a flag to support 16.6 minor releases in the meanwhile.
 
 var ReactDebugCurrentFrame$1 = void 0;
+var didWarnAboutInvalidateContextType = void 0;
 {
   ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
+  didWarnAboutInvalidateContextType = new Set();
 }
-
-var didWarnAboutInvalidateContextType = {};
 
 var emptyObject = {};
 {
@@ -3393,16 +3393,33 @@ function validateContextBounds(context, threadID) {
 
 function processContext(type, context, threadID) {
   var contextType = type.contextType;
-  if (typeof contextType === 'object' && contextType !== null) {
-    {
-      if (contextType.$$typeof !== REACT_CONTEXT_TYPE) {
-        var name = getComponentName(type) || 'Component';
-        if (!didWarnAboutInvalidateContextType[name]) {
-          didWarnAboutInvalidateContextType[name] = true;
-          warningWithoutStack$1(false, '%s defines an invalid contextType. ' + 'contextType should point to the Context object returned by React.createContext(). ' + 'Did you accidentally pass the Context.Provider instead?', name);
+  {
+    if ('contextType' in type) {
+      var isValid =
+      // Allow null for conditional declaration
+      contextType === null || contextType !== undefined && contextType.$$typeof === REACT_CONTEXT_TYPE && contextType._context === undefined; // Not a <Context.Consumer>
+
+      if (!isValid && !didWarnAboutInvalidateContextType.has(type)) {
+        didWarnAboutInvalidateContextType.add(type);
+
+        var addendum = '';
+        if (contextType === undefined) {
+          addendum = ' However, it is set to undefined. ' + 'This can be caused by a typo or by mixing up named and default imports. ' + 'This can also happen due to a circular dependency, so ' + 'try moving the createContext() call to a separate file.';
+        } else if (typeof contextType !== 'object') {
+          addendum = ' However, it is set to a ' + typeof contextType + '.';
+        } else if (contextType.$$typeof === REACT_PROVIDER_TYPE) {
+          addendum = ' Did you accidentally pass the Context.Provider instead?';
+        } else if (contextType._context !== undefined) {
+          // <Context.Consumer>
+          addendum = ' Did you accidentally pass the Context.Consumer instead?';
+        } else {
+          addendum = ' However, it is set to an object with keys {' + Object.keys(contextType).join(', ') + '}.';
         }
+        warningWithoutStack$1(false, '%s defines an invalid contextType. ' + 'contextType should point to the Context object returned by React.createContext().%s', getComponentName(type) || 'Component', addendum);
       }
     }
+  }
+  if (typeof contextType === 'object' && contextType !== null) {
     validateContextBounds(contextType, threadID);
     return contextType[threadID];
   } else {
@@ -3920,7 +3937,7 @@ var isInHookUserCodeInDev = false;
 var currentHookNameInDev = void 0;
 
 function resolveCurrentlyRenderingComponent() {
-  !(currentlyRenderingComponent !== null) ? invariant(false, 'Hooks can only be called inside the body of a function component. (https://fb.me/react-invalid-hook-call)') : void 0;
+  !(currentlyRenderingComponent !== null) ? invariant(false, 'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.') : void 0;
   {
     !!isInHookUserCodeInDev ? warning$1(false, 'Do not call Hooks inside useEffect(...), useMemo(...), or other built-in Hooks. ' + 'You can only call Hooks at the top level of your React function. ' + 'For more information, see ' + 'https://fb.me/rules-of-hooks') : void 0;
   }
@@ -4183,7 +4200,7 @@ function useLayoutEffect(create, inputs) {
   {
     currentHookNameInDev = 'useLayoutEffect';
   }
-  warning$1(false, 'useLayoutEffect does nothing on the server, because its effect cannot ' + "be encoded into the server renderer's output format. This will lead " + 'to a mismatch between the initial, non-hydrated UI and the intended ' + 'UI. To avoid this, useLayoutEffect should only be used in ' + 'components that render exclusively on the client.');
+  warning$1(false, 'useLayoutEffect does nothing on the server, because its effect cannot ' + "be encoded into the server renderer's output format. This will lead " + 'to a mismatch between the initial, non-hydrated UI and the intended ' + 'UI. To avoid this, useLayoutEffect should only be used in ' + 'components that render exclusively on the client. ' + 'See https://fb.me/react-uselayouteffect-ssr for common fixes.');
 }
 
 function dispatchAction(componentIdentity, queue, action) {
@@ -6668,7 +6685,7 @@ module.exports = server_browser;
 
 }).call(this,require('_process'))
 },{"_process":14,"object-assign":13,"prop-types/checkPropTypes":15,"react":35}],19:[function(require,module,exports){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-dom-server.browser.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -6691,7 +6708,7 @@ function sa(a,b,d,c){if(null===b||"undefined"===typeof b||ra(a,b,d,c))return!0;i
 ["capture","download"].forEach(function(a){J[a]=new I(a,4,!1,a,null)});["cols","rows","size","span"].forEach(function(a){J[a]=new I(a,6,!1,a,null)});["rowSpan","start"].forEach(function(a){J[a]=new I(a,5,!1,a.toLowerCase(),null)});var K=/[\-:]([a-z])/g;function L(a){return a[1].toUpperCase()}
 "accent-height alignment-baseline arabic-form baseline-shift cap-height clip-path clip-rule color-interpolation color-interpolation-filters color-profile color-rendering dominant-baseline enable-background fill-opacity fill-rule flood-color flood-opacity font-family font-size font-size-adjust font-stretch font-style font-variant font-weight glyph-name glyph-orientation-horizontal glyph-orientation-vertical horiz-adv-x horiz-origin-x image-rendering letter-spacing lighting-color marker-end marker-mid marker-start overline-position overline-thickness paint-order panose-1 pointer-events rendering-intent shape-rendering stop-color stop-opacity strikethrough-position strikethrough-thickness stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit stroke-opacity stroke-width text-anchor text-decoration text-rendering underline-position underline-thickness unicode-bidi unicode-range units-per-em v-alphabetic v-hanging v-ideographic v-mathematical vector-effect vert-adv-y vert-origin-x vert-origin-y word-spacing writing-mode xmlns:xlink x-height".split(" ").forEach(function(a){var b=a.replace(K,
 L);J[b]=new I(b,1,!1,a,null)});"xlink:actuate xlink:arcrole xlink:href xlink:role xlink:show xlink:title xlink:type".split(" ").forEach(function(a){var b=a.replace(K,L);J[b]=new I(b,1,!1,a,"http://www.w3.org/1999/xlink")});["xml:base","xml:lang","xml:space"].forEach(function(a){var b=a.replace(K,L);J[b]=new I(b,1,!1,a,"http://www.w3.org/XML/1998/namespace")});["tabIndex","crossOrigin"].forEach(function(a){J[a]=new I(a,1,!1,a.toLowerCase(),null)});var ta=/["'&<>]/;
-function M(a){if("boolean"===typeof a||"number"===typeof a)return""+a;a=""+a;var b=ta.exec(a);if(b){var d="",c,f=0;for(c=b.index;c<a.length;c++){switch(a.charCodeAt(c)){case 34:b="&quot;";break;case 38:b="&amp;";break;case 39:b="&#x27;";break;case 60:b="&lt;";break;case 62:b="&gt;";break;default:continue}f!==c&&(d+=a.substring(f,c));f=c+1;d+=b}a=f!==c?d+a.substring(f,c):d}return a}var N=null,O=null,P=null,Q=!1,S=!1,T=null,U=0;function V(){null===N?r("307"):void 0;return N}
+function M(a){if("boolean"===typeof a||"number"===typeof a)return""+a;a=""+a;var b=ta.exec(a);if(b){var d="",c,f=0;for(c=b.index;c<a.length;c++){switch(a.charCodeAt(c)){case 34:b="&quot;";break;case 38:b="&amp;";break;case 39:b="&#x27;";break;case 60:b="&lt;";break;case 62:b="&gt;";break;default:continue}f!==c&&(d+=a.substring(f,c));f=c+1;d+=b}a=f!==c?d+a.substring(f,c):d}return a}var N=null,O=null,P=null,Q=!1,S=!1,T=null,U=0;function V(){null===N?r("321"):void 0;return N}
 function ua(){0<U&&r("312");return{memoizedState:null,queue:null,next:null}}function W(){null===P?null===O?(Q=!1,O=P=ua()):(Q=!0,P=O):null===P.next?(Q=!1,P=P.next=ua()):(Q=!0,P=P.next);return P}function va(a,b,d,c){for(;S;)S=!1,U+=1,P=null,d=a(b,c);O=N=null;U=0;P=T=null;return d}function wa(a,b){return"function"===typeof b?b(a):b}
 function xa(a,b,d){N=V();P=W();if(Q){var c=P.queue;b=c.dispatch;if(null!==T&&(d=T.get(c),void 0!==d)){T.delete(c);c=P.memoizedState;do c=a(c,d.action),d=d.next;while(null!==d);P.memoizedState=c;return[c,b]}return[P.memoizedState,b]}a=a===wa?"function"===typeof b?b():b:void 0!==d?d(b):b;P.memoizedState=a;a=P.queue={last:null,dispatch:null};a=a.dispatch=ya.bind(null,N,a);return[P.memoizedState,a]}
 function ya(a,b,d){25>U?void 0:r("301");if(a===N)if(S=!0,a={action:d,next:null},null===T&&(T=new Map),d=T.get(b),void 0===d)T.set(b,a);else{for(b=d;null!==b.next;)b=b.next;b.next=a}}function za(){}
@@ -6718,11 +6735,11 @@ D=1===this.stack.length;B="<"+a.type;for(y in h)if(Oa.call(h,y)){var l=h[y];if(n
 m.indexOf("-"))m="string"===typeof u.is;else switch(m){case "annotation-xml":case "color-profile":case "font-face":case "font-face-src":case "font-face-uri":case "font-face-format":case "font-face-name":case "missing-glyph":m=!1;break b;default:m=!0}if(m)Pa.hasOwnProperty(y)||(n=y,n=qa(n)&&null!=l?n+"="+('"'+M(l)+'"'):"");else{m=y;n=l;l=J.hasOwnProperty(m)?J[m]:null;if(u="style"!==m)u=null!==l?0===l.type:!(2<m.length)||"o"!==m[0]&&"O"!==m[0]||"n"!==m[1]&&"N"!==m[1]?!1:!0;u||sa(m,n,l,!1)?n="":null!==
 l?(m=l.attributeName,l=l.type,n=3===l||4===l&&!0===n?m+'=""':m+"="+('"'+M(n)+'"')):n=qa(m)?m+"="+('"'+M(n)+'"'):""}n&&(B+=" "+n)}}g||D&&(B+=' data-reactroot=""');var y=B;h="";Da.hasOwnProperty(b)?y+="/>":(y+=">",h="</"+a.type+">");a:{g=e.dangerouslySetInnerHTML;if(null!=g){if(null!=g.__html){g=g.__html;break a}}else if(g=e.children,"string"===typeof g||"number"===typeof g){g=M(g);break a}g=null}null!=g?(e=[],Ja[b]&&"\n"===g.charAt(0)&&(y+="\n"),y+=g):e=Z(e.children);a=a.type;c=null==c||"http://www.w3.org/1999/xhtml"===
 c?Ca(a):"http://www.w3.org/2000/svg"===c&&"foreignObject"===a?"http://www.w3.org/1999/xhtml":c;this.stack.push({domNamespace:c,type:b,children:e,childIndex:0,context:d,footer:h});this.previousWasTextNode=!1;return y};return a}(),Ta={renderToString:function(a){a=new Sa(a,!1);try{return a.read(Infinity)}finally{a.destroy()}},renderToStaticMarkup:function(a){a=new Sa(a,!0);try{return a.read(Infinity)}finally{a.destroy()}},renderToNodeStream:function(){r("207")},renderToStaticNodeStream:function(){r("208")},
-version:"16.8.4"},Ua={default:Ta},Va=Ua&&Ta||Ua;module.exports=Va.default||Va;
+version:"16.8.6"},Ua={default:Ta},Va=Ua&&Ta||Ua;module.exports=Va.default||Va;
 
 },{"object-assign":13,"react":35}],20:[function(require,module,exports){
 (function (process){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-dom-test-utils.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -8027,7 +8044,7 @@ module.exports = testUtils;
 
 }).call(this,require('_process'))
 },{"_process":14,"object-assign":13,"react":35,"react-dom":24}],21:[function(require,module,exports){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-dom-test-utils.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -8063,7 +8080,7 @@ function ha(a,b){return function(c,e){var d=new T(a);g(d,e);W.isDOMComponent(c)?
 
 },{"object-assign":13,"react":35,"react-dom":24}],22:[function(require,module,exports){
 (function (process){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-dom.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -13397,15 +13414,29 @@ function isInDocument(node) {
   return node && node.ownerDocument && containsNode(node.ownerDocument.documentElement, node);
 }
 
+function isSameOriginFrame(iframe) {
+  try {
+    // Accessing the contentDocument of a HTMLIframeElement can cause the browser
+    // to throw, e.g. if it has a cross-origin src attribute.
+    // Safari will show an error in the console when the access results in "Blocked a frame with origin". e.g:
+    // iframe.contentDocument.defaultView;
+    // A safety way is to access one of the cross origin properties: Window or Location
+    // Which might result in "SecurityError" DOM Exception and it is compatible to Safari.
+    // https://html.spec.whatwg.org/multipage/browsers.html#integration-with-idl
+
+    return typeof iframe.contentWindow.location.href === 'string';
+  } catch (err) {
+    return false;
+  }
+}
+
 function getActiveElementDeep() {
   var win = window;
   var element = getActiveElement();
   while (element instanceof win.HTMLIFrameElement) {
-    // Accessing the contentDocument of a HTMLIframeElement can cause the browser
-    // to throw, e.g. if it has a cross-origin src attribute
-    try {
-      win = element.contentDocument.defaultView;
-    } catch (e) {
+    if (isSameOriginFrame(element)) {
+      win = element.contentWindow;
+    } else {
       return element;
     }
     element = getActiveElement(win.document);
@@ -15695,14 +15726,25 @@ function createElement(type, props, rootContainerElement, parentNamespace) {
       // See discussion in https://github.com/facebook/react/pull/6896
       // and discussion in https://bugzilla.mozilla.org/show_bug.cgi?id=1276240
       domElement = ownerDocument.createElement(type);
-      // Normally attributes are assigned in `setInitialDOMProperties`, however the `multiple`
-      // attribute on `select`s needs to be added before `option`s are inserted. This prevents
-      // a bug where the `select` does not scroll to the correct option because singular
-      // `select` elements automatically pick the first item.
+      // Normally attributes are assigned in `setInitialDOMProperties`, however the `multiple` and `size`
+      // attributes on `select`s needs to be added before `option`s are inserted.
+      // This prevents:
+      // - a bug where the `select` does not scroll to the correct option because singular
+      //  `select` elements automatically pick the first item #13222
+      // - a bug where the `select` set the first item as selected despite the `size` attribute #14239
       // See https://github.com/facebook/react/issues/13222
-      if (type === 'select' && props.multiple) {
+      // and https://github.com/facebook/react/issues/14239
+      if (type === 'select') {
         var node = domElement;
-        node.multiple = true;
+        if (props.multiple) {
+          node.multiple = true;
+        } else if (props.size) {
+          // Setting a size greater than 1 causes a select to behave like `multiple=true`, where
+          // it is possible that no option is selected.
+          //
+          // This is only necessary when a select in "single selection mode".
+          node.size = props.size;
+        }
       }
     }
   } else {
@@ -19354,14 +19396,35 @@ function constructClassInstance(workInProgress, ctor, props, renderExpirationTim
   var unmaskedContext = emptyContextObject;
   var context = null;
   var contextType = ctor.contextType;
-  if (typeof contextType === 'object' && contextType !== null) {
-    {
-      if (contextType.$$typeof !== REACT_CONTEXT_TYPE && !didWarnAboutInvalidateContextType.has(ctor)) {
+
+  {
+    if ('contextType' in ctor) {
+      var isValid =
+      // Allow null for conditional declaration
+      contextType === null || contextType !== undefined && contextType.$$typeof === REACT_CONTEXT_TYPE && contextType._context === undefined; // Not a <Context.Consumer>
+
+      if (!isValid && !didWarnAboutInvalidateContextType.has(ctor)) {
         didWarnAboutInvalidateContextType.add(ctor);
-        warningWithoutStack$1(false, '%s defines an invalid contextType. ' + 'contextType should point to the Context object returned by React.createContext(). ' + 'Did you accidentally pass the Context.Provider instead?', getComponentName(ctor) || 'Component');
+
+        var addendum = '';
+        if (contextType === undefined) {
+          addendum = ' However, it is set to undefined. ' + 'This can be caused by a typo or by mixing up named and default imports. ' + 'This can also happen due to a circular dependency, so ' + 'try moving the createContext() call to a separate file.';
+        } else if (typeof contextType !== 'object') {
+          addendum = ' However, it is set to a ' + typeof contextType + '.';
+        } else if (contextType.$$typeof === REACT_PROVIDER_TYPE) {
+          addendum = ' Did you accidentally pass the Context.Provider instead?';
+        } else if (contextType._context !== undefined) {
+          // <Context.Consumer>
+          addendum = ' Did you accidentally pass the Context.Consumer instead?';
+        } else {
+          addendum = ' However, it is set to an object with keys {' + Object.keys(contextType).join(', ') + '}.';
+        }
+        warningWithoutStack$1(false, '%s defines an invalid contextType. ' + 'contextType should point to the Context object returned by React.createContext().%s', getComponentName(ctor) || 'Component', addendum);
       }
     }
+  }
 
+  if (typeof contextType === 'object' && contextType !== null) {
     context = readContext(contextType);
   } else {
     unmaskedContext = getUnmaskedContext(workInProgress, ctor, true);
@@ -20883,7 +20946,7 @@ function warnOnHookMismatchInDev(currentHookName) {
 }
 
 function throwInvalidHookError() {
-  invariant(false, 'Hooks can only be called inside the body of a function component. (https://fb.me/react-invalid-hook-call)');
+  invariant(false, 'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.');
 }
 
 function areHookInputsEqual(nextDeps, prevDeps) {
@@ -21155,8 +21218,8 @@ function mountReducer(reducer, initialArg, init) {
   var queue = hook.queue = {
     last: null,
     dispatch: null,
-    eagerReducer: reducer,
-    eagerState: initialState
+    lastRenderedReducer: reducer,
+    lastRenderedState: initialState
   };
   var dispatch = queue.dispatch = dispatchAction.bind(null,
   // Flow doesn't know this is non-null, but we do.
@@ -21168,6 +21231,8 @@ function updateReducer(reducer, initialArg, init) {
   var hook = updateWorkInProgressHook();
   var queue = hook.queue;
   !(queue !== null) ? invariant(false, 'Should have a queue. This is likely a bug in React. Please file an issue.') : void 0;
+
+  queue.lastRenderedReducer = reducer;
 
   if (numberOfReRenders > 0) {
     // This is a re-render. Apply the new render phase updates to the previous
@@ -21203,8 +21268,7 @@ function updateReducer(reducer, initialArg, init) {
           hook.baseState = newState;
         }
 
-        queue.eagerReducer = reducer;
-        queue.eagerState = newState;
+        queue.lastRenderedState = newState;
 
         return [newState, _dispatch];
       }
@@ -21283,8 +21347,7 @@ function updateReducer(reducer, initialArg, init) {
     hook.baseUpdate = newBaseUpdate;
     hook.baseState = newBaseState;
 
-    queue.eagerReducer = reducer;
-    queue.eagerState = _newState;
+    queue.lastRenderedState = _newState;
   }
 
   var dispatch = queue.dispatch;
@@ -21300,8 +21363,8 @@ function mountState(initialState) {
   var queue = hook.queue = {
     last: null,
     dispatch: null,
-    eagerReducer: basicStateReducer,
-    eagerState: initialState
+    lastRenderedReducer: basicStateReducer,
+    lastRenderedState: initialState
   };
   var dispatch = queue.dispatch = dispatchAction.bind(null,
   // Flow doesn't know this is non-null, but we do.
@@ -21578,21 +21641,21 @@ function dispatchAction(fiber, queue, action) {
       // The queue is currently empty, which means we can eagerly compute the
       // next state before entering the render phase. If the new state is the
       // same as the current state, we may be able to bail out entirely.
-      var _eagerReducer = queue.eagerReducer;
-      if (_eagerReducer !== null) {
+      var _lastRenderedReducer = queue.lastRenderedReducer;
+      if (_lastRenderedReducer !== null) {
         var prevDispatcher = void 0;
         {
           prevDispatcher = ReactCurrentDispatcher$1.current;
           ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
         }
         try {
-          var currentState = queue.eagerState;
-          var _eagerState = _eagerReducer(currentState, action);
+          var currentState = queue.lastRenderedState;
+          var _eagerState = _lastRenderedReducer(currentState, action);
           // Stash the eagerly computed state, and the reducer used to compute
           // it, on the update object. If the reducer hasn't changed by the
           // time we enter the render phase, then the eager state can be used
           // without calling the reducer again.
-          _update2.eagerReducer = _eagerReducer;
+          _update2.eagerReducer = _lastRenderedReducer;
           _update2.eagerState = _eagerState;
           if (is(_eagerState, currentState)) {
             // Fast path. We can bail out without scheduling React to re-render.
@@ -25308,11 +25371,11 @@ function commitHookEffectList(unmountTag, mountTag, finishedWork) {
             if (_destroy === null) {
               addendum = ' You returned null. If your effect does not require clean ' + 'up, return undefined (or nothing).';
             } else if (typeof _destroy.then === 'function') {
-              addendum = '\n\nIt looks like you wrote useEffect(async () => ...) or returned a Promise. ' + 'Instead, you may write an async function separately ' + 'and then call it from inside the effect:\n\n' + 'async function fetchComment(commentId) {\n' + '  // You can await here\n' + '}\n\n' + 'useEffect(() => {\n' + '  fetchComment(commentId);\n' + '}, [commentId]);\n\n' + 'In the future, React will provide a more idiomatic solution for data fetching ' + "that doesn't involve writing effects manually.";
+              addendum = '\n\nIt looks like you wrote useEffect(async () => ...) or returned a Promise. ' + 'Instead, write the async function inside your effect ' + 'and call it immediately:\n\n' + 'useEffect(() => {\n' + '  async function fetchData() {\n' + '    // You can await here\n' + '    const response = await MyAPI.getData(someId);\n' + '    // ...\n' + '  }\n' + '  fetchData();\n' + '}, [someId]); // Or [] if effect doesn\'t need props or state\n\n' + 'Learn more about data fetching with Hooks: https://fb.me/react-hooks-data-fetching';
             } else {
               addendum = ' You returned: ' + _destroy;
             }
-            warningWithoutStack$1(false, 'An Effect function must not return anything besides a function, ' + 'which is used for clean-up.%s%s', addendum, getStackByFiberInDevAndProd(finishedWork));
+            warningWithoutStack$1(false, 'An effect function must not return anything besides a function, ' + 'which is used for clean-up.%s%s', addendum, getStackByFiberInDevAndProd(finishedWork));
           }
         }
       }
@@ -28771,7 +28834,7 @@ implementation) {
 
 // TODO: this is special because it gets imported during build.
 
-var ReactVersion = '16.8.4';
+var ReactVersion = '16.8.6';
 
 // TODO: This type is shared between the reconciler and ReactDOM, but will
 // eventually be lifted out to the renderer.
@@ -29298,7 +29361,7 @@ module.exports = reactDom;
 
 }).call(this,require('_process'))
 },{"_process":14,"object-assign":13,"prop-types/checkPropTypes":15,"react":35,"scheduler":40,"scheduler/tracing":41}],23:[function(require,module,exports){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -29386,7 +29449,7 @@ function E(a,b){if(!b)return null;var c=(yd(a)?Cd:Dd).bind(null,a);b.addEventLis
 function Dd(a,b){if(Bd){var c=Nb(b);c=Ha(c);null===c||"number"!==typeof c.tag||2===ed(c)||(c=null);if(zd.length){var d=zd.pop();d.topLevelType=a;d.nativeEvent=b;d.targetInst=c;a=d}else a={topLevelType:a,nativeEvent:b,targetInst:c,ancestors:[]};try{Kb(Ad,a)}finally{a.topLevelType=null,a.nativeEvent=null,a.targetInst=null,a.ancestors.length=0,10>zd.length&&zd.push(a)}}}var Fd={},Gd=0,Hd="_reactListenersID"+(""+Math.random()).slice(2);
 function Id(a){Object.prototype.hasOwnProperty.call(a,Hd)||(a[Hd]=Gd++,Fd[a[Hd]]={});return Fd[a[Hd]]}function Jd(a){a=a||("undefined"!==typeof document?document:void 0);if("undefined"===typeof a)return null;try{return a.activeElement||a.body}catch(b){return a.body}}function Kd(a){for(;a&&a.firstChild;)a=a.firstChild;return a}
 function Ld(a,b){var c=Kd(a);a=0;for(var d;c;){if(3===c.nodeType){d=a+c.textContent.length;if(a<=b&&d>=b)return{node:c,offset:b-a};a=d}a:{for(;c;){if(c.nextSibling){c=c.nextSibling;break a}c=c.parentNode}c=void 0}c=Kd(c)}}function Md(a,b){return a&&b?a===b?!0:a&&3===a.nodeType?!1:b&&3===b.nodeType?Md(a,b.parentNode):"contains"in a?a.contains(b):a.compareDocumentPosition?!!(a.compareDocumentPosition(b)&16):!1:!1}
-function Nd(){for(var a=window,b=Jd();b instanceof a.HTMLIFrameElement;){try{a=b.contentDocument.defaultView}catch(c){break}b=Jd(a.document)}return b}function Od(a){var b=a&&a.nodeName&&a.nodeName.toLowerCase();return b&&("input"===b&&("text"===a.type||"search"===a.type||"tel"===a.type||"url"===a.type||"password"===a.type)||"textarea"===b||"true"===a.contentEditable)}
+function Nd(){for(var a=window,b=Jd();b instanceof a.HTMLIFrameElement;){try{var c="string"===typeof b.contentWindow.location.href}catch(d){c=!1}if(c)a=b.contentWindow;else break;b=Jd(a.document)}return b}function Od(a){var b=a&&a.nodeName&&a.nodeName.toLowerCase();return b&&("input"===b&&("text"===a.type||"search"===a.type||"tel"===a.type||"url"===a.type||"password"===a.type)||"textarea"===b||"true"===a.contentEditable)}
 function Pd(){var a=Nd();if(Od(a)){if("selectionStart"in a)var b={start:a.selectionStart,end:a.selectionEnd};else a:{b=(b=a.ownerDocument)&&b.defaultView||window;var c=b.getSelection&&b.getSelection();if(c&&0!==c.rangeCount){b=c.anchorNode;var d=c.anchorOffset,e=c.focusNode;c=c.focusOffset;try{b.nodeType,e.nodeType}catch(A){b=null;break a}var f=0,g=-1,h=-1,l=0,k=0,m=a,p=null;b:for(;;){for(var t;;){m!==b||0!==d&&3!==m.nodeType||(g=f+d);m!==e||0!==c&&3!==m.nodeType||(h=f+c);3===m.nodeType&&(f+=m.nodeValue.length);
 if(null===(t=m.firstChild))break;p=m;m=t}for(;;){if(m===a)break b;p===b&&++l===d&&(g=f);p===e&&++k===c&&(h=f);if(null!==(t=m.nextSibling))break;m=p;p=m.parentNode}m=t}b=-1===g||-1===h?null:{start:g,end:h}}else b=null}b=b||{start:0,end:0}}else b=null;return{focusedElem:a,selectionRange:b}}
 function Qd(a){var b=Nd(),c=a.focusedElem,d=a.selectionRange;if(b!==c&&c&&c.ownerDocument&&Md(c.ownerDocument.documentElement,c)){if(null!==d&&Od(c))if(b=d.start,a=d.end,void 0===a&&(a=b),"selectionStart"in c)c.selectionStart=b,c.selectionEnd=Math.min(a,c.value.length);else if(a=(b=c.ownerDocument||document)&&b.defaultView||window,a.getSelection){a=a.getSelection();var e=c.textContent.length,f=Math.min(d.start,e);d=void 0===d.end?f:Math.min(d.end,e);!a.extend&&f>d&&(e=d,d=f,f=e);e=Ld(c,f);var g=Ld(c,
@@ -29446,19 +29509,19 @@ w.key),g=f(w,g,u),null===m?l=w:m.sibling=w,m=w);a&&q.forEach(function(a){return 
 k.sibling}f.type===Xb?(d=Ze(f.props.children,a.mode,h,f.key),d.return=a,a=d):(h=Ye(f.type,f.key,f.props,null,a.mode,h),h.ref=Af(a,d,f),h.return=a,a=h)}return g(a);case Wb:a:{for(k=f.key;null!==d;){if(d.key===k)if(4===d.tag&&d.stateNode.containerInfo===f.containerInfo&&d.stateNode.implementation===f.implementation){c(a,d.sibling);d=e(d,f.children||[],h);d.return=a;a=d;break a}else{c(a,d);break}else b(a,d);d=d.sibling}d=bf(f,a.mode,h);d.return=a;a=d}return g(a)}if("string"===typeof f||"number"===typeof f)return f=
 ""+f,null!==d&&6===d.tag?(c(a,d.sibling),d=e(d,f,h),d.return=a,a=d):(c(a,d),d=af(f,a.mode,h),d.return=a,a=d),g(a);if(zf(f))return v(a,d,f,h);if(hc(f))return R(a,d,f,h);l&&Bf(a,f);if("undefined"===typeof f&&!k)switch(a.tag){case 1:case 0:h=a.type,x("152",h.displayName||h.name||"Component")}return c(a,d)}}var Df=Cf(!0),Ef=Cf(!1),Ff={},N={current:Ff},Gf={current:Ff},Hf={current:Ff};function If(a){a===Ff?x("174"):void 0;return a}
 function Jf(a,b){G(Hf,b,a);G(Gf,a,a);G(N,Ff,a);var c=b.nodeType;switch(c){case 9:case 11:b=(b=b.documentElement)?b.namespaceURI:he(null,"");break;default:c=8===c?b.parentNode:b,b=c.namespaceURI||null,c=c.tagName,b=he(b,c)}F(N,a);G(N,b,a)}function Kf(a){F(N,a);F(Gf,a);F(Hf,a)}function Lf(a){If(Hf.current);var b=If(N.current);var c=he(b,a.type);b!==c&&(G(Gf,a,a),G(N,c,a))}function Mf(a){Gf.current===a&&(F(N,a),F(Gf,a))}
-var Nf=0,Of=2,Pf=4,Qf=8,Rf=16,Sf=32,Tf=64,Uf=128,Vf=Tb.ReactCurrentDispatcher,Wf=0,Xf=null,O=null,P=null,Yf=null,Q=null,Zf=null,$f=0,ag=null,bg=0,cg=!1,dg=null,eg=0;function fg(){x("307")}function gg(a,b){if(null===b)return!1;for(var c=0;c<b.length&&c<a.length;c++)if(!bd(a[c],b[c]))return!1;return!0}
+var Nf=0,Of=2,Pf=4,Qf=8,Rf=16,Sf=32,Tf=64,Uf=128,Vf=Tb.ReactCurrentDispatcher,Wf=0,Xf=null,O=null,P=null,Yf=null,Q=null,Zf=null,$f=0,ag=null,bg=0,cg=!1,dg=null,eg=0;function fg(){x("321")}function gg(a,b){if(null===b)return!1;for(var c=0;c<b.length&&c<a.length;c++)if(!bd(a[c],b[c]))return!1;return!0}
 function hg(a,b,c,d,e,f){Wf=f;Xf=b;P=null!==a?a.memoizedState:null;Vf.current=null===P?ig:jg;b=c(d,e);if(cg){do cg=!1,eg+=1,P=null!==a?a.memoizedState:null,Zf=Yf,ag=Q=O=null,Vf.current=jg,b=c(d,e);while(cg);dg=null;eg=0}Vf.current=kg;a=Xf;a.memoizedState=Yf;a.expirationTime=$f;a.updateQueue=ag;a.effectTag|=bg;a=null!==O&&null!==O.next;Wf=0;Zf=Q=Yf=P=O=Xf=null;$f=0;ag=null;bg=0;a?x("300"):void 0;return b}function lg(){Vf.current=kg;Wf=0;Zf=Q=Yf=P=O=Xf=null;$f=0;ag=null;bg=0;cg=!1;dg=null;eg=0}
 function mg(){var a={memoizedState:null,baseState:null,queue:null,baseUpdate:null,next:null};null===Q?Yf=Q=a:Q=Q.next=a;return Q}function ng(){if(null!==Zf)Q=Zf,Zf=Q.next,O=P,P=null!==O?O.next:null;else{null===P?x("310"):void 0;O=P;var a={memoizedState:O.memoizedState,baseState:O.baseState,queue:O.queue,baseUpdate:O.baseUpdate,next:null};Q=null===Q?Yf=a:Q.next=a;P=O.next}return Q}function og(a,b){return"function"===typeof b?b(a):b}
-function pg(a){var b=ng(),c=b.queue;null===c?x("311"):void 0;if(0<eg){var d=c.dispatch;if(null!==dg){var e=dg.get(c);if(void 0!==e){dg.delete(c);var f=b.memoizedState;do f=a(f,e.action),e=e.next;while(null!==e);bd(f,b.memoizedState)||(qg=!0);b.memoizedState=f;b.baseUpdate===c.last&&(b.baseState=f);c.eagerReducer=a;c.eagerState=f;return[f,d]}}return[b.memoizedState,d]}d=c.last;var g=b.baseUpdate;f=b.baseState;null!==g?(null!==d&&(d.next=null),d=g.next):d=null!==d?d.next:null;if(null!==d){var h=e=null,
-l=d,k=!1;do{var m=l.expirationTime;m<Wf?(k||(k=!0,h=g,e=f),m>$f&&($f=m)):f=l.eagerReducer===a?l.eagerState:a(f,l.action);g=l;l=l.next}while(null!==l&&l!==d);k||(h=g,e=f);bd(f,b.memoizedState)||(qg=!0);b.memoizedState=f;b.baseUpdate=h;b.baseState=e;c.eagerReducer=a;c.eagerState=f}return[b.memoizedState,c.dispatch]}
+function pg(a){var b=ng(),c=b.queue;null===c?x("311"):void 0;c.lastRenderedReducer=a;if(0<eg){var d=c.dispatch;if(null!==dg){var e=dg.get(c);if(void 0!==e){dg.delete(c);var f=b.memoizedState;do f=a(f,e.action),e=e.next;while(null!==e);bd(f,b.memoizedState)||(qg=!0);b.memoizedState=f;b.baseUpdate===c.last&&(b.baseState=f);c.lastRenderedState=f;return[f,d]}}return[b.memoizedState,d]}d=c.last;var g=b.baseUpdate;f=b.baseState;null!==g?(null!==d&&(d.next=null),d=g.next):d=null!==d?d.next:null;if(null!==
+d){var h=e=null,l=d,k=!1;do{var m=l.expirationTime;m<Wf?(k||(k=!0,h=g,e=f),m>$f&&($f=m)):f=l.eagerReducer===a?l.eagerState:a(f,l.action);g=l;l=l.next}while(null!==l&&l!==d);k||(h=g,e=f);bd(f,b.memoizedState)||(qg=!0);b.memoizedState=f;b.baseUpdate=h;b.baseState=e;c.lastRenderedState=f}return[b.memoizedState,c.dispatch]}
 function rg(a,b,c,d){a={tag:a,create:b,destroy:c,deps:d,next:null};null===ag?(ag={lastEffect:null},ag.lastEffect=a.next=a):(b=ag.lastEffect,null===b?ag.lastEffect=a.next=a:(c=b.next,b.next=a,a.next=c,ag.lastEffect=a));return a}function sg(a,b,c,d){var e=mg();bg|=a;e.memoizedState=rg(b,c,void 0,void 0===d?null:d)}
 function tg(a,b,c,d){var e=ng();d=void 0===d?null:d;var f=void 0;if(null!==O){var g=O.memoizedState;f=g.destroy;if(null!==d&&gg(d,g.deps)){rg(Nf,c,f,d);return}}bg|=a;e.memoizedState=rg(b,c,f,d)}function ug(a,b){if("function"===typeof b)return a=a(),b(a),function(){b(null)};if(null!==b&&void 0!==b)return a=a(),b.current=a,function(){b.current=null}}function vg(){}
 function wg(a,b,c){25>eg?void 0:x("301");var d=a.alternate;if(a===Xf||null!==d&&d===Xf)if(cg=!0,a={expirationTime:Wf,action:c,eagerReducer:null,eagerState:null,next:null},null===dg&&(dg=new Map),c=dg.get(b),void 0===c)dg.set(b,a);else{for(b=c;null!==b.next;)b=b.next;b.next=a}else{of();var e=lf();e=mf(e,a);var f={expirationTime:e,action:c,eagerReducer:null,eagerState:null,next:null},g=b.last;if(null===g)f.next=f;else{var h=g.next;null!==h&&(f.next=h);g.next=f}b.last=f;if(0===a.expirationTime&&(null===
-d||0===d.expirationTime)&&(d=b.eagerReducer,null!==d))try{var l=b.eagerState,k=d(l,c);f.eagerReducer=d;f.eagerState=k;if(bd(k,l))return}catch(m){}finally{}qf(a,e)}}
+d||0===d.expirationTime)&&(d=b.lastRenderedReducer,null!==d))try{var l=b.lastRenderedState,k=d(l,c);f.eagerReducer=d;f.eagerState=k;if(bd(k,l))return}catch(m){}finally{}qf(a,e)}}
 var kg={readContext:M,useCallback:fg,useContext:fg,useEffect:fg,useImperativeHandle:fg,useLayoutEffect:fg,useMemo:fg,useReducer:fg,useRef:fg,useState:fg,useDebugValue:fg},ig={readContext:M,useCallback:function(a,b){mg().memoizedState=[a,void 0===b?null:b];return a},useContext:M,useEffect:function(a,b){return sg(516,Uf|Tf,a,b)},useImperativeHandle:function(a,b,c){c=null!==c&&void 0!==c?c.concat([a]):null;return sg(4,Pf|Sf,ug.bind(null,b,a),c)},useLayoutEffect:function(a,b){return sg(4,Pf|Sf,a,b)},
-useMemo:function(a,b){var c=mg();b=void 0===b?null:b;a=a();c.memoizedState=[a,b];return a},useReducer:function(a,b,c){var d=mg();b=void 0!==c?c(b):b;d.memoizedState=d.baseState=b;a=d.queue={last:null,dispatch:null,eagerReducer:a,eagerState:b};a=a.dispatch=wg.bind(null,Xf,a);return[d.memoizedState,a]},useRef:function(a){var b=mg();a={current:a};return b.memoizedState=a},useState:function(a){var b=mg();"function"===typeof a&&(a=a());b.memoizedState=b.baseState=a;a=b.queue={last:null,dispatch:null,eagerReducer:og,
-eagerState:a};a=a.dispatch=wg.bind(null,Xf,a);return[b.memoizedState,a]},useDebugValue:vg},jg={readContext:M,useCallback:function(a,b){var c=ng();b=void 0===b?null:b;var d=c.memoizedState;if(null!==d&&null!==b&&gg(b,d[1]))return d[0];c.memoizedState=[a,b];return a},useContext:M,useEffect:function(a,b){return tg(516,Uf|Tf,a,b)},useImperativeHandle:function(a,b,c){c=null!==c&&void 0!==c?c.concat([a]):null;return tg(4,Pf|Sf,ug.bind(null,b,a),c)},useLayoutEffect:function(a,b){return tg(4,Pf|Sf,a,b)},
-useMemo:function(a,b){var c=ng();b=void 0===b?null:b;var d=c.memoizedState;if(null!==d&&null!==b&&gg(b,d[1]))return d[0];a=a();c.memoizedState=[a,b];return a},useReducer:pg,useRef:function(){return ng().memoizedState},useState:function(a){return pg(og,a)},useDebugValue:vg},xg=null,yg=null,zg=!1;
+useMemo:function(a,b){var c=mg();b=void 0===b?null:b;a=a();c.memoizedState=[a,b];return a},useReducer:function(a,b,c){var d=mg();b=void 0!==c?c(b):b;d.memoizedState=d.baseState=b;a=d.queue={last:null,dispatch:null,lastRenderedReducer:a,lastRenderedState:b};a=a.dispatch=wg.bind(null,Xf,a);return[d.memoizedState,a]},useRef:function(a){var b=mg();a={current:a};return b.memoizedState=a},useState:function(a){var b=mg();"function"===typeof a&&(a=a());b.memoizedState=b.baseState=a;a=b.queue={last:null,dispatch:null,
+lastRenderedReducer:og,lastRenderedState:a};a=a.dispatch=wg.bind(null,Xf,a);return[b.memoizedState,a]},useDebugValue:vg},jg={readContext:M,useCallback:function(a,b){var c=ng();b=void 0===b?null:b;var d=c.memoizedState;if(null!==d&&null!==b&&gg(b,d[1]))return d[0];c.memoizedState=[a,b];return a},useContext:M,useEffect:function(a,b){return tg(516,Uf|Tf,a,b)},useImperativeHandle:function(a,b,c){c=null!==c&&void 0!==c?c.concat([a]):null;return tg(4,Pf|Sf,ug.bind(null,b,a),c)},useLayoutEffect:function(a,
+b){return tg(4,Pf|Sf,a,b)},useMemo:function(a,b){var c=ng();b=void 0===b?null:b;var d=c.memoizedState;if(null!==d&&null!==b&&gg(b,d[1]))return d[0];a=a();c.memoizedState=[a,b];return a},useReducer:pg,useRef:function(){return ng().memoizedState},useState:function(a){return pg(og,a)},useDebugValue:vg},xg=null,yg=null,zg=!1;
 function Ag(a,b){var c=K(5,null,null,0);c.elementType="DELETED";c.type="DELETED";c.stateNode=b;c.return=a;c.effectTag=8;null!==a.lastEffect?(a.lastEffect.nextEffect=c,a.lastEffect=c):a.firstEffect=a.lastEffect=c}function Bg(a,b){switch(a.tag){case 5:var c=a.type;b=1!==b.nodeType||c.toLowerCase()!==b.nodeName.toLowerCase()?null:b;return null!==b?(a.stateNode=b,!0):!1;case 6:return b=""===a.pendingProps||3!==b.nodeType?null:b,null!==b?(a.stateNode=b,!0):!1;case 13:return!1;default:return!1}}
 function Cg(a){if(zg){var b=yg;if(b){var c=b;if(!Bg(a,b)){b=De(c);if(!b||!Bg(a,b)){a.effectTag|=2;zg=!1;xg=a;return}Ag(xg,c)}xg=a;yg=Ee(b)}else a.effectTag|=2,zg=!1,xg=a}}function Dg(a){for(a=a.return;null!==a&&5!==a.tag&&3!==a.tag&&18!==a.tag;)a=a.return;xg=a}function Eg(a){if(a!==xg)return!1;if(!zg)return Dg(a),zg=!0,!1;var b=a.type;if(5!==a.tag||"head"!==b&&"body"!==b&&!xe(b,a.memoizedProps))for(b=yg;b;)Ag(a,b),b=De(b);Dg(a);yg=xg?De(a.stateNode):null;return!0}function Fg(){yg=xg=null;zg=!1}
 var Gg=Tb.ReactCurrentOwner,qg=!1;function S(a,b,c,d){b.child=null===a?Ef(b,null,c,d):Df(b,a.child,c,d)}function Hg(a,b,c,d,e){c=c.render;var f=b.ref;Ig(b,e);d=hg(a,b,c,d,f,e);if(null!==a&&!qg)return b.updateQueue=a.updateQueue,b.effectTag&=-517,a.expirationTime<=e&&(a.expirationTime=0),Jg(a,b,e);b.effectTag|=1;S(a,b,d,e);return b.child}
@@ -29522,7 +29585,7 @@ b>c?b:c;0===b&&(Fh=null);$h(a,b)}
 function ai(a){for(;;){var b=a.alternate,c=a.return,d=a.sibling;if(0===(a.effectTag&1024)){T=a;a:{var e=b;b=a;var f=U;var g=b.pendingProps;switch(b.tag){case 2:break;case 16:break;case 15:case 0:break;case 1:J(b.type)&&Ke(b);break;case 3:Kf(b);Le(b);g=b.stateNode;g.pendingContext&&(g.context=g.pendingContext,g.pendingContext=null);if(null===e||null===e.child)Eg(b),b.effectTag&=-3;mh(b);break;case 5:Mf(b);var h=If(Hf.current);f=b.type;if(null!==e&&null!=b.stateNode)nh(e,b,f,g,h),e.ref!==b.ref&&(b.effectTag|=
 128);else if(g){var l=If(N.current);if(Eg(b)){g=b;e=g.stateNode;var k=g.type,m=g.memoizedProps,p=h;e[Fa]=g;e[Ga]=m;f=void 0;h=k;switch(h){case "iframe":case "object":E("load",e);break;case "video":case "audio":for(k=0;k<ab.length;k++)E(ab[k],e);break;case "source":E("error",e);break;case "img":case "image":case "link":E("error",e);E("load",e);break;case "form":E("reset",e);E("submit",e);break;case "details":E("toggle",e);break;case "input":wc(e,m);E("invalid",e);se(p,"onChange");break;case "select":e._wrapperState=
 {wasMultiple:!!m.multiple};E("invalid",e);se(p,"onChange");break;case "textarea":ce(e,m),E("invalid",e),se(p,"onChange")}qe(h,m);k=null;for(f in m)m.hasOwnProperty(f)&&(l=m[f],"children"===f?"string"===typeof l?e.textContent!==l&&(k=["children",l]):"number"===typeof l&&e.textContent!==""+l&&(k=["children",""+l]):ra.hasOwnProperty(f)&&null!=l&&se(p,f));switch(h){case "input":Rb(e);Ac(e,m,!0);break;case "textarea":Rb(e);ee(e,m);break;case "select":case "option":break;default:"function"===typeof m.onClick&&
-(e.onclick=te)}f=k;g.updateQueue=f;g=null!==f?!0:!1;g&&kh(b)}else{m=b;e=f;p=g;k=9===h.nodeType?h:h.ownerDocument;l===fe.html&&(l=ge(e));l===fe.html?"script"===e?(e=k.createElement("div"),e.innerHTML="<script>\x3c/script>",k=e.removeChild(e.firstChild)):"string"===typeof p.is?k=k.createElement(e,{is:p.is}):(k=k.createElement(e),"select"===e&&p.multiple&&(k.multiple=!0)):k=k.createElementNS(l,e);e=k;e[Fa]=m;e[Ga]=g;lh(e,b,!1,!1);p=e;k=f;m=g;var t=h,A=re(k,m);switch(k){case "iframe":case "object":E("load",
+(e.onclick=te)}f=k;g.updateQueue=f;g=null!==f?!0:!1;g&&kh(b)}else{m=b;p=f;e=g;k=9===h.nodeType?h:h.ownerDocument;l===fe.html&&(l=ge(p));l===fe.html?"script"===p?(e=k.createElement("div"),e.innerHTML="<script>\x3c/script>",k=e.removeChild(e.firstChild)):"string"===typeof e.is?k=k.createElement(p,{is:e.is}):(k=k.createElement(p),"select"===p&&(p=k,e.multiple?p.multiple=!0:e.size&&(p.size=e.size))):k=k.createElementNS(l,p);e=k;e[Fa]=m;e[Ga]=g;lh(e,b,!1,!1);p=e;k=f;m=g;var t=h,A=re(k,m);switch(k){case "iframe":case "object":E("load",
 p);h=m;break;case "video":case "audio":for(h=0;h<ab.length;h++)E(ab[h],p);h=m;break;case "source":E("error",p);h=m;break;case "img":case "image":case "link":E("error",p);E("load",p);h=m;break;case "form":E("reset",p);E("submit",p);h=m;break;case "details":E("toggle",p);h=m;break;case "input":wc(p,m);h=vc(p,m);E("invalid",p);se(t,"onChange");break;case "option":h=$d(p,m);break;case "select":p._wrapperState={wasMultiple:!!m.multiple};h=n({},m,{value:void 0});E("invalid",p);se(t,"onChange");break;case "textarea":ce(p,
 m);h=be(p,m);E("invalid",p);se(t,"onChange");break;default:h=m}qe(k,h);l=void 0;var v=k,R=p,u=h;for(l in u)if(u.hasOwnProperty(l)){var q=u[l];"style"===l?oe(R,q):"dangerouslySetInnerHTML"===l?(q=q?q.__html:void 0,null!=q&&je(R,q)):"children"===l?"string"===typeof q?("textarea"!==v||""!==q)&&ke(R,q):"number"===typeof q&&ke(R,""+q):"suppressContentEditableWarning"!==l&&"suppressHydrationWarning"!==l&&"autoFocus"!==l&&(ra.hasOwnProperty(l)?null!=q&&se(t,l):null!=q&&tc(R,l,q,A))}switch(k){case "input":Rb(p);
 Ac(p,m,!1);break;case "textarea":Rb(p);ee(p,m);break;case "option":null!=m.value&&p.setAttribute("value",""+uc(m.value));break;case "select":h=p;h.multiple=!!m.multiple;p=m.value;null!=p?ae(h,!!m.multiple,p,!1):null!=m.defaultValue&&ae(h,!!m.multiple,m.defaultValue,!0);break;default:"function"===typeof h.onClick&&(p.onclick=te)}(g=we(f,g))&&kh(b);b.stateNode=e}null!==b.ref&&(b.effectTag|=128)}else null===b.stateNode?x("166"):void 0;break;case 6:e&&null!=b.stateNode?oh(e,b,e.memoizedProps,g):("string"!==
@@ -29566,7 +29629,7 @@ function Ti(a,b){var c=2<arguments.length&&void 0!==arguments[2]?arguments[2]:nu
 var Vi={createPortal:Ti,findDOMNode:function(a){if(null==a)return null;if(1===a.nodeType)return a;var b=a._reactInternalFiber;void 0===b&&("function"===typeof a.render?x("188"):x("268",Object.keys(a)));a=hd(b);a=null===a?null:a.stateNode;return a},hydrate:function(a,b,c){Qi(b)?void 0:x("200");return Si(null,a,b,!0,c)},render:function(a,b,c){Qi(b)?void 0:x("200");return Si(null,a,b,!1,c)},unstable_renderSubtreeIntoContainer:function(a,b,c,d){Qi(c)?void 0:x("200");null==a||void 0===a._reactInternalFiber?
 x("38"):void 0;return Si(a,b,c,!1,d)},unmountComponentAtNode:function(a){Qi(a)?void 0:x("40");return a._reactRootContainer?(Hi(function(){Si(null,null,a,!1,function(){a._reactRootContainer=null})}),!0):!1},unstable_createPortal:function(){return Ti.apply(void 0,arguments)},unstable_batchedUpdates:Gi,unstable_interactiveUpdates:Ii,flushSync:function(a,b){W?x("187"):void 0;var c=X;X=!0;try{return ki(a,b)}finally{X=c,Yh(1073741823,!1)}},unstable_createRoot:Ui,unstable_flushControlled:function(a){var b=
 X;X=!0;try{ki(a)}finally{(X=b)||W||Yh(1073741823,!1)}},__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{Events:[Ia,Ja,Ka,Ba.injectEventPluginsByName,pa,Qa,function(a){ya(a,Pa)},Eb,Fb,Dd,Da]}};function Ui(a,b){Qi(a)?void 0:x("299","unstable_createRoot");return new Pi(a,!0,null!=b&&!0===b.hydrate)}
-(function(a){var b=a.findFiberByHostInstance;return Te(n({},a,{overrideProps:null,currentDispatcherRef:Tb.ReactCurrentDispatcher,findHostInstanceByFiber:function(a){a=hd(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null}}))})({findFiberByHostInstance:Ha,bundleType:0,version:"16.8.4",rendererPackageName:"react-dom"});var Wi={default:Vi},Xi=Wi&&Vi||Wi;module.exports=Xi.default||Xi;
+(function(a){var b=a.findFiberByHostInstance;return Te(n({},a,{overrideProps:null,currentDispatcherRef:Tb.ReactCurrentDispatcher,findHostInstanceByFiber:function(a){a=hd(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null}}))})({findFiberByHostInstance:Ha,bundleType:0,version:"16.8.6",rendererPackageName:"react-dom"});var Wi={default:Vi},Xi=Wi&&Vi||Wi;module.exports=Xi.default||Xi;
 
 },{"object-assign":13,"react":35,"scheduler":40}],24:[function(require,module,exports){
 (function (process){
@@ -29634,7 +29697,7 @@ if (process.env.NODE_ENV === 'production') {
 }).call(this,require('_process'))
 },{"./cjs/react-dom-test-utils.development.js":20,"./cjs/react-dom-test-utils.production.min.js":21,"_process":14}],27:[function(require,module,exports){
 (function (process){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-is.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -29864,7 +29927,7 @@ exports.isSuspense = isSuspense;
 
 }).call(this,require('_process'))
 },{"_process":14}],28:[function(require,module,exports){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -29893,7 +29956,7 @@ if (process.env.NODE_ENV === 'production') {
 }).call(this,require('_process'))
 },{"./cjs/react-is.development.js":27,"./cjs/react-is.production.min.js":28,"_process":14}],30:[function(require,module,exports){
 (function (process){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-test-renderer-shallow.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -30319,6 +30382,10 @@ var ReactShallowRenderer = function () {
   function ReactShallowRenderer() {
     _classCallCheck(this, ReactShallowRenderer);
 
+    this._reset();
+  }
+
+  ReactShallowRenderer.prototype._reset = function _reset() {
     this._context = null;
     this._element = null;
     this._instance = null;
@@ -30333,13 +30400,11 @@ var ReactShallowRenderer = function () {
     this._isReRender = false;
     this._didScheduleRenderPhaseUpdate = false;
     this._renderPhaseUpdates = null;
-    this._currentlyRenderingComponent = null;
     this._numberOfReRenders = 0;
-    this._previousComponentIdentity = null;
-  }
+  };
 
   ReactShallowRenderer.prototype._validateCurrentlyRenderingComponent = function _validateCurrentlyRenderingComponent() {
-    !(this._currentlyRenderingComponent !== null) ? invariant(false, 'Hooks can only be called inside the body of a function component. (https://fb.me/react-invalid-hook-call)') : void 0;
+    !(this._rendering && !this._instance) ? invariant(false, 'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.') : void 0;
   };
 
   ReactShallowRenderer.prototype._createDispatcher = function _createDispatcher() {
@@ -30349,32 +30414,44 @@ var ReactShallowRenderer = function () {
       _this._validateCurrentlyRenderingComponent();
       _this._createWorkInProgressHook();
       var workInProgressHook = _this._workInProgressHook;
+
       if (_this._isReRender) {
-        // This is a re-render. Apply the new render phase updates to the previous
+        // This is a re-render.
         var _queue = workInProgressHook.queue;
         var _dispatch = _queue.dispatch;
-        if (_this._renderPhaseUpdates !== null) {
-          // Render phase updates are stored in a map of queue -> linked list
-          var firstRenderPhaseUpdate = _this._renderPhaseUpdates.get(_queue);
-          if (firstRenderPhaseUpdate !== undefined) {
-            _this._renderPhaseUpdates.delete(_queue);
-            var newState = workInProgressHook.memoizedState;
-            var update = firstRenderPhaseUpdate;
-            do {
-              // Process this render phase update. We don't have to check the
-              // priority because it will always be the same as the current
-              // render's.
-              var _action = update.action;
-              newState = reducer(newState, _action);
-              update = update.next;
-            } while (update !== null);
-
-            workInProgressHook.memoizedState = newState;
-
-            return [newState, _dispatch];
+        if (_this._numberOfReRenders > 0) {
+          // Apply the new render phase updates to the previous current hook.
+          if (_this._renderPhaseUpdates !== null) {
+            // Render phase updates are stored in a map of queue -> linked list
+            var firstRenderPhaseUpdate = _this._renderPhaseUpdates.get(_queue);
+            if (firstRenderPhaseUpdate !== undefined) {
+              _this._renderPhaseUpdates.delete(_queue);
+              var _newState = workInProgressHook.memoizedState;
+              var _update = firstRenderPhaseUpdate;
+              do {
+                var _action = _update.action;
+                _newState = reducer(_newState, _action);
+                _update = _update.next;
+              } while (_update !== null);
+              workInProgressHook.memoizedState = _newState;
+              return [_newState, _dispatch];
+            }
           }
+          return [workInProgressHook.memoizedState, _dispatch];
         }
-        return [workInProgressHook.memoizedState, _dispatch];
+        // Process updates outside of render
+        var newState = workInProgressHook.memoizedState;
+        var update = _queue.first;
+        if (update !== null) {
+          do {
+            var _action2 = update.action;
+            newState = reducer(newState, _action2);
+            update = update.next;
+          } while (update !== null);
+          _queue.first = null;
+          workInProgressHook.memoizedState = newState;
+        }
+        return [newState, _dispatch];
       } else {
         var initialState = void 0;
         if (reducer === basicStateReducer) {
@@ -30385,10 +30462,10 @@ var ReactShallowRenderer = function () {
         }
         workInProgressHook.memoizedState = initialState;
         var _queue2 = workInProgressHook.queue = {
-          last: null,
+          first: null,
           dispatch: null
         };
-        var _dispatch2 = _queue2.dispatch = _this._dispatchAction.bind(_this, _this._currentlyRenderingComponent, _queue2);
+        var _dispatch2 = _queue2.dispatch = _this._dispatchAction.bind(_this, _queue2);
         return [workInProgressHook.memoizedState, _dispatch2];
       }
     };
@@ -30466,10 +30543,10 @@ var ReactShallowRenderer = function () {
     };
   };
 
-  ReactShallowRenderer.prototype._dispatchAction = function _dispatchAction(componentIdentity, queue, action) {
+  ReactShallowRenderer.prototype._dispatchAction = function _dispatchAction(queue, action) {
     !(this._numberOfReRenders < RE_RENDER_LIMIT) ? invariant(false, 'Too many re-renders. React limits the number of renders to prevent an infinite loop.') : void 0;
 
-    if (componentIdentity === this._currentlyRenderingComponent) {
+    if (this._rendering) {
       // This is a render phase update. Stash it in a lazily-created map of
       // queue -> linked list of updates. After this render pass, we'll restart
       // and apply the stashed updates on top of the work-in-progress hook.
@@ -30494,9 +30571,24 @@ var ReactShallowRenderer = function () {
         lastRenderPhaseUpdate.next = update;
       }
     } else {
-      // This means an update has happened after the function component has
-      // returned. On the server this is a no-op. In React Fiber, the update
-      // would be scheduled for a future render.
+      var _update2 = {
+        action: action,
+        next: null
+      };
+
+      // Append the update to the end of the list.
+      var last = queue.first;
+      if (last === null) {
+        queue.first = _update2;
+      } else {
+        while (last.next !== null) {
+          last = last.next;
+        }
+        last.next = _update2;
+      }
+
+      // Re-render now.
+      this.render(this._element, this._context);
     }
   };
 
@@ -30525,14 +30617,6 @@ var ReactShallowRenderer = function () {
     return this._workInProgressHook;
   };
 
-  ReactShallowRenderer.prototype._prepareToUseHooks = function _prepareToUseHooks(componentIdentity) {
-    if (this._previousComponentIdentity !== null && this._previousComponentIdentity !== componentIdentity) {
-      this._firstWorkInProgressHook = null;
-    }
-    this._currentlyRenderingComponent = componentIdentity;
-    this._previousComponentIdentity = componentIdentity;
-  };
-
   ReactShallowRenderer.prototype._finishHooks = function _finishHooks(element, context) {
     if (this._didScheduleRenderPhaseUpdate) {
       // Updates were scheduled during the render phase. They are stored in
@@ -30547,7 +30631,6 @@ var ReactShallowRenderer = function () {
       this._rendering = false;
       this.render(element, context);
     } else {
-      this._currentlyRenderingComponent = null;
       this._workInProgressHook = null;
       this._renderPhaseUpdates = null;
       this._numberOfReRenders = 0;
@@ -30569,50 +30652,74 @@ var ReactShallowRenderer = function () {
     element = element;
     // Show a special message for host elements since it's a common case.
     !(typeof element.type !== 'string') ? invariant(false, 'ReactShallowRenderer render(): Shallow rendering works only with custom components, not primitives (%s). Instead of calling `.render(el)` and inspecting the rendered output, look at `el.props` directly instead.', element.type) : void 0;
-    !(reactIs.isForwardRef(element) || typeof element.type === 'function') ? invariant(false, 'ReactShallowRenderer render(): Shallow rendering works only with custom components, but the provided element type was `%s`.', Array.isArray(element.type) ? 'array' : element.type === null ? 'null' : typeof element.type) : void 0;
+    !(reactIs.isForwardRef(element) || typeof element.type === 'function' || reactIs.isMemo(element.type)) ? invariant(false, 'ReactShallowRenderer render(): Shallow rendering works only with custom components, but the provided element type was `%s`.', Array.isArray(element.type) ? 'array' : element.type === null ? 'null' : typeof element.type) : void 0;
 
     if (this._rendering) {
       return;
     }
+    if (this._element != null && this._element.type !== element.type) {
+      this._reset();
+    }
+
+    var elementType = reactIs.isMemo(element.type) ? element.type.type : element.type;
+    var previousElement = this._element;
 
     this._rendering = true;
     this._element = element;
-    this._context = getMaskedContext(element.type.contextTypes, context);
+    this._context = getMaskedContext(elementType.contextTypes, context);
+
+    // Inner memo component props aren't currently validated in createElement.
+    if (reactIs.isMemo(element.type) && elementType.propTypes) {
+      currentlyValidatingElement = element;
+      checkPropTypes(elementType.propTypes, element.props, 'prop', getComponentName(elementType), getStackAddendum);
+    }
 
     if (this._instance) {
-      this._updateClassComponent(element, this._context);
+      this._updateClassComponent(elementType, element, this._context);
     } else {
-      if (reactIs.isForwardRef(element)) {
-        this._rendered = element.type.render(element.props, element.ref);
-      } else if (shouldConstruct(element.type)) {
-        this._instance = new element.type(element.props, this._context, this._updater);
-
-        if (typeof element.type.getDerivedStateFromProps === 'function') {
-          var partialState = element.type.getDerivedStateFromProps.call(null, element.props, this._instance.state);
+      if (shouldConstruct(elementType)) {
+        this._instance = new elementType(element.props, this._context, this._updater);
+        if (typeof elementType.getDerivedStateFromProps === 'function') {
+          var partialState = elementType.getDerivedStateFromProps.call(null, element.props, this._instance.state);
           if (partialState != null) {
             this._instance.state = _assign({}, this._instance.state, partialState);
           }
         }
 
-        if (element.type.hasOwnProperty('contextTypes')) {
+        if (elementType.contextTypes) {
           currentlyValidatingElement = element;
-
-          checkPropTypes(element.type.contextTypes, this._context, 'context', getName(element.type, this._instance), getStackAddendum);
+          checkPropTypes(elementType.contextTypes, this._context, 'context', getName(elementType, this._instance), getStackAddendum);
 
           currentlyValidatingElement = null;
         }
 
-        this._mountClassComponent(element, this._context);
+        this._mountClassComponent(elementType, element, this._context);
       } else {
-        var prevDispatcher = ReactCurrentDispatcher.current;
-        ReactCurrentDispatcher.current = this._dispatcher;
-        this._prepareToUseHooks(element.type);
-        try {
-          this._rendered = element.type.call(undefined, element.props, this._context);
-        } finally {
-          ReactCurrentDispatcher.current = prevDispatcher;
+        var shouldRender = true;
+        if (reactIs.isMemo(element.type) && previousElement !== null) {
+          // This is a Memo component that is being re-rendered.
+          var compare = element.type.compare || shallowEqual;
+          if (compare(previousElement.props, element.props)) {
+            shouldRender = false;
+          }
         }
-        this._finishHooks(element, context);
+        if (shouldRender) {
+          var prevDispatcher = ReactCurrentDispatcher.current;
+          ReactCurrentDispatcher.current = this._dispatcher;
+          try {
+            // elementType could still be a ForwardRef if it was
+            // nested inside Memo.
+            if (elementType.$$typeof === reactIs.ForwardRef) {
+              !(typeof elementType.render === 'function') ? invariant(false, 'forwardRef requires a render function but was given %s.', typeof elementType.render) : void 0;
+              this._rendered = elementType.render.call(undefined, element.props, element.ref);
+            } else {
+              this._rendered = elementType(element.props, this._context);
+            }
+          } finally {
+            ReactCurrentDispatcher.current = prevDispatcher;
+          }
+          this._finishHooks(element, context);
+        }
       }
     }
 
@@ -30628,17 +30735,10 @@ var ReactShallowRenderer = function () {
         this._instance.componentWillUnmount();
       }
     }
-
-    this._firstWorkInProgressHook = null;
-    this._previousComponentIdentity = null;
-    this._context = null;
-    this._element = null;
-    this._newState = null;
-    this._rendered = null;
-    this._instance = null;
+    this._reset();
   };
 
-  ReactShallowRenderer.prototype._mountClassComponent = function _mountClassComponent(element, context) {
+  ReactShallowRenderer.prototype._mountClassComponent = function _mountClassComponent(elementType, element, context) {
     this._instance.context = context;
     this._instance.props = element.props;
     this._instance.state = this._instance.state || null;
@@ -30649,7 +30749,7 @@ var ReactShallowRenderer = function () {
 
       // In order to support react-lifecycles-compat polyfilled components,
       // Unsafe lifecycles should not be invoked for components using the new APIs.
-      if (typeof element.type.getDerivedStateFromProps !== 'function' && typeof this._instance.getSnapshotBeforeUpdate !== 'function') {
+      if (typeof elementType.getDerivedStateFromProps !== 'function' && typeof this._instance.getSnapshotBeforeUpdate !== 'function') {
         if (typeof this._instance.componentWillMount === 'function') {
           this._instance.componentWillMount();
         }
@@ -30669,9 +30769,8 @@ var ReactShallowRenderer = function () {
     // because DOM refs are not available.
   };
 
-  ReactShallowRenderer.prototype._updateClassComponent = function _updateClassComponent(element, context) {
-    var props = element.props,
-        type = element.type;
+  ReactShallowRenderer.prototype._updateClassComponent = function _updateClassComponent(elementType, element, context) {
+    var props = element.props;
 
 
     var oldState = this._instance.state || emptyObject;
@@ -30680,7 +30779,7 @@ var ReactShallowRenderer = function () {
     if (oldProps !== props) {
       // In order to support react-lifecycles-compat polyfilled components,
       // Unsafe lifecycles should not be invoked for components using the new APIs.
-      if (typeof element.type.getDerivedStateFromProps !== 'function' && typeof this._instance.getSnapshotBeforeUpdate !== 'function') {
+      if (typeof elementType.getDerivedStateFromProps !== 'function' && typeof this._instance.getSnapshotBeforeUpdate !== 'function') {
         if (typeof this._instance.componentWillReceiveProps === 'function') {
           this._instance.componentWillReceiveProps(props, context);
         }
@@ -30692,8 +30791,8 @@ var ReactShallowRenderer = function () {
 
     // Read state after cWRP in case it calls setState
     var state = this._newState || oldState;
-    if (typeof type.getDerivedStateFromProps === 'function') {
-      var partialState = type.getDerivedStateFromProps.call(null, props, state);
+    if (typeof elementType.getDerivedStateFromProps === 'function') {
+      var partialState = elementType.getDerivedStateFromProps.call(null, props, state);
       if (partialState != null) {
         state = _assign({}, state, partialState);
       }
@@ -30705,14 +30804,14 @@ var ReactShallowRenderer = function () {
       this._forcedUpdate = false;
     } else if (typeof this._instance.shouldComponentUpdate === 'function') {
       shouldUpdate = !!this._instance.shouldComponentUpdate(props, state, context);
-    } else if (type.prototype && type.prototype.isPureReactComponent) {
+    } else if (elementType.prototype && elementType.prototype.isPureReactComponent) {
       shouldUpdate = !shallowEqual(oldProps, props) || !shallowEqual(oldState, state);
     }
 
     if (shouldUpdate) {
       // In order to support react-lifecycles-compat polyfilled components,
       // Unsafe lifecycles should not be invoked for components using the new APIs.
-      if (typeof element.type.getDerivedStateFromProps !== 'function' && typeof this._instance.getSnapshotBeforeUpdate !== 'function') {
+      if (typeof elementType.getDerivedStateFromProps !== 'function' && typeof this._instance.getSnapshotBeforeUpdate !== 'function') {
         if (typeof this._instance.componentWillUpdate === 'function') {
           this._instance.componentWillUpdate(props, state, context);
         }
@@ -30751,7 +30850,8 @@ function getDisplayName(element) {
   } else if (typeof element.type === 'string') {
     return element.type;
   } else {
-    return element.type.displayName || element.type.name || 'Unknown';
+    var elementType = reactIs.isMemo(element.type) ? element.type.type : element.type;
+    return elementType.displayName || elementType.name || 'Unknown';
   }
 }
 
@@ -30803,7 +30903,7 @@ module.exports = shallow;
 
 }).call(this,require('_process'))
 },{"_process":14,"object-assign":13,"prop-types/checkPropTypes":15,"react":35,"react-is":29}],31:[function(require,module,exports){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react-test-renderer-shallow.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -30812,31 +30912,32 @@ module.exports = shallow;
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';var g=require("object-assign"),h=require("react"),m=require("react-is"),p=require("prop-types/checkPropTypes");function q(a,b,d,c,e,l,n,k){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var f=[d,c,e,l,n,k],H=0;a=Error(b.replace(/%s/g,function(){return f[H++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
-function r(a){for(var b=arguments.length-1,d="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=0;c<b;c++)d+="&args[]="+encodeURIComponent(arguments[c+1]);q(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",d)}
-var t=/^(.*)[\\\/]/,u="function"===typeof Symbol&&Symbol.for,v=u?Symbol.for("react.portal"):60106,w=u?Symbol.for("react.fragment"):60107,x=u?Symbol.for("react.strict_mode"):60108,y=u?Symbol.for("react.profiler"):60114,z=u?Symbol.for("react.provider"):60109,A=u?Symbol.for("react.context"):60110,B=u?Symbol.for("react.concurrent_mode"):60111,C=u?Symbol.for("react.forward_ref"):60112,D=u?Symbol.for("react.suspense"):60113,E=u?Symbol.for("react.memo"):60115,F=u?Symbol.for("react.lazy"):60116;
-function G(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case B:return"ConcurrentMode";case w:return"Fragment";case v:return"Portal";case y:return"Profiler";case x:return"StrictMode";case D:return"Suspense"}if("object"===typeof a)switch(a.$$typeof){case A:return"Context.Consumer";case z:return"Context.Provider";case C:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
-case E:return G(a.type);case F:if(a=1===a._status?a._result:null)return G(a)}return null}function I(a,b){return a===b&&(0!==a||1/a===1/b)||a!==a&&b!==b}var J=Object.prototype.hasOwnProperty;function K(a,b){if(I(a,b))return!0;if("object"!==typeof a||null===a||"object"!==typeof b||null===b)return!1;var d=Object.keys(a),c=Object.keys(b);if(d.length!==c.length)return!1;for(c=0;c<d.length;c++)if(!J.call(b,d[c])||!I(a[d[c]],b[d[c]]))return!1;return!0}var L=h.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+'use strict';var k=require("object-assign"),l=require("react"),m=require("react-is"),n=require("prop-types/checkPropTypes");function p(a,b,d,c,f,e,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var H=[d,c,f,e,g,h],I=0;a=Error(b.replace(/%s/g,function(){return H[I++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+function q(a){for(var b=arguments.length-1,d="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=0;c<b;c++)d+="&args[]="+encodeURIComponent(arguments[c+1]);p(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",d)}
+var r=/^(.*)[\\\/]/,t="function"===typeof Symbol&&Symbol.for,u=t?Symbol.for("react.portal"):60106,v=t?Symbol.for("react.fragment"):60107,w=t?Symbol.for("react.strict_mode"):60108,x=t?Symbol.for("react.profiler"):60114,y=t?Symbol.for("react.provider"):60109,z=t?Symbol.for("react.context"):60110,A=t?Symbol.for("react.concurrent_mode"):60111,B=t?Symbol.for("react.forward_ref"):60112,C=t?Symbol.for("react.suspense"):60113,D=t?Symbol.for("react.memo"):60115,E=t?Symbol.for("react.lazy"):60116;
+function F(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case A:return"ConcurrentMode";case v:return"Fragment";case u:return"Portal";case x:return"Profiler";case w:return"StrictMode";case C:return"Suspense"}if("object"===typeof a)switch(a.$$typeof){case z:return"Context.Consumer";case y:return"Context.Provider";case B:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
+case D:return F(a.type);case E:if(a=1===a._status?a._result:null)return F(a)}return null}function G(a,b){return a===b&&(0!==a||1/a===1/b)||a!==a&&b!==b}var J=Object.prototype.hasOwnProperty;function K(a,b){if(G(a,b))return!0;if("object"!==typeof a||null===a||"object"!==typeof b||null===b)return!1;var d=Object.keys(a),c=Object.keys(b);if(d.length!==c.length)return!1;for(c=0;c<d.length;c++)if(!J.call(b,d[c])||!G(a[d[c]],b[d[c]]))return!1;return!0}var L=l.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
 L.hasOwnProperty("ReactCurrentDispatcher")||(L.ReactCurrentDispatcher={current:null});function M(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function");}
 var N=L.ReactCurrentDispatcher,O={},P=function(){function a(b){M(this,a);this._renderer=b;this._callbacks=[]}a.prototype._enqueueCallback=function(b,a){"function"===typeof b&&a&&this._callbacks.push({callback:b,publicInstance:a})};a.prototype._invokeCallbacks=function(){var b=this._callbacks;this._callbacks=[];b.forEach(function(b){b.callback.call(b.publicInstance)})};a.prototype.isMounted=function(){return!!this._renderer._element};a.prototype.enqueueForceUpdate=function(b,a){this._enqueueCallback(a,
-b);this._renderer._forcedUpdate=!0;this._renderer.render(this._renderer._element,this._renderer._context)};a.prototype.enqueueReplaceState=function(b,a,c){this._enqueueCallback(c,b);this._renderer._newState=a;this._renderer.render(this._renderer._element,this._renderer._context)};a.prototype.enqueueSetState=function(b,a,c){this._enqueueCallback(c,b);c=this._renderer._newState||b.state;"function"===typeof a&&(a=a.call(b,c,b.props));null!==a&&void 0!==a&&(this._renderer._newState=g({},c,a),this._renderer.render(this._renderer._element,
+b);this._renderer._forcedUpdate=!0;this._renderer.render(this._renderer._element,this._renderer._context)};a.prototype.enqueueReplaceState=function(b,a,c){this._enqueueCallback(c,b);this._renderer._newState=a;this._renderer.render(this._renderer._element,this._renderer._context)};a.prototype.enqueueSetState=function(b,a,c){this._enqueueCallback(c,b);c=this._renderer._newState||b.state;"function"===typeof a&&(a=a.call(b,c,b.props));null!==a&&void 0!==a&&(this._renderer._newState=k({},c,a),this._renderer.render(this._renderer._element,
 this._renderer._context))};return a}();function Q(){return{memoizedState:null,queue:null,next:null}}function R(a,b){return"function"===typeof b?b(a):b}
-var U=function(){function a(){M(this,a);this._rendered=this._newState=this._instance=this._element=this._context=null;this._forcedUpdate=this._rendering=!1;this._updater=new P(this);this._dispatcher=this._createDispatcher();this._firstWorkInProgressHook=this._workInProgressHook=null;this._didScheduleRenderPhaseUpdate=this._isReRender=!1;this._currentlyRenderingComponent=this._renderPhaseUpdates=null;this._numberOfReRenders=0;this._previousComponentIdentity=null}a.prototype._validateCurrentlyRenderingComponent=
-function(){null===this._currentlyRenderingComponent?r("307"):void 0};a.prototype._createDispatcher=function(){function b(){c._validateCurrentlyRenderingComponent()}function a(b,a,d){c._validateCurrentlyRenderingComponent();c._createWorkInProgressHook();var e=c._workInProgressHook;if(c._isReRender){var f=e.queue;a=f.dispatch;if(null!==c._renderPhaseUpdates&&(d=c._renderPhaseUpdates.get(f),void 0!==d)){c._renderPhaseUpdates.delete(f);f=e.memoizedState;do f=b(f,d.action),d=d.next;while(null!==d);e.memoizedState=
-f;return[f,a]}return[e.memoizedState,a]}b=b===R?"function"===typeof a?a():a:void 0!==d?d(a):a;e.memoizedState=b;b=e.queue={last:null,dispatch:null};b=b.dispatch=c._dispatchAction.bind(c,c._currentlyRenderingComponent,b);return[e.memoizedState,b]}var c=this;return{readContext:function(b){return b._currentValue},useCallback:function(b){return b},useContext:function(b){c._validateCurrentlyRenderingComponent();return b._currentValue},useDebugValue:b,useEffect:b,useImperativeHandle:b,useLayoutEffect:b,
-useMemo:function(b,a){c._validateCurrentlyRenderingComponent();c._createWorkInProgressHook();a=void 0!==a?a:null;if(null!==c._workInProgressHook&&null!==c._workInProgressHook.memoizedState){var d=c._workInProgressHook.memoizedState,e=d[1];if(null!==a){a:if(null===e)e=!1;else{for(var f=0;f<e.length&&f<a.length;f++)if(!I(a[f],e[f])){e=!1;break a}e=!0}if(e)return d[0]}}b=b();c._workInProgressHook.memoizedState=[b,a];return b},useReducer:a,useRef:function(b){c._validateCurrentlyRenderingComponent();c._createWorkInProgressHook();
-var a=c._workInProgressHook.memoizedState;return null===a?(b={current:b},c._workInProgressHook.memoizedState=b):a},useState:function(b){return a(R,b)}}};a.prototype._dispatchAction=function(b,a,c){25>this._numberOfReRenders?void 0:r("301");if(b===this._currentlyRenderingComponent){this._didScheduleRenderPhaseUpdate=!0;b={action:c,next:null};c=this._renderPhaseUpdates;null===c&&(this._renderPhaseUpdates=c=new Map);var d=c.get(a);if(void 0===d)c.set(a,b);else{for(a=d;null!==a.next;)a=a.next;a.next=
-b}}};a.prototype._createWorkInProgressHook=function(){null===this._workInProgressHook?null===this._firstWorkInProgressHook?(this._isReRender=!1,this._firstWorkInProgressHook=this._workInProgressHook=Q()):(this._isReRender=!0,this._workInProgressHook=this._firstWorkInProgressHook):null===this._workInProgressHook.next?(this._isReRender=!1,this._workInProgressHook=this._workInProgressHook.next=Q()):(this._isReRender=!0,this._workInProgressHook=this._workInProgressHook.next);return this._workInProgressHook};
-a.prototype._prepareToUseHooks=function(b){null!==this._previousComponentIdentity&&this._previousComponentIdentity!==b&&(this._firstWorkInProgressHook=null);this._previousComponentIdentity=this._currentlyRenderingComponent=b};a.prototype._finishHooks=function(b,a){this._didScheduleRenderPhaseUpdate?(this._didScheduleRenderPhaseUpdate=!1,this._numberOfReRenders+=1,this._workInProgressHook=null,this._rendering=!1,this.render(b,a)):(this._renderPhaseUpdates=this._workInProgressHook=this._currentlyRenderingComponent=
-null,this._numberOfReRenders=0)};a.prototype.getMountedInstance=function(){return this._instance};a.prototype.getRenderOutput=function(){return this._rendered};a.prototype.render=function(b){var a=1<arguments.length&&void 0!==arguments[1]?arguments[1]:O;h.isValidElement(b)?void 0:r("12","function"===typeof b?" Instead of passing a component class, make sure to instantiate it by passing it to React.createElement.":"");"string"===typeof b.type?r("13",b.type):void 0;m.isForwardRef(b)||"function"===typeof b.type?
-void 0:r("249",Array.isArray(b.type)?"array":null===b.type?"null":typeof b.type);if(!this._rendering){this._rendering=!0;this._element=b;var c;if((c=b.type.contextTypes)&&a){var e={},l;for(l in c)e[l]=a[l];c=e}else c=O;this._context=c;if(this._instance)this._updateClassComponent(b,this._context);else if(m.isForwardRef(b))this._rendered=b.type.render(b.props,b.ref);else if(c=b.type,c.prototype&&c.prototype.isReactComponent)this._instance=new b.type(b.props,this._context,this._updater),"function"===
-typeof b.type.getDerivedStateFromProps&&(a=b.type.getDerivedStateFromProps.call(null,b.props,this._instance.state),null!=a&&(this._instance.state=g({},this._instance.state,a))),b.type.hasOwnProperty("contextTypes")&&(S=b,a=b.type,c=(c=this._instance)&&c.constructor,p(b.type.contextTypes,this._context,"context",a.displayName||c&&c.displayName||a.name||c&&c.name||null,T),S=null),this._mountClassComponent(b,this._context);else{c=N.current;N.current=this._dispatcher;this._prepareToUseHooks(b.type);try{this._rendered=
-b.type.call(void 0,b.props,this._context)}finally{N.current=c}this._finishHooks(b,a)}this._rendering=!1;this._updater._invokeCallbacks();return this.getRenderOutput()}};a.prototype.unmount=function(){this._instance&&"function"===typeof this._instance.componentWillUnmount&&this._instance.componentWillUnmount();this._instance=this._rendered=this._newState=this._element=this._context=this._previousComponentIdentity=this._firstWorkInProgressHook=null};a.prototype._mountClassComponent=function(b,a){this._instance.context=
-a;this._instance.props=b.props;this._instance.state=this._instance.state||null;this._instance.updater=this._updater;if("function"===typeof this._instance.UNSAFE_componentWillMount||"function"===typeof this._instance.componentWillMount)a=this._newState,"function"!==typeof b.type.getDerivedStateFromProps&&"function"!==typeof this._instance.getSnapshotBeforeUpdate&&("function"===typeof this._instance.componentWillMount&&this._instance.componentWillMount(),"function"===typeof this._instance.UNSAFE_componentWillMount&&
-this._instance.UNSAFE_componentWillMount()),a!==this._newState&&(this._instance.state=this._newState||O);this._rendered=this._instance.render()};a.prototype._updateClassComponent=function(a,d){var b=a.props,e=a.type,l=this._instance.state||O,n=this._instance.props;n!==b&&"function"!==typeof a.type.getDerivedStateFromProps&&"function"!==typeof this._instance.getSnapshotBeforeUpdate&&("function"===typeof this._instance.componentWillReceiveProps&&this._instance.componentWillReceiveProps(b,d),"function"===
-typeof this._instance.UNSAFE_componentWillReceiveProps&&this._instance.UNSAFE_componentWillReceiveProps(b,d));var k=this._newState||l;if("function"===typeof e.getDerivedStateFromProps){var f=e.getDerivedStateFromProps.call(null,b,k);null!=f&&(k=g({},k,f))}f=!0;this._forcedUpdate?(f=!0,this._forcedUpdate=!1):"function"===typeof this._instance.shouldComponentUpdate?f=!!this._instance.shouldComponentUpdate(b,k,d):e.prototype&&e.prototype.isPureReactComponent&&(f=!K(n,b)||!K(l,k));f&&"function"!==typeof a.type.getDerivedStateFromProps&&
-"function"!==typeof this._instance.getSnapshotBeforeUpdate&&("function"===typeof this._instance.componentWillUpdate&&this._instance.componentWillUpdate(b,k,d),"function"===typeof this._instance.UNSAFE_componentWillUpdate&&this._instance.UNSAFE_componentWillUpdate(b,k,d));this._instance.context=d;this._instance.props=b;this._instance.state=k;this._newState=null;f&&(this._rendered=this._instance.render())};return a}();U.createRenderer=function(){return new U};var S=null;
-function T(){var a="";if(S){var b=null==S?"#empty":"string"===typeof S||"number"===typeof S?"#text":"string"===typeof S.type?S.type:S.type.displayName||S.type.name||"Unknown",d=S._owner,c=S._source;d=d&&G(d.type);var e="";c?e=" (at "+c.fileName.replace(t,"")+":"+c.lineNumber+")":d&&(e=" (created by "+d+")");a+="\n    in "+(b||"Unknown")+e}return a}var V={default:U},W=V&&U||V;module.exports=W.default||W;
+var U=function(){function a(){M(this,a);this._reset()}a.prototype._reset=function(){this._rendered=this._newState=this._instance=this._element=this._context=null;this._forcedUpdate=this._rendering=!1;this._updater=new P(this);this._dispatcher=this._createDispatcher();this._firstWorkInProgressHook=this._workInProgressHook=null;this._didScheduleRenderPhaseUpdate=this._isReRender=!1;this._renderPhaseUpdates=null;this._numberOfReRenders=0};a.prototype._validateCurrentlyRenderingComponent=function(){!this._rendering||
+this._instance?q("321"):void 0};a.prototype._createDispatcher=function(){function b(){c._validateCurrentlyRenderingComponent()}function a(b,a,d){c._validateCurrentlyRenderingComponent();c._createWorkInProgressHook();var f=c._workInProgressHook;if(c._isReRender){d=f.queue;a=d.dispatch;if(0<c._numberOfReRenders){if(null!==c._renderPhaseUpdates){var e=c._renderPhaseUpdates.get(d);if(void 0!==e){c._renderPhaseUpdates.delete(d);d=f.memoizedState;do d=b(d,e.action),e=e.next;while(null!==e);f.memoizedState=
+d;return[d,a]}}return[f.memoizedState,a]}e=f.memoizedState;var g=d.first;if(null!==g){do e=b(e,g.action),g=g.next;while(null!==g);d.first=null;f.memoizedState=e}return[e,a]}b=b===R?"function"===typeof a?a():a:void 0!==d?d(a):a;f.memoizedState=b;b=f.queue={first:null,dispatch:null};b=b.dispatch=c._dispatchAction.bind(c,b);return[f.memoizedState,b]}var c=this;return{readContext:function(b){return b._currentValue},useCallback:function(b){return b},useContext:function(b){c._validateCurrentlyRenderingComponent();
+return b._currentValue},useDebugValue:b,useEffect:b,useImperativeHandle:b,useLayoutEffect:b,useMemo:function(b,a){c._validateCurrentlyRenderingComponent();c._createWorkInProgressHook();a=void 0!==a?a:null;if(null!==c._workInProgressHook&&null!==c._workInProgressHook.memoizedState){var d=c._workInProgressHook.memoizedState,f=d[1];if(null!==a){a:if(null===f)f=!1;else{for(var e=0;e<f.length&&e<a.length;e++)if(!G(a[e],f[e])){f=!1;break a}f=!0}if(f)return d[0]}}b=b();c._workInProgressHook.memoizedState=
+[b,a];return b},useReducer:a,useRef:function(b){c._validateCurrentlyRenderingComponent();c._createWorkInProgressHook();var a=c._workInProgressHook.memoizedState;return null===a?(b={current:b},c._workInProgressHook.memoizedState=b):a},useState:function(b){return a(R,b)}}};a.prototype._dispatchAction=function(b,a){25>this._numberOfReRenders?void 0:q("301");if(this._rendering){this._didScheduleRenderPhaseUpdate=!0;a={action:a,next:null};var c=this._renderPhaseUpdates;null===c&&(this._renderPhaseUpdates=
+c=new Map);var d=c.get(b);if(void 0===d)c.set(b,a);else{for(b=d;null!==b.next;)b=b.next;b.next=a}}else{a={action:a,next:null};c=b.first;if(null===c)b.first=a;else{for(;null!==c.next;)c=c.next;c.next=a}this.render(this._element,this._context)}};a.prototype._createWorkInProgressHook=function(){null===this._workInProgressHook?null===this._firstWorkInProgressHook?(this._isReRender=!1,this._firstWorkInProgressHook=this._workInProgressHook=Q()):(this._isReRender=!0,this._workInProgressHook=this._firstWorkInProgressHook):
+null===this._workInProgressHook.next?(this._isReRender=!1,this._workInProgressHook=this._workInProgressHook.next=Q()):(this._isReRender=!0,this._workInProgressHook=this._workInProgressHook.next);return this._workInProgressHook};a.prototype._finishHooks=function(b,a){this._didScheduleRenderPhaseUpdate?(this._didScheduleRenderPhaseUpdate=!1,this._numberOfReRenders+=1,this._workInProgressHook=null,this._rendering=!1,this.render(b,a)):(this._renderPhaseUpdates=this._workInProgressHook=null,this._numberOfReRenders=
+0)};a.prototype.getMountedInstance=function(){return this._instance};a.prototype.getRenderOutput=function(){return this._rendered};a.prototype.render=function(b){var a=1<arguments.length&&void 0!==arguments[1]?arguments[1]:O;l.isValidElement(b)?void 0:q("12","function"===typeof b?" Instead of passing a component class, make sure to instantiate it by passing it to React.createElement.":"");"string"===typeof b.type?q("13",b.type):void 0;m.isForwardRef(b)||"function"===typeof b.type||m.isMemo(b.type)?
+void 0:q("249",Array.isArray(b.type)?"array":null===b.type?"null":typeof b.type);if(!this._rendering){null!=this._element&&this._element.type!==b.type&&this._reset();var c=m.isMemo(b.type)?b.type.type:b.type,f=this._element;this._rendering=!0;this._element=b;var e;if((e=c.contextTypes)&&a){var g={},h;for(h in e)g[h]=a[h];e=g}else e=O;this._context=e;m.isMemo(b.type)&&c.propTypes&&(S=b,n(c.propTypes,b.props,"prop",F(c),T));if(this._instance)this._updateClassComponent(c,b,this._context);else if(c.prototype&&
+c.prototype.isReactComponent)this._instance=new c(b.props,this._context,this._updater),"function"===typeof c.getDerivedStateFromProps&&(a=c.getDerivedStateFromProps.call(null,b.props,this._instance.state),null!=a&&(this._instance.state=k({},this._instance.state,a))),c.contextTypes&&(S=b,a=(a=this._instance)&&a.constructor,n(c.contextTypes,this._context,"context",c.displayName||a&&a.displayName||c.name||a&&a.name||null,T),S=null),this._mountClassComponent(c,b,this._context);else if(e=!0,m.isMemo(b.type)&&
+null!==f&&(b.type.compare||K)(f.props,b.props)&&(e=!1),e){f=N.current;N.current=this._dispatcher;try{c.$$typeof===m.ForwardRef?("function"!==typeof c.render?q("322",typeof c.render):void 0,this._rendered=c.render.call(void 0,b.props,b.ref)):this._rendered=c(b.props,this._context)}finally{N.current=f}this._finishHooks(b,a)}this._rendering=!1;this._updater._invokeCallbacks();return this.getRenderOutput()}};a.prototype.unmount=function(){this._instance&&"function"===typeof this._instance.componentWillUnmount&&
+this._instance.componentWillUnmount();this._reset()};a.prototype._mountClassComponent=function(a,d,c){this._instance.context=c;this._instance.props=d.props;this._instance.state=this._instance.state||null;this._instance.updater=this._updater;if("function"===typeof this._instance.UNSAFE_componentWillMount||"function"===typeof this._instance.componentWillMount)d=this._newState,"function"!==typeof a.getDerivedStateFromProps&&"function"!==typeof this._instance.getSnapshotBeforeUpdate&&("function"===typeof this._instance.componentWillMount&&
+this._instance.componentWillMount(),"function"===typeof this._instance.UNSAFE_componentWillMount&&this._instance.UNSAFE_componentWillMount()),d!==this._newState&&(this._instance.state=this._newState||O);this._rendered=this._instance.render()};a.prototype._updateClassComponent=function(a,d,c){d=d.props;var b=this._instance.state||O,e=this._instance.props;e!==d&&"function"!==typeof a.getDerivedStateFromProps&&"function"!==typeof this._instance.getSnapshotBeforeUpdate&&("function"===typeof this._instance.componentWillReceiveProps&&
+this._instance.componentWillReceiveProps(d,c),"function"===typeof this._instance.UNSAFE_componentWillReceiveProps&&this._instance.UNSAFE_componentWillReceiveProps(d,c));var g=this._newState||b;if("function"===typeof a.getDerivedStateFromProps){var h=a.getDerivedStateFromProps.call(null,d,g);null!=h&&(g=k({},g,h))}h=!0;this._forcedUpdate?(h=!0,this._forcedUpdate=!1):"function"===typeof this._instance.shouldComponentUpdate?h=!!this._instance.shouldComponentUpdate(d,g,c):a.prototype&&a.prototype.isPureReactComponent&&
+(h=!K(e,d)||!K(b,g));h&&"function"!==typeof a.getDerivedStateFromProps&&"function"!==typeof this._instance.getSnapshotBeforeUpdate&&("function"===typeof this._instance.componentWillUpdate&&this._instance.componentWillUpdate(d,g,c),"function"===typeof this._instance.UNSAFE_componentWillUpdate&&this._instance.UNSAFE_componentWillUpdate(d,g,c));this._instance.context=c;this._instance.props=d;this._instance.state=g;this._newState=null;h&&(this._rendered=this._instance.render())};return a}();
+U.createRenderer=function(){return new U};var S=null;function V(a){if(null==a)return"#empty";if("string"===typeof a||"number"===typeof a)return"#text";if("string"===typeof a.type)return a.type;a=m.isMemo(a.type)?a.type.type:a.type;return a.displayName||a.name||"Unknown"}function T(){var a="";if(S){var b=V(S),d=S._owner,c=S._source;d=d&&F(d.type);var f="";c?f=" (at "+c.fileName.replace(r,"")+":"+c.lineNumber+")":d&&(f=" (created by "+d+")");a+="\n    in "+(b||"Unknown")+f}return a}
+var W={default:U},X=W&&U||W;module.exports=X.default||X;
 
 },{"object-assign":13,"prop-types/checkPropTypes":15,"react":35,"react-is":29}],32:[function(require,module,exports){
 (function (process){
@@ -30851,7 +30952,7 @@ if (process.env.NODE_ENV === 'production') {
 }).call(this,require('_process'))
 },{"./cjs/react-test-renderer-shallow.development.js":30,"./cjs/react-test-renderer-shallow.production.min.js":31,"_process":14}],33:[function(require,module,exports){
 (function (process){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -30873,7 +30974,7 @@ var checkPropTypes = require('prop-types/checkPropTypes');
 
 // TODO: this is special because it gets imported during build.
 
-var ReactVersion = '16.8.4';
+var ReactVersion = '16.8.6';
 
 // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
 // nor polyfill, then a plain number is used for performance.
@@ -32286,7 +32387,7 @@ function memo(type, compare) {
 
 function resolveDispatcher() {
   var dispatcher = ReactCurrentDispatcher.current;
-  !(dispatcher !== null) ? invariant(false, 'Hooks can only be called inside the body of a function component. (https://fb.me/react-invalid-hook-call)') : void 0;
+  !(dispatcher !== null) ? invariant(false, 'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n1. You might have mismatching versions of React and the renderer (such as React DOM)\n2. You might be breaking the Rules of Hooks\n3. You might have more than one copy of React in the same app\nSee https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.') : void 0;
   return dispatcher;
 }
 
@@ -32755,7 +32856,7 @@ module.exports = react;
 
 }).call(this,require('_process'))
 },{"_process":14,"object-assign":13,"prop-types/checkPropTypes":15}],34:[function(require,module,exports){
-/** @license React v16.8.4
+/** @license React v16.8.6
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -32774,11 +32875,11 @@ function da(a,b){return{$$typeof:p,type:a.type,key:b,ref:a.ref,props:a.props,_ow
 function R(a){a.result=null;a.keyPrefix=null;a.func=null;a.context=null;a.count=0;10>P.length&&P.push(a)}
 function S(a,b,d,c){var e=typeof a;if("undefined"===e||"boolean"===e)a=null;var g=!1;if(null===a)g=!0;else switch(e){case "string":case "number":g=!0;break;case "object":switch(a.$$typeof){case p:case q:g=!0}}if(g)return d(c,a,""===b?"."+T(a,0):b),1;g=0;b=""===b?".":b+":";if(Array.isArray(a))for(var h=0;h<a.length;h++){e=a[h];var f=b+T(e,h);g+=S(e,f,d,c)}else if(null===a||"object"!==typeof a?f=null:(f=A&&a[A]||a["@@iterator"],f="function"===typeof f?f:null),"function"===typeof f)for(a=f.call(a),h=
 0;!(e=a.next()).done;)e=e.value,f=b+T(e,h++),g+=S(e,f,d,c);else"object"===e&&(d=""+a,B("31","[object Object]"===d?"object with keys {"+Object.keys(a).join(", ")+"}":d,""));return g}function U(a,b,d){return null==a?0:S(a,"",b,d)}function T(a,b){return"object"===typeof a&&null!==a&&null!=a.key?escape(a.key):b.toString(36)}function ea(a,b){a.func.call(a.context,b,a.count++)}
-function fa(a,b,d){var c=a.result,e=a.keyPrefix;a=a.func.call(a.context,b,a.count++);Array.isArray(a)?V(a,c,d,function(a){return a}):null!=a&&(N(a)&&(a=da(a,e+(!a.key||b&&b.key===a.key?"":(""+a.key).replace(O,"$&/")+"/")+d)),c.push(a))}function V(a,b,d,c,e){var g="";null!=d&&(g=(""+d).replace(O,"$&/")+"/");b=Q(b,g,c,e);U(a,fa,b);R(b)}function W(){var a=I.current;null===a?B("307"):void 0;return a}
+function fa(a,b,d){var c=a.result,e=a.keyPrefix;a=a.func.call(a.context,b,a.count++);Array.isArray(a)?V(a,c,d,function(a){return a}):null!=a&&(N(a)&&(a=da(a,e+(!a.key||b&&b.key===a.key?"":(""+a.key).replace(O,"$&/")+"/")+d)),c.push(a))}function V(a,b,d,c,e){var g="";null!=d&&(g=(""+d).replace(O,"$&/")+"/");b=Q(b,g,c,e);U(a,fa,b);R(b)}function W(){var a=I.current;null===a?B("321"):void 0;return a}
 var X={Children:{map:function(a,b,d){if(null==a)return a;var c=[];V(a,c,null,b,d);return c},forEach:function(a,b,d){if(null==a)return a;b=Q(null,null,b,d);U(a,ea,b);R(b)},count:function(a){return U(a,function(){return null},null)},toArray:function(a){var b=[];V(a,b,null,function(a){return a});return b},only:function(a){N(a)?void 0:B("143");return a}},createRef:function(){return{current:null}},Component:E,PureComponent:G,createContext:function(a,b){void 0===b&&(b=null);a={$$typeof:w,_calculateChangedBits:b,
 _currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null};a.Provider={$$typeof:v,_context:a};return a.Consumer=a},forwardRef:function(a){return{$$typeof:y,render:a}},lazy:function(a){return{$$typeof:ba,_ctor:a,_status:-1,_result:null}},memo:function(a,b){return{$$typeof:aa,type:a,compare:void 0===b?null:b}},useCallback:function(a,b){return W().useCallback(a,b)},useContext:function(a,b){return W().useContext(a,b)},useEffect:function(a,b){return W().useEffect(a,b)},useImperativeHandle:function(a,
 b,d){return W().useImperativeHandle(a,b,d)},useDebugValue:function(){},useLayoutEffect:function(a,b){return W().useLayoutEffect(a,b)},useMemo:function(a,b){return W().useMemo(a,b)},useReducer:function(a,b,d){return W().useReducer(a,b,d)},useRef:function(a){return W().useRef(a)},useState:function(a){return W().useState(a)},Fragment:r,StrictMode:t,Suspense:z,createElement:M,cloneElement:function(a,b,d){null===a||void 0===a?B("267",a):void 0;var c=void 0,e=k({},a.props),g=a.key,h=a.ref,f=a._owner;if(null!=
-b){void 0!==b.ref&&(h=b.ref,f=J.current);void 0!==b.key&&(g=""+b.key);var l=void 0;a.type&&a.type.defaultProps&&(l=a.type.defaultProps);for(c in b)K.call(b,c)&&!L.hasOwnProperty(c)&&(e[c]=void 0===b[c]&&void 0!==l?l[c]:b[c])}c=arguments.length-2;if(1===c)e.children=d;else if(1<c){l=Array(c);for(var m=0;m<c;m++)l[m]=arguments[m+2];e.children=l}return{$$typeof:p,type:a.type,key:g,ref:h,props:e,_owner:f}},createFactory:function(a){var b=M.bind(null,a);b.type=a;return b},isValidElement:N,version:"16.8.4",
+b){void 0!==b.ref&&(h=b.ref,f=J.current);void 0!==b.key&&(g=""+b.key);var l=void 0;a.type&&a.type.defaultProps&&(l=a.type.defaultProps);for(c in b)K.call(b,c)&&!L.hasOwnProperty(c)&&(e[c]=void 0===b[c]&&void 0!==l?l[c]:b[c])}c=arguments.length-2;if(1===c)e.children=d;else if(1<c){l=Array(c);for(var m=0;m<c;m++)l[m]=arguments[m+2];e.children=l}return{$$typeof:p,type:a.type,key:g,ref:h,props:e,_owner:f}},createFactory:function(a){var b=M.bind(null,a);b.type=a;return b},isValidElement:N,version:"16.8.6",
 unstable_ConcurrentMode:x,unstable_Profiler:u,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentDispatcher:I,ReactCurrentOwner:J,assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default||Z;
 
 },{"object-assign":13}],35:[function(require,module,exports){
@@ -32794,7 +32895,7 @@ if (process.env.NODE_ENV === 'production') {
 }).call(this,require('_process'))
 },{"./cjs/react.development.js":33,"./cjs/react.production.min.js":34,"_process":14}],36:[function(require,module,exports){
 (function (process){
-/** @license React v0.13.4
+/** @license React v0.13.6
  * scheduler-tracing.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -33220,7 +33321,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 }).call(this,require('_process'))
 },{"_process":14}],37:[function(require,module,exports){
-/** @license React v0.13.4
+/** @license React v0.13.6
  * scheduler-tracing.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -33233,7 +33334,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 },{}],38:[function(require,module,exports){
 (function (process,global){
-/** @license React v0.13.4
+/** @license React v0.13.6
  * scheduler.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -33936,7 +34037,7 @@ exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":14}],39:[function(require,module,exports){
 (function (global){
-/** @license React v0.13.4
+/** @license React v0.13.6
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -35065,7 +35166,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
     }, {
       key: "shouldComponentUpdate",
       value: function shouldComponentUpdate(nextProps, nextState) {
-        return (0, _reactAddonsShallowCompare.default)(this, nextProps, nextState);
+        return (0, _reactAddonsShallowCompare["default"])(this, nextProps, nextState);
       }
     }, {
       key: "componentDidMount",
@@ -35093,7 +35194,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         var labelType = jqLite.type(label);
 
         if (labelType == 'string' && label.length || labelType == 'object') {
-          labelEl = _react.default.createElement(Label, {
+          labelEl = _react["default"].createElement(Label, {
             text: label,
             onClick: this.onClickCB,
             htmlFor: this.props.id
@@ -35111,10 +35212,10 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         inputCls['mui--is-not-empty'] = !this.state.isEmpty;
         inputCls['mui--is-invalid'] = invalid;
         inputCls = util.classNames(inputCls);
-        return _react.default.createElement("div", {
+        return _react["default"].createElement("div", {
           className: wrapperCls + ' ' + className,
           style: style
-        }, _react.default.createElement(TextfieldComponent, babelHelpers.extends({
+        }, _react["default"].createElement(TextfieldComponent, babelHelpers["extends"]({
           className: inputCls,
           inputRef: function inputRef(el) {
             _this2.controlEl = el;
@@ -35127,7 +35228,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
       }
     }]);
     return _class;
-  }(_react.default.Component), babelHelpers.defineProperty(_class, "defaultProps", {
+  }(_react["default"].Component), babelHelpers.defineProperty(_class, "defaultProps", {
     className: '',
     hint: null,
     invalid: false,
@@ -35196,7 +35297,7 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("label", {
+      return _react["default"].createElement("label", {
         style: this.state.style,
         onClick: this.props.onClick,
         htmlFor: this.props.htmlFor,
@@ -35206,7 +35307,7 @@ function (_React$Component2) {
     }
   }]);
   return Label;
-}(_react.default.Component);
+}(_react["default"].Component);
 /**
  * isEmpty helper
  * @function
@@ -35233,7 +35334,7 @@ function isEmpty(value) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35257,13 +35358,13 @@ function (_React$Component) {
       var _this$props = this.props,
           children = _this$props.children,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-appbar ' + this.props.className
       }), children);
     }
   }]);
   return Appbar;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -35271,7 +35372,7 @@ babelHelpers.defineProperty(Appbar, "defaultProps", {
   className: ''
 });
 var _default = Appbar;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],52:[function(require,module,exports){
@@ -35284,7 +35385,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35445,7 +35546,7 @@ function (_React$Component) {
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react.default.createElement("button", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("button", babelHelpers["extends"]({}, reactProps, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -35455,9 +35556,9 @@ function (_React$Component) {
         onMouseLeave: this.onMouseLeaveCB,
         onTouchStart: this.onTouchStartCB,
         onTouchEnd: this.onTouchEndCB
-      }), this.props.children, _react.default.createElement("span", {
+      }), this.props.children, _react["default"].createElement("span", {
         className: "mui-btn__ripple-container"
-      }, _react.default.createElement("span", {
+      }, _react["default"].createElement("span", {
         ref: function ref(el) {
           _this2.rippleElRef = el;
         },
@@ -35467,7 +35568,7 @@ function (_React$Component) {
     }
   }]);
   return Button;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -35478,7 +35579,7 @@ babelHelpers.defineProperty(Button, "defaultProps", {
   variant: 'default'
 });
 var _default = Button;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":47,"../js/lib/util":48,"react":35}],53:[function(require,module,exports){
@@ -35491,7 +35592,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35515,13 +35616,13 @@ function (_React$Component) {
       var _this$props = this.props,
           children = _this$props.children,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
-      return _react.default.createElement("span", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("span", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-caret ' + this.props.className
       }));
     }
   }]);
   return Caret;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -35529,7 +35630,7 @@ babelHelpers.defineProperty(Caret, "defaultProps", {
   className: ''
 });
 var _default = Caret;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],54:[function(require,module,exports){
@@ -35542,7 +35643,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35584,9 +35685,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-checkbox ' + className
-      }), _react.default.createElement("label", null, _react.default.createElement("input", {
+      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -35605,7 +35706,7 @@ function (_React$Component) {
     }
   }]);
   return Checkbox;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -35614,7 +35715,7 @@ babelHelpers.defineProperty(Checkbox, "defaultProps", {
   label: null
 });
 var _default = Checkbox;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"./_helpers":49,"react":35}],55:[function(require,module,exports){
@@ -35627,7 +35728,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35676,13 +35777,13 @@ function (_React$Component) {
       }
 
       cls = util.classNames(cls);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Col;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -35700,7 +35801,7 @@ babelHelpers.defineProperty(Col, "defaultProps", {
   'xl-offset': null
 });
 var _default = Col;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"react":35}],56:[function(require,module,exports){
@@ -35713,7 +35814,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35742,13 +35843,13 @@ function (_React$Component) {
       var cls = 'mui-container'; // fluid containers
 
       if (fluid) cls += '-fluid';
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Container;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -35757,7 +35858,7 @@ babelHelpers.defineProperty(Container, "defaultProps", {
   fluid: false
 });
 var _default = Container;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],57:[function(require,module,exports){
@@ -35770,7 +35871,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35795,13 +35896,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-divider ' + className
       }));
     }
   }]);
   return Divider;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -35809,7 +35910,7 @@ babelHelpers.defineProperty(Divider, "defaultProps", {
   className: ''
 });
 var _default = Divider;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],58:[function(require,module,exports){
@@ -35825,7 +35926,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35855,7 +35956,7 @@ function (_React$Component) {
           value = _this$props.value,
           onClick = _this$props.onClick,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "link", "target", "value", "onClick"]);
-      return _react.default.createElement("li", reactProps, _react.default.createElement("a", {
+      return _react["default"].createElement("li", reactProps, _react["default"].createElement("a", {
         href: link,
         target: target,
         "data-mui-value": value,
@@ -35864,12 +35965,12 @@ function (_React$Component) {
     }
   }]);
   return DropdownItem;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
 var _default = DropdownItem;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"react":35}],59:[function(require,module,exports){
@@ -35885,7 +35986,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36034,12 +36135,12 @@ function (_React$Component) {
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
 
       if (jqLite.type(label) === 'string') {
-        labelEl = _react.default.createElement("span", null, label, " ", _react.default.createElement(_caret.default, null));
+        labelEl = _react["default"].createElement("span", null, label, " ", _react["default"].createElement(_caret["default"], null));
       } else {
         labelEl = label;
       }
 
-      buttonEl = _react.default.createElement(_button.default, {
+      buttonEl = _react["default"].createElement(_button["default"], {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -36057,7 +36158,7 @@ function (_React$Component) {
         cs[openClass] = this.state.opened;
         cs[rightClass] = alignMenu === 'right';
         cs = util.classNames(cs);
-        menuEl = _react.default.createElement("ul", {
+        menuEl = _react["default"].createElement("ul", {
           ref: function ref(el) {
             _this2.menuElRef = el;
           },
@@ -36068,10 +36169,10 @@ function (_React$Component) {
           onClick: this.selectCB
         }, children);
       } else {
-        menuEl = _react.default.createElement("div", null);
+        menuEl = _react["default"].createElement("div", null);
       }
 
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -36080,7 +36181,7 @@ function (_React$Component) {
     }
   }]);
   return Dropdown;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36096,7 +36197,7 @@ babelHelpers.defineProperty(Dropdown, "defaultProps", {
   disabled: false
 });
 var _default = Dropdown;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":47,"../js/lib/util":48,"./button":52,"./caret":53,"react":35}],60:[function(require,module,exports){
@@ -36109,7 +36210,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36138,13 +36239,13 @@ function (_React$Component) {
       var cls = 'mui-form'; // inline form
 
       if (inline) cls += ' mui-form--inline';
-      return _react.default.createElement("form", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("form", babelHelpers["extends"]({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Form;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36153,7 +36254,7 @@ babelHelpers.defineProperty(Form, "defaultProps", {
   inline: false
 });
 var _default = Form;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],61:[function(require,module,exports){
@@ -36166,7 +36267,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36179,14 +36280,14 @@ var _textfieldHelpers = require("./_textfieldHelpers");
 var Input = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
   var inputRef = props.inputRef,
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]);
-  return _react.default.createElement("input", babelHelpers.extends({
+  return _react["default"].createElement("input", babelHelpers["extends"]({
     ref: inputRef
   }, rest));
 });
 /** Module API */
 
 var _default = Input;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"./_textfieldHelpers":50,"react":35}],62:[function(require,module,exports){
@@ -36199,7 +36300,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36230,11 +36331,11 @@ function (_React$Component) {
           children = _this$props.children,
           label = _this$props.label,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "label"]);
-      return _react.default.createElement("option", reactProps, label);
+      return _react["default"].createElement("option", reactProps, label);
     }
   }]);
   return Option;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36243,7 +36344,7 @@ babelHelpers.defineProperty(Option, "defaultProps", {
   label: null
 });
 var _default = Option;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":46,"../js/lib/jqLite":47,"../js/lib/util":48,"./_helpers":49,"react":35}],63:[function(require,module,exports){
@@ -36256,7 +36357,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36281,13 +36382,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-panel ' + className
       }), children);
     }
   }]);
   return Panel;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36295,7 +36396,7 @@ babelHelpers.defineProperty(Panel, "defaultProps", {
   className: ''
 });
 var _default = Panel;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],64:[function(require,module,exports){
@@ -36308,7 +36409,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36346,9 +36447,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-radio ' + className
-      }), _react.default.createElement("label", null, _react.default.createElement("input", {
+      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -36367,7 +36468,7 @@ function (_React$Component) {
     }
   }]);
   return Radio;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36376,7 +36477,7 @@ babelHelpers.defineProperty(Radio, "defaultProps", {
   label: null
 });
 var _default = Radio;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],65:[function(require,module,exports){
@@ -36389,7 +36490,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36417,13 +36518,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         className: 'mui-row ' + className
       }), children);
     }
   }]);
   return Row;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36431,7 +36532,7 @@ babelHelpers.defineProperty(Row, "defaultProps", {
   className: ''
 });
 var _default = Row;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"react":35}],66:[function(require,module,exports){
@@ -36444,7 +36545,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36608,7 +36709,7 @@ function (_React$Component) {
           selectCls;
 
       if (this.state.showMenu) {
-        menuElem = _react.default.createElement(Menu, {
+        menuElem = _react["default"].createElement(Menu, {
           optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
@@ -36643,7 +36744,7 @@ function (_React$Component) {
       if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue; // handle placeholder
 
       if (placeholder) {
-        placeholderElem = _react.default.createElement("option", {
+        placeholderElem = _react["default"].createElement("option", {
           className: "mui--text-placeholder",
           value: ""
         }, placeholder); // apply class if value is empty
@@ -36653,7 +36754,7 @@ function (_React$Component) {
         }
       }
 
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -36662,7 +36763,7 @@ function (_React$Component) {
         className: 'mui-select ' + className,
         onClick: this.onOuterClickCB,
         onKeyDown: this.onOuterKeyDownCB
-      }), _react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
+      }), _react["default"].createElement("select", babelHelpers["extends"]({}, valueArgs, {
         ref: function ref(el) {
           _this2.controlEl = el;
         },
@@ -36674,13 +36775,13 @@ function (_React$Component) {
         onChange: this.onInnerChangeCB,
         onMouseDown: this.onInnerMouseDownCB,
         required: this.props.required
-      }), placeholderElem, children), _react.default.createElement("label", {
+      }), placeholderElem, children), _react["default"].createElement("label", {
         tabIndex: "-1"
       }, label), menuElem);
     }
   }]);
   return Select;
-}(_react.default.Component);
+}(_react["default"].Component);
 /**
  * Menu constructor
  * @class
@@ -36900,14 +37001,14 @@ function (_React$Component2) {
 
 
         cls += optionEl.className;
-        menuItems.push(_react.default.createElement("div", {
+        menuItems.push(_react["default"].createElement("div", {
           key: i,
           className: cls,
           onClick: this.onClick.bind(this, val)
         }, optionEl.textContent));
       }
 
-      return _react.default.createElement("div", {
+      return _react["default"].createElement("div", {
         ref: function ref(el) {
           _this4.wrapperElRef = el;
         },
@@ -36916,7 +37017,7 @@ function (_React$Component2) {
     }
   }]);
   return Menu;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36927,7 +37028,7 @@ babelHelpers.defineProperty(Menu, "defaultProps", {
   onClose: null
 });
 var _default = Select;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":46,"../js/lib/jqLite":47,"../js/lib/util":48,"./_helpers":49,"react":35}],67:[function(require,module,exports){
@@ -36943,7 +37044,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36968,7 +37069,7 @@ function (_React$Component) {
     }
   }]);
   return Tab;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -36978,7 +37079,7 @@ babelHelpers.defineProperty(Tab, "defaultProps", {
   onActive: null
 });
 var _default = Tab;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"react":35}],68:[function(require,module,exports){
@@ -36995,7 +37096,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -37074,7 +37175,7 @@ function (_React$Component) {
           selectedIndex = _this$props.selectedIndex,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "defaultSelectedIndex", "initialSelectedIndex", "justified", "selectedIndex"]);
 
-      var tabs = _react.default.Children.toArray(children);
+      var tabs = _react["default"].Children.toArray(children);
 
       var tabEls = [],
           paneEls = [],
@@ -37088,19 +37189,19 @@ function (_React$Component) {
       for (i = 0; i < m; i++) {
         item = tabs[i]; // only accept MUITab elements
 
-        if (item.type !== _tab.default) util.raiseError('Expecting MUITab React Element');
+        if (item.type !== _tab["default"]) util.raiseError('Expecting MUITab React Element');
         isActive = i === currentSelectedIndex ? true : false; // tab element
 
-        tabEls.push(_react.default.createElement("li", {
+        tabEls.push(_react["default"].createElement("li", {
           key: i,
           className: isActive ? isActiveClass : ''
-        }, _react.default.createElement("a", {
+        }, _react["default"].createElement("a", {
           onClick: this.onClick.bind(this, i, item)
         }, item.props.label))); // pane element
 
         cls = tabsPaneClass + ' ';
         if (isActive) cls += isActiveClass;
-        paneEls.push(_react.default.createElement("div", {
+        paneEls.push(_react["default"].createElement("div", {
           key: i,
           className: cls
         }, item.props.children));
@@ -37108,13 +37209,13 @@ function (_React$Component) {
 
       cls = tabsBarClass;
       if (justified) cls += ' ' + tabsBarJustifiedClass;
-      return _react.default.createElement("div", reactProps, _react.default.createElement("ul", {
+      return _react["default"].createElement("div", reactProps, _react["default"].createElement("ul", {
         className: cls
       }, tabEls), paneEls);
     }
   }]);
   return Tabs;
-}(_react.default.Component);
+}(_react["default"].Component);
 /** Define module API */
 
 
@@ -37131,7 +37232,7 @@ babelHelpers.defineProperty(Tabs, "defaultProps", {
   selectedIndex: null
 });
 var _default = Tabs;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 }).call(this,require('_process'))
@@ -37145,7 +37246,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -37160,12 +37261,12 @@ var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]); // default number of rows
 
   if (!'rows' in rest) rest.rows = 2;
-  return _react.default.createElement("textarea", babelHelpers.extends({
+  return _react["default"].createElement("textarea", babelHelpers["extends"]({
     ref: inputRef
   }, rest));
 });
 var _default = Textarea;
-exports.default = _default;
+exports["default"] = _default;
 module.exports = exports.default;
 
 },{"./_textfieldHelpers":50,"react":35}],70:[function(require,module,exports){
@@ -37482,29 +37583,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/appbar', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_appbar.default, null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_appbar["default"], null, "test"));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-appbar ');
+    _assert["default"].equal(result.props.className, 'mui-appbar ');
 
-    _assert.default.equal(result.props.children, 'test');
+    _assert["default"].equal(result.props.children, 'test');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_appbar.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_appbar["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-appbar additional');
+    _assert["default"].equal(result.props.className, 'mui-appbar additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_appbar.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_appbar["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -37533,63 +37634,63 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/button', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], null, "test"));
 
-    _assert.default.equal(result.type, 'button');
+    _assert["default"].equal(result.type, 'button');
 
-    _assert.default.equal(/\bmui-btn\b/.test(result.props.className), true);
+    _assert["default"].equal(/\bmui-btn\b/.test(result.props.className), true);
 
-    _assert.default.equal(result.props.children[0], 'test');
+    _assert["default"].equal(result.props.children[0], 'test');
   });
   it('renders properly with addtional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(/\badditional\b/.test(result.props.className), true);
+    _assert["default"].equal(/\badditional\b/.test(result.props.className), true);
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('supports colors', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
       color: "primary"
     }, "test"));
 
-    _assert.default.equal(/mui-btn--primary/.test(result.props.className), true);
+    _assert["default"].equal(/mui-btn--primary/.test(result.props.className), true);
   });
   it('supports variants', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
       variant: "raised"
     }, "test"));
 
-    _assert.default.equal(/mui-btn--raised/.test(result.props.className), true);
+    _assert["default"].equal(/mui-btn--raised/.test(result.props.className), true);
   });
   it('supports sizes', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
       size: "large"
     }, "test"));
 
-    _assert.default.equal(/mui-btn--large/.test(result.props.className), true);
+    _assert["default"].equal(/mui-btn--large/.test(result.props.className), true);
   });
   it('supports type attribute', function () {
     // check default
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], null, "test"));
 
-    _assert.default.equal(result.props.type, null); // check 'button' type
+    _assert["default"].equal(result.props.type, null); // check 'button' type
 
 
-    result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
+    result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
       type: "button"
     }, "test"));
 
-    _assert.default.equal(result.props.type, 'button');
+    _assert["default"].equal(result.props.type, 'button');
   });
   it('supports click, mouse and touch events', function () {
     var executedEvents = [],
@@ -37609,7 +37710,7 @@ describe('react/button', function () {
       onTouchEnd: fn
     };
 
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_button.default, props, "test")); // trigger events
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_button["default"], props, "test")); // trigger events
 
 
     var k, eventName, eventType;
@@ -37619,7 +37720,7 @@ describe('react/button', function () {
       eventName = k.charAt(2).toLowerCase() + k.substr(3, k.length);
       eventType = eventName.toLowerCase(); // trigger event
 
-      _testUtils.default.Simulate[eventName](node.buttonElRef, {
+      _testUtils["default"].Simulate[eventName](node.buttonElRef, {
         type: eventType
       });
 
@@ -37627,35 +37728,35 @@ describe('react/button', function () {
     } // check that events were executed
 
 
-    _assert.default.deepEqual(triggeredEvents, executedEvents);
+    _assert["default"].deepEqual(triggeredEvents, executedEvents);
   });
   it('renders ripples on click', function (done) {
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_button.default, null, "test")),
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_button["default"], null, "test")),
         buttonEl = node.buttonElRef,
         rippleEl = node.rippleElRef; // check state before click
 
 
-    _assert.default.equal(node.state.ripple, null);
+    _assert["default"].equal(node.state.ripple, null);
 
-    _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-visible'), false); // trigger ripple
-
-
-    _testUtils.default.Simulate.mouseDown(buttonEl); // check state after click
+    _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-visible'), false); // trigger ripple
 
 
-    _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-visible'), true);
+    _testUtils["default"].Simulate.mouseDown(buttonEl); // check state after click
 
-    _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-animating'), false); // check animation
+
+    _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-visible'), true);
+
+    _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-animating'), false); // check animation
 
 
     (0, _util.requestAnimationFrame)(function () {
-      _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-animating'), true); // remove ripple
+      _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-animating'), true); // remove ripple
 
 
-      _testUtils.default.Simulate.mouseUp(node.buttonElRef);
+      _testUtils["default"].Simulate.mouseUp(node.buttonElRef);
 
       (0, _util.requestAnimationFrame)(function () {
-        _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-visible'), false);
+        _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-visible'), false);
 
         done();
       });
@@ -37680,29 +37781,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/caret', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_caret.default, null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_caret["default"], null, "test"));
 
-    _assert.default.equal(result.type, 'span');
+    _assert["default"].equal(result.type, 'span');
 
-    _assert.default.equal(result.props.className, 'mui-caret ');
+    _assert["default"].equal(result.props.className, 'mui-caret ');
 
-    _assert.default.equal(result.props.children, undefined);
+    _assert["default"].equal(result.props.children, undefined);
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_caret.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_caret["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-caret additional');
+    _assert["default"].equal(result.props.className, 'mui-caret additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_caret.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_caret["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -37730,52 +37831,52 @@ var _reactHelpers = require("../lib/react-helpers");
 describe('react/checkbox', function () {
   var elem;
   beforeEach(function () {
-    elem = _react.default.createElement(_checkbox.default, {
+    elem = _react["default"].createElement(_checkbox["default"], {
       label: "My Label"
     });
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-checkbox ');
+    _assert["default"].equal(result.props.className, 'mui-checkbox ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_checkbox.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_checkbox["default"], {
       className: "additional",
       label: "test"
     }));
 
-    _assert.default.equal(result.props.className, 'mui-checkbox additional');
+    _assert["default"].equal(result.props.className, 'mui-checkbox additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_checkbox.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_checkbox["default"], {
       style: {
         additonal: 'style'
       },
       label: "test"
     }));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('renders content properly', function () {
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom.default.findDOMNode(instance);
+    var wrapperEl = _reactDom["default"].findDOMNode(instance);
 
-    _assert.default.equal(wrapperEl.children.length, 1);
+    _assert["default"].equal(wrapperEl.children.length, 1);
 
     var labelEl = wrapperEl.children[0];
 
-    _assert.default.equal(labelEl.tagName, 'LABEL');
+    _assert["default"].equal(labelEl.tagName, 'LABEL');
 
     var inputEl = labelEl.children[0];
 
-    _assert.default.equal(inputEl.tagName, 'INPUT');
+    _assert["default"].equal(inputEl.tagName, 'INPUT');
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass.default)({
+    var TestApp = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           checked: this.props.checked
@@ -37787,7 +37888,7 @@ describe('react/checkbox', function () {
         });
       },
       render: function render() {
-        return _react.default.createElement(_checkbox.default, {
+        return _react["default"].createElement(_checkbox["default"], {
           ref: "refEl",
           checked: this.state.checked,
           onChange: this.onChange
@@ -37795,29 +37896,29 @@ describe('react/checkbox', function () {
       }
     });
 
-    var elem = _react.default.createElement(TestApp, {
+    var elem = _react["default"].createElement(TestApp, {
       checked: false
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
     var inputEl = instance.refs.refEl.controlEl; // check default value
 
-    _assert.default.equal(inputEl.checked, false); // update TestApp and check inputEl value
+    _assert["default"].equal(inputEl.checked, false); // update TestApp and check inputEl value
 
 
     instance.setState({
       checked: true
     });
 
-    _assert.default.equal(inputEl.checked, true); // update inputEl and check state
+    _assert["default"].equal(inputEl.checked, true); // update inputEl and check state
 
 
     inputEl.checked = false;
 
-    _testUtils.default.Simulate.change(inputEl);
+    _testUtils["default"].Simulate.change(inputEl);
 
-    _assert.default.equal(instance.state.checked, false);
+    _assert["default"].equal(instance.state.checked, false);
   });
   it('supports onChange method', function (done) {
     var counter = 0;
@@ -37826,19 +37927,19 @@ describe('react/checkbox', function () {
       counter += 1;
     };
 
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_checkbox.default, {
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_checkbox["default"], {
       onChange: onChangeFn
     })); // change checkbox
 
 
-    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'input');
+    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'input');
 
-    _testUtils.default.Simulate.change(inputEl); // test conditions
+    _testUtils["default"].Simulate.change(inputEl); // test conditions
 
 
     setTimeout(function () {
       // one onChange event (https://github.com/muicss/mui/issues/94)
-      _assert.default.equal(counter, 1);
+      _assert["default"].equal(counter, 1);
 
       done();
     }, 50);
@@ -37864,7 +37965,7 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/grid', function () {
   it('col renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_col.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_col["default"], {
       xs: 1,
       sm: 2,
       md: 3,
@@ -37875,41 +37976,41 @@ describe('react/grid', function () {
       "lg-offset": 8
     }, "My Content"));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
     var className = result.props.className;
 
-    _assert.default.equal(/mui-col-xs-1/.test(className), true);
+    _assert["default"].equal(/mui-col-xs-1/.test(className), true);
 
-    _assert.default.equal(/mui-col-sm-2/.test(className), true);
+    _assert["default"].equal(/mui-col-sm-2/.test(className), true);
 
-    _assert.default.equal(/mui-col-md-3/.test(className), true);
+    _assert["default"].equal(/mui-col-md-3/.test(className), true);
 
-    _assert.default.equal(/mui-col-lg-4/.test(className), true);
+    _assert["default"].equal(/mui-col-lg-4/.test(className), true);
 
-    _assert.default.equal(/mui-col-xs-offset-5/.test(className), true);
+    _assert["default"].equal(/mui-col-xs-offset-5/.test(className), true);
 
-    _assert.default.equal(/mui-col-sm-offset-6/.test(className), true);
+    _assert["default"].equal(/mui-col-sm-offset-6/.test(className), true);
 
-    _assert.default.equal(/mui-col-md-offset-7/.test(className), true);
+    _assert["default"].equal(/mui-col-md-offset-7/.test(className), true);
 
-    _assert.default.equal(/mui-col-lg-offset-8/.test(className), true);
+    _assert["default"].equal(/mui-col-lg-offset-8/.test(className), true);
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_col.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_col["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, ' additional');
+    _assert["default"].equal(result.props.className, ' additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_col.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_col["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -37930,40 +38031,40 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/container', function () {
   it('renders default properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], null, "test"));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-container ');
+    _assert["default"].equal(result.props.className, 'mui-container ');
 
-    _assert.default.equal(result.props.children, 'test');
+    _assert["default"].equal(result.props.children, 'test');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-container additional');
+    _assert["default"].equal(result.props.className, 'mui-container additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('rendes fluid properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], {
       fluid: true
     }, "test"));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-container-fluid ');
+    _assert["default"].equal(result.props.className, 'mui-container-fluid ');
 
-    _assert.default.equal(result.props.children, 'test');
+    _assert["default"].equal(result.props.children, 'test');
   });
 });
 
@@ -37984,29 +38085,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/divider', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_divider.default, null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_divider["default"], null, "test"));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-divider ');
+    _assert["default"].equal(result.props.className, 'mui-divider ');
 
-    _assert.default.equal(result.props.children, undefined);
+    _assert["default"].equal(result.props.children, undefined);
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_divider.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_divider["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-divider additional');
+    _assert["default"].equal(result.props.className, 'mui-divider additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_divider.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_divider["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -38034,69 +38135,69 @@ var util = babelHelpers.interopRequireWildcard(require("../../src/js/lib/util"))
 describe('react/dropdown', function () {
   var elem;
   beforeEach(function () {
-    elem = _react.default.createElement(_dropdown.default, null, _react.default.createElement(_dropdownItem.default, null, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"));
+    elem = _react["default"].createElement(_dropdown["default"], null, _react["default"].createElement(_dropdownItem["default"], null, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"));
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-dropdown ');
+    _assert["default"].equal(result.props.className, 'mui-dropdown ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_dropdown.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_dropdown["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-dropdown additional');
+    _assert["default"].equal(result.props.className, 'mui-dropdown additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_dropdown.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_dropdown["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('renders menu on click', function () {
-    var node = _testUtils.default.renderIntoDocument(elem);
+    var node = _testUtils["default"].renderIntoDocument(elem);
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button'); // check menu is hidden
-
-
-    _assert.default.equal(node.menuElRef, undefined); // click to render menu
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button'); // check menu is hidden
 
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _assert["default"].equal(node.menuElRef, undefined); // click to render menu
+
+
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     });
 
     var cls = 'mui-dropdown__menu mui--is-open';
 
-    _assert.default.equal(node.menuElRef.className, cls); // click again to hide
+    _assert["default"].equal(node.menuElRef.className, cls); // click again to hide
 
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     });
 
-    _assert.default.equal(node.menuElRef, undefined);
+    _assert["default"].equal(node.menuElRef, undefined);
   });
   it('renders options into menu', function () {
-    var node = _testUtils.default.renderIntoDocument(elem); // render menu
+    var node = _testUtils["default"].renderIntoDocument(elem); // render menu
 
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button');
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     }); // check menu
 
 
     var menuEl = node.menuElRef;
 
-    _assert.default.equal(menuEl.children.length, 3); // check content
+    _assert["default"].equal(menuEl.children.length, 3); // check content
 
 
     var el;
@@ -38104,9 +38205,9 @@ describe('react/dropdown', function () {
     for (var i = 0; i < menuEl.children.length; i++) {
       el = menuEl.children[i];
 
-      _assert.default.equal(el.tagName, 'LI');
+      _assert["default"].equal(el.tagName, 'LI');
 
-      _assert.default.equal(el.textContent, 'Option ' + (i + 1));
+      _assert["default"].equal(el.textContent, 'Option ' + (i + 1));
     }
   });
   it('handles onClick method on toggle button', function (done) {
@@ -38114,14 +38215,14 @@ describe('react/dropdown', function () {
       done();
     };
 
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_dropdown.default, {
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], {
       onClick: onClickFn
-    }, _react.default.createElement(_dropdownItem.default, null, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"))); // trigger event
+    }, _react["default"].createElement(_dropdownItem["default"], null, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"))); // trigger event
 
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button');
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     });
   });
@@ -38132,55 +38233,55 @@ describe('react/dropdown', function () {
       counter += 1;
     };
 
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_dropdown.default, null, _react.default.createElement(_dropdownItem.default, {
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], null, _react["default"].createElement(_dropdownItem["default"], {
       onClick: onClickFn
-    }, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"))); // open menu
+    }, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"))); // open menu
 
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button');
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     }); // click on first menu item
 
 
-    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _testUtils.default.Simulate.click(anchorEl); // test conditions
+    _testUtils["default"].Simulate.click(anchorEl); // test conditions
 
 
     setTimeout(function () {
       // one click per child (https://github.com/muicss/mui/issues/92)
-      _assert.default.equal(counter, 1);
+      _assert["default"].equal(counter, 1);
 
       done();
     }, 50);
   });
   it('closes menu after item click', function () {
-    var node = _testUtils.default.renderIntoDocument(elem); // open menu
+    var node = _testUtils["default"].renderIntoDocument(elem); // open menu
 
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button');
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     }); // click on first menu item
 
 
-    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _testUtils.default.Simulate.click(anchorEl); // check that menu has closed
+    _testUtils["default"].Simulate.click(anchorEl); // check that menu has closed
 
 
-    _assert.default.equal(node.menuElRef, undefined);
+    _assert["default"].equal(node.menuElRef, undefined);
   });
   it('closes menu after Escape key press', function () {
-    var node = _testUtils.default.renderIntoDocument(elem); // open menu
+    var node = _testUtils["default"].renderIntoDocument(elem); // open menu
 
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button');
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     }); // press Escape
 
@@ -38189,49 +38290,49 @@ describe('react/dropdown', function () {
       key: 'Escape'
     }); // check that menu has closed
 
-    _assert.default.equal(node.menuElRef, undefined);
+    _assert["default"].equal(node.menuElRef, undefined);
   });
   it('handles onSelect method on dropdown', function (done) {
     var onSelectFn = function onSelectFn(value) {
-      _assert.default.equal(value, 'opt1');
+      _assert["default"].equal(value, 'opt1');
 
       done();
     };
 
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_dropdown.default, {
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], {
       onSelect: onSelectFn
-    }, _react.default.createElement(_dropdownItem.default, {
+    }, _react["default"].createElement(_dropdownItem["default"], {
       value: "opt1"
-    }, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"))); // open menu
+    }, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"))); // open menu
 
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button');
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     }); // click on first menu item
 
 
-    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _testUtils.default.Simulate.click(anchorEl);
+    _testUtils["default"].Simulate.click(anchorEl);
   });
   it('renders target attribute on DropdownItem', function () {
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_dropdown.default, null, _react.default.createElement(_dropdownItem.default, {
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], null, _react["default"].createElement(_dropdownItem["default"], {
       target: "_blank"
     }, "Option 1"))); // open menu
 
 
-    var buttonEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'button');
+    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
 
-    _testUtils.default.Simulate.click(buttonEl, {
+    _testUtils["default"].Simulate.click(buttonEl, {
       button: 0
     }); // check rendered anchor tag
 
 
-    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _assert.default.equal(anchorEl.target, "_blank");
+    _assert["default"].equal(anchorEl.target, "_blank");
   });
 });
 
@@ -38252,36 +38353,36 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/form', function () {
   it('renders wrapper properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, null));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], null));
 
-    _assert.default.equal(result.type, 'form');
+    _assert["default"].equal(result.type, 'form');
 
-    _assert.default.equal(result.props.className, 'mui-form ');
+    _assert["default"].equal(result.props.className, 'mui-form ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-form additional');
+    _assert["default"].equal(result.props.className, 'mui-form additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('handles inline option', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], {
       inline: true
     }));
 
-    _assert.default.equal(result.type, 'form');
+    _assert["default"].equal(result.type, 'form');
 
-    _assert.default.equal(result.props.className, 'mui-form mui-form--inline ');
+    _assert["default"].equal(result.props.className, 'mui-form mui-form--inline ');
   });
 });
 
@@ -38313,154 +38414,154 @@ describe('react/input', function () {
     console.warn = warnFn;
   });
   it('renders wrapper properly', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_input.default, null));
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_input["default"], null));
 
-    var wrapperEl = _reactDom.default.findDOMNode(instance);
+    var wrapperEl = _reactDom["default"].findDOMNode(instance);
 
-    _assert.default.equal(wrapperEl.tagName, 'DIV');
+    _assert["default"].equal(wrapperEl.tagName, 'DIV');
 
-    _assert.default.equal(wrapperEl.className.trim(), 'mui-textfield');
+    _assert["default"].equal(wrapperEl.className.trim(), 'mui-textfield');
   });
   it('renders component with defaultValue properly', function () {
-    var elem = _react.default.createElement(_input.default, {
+    var elem = _react["default"].createElement(_input["default"], {
       defaultValue: "my input"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
-
-
-    _assert.default.equal(inputEl.value, 'my input'); // check empty/not-empty classes
+    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
 
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert["default"].equal(inputEl.value, 'my input'); // check empty/not-empty classes
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
+
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
   it('renders component with integer defaultValue', function () {
-    var elem = _react.default.createElement(_input.default, {
+    var elem = _react["default"].createElement(_input["default"], {
       defaultValue: 0
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
-
-
-    _assert.default.equal(inputEl.value, 0); // check empty/not-empty classes
+    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
 
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert["default"].equal(inputEl.value, 0); // check empty/not-empty classes
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
+
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
   it('renders component with defaultValue received by update', function () {
-    var ParentClass = (0, _createReactClass.default)({
+    var ParentClass = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           testState: 'init'
         };
       },
       render: function render() {
-        return _react.default.createElement(_input.default, {
+        return _react["default"].createElement(_input["default"], {
           defaultValue: "my input"
         });
       }
     });
 
-    var parentElem = _react.default.createElement(ParentClass, null);
+    var parentElem = _react["default"].createElement(ParentClass, null);
 
-    var parentInstance = _testUtils.default.renderIntoDocument(parentElem);
+    var parentInstance = _testUtils["default"].renderIntoDocument(parentElem);
 
-    var instance = _testUtils.default.findRenderedComponentWithType(parentInstance, _input.default);
+    var instance = _testUtils["default"].findRenderedComponentWithType(parentInstance, _input["default"]);
 
-    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
-
-
-    _assert.default.equal(inputEl.value, 'my input'); // check empty/not-empty classes
+    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
 
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert["default"].equal(inputEl.value, 'my input'); // check empty/not-empty classes
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true); // changing state calls componentWillReceiveProps()
+
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true); // changing state calls componentWillReceiveProps()
 
 
     parentInstance.setState({
       testState: 'new'
     }); // check input element value
 
-    _assert.default.equal(inputEl.value, 'my input'); // check empty/not-empty classes
+    _assert["default"].equal(inputEl.value, 'my input'); // check empty/not-empty classes
 
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
   it('properly renders instance classes', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_input.default, null));
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_input["default"], null));
 
-    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // starts with empty|pristine|untouched classes
-
-
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
-
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
-
-    _assert.default.equal(/mui--is-untouched/.test(inputEl.className), true);
-
-    _assert.default.equal(/mui--is-touched/.test(inputEl.className), false);
-
-    _assert.default.equal(/mui--is-pristine/.test(inputEl.className), true);
-
-    _assert.default.equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `untouched` with `touched` on blur
+    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // starts with empty|pristine|untouched classes
 
 
-    _testUtils.default.Simulate.blur(inputEl);
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-untouched/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-untouched/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-touched/.test(inputEl.className), false);
 
-    _assert.default.equal(/mui--is-touched/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-pristine/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-pristine/.test(inputEl.className), true);
-
-    _assert.default.equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `pristine` with `dirty` on user input
+    _assert["default"].equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `untouched` with `touched` on blur
 
 
-    _testUtils.default.Simulate.change(inputEl);
+    _testUtils["default"].Simulate.blur(inputEl);
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
 
-    _assert.default.equal(/mui--is-untouched/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-untouched/.test(inputEl.className), false);
 
-    _assert.default.equal(/mui--is-touched/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-touched/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-pristine/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-pristine/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-dirty/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `pristine` with `dirty` on user input
+
+
+    _testUtils["default"].Simulate.change(inputEl);
+
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
+
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
+
+    _assert["default"].equal(/mui--is-untouched/.test(inputEl.className), false);
+
+    _assert["default"].equal(/mui--is-touched/.test(inputEl.className), true);
+
+    _assert["default"].equal(/mui--is-pristine/.test(inputEl.className), false);
+
+    _assert["default"].equal(/mui--is-dirty/.test(inputEl.className), true);
   });
   it('executes onBlur callback', function (done) {
     var callbackFn = function callbackFn(ev) {
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_input.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_input["default"], {
       onBlur: callbackFn
     }));
 
-    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // simulate blur
+    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // simulate blur
 
 
-    _testUtils.default.Simulate.blur(inputEl);
+    _testUtils["default"].Simulate.blur(inputEl);
   });
   it('adds and removes mui--is-empty classes', function () {
-    var TestApp = (0, _createReactClass.default)({
+    var TestApp = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -38472,60 +38573,60 @@ describe('react/input', function () {
         });
       },
       render: function render() {
-        return _react.default.createElement(_input.default, {
+        return _react["default"].createElement(_input["default"], {
           value: this.state.value,
           onChange: this.onChange
         });
       }
     });
 
-    var elem = _react.default.createElement(TestApp, {
+    var elem = _react["default"].createElement(TestApp, {
       value: ""
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'input'); // check empty classes
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false); // add input value and check classes
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false); // add input value and check classes
 
 
     instance.setState({
       value: 'test'
     });
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true); // remove input classes and check classes
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true); // remove input classes and check classes
 
 
     instance.setState({
       value: ''
     });
 
-    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
   });
   it('does controlled component validation', function (done) {
     console.warn = function (msg) {
-      _assert.default.equal(/MUI Warning/.test(msg), true);
+      _assert["default"].equal(/MUI Warning/.test(msg), true);
 
       done();
     }; // raises error when `value` defined and `onChange missing
 
 
-    var elem = _react.default.createElement(_input.default, {
+    var elem = _react["default"].createElement(_input["default"], {
       value: "my value"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
   });
   it('can be used as controlled component', function () {
-    var TestApp = (0, _createReactClass.default)({
+    var TestApp = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -38537,82 +38638,82 @@ describe('react/input', function () {
         });
       },
       render: function render() {
-        return _react.default.createElement(_input.default, {
+        return _react["default"].createElement(_input["default"], {
           value: this.state.value,
           onChange: this.onChange
         });
       }
     });
 
-    var elem = _react.default.createElement(TestApp, {
+    var elem = _react["default"].createElement(TestApp, {
       value: "test"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'input'); // check default value
 
-    _assert.default.equal(inputEl.value, 'test'); // update TestApp and check inputEl value
+    _assert["default"].equal(inputEl.value, 'test'); // update TestApp and check inputEl value
 
 
     instance.setState({
       value: 'test2'
     });
 
-    _assert.default.equal(inputEl.value, 'test2'); // update inputEl and check state
+    _assert["default"].equal(inputEl.value, 'test2'); // update inputEl and check state
 
 
     inputEl.value = 'test3';
 
-    _testUtils.default.Simulate.change(inputEl);
+    _testUtils["default"].Simulate.change(inputEl);
 
-    _assert.default.equal(instance.state.value, 'test3');
+    _assert["default"].equal(instance.state.value, 'test3');
   });
   it('can be used as an uncontrolled component', function () {
-    var elem = _react.default.createElement(_input.default, {
+    var elem = _react["default"].createElement(_input["default"], {
       defaultValue: "mydefaultvalue"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'input');
 
-    _assert.default.equal(inputEl, instance.controlEl);
+    _assert["default"].equal(inputEl, instance.controlEl);
 
-    _assert.default.equal(instance.controlEl.value, 'mydefaultvalue');
+    _assert["default"].equal(instance.controlEl.value, 'mydefaultvalue');
   });
   it('handles label unmount gracefully', function () {
-    var elem = _react.default.createElement(_input.default, {
+    var elem = _react["default"].createElement(_input["default"], {
       label: "label",
       defaultValue: "defaultValue"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom.default.findDOMNode(instance);
+    var wrapperEl = _reactDom["default"].findDOMNode(instance);
 
-    _reactDom.default.unmountComponentAtNode(wrapperEl.parentNode); // TODO: How can we access the timer id to check if it was removed
+    _reactDom["default"].unmountComponentAtNode(wrapperEl.parentNode); // TODO: How can we access the timer id to check if it was removed
     //       successfully?
 
 
-    _assert.default.equal(true, true);
+    _assert["default"].equal(true, true);
   });
   it('sets id for control and label elements', function () {
-    var elem = _react.default.createElement(_input.default, {
+    var elem = _react["default"].createElement(_input["default"], {
       id: "myId",
       label: "label",
       defaultValue: "defaultValue"
     }),
-        instance = _testUtils.default.renderIntoDocument(elem),
-        findComponent = _testUtils.default.findRenderedDOMComponentWithTag,
+        instance = _testUtils["default"].renderIntoDocument(elem),
+        findComponent = _testUtils["default"].findRenderedDOMComponentWithTag,
         inputEl = instance.controlEl,
         labelEl = findComponent(instance, 'label');
 
-    _assert.default.equal(inputEl.id, 'myId');
+    _assert["default"].equal(inputEl.id, 'myId');
 
-    _assert.default.equal(labelEl.getAttribute('for'), 'myId');
+    _assert["default"].equal(labelEl.getAttribute('for'), 'myId');
   });
 });
 
@@ -38637,29 +38738,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/option', function () {
   it('renders element properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_option.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_option["default"], {
       label: "Option 1"
     }));
 
-    _assert.default.equal(result.type, 'option');
+    _assert["default"].equal(result.type, 'option');
 
-    _assert.default.equal(result.props.children, 'Option 1');
+    _assert["default"].equal(result.props.children, 'Option 1');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_option.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_option["default"], {
       className: "additional"
     }));
 
-    _assert.default.equal(result.props.className, 'additional');
+    _assert["default"].equal(result.props.className, 'additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_option.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_option["default"], {
       style: {
         additional: 'style'
       }
     }));
 
-    _assert.default.equal(result.props.style.additional, 'style');
+    _assert["default"].equal(result.props.style.additional, 'style');
   });
 });
 
@@ -38680,29 +38781,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/panel', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_panel.default, null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_panel["default"], null, "test"));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-panel ');
+    _assert["default"].equal(result.props.className, 'mui-panel ');
 
-    _assert.default.equal(result.props.children, 'test');
+    _assert["default"].equal(result.props.children, 'test');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_panel.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_panel["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-panel additional');
+    _assert["default"].equal(result.props.className, 'mui-panel additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_panel.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_panel["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -38730,48 +38831,48 @@ var _reactHelpers = require("../lib/react-helpers");
 describe('react/radio', function () {
   var elem;
   beforeEach(function () {
-    elem = _react.default.createElement(_radio.default, null, "My Label");
+    elem = _react["default"].createElement(_radio["default"], null, "My Label");
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-radio ');
+    _assert["default"].equal(result.props.className, 'mui-radio ');
   });
   it('renders content properly', function () {
-    var node = _testUtils.default.renderIntoDocument(elem);
+    var node = _testUtils["default"].renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom.default.findDOMNode(node);
+    var wrapperEl = _reactDom["default"].findDOMNode(node);
 
-    _assert.default.equal(wrapperEl.children.length, 1);
+    _assert["default"].equal(wrapperEl.children.length, 1);
 
     var labelEl = wrapperEl.children[0];
 
-    _assert.default.equal(labelEl.tagName, 'LABEL');
+    _assert["default"].equal(labelEl.tagName, 'LABEL');
 
     var inputEl = labelEl.children[0];
 
-    _assert.default.equal(inputEl.tagName, 'INPUT');
+    _assert["default"].equal(inputEl.tagName, 'INPUT');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_radio.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_radio["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-radio additional');
+    _assert["default"].equal(result.props.className, 'mui-radio additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_radio.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_radio["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass.default)({
+    var TestApp = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           checked: this.props.checked
@@ -38785,7 +38886,7 @@ describe('react/radio', function () {
       render: function render() {
         var _this = this;
 
-        return _react.default.createElement(_radio.default, {
+        return _react["default"].createElement(_radio["default"], {
           ref: function ref(el) {
             _this.refElRef = el;
           },
@@ -38795,29 +38896,29 @@ describe('react/radio', function () {
       }
     });
 
-    var elem = _react.default.createElement(TestApp, {
+    var elem = _react["default"].createElement(TestApp, {
       checked: false
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
     var inputEl = instance.refElRef.controlEl; // check default value
 
-    _assert.default.equal(inputEl.checked, false); // update TestApp and check inputEl value
+    _assert["default"].equal(inputEl.checked, false); // update TestApp and check inputEl value
 
 
     instance.setState({
       checked: true
     });
 
-    _assert.default.equal(inputEl.checked, true); // update inputEl and check state
+    _assert["default"].equal(inputEl.checked, true); // update inputEl and check state
 
 
     inputEl.checked = false;
 
-    _testUtils.default.Simulate.change(inputEl);
+    _testUtils["default"].Simulate.change(inputEl);
 
-    _assert.default.equal(instance.state.checked, false);
+    _assert["default"].equal(instance.state.checked, false);
   });
   it('supports onChange method', function (done) {
     var counter = 0;
@@ -38826,19 +38927,19 @@ describe('react/radio', function () {
       counter += 1;
     };
 
-    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_radio.default, {
+    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_radio["default"], {
       onChange: onChangeFn
     })); // change checkbox
 
 
-    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'input');
+    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'input');
 
-    _testUtils.default.Simulate.change(inputEl); // test conditions
+    _testUtils["default"].Simulate.change(inputEl); // test conditions
 
 
     setTimeout(function () {
       // one onChange event (https://github.com/muicss/mui/issues/94)
-      _assert.default.equal(counter, 1);
+      _assert["default"].equal(counter, 1);
 
       done();
     }, 50);
@@ -38866,42 +38967,42 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/grid', function () {
   it('row renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_row.default, null));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_row["default"], null));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-row ');
+    _assert["default"].equal(result.props.className, 'mui-row ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_row.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_row["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-row additional');
+    _assert["default"].equal(result.props.className, 'mui-row additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_row.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_row["default"], {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('handles click events', function (done) {
     function onClickFn() {
-      _assert.default.equal(true, true);
+      _assert["default"].equal(true, true);
 
       done();
     }
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_row.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_row["default"], {
       onClick: onClickFn
     }));
 
-    var wrapperEl = _reactDom.default.findDOMNode(instance);
+    var wrapperEl = _reactDom["default"].findDOMNode(instance);
 
-    _testUtils.default.Simulate.click(wrapperEl);
+    _testUtils["default"].Simulate.click(wrapperEl);
   });
 });
 
@@ -38935,255 +39036,255 @@ describe('react/select', function () {
     console.warn = warnFn;
   });
   beforeEach(function () {
-    elem = _react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
+    elem = _react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       label: "Option 3"
     }));
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, 'mui-select ');
+    _assert["default"].equal(result.props.className, 'mui-select ');
   });
   it('renders native select element', function () {
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
     var wrapperEl = instance.wrapperElRef; // check that select element is only child
 
-    _assert.default.equal(wrapperEl.children[0].tagName, 'SELECT');
+    _assert["default"].equal(wrapperEl.children[0].tagName, 'SELECT');
   });
   it('supports dynamic list of children', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, [1, 2, 3].map(function (val, i) {
-      return _react.default.createElement(_option.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, [1, 2, 3].map(function (val, i) {
+      return _react["default"].createElement(_option["default"], {
         key: i,
         value: val
       });
     }))); // get options
 
 
-    var optionEls = _testUtils.default.scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
+    var optionEls = _testUtils["default"].scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
 
 
-    _assert.default.equal(optionEls.length, 3); // check content
+    _assert["default"].equal(optionEls.length, 3); // check content
 
 
     [1, 2, 3].map(function (val, i) {
-      _assert.default.equal(optionEls[i].value, val);
+      _assert["default"].equal(optionEls[i].value, val);
     });
   });
   it('supports mixed static and dynamic children', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
       value: 0
     }), [1, 2, 3].map(function (val, i) {
-      return _react.default.createElement(_option.default, {
+      return _react["default"].createElement(_option["default"], {
         key: i,
         value: val
       });
     }))); // get options
 
 
-    var optionEls = _testUtils.default.scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
+    var optionEls = _testUtils["default"].scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
 
 
-    _assert.default.equal(optionEls.length, 4); // check content
+    _assert["default"].equal(optionEls.length, 4); // check content
 
 
     [0, 1, 2, 3].map(function (val, i) {
-      _assert.default.equal(optionEls[i].value, val);
+      _assert["default"].equal(optionEls[i].value, val);
     });
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_select.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_select["default"], {
       className: "additional"
     }, "test"));
 
-    _assert.default.equal(result.props.className, 'mui-select additional');
+    _assert["default"].equal(result.props.className, 'mui-select additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_select.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_select["default"], {
       style: {
         additional: 'style'
       }
     }, "test"));
 
-    _assert.default.equal(result.props.style.additional, 'style');
+    _assert["default"].equal(result.props.style.additional, 'style');
   });
   it('renders tabIndex properly', function () {
     var instance; // useDefault is false
 
-    instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null));
+    instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null));
 
-    _assert.default.equal(instance.wrapperElRef.tabIndex, 0);
+    _assert["default"].equal(instance.wrapperElRef.tabIndex, 0);
 
-    _assert.default.equal(instance.controlEl.tabIndex, -1); // useDefault is true
+    _assert["default"].equal(instance.controlEl.tabIndex, -1); // useDefault is true
 
 
-    instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       useDefault: true
     }));
 
-    _assert.default.equal(instance.wrapperElRef.tabIndex, -1);
+    _assert["default"].equal(instance.wrapperElRef.tabIndex, -1);
 
-    _assert.default.equal(instance.controlEl.tabIndex, 0);
+    _assert["default"].equal(instance.controlEl.tabIndex, 0);
   });
   it('renders name attribute properly', function () {
-    var testElem = _react.default.createElement(_select.default, {
+    var testElem = _react["default"].createElement(_select["default"], {
       name: "my-name"
-    }, _react.default.createElement(_option.default, {
+    }, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils.default.renderIntoDocument(testElem);
+    var instance = _testUtils["default"].renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert.default.equal(selectEl.name, 'my-name');
+    _assert["default"].equal(selectEl.name, 'my-name');
   });
   it('renders disabled attribute properly', function () {
-    var testElem = _react.default.createElement(_select.default, {
+    var testElem = _react["default"].createElement(_select["default"], {
       disabled: true
-    }, _react.default.createElement(_option.default, {
+    }, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils.default.renderIntoDocument(testElem);
+    var instance = _testUtils["default"].renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert.default.equal(selectEl.disabled, true);
+    _assert["default"].equal(selectEl.disabled, true);
   });
   it('renders required attribute properly', function () {
     // true
-    var testElem = _react.default.createElement(_select.default, {
+    var testElem = _react["default"].createElement(_select["default"], {
       required: true
-    }, _react.default.createElement(_option.default, {
+    }, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils.default.renderIntoDocument(testElem);
+    var instance = _testUtils["default"].renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert.default.equal(selectEl.required, true); // false
+    _assert["default"].equal(selectEl.required, true); // false
 
 
-    testElem = _react.default.createElement(_select.default, {
+    testElem = _react["default"].createElement(_select["default"], {
       required: false
-    }, _react.default.createElement(_option.default, {
+    }, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value3",
       label: "Option 3"
     }));
-    instance = _testUtils.default.renderIntoDocument(testElem);
+    instance = _testUtils["default"].renderIntoDocument(testElem);
     selectEl = instance.controlEl;
 
-    _assert.default.equal(selectEl.required, false);
+    _assert["default"].equal(selectEl.required, false);
 
-    _assert.default.equal(selectEl.hasAttribute('required'), false); // undefined
+    _assert["default"].equal(selectEl.hasAttribute('required'), false); // undefined
 
 
-    testElem = _react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
+    testElem = _react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value3",
       label: "Option 3"
     }));
-    instance = _testUtils.default.renderIntoDocument(testElem);
+    instance = _testUtils["default"].renderIntoDocument(testElem);
     selectEl = instance.controlEl;
 
-    _assert.default.equal(selectEl.required, false);
+    _assert["default"].equal(selectEl.required, false);
 
-    _assert.default.equal(selectEl.hasAttribute('required'), false);
+    _assert["default"].equal(selectEl.hasAttribute('required'), false);
   });
   it('handles default undefined value', function () {
-    var testElem = _react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
+    var testElem = _react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils.default.renderIntoDocument(testElem);
+    var instance = _testUtils["default"].renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert.default.equal(selectEl.value, 'value1');
+    _assert["default"].equal(selectEl.value, 'value1');
   });
   it('handles defaultValue for uncontrolled component', function () {
-    var testElem = _react.default.createElement(_select.default, {
+    var testElem = _react["default"].createElement(_select["default"], {
       defaultValue: "value2"
-    }, _react.default.createElement(_option.default, {
+    }, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils.default.renderIntoDocument(testElem);
+    var instance = _testUtils["default"].renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert.default.equal(selectEl.value, 'value2');
+    _assert["default"].equal(selectEl.value, 'value2');
   });
   it('does controlled component validation', function (done) {
     console.warn = function (msg) {
-      _assert.default.equal(/MUI Warning/.test(msg), true);
+      _assert["default"].equal(/MUI Warning/.test(msg), true);
 
       done();
     }; // warns when `value` defined and `onChange missing
 
 
-    var elem = _react.default.createElement(_select.default, {
+    var elem = _react["default"].createElement(_select["default"], {
       value: "my value"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass.default)({
+    var TestApp = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -39197,230 +39298,230 @@ describe('react/select', function () {
       render: function render() {
         var _this = this;
 
-        return _react.default.createElement(_select.default, {
+        return _react["default"].createElement(_select["default"], {
           ref: function ref(el) {
             _this.innerElRef = el;
           },
           value: this.state.value,
           onChange: this.onChange
-        }, _react.default.createElement(_option.default, {
+        }, _react["default"].createElement(_option["default"], {
           value: "option-1"
-        }), _react.default.createElement(_option.default, {
+        }), _react["default"].createElement(_option["default"], {
           value: "option-2"
         }));
       }
     });
 
-    var elem = _react.default.createElement(TestApp, {
+    var elem = _react["default"].createElement(TestApp, {
       value: "option-2"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
     var innerEl = instance.innerElRef; // check default inner value
 
-    _assert.default.equal(innerEl.state.value, 'option-2'); // update outer and check <select> element
+    _assert["default"].equal(innerEl.state.value, 'option-2'); // update outer and check <select> element
 
 
     instance.setState({
       value: 'option-1'
     });
 
-    _assert.default.equal(innerEl.controlEl.value, 'option-1'); // update <select> element and trigger 'change' event
+    _assert["default"].equal(innerEl.controlEl.value, 'option-1'); // update <select> element and trigger 'change' event
 
 
     innerEl.controlEl.value = 'option-2';
 
-    _testUtils.default.Simulate.change(innerEl.controlEl);
+    _testUtils["default"].Simulate.change(innerEl.controlEl);
 
-    _assert.default.equal(instance.state.value, 'option-2');
+    _assert["default"].equal(instance.state.value, 'option-2');
   });
   it('handles blur on wrapper <div> properly', function (done) {
     var onBlur = function onBlur(ev) {
-      _assert.default.equal(ev.type, 'blur');
+      _assert["default"].equal(ev.type, 'blur');
 
-      _assert.default.equal(ev.target, instance.wrapperElRef);
+      _assert["default"].equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onBlur: onBlur
     })); // trigger 'blur' on wrapper <div> element
 
 
-    _testUtils.default.Simulate.blur(instance.wrapperElRef);
+    _testUtils["default"].Simulate.blur(instance.wrapperElRef);
   });
   it('handles change event on <select> properly', function (done) {
     var checkChangeFn = function checkChangeFn(ev) {
-      _assert.default.equal(ev.type, 'change');
+      _assert["default"].equal(ev.type, 'change');
 
-      _assert.default.equal(ev.target, instance.controlEl);
+      _assert["default"].equal(ev.target, instance.controlEl);
 
-      _assert.default.equal(ev.target.value, "value2");
+      _assert["default"].equal(ev.target.value, "value2");
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       defaultValue: "value2",
       onChange: checkChangeFn
-    }, _react.default.createElement(_option.default, {
+    }, _react["default"].createElement(_option["default"], {
       value: "value1",
       label: "Option 1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       value: "value2",
       label: "Option 2"
     }))); // trigger 'change' on inner <select> element
 
 
-    _testUtils.default.Simulate.change(instance.controlEl);
+    _testUtils["default"].Simulate.change(instance.controlEl);
   });
   it('handles click on inner <select> properly', function (done) {
     var onClick = function onClick(ev) {
-      _assert.default.equal(ev.type, 'click');
+      _assert["default"].equal(ev.type, 'click');
 
-      _assert.default.equal(ev.target, instance.controlEl);
+      _assert["default"].equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onClick: onClick
     })); // trigger 'click' on inner <select> element
 
 
-    _testUtils.default.Simulate.click(instance.controlEl, {
+    _testUtils["default"].Simulate.click(instance.controlEl, {
       button: 0
     });
   });
   it('handles focus on inner <select> properly', function (done) {
     var onFocus = function onFocus(ev) {
-      _assert.default.equal(ev.type, 'focus');
+      _assert["default"].equal(ev.type, 'focus');
 
-      _assert.default.equal(ev.target, instance.controlEl);
+      _assert["default"].equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onFocus: onFocus
     })); // trigger 'focus' on inner <select> element
 
 
-    _testUtils.default.Simulate.focus(instance.controlEl);
+    _testUtils["default"].Simulate.focus(instance.controlEl);
   });
   it('handles focus on wrapper <div> properly', function (done) {
     var onFocus = function onFocus(ev) {
-      _assert.default.equal(ev.type, 'focus');
+      _assert["default"].equal(ev.type, 'focus');
 
-      _assert.default.equal(ev.target, instance.wrapperElRef);
+      _assert["default"].equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onFocus: onFocus
     })); // trigger 'focus' on wrapper <div> element
 
 
-    _testUtils.default.Simulate.focus(instance.wrapperElRef);
+    _testUtils["default"].Simulate.focus(instance.wrapperElRef);
   });
   it('handles keydown on inner <select> properly', function (done) {
     var onKeyDown = function onKeyDown(ev) {
-      _assert.default.equal(ev.type, 'keydown');
+      _assert["default"].equal(ev.type, 'keydown');
 
-      _assert.default.equal(ev.target, instance.controlEl);
+      _assert["default"].equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onKeyDown: onKeyDown
     })); // trigger 'keydown' on inner <select> element
 
 
-    _testUtils.default.Simulate.keyDown(instance.controlEl);
+    _testUtils["default"].Simulate.keyDown(instance.controlEl);
   });
   it('handles keydown on wrapper <div> properly', function (done) {
     var onKeyDown = function onKeyDown(ev) {
-      _assert.default.equal(ev.type, 'keydown');
+      _assert["default"].equal(ev.type, 'keydown');
 
-      _assert.default.equal(ev.target, instance.wrapperElRef);
+      _assert["default"].equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onKeyDown: onKeyDown
     })); // trigger 'keydown' on wrapper <div> element
 
 
-    _testUtils.default.Simulate.keyDown(instance.wrapperElRef);
+    _testUtils["default"].Simulate.keyDown(instance.wrapperElRef);
   });
   it('handles keypress on inner <select> properly', function (done) {
     var onKeyPress = function onKeyPress(ev) {
-      _assert.default.equal(ev.type, 'keypress');
+      _assert["default"].equal(ev.type, 'keypress');
 
-      _assert.default.equal(ev.target, instance.controlEl);
+      _assert["default"].equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onKeyPress: onKeyPress
     })); // trigger 'keypress' on inner <select> element
 
 
-    _testUtils.default.Simulate.keyPress(instance.controlEl);
+    _testUtils["default"].Simulate.keyPress(instance.controlEl);
   });
   it('handles keypress on wrapper <div> properly', function (done) {
     var onKeyPress = function onKeyPress(ev) {
-      _assert.default.equal(ev.type, 'keypress');
+      _assert["default"].equal(ev.type, 'keypress');
 
-      _assert.default.equal(ev.target, instance.wrapperElRef);
+      _assert["default"].equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onKeyPress: onKeyPress
     })); // trigger 'keypress' on wrapper <div> element
 
 
-    _testUtils.default.Simulate.keyPress(instance.wrapperElRef);
+    _testUtils["default"].Simulate.keyPress(instance.wrapperElRef);
   });
   it('handles mousedown on inner <select> properly', function (done) {
     var onMouseDown = function onMouseDown(ev) {
-      (0, _assert.default)(ev.defaultPrevented, true);
+      (0, _assert["default"])(ev.defaultPrevented, true);
       done();
     };
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       onMouseDown: onMouseDown
     })); // trigger 'mousedown' on inner <select> element
 
 
-    _testUtils.default.Simulate.mouseDown(instance.controlEl, {
+    _testUtils["default"].Simulate.mouseDown(instance.controlEl, {
       button: 0
     });
   });
   it('shows custom menu on click', function () {
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
     var wrapperEl = instance.wrapperElRef;
     var selectEl = instance.controlEl; // check before and after click
 
     var numBefore = wrapperEl.children.length;
 
-    _testUtils.default.Simulate.click(selectEl, {
+    _testUtils["default"].Simulate.click(selectEl, {
       button: 0
     });
 
-    _assert.default.equal(wrapperEl.children.length, numBefore + 1);
+    _assert["default"].equal(wrapperEl.children.length, numBefore + 1);
   });
   it("doesn't show custom menu when useDefault is true", function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       useDefault: true
     }));
 
@@ -39428,14 +39529,14 @@ describe('react/select', function () {
 
     var numBefore = wrapperEl.children.length;
 
-    _testUtils.default.Simulate.click(instance.controlEl, {
+    _testUtils["default"].Simulate.click(instance.controlEl, {
       button: 0
     });
 
-    _assert.default.equal(wrapperEl.children.length, numBefore);
+    _assert["default"].equal(wrapperEl.children.length, numBefore);
   });
   it('renders menu items with additional classNames', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, _react.default.createElement(_option.default, null), _react.default.createElement(_option.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], null), _react["default"].createElement(_option["default"], {
       className: "my-custom-class"
     })));
 
@@ -39443,71 +39544,71 @@ describe('react/select', function () {
 
     var optionEl = selectEl.children[1];
 
-    _assert.default.equal(optionEl.className, 'my-custom-class'); // open menu
+    _assert["default"].equal(optionEl.className, 'my-custom-class'); // open menu
 
 
-    _testUtils.default.Simulate.click(selectEl, {
+    _testUtils["default"].Simulate.click(selectEl, {
       button: 0
     }); // check menu item custom class
 
 
-    var findComponentFn = _testUtils.default.findRenderedDOMComponentWithClass;
+    var findComponentFn = _testUtils["default"].findRenderedDOMComponentWithClass;
     var menuEl = findComponentFn(instance, 'mui-select__menu');
     var itemEl = menuEl.children[1];
 
-    _assert.default.equal(itemEl.className, 'my-custom-class');
+    _assert["default"].equal(itemEl.className, 'my-custom-class');
   });
   it('supports placeholder property', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
       placeholder: "Placeholder"
-    }, _react.default.createElement(_option.default, {
+    }, _react["default"].createElement(_option["default"], {
       label: "Option 1",
       value: "option1"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       label: "Option 2",
       value: "option2"
     })));
 
     var selectEl = instance.controlEl; // check additional option
 
-    _assert.default.equal(selectEl.children.length, 3);
+    _assert["default"].equal(selectEl.children.length, 3);
 
     var optionEl = selectEl.children[0];
 
-    _assert.default.equal(optionEl.innerHTML, 'Placeholder');
+    _assert["default"].equal(optionEl.innerHTML, 'Placeholder');
 
-    _assert.default.equal(optionEl.value, ''); // check classes
+    _assert["default"].equal(optionEl.value, ''); // check classes
 
 
-    _assert.default.equal(selectEl.className, 'mui--text-placeholder');
+    _assert["default"].equal(selectEl.className, 'mui--text-placeholder');
 
-    _assert.default.equal(optionEl.className, 'mui--text-placeholder'); // select different option and check class again
+    _assert["default"].equal(optionEl.className, 'mui--text-placeholder'); // select different option and check class again
 
 
     selectEl.value = 'option2';
 
-    _testUtils.default.Simulate.change(selectEl);
+    _testUtils["default"].Simulate.change(selectEl);
 
-    _assert.default.equal(selectEl.className, ''); // re-select placeholder and check class again
+    _assert["default"].equal(selectEl.className, ''); // re-select placeholder and check class again
 
 
     selectEl.value = '';
 
-    _testUtils.default.Simulate.change(selectEl);
+    _testUtils["default"].Simulate.change(selectEl);
 
-    _assert.default.equal(selectEl.className, 'mui--text-placeholder');
+    _assert["default"].equal(selectEl.className, 'mui--text-placeholder');
   });
   it('handles multiple options with same value', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
       label: "Apple",
       value: "fruit"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       label: "Banana",
       value: "fruit"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       label: "Ford",
       value: "car"
-    }), _react.default.createElement(_option.default, {
+    }), _react["default"].createElement(_option["default"], {
       label: "Toyota",
       value: "car"
     })));
@@ -39515,11 +39616,11 @@ describe('react/select', function () {
     var selectEl = instance.controlEl;
     selectEl.selectedIndex = 3;
 
-    _testUtils.default.Simulate.change(selectEl);
+    _testUtils["default"].Simulate.change(selectEl);
 
-    _assert.default.equal(selectEl.value, 'car');
+    _assert["default"].equal(selectEl.value, 'car');
 
-    _assert.default.equal(selectEl.selectedIndex, 3);
+    _assert["default"].equal(selectEl.selectedIndex, 3);
   });
 });
 
@@ -39548,60 +39649,60 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/tabs', function () {
   it('renders wrapper properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null)));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null)));
 
-    _assert.default.equal(result.type, 'div');
+    _assert["default"].equal(result.type, 'div');
 
-    _assert.default.equal(result.props.className, '');
+    _assert["default"].equal(result.props.className, '');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_tabs.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_tabs["default"], {
       className: "additional"
-    }, _react.default.createElement(_tab.default, null)));
+    }, _react["default"].createElement(_tab["default"], null)));
 
-    _assert.default.equal(result.props.className, 'additional');
+    _assert["default"].equal(result.props.className, 'additional');
   });
   it('renders with one Tab as child', function () {
-    var result = _server.default.renderToStaticMarkup(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null, "ABC")));
+    var result = _server["default"].renderToStaticMarkup(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null, "ABC")));
 
-    _assert.default.equal((result.match(/ABC/g) || []).length, 1);
+    _assert["default"].equal((result.match(/ABC/g) || []).length, 1);
   });
   it('renders with two Tabs as children', function () {
-    var result = _server.default.renderToStaticMarkup(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null, "ABC"), _react.default.createElement(_tab.default, null, "ABC")));
+    var result = _server["default"].renderToStaticMarkup(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null, "ABC"), _react["default"].createElement(_tab["default"], null, "ABC")));
 
-    _assert.default.equal((result.match(/ABC/g) || []).length, 2);
+    _assert["default"].equal((result.match(/ABC/g) || []).length, 2);
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_tabs.default, {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_tabs["default"], {
       style: {
         additonal: 'style'
       }
-    }, _react.default.createElement(_tab.default, null)));
+    }, _react["default"].createElement(_tab["default"], null)));
 
-    _assert.default.equal(result.props.style.additonal, 'style');
+    _assert["default"].equal(result.props.style.additonal, 'style');
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass.default)({
+    var TestApp = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           tabIndex: 1
         };
       },
       render: function render() {
-        return _react.default.createElement(_tabs.default, {
+        return _react["default"].createElement(_tabs["default"], {
           selectedIndex: this.state.tabIndex
-        }, _react.default.createElement(_tab.default, null, "ABC"), _react.default.createElement(_tab.default, null, "DEF"));
+        }, _react["default"].createElement(_tab["default"], null, "ABC"), _react["default"].createElement(_tab["default"], null, "DEF"));
       }
     });
 
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(TestApp, null)),
-        findElements = _testUtils.default.scryRenderedDOMComponentsWithClass,
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(TestApp, null)),
+        findElements = _testUtils["default"].scryRenderedDOMComponentsWithClass,
         paneEl; // check default value
 
 
     paneEl = findElements(instance, 'mui--is-active')[1];
 
-    _assert.default.equal(paneEl.innerHTML, 'DEF'); // update state and check value
+    _assert["default"].equal(paneEl.innerHTML, 'DEF'); // update state and check value
 
 
     instance.setState({
@@ -39609,42 +39710,42 @@ describe('react/tabs', function () {
     });
     paneEl = findElements(instance, 'mui--is-active')[1];
 
-    _assert.default.equal(paneEl.innerHTML, 'ABC');
+    _assert["default"].equal(paneEl.innerHTML, 'ABC');
   });
   it('can support list of tab elements', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_tabs.default, null, [1, 2, 3].map(function (val) {
-      return _react.default.createElement(_tab.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_tabs["default"], null, [1, 2, 3].map(function (val) {
+      return _react["default"].createElement(_tab["default"], {
         key: val
       }, val);
     }))); // get panes
 
 
-    var panes = _testUtils.default.scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
+    var panes = _testUtils["default"].scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
 
 
-    _assert.default.equal(panes.length, 3); // check content
+    _assert["default"].equal(panes.length, 3); // check content
 
 
     [1, 2, 3].map(function (val, i) {
-      _assert.default.equal(panes[i].innerHTML, val);
+      _assert["default"].equal(panes[i].innerHTML, val);
     });
   });
   it('can support mixed static and dynamic children', function () {
-    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null, "0"), [1, 2, 3].map(function (val) {
-      return _react.default.createElement(_tab.default, {
+    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null, "0"), [1, 2, 3].map(function (val) {
+      return _react["default"].createElement(_tab["default"], {
         key: val
       }, val);
     }))); // get panes
 
 
-    var panes = _testUtils.default.scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
+    var panes = _testUtils["default"].scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
 
 
-    _assert.default.equal(panes.length, 4); // check content
+    _assert["default"].equal(panes.length, 4); // check content
 
 
     [0, 1, 2, 3].map(function (val, i) {
-      _assert.default.equal(panes[i].innerHTML, val);
+      _assert["default"].equal(panes[i].innerHTML, val);
     });
   });
 });
@@ -39680,42 +39781,42 @@ describe('react/textarea', function () {
     console.warn = warnFn;
   });
   beforeEach(function () {
-    elem = _react.default.createElement(_textarea.default, {
+    elem = _react["default"].createElement(_textarea["default"], {
       defaultValue: "my input"
     });
   });
   it('renders wrapper properly', function () {
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom.default.findDOMNode(instance);
+    var wrapperEl = _reactDom["default"].findDOMNode(instance);
 
-    _assert.default.equal(wrapperEl.tagName, 'DIV');
+    _assert["default"].equal(wrapperEl.tagName, 'DIV');
 
-    _assert.default.equal(wrapperEl.className.trim(), 'mui-textfield');
+    _assert["default"].equal(wrapperEl.className.trim(), 'mui-textfield');
   });
   it('renders native textarea element', function () {
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var fn = _testUtils.default.findRenderedDOMComponentWithTag;
+    var fn = _testUtils["default"].findRenderedDOMComponentWithTag;
     var textareaEl = fn(instance, 'textarea');
 
-    _assert.default.equal(textareaEl.textContent, 'my input');
+    _assert["default"].equal(textareaEl.textContent, 'my input');
   });
   it('does controlled component validation', function (done) {
     console.warn = function (msg) {
-      _assert.default.equal(/MUI Warning/.test(msg), true);
+      _assert["default"].equal(/MUI Warning/.test(msg), true);
 
       done();
     };
 
-    var elem = _react.default.createElement(_textarea.default, {
+    var elem = _react["default"].createElement(_textarea["default"], {
       value: "my value"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
   });
   it('can be used as controlled component', function () {
-    var TestApp = (0, _createReactClass.default)({
+    var TestApp = (0, _createReactClass["default"])({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -39727,51 +39828,51 @@ describe('react/textarea', function () {
         });
       },
       render: function render() {
-        return _react.default.createElement(_textarea.default, {
+        return _react["default"].createElement(_textarea["default"], {
           value: this.state.value,
           onChange: this.onChange
         });
       }
     });
 
-    var elem = _react.default.createElement(TestApp, {
+    var elem = _react["default"].createElement(TestApp, {
       value: "test"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'textarea'); // check default value
 
-    _assert.default.equal(inputEl.value, 'test'); // update TestApp and check inputEl value
+    _assert["default"].equal(inputEl.value, 'test'); // update TestApp and check inputEl value
 
 
     instance.setState({
       value: 'test2'
     });
 
-    _assert.default.equal(inputEl.value, 'test2'); // update inputEl and check state
+    _assert["default"].equal(inputEl.value, 'test2'); // update inputEl and check state
 
 
     inputEl.value = 'test3';
 
-    _testUtils.default.Simulate.change(inputEl);
+    _testUtils["default"].Simulate.change(inputEl);
 
-    _assert.default.equal(instance.state.value, 'test3');
+    _assert["default"].equal(instance.state.value, 'test3');
   });
   it('can be used as an uncontrolled component', function () {
-    var elem = _react.default.createElement(_textarea.default, {
+    var elem = _react["default"].createElement(_textarea["default"], {
       defaultValue: "mydefaultvalue"
     });
 
-    var instance = _testUtils.default.renderIntoDocument(elem);
+    var instance = _testUtils["default"].renderIntoDocument(elem);
 
-    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'textarea');
 
-    _assert.default.equal(inputEl, instance.controlEl);
+    _assert["default"].equal(inputEl, instance.controlEl);
 
-    _assert.default.equal(instance.controlEl.value, 'mydefaultvalue');
+    _assert["default"].equal(instance.controlEl.value, 'mydefaultvalue');
   });
 });
 
