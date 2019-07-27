@@ -37,8 +37,6 @@
   }
 
   position: absolute;
-  top: 100%;
-  left: 0;
   display: none;
   min-width: mui-rem(160px);
   padding: mui-rem(5px) 0;
@@ -98,4 +96,17 @@
 .mui-dropdown__menu--right {
   left: auto;
   right: 0;
+}
+
+// alternative positions
+.mui-dropdown--up > .mui-dropdown__menu {
+  margin: 0 0 mui-rem(2px);
+}
+
+.mui-dropdown--right > .mui-dropdown__menu {
+  margin: 0 0 0 mui-rem(2px);
+}
+
+.mui-dropdown--left > .mui-dropdown__menu {
+  margin: 0 mui-rem(2px) 0 0;
 }
