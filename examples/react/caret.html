@@ -15,16 +15,36 @@
     <script src="../assets/mui/react/mui-react.js"></script>
   </head>
   <body>
-    <h1>Caret</h1>
-    <div class="mui-panel">
-      <div id="caret-example"></div>
+    <div class="mui-container">
+      <h1>Caret</h1>
+      <div class="mui-panel">
+        <div id="caret-down"></div>
+        <div id="caret-up"></div>
+        <div id="caret-right"></div>
+        <div id="caret-left"></div>
+      </div>
     </div>
     <script type="text/babel">
       let Caret = mui.react.Caret;
 
       ReactDOM.render(
         <Caret />,
-        document.getElementById('caret-example')
+        document.getElementById('caret-down')
+      );
+
+      ReactDOM.render(
+        <Caret direction="up" />,
+        document.getElementById('caret-up')
+      );
+
+      ReactDOM.render(
+        <Caret direction="right" />,
+        document.getElementById('caret-right')
+      );
+
+      ReactDOM.render(
+        <Caret direction="left" />,
+        document.getElementById('caret-left')
       );
     </script>
   </body>

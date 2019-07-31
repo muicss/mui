@@ -35166,7 +35166,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
     }, {
       key: "shouldComponentUpdate",
       value: function shouldComponentUpdate(nextProps, nextState) {
-        return (0, _reactAddonsShallowCompare["default"])(this, nextProps, nextState);
+        return (0, _reactAddonsShallowCompare.default)(this, nextProps, nextState);
       }
     }, {
       key: "componentDidMount",
@@ -35194,7 +35194,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         var labelType = jqLite.type(label);
 
         if (labelType == 'string' && label.length || labelType == 'object') {
-          labelEl = _react["default"].createElement(Label, {
+          labelEl = _react.default.createElement(Label, {
             text: label,
             onClick: this.onClickCB,
             htmlFor: this.props.id
@@ -35212,10 +35212,10 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         inputCls['mui--is-not-empty'] = !this.state.isEmpty;
         inputCls['mui--is-invalid'] = invalid;
         inputCls = util.classNames(inputCls);
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: wrapperCls + ' ' + className,
           style: style
-        }, _react["default"].createElement(TextfieldComponent, babelHelpers["extends"]({
+        }, _react.default.createElement(TextfieldComponent, babelHelpers.extends({
           className: inputCls,
           inputRef: function inputRef(el) {
             _this2.controlEl = el;
@@ -35228,7 +35228,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
       }
     }]);
     return _class;
-  }(_react["default"].Component), babelHelpers.defineProperty(_class, "defaultProps", {
+  }(_react.default.Component), babelHelpers.defineProperty(_class, "defaultProps", {
     className: '',
     hint: null,
     invalid: false,
@@ -35297,7 +35297,7 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("label", {
+      return _react.default.createElement("label", {
         style: this.state.style,
         onClick: this.props.onClick,
         htmlFor: this.props.htmlFor,
@@ -35307,7 +35307,7 @@ function (_React$Component2) {
     }
   }]);
   return Label;
-}(_react["default"].Component);
+}(_react.default.Component);
 /**
  * isEmpty helper
  * @function
@@ -35334,7 +35334,7 @@ function isEmpty(value) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35358,13 +35358,13 @@ function (_React$Component) {
       var _this$props = this.props,
           children = _this$props.children,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-appbar ' + this.props.className
       }), children);
     }
   }]);
   return Appbar;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -35372,7 +35372,7 @@ babelHelpers.defineProperty(Appbar, "defaultProps", {
   className: ''
 });
 var _default = Appbar;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],52:[function(require,module,exports){
@@ -35385,7 +35385,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35546,7 +35546,7 @@ function (_React$Component) {
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react["default"].createElement("button", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("button", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -35556,9 +35556,9 @@ function (_React$Component) {
         onMouseLeave: this.onMouseLeaveCB,
         onTouchStart: this.onTouchStartCB,
         onTouchEnd: this.onTouchEndCB
-      }), this.props.children, _react["default"].createElement("span", {
+      }), this.props.children, _react.default.createElement("span", {
         className: "mui-btn__ripple-container"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         ref: function ref(el) {
           _this2.rippleElRef = el;
         },
@@ -35568,7 +35568,7 @@ function (_React$Component) {
     }
   }]);
   return Button;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -35579,7 +35579,7 @@ babelHelpers.defineProperty(Button, "defaultProps", {
   variant: 'default'
 });
 var _default = Button;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":47,"../js/lib/util":48,"react":35}],53:[function(require,module,exports){
@@ -35592,14 +35592,16 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
+var caretClass = 'mui-caret';
 /**
  * Caret constructor
  * @class
  */
+
 var Caret =
 /*#__PURE__*/
 function (_React$Component) {
@@ -35613,16 +35615,20 @@ function (_React$Component) {
   babelHelpers.createClass(Caret, [{
     key: "render",
     value: function render() {
+      var cls = caretClass;
       var _this$props = this.props,
           children = _this$props.children,
-          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
-      return _react["default"].createElement("span", babelHelpers["extends"]({}, reactProps, {
-        className: 'mui-caret ' + this.props.className
+          direction = _this$props.direction,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "direction"]); // add direction class
+
+      if (direction) cls += ' ' + caretClass + '--' + direction;
+      return _react.default.createElement("span", babelHelpers.extends({}, reactProps, {
+        className: cls + ' ' + this.props.className
       }));
     }
   }]);
   return Caret;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -35630,7 +35636,7 @@ babelHelpers.defineProperty(Caret, "defaultProps", {
   className: ''
 });
 var _default = Caret;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],54:[function(require,module,exports){
@@ -35643,7 +35649,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35685,9 +35691,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-checkbox ' + className
-      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
+      }), _react.default.createElement("label", null, _react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -35706,7 +35712,7 @@ function (_React$Component) {
     }
   }]);
   return Checkbox;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -35715,7 +35721,7 @@ babelHelpers.defineProperty(Checkbox, "defaultProps", {
   label: null
 });
 var _default = Checkbox;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"./_helpers":49,"react":35}],55:[function(require,module,exports){
@@ -35728,7 +35734,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35777,13 +35783,13 @@ function (_React$Component) {
       }
 
       cls = util.classNames(cls);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Col;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -35801,7 +35807,7 @@ babelHelpers.defineProperty(Col, "defaultProps", {
   'xl-offset': null
 });
 var _default = Col;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"react":35}],56:[function(require,module,exports){
@@ -35814,7 +35820,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35843,13 +35849,13 @@ function (_React$Component) {
       var cls = 'mui-container'; // fluid containers
 
       if (fluid) cls += '-fluid';
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Container;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -35858,7 +35864,7 @@ babelHelpers.defineProperty(Container, "defaultProps", {
   fluid: false
 });
 var _default = Container;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],57:[function(require,module,exports){
@@ -35871,7 +35877,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35896,13 +35902,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-divider ' + className
       }));
     }
   }]);
   return Divider;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -35910,7 +35916,7 @@ babelHelpers.defineProperty(Divider, "defaultProps", {
   className: ''
 });
 var _default = Divider;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],58:[function(require,module,exports){
@@ -35926,7 +35932,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35956,7 +35962,7 @@ function (_React$Component) {
           value = _this$props.value,
           onClick = _this$props.onClick,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "link", "target", "value", "onClick"]);
-      return _react["default"].createElement("li", reactProps, _react["default"].createElement("a", {
+      return _react.default.createElement("li", reactProps, _react.default.createElement("a", {
         href: link,
         target: target,
         "data-mui-value": value,
@@ -35965,12 +35971,12 @@ function (_React$Component) {
     }
   }]);
   return DropdownItem;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
 var _default = DropdownItem;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"react":35}],59:[function(require,module,exports){
@@ -35986,7 +35992,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -35998,8 +36004,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
-    openClass = 'mui--is-open',
-    rightClass = 'mui-dropdown__menu--right';
+    openClass = 'mui--is-open';
 /**
  * Dropdown constructor
  * @class
@@ -36017,7 +36022,7 @@ function (_React$Component) {
     _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Dropdown).call(this, props));
     _this.state = {
       opened: false,
-      menuTop: 0
+      menuPos: {}
     };
     var cb = util.callback;
     _this.selectCB = cb(babelHelpers.assertThisInitialized(_this), 'select');
@@ -36076,12 +36081,39 @@ function (_React$Component) {
     key: "open",
     value: function open() {
       // position menu element below toggle button
-      var wrapperRect = this.wrapperElRef.getBoundingClientRect(),
+      var pos = {},
+          wrapperRect = this.wrapperElRef.getBoundingClientRect(),
           toggleRect;
-      toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
+      toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect(); // menu position
+
+      switch (this.props.placement) {
+        case 'up':
+          pos.bottom = toggleRect.height + toggleRect.top - wrapperRect.top;
+          break;
+
+        case 'right':
+          pos.left = toggleRect.width;
+          pos.top = toggleRect.top - wrapperRect.top;
+          break;
+
+        case 'left':
+          pos.right = toggleRect.width;
+          pos.top = toggleRect.top - wrapperRect.top;
+          break;
+
+        default:
+          pos.top = toggleRect.top - wrapperRect.top + toggleRect.height;
+      } // menu alignment
+
+
+      if (this.props.alignment === 'bottom') {
+        pos.top = 'auto';
+        pos.bottom = toggleRect.top - wrapperRect.top;
+      }
+
       this.setState({
         opened: true,
-        menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+        menuPos: pos
       });
     }
   }, {
@@ -36120,7 +36152,10 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var buttonEl, menuEl, labelEl;
+      var wrapperCls = dropdownClass,
+          buttonEl,
+          menuEl,
+          labelEl;
       var _this$props = this.props,
           children = _this$props.children,
           className = _this$props.className,
@@ -36128,19 +36163,32 @@ function (_React$Component) {
           variant = _this$props.variant,
           size = _this$props.size,
           label = _this$props.label,
+          placement = _this$props.placement,
+          alignment = _this$props.alignment,
           alignMenu = _this$props.alignMenu,
           onClick = _this$props.onClick,
           onSelect = _this$props.onSelect,
           disabled = _this$props.disabled,
-          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "placement", "alignment", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
 
       if (jqLite.type(label) === 'string') {
-        labelEl = _react["default"].createElement("span", null, label, " ", _react["default"].createElement(_caret["default"], null));
+        if (placement === 'left') {
+          labelEl = _react.default.createElement("span", null, _react.default.createElement(_caret.default, {
+            direction: placement
+          }), " ", label);
+        } else {
+          labelEl = _react.default.createElement("span", null, label, " ", _react.default.createElement(_caret.default, {
+            direction: placement
+          }));
+        }
       } else {
         labelEl = label;
-      }
+      } // placement
 
-      buttonEl = _react["default"].createElement(_button["default"], {
+
+      if (placement) wrapperCls += ' ' + dropdownClass + '--' + placement; // button
+
+      buttonEl = _react.default.createElement(_button.default, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -36156,32 +36204,34 @@ function (_React$Component) {
         var cs = {};
         cs[menuClass] = true;
         cs[openClass] = this.state.opened;
-        cs[rightClass] = alignMenu === 'right';
-        cs = util.classNames(cs);
-        menuEl = _react["default"].createElement("ul", {
+        cs = util.classNames(cs); // alignment (also handles `alignMenu` legacy argument)
+
+        if (alignment || alignMenu) {
+          cs += ' ' + menuClass + '--' + (alignment || alignMenu);
+        }
+
+        menuEl = _react.default.createElement("ul", {
           ref: function ref(el) {
             _this2.menuElRef = el;
           },
           className: cs,
-          style: {
-            top: this.state.menuTop
-          },
+          style: this.state.menuPos,
           onClick: this.selectCB
         }, children);
       } else {
-        menuEl = _react["default"].createElement("div", null);
+        menuEl = _react.default.createElement("div", null);
       }
 
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
-        className: dropdownClass + ' ' + className
+        className: wrapperCls + ' ' + className
       }), buttonEl, menuEl);
     }
   }]);
   return Dropdown;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -36191,13 +36241,16 @@ babelHelpers.defineProperty(Dropdown, "defaultProps", {
   variant: 'default',
   size: 'default',
   label: '',
-  alignMenu: 'left',
+  placement: null,
+  alignment: null,
+  alignMenu: null,
+  // legacy
   onClick: null,
   onSelect: null,
   disabled: false
 });
 var _default = Dropdown;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":47,"../js/lib/util":48,"./button":52,"./caret":53,"react":35}],60:[function(require,module,exports){
@@ -36210,7 +36263,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36239,13 +36292,13 @@ function (_React$Component) {
       var cls = 'mui-form'; // inline form
 
       if (inline) cls += ' mui-form--inline';
-      return _react["default"].createElement("form", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("form", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Form;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -36254,7 +36307,7 @@ babelHelpers.defineProperty(Form, "defaultProps", {
   inline: false
 });
 var _default = Form;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],61:[function(require,module,exports){
@@ -36267,7 +36320,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36280,14 +36333,14 @@ var _textfieldHelpers = require("./_textfieldHelpers");
 var Input = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
   var inputRef = props.inputRef,
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]);
-  return _react["default"].createElement("input", babelHelpers["extends"]({
+  return _react.default.createElement("input", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });
 /** Module API */
 
 var _default = Input;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"./_textfieldHelpers":50,"react":35}],62:[function(require,module,exports){
@@ -36300,7 +36353,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36331,11 +36384,11 @@ function (_React$Component) {
           children = _this$props.children,
           label = _this$props.label,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "label"]);
-      return _react["default"].createElement("option", reactProps, label);
+      return _react.default.createElement("option", reactProps, label);
     }
   }]);
   return Option;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -36344,7 +36397,7 @@ babelHelpers.defineProperty(Option, "defaultProps", {
   label: null
 });
 var _default = Option;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":46,"../js/lib/jqLite":47,"../js/lib/util":48,"./_helpers":49,"react":35}],63:[function(require,module,exports){
@@ -36357,7 +36410,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36382,13 +36435,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-panel ' + className
       }), children);
     }
   }]);
   return Panel;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -36396,7 +36449,7 @@ babelHelpers.defineProperty(Panel, "defaultProps", {
   className: ''
 });
 var _default = Panel;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],64:[function(require,module,exports){
@@ -36409,7 +36462,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36447,9 +36500,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-radio ' + className
-      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
+      }), _react.default.createElement("label", null, _react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -36468,7 +36521,7 @@ function (_React$Component) {
     }
   }]);
   return Radio;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -36477,7 +36530,7 @@ babelHelpers.defineProperty(Radio, "defaultProps", {
   label: null
 });
 var _default = Radio;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],65:[function(require,module,exports){
@@ -36490,7 +36543,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36518,13 +36571,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-row ' + className
       }), children);
     }
   }]);
   return Row;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -36532,7 +36585,7 @@ babelHelpers.defineProperty(Row, "defaultProps", {
   className: ''
 });
 var _default = Row;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":48,"react":35}],66:[function(require,module,exports){
@@ -36545,7 +36598,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -36709,7 +36762,7 @@ function (_React$Component) {
           selectCls;
 
       if (this.state.showMenu) {
-        menuElem = _react["default"].createElement(Menu, {
+        menuElem = _react.default.createElement(Menu, {
           optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
@@ -36744,7 +36797,7 @@ function (_React$Component) {
       if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue; // handle placeholder
 
       if (placeholder) {
-        placeholderElem = _react["default"].createElement("option", {
+        placeholderElem = _react.default.createElement("option", {
           className: "mui--text-placeholder",
           value: ""
         }, placeholder); // apply class if value is empty
@@ -36754,7 +36807,7 @@ function (_React$Component) {
         }
       }
 
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -36763,7 +36816,7 @@ function (_React$Component) {
         className: 'mui-select ' + className,
         onClick: this.onOuterClickCB,
         onKeyDown: this.onOuterKeyDownCB
-      }), _react["default"].createElement("select", babelHelpers["extends"]({}, valueArgs, {
+      }), _react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
         ref: function ref(el) {
           _this2.controlEl = el;
         },
@@ -36775,13 +36828,13 @@ function (_React$Component) {
         onChange: this.onInnerChangeCB,
         onMouseDown: this.onInnerMouseDownCB,
         required: this.props.required
-      }), placeholderElem, children), _react["default"].createElement("label", {
+      }), placeholderElem, children), _react.default.createElement("label", {
         tabIndex: "-1"
       }, label), menuElem);
     }
   }]);
   return Select;
-}(_react["default"].Component);
+}(_react.default.Component);
 /**
  * Menu constructor
  * @class
@@ -37001,14 +37054,14 @@ function (_React$Component2) {
 
 
         cls += optionEl.className;
-        menuItems.push(_react["default"].createElement("div", {
+        menuItems.push(_react.default.createElement("div", {
           key: i,
           className: cls,
           onClick: this.onClick.bind(this, val)
         }, optionEl.textContent));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         ref: function ref(el) {
           _this4.wrapperElRef = el;
         },
@@ -37017,7 +37070,7 @@ function (_React$Component2) {
     }
   }]);
   return Menu;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -37028,7 +37081,7 @@ babelHelpers.defineProperty(Menu, "defaultProps", {
   onClose: null
 });
 var _default = Select;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":46,"../js/lib/jqLite":47,"../js/lib/util":48,"./_helpers":49,"react":35}],67:[function(require,module,exports){
@@ -37044,7 +37097,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -37069,7 +37122,7 @@ function (_React$Component) {
     }
   }]);
   return Tab;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -37079,7 +37132,7 @@ babelHelpers.defineProperty(Tab, "defaultProps", {
   onActive: null
 });
 var _default = Tab;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":35}],68:[function(require,module,exports){
@@ -37096,7 +37149,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -37175,7 +37228,7 @@ function (_React$Component) {
           selectedIndex = _this$props.selectedIndex,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "defaultSelectedIndex", "initialSelectedIndex", "justified", "selectedIndex"]);
 
-      var tabs = _react["default"].Children.toArray(children);
+      var tabs = _react.default.Children.toArray(children);
 
       var tabEls = [],
           paneEls = [],
@@ -37189,19 +37242,19 @@ function (_React$Component) {
       for (i = 0; i < m; i++) {
         item = tabs[i]; // only accept MUITab elements
 
-        if (item.type !== _tab["default"]) util.raiseError('Expecting MUITab React Element');
+        if (item.type !== _tab.default) util.raiseError('Expecting MUITab React Element');
         isActive = i === currentSelectedIndex ? true : false; // tab element
 
-        tabEls.push(_react["default"].createElement("li", {
+        tabEls.push(_react.default.createElement("li", {
           key: i,
           className: isActive ? isActiveClass : ''
-        }, _react["default"].createElement("a", {
+        }, _react.default.createElement("a", {
           onClick: this.onClick.bind(this, i, item)
         }, item.props.label))); // pane element
 
         cls = tabsPaneClass + ' ';
         if (isActive) cls += isActiveClass;
-        paneEls.push(_react["default"].createElement("div", {
+        paneEls.push(_react.default.createElement("div", {
           key: i,
           className: cls
         }, item.props.children));
@@ -37209,13 +37262,13 @@ function (_React$Component) {
 
       cls = tabsBarClass;
       if (justified) cls += ' ' + tabsBarJustifiedClass;
-      return _react["default"].createElement("div", reactProps, _react["default"].createElement("ul", {
+      return _react.default.createElement("div", reactProps, _react.default.createElement("ul", {
         className: cls
       }, tabEls), paneEls);
     }
   }]);
   return Tabs;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -37232,7 +37285,7 @@ babelHelpers.defineProperty(Tabs, "defaultProps", {
   selectedIndex: null
 });
 var _default = Tabs;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 }).call(this,require('_process'))
@@ -37246,7 +37299,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -37261,12 +37314,12 @@ var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]); // default number of rows
 
   if (!'rows' in rest) rest.rows = 2;
-  return _react["default"].createElement("textarea", babelHelpers["extends"]({
+  return _react.default.createElement("textarea", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });
 var _default = Textarea;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"./_textfieldHelpers":50,"react":35}],70:[function(require,module,exports){
@@ -37583,29 +37636,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/appbar', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_appbar["default"], null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_appbar.default, null, "test"));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-appbar ');
+    _assert.default.equal(result.props.className, 'mui-appbar ');
 
-    _assert["default"].equal(result.props.children, 'test');
+    _assert.default.equal(result.props.children, 'test');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_appbar["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_appbar.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-appbar additional');
+    _assert.default.equal(result.props.className, 'mui-appbar additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_appbar["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_appbar.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -37634,63 +37687,63 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/button', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, null, "test"));
 
-    _assert["default"].equal(result.type, 'button');
+    _assert.default.equal(result.type, 'button');
 
-    _assert["default"].equal(/\bmui-btn\b/.test(result.props.className), true);
+    _assert.default.equal(/\bmui-btn\b/.test(result.props.className), true);
 
-    _assert["default"].equal(result.props.children[0], 'test');
+    _assert.default.equal(result.props.children[0], 'test');
   });
   it('renders properly with addtional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(/\badditional\b/.test(result.props.className), true);
+    _assert.default.equal(/\badditional\b/.test(result.props.className), true);
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
   it('supports colors', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
       color: "primary"
     }, "test"));
 
-    _assert["default"].equal(/mui-btn--primary/.test(result.props.className), true);
+    _assert.default.equal(/mui-btn--primary/.test(result.props.className), true);
   });
   it('supports variants', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
       variant: "raised"
     }, "test"));
 
-    _assert["default"].equal(/mui-btn--raised/.test(result.props.className), true);
+    _assert.default.equal(/mui-btn--raised/.test(result.props.className), true);
   });
   it('supports sizes', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
       size: "large"
     }, "test"));
 
-    _assert["default"].equal(/mui-btn--large/.test(result.props.className), true);
+    _assert.default.equal(/mui-btn--large/.test(result.props.className), true);
   });
   it('supports type attribute', function () {
     // check default
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, null, "test"));
 
-    _assert["default"].equal(result.props.type, null); // check 'button' type
+    _assert.default.equal(result.props.type, null); // check 'button' type
 
 
-    result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_button["default"], {
+    result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_button.default, {
       type: "button"
     }, "test"));
 
-    _assert["default"].equal(result.props.type, 'button');
+    _assert.default.equal(result.props.type, 'button');
   });
   it('supports click, mouse and touch events', function () {
     var executedEvents = [],
@@ -37710,7 +37763,7 @@ describe('react/button', function () {
       onTouchEnd: fn
     };
 
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_button["default"], props, "test")); // trigger events
+    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_button.default, props, "test")); // trigger events
 
 
     var k, eventName, eventType;
@@ -37720,7 +37773,7 @@ describe('react/button', function () {
       eventName = k.charAt(2).toLowerCase() + k.substr(3, k.length);
       eventType = eventName.toLowerCase(); // trigger event
 
-      _testUtils["default"].Simulate[eventName](node.buttonElRef, {
+      _testUtils.default.Simulate[eventName](node.buttonElRef, {
         type: eventType
       });
 
@@ -37728,35 +37781,35 @@ describe('react/button', function () {
     } // check that events were executed
 
 
-    _assert["default"].deepEqual(triggeredEvents, executedEvents);
+    _assert.default.deepEqual(triggeredEvents, executedEvents);
   });
   it('renders ripples on click', function (done) {
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_button["default"], null, "test")),
+    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_button.default, null, "test")),
         buttonEl = node.buttonElRef,
         rippleEl = node.rippleElRef; // check state before click
 
 
-    _assert["default"].equal(node.state.ripple, null);
+    _assert.default.equal(node.state.ripple, null);
 
-    _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-visible'), false); // trigger ripple
-
-
-    _testUtils["default"].Simulate.mouseDown(buttonEl); // check state after click
+    _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-visible'), false); // trigger ripple
 
 
-    _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-visible'), true);
+    _testUtils.default.Simulate.mouseDown(buttonEl); // check state after click
 
-    _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-animating'), false); // check animation
+
+    _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-visible'), true);
+
+    _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-animating'), false); // check animation
 
 
     (0, _util.requestAnimationFrame)(function () {
-      _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-animating'), true); // remove ripple
+      _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-animating'), true); // remove ripple
 
 
-      _testUtils["default"].Simulate.mouseUp(node.buttonElRef);
+      _testUtils.default.Simulate.mouseUp(node.buttonElRef);
 
       (0, _util.requestAnimationFrame)(function () {
-        _assert["default"].equal(_jqLite["default"].hasClass(rippleEl, 'mui--is-visible'), false);
+        _assert.default.equal(_jqLite.default.hasClass(rippleEl, 'mui--is-visible'), false);
 
         done();
       });
@@ -37781,29 +37834,44 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/caret', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_caret["default"], null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_caret.default, null, "test"));
 
-    _assert["default"].equal(result.type, 'span');
+    _assert.default.equal(result.type, 'span');
 
-    _assert["default"].equal(result.props.className, 'mui-caret ');
+    _assert.default.equal(result.props.className, 'mui-caret ');
 
-    _assert["default"].equal(result.props.children, undefined);
+    _assert.default.equal(result.props.children, undefined);
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_caret["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_caret.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-caret additional');
+    _assert.default.equal(result.props.className, 'mui-caret additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_caret["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_caret.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
+  });
+  it('renders direction variants properly', function () {
+    var baseClass = 'mui-caret mui-caret--',
+        result;
+    ['up', 'right', 'left'].forEach(function (direction) {
+      result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_caret.default, {
+        direction: direction
+      }, "test")); // check html
+
+      _assert.default.equal(result.type, 'span');
+
+      _assert.default.equal(result.props.className, baseClass + direction + ' ');
+
+      _assert.default.equal(result.props.children, undefined);
+    });
   });
 });
 
@@ -37831,52 +37899,52 @@ var _reactHelpers = require("../lib/react-helpers");
 describe('react/checkbox', function () {
   var elem;
   beforeEach(function () {
-    elem = _react["default"].createElement(_checkbox["default"], {
+    elem = _react.default.createElement(_checkbox.default, {
       label: "My Label"
     });
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-checkbox ');
+    _assert.default.equal(result.props.className, 'mui-checkbox ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_checkbox["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_checkbox.default, {
       className: "additional",
       label: "test"
     }));
 
-    _assert["default"].equal(result.props.className, 'mui-checkbox additional');
+    _assert.default.equal(result.props.className, 'mui-checkbox additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_checkbox["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_checkbox.default, {
       style: {
         additonal: 'style'
       },
       label: "test"
     }));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
   it('renders content properly', function () {
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom["default"].findDOMNode(instance);
+    var wrapperEl = _reactDom.default.findDOMNode(instance);
 
-    _assert["default"].equal(wrapperEl.children.length, 1);
+    _assert.default.equal(wrapperEl.children.length, 1);
 
     var labelEl = wrapperEl.children[0];
 
-    _assert["default"].equal(labelEl.tagName, 'LABEL');
+    _assert.default.equal(labelEl.tagName, 'LABEL');
 
     var inputEl = labelEl.children[0];
 
-    _assert["default"].equal(inputEl.tagName, 'INPUT');
+    _assert.default.equal(inputEl.tagName, 'INPUT');
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass["default"])({
+    var TestApp = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           checked: this.props.checked
@@ -37888,7 +37956,7 @@ describe('react/checkbox', function () {
         });
       },
       render: function render() {
-        return _react["default"].createElement(_checkbox["default"], {
+        return _react.default.createElement(_checkbox.default, {
           ref: "refEl",
           checked: this.state.checked,
           onChange: this.onChange
@@ -37896,29 +37964,29 @@ describe('react/checkbox', function () {
       }
     });
 
-    var elem = _react["default"].createElement(TestApp, {
+    var elem = _react.default.createElement(TestApp, {
       checked: false
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
     var inputEl = instance.refs.refEl.controlEl; // check default value
 
-    _assert["default"].equal(inputEl.checked, false); // update TestApp and check inputEl value
+    _assert.default.equal(inputEl.checked, false); // update TestApp and check inputEl value
 
 
     instance.setState({
       checked: true
     });
 
-    _assert["default"].equal(inputEl.checked, true); // update inputEl and check state
+    _assert.default.equal(inputEl.checked, true); // update inputEl and check state
 
 
     inputEl.checked = false;
 
-    _testUtils["default"].Simulate.change(inputEl);
+    _testUtils.default.Simulate.change(inputEl);
 
-    _assert["default"].equal(instance.state.checked, false);
+    _assert.default.equal(instance.state.checked, false);
   });
   it('supports onChange method', function (done) {
     var counter = 0;
@@ -37927,19 +37995,19 @@ describe('react/checkbox', function () {
       counter += 1;
     };
 
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_checkbox["default"], {
+    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_checkbox.default, {
       onChange: onChangeFn
     })); // change checkbox
 
 
-    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'input');
+    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'input');
 
-    _testUtils["default"].Simulate.change(inputEl); // test conditions
+    _testUtils.default.Simulate.change(inputEl); // test conditions
 
 
     setTimeout(function () {
       // one onChange event (https://github.com/muicss/mui/issues/94)
-      _assert["default"].equal(counter, 1);
+      _assert.default.equal(counter, 1);
 
       done();
     }, 50);
@@ -37965,7 +38033,7 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/grid', function () {
   it('col renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_col["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_col.default, {
       xs: 1,
       sm: 2,
       md: 3,
@@ -37976,41 +38044,41 @@ describe('react/grid', function () {
       "lg-offset": 8
     }, "My Content"));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
     var className = result.props.className;
 
-    _assert["default"].equal(/mui-col-xs-1/.test(className), true);
+    _assert.default.equal(/mui-col-xs-1/.test(className), true);
 
-    _assert["default"].equal(/mui-col-sm-2/.test(className), true);
+    _assert.default.equal(/mui-col-sm-2/.test(className), true);
 
-    _assert["default"].equal(/mui-col-md-3/.test(className), true);
+    _assert.default.equal(/mui-col-md-3/.test(className), true);
 
-    _assert["default"].equal(/mui-col-lg-4/.test(className), true);
+    _assert.default.equal(/mui-col-lg-4/.test(className), true);
 
-    _assert["default"].equal(/mui-col-xs-offset-5/.test(className), true);
+    _assert.default.equal(/mui-col-xs-offset-5/.test(className), true);
 
-    _assert["default"].equal(/mui-col-sm-offset-6/.test(className), true);
+    _assert.default.equal(/mui-col-sm-offset-6/.test(className), true);
 
-    _assert["default"].equal(/mui-col-md-offset-7/.test(className), true);
+    _assert.default.equal(/mui-col-md-offset-7/.test(className), true);
 
-    _assert["default"].equal(/mui-col-lg-offset-8/.test(className), true);
+    _assert.default.equal(/mui-col-lg-offset-8/.test(className), true);
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_col["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_col.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, ' additional');
+    _assert.default.equal(result.props.className, ' additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_col["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_col.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -38031,40 +38099,40 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/container', function () {
   it('renders default properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, null, "test"));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-container ');
+    _assert.default.equal(result.props.className, 'mui-container ');
 
-    _assert["default"].equal(result.props.children, 'test');
+    _assert.default.equal(result.props.children, 'test');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-container additional');
+    _assert.default.equal(result.props.className, 'mui-container additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
   it('rendes fluid properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_container["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_container.default, {
       fluid: true
     }, "test"));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-container-fluid ');
+    _assert.default.equal(result.props.className, 'mui-container-fluid ');
 
-    _assert["default"].equal(result.props.children, 'test');
+    _assert.default.equal(result.props.children, 'test');
   });
 });
 
@@ -38085,29 +38153,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/divider', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_divider["default"], null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_divider.default, null, "test"));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-divider ');
+    _assert.default.equal(result.props.className, 'mui-divider ');
 
-    _assert["default"].equal(result.props.children, undefined);
+    _assert.default.equal(result.props.children, undefined);
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_divider["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_divider.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-divider additional');
+    _assert.default.equal(result.props.className, 'mui-divider additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_divider["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_divider.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -38132,72 +38200,102 @@ var util = babelHelpers.interopRequireWildcard(require("../../src/js/lib/util"))
  * MUI test react appbar library
  * @module test/react-tests/test-appbar
  */
+var renderIntoDocument = _testUtils.default.renderIntoDocument,
+    findRenderedComponent = _testUtils.default.findRenderedDOMComponentWithTag;
 describe('react/dropdown', function () {
   var elem;
   beforeEach(function () {
-    elem = _react["default"].createElement(_dropdown["default"], null, _react["default"].createElement(_dropdownItem["default"], null, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"));
+    elem = _react.default.createElement(_dropdown.default, null, _react.default.createElement(_dropdownItem.default, null, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"));
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-dropdown ');
+    _assert.default.equal(result.props.className, 'mui-dropdown ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_dropdown["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_dropdown.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-dropdown additional');
+    _assert.default.equal(result.props.className, 'mui-dropdown additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_dropdown["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_dropdown.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
+  });
+  it('renders placement variants properly', function () {
+    var baseClass = 'mui-dropdown mui-dropdown--';
+    ['up', 'right', 'left'].forEach(function (placement) {
+      var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_dropdown.default, {
+        placement: placement
+      }, "test"));
+
+      _assert.default.equal(result.props.className, baseClass + placement + ' ');
+
+      console.log(result.classList);
+    });
+  });
+  it('renders alignment variants properly', function () {
+    ['right', 'bottom'].forEach(function (alignment) {
+      // render
+      var node = renderIntoDocument(_react.default.createElement(_dropdown.default, {
+        alignment: alignment
+      }, _react.default.createElement(_dropdownItem.default, null, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"))); // open
+
+      var buttonEl = findRenderedComponent(node, 'button');
+
+      _testUtils.default.Simulate.click(buttonEl, {
+        button: 0
+      }); // check class
+
+
+      var cls = 'mui-dropdown__menu--' + alignment;
+
+      _assert.default.equal(node.menuElRef.classList.contains(cls), true);
+    });
   });
   it('renders menu on click', function () {
-    var node = _testUtils["default"].renderIntoDocument(elem);
+    var node = renderIntoDocument(elem);
+    var buttonEl = findRenderedComponent(node, 'button'); // check menu is hidden
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button'); // check menu is hidden
-
-
-    _assert["default"].equal(node.menuElRef, undefined); // click to render menu
+    _assert.default.equal(node.menuElRef, undefined); // click to render menu
 
 
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     });
 
     var cls = 'mui-dropdown__menu mui--is-open';
 
-    _assert["default"].equal(node.menuElRef.className, cls); // click again to hide
+    _assert.default.equal(node.menuElRef.className, cls); // click again to hide
 
 
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     });
 
-    _assert["default"].equal(node.menuElRef, undefined);
+    _assert.default.equal(node.menuElRef, undefined);
   });
   it('renders options into menu', function () {
-    var node = _testUtils["default"].renderIntoDocument(elem); // render menu
+    var node = renderIntoDocument(elem); // render menu
 
+    var buttonEl = findRenderedComponent(node, 'button');
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
-
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     }); // check menu
 
 
     var menuEl = node.menuElRef;
 
-    _assert["default"].equal(menuEl.children.length, 3); // check content
+    _assert.default.equal(menuEl.children.length, 3); // check content
 
 
     var el;
@@ -38205,9 +38303,9 @@ describe('react/dropdown', function () {
     for (var i = 0; i < menuEl.children.length; i++) {
       el = menuEl.children[i];
 
-      _assert["default"].equal(el.tagName, 'LI');
+      _assert.default.equal(el.tagName, 'LI');
 
-      _assert["default"].equal(el.textContent, 'Option ' + (i + 1));
+      _assert.default.equal(el.textContent, 'Option ' + (i + 1));
     }
   });
   it('handles onClick method on toggle button', function (done) {
@@ -38215,14 +38313,13 @@ describe('react/dropdown', function () {
       done();
     };
 
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], {
+    var node = renderIntoDocument(_react.default.createElement(_dropdown.default, {
       onClick: onClickFn
-    }, _react["default"].createElement(_dropdownItem["default"], null, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"))); // trigger event
+    }, _react.default.createElement(_dropdownItem.default, null, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"))); // trigger event
 
+    var buttonEl = findRenderedComponent(node, 'button');
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
-
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     });
   });
@@ -38233,55 +38330,52 @@ describe('react/dropdown', function () {
       counter += 1;
     };
 
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], null, _react["default"].createElement(_dropdownItem["default"], {
+    var node = renderIntoDocument(_react.default.createElement(_dropdown.default, null, _react.default.createElement(_dropdownItem.default, {
       onClick: onClickFn
-    }, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"))); // open menu
+    }, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"))); // open menu
 
+    var buttonEl = findRenderedComponent(node, 'button');
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
-
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     }); // click on first menu item
 
 
-    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _testUtils["default"].Simulate.click(anchorEl); // test conditions
+    _testUtils.default.Simulate.click(anchorEl); // test conditions
 
 
     setTimeout(function () {
       // one click per child (https://github.com/muicss/mui/issues/92)
-      _assert["default"].equal(counter, 1);
+      _assert.default.equal(counter, 1);
 
       done();
     }, 50);
   });
   it('closes menu after item click', function () {
-    var node = _testUtils["default"].renderIntoDocument(elem); // open menu
+    var node = renderIntoDocument(elem); // open menu
 
+    var buttonEl = findRenderedComponent(node, 'button');
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
-
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     }); // click on first menu item
 
 
-    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _testUtils["default"].Simulate.click(anchorEl); // check that menu has closed
+    _testUtils.default.Simulate.click(anchorEl); // check that menu has closed
 
 
-    _assert["default"].equal(node.menuElRef, undefined);
+    _assert.default.equal(node.menuElRef, undefined);
   });
   it('closes menu after Escape key press', function () {
-    var node = _testUtils["default"].renderIntoDocument(elem); // open menu
+    var node = renderIntoDocument(elem); // open menu
 
+    var buttonEl = findRenderedComponent(node, 'button');
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
-
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     }); // press Escape
 
@@ -38290,49 +38384,47 @@ describe('react/dropdown', function () {
       key: 'Escape'
     }); // check that menu has closed
 
-    _assert["default"].equal(node.menuElRef, undefined);
+    _assert.default.equal(node.menuElRef, undefined);
   });
   it('handles onSelect method on dropdown', function (done) {
     var onSelectFn = function onSelectFn(value) {
-      _assert["default"].equal(value, 'opt1');
+      _assert.default.equal(value, 'opt1');
 
       done();
     };
 
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], {
+    var node = renderIntoDocument(_react.default.createElement(_dropdown.default, {
       onSelect: onSelectFn
-    }, _react["default"].createElement(_dropdownItem["default"], {
+    }, _react.default.createElement(_dropdownItem.default, {
       value: "opt1"
-    }, "Option 1"), _react["default"].createElement(_dropdownItem["default"], null, "Option 2"), _react["default"].createElement(_dropdownItem["default"], null, "Option 3"))); // open menu
+    }, "Option 1"), _react.default.createElement(_dropdownItem.default, null, "Option 2"), _react.default.createElement(_dropdownItem.default, null, "Option 3"))); // open menu
 
+    var buttonEl = findRenderedComponent(node, 'button');
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
-
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     }); // click on first menu item
 
 
-    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _testUtils["default"].Simulate.click(anchorEl);
+    _testUtils.default.Simulate.click(anchorEl);
   });
   it('renders target attribute on DropdownItem', function () {
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_dropdown["default"], null, _react["default"].createElement(_dropdownItem["default"], {
+    var node = renderIntoDocument(_react.default.createElement(_dropdown.default, null, _react.default.createElement(_dropdownItem.default, {
       target: "_blank"
     }, "Option 1"))); // open menu
 
+    var buttonEl = findRenderedComponent(node, 'button');
 
-    var buttonEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'button');
-
-    _testUtils["default"].Simulate.click(buttonEl, {
+    _testUtils.default.Simulate.click(buttonEl, {
       button: 0
     }); // check rendered anchor tag
 
 
-    var anchorEl = _testUtils["default"].scryRenderedDOMComponentsWithTag(node, 'a')[0];
+    var anchorEl = _testUtils.default.scryRenderedDOMComponentsWithTag(node, 'a')[0];
 
-    _assert["default"].equal(anchorEl.target, "_blank");
+    _assert.default.equal(anchorEl.target, "_blank");
   });
 });
 
@@ -38353,36 +38445,36 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/form', function () {
   it('renders wrapper properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], null));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, null));
 
-    _assert["default"].equal(result.type, 'form');
+    _assert.default.equal(result.type, 'form');
 
-    _assert["default"].equal(result.props.className, 'mui-form ');
+    _assert.default.equal(result.props.className, 'mui-form ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-form additional');
+    _assert.default.equal(result.props.className, 'mui-form additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
   it('handles inline option', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_form["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_form.default, {
       inline: true
     }));
 
-    _assert["default"].equal(result.type, 'form');
+    _assert.default.equal(result.type, 'form');
 
-    _assert["default"].equal(result.props.className, 'mui-form mui-form--inline ');
+    _assert.default.equal(result.props.className, 'mui-form mui-form--inline ');
   });
 });
 
@@ -38414,154 +38506,154 @@ describe('react/input', function () {
     console.warn = warnFn;
   });
   it('renders wrapper properly', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_input["default"], null));
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_input.default, null));
 
-    var wrapperEl = _reactDom["default"].findDOMNode(instance);
+    var wrapperEl = _reactDom.default.findDOMNode(instance);
 
-    _assert["default"].equal(wrapperEl.tagName, 'DIV');
+    _assert.default.equal(wrapperEl.tagName, 'DIV');
 
-    _assert["default"].equal(wrapperEl.className.trim(), 'mui-textfield');
+    _assert.default.equal(wrapperEl.className.trim(), 'mui-textfield');
   });
   it('renders component with defaultValue properly', function () {
-    var elem = _react["default"].createElement(_input["default"], {
+    var elem = _react.default.createElement(_input.default, {
       defaultValue: "my input"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
-
-
-    _assert["default"].equal(inputEl.value, 'my input'); // check empty/not-empty classes
+    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
 
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert.default.equal(inputEl.value, 'my input'); // check empty/not-empty classes
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true);
+
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
   it('renders component with integer defaultValue', function () {
-    var elem = _react["default"].createElement(_input["default"], {
+    var elem = _react.default.createElement(_input.default, {
       defaultValue: 0
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
-
-
-    _assert["default"].equal(inputEl.value, 0); // check empty/not-empty classes
+    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
 
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert.default.equal(inputEl.value, 0); // check empty/not-empty classes
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true);
+
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
   it('renders component with defaultValue received by update', function () {
-    var ParentClass = (0, _createReactClass["default"])({
+    var ParentClass = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           testState: 'init'
         };
       },
       render: function render() {
-        return _react["default"].createElement(_input["default"], {
+        return _react.default.createElement(_input.default, {
           defaultValue: "my input"
         });
       }
     });
 
-    var parentElem = _react["default"].createElement(ParentClass, null);
+    var parentElem = _react.default.createElement(ParentClass, null);
 
-    var parentInstance = _testUtils["default"].renderIntoDocument(parentElem);
+    var parentInstance = _testUtils.default.renderIntoDocument(parentElem);
 
-    var instance = _testUtils["default"].findRenderedComponentWithType(parentInstance, _input["default"]);
+    var instance = _testUtils.default.findRenderedComponentWithType(parentInstance, _input.default);
 
-    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
-
-
-    _assert["default"].equal(inputEl.value, 'my input'); // check empty/not-empty classes
+    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // check input element value
 
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert.default.equal(inputEl.value, 'my input'); // check empty/not-empty classes
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true); // changing state calls componentWillReceiveProps()
+
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
+
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true); // changing state calls componentWillReceiveProps()
 
 
     parentInstance.setState({
       testState: 'new'
     }); // check input element value
 
-    _assert["default"].equal(inputEl.value, 'my input'); // check empty/not-empty classes
+    _assert.default.equal(inputEl.value, 'my input'); // check empty/not-empty classes
 
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true);
   });
   it('properly renders instance classes', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_input["default"], null));
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_input.default, null));
 
-    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // starts with empty|pristine|untouched classes
-
-
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
-
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
-
-    _assert["default"].equal(/mui--is-untouched/.test(inputEl.className), true);
-
-    _assert["default"].equal(/mui--is-touched/.test(inputEl.className), false);
-
-    _assert["default"].equal(/mui--is-pristine/.test(inputEl.className), true);
-
-    _assert["default"].equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `untouched` with `touched` on blur
+    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // starts with empty|pristine|untouched classes
 
 
-    _testUtils["default"].Simulate.blur(inputEl);
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-untouched/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-untouched/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-touched/.test(inputEl.className), false);
 
-    _assert["default"].equal(/mui--is-touched/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-pristine/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-pristine/.test(inputEl.className), true);
-
-    _assert["default"].equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `pristine` with `dirty` on user input
+    _assert.default.equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `untouched` with `touched` on blur
 
 
-    _testUtils["default"].Simulate.change(inputEl);
+    _testUtils.default.Simulate.blur(inputEl);
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
 
-    _assert["default"].equal(/mui--is-untouched/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-untouched/.test(inputEl.className), false);
 
-    _assert["default"].equal(/mui--is-touched/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-touched/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-pristine/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-pristine/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-dirty/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-dirty/.test(inputEl.className), false); // replaces `pristine` with `dirty` on user input
+
+
+    _testUtils.default.Simulate.change(inputEl);
+
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
+
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
+
+    _assert.default.equal(/mui--is-untouched/.test(inputEl.className), false);
+
+    _assert.default.equal(/mui--is-touched/.test(inputEl.className), true);
+
+    _assert.default.equal(/mui--is-pristine/.test(inputEl.className), false);
+
+    _assert.default.equal(/mui--is-dirty/.test(inputEl.className), true);
   });
   it('executes onBlur callback', function (done) {
     var callbackFn = function callbackFn(ev) {
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_input["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_input.default, {
       onBlur: callbackFn
     }));
 
-    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(instance, 'input'); // simulate blur
+    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(instance, 'input'); // simulate blur
 
 
-    _testUtils["default"].Simulate.blur(inputEl);
+    _testUtils.default.Simulate.blur(inputEl);
   });
   it('adds and removes mui--is-empty classes', function () {
-    var TestApp = (0, _createReactClass["default"])({
+    var TestApp = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -38573,60 +38665,60 @@ describe('react/input', function () {
         });
       },
       render: function render() {
-        return _react["default"].createElement(_input["default"], {
+        return _react.default.createElement(_input.default, {
           value: this.state.value,
           onChange: this.onChange
         });
       }
     });
 
-    var elem = _react["default"].createElement(TestApp, {
+    var elem = _react.default.createElement(TestApp, {
       value: ""
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'input'); // check empty classes
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false); // add input value and check classes
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false); // add input value and check classes
 
 
     instance.setState({
       value: 'test'
     });
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), false);
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), true); // remove input classes and check classes
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), true); // remove input classes and check classes
 
 
     instance.setState({
       value: ''
     });
 
-    _assert["default"].equal(/mui--is-empty/.test(inputEl.className), true);
+    _assert.default.equal(/mui--is-empty/.test(inputEl.className), true);
 
-    _assert["default"].equal(/mui--is-not-empty/.test(inputEl.className), false);
+    _assert.default.equal(/mui--is-not-empty/.test(inputEl.className), false);
   });
   it('does controlled component validation', function (done) {
     console.warn = function (msg) {
-      _assert["default"].equal(/MUI Warning/.test(msg), true);
+      _assert.default.equal(/MUI Warning/.test(msg), true);
 
       done();
     }; // raises error when `value` defined and `onChange missing
 
 
-    var elem = _react["default"].createElement(_input["default"], {
+    var elem = _react.default.createElement(_input.default, {
       value: "my value"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
   });
   it('can be used as controlled component', function () {
-    var TestApp = (0, _createReactClass["default"])({
+    var TestApp = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -38638,82 +38730,82 @@ describe('react/input', function () {
         });
       },
       render: function render() {
-        return _react["default"].createElement(_input["default"], {
+        return _react.default.createElement(_input.default, {
           value: this.state.value,
           onChange: this.onChange
         });
       }
     });
 
-    var elem = _react["default"].createElement(TestApp, {
+    var elem = _react.default.createElement(TestApp, {
       value: "test"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'input'); // check default value
 
-    _assert["default"].equal(inputEl.value, 'test'); // update TestApp and check inputEl value
+    _assert.default.equal(inputEl.value, 'test'); // update TestApp and check inputEl value
 
 
     instance.setState({
       value: 'test2'
     });
 
-    _assert["default"].equal(inputEl.value, 'test2'); // update inputEl and check state
+    _assert.default.equal(inputEl.value, 'test2'); // update inputEl and check state
 
 
     inputEl.value = 'test3';
 
-    _testUtils["default"].Simulate.change(inputEl);
+    _testUtils.default.Simulate.change(inputEl);
 
-    _assert["default"].equal(instance.state.value, 'test3');
+    _assert.default.equal(instance.state.value, 'test3');
   });
   it('can be used as an uncontrolled component', function () {
-    var elem = _react["default"].createElement(_input["default"], {
+    var elem = _react.default.createElement(_input.default, {
       defaultValue: "mydefaultvalue"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'input');
 
-    _assert["default"].equal(inputEl, instance.controlEl);
+    _assert.default.equal(inputEl, instance.controlEl);
 
-    _assert["default"].equal(instance.controlEl.value, 'mydefaultvalue');
+    _assert.default.equal(instance.controlEl.value, 'mydefaultvalue');
   });
   it('handles label unmount gracefully', function () {
-    var elem = _react["default"].createElement(_input["default"], {
+    var elem = _react.default.createElement(_input.default, {
       label: "label",
       defaultValue: "defaultValue"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom["default"].findDOMNode(instance);
+    var wrapperEl = _reactDom.default.findDOMNode(instance);
 
-    _reactDom["default"].unmountComponentAtNode(wrapperEl.parentNode); // TODO: How can we access the timer id to check if it was removed
+    _reactDom.default.unmountComponentAtNode(wrapperEl.parentNode); // TODO: How can we access the timer id to check if it was removed
     //       successfully?
 
 
-    _assert["default"].equal(true, true);
+    _assert.default.equal(true, true);
   });
   it('sets id for control and label elements', function () {
-    var elem = _react["default"].createElement(_input["default"], {
+    var elem = _react.default.createElement(_input.default, {
       id: "myId",
       label: "label",
       defaultValue: "defaultValue"
     }),
-        instance = _testUtils["default"].renderIntoDocument(elem),
-        findComponent = _testUtils["default"].findRenderedDOMComponentWithTag,
+        instance = _testUtils.default.renderIntoDocument(elem),
+        findComponent = _testUtils.default.findRenderedDOMComponentWithTag,
         inputEl = instance.controlEl,
         labelEl = findComponent(instance, 'label');
 
-    _assert["default"].equal(inputEl.id, 'myId');
+    _assert.default.equal(inputEl.id, 'myId');
 
-    _assert["default"].equal(labelEl.getAttribute('for'), 'myId');
+    _assert.default.equal(labelEl.getAttribute('for'), 'myId');
   });
 });
 
@@ -38738,29 +38830,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/option', function () {
   it('renders element properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_option["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_option.default, {
       label: "Option 1"
     }));
 
-    _assert["default"].equal(result.type, 'option');
+    _assert.default.equal(result.type, 'option');
 
-    _assert["default"].equal(result.props.children, 'Option 1');
+    _assert.default.equal(result.props.children, 'Option 1');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_option["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_option.default, {
       className: "additional"
     }));
 
-    _assert["default"].equal(result.props.className, 'additional');
+    _assert.default.equal(result.props.className, 'additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_option["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_option.default, {
       style: {
         additional: 'style'
       }
     }));
 
-    _assert["default"].equal(result.props.style.additional, 'style');
+    _assert.default.equal(result.props.style.additional, 'style');
   });
 });
 
@@ -38781,29 +38873,29 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/panel', function () {
   it('renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_panel["default"], null, "test"));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_panel.default, null, "test"));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-panel ');
+    _assert.default.equal(result.props.className, 'mui-panel ');
 
-    _assert["default"].equal(result.props.children, 'test');
+    _assert.default.equal(result.props.children, 'test');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_panel["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_panel.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-panel additional');
+    _assert.default.equal(result.props.className, 'mui-panel additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_panel["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_panel.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
 });
 
@@ -38831,48 +38923,48 @@ var _reactHelpers = require("../lib/react-helpers");
 describe('react/radio', function () {
   var elem;
   beforeEach(function () {
-    elem = _react["default"].createElement(_radio["default"], null, "My Label");
+    elem = _react.default.createElement(_radio.default, null, "My Label");
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-radio ');
+    _assert.default.equal(result.props.className, 'mui-radio ');
   });
   it('renders content properly', function () {
-    var node = _testUtils["default"].renderIntoDocument(elem);
+    var node = _testUtils.default.renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom["default"].findDOMNode(node);
+    var wrapperEl = _reactDom.default.findDOMNode(node);
 
-    _assert["default"].equal(wrapperEl.children.length, 1);
+    _assert.default.equal(wrapperEl.children.length, 1);
 
     var labelEl = wrapperEl.children[0];
 
-    _assert["default"].equal(labelEl.tagName, 'LABEL');
+    _assert.default.equal(labelEl.tagName, 'LABEL');
 
     var inputEl = labelEl.children[0];
 
-    _assert["default"].equal(inputEl.tagName, 'INPUT');
+    _assert.default.equal(inputEl.tagName, 'INPUT');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_radio["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_radio.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-radio additional');
+    _assert.default.equal(result.props.className, 'mui-radio additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_radio["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_radio.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass["default"])({
+    var TestApp = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           checked: this.props.checked
@@ -38886,7 +38978,7 @@ describe('react/radio', function () {
       render: function render() {
         var _this = this;
 
-        return _react["default"].createElement(_radio["default"], {
+        return _react.default.createElement(_radio.default, {
           ref: function ref(el) {
             _this.refElRef = el;
           },
@@ -38896,29 +38988,29 @@ describe('react/radio', function () {
       }
     });
 
-    var elem = _react["default"].createElement(TestApp, {
+    var elem = _react.default.createElement(TestApp, {
       checked: false
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
     var inputEl = instance.refElRef.controlEl; // check default value
 
-    _assert["default"].equal(inputEl.checked, false); // update TestApp and check inputEl value
+    _assert.default.equal(inputEl.checked, false); // update TestApp and check inputEl value
 
 
     instance.setState({
       checked: true
     });
 
-    _assert["default"].equal(inputEl.checked, true); // update inputEl and check state
+    _assert.default.equal(inputEl.checked, true); // update inputEl and check state
 
 
     inputEl.checked = false;
 
-    _testUtils["default"].Simulate.change(inputEl);
+    _testUtils.default.Simulate.change(inputEl);
 
-    _assert["default"].equal(instance.state.checked, false);
+    _assert.default.equal(instance.state.checked, false);
   });
   it('supports onChange method', function (done) {
     var counter = 0;
@@ -38927,19 +39019,19 @@ describe('react/radio', function () {
       counter += 1;
     };
 
-    var node = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_radio["default"], {
+    var node = _testUtils.default.renderIntoDocument(_react.default.createElement(_radio.default, {
       onChange: onChangeFn
     })); // change checkbox
 
 
-    var inputEl = _testUtils["default"].findRenderedDOMComponentWithTag(node, 'input');
+    var inputEl = _testUtils.default.findRenderedDOMComponentWithTag(node, 'input');
 
-    _testUtils["default"].Simulate.change(inputEl); // test conditions
+    _testUtils.default.Simulate.change(inputEl); // test conditions
 
 
     setTimeout(function () {
       // one onChange event (https://github.com/muicss/mui/issues/94)
-      _assert["default"].equal(counter, 1);
+      _assert.default.equal(counter, 1);
 
       done();
     }, 50);
@@ -38967,42 +39059,42 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/grid', function () {
   it('row renders properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_row["default"], null));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_row.default, null));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-row ');
+    _assert.default.equal(result.props.className, 'mui-row ');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_row["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_row.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-row additional');
+    _assert.default.equal(result.props.className, 'mui-row additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_row["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_row.default, {
       style: {
         additonal: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
   it('handles click events', function (done) {
     function onClickFn() {
-      _assert["default"].equal(true, true);
+      _assert.default.equal(true, true);
 
       done();
     }
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_row["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_row.default, {
       onClick: onClickFn
     }));
 
-    var wrapperEl = _reactDom["default"].findDOMNode(instance);
+    var wrapperEl = _reactDom.default.findDOMNode(instance);
 
-    _testUtils["default"].Simulate.click(wrapperEl);
+    _testUtils.default.Simulate.click(wrapperEl);
   });
 });
 
@@ -39036,255 +39128,255 @@ describe('react/select', function () {
     console.warn = warnFn;
   });
   beforeEach(function () {
-    elem = _react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
+    elem = _react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       label: "Option 3"
     }));
   });
   it('renders wrapper properly', function () {
     var result = (0, _reactHelpers.getShallowRendererOutput)(elem);
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, 'mui-select ');
+    _assert.default.equal(result.props.className, 'mui-select ');
   });
   it('renders native select element', function () {
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
     var wrapperEl = instance.wrapperElRef; // check that select element is only child
 
-    _assert["default"].equal(wrapperEl.children[0].tagName, 'SELECT');
+    _assert.default.equal(wrapperEl.children[0].tagName, 'SELECT');
   });
   it('supports dynamic list of children', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, [1, 2, 3].map(function (val, i) {
-      return _react["default"].createElement(_option["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, [1, 2, 3].map(function (val, i) {
+      return _react.default.createElement(_option.default, {
         key: i,
         value: val
       });
     }))); // get options
 
 
-    var optionEls = _testUtils["default"].scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
+    var optionEls = _testUtils.default.scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
 
 
-    _assert["default"].equal(optionEls.length, 3); // check content
+    _assert.default.equal(optionEls.length, 3); // check content
 
 
     [1, 2, 3].map(function (val, i) {
-      _assert["default"].equal(optionEls[i].value, val);
+      _assert.default.equal(optionEls[i].value, val);
     });
   });
   it('supports mixed static and dynamic children', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
       value: 0
     }), [1, 2, 3].map(function (val, i) {
-      return _react["default"].createElement(_option["default"], {
+      return _react.default.createElement(_option.default, {
         key: i,
         value: val
       });
     }))); // get options
 
 
-    var optionEls = _testUtils["default"].scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
+    var optionEls = _testUtils.default.scryRenderedDOMComponentsWithTag(instance, 'option'); // check number
 
 
-    _assert["default"].equal(optionEls.length, 4); // check content
+    _assert.default.equal(optionEls.length, 4); // check content
 
 
     [0, 1, 2, 3].map(function (val, i) {
-      _assert["default"].equal(optionEls[i].value, val);
+      _assert.default.equal(optionEls[i].value, val);
     });
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_select["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_select.default, {
       className: "additional"
     }, "test"));
 
-    _assert["default"].equal(result.props.className, 'mui-select additional');
+    _assert.default.equal(result.props.className, 'mui-select additional');
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_select["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_select.default, {
       style: {
         additional: 'style'
       }
     }, "test"));
 
-    _assert["default"].equal(result.props.style.additional, 'style');
+    _assert.default.equal(result.props.style.additional, 'style');
   });
   it('renders tabIndex properly', function () {
     var instance; // useDefault is false
 
-    instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null));
+    instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null));
 
-    _assert["default"].equal(instance.wrapperElRef.tabIndex, 0);
+    _assert.default.equal(instance.wrapperElRef.tabIndex, 0);
 
-    _assert["default"].equal(instance.controlEl.tabIndex, -1); // useDefault is true
+    _assert.default.equal(instance.controlEl.tabIndex, -1); // useDefault is true
 
 
-    instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       useDefault: true
     }));
 
-    _assert["default"].equal(instance.wrapperElRef.tabIndex, -1);
+    _assert.default.equal(instance.wrapperElRef.tabIndex, -1);
 
-    _assert["default"].equal(instance.controlEl.tabIndex, 0);
+    _assert.default.equal(instance.controlEl.tabIndex, 0);
   });
   it('renders name attribute properly', function () {
-    var testElem = _react["default"].createElement(_select["default"], {
+    var testElem = _react.default.createElement(_select.default, {
       name: "my-name"
-    }, _react["default"].createElement(_option["default"], {
+    }, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils["default"].renderIntoDocument(testElem);
+    var instance = _testUtils.default.renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert["default"].equal(selectEl.name, 'my-name');
+    _assert.default.equal(selectEl.name, 'my-name');
   });
   it('renders disabled attribute properly', function () {
-    var testElem = _react["default"].createElement(_select["default"], {
+    var testElem = _react.default.createElement(_select.default, {
       disabled: true
-    }, _react["default"].createElement(_option["default"], {
+    }, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils["default"].renderIntoDocument(testElem);
+    var instance = _testUtils.default.renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert["default"].equal(selectEl.disabled, true);
+    _assert.default.equal(selectEl.disabled, true);
   });
   it('renders required attribute properly', function () {
     // true
-    var testElem = _react["default"].createElement(_select["default"], {
+    var testElem = _react.default.createElement(_select.default, {
       required: true
-    }, _react["default"].createElement(_option["default"], {
+    }, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils["default"].renderIntoDocument(testElem);
+    var instance = _testUtils.default.renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert["default"].equal(selectEl.required, true); // false
+    _assert.default.equal(selectEl.required, true); // false
 
 
-    testElem = _react["default"].createElement(_select["default"], {
+    testElem = _react.default.createElement(_select.default, {
       required: false
-    }, _react["default"].createElement(_option["default"], {
+    }, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value3",
       label: "Option 3"
     }));
-    instance = _testUtils["default"].renderIntoDocument(testElem);
+    instance = _testUtils.default.renderIntoDocument(testElem);
     selectEl = instance.controlEl;
 
-    _assert["default"].equal(selectEl.required, false);
+    _assert.default.equal(selectEl.required, false);
 
-    _assert["default"].equal(selectEl.hasAttribute('required'), false); // undefined
+    _assert.default.equal(selectEl.hasAttribute('required'), false); // undefined
 
 
-    testElem = _react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
+    testElem = _react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value3",
       label: "Option 3"
     }));
-    instance = _testUtils["default"].renderIntoDocument(testElem);
+    instance = _testUtils.default.renderIntoDocument(testElem);
     selectEl = instance.controlEl;
 
-    _assert["default"].equal(selectEl.required, false);
+    _assert.default.equal(selectEl.required, false);
 
-    _assert["default"].equal(selectEl.hasAttribute('required'), false);
+    _assert.default.equal(selectEl.hasAttribute('required'), false);
   });
   it('handles default undefined value', function () {
-    var testElem = _react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
+    var testElem = _react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils["default"].renderIntoDocument(testElem);
+    var instance = _testUtils.default.renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert["default"].equal(selectEl.value, 'value1');
+    _assert.default.equal(selectEl.value, 'value1');
   });
   it('handles defaultValue for uncontrolled component', function () {
-    var testElem = _react["default"].createElement(_select["default"], {
+    var testElem = _react.default.createElement(_select.default, {
       defaultValue: "value2"
-    }, _react["default"].createElement(_option["default"], {
+    }, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value3",
       label: "Option 3"
     }));
 
-    var instance = _testUtils["default"].renderIntoDocument(testElem);
+    var instance = _testUtils.default.renderIntoDocument(testElem);
 
     var selectEl = instance.controlEl;
 
-    _assert["default"].equal(selectEl.value, 'value2');
+    _assert.default.equal(selectEl.value, 'value2');
   });
   it('does controlled component validation', function (done) {
     console.warn = function (msg) {
-      _assert["default"].equal(/MUI Warning/.test(msg), true);
+      _assert.default.equal(/MUI Warning/.test(msg), true);
 
       done();
     }; // warns when `value` defined and `onChange missing
 
 
-    var elem = _react["default"].createElement(_select["default"], {
+    var elem = _react.default.createElement(_select.default, {
       value: "my value"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass["default"])({
+    var TestApp = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -39298,230 +39390,230 @@ describe('react/select', function () {
       render: function render() {
         var _this = this;
 
-        return _react["default"].createElement(_select["default"], {
+        return _react.default.createElement(_select.default, {
           ref: function ref(el) {
             _this.innerElRef = el;
           },
           value: this.state.value,
           onChange: this.onChange
-        }, _react["default"].createElement(_option["default"], {
+        }, _react.default.createElement(_option.default, {
           value: "option-1"
-        }), _react["default"].createElement(_option["default"], {
+        }), _react.default.createElement(_option.default, {
           value: "option-2"
         }));
       }
     });
 
-    var elem = _react["default"].createElement(TestApp, {
+    var elem = _react.default.createElement(TestApp, {
       value: "option-2"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
     var innerEl = instance.innerElRef; // check default inner value
 
-    _assert["default"].equal(innerEl.state.value, 'option-2'); // update outer and check <select> element
+    _assert.default.equal(innerEl.state.value, 'option-2'); // update outer and check <select> element
 
 
     instance.setState({
       value: 'option-1'
     });
 
-    _assert["default"].equal(innerEl.controlEl.value, 'option-1'); // update <select> element and trigger 'change' event
+    _assert.default.equal(innerEl.controlEl.value, 'option-1'); // update <select> element and trigger 'change' event
 
 
     innerEl.controlEl.value = 'option-2';
 
-    _testUtils["default"].Simulate.change(innerEl.controlEl);
+    _testUtils.default.Simulate.change(innerEl.controlEl);
 
-    _assert["default"].equal(instance.state.value, 'option-2');
+    _assert.default.equal(instance.state.value, 'option-2');
   });
   it('handles blur on wrapper <div> properly', function (done) {
     var onBlur = function onBlur(ev) {
-      _assert["default"].equal(ev.type, 'blur');
+      _assert.default.equal(ev.type, 'blur');
 
-      _assert["default"].equal(ev.target, instance.wrapperElRef);
+      _assert.default.equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onBlur: onBlur
     })); // trigger 'blur' on wrapper <div> element
 
 
-    _testUtils["default"].Simulate.blur(instance.wrapperElRef);
+    _testUtils.default.Simulate.blur(instance.wrapperElRef);
   });
   it('handles change event on <select> properly', function (done) {
     var checkChangeFn = function checkChangeFn(ev) {
-      _assert["default"].equal(ev.type, 'change');
+      _assert.default.equal(ev.type, 'change');
 
-      _assert["default"].equal(ev.target, instance.controlEl);
+      _assert.default.equal(ev.target, instance.controlEl);
 
-      _assert["default"].equal(ev.target.value, "value2");
+      _assert.default.equal(ev.target.value, "value2");
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       defaultValue: "value2",
       onChange: checkChangeFn
-    }, _react["default"].createElement(_option["default"], {
+    }, _react.default.createElement(_option.default, {
       value: "value1",
       label: "Option 1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       value: "value2",
       label: "Option 2"
     }))); // trigger 'change' on inner <select> element
 
 
-    _testUtils["default"].Simulate.change(instance.controlEl);
+    _testUtils.default.Simulate.change(instance.controlEl);
   });
   it('handles click on inner <select> properly', function (done) {
     var onClick = function onClick(ev) {
-      _assert["default"].equal(ev.type, 'click');
+      _assert.default.equal(ev.type, 'click');
 
-      _assert["default"].equal(ev.target, instance.controlEl);
+      _assert.default.equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onClick: onClick
     })); // trigger 'click' on inner <select> element
 
 
-    _testUtils["default"].Simulate.click(instance.controlEl, {
+    _testUtils.default.Simulate.click(instance.controlEl, {
       button: 0
     });
   });
   it('handles focus on inner <select> properly', function (done) {
     var onFocus = function onFocus(ev) {
-      _assert["default"].equal(ev.type, 'focus');
+      _assert.default.equal(ev.type, 'focus');
 
-      _assert["default"].equal(ev.target, instance.controlEl);
+      _assert.default.equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onFocus: onFocus
     })); // trigger 'focus' on inner <select> element
 
 
-    _testUtils["default"].Simulate.focus(instance.controlEl);
+    _testUtils.default.Simulate.focus(instance.controlEl);
   });
   it('handles focus on wrapper <div> properly', function (done) {
     var onFocus = function onFocus(ev) {
-      _assert["default"].equal(ev.type, 'focus');
+      _assert.default.equal(ev.type, 'focus');
 
-      _assert["default"].equal(ev.target, instance.wrapperElRef);
+      _assert.default.equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onFocus: onFocus
     })); // trigger 'focus' on wrapper <div> element
 
 
-    _testUtils["default"].Simulate.focus(instance.wrapperElRef);
+    _testUtils.default.Simulate.focus(instance.wrapperElRef);
   });
   it('handles keydown on inner <select> properly', function (done) {
     var onKeyDown = function onKeyDown(ev) {
-      _assert["default"].equal(ev.type, 'keydown');
+      _assert.default.equal(ev.type, 'keydown');
 
-      _assert["default"].equal(ev.target, instance.controlEl);
+      _assert.default.equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onKeyDown: onKeyDown
     })); // trigger 'keydown' on inner <select> element
 
 
-    _testUtils["default"].Simulate.keyDown(instance.controlEl);
+    _testUtils.default.Simulate.keyDown(instance.controlEl);
   });
   it('handles keydown on wrapper <div> properly', function (done) {
     var onKeyDown = function onKeyDown(ev) {
-      _assert["default"].equal(ev.type, 'keydown');
+      _assert.default.equal(ev.type, 'keydown');
 
-      _assert["default"].equal(ev.target, instance.wrapperElRef);
+      _assert.default.equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onKeyDown: onKeyDown
     })); // trigger 'keydown' on wrapper <div> element
 
 
-    _testUtils["default"].Simulate.keyDown(instance.wrapperElRef);
+    _testUtils.default.Simulate.keyDown(instance.wrapperElRef);
   });
   it('handles keypress on inner <select> properly', function (done) {
     var onKeyPress = function onKeyPress(ev) {
-      _assert["default"].equal(ev.type, 'keypress');
+      _assert.default.equal(ev.type, 'keypress');
 
-      _assert["default"].equal(ev.target, instance.controlEl);
+      _assert.default.equal(ev.target, instance.controlEl);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onKeyPress: onKeyPress
     })); // trigger 'keypress' on inner <select> element
 
 
-    _testUtils["default"].Simulate.keyPress(instance.controlEl);
+    _testUtils.default.Simulate.keyPress(instance.controlEl);
   });
   it('handles keypress on wrapper <div> properly', function (done) {
     var onKeyPress = function onKeyPress(ev) {
-      _assert["default"].equal(ev.type, 'keypress');
+      _assert.default.equal(ev.type, 'keypress');
 
-      _assert["default"].equal(ev.target, instance.wrapperElRef);
+      _assert.default.equal(ev.target, instance.wrapperElRef);
 
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onKeyPress: onKeyPress
     })); // trigger 'keypress' on wrapper <div> element
 
 
-    _testUtils["default"].Simulate.keyPress(instance.wrapperElRef);
+    _testUtils.default.Simulate.keyPress(instance.wrapperElRef);
   });
   it('handles mousedown on inner <select> properly', function (done) {
     var onMouseDown = function onMouseDown(ev) {
-      (0, _assert["default"])(ev.defaultPrevented, true);
+      (0, _assert.default)(ev.defaultPrevented, true);
       done();
     };
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       onMouseDown: onMouseDown
     })); // trigger 'mousedown' on inner <select> element
 
 
-    _testUtils["default"].Simulate.mouseDown(instance.controlEl, {
+    _testUtils.default.Simulate.mouseDown(instance.controlEl, {
       button: 0
     });
   });
   it('shows custom menu on click', function () {
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
     var wrapperEl = instance.wrapperElRef;
     var selectEl = instance.controlEl; // check before and after click
 
     var numBefore = wrapperEl.children.length;
 
-    _testUtils["default"].Simulate.click(selectEl, {
+    _testUtils.default.Simulate.click(selectEl, {
       button: 0
     });
 
-    _assert["default"].equal(wrapperEl.children.length, numBefore + 1);
+    _assert.default.equal(wrapperEl.children.length, numBefore + 1);
   });
   it("doesn't show custom menu when useDefault is true", function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       useDefault: true
     }));
 
@@ -39529,14 +39621,14 @@ describe('react/select', function () {
 
     var numBefore = wrapperEl.children.length;
 
-    _testUtils["default"].Simulate.click(instance.controlEl, {
+    _testUtils.default.Simulate.click(instance.controlEl, {
       button: 0
     });
 
-    _assert["default"].equal(wrapperEl.children.length, numBefore);
+    _assert.default.equal(wrapperEl.children.length, numBefore);
   });
   it('renders menu items with additional classNames', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], null), _react["default"].createElement(_option["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, _react.default.createElement(_option.default, null), _react.default.createElement(_option.default, {
       className: "my-custom-class"
     })));
 
@@ -39544,71 +39636,71 @@ describe('react/select', function () {
 
     var optionEl = selectEl.children[1];
 
-    _assert["default"].equal(optionEl.className, 'my-custom-class'); // open menu
+    _assert.default.equal(optionEl.className, 'my-custom-class'); // open menu
 
 
-    _testUtils["default"].Simulate.click(selectEl, {
+    _testUtils.default.Simulate.click(selectEl, {
       button: 0
     }); // check menu item custom class
 
 
-    var findComponentFn = _testUtils["default"].findRenderedDOMComponentWithClass;
+    var findComponentFn = _testUtils.default.findRenderedDOMComponentWithClass;
     var menuEl = findComponentFn(instance, 'mui-select__menu');
     var itemEl = menuEl.children[1];
 
-    _assert["default"].equal(itemEl.className, 'my-custom-class');
+    _assert.default.equal(itemEl.className, 'my-custom-class');
   });
   it('supports placeholder property', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, {
       placeholder: "Placeholder"
-    }, _react["default"].createElement(_option["default"], {
+    }, _react.default.createElement(_option.default, {
       label: "Option 1",
       value: "option1"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       label: "Option 2",
       value: "option2"
     })));
 
     var selectEl = instance.controlEl; // check additional option
 
-    _assert["default"].equal(selectEl.children.length, 3);
+    _assert.default.equal(selectEl.children.length, 3);
 
     var optionEl = selectEl.children[0];
 
-    _assert["default"].equal(optionEl.innerHTML, 'Placeholder');
+    _assert.default.equal(optionEl.innerHTML, 'Placeholder');
 
-    _assert["default"].equal(optionEl.value, ''); // check classes
+    _assert.default.equal(optionEl.value, ''); // check classes
 
 
-    _assert["default"].equal(selectEl.className, 'mui--text-placeholder');
+    _assert.default.equal(selectEl.className, 'mui--text-placeholder');
 
-    _assert["default"].equal(optionEl.className, 'mui--text-placeholder'); // select different option and check class again
+    _assert.default.equal(optionEl.className, 'mui--text-placeholder'); // select different option and check class again
 
 
     selectEl.value = 'option2';
 
-    _testUtils["default"].Simulate.change(selectEl);
+    _testUtils.default.Simulate.change(selectEl);
 
-    _assert["default"].equal(selectEl.className, ''); // re-select placeholder and check class again
+    _assert.default.equal(selectEl.className, ''); // re-select placeholder and check class again
 
 
     selectEl.value = '';
 
-    _testUtils["default"].Simulate.change(selectEl);
+    _testUtils.default.Simulate.change(selectEl);
 
-    _assert["default"].equal(selectEl.className, 'mui--text-placeholder');
+    _assert.default.equal(selectEl.className, 'mui--text-placeholder');
   });
   it('handles multiple options with same value', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_select["default"], null, _react["default"].createElement(_option["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_select.default, null, _react.default.createElement(_option.default, {
       label: "Apple",
       value: "fruit"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       label: "Banana",
       value: "fruit"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       label: "Ford",
       value: "car"
-    }), _react["default"].createElement(_option["default"], {
+    }), _react.default.createElement(_option.default, {
       label: "Toyota",
       value: "car"
     })));
@@ -39616,11 +39708,11 @@ describe('react/select', function () {
     var selectEl = instance.controlEl;
     selectEl.selectedIndex = 3;
 
-    _testUtils["default"].Simulate.change(selectEl);
+    _testUtils.default.Simulate.change(selectEl);
 
-    _assert["default"].equal(selectEl.value, 'car');
+    _assert.default.equal(selectEl.value, 'car');
 
-    _assert["default"].equal(selectEl.selectedIndex, 3);
+    _assert.default.equal(selectEl.selectedIndex, 3);
   });
 });
 
@@ -39649,60 +39741,60 @@ var _reactHelpers = require("../lib/react-helpers");
  */
 describe('react/tabs', function () {
   it('renders wrapper properly', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null)));
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null)));
 
-    _assert["default"].equal(result.type, 'div');
+    _assert.default.equal(result.type, 'div');
 
-    _assert["default"].equal(result.props.className, '');
+    _assert.default.equal(result.props.className, '');
   });
   it('renders properly with additional classNames', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_tabs["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_tabs.default, {
       className: "additional"
-    }, _react["default"].createElement(_tab["default"], null)));
+    }, _react.default.createElement(_tab.default, null)));
 
-    _assert["default"].equal(result.props.className, 'additional');
+    _assert.default.equal(result.props.className, 'additional');
   });
   it('renders with one Tab as child', function () {
-    var result = _server["default"].renderToStaticMarkup(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null, "ABC")));
+    var result = _server.default.renderToStaticMarkup(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null, "ABC")));
 
-    _assert["default"].equal((result.match(/ABC/g) || []).length, 1);
+    _assert.default.equal((result.match(/ABC/g) || []).length, 1);
   });
   it('renders with two Tabs as children', function () {
-    var result = _server["default"].renderToStaticMarkup(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null, "ABC"), _react["default"].createElement(_tab["default"], null, "ABC")));
+    var result = _server.default.renderToStaticMarkup(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null, "ABC"), _react.default.createElement(_tab.default, null, "ABC")));
 
-    _assert["default"].equal((result.match(/ABC/g) || []).length, 2);
+    _assert.default.equal((result.match(/ABC/g) || []).length, 2);
   });
   it('renders properly with additional styles', function () {
-    var result = (0, _reactHelpers.getShallowRendererOutput)(_react["default"].createElement(_tabs["default"], {
+    var result = (0, _reactHelpers.getShallowRendererOutput)(_react.default.createElement(_tabs.default, {
       style: {
         additonal: 'style'
       }
-    }, _react["default"].createElement(_tab["default"], null)));
+    }, _react.default.createElement(_tab.default, null)));
 
-    _assert["default"].equal(result.props.style.additonal, 'style');
+    _assert.default.equal(result.props.style.additonal, 'style');
   });
   it('can be used as a controlled component', function () {
-    var TestApp = (0, _createReactClass["default"])({
+    var TestApp = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           tabIndex: 1
         };
       },
       render: function render() {
-        return _react["default"].createElement(_tabs["default"], {
+        return _react.default.createElement(_tabs.default, {
           selectedIndex: this.state.tabIndex
-        }, _react["default"].createElement(_tab["default"], null, "ABC"), _react["default"].createElement(_tab["default"], null, "DEF"));
+        }, _react.default.createElement(_tab.default, null, "ABC"), _react.default.createElement(_tab.default, null, "DEF"));
       }
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(TestApp, null)),
-        findElements = _testUtils["default"].scryRenderedDOMComponentsWithClass,
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(TestApp, null)),
+        findElements = _testUtils.default.scryRenderedDOMComponentsWithClass,
         paneEl; // check default value
 
 
     paneEl = findElements(instance, 'mui--is-active')[1];
 
-    _assert["default"].equal(paneEl.innerHTML, 'DEF'); // update state and check value
+    _assert.default.equal(paneEl.innerHTML, 'DEF'); // update state and check value
 
 
     instance.setState({
@@ -39710,42 +39802,42 @@ describe('react/tabs', function () {
     });
     paneEl = findElements(instance, 'mui--is-active')[1];
 
-    _assert["default"].equal(paneEl.innerHTML, 'ABC');
+    _assert.default.equal(paneEl.innerHTML, 'ABC');
   });
   it('can support list of tab elements', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_tabs["default"], null, [1, 2, 3].map(function (val) {
-      return _react["default"].createElement(_tab["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_tabs.default, null, [1, 2, 3].map(function (val) {
+      return _react.default.createElement(_tab.default, {
         key: val
       }, val);
     }))); // get panes
 
 
-    var panes = _testUtils["default"].scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
+    var panes = _testUtils.default.scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
 
 
-    _assert["default"].equal(panes.length, 3); // check content
+    _assert.default.equal(panes.length, 3); // check content
 
 
     [1, 2, 3].map(function (val, i) {
-      _assert["default"].equal(panes[i].innerHTML, val);
+      _assert.default.equal(panes[i].innerHTML, val);
     });
   });
   it('can support mixed static and dynamic children', function () {
-    var instance = _testUtils["default"].renderIntoDocument(_react["default"].createElement(_tabs["default"], null, _react["default"].createElement(_tab["default"], null, "0"), [1, 2, 3].map(function (val) {
-      return _react["default"].createElement(_tab["default"], {
+    var instance = _testUtils.default.renderIntoDocument(_react.default.createElement(_tabs.default, null, _react.default.createElement(_tab.default, null, "0"), [1, 2, 3].map(function (val) {
+      return _react.default.createElement(_tab.default, {
         key: val
       }, val);
     }))); // get panes
 
 
-    var panes = _testUtils["default"].scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
+    var panes = _testUtils.default.scryRenderedDOMComponentsWithClass(instance, 'mui-tabs__pane'); // check number
 
 
-    _assert["default"].equal(panes.length, 4); // check content
+    _assert.default.equal(panes.length, 4); // check content
 
 
     [0, 1, 2, 3].map(function (val, i) {
-      _assert["default"].equal(panes[i].innerHTML, val);
+      _assert.default.equal(panes[i].innerHTML, val);
     });
   });
 });
@@ -39781,42 +39873,42 @@ describe('react/textarea', function () {
     console.warn = warnFn;
   });
   beforeEach(function () {
-    elem = _react["default"].createElement(_textarea["default"], {
+    elem = _react.default.createElement(_textarea.default, {
       defaultValue: "my input"
     });
   });
   it('renders wrapper properly', function () {
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var wrapperEl = _reactDom["default"].findDOMNode(instance);
+    var wrapperEl = _reactDom.default.findDOMNode(instance);
 
-    _assert["default"].equal(wrapperEl.tagName, 'DIV');
+    _assert.default.equal(wrapperEl.tagName, 'DIV');
 
-    _assert["default"].equal(wrapperEl.className.trim(), 'mui-textfield');
+    _assert.default.equal(wrapperEl.className.trim(), 'mui-textfield');
   });
   it('renders native textarea element', function () {
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var fn = _testUtils["default"].findRenderedDOMComponentWithTag;
+    var fn = _testUtils.default.findRenderedDOMComponentWithTag;
     var textareaEl = fn(instance, 'textarea');
 
-    _assert["default"].equal(textareaEl.textContent, 'my input');
+    _assert.default.equal(textareaEl.textContent, 'my input');
   });
   it('does controlled component validation', function (done) {
     console.warn = function (msg) {
-      _assert["default"].equal(/MUI Warning/.test(msg), true);
+      _assert.default.equal(/MUI Warning/.test(msg), true);
 
       done();
     };
 
-    var elem = _react["default"].createElement(_textarea["default"], {
+    var elem = _react.default.createElement(_textarea.default, {
       value: "my value"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
   });
   it('can be used as controlled component', function () {
-    var TestApp = (0, _createReactClass["default"])({
+    var TestApp = (0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
           value: this.props.value
@@ -39828,51 +39920,51 @@ describe('react/textarea', function () {
         });
       },
       render: function render() {
-        return _react["default"].createElement(_textarea["default"], {
+        return _react.default.createElement(_textarea.default, {
           value: this.state.value,
           onChange: this.onChange
         });
       }
     });
 
-    var elem = _react["default"].createElement(TestApp, {
+    var elem = _react.default.createElement(TestApp, {
       value: "test"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'textarea'); // check default value
 
-    _assert["default"].equal(inputEl.value, 'test'); // update TestApp and check inputEl value
+    _assert.default.equal(inputEl.value, 'test'); // update TestApp and check inputEl value
 
 
     instance.setState({
       value: 'test2'
     });
 
-    _assert["default"].equal(inputEl.value, 'test2'); // update inputEl and check state
+    _assert.default.equal(inputEl.value, 'test2'); // update inputEl and check state
 
 
     inputEl.value = 'test3';
 
-    _testUtils["default"].Simulate.change(inputEl);
+    _testUtils.default.Simulate.change(inputEl);
 
-    _assert["default"].equal(instance.state.value, 'test3');
+    _assert.default.equal(instance.state.value, 'test3');
   });
   it('can be used as an uncontrolled component', function () {
-    var elem = _react["default"].createElement(_textarea["default"], {
+    var elem = _react.default.createElement(_textarea.default, {
       defaultValue: "mydefaultvalue"
     });
 
-    var instance = _testUtils["default"].renderIntoDocument(elem);
+    var instance = _testUtils.default.renderIntoDocument(elem);
 
-    var findComponent = _testUtils["default"].findRenderedDOMComponentWithTag;
+    var findComponent = _testUtils.default.findRenderedDOMComponentWithTag;
     var inputEl = findComponent(instance, 'textarea');
 
-    _assert["default"].equal(inputEl, instance.controlEl);
+    _assert.default.equal(inputEl, instance.controlEl);
 
-    _assert["default"].equal(instance.controlEl.value, 'mydefaultvalue');
+    _assert.default.equal(instance.controlEl.value, 'mydefaultvalue');
   });
 });
 

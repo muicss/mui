@@ -41,4 +41,21 @@ describe('react/caret', function() {
 
     assert.equal(result.props.style.additonal, 'style');
   });
+
+
+  it('renders direction variants properly', function() {
+    let baseClass = 'mui-caret mui-caret--',
+        result;
+
+    ['up', 'right', 'left'].forEach(direction => {
+      result = getShallowRendererOutput(
+          <Caret direction={direction}>test</Caret>
+      );
+
+      // check html
+      assert.equal(result.type, 'span');
+      assert.equal(result.props.className, baseClass + direction + ' ');
+      assert.equal(result.props.children, undefined);
+    });
+  });
 });

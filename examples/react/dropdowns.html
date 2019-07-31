@@ -18,80 +18,179 @@
     <div class="mui-container">
       <h1>Dropdowns</h1>
       <div id="dropdowns"></div>
+      <div class="mui-panel">
+        <h2>Dropdown</h2>
+        <div id="example-down"></div>
+        <div id="example-down-right"></div>
+        <div id="example-customlabel"></div>
+      </div>
+      <div class="mui-panel">
+        <h2>Dropup</h2>
+        <div id="example-up"></div>
+        <div id="example-up-right"></div>
+      </div>
+      <div class="mui-panel">
+        <h2>Dropright</h2>
+        <div id="example-right"></div>
+        <div id="example-right-bottom"></div>
+      </div>
+      <div class="mui-panel">
+        <h2>Dropleft</h2>
+        <div id="example-left"></div>
+        <div id="example-left-bottom"></div>
+      </div>
+      <div class="mui-panel">
+        <h2>Custom Label</h2>
+        <div id="example-custom-label"></div>
+      </div>
+      <div class="mui-panel">
+        <h2>Advanced</h2>
+        <div id="example-advanced"></div>
+      </div>
     </div>
     <script type="text/babel">
       let Dropdown = mui.react.Dropdown,
           DropdownItem = mui.react.DropdownItem;
 
 
-      class DropdownExample1 extends React.Component {
-        render() {
-          return (
-            <Dropdown
-                color="primary"
-                label="Dropdown"
-                onClick={function() {console.log('toggle clicked')}}
-                onSelect={function(val) {console.log(val);}}
-             >
-              <DropdownItem value="a" link="#/link1">Option 1</DropdownItem>
-              <DropdownItem value="b" target="_blank">Option 2</DropdownItem>
-              <DropdownItem value="c">Option 3</DropdownItem>
-              <DropdownItem 
-                  value="d"
-                  onClick={function() {alert("Option 4 selected");}}
-              >
-                Option 4
-              </DropdownItem>
-            </Dropdown>
-          );
-        }
-      }
+      const menuItems = [
+        <DropdownItem key="1">Option 1</DropdownItem>,
+        <DropdownItem key="2">Option 2</DropdownItem>,
+        <DropdownItem key="3">Option 3</DropdownItem>,
+        <DropdownItem key="4">Option 4</DropdownItem>
+      ];
 
+     
+      // default
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropdown"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-down')
+      );
 
-      class DropdownExample2 extends React.Component {
-        render() {
-          return (
-            <Dropdown 
-                color="primary"
-                alignMenu="right"
-                label="Dropdown">
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem>Option 3</DropdownItem>
-              <DropdownItem>Option 4</DropdownItem>
-            </Dropdown>
-          );
-        }
-      }
+      // down-right
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropdown-right"
+          alignment="right"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-down-right')
+      );
 
+      // up
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropup"
+          placement="up"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-up')
+      );
 
-      class DropdownExample3 extends React.Component {
-        render() {
-          let labelEl = <i>test</i>;
+      // up-right
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropup-right"
+          placement="up"
+          alignment="right"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-up-right')
+      );
 
-          return (
-            <Dropdown 
-                color="primary"
-                alignMenu="right"
-                label={labelEl}>
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem>Option 3</DropdownItem>
-              <DropdownItem>Option 4</DropdownItem>
-            </Dropdown>
-          );
-        }
-      }
+      // right
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropright"
+          placement="right"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-right')
+      );
 
+      // right-bottom
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropright-bottom"
+          placement="right"
+          alignment="bottom"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-right-bottom')
+      );
+
+      // left
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropleft"
+          placement="left"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-left')
+      );
+
+      // left-bottom
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropleft-bottom"
+          placement="left"
+          alignment="bottom"
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-left-bottom')
+      );
+
+      // custom label
+      let labelEl = <i>custom label</i>;
 
       ReactDOM.render(
-        <div className="mui-panel">
-          <h2>React</h2>
-          <DropdownExample1 />
-          <DropdownExample2 />
-          <DropdownExample3 />
-        </div>,
-        document.getElementById('dropdowns')
+        <Dropdown
+          color="primary"
+          label={labelEl}
+        >
+          {menuItems}
+        </Dropdown>,
+        document.getElementById('example-custom-label')
+      );
+
+      // advanced example
+      ReactDOM.render(
+        <Dropdown
+          color="primary"
+          label="Dropdown"
+          onClick={function() {console.log('toggle clicked')}}
+          onSelect={function(val) {console.log(val);}}
+        >
+          <DropdownItem value="a" link="#/link1">Option 1</DropdownItem>
+          <DropdownItem value="b" target="_blank">Option 2</DropdownItem>
+          <DropdownItem value="c">Option 3</DropdownItem>
+          <DropdownItem 
+            value="d"
+            onClick={function() {alert("Option 4 selected");}}
+          >
+            Option 4
+          </DropdownItem>
+        </Dropdown>,
+        document.getElementById('example-advanced')
       );
     </script>
   </body>

@@ -15,6 +15,10 @@ import { getShallowRendererOutput } from '../lib/react-helpers';
 import * as util from '../../src/js/lib/util';
 
 
+let renderIntoDocument = ReactUtils.renderIntoDocument,
+    findRenderedComponent = ReactUtils.findRenderedDOMComponentWithTag;
+
+
 describe('react/dropdown', function () {
   let elem;
 
@@ -59,9 +63,43 @@ describe('react/dropdown', function () {
   });
 
 
+  it('renders placement variants properly', function() {
+    let baseClass = 'mui-dropdown mui-dropdown--';
+    
+    ['up', 'right', 'left'].forEach(placement => {
+      let result = getShallowRendererOutput(
+        <Dropdown placement={placement}>test</Dropdown>
+      );
+
+      assert.equal(result.props.className, baseClass + placement + ' ' );
+    });
+  });
+
+
+  it('renders alignment variants properly', function() {
+    ['right', 'bottom'].forEach(alignment => {
+      // render
+      let node = renderIntoDocument(
+        <Dropdown alignment={alignment}>
+          <DropdownItem>Option 1</DropdownItem>
+          <DropdownItem>Option 2</DropdownItem>
+        </Dropdown>
+      );
+
+      // open
+      let buttonEl = findRenderedComponent(node, 'button');
+      ReactUtils.Simulate.click(buttonEl, { button: 0 });
+
+      // check class
+      let cls = 'mui-dropdown__menu--' + alignment;
+      assert.equal(node.menuElRef.classList.contains(cls), true)
+    });
+  });
+  
+  
   it('renders menu on click', function () {
-    let node = ReactUtils.renderIntoDocument(elem);
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let node = renderIntoDocument(elem);
+    let buttonEl = findRenderedComponent(node, 'button');
 
     // check menu is hidden
     assert.equal(node.menuElRef, undefined);
@@ -78,10 +116,10 @@ describe('react/dropdown', function () {
 
 
   it('renders options into menu', function () {
-    let node = ReactUtils.renderIntoDocument(elem);
+    let node = renderIntoDocument(elem);
 
     // render menu
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let buttonEl = findRenderedComponent(node, 'button');
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // check menu
@@ -103,7 +141,7 @@ describe('react/dropdown', function () {
       done();
     };
 
-    let node = ReactUtils.renderIntoDocument(
+    let node = renderIntoDocument(
       <Dropdown onClick={onClickFn}>
         <DropdownItem>Option 1</DropdownItem>
         <DropdownItem>Option 2</DropdownItem>
@@ -112,7 +150,7 @@ describe('react/dropdown', function () {
     );
 
     // trigger event
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let buttonEl = findRenderedComponent(node, 'button');
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
   });
 
@@ -124,7 +162,7 @@ describe('react/dropdown', function () {
       counter += 1;
     };
 
-    let node = ReactUtils.renderIntoDocument(
+    let node = renderIntoDocument(
       <Dropdown>
         <DropdownItem onClick={onClickFn}>Option 1</DropdownItem>
         <DropdownItem>Option 2</DropdownItem>
@@ -133,7 +171,7 @@ describe('react/dropdown', function () {
     );
 
     // open menu
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let buttonEl = findRenderedComponent(node, 'button');
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // click on first menu item
@@ -151,10 +189,10 @@ describe('react/dropdown', function () {
 
 
   it('closes menu after item click', function () {
-    let node = ReactUtils.renderIntoDocument(elem);
+    let node = renderIntoDocument(elem);
 
     // open menu
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let buttonEl = findRenderedComponent(node, 'button');
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // click on first menu item
@@ -166,10 +204,10 @@ describe('react/dropdown', function () {
   });
 
   it('closes menu after Escape key press', function () {
-    let node = ReactUtils.renderIntoDocument(elem);
+    let node = renderIntoDocument(elem);
 
     // open menu
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let buttonEl = findRenderedComponent(node, 'button');
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // press Escape
@@ -186,7 +224,7 @@ describe('react/dropdown', function () {
       done();
     };
 
-    let node = ReactUtils.renderIntoDocument(
+    let node = renderIntoDocument(
       <Dropdown onSelect={onSelectFn}>
         <DropdownItem value="opt1">Option 1</DropdownItem>
         <DropdownItem>Option 2</DropdownItem>
@@ -195,7 +233,7 @@ describe('react/dropdown', function () {
     );
 
     // open menu
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let buttonEl = findRenderedComponent(node, 'button');
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // click on first menu item
@@ -205,14 +243,14 @@ describe('react/dropdown', function () {
 
 
   it('renders target attribute on DropdownItem', function () {
-    let node = ReactUtils.renderIntoDocument(
+    let node = renderIntoDocument(
       <Dropdown>
         <DropdownItem target="_blank">Option 1</DropdownItem>
       </Dropdown>
     );
 
     // open menu
-    let buttonEl = ReactUtils.findRenderedDOMComponentWithTag(node, 'button');
+    let buttonEl = findRenderedComponent(node, 'button');
     ReactUtils.Simulate.click(buttonEl, { button: 0 });
 
     // check rendered anchor tag

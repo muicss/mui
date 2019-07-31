@@ -17,8 +17,7 @@ import * as util from '../js/lib/util';
 
 const dropdownClass = 'mui-dropdown',
       menuClass = 'mui-dropdown__menu',
-      openClass = 'mui--is-open',
-      rightClass = 'mui-dropdown__menu--right';
+      openClass = 'mui--is-open';
 
 
 /**
@@ -31,7 +30,7 @@ class Dropdown extends React.Component {
 
     this.state = {
       opened: false,
-      menuTop: 0
+      menuPos: {}
     }
     let cb = util.callback;
     this.selectCB = cb(this, 'select');
@@ -46,7 +45,9 @@ class Dropdown extends React.Component {
     variant: 'default',
     size: 'default',
     label: '',
-    alignMenu: 'left',
+    placement: null,
+    alignment: null,
+    alignMenu: null,  // legacy
     onClick: null,
     onSelect: null,
     disabled: false
@@ -98,14 +99,38 @@ class Dropdown extends React.Component {
 
   open() {
     // position menu element below toggle button
-    let wrapperRect = this.wrapperElRef.getBoundingClientRect(),
-      toggleRect;
-
+    let pos = {},
+        wrapperRect = this.wrapperElRef.getBoundingClientRect(),
+        toggleRect;
+    
     toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
 
+    // menu position
+    switch (this.props.placement) {
+      case 'up':
+        pos.bottom = toggleRect.height + toggleRect.top - wrapperRect.top;
+        break;
+      case 'right':
+        pos.left = toggleRect.width;
+        pos.top = toggleRect.top - wrapperRect.top;
+        break;
+      case 'left':
+        pos.right = toggleRect.width;
+        pos.top = toggleRect.top - wrapperRect.top;
+        break;
+      default:
+        pos.top = toggleRect.top - wrapperRect.top + toggleRect.height;
+    }
+
+    // menu alignment
+    if (this.props.alignment === 'bottom') {
+      pos.top = 'auto';
+      pos.bottom = toggleRect.top - wrapperRect.top;
+    }
+    
     this.setState({
       opened: true,
-      menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+      menuPos: pos
     });
   }
 
@@ -135,20 +160,30 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    let buttonEl,
+    let wrapperCls = dropdownClass,
+        buttonEl,
         menuEl,
         labelEl;
-
-    const { children, className, color, variant, size, label, alignMenu,
-      onClick, onSelect, disabled, ...reactProps } = this.props;
+    
+    const { children, className, color, variant, size, label, placement,
+            alignment, alignMenu, onClick, onSelect,
+            disabled, ...reactProps } = this.props;
 
     // build label
     if (jqLite.type(label) === 'string') {
-      labelEl = <span>{label} <Caret /></span>;
+      if (placement === 'left') {
+        labelEl = <span><Caret direction={placement} /> {label}</span>;
+      } else {
+        labelEl = <span>{label} <Caret direction={placement} /></span>;
+      }
     } else {
       labelEl = label;
     }
 
+    // placement
+    if (placement) wrapperCls += ' ' + dropdownClass + '--' + placement;
+    
+    // button
     buttonEl = (
       <Button
         ref={el => { this.buttonElRef = el }}
@@ -168,14 +203,18 @@ class Dropdown extends React.Component {
 
       cs[menuClass] = true;
       cs[openClass] = this.state.opened;
-      cs[rightClass] = (alignMenu === 'right');
       cs = util.classNames(cs);
 
+      // alignment (also handles `alignMenu` legacy argument)
+      if (alignment || alignMenu) {
+        cs += ' ' + menuClass + '--' + (alignment || alignMenu);
+      }
+      
       menuEl = (
         <ul
           ref={el => { this.menuElRef = el }}
           className={cs}
-          style={{ top: this.state.menuTop }}
+          style={this.state.menuPos}
           onClick={this.selectCB}
         >
           {children}
@@ -189,7 +228,7 @@ class Dropdown extends React.Component {
       <div
         { ...reactProps }
         ref={el => { this.wrapperElRef = el }}
-        className={dropdownClass + ' ' + className}
+        className={wrapperCls + ' ' + className}
       >
         {buttonEl}
         {menuEl}

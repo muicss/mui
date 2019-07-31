@@ -20,6 +20,8 @@ angular.module(moduleName, [])
         color: '@',
         size: '@',
         open: '=?',
+        placement: '@',
+        alignment: '@',
         ngDisabled: '='
       },
       template: '<div class="mui-dropdown">' +
@@ -38,13 +40,12 @@ angular.module(moduleName, [])
             rightClass = 'mui-dropdown__menu--right',
             isUndef = angular.isUndefined,
             menuEl,
-            buttonEl;
+            buttonEl,
+            contents;
 
         // save references
         menuEl = angular.element(element[0].querySelector('.' + menuClass));
         buttonEl = angular.element(element[0].querySelector('.mui-btn'));
-
-        menuEl.css('margin-top', '-3px');
 
         // handle is-open
         if (!isUndef(attrs.open)) scope.open = true;
@@ -54,12 +55,33 @@ angular.module(moduleName, [])
           buttonEl.attr('disabled', true);
         }
 
-        // handle right-align
-        if (!isUndef(attrs.rightAlign)) menuEl.addClass(rightClass);
+        // placement class
+        if (!isUndef(attrs.placement)) {
+          element.addClass(dropdownClass + '--' + attrs.placement);
+        }
+          
+        // alignment class
+        if (!isUndef(attrs.rightAlign)) {  // legacy `rightAlign` attribute
+          menuEl.addClass(rightClass);
+        } else if (!isUndef(attrs.alignment)) {
+          menuEl.addClass(menuClass + '--' + attrs.alignment);
+        }
 
-        // handle no-caret
-        if (!isUndef(attrs.noCaret)) buttonEl.html(attrs.label);
-        else buttonEl.html(attrs.label + ' <mui-caret></mui-caret>'); 
+        // handle caret
+        if (!isUndef(attrs.noCaret)) {
+          // no caret
+          buttonEl.html(attrs.label);
+        } else {
+          // caret direction and placement
+          contents = '<mui-caret direction="{{placement}}"></mui-caret>';
+          contents = $compile(contents)(scope);
+
+          if (scope.placement === 'left') {
+            buttonEl.append(contents).append(attrs.label + ' ');
+          } else {
+            buttonEl.append(attrs.label + ' ').append(contents);
+          }
+        }
 
         function closeDropdownFn() {
           scope.open = false;
@@ -74,8 +96,44 @@ angular.module(moduleName, [])
 
         // handle menu open
         scope.$watch('open', function(newValue) {
-          var doc = document;
+          var doc = document,
+              pos = {},
+              wrapperRect,
+              toggleRect;
+          
           if (newValue === true) {
+            // menu placement
+            wrapperRect = element[0].getBoundingClientRect();
+            toggleRect = buttonEl[0].getBoundingClientRect();
+            
+            switch (attrs.placement) {
+            case 'up':
+              pos.bottom = toggleRect.height + toggleRect.top
+                - wrapperRect.top + 'px';
+              break;
+            case 'right':
+              pos.left = toggleRect.width + 'px';
+              pos.top = toggleRect.top - wrapperRect.top + 'px';
+              break;
+            case 'left':
+              pos.right = toggleRect.width + 'px';
+              pos.top = toggleRect.top - wrapperRect.top + 'px';
+              break;
+            default:
+              pos.top = toggleRect.top - wrapperRect.top + toggleRect.height
+                + 'px';
+            }
+            
+            // menu alignment
+            if (attrs.alignment === 'bottom') {
+              pos.top = 'auto';
+              pos.bottom = toggleRect.top - wrapperRect.top + 'px';
+            }
+            
+            // set menu position
+            menuEl.css(pos);
+            
+            // open menu
             menuEl.addClass(openClass);
             doc.addEventListener('click', closeDropdownFn);
             doc.addEventListener('keydown', handleKeyDownFn);

@@ -27,37 +27,33 @@
 // CARET
 // ============================================================================
 
-.mui-caret, .mui-caret-up, .mui-caret-right, .mui-caret-left {
+.mui-caret {
   display: inline-block;
   width: 0;
   height: 0;
+  margin: 0 0 0 mui-rem(2px);
   vertical-align: middle;
   border-top:   $mui-caret-width solid;
   border-right: $mui-caret-width solid transparent;
   border-left:  $mui-caret-width solid transparent;
+
+  &.mui-caret--up {
+    transform: rotate(180deg);
+    margin: 0 0 mui-rem(2px) mui-rem(2px);
+  }
+
+  &.mui-caret--right {
+    transform: rotate(-90deg);
+    margin: 0 0 mui-rem(2px) mui-rem(2px);
+  }
+
+  &.mui-caret--left {
+    transform: rotate(90deg);
+    margin: 0 mui-rem(2px) mui-rem(2px) 0;
+  }
 }
 
-.mui-caret {
-  margin-left: mui-rem(2px);
-}
 
-.mui-caret-up {
-  transform: rotate(180deg);
-  margin-left: mui-rem(2px);
-  margin-bottom: mui-rem(2px);
-}
-
-.mui-caret-right {
-  transform: rotate(-90deg);
-  margin-left: mui-rem(2px);
-  margin-bottom: mui-rem(2px);
-}
-
-.mui-caret-left {
-  transform: rotate(90deg);
-  margin-right: mui-rem(2px);
-  margin-bottom: mui-rem(2px);
-}
 
 
 

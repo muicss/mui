@@ -14,7 +14,13 @@ angular.module(moduleName, [])
     return {
       restrict : 'AE',
       replace: true,
-      template : '<span class="mui-caret"></span>'
+      template : '<span class="mui-caret"></span>',
+      link: function(scope, element, attrs) {
+        // caret direction
+        if (!angular.isUndefined(attrs.direction)) {
+          element.addClass('mui-caret--' + attrs['direction']);
+        }
+      }
     };
   });
 

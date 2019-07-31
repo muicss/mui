@@ -8,6 +8,9 @@
 import React from 'react';
 
 
+const caretClass = 'mui-caret';
+
+
 /**
  * Caret constructor
  * @class
@@ -18,12 +21,17 @@ class Caret extends React.Component {
   };
 
   render() {
-    const { children, ...reactProps } = this.props;
+    let cls = caretClass;
+    
+    const { children, direction, ...reactProps } = this.props;
 
+    // add direction class
+    if (direction) cls += ' ' + caretClass + '--' + direction;
+    
     return (
       <span
         { ...reactProps }
-        className={'mui-caret ' + this.props.className}
+        className={cls + ' ' + this.props.className}
       >
       </span>
     );
