@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -18,7 +18,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
  */
 var moduleName = 'mui.option';
 
-_angular["default"].module(moduleName, []).directive('muiOption', function () {
+_angular.default.module(moduleName, []).directive('muiOption', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -50,5 +50,5 @@ _angular["default"].module(moduleName, []).directive('muiOption', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

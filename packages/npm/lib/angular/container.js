@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -14,7 +14,7 @@ var _angular = babelHelpers.interopRequireDefault(require("angular"));
  */
 var moduleName = 'mui.container';
 
-_angular["default"].module(moduleName, []).directive('muiContainer', function () {
+_angular.default.module(moduleName, []).directive('muiContainer', function () {
   return {
     restrict: 'AE',
     template: '<div class="mui-container"></div>',
@@ -27,7 +27,7 @@ _angular["default"].module(moduleName, []).directive('muiContainer', function ()
         element.append(clone);
       }); // handle fluid containers
 
-      if (!_angular["default"].isUndefined(attrs.fluid)) {
+      if (!_angular.default.isUndefined(attrs.fluid)) {
         element.removeClass('mui-container').addClass('mui-container-fluid');
       }
     }
@@ -37,5 +37,5 @@ _angular["default"].module(moduleName, []).directive('muiContainer', function ()
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

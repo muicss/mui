@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -16,7 +16,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
  */
 var moduleName = 'mui.tabs';
 
-_angular["default"].module(moduleName, []).directive('muiTabs', function () {
+_angular.default.module(moduleName, []).directive('muiTabs', function () {
   return {
     restrict: 'EA',
     transclude: true,
@@ -45,7 +45,7 @@ _angular["default"].module(moduleName, []).directive('muiTabs', function () {
       };
     }],
     link: function link(scope, element, attrs, ctrl, transcludeFn) {
-      var isUndef = _angular["default"].isUndefined; // init scope
+      var isUndef = _angular.default.isUndefined; // init scope
 
       if (isUndef(scope.selectedId)) scope.selectedId = 0;
       scope.justified = false; // justified
@@ -110,5 +110,5 @@ _angular["default"].module(moduleName, []).directive('muiTabs', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

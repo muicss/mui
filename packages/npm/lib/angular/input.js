@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -62,7 +62,7 @@ function inputFactory(isTextArea) {
             labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],
-            isUndef = _angular["default"].isUndefined,
+            isUndef = _angular.default.isUndefined,
             el = inputEl[0]; // add inputCrl to scope
 
         scope.inputCtrl = inputEl.controller('ngModel'); // disable MUI js
@@ -105,10 +105,10 @@ function inputFactory(isTextArea) {
   }];
 }
 
-_angular["default"].module(moduleName, []).directive('muiInput', inputFactory(false)).directive('muiTextarea', inputFactory(true));
+_angular.default.module(moduleName, []).directive('muiInput', inputFactory(false)).directive('muiTextarea', inputFactory(true));
 /** Define module API */
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

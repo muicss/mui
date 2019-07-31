@@ -1349,7 +1349,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
     }, {
       key: "shouldComponentUpdate",
       value: function shouldComponentUpdate(nextProps, nextState) {
-        return (0, _reactAddonsShallowCompare["default"])(this, nextProps, nextState);
+        return (0, _reactAddonsShallowCompare.default)(this, nextProps, nextState);
       }
     }, {
       key: "componentDidMount",
@@ -1377,7 +1377,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         var labelType = jqLite.type(label);
 
         if (labelType == 'string' && label.length || labelType == 'object') {
-          labelEl = _react["default"].createElement(Label, {
+          labelEl = _react.default.createElement(Label, {
             text: label,
             onClick: this.onClickCB,
             htmlFor: this.props.id
@@ -1395,10 +1395,10 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         inputCls['mui--is-not-empty'] = !this.state.isEmpty;
         inputCls['mui--is-invalid'] = invalid;
         inputCls = util.classNames(inputCls);
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: wrapperCls + ' ' + className,
           style: style
-        }, _react["default"].createElement(TextfieldComponent, babelHelpers["extends"]({
+        }, _react.default.createElement(TextfieldComponent, babelHelpers.extends({
           className: inputCls,
           inputRef: function inputRef(el) {
             _this2.controlEl = el;
@@ -1411,7 +1411,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
       }
     }]);
     return _class;
-  }(_react["default"].Component), babelHelpers.defineProperty(_class, "defaultProps", {
+  }(_react.default.Component), babelHelpers.defineProperty(_class, "defaultProps", {
     className: '',
     hint: null,
     invalid: false,
@@ -1480,7 +1480,7 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("label", {
+      return _react.default.createElement("label", {
         style: this.state.style,
         onClick: this.props.onClick,
         htmlFor: this.props.htmlFor,
@@ -1490,7 +1490,7 @@ function (_React$Component2) {
     }
   }]);
   return Label;
-}(_react["default"].Component);
+}(_react.default.Component);
 /**
  * isEmpty helper
  * @function
@@ -1517,7 +1517,7 @@ function isEmpty(value) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -1541,13 +1541,13 @@ function (_React$Component) {
       var _this$props = this.props,
           children = _this$props.children,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-appbar ' + this.props.className
       }), children);
     }
   }]);
   return Appbar;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -1555,7 +1555,7 @@ babelHelpers.defineProperty(Appbar, "defaultProps", {
   className: ''
 });
 var _default = Appbar;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],12:[function(require,module,exports){
@@ -1568,7 +1568,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -1729,7 +1729,7 @@ function (_React$Component) {
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react["default"].createElement("button", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("button", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -1739,9 +1739,9 @@ function (_React$Component) {
         onMouseLeave: this.onMouseLeaveCB,
         onTouchStart: this.onTouchStartCB,
         onTouchEnd: this.onTouchEndCB
-      }), this.props.children, _react["default"].createElement("span", {
+      }), this.props.children, _react.default.createElement("span", {
         className: "mui-btn__ripple-container"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         ref: function ref(el) {
           _this2.rippleElRef = el;
         },
@@ -1751,7 +1751,7 @@ function (_React$Component) {
     }
   }]);
   return Button;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -1762,7 +1762,7 @@ babelHelpers.defineProperty(Button, "defaultProps", {
   variant: 'default'
 });
 var _default = Button;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":7,"../js/lib/util":8,"react":"react"}],13:[function(require,module,exports){
@@ -1775,14 +1775,16 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+var caretClass = 'mui-caret';
 /**
  * Caret constructor
  * @class
  */
+
 var Caret =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1796,16 +1798,20 @@ function (_React$Component) {
   babelHelpers.createClass(Caret, [{
     key: "render",
     value: function render() {
+      var cls = caretClass;
       var _this$props = this.props,
           children = _this$props.children,
-          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
-      return _react["default"].createElement("span", babelHelpers["extends"]({}, reactProps, {
-        className: 'mui-caret ' + this.props.className
+          direction = _this$props.direction,
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "direction"]); // add direction class
+
+      if (direction) cls += ' ' + caretClass + '--' + direction;
+      return _react.default.createElement("span", babelHelpers.extends({}, reactProps, {
+        className: cls + ' ' + this.props.className
       }));
     }
   }]);
   return Caret;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -1813,7 +1819,7 @@ babelHelpers.defineProperty(Caret, "defaultProps", {
   className: ''
 });
 var _default = Caret;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],14:[function(require,module,exports){
@@ -1826,7 +1832,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -1868,9 +1874,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-checkbox ' + className
-      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
+      }), _react.default.createElement("label", null, _react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -1889,7 +1895,7 @@ function (_React$Component) {
     }
   }]);
   return Checkbox;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -1898,7 +1904,7 @@ babelHelpers.defineProperty(Checkbox, "defaultProps", {
   label: null
 });
 var _default = Checkbox;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":8,"./_helpers":9,"react":"react"}],15:[function(require,module,exports){
@@ -1911,7 +1917,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -1960,13 +1966,13 @@ function (_React$Component) {
       }
 
       cls = util.classNames(cls);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Col;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -1984,7 +1990,7 @@ babelHelpers.defineProperty(Col, "defaultProps", {
   'xl-offset': null
 });
 var _default = Col;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":8,"react":"react"}],16:[function(require,module,exports){
@@ -1997,7 +2003,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2026,13 +2032,13 @@ function (_React$Component) {
       var cls = 'mui-container'; // fluid containers
 
       if (fluid) cls += '-fluid';
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Container;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2041,7 +2047,7 @@ babelHelpers.defineProperty(Container, "defaultProps", {
   fluid: false
 });
 var _default = Container;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],17:[function(require,module,exports){
@@ -2054,7 +2060,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2079,13 +2085,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-divider ' + className
       }));
     }
   }]);
   return Divider;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2093,7 +2099,7 @@ babelHelpers.defineProperty(Divider, "defaultProps", {
   className: ''
 });
 var _default = Divider;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],18:[function(require,module,exports){
@@ -2109,7 +2115,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2139,7 +2145,7 @@ function (_React$Component) {
           value = _this$props.value,
           onClick = _this$props.onClick,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "link", "target", "value", "onClick"]);
-      return _react["default"].createElement("li", reactProps, _react["default"].createElement("a", {
+      return _react.default.createElement("li", reactProps, _react.default.createElement("a", {
         href: link,
         target: target,
         "data-mui-value": value,
@@ -2148,12 +2154,12 @@ function (_React$Component) {
     }
   }]);
   return DropdownItem;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
 var _default = DropdownItem;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":8,"react":"react"}],19:[function(require,module,exports){
@@ -2169,7 +2175,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2181,8 +2187,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
-    openClass = 'mui--is-open',
-    rightClass = 'mui-dropdown__menu--right';
+    openClass = 'mui--is-open';
 /**
  * Dropdown constructor
  * @class
@@ -2200,7 +2205,7 @@ function (_React$Component) {
     _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Dropdown).call(this, props));
     _this.state = {
       opened: false,
-      menuTop: 0
+      menuPos: {}
     };
     var cb = util.callback;
     _this.selectCB = cb(babelHelpers.assertThisInitialized(_this), 'select');
@@ -2259,12 +2264,39 @@ function (_React$Component) {
     key: "open",
     value: function open() {
       // position menu element below toggle button
-      var wrapperRect = this.wrapperElRef.getBoundingClientRect(),
+      var pos = {},
+          wrapperRect = this.wrapperElRef.getBoundingClientRect(),
           toggleRect;
-      toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
+      toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect(); // menu position
+
+      switch (this.props.placement) {
+        case 'up':
+          pos.bottom = toggleRect.height + toggleRect.top - wrapperRect.top;
+          break;
+
+        case 'right':
+          pos.left = toggleRect.width;
+          pos.top = toggleRect.top - wrapperRect.top;
+          break;
+
+        case 'left':
+          pos.right = toggleRect.width;
+          pos.top = toggleRect.top - wrapperRect.top;
+          break;
+
+        default:
+          pos.top = toggleRect.top - wrapperRect.top + toggleRect.height;
+      } // menu alignment
+
+
+      if (this.props.alignment === 'bottom') {
+        pos.top = 'auto';
+        pos.bottom = toggleRect.top - wrapperRect.top;
+      }
+
       this.setState({
         opened: true,
-        menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+        menuPos: pos
       });
     }
   }, {
@@ -2303,7 +2335,10 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var buttonEl, menuEl, labelEl;
+      var wrapperCls = dropdownClass,
+          buttonEl,
+          menuEl,
+          labelEl;
       var _this$props = this.props,
           children = _this$props.children,
           className = _this$props.className,
@@ -2311,19 +2346,32 @@ function (_React$Component) {
           variant = _this$props.variant,
           size = _this$props.size,
           label = _this$props.label,
+          placement = _this$props.placement,
+          alignment = _this$props.alignment,
           alignMenu = _this$props.alignMenu,
           onClick = _this$props.onClick,
           onSelect = _this$props.onSelect,
           disabled = _this$props.disabled,
-          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "placement", "alignment", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
 
       if (jqLite.type(label) === 'string') {
-        labelEl = _react["default"].createElement("span", null, label, " ", _react["default"].createElement(_caret["default"], null));
+        if (placement === 'left') {
+          labelEl = _react.default.createElement("span", null, _react.default.createElement(_caret.default, {
+            direction: placement
+          }), " ", label);
+        } else {
+          labelEl = _react.default.createElement("span", null, label, " ", _react.default.createElement(_caret.default, {
+            direction: placement
+          }));
+        }
       } else {
         labelEl = label;
-      }
+      } // placement
 
-      buttonEl = _react["default"].createElement(_button["default"], {
+
+      if (placement) wrapperCls += ' ' + dropdownClass + '--' + placement; // button
+
+      buttonEl = _react.default.createElement(_button.default, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -2339,32 +2387,34 @@ function (_React$Component) {
         var cs = {};
         cs[menuClass] = true;
         cs[openClass] = this.state.opened;
-        cs[rightClass] = alignMenu === 'right';
-        cs = util.classNames(cs);
-        menuEl = _react["default"].createElement("ul", {
+        cs = util.classNames(cs); // alignment (also handles `alignMenu` legacy argument)
+
+        if (alignment || alignMenu) {
+          cs += ' ' + menuClass + '--' + (alignment || alignMenu);
+        }
+
+        menuEl = _react.default.createElement("ul", {
           ref: function ref(el) {
             _this2.menuElRef = el;
           },
           className: cs,
-          style: {
-            top: this.state.menuTop
-          },
+          style: this.state.menuPos,
           onClick: this.selectCB
         }, children);
       } else {
-        menuEl = _react["default"].createElement("div", null);
+        menuEl = _react.default.createElement("div", null);
       }
 
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
-        className: dropdownClass + ' ' + className
+        className: wrapperCls + ' ' + className
       }), buttonEl, menuEl);
     }
   }]);
   return Dropdown;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2374,13 +2424,16 @@ babelHelpers.defineProperty(Dropdown, "defaultProps", {
   variant: 'default',
   size: 'default',
   label: '',
-  alignMenu: 'left',
+  placement: null,
+  alignment: null,
+  alignMenu: null,
+  // legacy
   onClick: null,
   onSelect: null,
   disabled: false
 });
 var _default = Dropdown;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":7,"../js/lib/util":8,"./button":12,"./caret":13,"react":"react"}],20:[function(require,module,exports){
@@ -2393,7 +2446,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2422,13 +2475,13 @@ function (_React$Component) {
       var cls = 'mui-form'; // inline form
 
       if (inline) cls += ' mui-form--inline';
-      return _react["default"].createElement("form", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("form", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Form;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2437,7 +2490,7 @@ babelHelpers.defineProperty(Form, "defaultProps", {
   inline: false
 });
 var _default = Form;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],21:[function(require,module,exports){
@@ -2450,7 +2503,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2463,14 +2516,14 @@ var _textfieldHelpers = require("./_textfieldHelpers");
 var Input = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
   var inputRef = props.inputRef,
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]);
-  return _react["default"].createElement("input", babelHelpers["extends"]({
+  return _react.default.createElement("input", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });
 /** Module API */
 
 var _default = Input;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"./_textfieldHelpers":10,"react":"react"}],22:[function(require,module,exports){
@@ -2483,7 +2536,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2514,11 +2567,11 @@ function (_React$Component) {
           children = _this$props.children,
           label = _this$props.label,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "label"]);
-      return _react["default"].createElement("option", reactProps, label);
+      return _react.default.createElement("option", reactProps, label);
     }
   }]);
   return Option;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2527,7 +2580,7 @@ babelHelpers.defineProperty(Option, "defaultProps", {
   label: null
 });
 var _default = Option;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":6,"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react"}],23:[function(require,module,exports){
@@ -2540,7 +2593,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2565,13 +2618,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-panel ' + className
       }), children);
     }
   }]);
   return Panel;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2579,7 +2632,7 @@ babelHelpers.defineProperty(Panel, "defaultProps", {
   className: ''
 });
 var _default = Panel;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],24:[function(require,module,exports){
@@ -2592,7 +2645,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2630,9 +2683,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-radio ' + className
-      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
+      }), _react.default.createElement("label", null, _react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -2651,7 +2704,7 @@ function (_React$Component) {
     }
   }]);
   return Radio;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2660,7 +2713,7 @@ babelHelpers.defineProperty(Radio, "defaultProps", {
   label: null
 });
 var _default = Radio;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],25:[function(require,module,exports){
@@ -2673,7 +2726,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2701,13 +2754,13 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-row ' + className
       }), children);
     }
   }]);
   return Row;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -2715,7 +2768,7 @@ babelHelpers.defineProperty(Row, "defaultProps", {
   className: ''
 });
 var _default = Row;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/util":8,"react":"react"}],26:[function(require,module,exports){
@@ -2728,7 +2781,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -2892,7 +2945,7 @@ function (_React$Component) {
           selectCls;
 
       if (this.state.showMenu) {
-        menuElem = _react["default"].createElement(Menu, {
+        menuElem = _react.default.createElement(Menu, {
           optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
@@ -2927,7 +2980,7 @@ function (_React$Component) {
       if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue; // handle placeholder
 
       if (placeholder) {
-        placeholderElem = _react["default"].createElement("option", {
+        placeholderElem = _react.default.createElement("option", {
           className: "mui--text-placeholder",
           value: ""
         }, placeholder); // apply class if value is empty
@@ -2937,7 +2990,7 @@ function (_React$Component) {
         }
       }
 
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -2946,7 +2999,7 @@ function (_React$Component) {
         className: 'mui-select ' + className,
         onClick: this.onOuterClickCB,
         onKeyDown: this.onOuterKeyDownCB
-      }), _react["default"].createElement("select", babelHelpers["extends"]({}, valueArgs, {
+      }), _react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
         ref: function ref(el) {
           _this2.controlEl = el;
         },
@@ -2958,13 +3011,13 @@ function (_React$Component) {
         onChange: this.onInnerChangeCB,
         onMouseDown: this.onInnerMouseDownCB,
         required: this.props.required
-      }), placeholderElem, children), _react["default"].createElement("label", {
+      }), placeholderElem, children), _react.default.createElement("label", {
         tabIndex: "-1"
       }, label), menuElem);
     }
   }]);
   return Select;
-}(_react["default"].Component);
+}(_react.default.Component);
 /**
  * Menu constructor
  * @class
@@ -3184,14 +3237,14 @@ function (_React$Component2) {
 
 
         cls += optionEl.className;
-        menuItems.push(_react["default"].createElement("div", {
+        menuItems.push(_react.default.createElement("div", {
           key: i,
           className: cls,
           onClick: this.onClick.bind(this, val)
         }, optionEl.textContent));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         ref: function ref(el) {
           _this4.wrapperElRef = el;
         },
@@ -3200,7 +3253,7 @@ function (_React$Component2) {
     }
   }]);
   return Menu;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -3211,7 +3264,7 @@ babelHelpers.defineProperty(Menu, "defaultProps", {
   onClose: null
 });
 var _default = Select;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":6,"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react"}],27:[function(require,module,exports){
@@ -3227,7 +3280,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -3252,7 +3305,7 @@ function (_React$Component) {
     }
   }]);
   return Tab;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -3262,7 +3315,7 @@ babelHelpers.defineProperty(Tab, "defaultProps", {
   onActive: null
 });
 var _default = Tab;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"react":"react"}],28:[function(require,module,exports){
@@ -3279,7 +3332,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -3358,7 +3411,7 @@ function (_React$Component) {
           selectedIndex = _this$props.selectedIndex,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "defaultSelectedIndex", "initialSelectedIndex", "justified", "selectedIndex"]);
 
-      var tabs = _react["default"].Children.toArray(children);
+      var tabs = _react.default.Children.toArray(children);
 
       var tabEls = [],
           paneEls = [],
@@ -3372,19 +3425,19 @@ function (_React$Component) {
       for (i = 0; i < m; i++) {
         item = tabs[i]; // only accept MUITab elements
 
-        if (item.type !== _tab["default"]) util.raiseError('Expecting MUITab React Element');
+        if (item.type !== _tab.default) util.raiseError('Expecting MUITab React Element');
         isActive = i === currentSelectedIndex ? true : false; // tab element
 
-        tabEls.push(_react["default"].createElement("li", {
+        tabEls.push(_react.default.createElement("li", {
           key: i,
           className: isActive ? isActiveClass : ''
-        }, _react["default"].createElement("a", {
+        }, _react.default.createElement("a", {
           onClick: this.onClick.bind(this, i, item)
         }, item.props.label))); // pane element
 
         cls = tabsPaneClass + ' ';
         if (isActive) cls += isActiveClass;
-        paneEls.push(_react["default"].createElement("div", {
+        paneEls.push(_react.default.createElement("div", {
           key: i,
           className: cls
         }, item.props.children));
@@ -3392,13 +3445,13 @@ function (_React$Component) {
 
       cls = tabsBarClass;
       if (justified) cls += ' ' + tabsBarJustifiedClass;
-      return _react["default"].createElement("div", reactProps, _react["default"].createElement("ul", {
+      return _react.default.createElement("div", reactProps, _react.default.createElement("ul", {
         className: cls
       }, tabEls), paneEls);
     }
   }]);
   return Tabs;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -3415,7 +3468,7 @@ babelHelpers.defineProperty(Tabs, "defaultProps", {
   selectedIndex: null
 });
 var _default = Tabs;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 }).call(this,require('_process'))
@@ -3429,7 +3482,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
@@ -3444,12 +3497,12 @@ var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]); // default number of rows
 
   if (!'rows' in rest) rest.rows = 2;
-  return _react["default"].createElement("textarea", babelHelpers["extends"]({
+  return _react.default.createElement("textarea", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });
 var _default = Textarea;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"./_textfieldHelpers":10,"react":"react"}]},{},[1]);

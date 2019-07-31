@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -14,7 +14,7 @@ var _angular = babelHelpers.interopRequireDefault(require("angular"));
  */
 var moduleName = 'mui.radio';
 
-_angular["default"].module(moduleName, []).directive('muiRadio', function () {
+_angular.default.module(moduleName, []).directive('muiRadio', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -27,7 +27,7 @@ _angular["default"].module(moduleName, []).directive('muiRadio', function () {
       ngModel: '='
     },
     template: function template(tElement, tAttrs) {
-      var isUndef = _angular["default"].isUndefined,
+      var isUndef = _angular.default.isUndefined,
           html = '';
       html += '<div class="mui-radio"><label><input type="radio" '; // input attributes
 
@@ -46,5 +46,5 @@ _angular["default"].module(moduleName, []).directive('muiRadio', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

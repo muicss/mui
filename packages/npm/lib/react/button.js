@@ -8,7 +8,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -169,7 +169,7 @@ function (_React$Component) {
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react["default"].createElement("button", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("button", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -179,9 +179,9 @@ function (_React$Component) {
         onMouseLeave: this.onMouseLeaveCB,
         onTouchStart: this.onTouchStartCB,
         onTouchEnd: this.onTouchEndCB
-      }), this.props.children, _react["default"].createElement("span", {
+      }), this.props.children, _react.default.createElement("span", {
         className: "mui-btn__ripple-container"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         ref: function ref(el) {
           _this2.rippleElRef = el;
         },
@@ -191,7 +191,7 @@ function (_React$Component) {
     }
   }]);
   return Button;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -202,5 +202,5 @@ babelHelpers.defineProperty(Button, "defaultProps", {
   variant: 'default'
 });
 var _default = Button;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

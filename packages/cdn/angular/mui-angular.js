@@ -54,7 +54,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -64,7 +64,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.appbar';
 
-_angular["default"].module(moduleName, []).directive('muiAppbar', function () {
+_angular.default.module(moduleName, []).directive('muiAppbar', function () {
   return {
     restrict: 'AE',
     transclude: true,
@@ -82,7 +82,7 @@ _angular["default"].module(moduleName, []).directive('muiAppbar', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],3:[function(require,module,exports){
@@ -91,7 +91,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -107,14 +107,14 @@ var moduleName = 'mui.button',
     mouseDownEvents = supportsTouch ? 'touchstart' : 'mousedown',
     mouseUpEvents = supportsTouch ? 'touchend' : 'mouseup mouseleave';
 
-_angular["default"].module(moduleName, []).directive('muiButton', function () {
+_angular.default.module(moduleName, []).directive('muiButton', function () {
   return {
     restrict: 'AE',
     replace: true,
     template: '<button class="mui-btn" mui-ripple>' + '<ng-transclude></ng-transclude>' + '<span class="mui-btn__ripple-container">' + '<span class="mui-ripple"></span>' + '</span>' + '</button>',
     transclude: true,
     link: function link(scope, element, attrs) {
-      var isUndef = _angular["default"].isUndefined,
+      var isUndef = _angular.default.isUndefined,
           el = element[0]; // disable MUI js
 
       el._muiDropdown = true;
@@ -125,7 +125,7 @@ _angular["default"].module(moduleName, []).directive('muiButton', function () {
       } // set button styles        
 
 
-      _angular["default"].forEach(['variant', 'color', 'size'], function (attrName) {
+      _angular.default.forEach(['variant', 'color', 'size'], function (attrName) {
         var attrVal = attrs[attrName];
         if (attrVal) element.addClass('mui-btn--' + attrVal);
       });
@@ -201,7 +201,7 @@ function mouseUpHandler(ev) {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],4:[function(require,module,exports){
@@ -210,7 +210,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -220,18 +220,24 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.caret';
 
-_angular["default"].module(moduleName, []).directive('muiCaret', function () {
+_angular.default.module(moduleName, []).directive('muiCaret', function () {
   return {
     restrict: 'AE',
     replace: true,
-    template: '<span class="mui-caret"></span>'
+    template: '<span class="mui-caret"></span>',
+    link: function link(scope, element, attrs) {
+      // caret direction
+      if (!_angular.default.isUndefined(attrs.direction)) {
+        element.addClass('mui-caret--' + attrs['direction']);
+      }
+    }
   };
 });
 /** Define module API */
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],5:[function(require,module,exports){
@@ -240,7 +246,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -250,7 +256,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.checkbox';
 
-_angular["default"].module(moduleName, []).directive('muiCheckbox', ['$parse', function () {
+_angular.default.module(moduleName, []).directive('muiCheckbox', ['$parse', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -263,7 +269,7 @@ _angular["default"].module(moduleName, []).directive('muiCheckbox', ['$parse', f
       ngModel: '='
     },
     template: function template(tElement, tAttrs) {
-      var isUndef = _angular["default"].isUndefined,
+      var isUndef = _angular.default.isUndefined,
           html = '';
       html += '<div class="mui-checkbox"><label><input type="checkbox" '; // input attributes
 
@@ -282,7 +288,7 @@ _angular["default"].module(moduleName, []).directive('muiCheckbox', ['$parse', f
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],6:[function(require,module,exports){
@@ -291,7 +297,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -301,7 +307,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.col';
 
-_angular["default"].module(moduleName, []).directive('muiCol', function () {
+_angular.default.module(moduleName, []).directive('muiCol', function () {
   return {
     restrict: 'AE',
     scope: true,
@@ -327,7 +333,7 @@ _angular["default"].module(moduleName, []).directive('muiCol', function () {
         'xl-offset': 'mui-col-xl-offset-'
       };
 
-      _angular["default"].forEach(breakpoints, function (value, key) {
+      _angular.default.forEach(breakpoints, function (value, key) {
         var attrVal = attrs[attrs.$normalize(key)];
         if (attrVal) element.addClass(value + attrVal);
       });
@@ -338,7 +344,7 @@ _angular["default"].module(moduleName, []).directive('muiCol', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],7:[function(require,module,exports){
@@ -347,7 +353,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -357,7 +363,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.container';
 
-_angular["default"].module(moduleName, []).directive('muiContainer', function () {
+_angular.default.module(moduleName, []).directive('muiContainer', function () {
   return {
     restrict: 'AE',
     template: '<div class="mui-container"></div>',
@@ -370,7 +376,7 @@ _angular["default"].module(moduleName, []).directive('muiContainer', function ()
         element.append(clone);
       }); // handle fluid containers
 
-      if (!_angular["default"].isUndefined(attrs.fluid)) {
+      if (!_angular.default.isUndefined(attrs.fluid)) {
         element.removeClass('mui-container').addClass('mui-container-fluid');
       }
     }
@@ -380,7 +386,7 @@ _angular["default"].module(moduleName, []).directive('muiContainer', function ()
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],8:[function(require,module,exports){
@@ -389,7 +395,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -399,7 +405,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.divider';
 
-_angular["default"].module(moduleName, []).directive('muiDivider', function () {
+_angular.default.module(moduleName, []).directive('muiDivider', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -412,7 +418,7 @@ _angular["default"].module(moduleName, []).directive('muiDivider', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],9:[function(require,module,exports){
@@ -421,7 +427,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -431,7 +437,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.dropdown-item';
 
-_angular["default"].module(moduleName, []).directive('muiDropdownItem', function () {
+_angular.default.module(moduleName, []).directive('muiDropdownItem', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -446,7 +452,7 @@ _angular["default"].module(moduleName, []).directive('muiDropdownItem', function
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],10:[function(require,module,exports){
@@ -455,7 +461,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -465,7 +471,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.dropdown';
 
-_angular["default"].module(moduleName, []).directive('muiDropdown', ['$timeout', '$compile', function ($timeout, $compile) {
+_angular.default.module(moduleName, []).directive('muiDropdown', ['$timeout', '$compile', function ($timeout, $compile) {
   return {
     restrict: 'AE',
     transclude: true,
@@ -475,6 +481,8 @@ _angular["default"].module(moduleName, []).directive('muiDropdown', ['$timeout',
       color: '@',
       size: '@',
       open: '=?',
+      placement: '@',
+      alignment: '@',
       ngDisabled: '='
     },
     template: '<div class="mui-dropdown">' + '<mui-button ' + 'variant="{{variant}}" ' + 'color="{{color}}" ' + 'size="{{size}}" ' + 'ng-click="onClick($event);" ' + '></mui-button>' + '<ul class="mui-dropdown__menu" ng-transclude></ul>' + '</div>',
@@ -483,24 +491,48 @@ _angular["default"].module(moduleName, []).directive('muiDropdown', ['$timeout',
           menuClass = 'mui-dropdown__menu',
           openClass = 'mui--is-open',
           rightClass = 'mui-dropdown__menu--right',
-          isUndef = _angular["default"].isUndefined,
+          isUndef = _angular.default.isUndefined,
           menuEl,
-          buttonEl; // save references
+          buttonEl,
+          contents; // save references
 
-      menuEl = _angular["default"].element(element[0].querySelector('.' + menuClass));
-      buttonEl = _angular["default"].element(element[0].querySelector('.mui-btn'));
-      menuEl.css('margin-top', '-3px'); // handle is-open
+      menuEl = _angular.default.element(element[0].querySelector('.' + menuClass));
+      buttonEl = _angular.default.element(element[0].querySelector('.mui-btn')); // handle is-open
 
       if (!isUndef(attrs.open)) scope.open = true; // handle disabled
 
       if (!isUndef(attrs.disabled)) {
         buttonEl.attr('disabled', true);
-      } // handle right-align
+      } // placement class
 
 
-      if (!isUndef(attrs.rightAlign)) menuEl.addClass(rightClass); // handle no-caret
+      if (!isUndef(attrs.placement)) {
+        element.addClass(dropdownClass + '--' + attrs.placement);
+      } // alignment class
 
-      if (!isUndef(attrs.noCaret)) buttonEl.html(attrs.label);else buttonEl.html(attrs.label + ' <mui-caret></mui-caret>');
+
+      if (!isUndef(attrs.rightAlign)) {
+        // legacy `rightAlign` attribute
+        menuEl.addClass(rightClass);
+      } else if (!isUndef(attrs.alignment)) {
+        menuEl.addClass(menuClass + '--' + attrs.alignment);
+      } // handle caret
+
+
+      if (!isUndef(attrs.noCaret)) {
+        // no caret
+        buttonEl.html(attrs.label);
+      } else {
+        // caret direction and placement
+        contents = '<mui-caret direction="{{placement}}"></mui-caret>';
+        contents = $compile(contents)(scope);
+
+        if (scope.placement === 'left') {
+          buttonEl.append(contents).append(attrs.label + ' ');
+        } else {
+          buttonEl.append(attrs.label + ' ').append(contents);
+        }
+      }
 
       function closeDropdownFn() {
         scope.open = false;
@@ -515,9 +547,44 @@ _angular["default"].module(moduleName, []).directive('muiDropdown', ['$timeout',
 
 
       scope.$watch('open', function (newValue) {
-        var doc = document;
+        var doc = document,
+            pos = {},
+            wrapperRect,
+            toggleRect;
 
         if (newValue === true) {
+          // menu placement
+          wrapperRect = element[0].getBoundingClientRect();
+          toggleRect = buttonEl[0].getBoundingClientRect();
+
+          switch (attrs.placement) {
+            case 'up':
+              pos.bottom = toggleRect.height + toggleRect.top - wrapperRect.top + 'px';
+              break;
+
+            case 'right':
+              pos.left = toggleRect.width + 'px';
+              pos.top = toggleRect.top - wrapperRect.top + 'px';
+              break;
+
+            case 'left':
+              pos.right = toggleRect.width + 'px';
+              pos.top = toggleRect.top - wrapperRect.top + 'px';
+              break;
+
+            default:
+              pos.top = toggleRect.top - wrapperRect.top + toggleRect.height + 'px';
+          } // menu alignment
+
+
+          if (attrs.alignment === 'bottom') {
+            pos.top = 'auto';
+            pos.bottom = toggleRect.top - wrapperRect.top + 'px';
+          } // set menu position
+
+
+          menuEl.css(pos); // open menu
+
           menuEl.addClass(openClass);
           doc.addEventListener('click', closeDropdownFn);
           doc.addEventListener('keydown', handleKeyDownFn);
@@ -544,7 +611,7 @@ _angular["default"].module(moduleName, []).directive('muiDropdown', ['$timeout',
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],11:[function(require,module,exports){
@@ -553,7 +620,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -563,7 +630,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.form';
 
-_angular["default"].module(moduleName, []).directive('muiForm', function () {
+_angular.default.module(moduleName, []).directive('muiForm', function () {
   return {
     restrict: 'AE',
     template: '<form class="mui-form"></form>',
@@ -576,7 +643,7 @@ _angular["default"].module(moduleName, []).directive('muiForm', function () {
         element.append(clone);
       }); // handle inline forms
 
-      if (!_angular["default"].isUndefined(attrs.inline)) {
+      if (!_angular.default.isUndefined(attrs.inline)) {
         element.addClass('mui-form--inline');
       }
     }
@@ -586,7 +653,7 @@ _angular["default"].module(moduleName, []).directive('muiForm', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],12:[function(require,module,exports){
@@ -595,7 +662,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -653,7 +720,7 @@ function inputFactory(isTextArea) {
             labelEl = element.find('label'),
             ngModelCtrl = controllers[0],
             formCtrl = controllers[1],
-            isUndef = _angular["default"].isUndefined,
+            isUndef = _angular.default.isUndefined,
             el = inputEl[0]; // add inputCrl to scope
 
         scope.inputCtrl = inputEl.controller('ngModel'); // disable MUI js
@@ -696,12 +763,12 @@ function inputFactory(isTextArea) {
   }];
 }
 
-_angular["default"].module(moduleName, []).directive('muiInput', inputFactory(false)).directive('muiTextarea', inputFactory(true));
+_angular.default.module(moduleName, []).directive('muiInput', inputFactory(false)).directive('muiTextarea', inputFactory(true));
 /** Define module API */
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],13:[function(require,module,exports){
@@ -710,7 +777,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -724,7 +791,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
  */
 var moduleName = 'mui.option';
 
-_angular["default"].module(moduleName, []).directive('muiOption', function () {
+_angular.default.module(moduleName, []).directive('muiOption', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -756,7 +823,7 @@ _angular["default"].module(moduleName, []).directive('muiOption', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":20,"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],14:[function(require,module,exports){
@@ -765,7 +832,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -775,7 +842,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.panel';
 
-_angular["default"].module(moduleName, []).directive('muiPanel', function () {
+_angular.default.module(moduleName, []).directive('muiPanel', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -793,7 +860,7 @@ _angular["default"].module(moduleName, []).directive('muiPanel', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],15:[function(require,module,exports){
@@ -802,7 +869,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -812,7 +879,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.radio';
 
-_angular["default"].module(moduleName, []).directive('muiRadio', function () {
+_angular.default.module(moduleName, []).directive('muiRadio', function () {
   return {
     restrict: 'AE',
     replace: true,
@@ -825,7 +892,7 @@ _angular["default"].module(moduleName, []).directive('muiRadio', function () {
       ngModel: '='
     },
     template: function template(tElement, tAttrs) {
-      var isUndef = _angular["default"].isUndefined,
+      var isUndef = _angular.default.isUndefined,
           html = '';
       html += '<div class="mui-radio"><label><input type="radio" '; // input attributes
 
@@ -844,7 +911,7 @@ _angular["default"].module(moduleName, []).directive('muiRadio', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],16:[function(require,module,exports){
@@ -853,7 +920,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -863,7 +930,7 @@ var _angular = babelHelpers.interopRequireDefault(window.angular);
  */
 var moduleName = 'mui.row';
 
-_angular["default"].module('mui.row', []).directive('muiRow', function () {
+_angular.default.module('mui.row', []).directive('muiRow', function () {
   return {
     restrict: 'AE',
     scope: true,
@@ -881,7 +948,7 @@ _angular["default"].module('mui.row', []).directive('muiRow', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"angular":"angular"}],17:[function(require,module,exports){
@@ -890,7 +957,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -904,7 +971,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
  */
 var moduleName = 'mui.select';
 
-_angular["default"].module(moduleName, []).directive('muiSelect', ['$timeout', function ($timeout) {
+_angular.default.module(moduleName, []).directive('muiSelect', ['$timeout', function ($timeout) {
   return {
     restrict: 'AE',
     require: ['ngModel'],
@@ -922,7 +989,7 @@ _angular["default"].module(moduleName, []).directive('muiSelect', ['$timeout', f
     link: function link(scope, element, attrs, controller, transcludeFn) {
       var wrapperEl = element,
           selectEl = element.find('select'),
-          isUndef = _angular["default"].isUndefined,
+          isUndef = _angular.default.isUndefined,
           origValue; // disable MUI js
 
       selectEl[0]._muiSelect = true; // init scope
@@ -1208,7 +1275,7 @@ _angular["default"].module(moduleName, []).directive('muiSelect', ['$timeout', f
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/forms":20,"../js/lib/jqLite":21,"../js/lib/util":22,"angular":"angular"}],18:[function(require,module,exports){
@@ -1217,7 +1284,7 @@ module.exports = exports.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(window.angular);
 
@@ -1229,7 +1296,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
  */
 var moduleName = 'mui.tabs';
 
-_angular["default"].module(moduleName, []).directive('muiTabs', function () {
+_angular.default.module(moduleName, []).directive('muiTabs', function () {
   return {
     restrict: 'EA',
     transclude: true,
@@ -1258,7 +1325,7 @@ _angular["default"].module(moduleName, []).directive('muiTabs', function () {
       };
     }],
     link: function link(scope, element, attrs, ctrl, transcludeFn) {
-      var isUndef = _angular["default"].isUndefined; // init scope
+      var isUndef = _angular.default.isUndefined; // init scope
 
       if (isUndef(scope.selectedId)) scope.selectedId = 0;
       scope.justified = false; // justified
@@ -1323,7 +1390,7 @@ _angular["default"].module(moduleName, []).directive('muiTabs', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 },{"../js/lib/jqLite":21,"angular":"angular"}],19:[function(require,module,exports){

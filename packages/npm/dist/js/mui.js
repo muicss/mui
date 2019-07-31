@@ -63,7 +63,11 @@ var jqLite = require('./lib/jqLite'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[data-mui-toggle="dropdown"]',
     openClass = 'mui--is-open',
-    menuClass = 'mui-dropdown__menu';
+    menuClass = 'mui-dropdown__menu',
+    upClass = 'mui-dropdown--up',
+    rightClass = 'mui-dropdown--right',
+    leftClass = 'mui-dropdown--left',
+    bottomClass = 'mui-dropdown__menu--bottom';
 
 
 /**
@@ -140,9 +144,39 @@ function toggleDropdown(toggleEl) {
     var wrapperRect = wrapperEl.getBoundingClientRect(),
         toggleRect = toggleEl.getBoundingClientRect();
 
-    var top = toggleRect.top - wrapperRect.top + toggleRect.height;
-    jqLite.css(menuEl, 'top', top + 'px');
+    // menu position
+    if (jqLite.hasClass(wrapperEl, upClass)) {
+      // up
+      jqLite.css(menuEl, {
+        'bottom': toggleRect.height + toggleRect.top - wrapperRect.top + 'px'
+      });
+    } else if (jqLite.hasClass(wrapperEl, rightClass)) {
+      // right
+      jqLite.css(menuEl, {
+        'left': toggleRect.width + 'px',
+        'top': toggleRect.top - wrapperRect.top + 'px'
+      });
+    } else if (jqLite.hasClass(wrapperEl, leftClass)) {
+      // left
+      jqLite.css(menuEl, {
+        'right': toggleRect.width + 'px',
+        'top': toggleRect.top - wrapperRect.top + 'px'
+      });
+    } else {
+      // down
+      jqLite.css(menuEl, {
+        'top': toggleRect.top - wrapperRect.top + toggleRect.height + 'px'
+      });
+    }
 
+    // menu alignment
+    if (jqLite.hasClass(menuEl, bottomClass)) {
+      jqLite.css(menuEl, {
+        'top': 'auto',
+        'bottom': toggleRect.top - wrapperRect.top + 'px'
+      });
+    }
+    
     // add open class to wrapper
     jqLite.addClass(menuEl, openClass);
 

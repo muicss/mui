@@ -11,7 +11,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -41,7 +41,7 @@ function (_React$Component) {
           value = _this$props.value,
           onClick = _this$props.onClick,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "link", "target", "value", "onClick"]);
-      return _react["default"].createElement("li", reactProps, _react["default"].createElement("a", {
+      return _react.default.createElement("li", reactProps, _react.default.createElement("a", {
         href: link,
         target: target,
         "data-mui-value": value,
@@ -50,10 +50,10 @@ function (_React$Component) {
     }
   }]);
   return DropdownItem;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
 var _default = DropdownItem;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

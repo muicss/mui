@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -18,7 +18,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
  */
 var moduleName = 'mui.select';
 
-_angular["default"].module(moduleName, []).directive('muiSelect', ['$timeout', function ($timeout) {
+_angular.default.module(moduleName, []).directive('muiSelect', ['$timeout', function ($timeout) {
   return {
     restrict: 'AE',
     require: ['ngModel'],
@@ -36,7 +36,7 @@ _angular["default"].module(moduleName, []).directive('muiSelect', ['$timeout', f
     link: function link(scope, element, attrs, controller, transcludeFn) {
       var wrapperEl = element,
           selectEl = element.find('select'),
-          isUndef = _angular["default"].isUndefined,
+          isUndef = _angular.default.isUndefined,
           origValue; // disable MUI js
 
       selectEl[0]._muiSelect = true; // init scope
@@ -322,5 +322,5 @@ _angular["default"].module(moduleName, []).directive('muiSelect', ['$timeout', f
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

@@ -11,7 +11,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -90,7 +90,7 @@ function (_React$Component) {
           selectedIndex = _this$props.selectedIndex,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "defaultSelectedIndex", "initialSelectedIndex", "justified", "selectedIndex"]);
 
-      var tabs = _react["default"].Children.toArray(children);
+      var tabs = _react.default.Children.toArray(children);
 
       var tabEls = [],
           paneEls = [],
@@ -104,19 +104,19 @@ function (_React$Component) {
       for (i = 0; i < m; i++) {
         item = tabs[i]; // only accept MUITab elements
 
-        if (item.type !== _tab["default"]) util.raiseError('Expecting MUITab React Element');
+        if (item.type !== _tab.default) util.raiseError('Expecting MUITab React Element');
         isActive = i === currentSelectedIndex ? true : false; // tab element
 
-        tabEls.push(_react["default"].createElement("li", {
+        tabEls.push(_react.default.createElement("li", {
           key: i,
           className: isActive ? isActiveClass : ''
-        }, _react["default"].createElement("a", {
+        }, _react.default.createElement("a", {
           onClick: this.onClick.bind(this, i, item)
         }, item.props.label))); // pane element
 
         cls = tabsPaneClass + ' ';
         if (isActive) cls += isActiveClass;
-        paneEls.push(_react["default"].createElement("div", {
+        paneEls.push(_react.default.createElement("div", {
           key: i,
           className: cls
         }, item.props.children));
@@ -124,13 +124,13 @@ function (_React$Component) {
 
       cls = tabsBarClass;
       if (justified) cls += ' ' + tabsBarJustifiedClass;
-      return _react["default"].createElement("div", reactProps, _react["default"].createElement("ul", {
+      return _react.default.createElement("div", reactProps, _react.default.createElement("ul", {
         className: cls
       }, tabEls), paneEls);
     }
   }]);
   return Tabs;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -147,5 +147,5 @@ babelHelpers.defineProperty(Tabs, "defaultProps", {
   selectedIndex: null
 });
 var _default = Tabs;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

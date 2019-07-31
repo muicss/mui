@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -20,14 +20,14 @@ var moduleName = 'mui.button',
     mouseDownEvents = supportsTouch ? 'touchstart' : 'mousedown',
     mouseUpEvents = supportsTouch ? 'touchend' : 'mouseup mouseleave';
 
-_angular["default"].module(moduleName, []).directive('muiButton', function () {
+_angular.default.module(moduleName, []).directive('muiButton', function () {
   return {
     restrict: 'AE',
     replace: true,
     template: '<button class="mui-btn" mui-ripple>' + '<ng-transclude></ng-transclude>' + '<span class="mui-btn__ripple-container">' + '<span class="mui-ripple"></span>' + '</span>' + '</button>',
     transclude: true,
     link: function link(scope, element, attrs) {
-      var isUndef = _angular["default"].isUndefined,
+      var isUndef = _angular.default.isUndefined,
           el = element[0]; // disable MUI js
 
       el._muiDropdown = true;
@@ -38,7 +38,7 @@ _angular["default"].module(moduleName, []).directive('muiButton', function () {
       } // set button styles        
 
 
-      _angular["default"].forEach(['variant', 'color', 'size'], function (attrName) {
+      _angular.default.forEach(['variant', 'color', 'size'], function (attrName) {
         var attrVal = attrs[attrName];
         if (attrVal) element.addClass('mui-btn--' + attrVal);
       });
@@ -114,5 +114,5 @@ function mouseUpHandler(ev) {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

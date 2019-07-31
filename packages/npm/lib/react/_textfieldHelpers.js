@@ -101,7 +101,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
     }, {
       key: "shouldComponentUpdate",
       value: function shouldComponentUpdate(nextProps, nextState) {
-        return (0, _reactAddonsShallowCompare["default"])(this, nextProps, nextState);
+        return (0, _reactAddonsShallowCompare.default)(this, nextProps, nextState);
       }
     }, {
       key: "componentDidMount",
@@ -129,7 +129,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         var labelType = jqLite.type(label);
 
         if (labelType == 'string' && label.length || labelType == 'object') {
-          labelEl = _react["default"].createElement(Label, {
+          labelEl = _react.default.createElement(Label, {
             text: label,
             onClick: this.onClickCB,
             htmlFor: this.props.id
@@ -147,10 +147,10 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         inputCls['mui--is-not-empty'] = !this.state.isEmpty;
         inputCls['mui--is-invalid'] = invalid;
         inputCls = util.classNames(inputCls);
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: wrapperCls + ' ' + className,
           style: style
-        }, _react["default"].createElement(TextfieldComponent, babelHelpers["extends"]({
+        }, _react.default.createElement(TextfieldComponent, babelHelpers.extends({
           className: inputCls,
           inputRef: function inputRef(el) {
             _this2.controlEl = el;
@@ -163,7 +163,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
       }
     }]);
     return _class;
-  }(_react["default"].Component), babelHelpers.defineProperty(_class, "defaultProps", {
+  }(_react.default.Component), babelHelpers.defineProperty(_class, "defaultProps", {
     className: '',
     hint: null,
     invalid: false,
@@ -232,7 +232,7 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("label", {
+      return _react.default.createElement("label", {
         style: this.state.style,
         onClick: this.props.onClick,
         htmlFor: this.props.htmlFor,
@@ -242,7 +242,7 @@ function (_React$Component2) {
     }
   }]);
   return Label;
-}(_react["default"].Component);
+}(_react.default.Component);
 /**
  * isEmpty helper
  * @function

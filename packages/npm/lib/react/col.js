@@ -8,7 +8,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -57,13 +57,13 @@ function (_React$Component) {
       }
 
       cls = util.classNames(cls);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
   }]);
   return Col;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -81,5 +81,5 @@ babelHelpers.defineProperty(Col, "defaultProps", {
   'xl-offset': null
 });
 var _default = Col;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

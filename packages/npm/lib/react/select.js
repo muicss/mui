@@ -8,7 +8,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -172,7 +172,7 @@ function (_React$Component) {
           selectCls;
 
       if (this.state.showMenu) {
-        menuElem = _react["default"].createElement(Menu, {
+        menuElem = _react.default.createElement(Menu, {
           optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
@@ -207,7 +207,7 @@ function (_React$Component) {
       if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue; // handle placeholder
 
       if (placeholder) {
-        placeholderElem = _react["default"].createElement("option", {
+        placeholderElem = _react.default.createElement("option", {
           className: "mui--text-placeholder",
           value: ""
         }, placeholder); // apply class if value is empty
@@ -217,7 +217,7 @@ function (_React$Component) {
         }
       }
 
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -226,7 +226,7 @@ function (_React$Component) {
         className: 'mui-select ' + className,
         onClick: this.onOuterClickCB,
         onKeyDown: this.onOuterKeyDownCB
-      }), _react["default"].createElement("select", babelHelpers["extends"]({}, valueArgs, {
+      }), _react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
         ref: function ref(el) {
           _this2.controlEl = el;
         },
@@ -238,13 +238,13 @@ function (_React$Component) {
         onChange: this.onInnerChangeCB,
         onMouseDown: this.onInnerMouseDownCB,
         required: this.props.required
-      }), placeholderElem, children), _react["default"].createElement("label", {
+      }), placeholderElem, children), _react.default.createElement("label", {
         tabIndex: "-1"
       }, label), menuElem);
     }
   }]);
   return Select;
-}(_react["default"].Component);
+}(_react.default.Component);
 /**
  * Menu constructor
  * @class
@@ -464,14 +464,14 @@ function (_React$Component2) {
 
 
         cls += optionEl.className;
-        menuItems.push(_react["default"].createElement("div", {
+        menuItems.push(_react.default.createElement("div", {
           key: i,
           className: cls,
           onClick: this.onClick.bind(this, val)
         }, optionEl.textContent));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         ref: function ref(el) {
           _this4.wrapperElRef = el;
         },
@@ -480,7 +480,7 @@ function (_React$Component2) {
     }
   }]);
   return Menu;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -491,5 +491,5 @@ babelHelpers.defineProperty(Menu, "defaultProps", {
   onClose: null
 });
 var _default = Select;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

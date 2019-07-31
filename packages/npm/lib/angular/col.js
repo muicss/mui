@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -14,7 +14,7 @@ var _angular = babelHelpers.interopRequireDefault(require("angular"));
  */
 var moduleName = 'mui.col';
 
-_angular["default"].module(moduleName, []).directive('muiCol', function () {
+_angular.default.module(moduleName, []).directive('muiCol', function () {
   return {
     restrict: 'AE',
     scope: true,
@@ -40,7 +40,7 @@ _angular["default"].module(moduleName, []).directive('muiCol', function () {
         'xl-offset': 'mui-col-xl-offset-'
       };
 
-      _angular["default"].forEach(breakpoints, function (value, key) {
+      _angular.default.forEach(breakpoints, function (value, key) {
         var attrVal = attrs[attrs.$normalize(key)];
         if (attrVal) element.addClass(value + attrVal);
       });
@@ -51,5 +51,5 @@ _angular["default"].module(moduleName, []).directive('muiCol', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

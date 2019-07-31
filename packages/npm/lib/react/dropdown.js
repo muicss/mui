@@ -11,7 +11,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -23,8 +23,7 @@ var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 var dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
-    openClass = 'mui--is-open',
-    rightClass = 'mui-dropdown__menu--right';
+    openClass = 'mui--is-open';
 /**
  * Dropdown constructor
  * @class
@@ -42,7 +41,7 @@ function (_React$Component) {
     _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Dropdown).call(this, props));
     _this.state = {
       opened: false,
-      menuTop: 0
+      menuPos: {}
     };
     var cb = util.callback;
     _this.selectCB = cb(babelHelpers.assertThisInitialized(_this), 'select');
@@ -101,12 +100,39 @@ function (_React$Component) {
     key: "open",
     value: function open() {
       // position menu element below toggle button
-      var wrapperRect = this.wrapperElRef.getBoundingClientRect(),
+      var pos = {},
+          wrapperRect = this.wrapperElRef.getBoundingClientRect(),
           toggleRect;
-      toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect();
+      toggleRect = this.buttonElRef.buttonElRef.getBoundingClientRect(); // menu position
+
+      switch (this.props.placement) {
+        case 'up':
+          pos.bottom = toggleRect.height + toggleRect.top - wrapperRect.top;
+          break;
+
+        case 'right':
+          pos.left = toggleRect.width;
+          pos.top = toggleRect.top - wrapperRect.top;
+          break;
+
+        case 'left':
+          pos.right = toggleRect.width;
+          pos.top = toggleRect.top - wrapperRect.top;
+          break;
+
+        default:
+          pos.top = toggleRect.top - wrapperRect.top + toggleRect.height;
+      } // menu alignment
+
+
+      if (this.props.alignment === 'bottom') {
+        pos.top = 'auto';
+        pos.bottom = toggleRect.top - wrapperRect.top;
+      }
+
       this.setState({
         opened: true,
-        menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+        menuPos: pos
       });
     }
   }, {
@@ -145,7 +171,10 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var buttonEl, menuEl, labelEl;
+      var wrapperCls = dropdownClass,
+          buttonEl,
+          menuEl,
+          labelEl;
       var _this$props = this.props,
           children = _this$props.children,
           className = _this$props.className,
@@ -153,19 +182,32 @@ function (_React$Component) {
           variant = _this$props.variant,
           size = _this$props.size,
           label = _this$props.label,
+          placement = _this$props.placement,
+          alignment = _this$props.alignment,
           alignMenu = _this$props.alignMenu,
           onClick = _this$props.onClick,
           onSelect = _this$props.onSelect,
           disabled = _this$props.disabled,
-          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
+          reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "color", "variant", "size", "label", "placement", "alignment", "alignMenu", "onClick", "onSelect", "disabled"]); // build label
 
       if (jqLite.type(label) === 'string') {
-        labelEl = _react["default"].createElement("span", null, label, " ", _react["default"].createElement(_caret["default"], null));
+        if (placement === 'left') {
+          labelEl = _react.default.createElement("span", null, _react.default.createElement(_caret.default, {
+            direction: placement
+          }), " ", label);
+        } else {
+          labelEl = _react.default.createElement("span", null, label, " ", _react.default.createElement(_caret.default, {
+            direction: placement
+          }));
+        }
       } else {
         labelEl = label;
-      }
+      } // placement
 
-      buttonEl = _react["default"].createElement(_button["default"], {
+
+      if (placement) wrapperCls += ' ' + dropdownClass + '--' + placement; // button
+
+      buttonEl = _react.default.createElement(_button.default, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -181,32 +223,34 @@ function (_React$Component) {
         var cs = {};
         cs[menuClass] = true;
         cs[openClass] = this.state.opened;
-        cs[rightClass] = alignMenu === 'right';
-        cs = util.classNames(cs);
-        menuEl = _react["default"].createElement("ul", {
+        cs = util.classNames(cs); // alignment (also handles `alignMenu` legacy argument)
+
+        if (alignment || alignMenu) {
+          cs += ' ' + menuClass + '--' + (alignment || alignMenu);
+        }
+
+        menuEl = _react.default.createElement("ul", {
           ref: function ref(el) {
             _this2.menuElRef = el;
           },
           className: cs,
-          style: {
-            top: this.state.menuTop
-          },
+          style: this.state.menuPos,
           onClick: this.selectCB
         }, children);
       } else {
-        menuEl = _react["default"].createElement("div", null);
+        menuEl = _react.default.createElement("div", null);
       }
 
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
-        className: dropdownClass + ' ' + className
+        className: wrapperCls + ' ' + className
       }), buttonEl, menuEl);
     }
   }]);
   return Dropdown;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -216,11 +260,14 @@ babelHelpers.defineProperty(Dropdown, "defaultProps", {
   variant: 'default',
   size: 'default',
   label: '',
-  alignMenu: 'left',
+  placement: null,
+  alignment: null,
+  alignMenu: null,
+  // legacy
   onClick: null,
   onSelect: null,
   disabled: false
 });
 var _default = Dropdown;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

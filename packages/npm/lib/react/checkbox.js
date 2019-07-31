@@ -8,7 +8,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
@@ -50,9 +50,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react["default"].createElement("div", babelHelpers["extends"]({}, reactProps, {
+      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-checkbox ' + className
-      }), _react["default"].createElement("label", null, _react["default"].createElement("input", {
+      }), _react.default.createElement("label", null, _react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -71,7 +71,7 @@ function (_React$Component) {
     }
   }]);
   return Checkbox;
-}(_react["default"].Component);
+}(_react.default.Component);
 /** Define module API */
 
 
@@ -80,5 +80,5 @@ babelHelpers.defineProperty(Checkbox, "defaultProps", {
   label: null
 });
 var _default = Checkbox;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

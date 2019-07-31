@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -14,7 +14,7 @@ var _angular = babelHelpers.interopRequireDefault(require("angular"));
  */
 var moduleName = 'mui.row';
 
-_angular["default"].module('mui.row', []).directive('muiRow', function () {
+_angular.default.module('mui.row', []).directive('muiRow', function () {
   return {
     restrict: 'AE',
     scope: true,
@@ -32,5 +32,5 @@ _angular["default"].module('mui.row', []).directive('muiRow', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;

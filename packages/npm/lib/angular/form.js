@@ -4,7 +4,7 @@ var babelHelpers = require('./babel-helpers.js');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _angular = babelHelpers.interopRequireDefault(require("angular"));
 
@@ -14,7 +14,7 @@ var _angular = babelHelpers.interopRequireDefault(require("angular"));
  */
 var moduleName = 'mui.form';
 
-_angular["default"].module(moduleName, []).directive('muiForm', function () {
+_angular.default.module(moduleName, []).directive('muiForm', function () {
   return {
     restrict: 'AE',
     template: '<form class="mui-form"></form>',
@@ -27,7 +27,7 @@ _angular["default"].module(moduleName, []).directive('muiForm', function () {
         element.append(clone);
       }); // handle inline forms
 
-      if (!_angular["default"].isUndefined(attrs.inline)) {
+      if (!_angular.default.isUndefined(attrs.inline)) {
         element.addClass('mui-form--inline');
       }
     }
@@ -37,5 +37,5 @@ _angular["default"].module(moduleName, []).directive('muiForm', function () {
 
 
 var _default = moduleName;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
