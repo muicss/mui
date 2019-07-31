@@ -134,8 +134,9 @@ import Dropdown from 'muicss/lib/react/dropdown';
 
 <Dropdown />
   * {String or ReactElement} label
-  * {String} alignMenu=left|right
+  * {String} alignment=default|right|bottom
   * {String} color=default|primary|danger|accent
+  * {String} placement=default|up|right|left
   * {String} size=default|small|large
   * {String} variant=default|flat|raised|fab
   * {Boolean} disabled

@@ -1,5 +1,12 @@
 # MUI Changelog
 
+## 0.9.43 - July 31, 2019
+
+* Added up/right/left options to caret component in CSS/JS, React and Angular
+  libraries
+* Added menu placement and alignment options to dropdown component in CSS/JS,
+  React and Angular libraries
+
 ## 0.9.42 - June 22, 2019
 
 * Updated devDependencies and rebuilt packages
