@@ -17,10 +17,14 @@
       ripple = require('src/js/ripple'),      
       select = require('src/js/select'),
       tabs = require('src/js/tabs'),
+      utils = require('src/js/lib/util'),
       textfield = require('src/js/textfield');
 
   // expose api
   win.mui = {
+    '$': jqLite,
+    jqLite: jqLite,
+    utils: utils,
     overlay: overlay,
     tabs: tabs.api
   };
