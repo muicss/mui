@@ -18,10 +18,14 @@
       ripple = require('src/js/ripple'),      
       select = require('src/js/select'),
       tabs = require('src/js/tabs'),
+      utils = require('src/js/lib/util'),
       textfield = require('src/js/textfield');
 
   // expose api
   win.mui = {
+    '$': jqLite,
+    jqLite: jqLite,
+    utils: utils,
     overlay: overlay,
     tabs: tabs.api
   };
@@ -36,7 +40,7 @@
   });
 })(window);
 
-},{"src/js/dropdown":3,"src/js/lib/jqLite":6,"src/js/overlay":8,"src/js/ripple":9,"src/js/select":10,"src/js/tabs":11,"src/js/textfield":12}],2:[function(require,module,exports){
+},{"src/js/dropdown":3,"src/js/lib/jqLite":6,"src/js/lib/util":7,"src/js/overlay":8,"src/js/ripple":9,"src/js/select":10,"src/js/tabs":11,"src/js/textfield":12}],2:[function(require,module,exports){
 /**
  * MUI config module
  * @module config
