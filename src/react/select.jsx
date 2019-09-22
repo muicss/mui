@@ -63,7 +63,7 @@ class Select extends React.Component {
     this.controlEl._muiSelect = true;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({ value: nextProps.value });
   }
 

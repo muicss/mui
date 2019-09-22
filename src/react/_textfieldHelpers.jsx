@@ -78,7 +78,7 @@ const textfieldWrapper = (TextfieldComponent) => class extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
       this.setState({isEmpty: isEmpty(nextProps.value)});
     }
