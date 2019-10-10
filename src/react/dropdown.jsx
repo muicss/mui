@@ -53,7 +53,7 @@ class Dropdown extends React.Component {
     disabled: false
   };
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     let doc = document;
 
     if (!this.state.opened && nextState.opened) {
