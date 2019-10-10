@@ -90,8 +90,8 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         }
       }
     }, {
-      key: "componentWillReceiveProps",
-      value: function componentWillReceiveProps(nextProps) {
+      key: "UNSAFE_componentWillReceiveProps",
+      value: function UNSAFE_componentWillReceiveProps(nextProps) {
         if ('value' in nextProps) {
           this.setState({
             isEmpty: isEmpty(nextProps.value)

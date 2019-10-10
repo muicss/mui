@@ -60,8 +60,8 @@ function (_React$Component) {
       this.controlEl._muiSelect = true;
     }
   }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
+    key: "UNSAFE_componentWillReceiveProps",
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
       this.setState({
         value: nextProps.value
       });

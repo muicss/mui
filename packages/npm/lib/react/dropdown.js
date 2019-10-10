@@ -52,8 +52,8 @@ function (_React$Component) {
   }
 
   babelHelpers.createClass(Dropdown, [{
-    key: "componentWillUpdate",
-    value: function componentWillUpdate(nextProps, nextState) {
+    key: "UNSAFE_componentWillUpdate",
+    value: function UNSAFE_componentWillUpdate(nextProps, nextState) {
       var doc = document;
 
       if (!this.state.opened && nextState.opened) {

@@ -1384,8 +1384,8 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         }
       }
     }, {
-      key: "componentWillReceiveProps",
-      value: function componentWillReceiveProps(nextProps) {
+      key: "UNSAFE_componentWillReceiveProps",
+      value: function UNSAFE_componentWillReceiveProps(nextProps) {
         if ('value' in nextProps) {
           this.setState({
             isEmpty: isEmpty(nextProps.value)
@@ -2262,8 +2262,8 @@ function (_React$Component) {
   }
 
   babelHelpers.createClass(Dropdown, [{
-    key: "componentWillUpdate",
-    value: function componentWillUpdate(nextProps, nextState) {
+    key: "UNSAFE_componentWillUpdate",
+    value: function UNSAFE_componentWillUpdate(nextProps, nextState) {
       var doc = document;
 
       if (!this.state.opened && nextState.opened) {
@@ -2879,8 +2879,8 @@ function (_React$Component) {
       this.controlEl._muiSelect = true;
     }
   }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
+    key: "UNSAFE_componentWillReceiveProps",
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
       this.setState({
         value: nextProps.value
       });

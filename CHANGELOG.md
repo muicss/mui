@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.10.0 - October 10, 2019
+
+* Added UNSAFE_ prefix to deprecated React methods to hide console warnings
+* Updated devDependencies and rebuilt packages
+
 ## 0.9.43 - July 31, 2019
 
 * Added up/right/left options to caret component in CSS/JS, React and Angular
