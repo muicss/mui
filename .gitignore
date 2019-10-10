@@ -10,4 +10,4 @@ examples/assets/mui
 examples/email-inlined
 *.sublime-*
 .idea/
-package-lock.json
+
