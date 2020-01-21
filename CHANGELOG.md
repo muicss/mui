@@ -1,5 +1,9 @@
 # MUI Changelog
 
+## 0.10.1 - January 21, 2020
+
+* Updated devDependencies and rebuilt packages
+
 ## 0.10.0 - October 10, 2019
 
 * Added UNSAFE_ prefix to deprecated React methods to hide console warnings

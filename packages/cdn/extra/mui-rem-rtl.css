@@ -1953,9 +1953,7 @@ h4, h5, h6 {
   border-width: 2px;
 }
 
-.mui-textfield > input:disabled, .mui-textfield > input:-moz-read-only,
-.mui-textfield > textarea:disabled,
-.mui-textfield > textarea:-moz-read-only {
+.mui-textfield > input:-moz-read-only, .mui-textfield > textarea:-moz-read-only {
   cursor: not-allowed;
   background-color: transparent;
   opacity: 1;
@@ -1969,26 +1967,22 @@ h4, h5, h6 {
   opacity: 1;
 }
 
-.mui-textfield > input::-webkit-input-placeholder,
-.mui-textfield > textarea::-webkit-input-placeholder {
+.mui-textfield > input::-webkit-input-placeholder, .mui-textfield > textarea::-webkit-input-placeholder {
   color: rgba(0, 0, 0, 0.26);
   opacity: 1;
 }
 
-.mui-textfield > input::-moz-placeholder,
-.mui-textfield > textarea::-moz-placeholder {
+.mui-textfield > input::-moz-placeholder, .mui-textfield > textarea::-moz-placeholder {
   color: rgba(0, 0, 0, 0.26);
   opacity: 1;
 }
 
-.mui-textfield > input:-ms-input-placeholder,
-.mui-textfield > textarea:-ms-input-placeholder {
+.mui-textfield > input:-ms-input-placeholder, .mui-textfield > textarea:-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.26);
   opacity: 1;
 }
 
-.mui-textfield > input::-ms-input-placeholder,
-.mui-textfield > textarea::-ms-input-placeholder {
+.mui-textfield > input::-ms-input-placeholder, .mui-textfield > textarea::-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.26);
   opacity: 1;
 }
