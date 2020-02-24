@@ -10,6 +10,7 @@ MUI is a lightweight CSS framework that follows Google's Material Design guideli
 [![devDependency Status](https://david-dm.org/muicss/mui/dev-status.svg)](https://david-dm.org/muicss/mui?type=dev)
 [![CDNJS](https://img.shields.io/cdnjs/v/muicss.svg)](https://cdnjs.com/libraries/muicss)
 [![Greenkeeper badge](https://badges.greenkeeper.io/muicss/mui.svg)](https://greenkeeper.io/)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/muicss/mui) 
 
 **Use From the CDN:**
 
@@ -59,6 +60,12 @@ MUI is tested and works in:
 * IE10+
 * Latest Stable: Firefox, Chrome, Safari
 * iOS 6+
+
+## Online one-click setup
+
+You can use Gitpod(a free online VS Code like IDE) for online setup. With a single click it will launch a ready to code workspace with the repo already cloned, all the dependencies pre-installed and `npm run build-examples` running so that you can start straight away without wasting time on the setup.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
 
 ## Development Quickstart
 
