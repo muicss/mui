@@ -1,0 +1,11 @@
+tasks:
+  - command: gp await-port 3000 && gp preview $(gp url 3000)/examples
+  - init: >    
+      npm install && 
+      npm install http-server &&
+      npm run build-examples
+    command: npm run http-server -- -p 3000
+
+ports:
+  - port: 3000
+    onOpen: ignore
