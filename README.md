@@ -61,12 +61,6 @@ MUI is tested and works in:
 * Latest Stable: Firefox, Chrome, Safari
 * iOS 6+
 
-## Online one-click setup
-
-You can use Gitpod(a free online VS Code like IDE) for online setup. With a single click it will launch a ready to code workspace with the repo already cloned, all the dependencies pre-installed and `npm run build-examples` running so that you can start straight away without wasting time on the setup.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
-
 ## Development Quickstart
 
 1. Install dependencies
@@ -103,6 +97,10 @@ You can use Gitpod(a free online VS Code like IDE) for online setup. With a sing
    ```
 
    Then visit http://localhost:3000/examples
+
+Alternatively, you can use a pre-configured development environment on GitPod:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
 
 ## Run tests
 
