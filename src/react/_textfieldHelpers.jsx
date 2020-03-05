@@ -98,7 +98,7 @@ const textfieldWrapper = (TextfieldComponent) => class extends React.Component {
         inputCls = {},
         labelEl;
 
-    const { children, className, style, hint, invalid, label, floatingLabel,
+    const { children, className, style, hint, invalid, label, floatingLabel, inputRef,
       ...other } = this.props;
 
     const labelType = jqLite.type(label);
@@ -133,9 +133,14 @@ const textfieldWrapper = (TextfieldComponent) => class extends React.Component {
       >
         <TextfieldComponent
           className={inputCls}
-          inputRef={el => { this.controlEl = el }}
           placeholder={hint}
           { ...other }
+          inputRef={el => {
+            this.controlEl = el
+            if (inputRef) {
+              inputRef(el)
+            }
+          }}
           onBlur={this.onBlurCB}
           onChange={this.onChangeCB}
         />
