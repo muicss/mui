@@ -1316,6 +1316,10 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 var _helpers = require("./_helpers");
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Textfield Wrapper
  * @function
@@ -1323,16 +1327,16 @@ var _helpers = require("./_helpers");
 var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
   var _class, _temp;
 
-  return _temp = _class =
-  /*#__PURE__*/
-  function (_React$Component) {
+  return _temp = _class = /*#__PURE__*/function (_React$Component) {
     babelHelpers.inherits(_class, _React$Component);
+
+    var _super = _createSuper(_class);
 
     function _class(props) {
       var _this;
 
       babelHelpers.classCallCheck(this, _class);
-      _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(_class).call(this, props)); // set initial state
+      _this = _super.call(this, props); // set initial state
 
       _this.state = {
         isEmpty: isEmpty('value' in props ? props.value : props.defaultValue),
@@ -1426,7 +1430,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         var labelType = jqLite.type(label);
 
         if (labelType == 'string' && label.length || labelType == 'object') {
-          labelEl = _react.default.createElement(Label, {
+          labelEl = /*#__PURE__*/_react.default.createElement(Label, {
             text: label,
             onClick: this.onClickCB,
             htmlFor: this.props.id
@@ -1444,10 +1448,10 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         inputCls['mui--is-not-empty'] = !this.state.isEmpty;
         inputCls['mui--is-invalid'] = invalid;
         inputCls = util.classNames(inputCls);
-        return _react.default.createElement("div", {
+        return /*#__PURE__*/_react.default.createElement("div", {
           className: wrapperCls + ' ' + className,
           style: style
-        }, _react.default.createElement(TextfieldComponent, babelHelpers.extends({
+        }, /*#__PURE__*/_react.default.createElement(TextfieldComponent, babelHelpers.extends({
           className: inputCls,
           inputRef: function inputRef(el) {
             _this2.controlEl = el;
@@ -1476,14 +1480,12 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
 
 exports.textfieldWrapper = textfieldWrapper;
 
-var Label =
-/*#__PURE__*/
-function (_React$Component2) {
+var Label = /*#__PURE__*/function (_React$Component2) {
   babelHelpers.inherits(Label, _React$Component2);
 
-  function Label() {
-    var _babelHelpers$getProt;
+  var _super2 = _createSuper(Label);
 
+  function Label() {
     var _this3;
 
     babelHelpers.classCallCheck(this, Label);
@@ -1492,7 +1494,7 @@ function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    _this3 = babelHelpers.possibleConstructorReturn(this, (_babelHelpers$getProt = babelHelpers.getPrototypeOf(Label)).call.apply(_babelHelpers$getProt, [this].concat(args)));
+    _this3 = _super2.call.apply(_super2, [this].concat(args));
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this3), "state", {
       style: {}
     });
@@ -1529,7 +1531,7 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("label", {
+      return /*#__PURE__*/_react.default.createElement("label", {
         style: this.state.style,
         onClick: this.props.onClick,
         htmlFor: this.props.htmlFor,
@@ -1570,18 +1572,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Appbar constructor
  * @class
  */
-var Appbar =
-/*#__PURE__*/
-function (_React$Component) {
+var Appbar = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Appbar, _React$Component);
+
+  var _super = _createSuper(Appbar);
 
   function Appbar() {
     babelHelpers.classCallCheck(this, Appbar);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Appbar).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Appbar, [{
@@ -1590,7 +1596,7 @@ function (_React$Component) {
       var _this$props = this.props,
           children = _this$props.children,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-appbar ' + this.props.className
       }), children);
     }
@@ -1623,6 +1629,11 @@ var _react = babelHelpers.interopRequireDefault(window.React);
 
 var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var btnClass = 'mui-btn',
     btnAttrs = {
   color: 1,
@@ -1634,16 +1645,16 @@ var btnClass = 'mui-btn',
  * @class
  */
 
-var Button =
-/*#__PURE__*/
-function (_React$Component) {
+var Button = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Button, _React$Component);
+
+  var _super = _createSuper(Button);
 
   function Button(props) {
     var _this;
 
     babelHelpers.classCallCheck(this, Button);
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Button).call(this, props));
+    _this = _super.call(this, props);
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "state", {
       rippleStyle: {},
       rippleIsVisible: false
@@ -1778,7 +1789,7 @@ function (_React$Component) {
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react.default.createElement("button", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("button", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -1788,9 +1799,9 @@ function (_React$Component) {
         onMouseLeave: this.onMouseLeaveCB,
         onTouchStart: this.onTouchStartCB,
         onTouchEnd: this.onTouchEndCB
-      }), this.props.children, _react.default.createElement("span", {
+      }), this.props.children, /*#__PURE__*/_react.default.createElement("span", {
         className: "mui-btn__ripple-container"
-      }, _react.default.createElement("span", {
+      }, /*#__PURE__*/_react.default.createElement("span", {
         ref: function ref(el) {
           _this2.rippleElRef = el;
         },
@@ -1828,20 +1839,24 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var caretClass = 'mui-caret';
 /**
  * Caret constructor
  * @class
  */
 
-var Caret =
-/*#__PURE__*/
-function (_React$Component) {
+var Caret = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Caret, _React$Component);
+
+  var _super = _createSuper(Caret);
 
   function Caret() {
     babelHelpers.classCallCheck(this, Caret);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Caret).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Caret, [{
@@ -1854,7 +1869,7 @@ function (_React$Component) {
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "direction"]); // add direction class
 
       if (direction) cls += ' ' + caretClass + '--' + direction;
-      return _react.default.createElement("span", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("span", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + this.props.className
       }));
     }
@@ -1889,18 +1904,22 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 var _helpers = require("./_helpers");
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Checkbox constructor
  * @class
  */
-var Checkbox =
-/*#__PURE__*/
-function (_React$Component) {
+var Checkbox = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Checkbox, _React$Component);
+
+  var _super = _createSuper(Checkbox);
 
   function Checkbox() {
     babelHelpers.classCallCheck(this, Checkbox);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Checkbox).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Checkbox, [{
@@ -1923,9 +1942,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-checkbox ' + className
-      }), _react.default.createElement("label", null, _react.default.createElement("input", {
+      }), /*#__PURE__*/_react.default.createElement("label", null, /*#__PURE__*/_react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -1971,20 +1990,25 @@ exports.default = void 0;
 var _react = babelHelpers.interopRequireDefault(window.React);
 
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
 /**
  * Col constructor
  * @class
  */
 
-var Col =
-/*#__PURE__*/
-function (_React$Component) {
+var Col = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Col, _React$Component);
+
+  var _super = _createSuper(Col);
 
   function Col() {
     babelHelpers.classCallCheck(this, Col);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Col).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Col, [{
@@ -2015,7 +2039,7 @@ function (_React$Component) {
       }
 
       cls = util.classNames(cls);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
@@ -2056,18 +2080,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Container constructor
  * @class
  */
-var Container =
-/*#__PURE__*/
-function (_React$Component) {
+var Container = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Container, _React$Component);
+
+  var _super = _createSuper(Container);
 
   function Container() {
     babelHelpers.classCallCheck(this, Container);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Container).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Container, [{
@@ -2081,7 +2109,7 @@ function (_React$Component) {
       var cls = 'mui-container'; // fluid containers
 
       if (fluid) cls += '-fluid';
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
@@ -2113,18 +2141,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Divider constructor
  * @class
  */
-var Divider =
-/*#__PURE__*/
-function (_React$Component) {
+var Divider = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Divider, _React$Component);
+
+  var _super = _createSuper(Divider);
 
   function Divider() {
     babelHelpers.classCallCheck(this, Divider);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Divider).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Divider, [{
@@ -2134,7 +2166,7 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-divider ' + className
       }));
     }
@@ -2170,18 +2202,22 @@ var _react = babelHelpers.interopRequireDefault(window.React);
 
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * DropdownItem constructor
  * @class
  */
-var DropdownItem =
-/*#__PURE__*/
-function (_React$Component) {
+var DropdownItem = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(DropdownItem, _React$Component);
+
+  var _super = _createSuper(DropdownItem);
 
   function DropdownItem() {
     babelHelpers.classCallCheck(this, DropdownItem);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(DropdownItem).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(DropdownItem, [{
@@ -2194,7 +2230,7 @@ function (_React$Component) {
           value = _this$props.value,
           onClick = _this$props.onClick,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "link", "target", "value", "onClick"]);
-      return _react.default.createElement("li", reactProps, _react.default.createElement("a", {
+      return /*#__PURE__*/_react.default.createElement("li", reactProps, /*#__PURE__*/_react.default.createElement("a", {
         href: link,
         target: target,
         "data-mui-value": value,
@@ -2234,6 +2270,11 @@ var _caret = babelHelpers.interopRequireDefault(require("./caret"));
 
 var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
     openClass = 'mui--is-open';
@@ -2242,16 +2283,16 @@ var dropdownClass = 'mui-dropdown',
  * @class
  */
 
-var Dropdown =
-/*#__PURE__*/
-function (_React$Component) {
+var Dropdown = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Dropdown, _React$Component);
+
+  var _super = _createSuper(Dropdown);
 
   function Dropdown(props) {
     var _this;
 
     babelHelpers.classCallCheck(this, Dropdown);
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Dropdown).call(this, props));
+    _this = _super.call(this, props);
     _this.state = {
       opened: false,
       menuPos: {}
@@ -2405,11 +2446,11 @@ function (_React$Component) {
 
       if (jqLite.type(label) === 'string') {
         if (placement === 'left') {
-          labelEl = _react.default.createElement("span", null, _react.default.createElement(_caret.default, {
+          labelEl = /*#__PURE__*/_react.default.createElement("span", null, /*#__PURE__*/_react.default.createElement(_caret.default, {
             direction: placement
           }), " ", label);
         } else {
-          labelEl = _react.default.createElement("span", null, label, " ", _react.default.createElement(_caret.default, {
+          labelEl = /*#__PURE__*/_react.default.createElement("span", null, label, " ", /*#__PURE__*/_react.default.createElement(_caret.default, {
             direction: placement
           }));
         }
@@ -2420,7 +2461,7 @@ function (_React$Component) {
 
       if (placement) wrapperCls += ' ' + dropdownClass + '--' + placement; // button
 
-      buttonEl = _react.default.createElement(_button.default, {
+      buttonEl = /*#__PURE__*/_react.default.createElement(_button.default, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -2442,7 +2483,7 @@ function (_React$Component) {
           cs += ' ' + menuClass + '--' + (alignment || alignMenu);
         }
 
-        menuEl = _react.default.createElement("ul", {
+        menuEl = /*#__PURE__*/_react.default.createElement("ul", {
           ref: function ref(el) {
             _this2.menuElRef = el;
           },
@@ -2451,10 +2492,10 @@ function (_React$Component) {
           onClick: this.selectCB
         }, children);
       } else {
-        menuEl = _react.default.createElement("div", null);
+        menuEl = /*#__PURE__*/_react.default.createElement("div", null);
       }
 
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -2499,18 +2540,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Form constructor
  * @class
  */
-var Form =
-/*#__PURE__*/
-function (_React$Component) {
+var Form = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Form, _React$Component);
+
+  var _super = _createSuper(Form);
 
   function Form() {
     babelHelpers.classCallCheck(this, Form);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Form).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Form, [{
@@ -2524,7 +2569,7 @@ function (_React$Component) {
       var cls = 'mui-form'; // inline form
 
       if (inline) cls += ' mui-form--inline';
-      return _react.default.createElement("form", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("form", babelHelpers.extends({}, reactProps, {
         className: cls + ' ' + className
       }), children);
     }
@@ -2565,7 +2610,7 @@ var _textfieldHelpers = require("./_textfieldHelpers");
 var Input = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
   var inputRef = props.inputRef,
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]);
-  return _react.default.createElement("input", babelHelpers.extends({
+  return /*#__PURE__*/_react.default.createElement("input", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });
@@ -2595,18 +2640,22 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 var _helpers = require("./_helpers");
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Option constructor
  * @class
  */
-var Option =
-/*#__PURE__*/
-function (_React$Component) {
+var Option = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Option, _React$Component);
+
+  var _super = _createSuper(Option);
 
   function Option() {
     babelHelpers.classCallCheck(this, Option);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Option).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Option, [{
@@ -2616,7 +2665,7 @@ function (_React$Component) {
           children = _this$props.children,
           label = _this$props.label,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "label"]);
-      return _react.default.createElement("option", reactProps, label);
+      return /*#__PURE__*/_react.default.createElement("option", reactProps, label);
     }
   }]);
   return Option;
@@ -2646,18 +2695,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Panel constructor
  * @class
  */
-var Panel =
-/*#__PURE__*/
-function (_React$Component) {
+var Panel = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Panel, _React$Component);
+
+  var _super = _createSuper(Panel);
 
   function Panel() {
     babelHelpers.classCallCheck(this, Panel);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Panel).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Panel, [{
@@ -2667,7 +2720,7 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-panel ' + className
       }), children);
     }
@@ -2698,18 +2751,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Radio constructor
  * @class
  */
-var Radio =
-/*#__PURE__*/
-function (_React$Component) {
+var Radio = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Radio, _React$Component);
+
+  var _super = _createSuper(Radio);
 
   function Radio() {
     babelHelpers.classCallCheck(this, Radio);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Radio).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Radio, [{
@@ -2732,9 +2789,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-radio ' + className
-      }), _react.default.createElement("label", null, _react.default.createElement("input", {
+      }), /*#__PURE__*/_react.default.createElement("label", null, /*#__PURE__*/_react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },
@@ -2780,20 +2837,25 @@ exports.default = void 0;
 var _react = babelHelpers.interopRequireDefault(window.React);
 
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var breakpoints = ['xs', 'sm', 'md', 'lg'];
 /**
  * Row constructor
  * @class
  */
 
-var Row =
-/*#__PURE__*/
-function (_React$Component) {
+var Row = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Row, _React$Component);
+
+  var _super = _createSuper(Row);
 
   function Row() {
     babelHelpers.classCallCheck(this, Row);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Row).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Row, [{
@@ -2803,7 +2865,7 @@ function (_React$Component) {
           children = _this$props.children,
           className = _this$props.className,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-row ' + className
       }), children);
     }
@@ -2840,20 +2902,24 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 var _helpers = require("./_helpers");
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Select constructor
  * @class
  */
-var Select =
-/*#__PURE__*/
-function (_React$Component) {
+var Select = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Select, _React$Component);
+
+  var _super = _createSuper(Select);
 
   function Select(props) {
     var _this;
 
     babelHelpers.classCallCheck(this, Select);
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Select).call(this, props)); // warn if value defined but onChange is not
+    _this = _super.call(this, props); // warn if value defined but onChange is not
 
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "state", {
       showMenu: false
@@ -2994,7 +3060,7 @@ function (_React$Component) {
           selectCls;
 
       if (this.state.showMenu) {
-        menuElem = _react.default.createElement(Menu, {
+        menuElem = /*#__PURE__*/_react.default.createElement(Menu, {
           optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
@@ -3029,7 +3095,7 @@ function (_React$Component) {
       if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue; // handle placeholder
 
       if (placeholder) {
-        placeholderElem = _react.default.createElement("option", {
+        placeholderElem = /*#__PURE__*/_react.default.createElement("option", {
           className: "mui--text-placeholder",
           value: ""
         }, placeholder); // apply class if value is empty
@@ -3039,7 +3105,7 @@ function (_React$Component) {
         }
       }
 
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -3048,7 +3114,7 @@ function (_React$Component) {
         className: 'mui-select ' + className,
         onClick: this.onOuterClickCB,
         onKeyDown: this.onOuterKeyDownCB
-      }), _react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
+      }), /*#__PURE__*/_react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
         ref: function ref(el) {
           _this2.controlEl = el;
         },
@@ -3060,7 +3126,7 @@ function (_React$Component) {
         onChange: this.onInnerChangeCB,
         onMouseDown: this.onInnerMouseDownCB,
         required: this.props.required
-      }), placeholderElem, children), _react.default.createElement("label", {
+      }), placeholderElem, children), /*#__PURE__*/_react.default.createElement("label", {
         tabIndex: "-1"
       }, label), menuElem);
     }
@@ -3084,16 +3150,16 @@ babelHelpers.defineProperty(Select, "defaultProps", {
   onKeyDown: null
 });
 
-var Menu =
-/*#__PURE__*/
-function (_React$Component2) {
+var Menu = /*#__PURE__*/function (_React$Component2) {
   babelHelpers.inherits(Menu, _React$Component2);
+
+  var _super2 = _createSuper(Menu);
 
   function Menu(props) {
     var _this3;
 
     babelHelpers.classCallCheck(this, Menu);
-    _this3 = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Menu).call(this, props));
+    _this3 = _super2.call(this, props);
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this3), "state", {
       origIndex: null,
       currentIndex: 0
@@ -3286,14 +3352,14 @@ function (_React$Component2) {
 
 
         cls += optionEl.className;
-        menuItems.push(_react.default.createElement("div", {
+        menuItems.push( /*#__PURE__*/_react.default.createElement("div", {
           key: i,
           className: cls,
           onClick: this.onClick.bind(this, val)
         }, optionEl.textContent));
       }
 
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         ref: function ref(el) {
           _this4.wrapperElRef = el;
         },
@@ -3333,18 +3399,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(window.React);
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Tab constructor
  * @class
  */
-var Tab =
-/*#__PURE__*/
-function (_React$Component) {
+var Tab = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Tab, _React$Component);
+
+  var _super = _createSuper(Tab);
 
   function Tab() {
     babelHelpers.classCallCheck(this, Tab);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Tab).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Tab, [{
@@ -3388,6 +3458,11 @@ var _react = babelHelpers.interopRequireDefault(window.React);
 var _tab = babelHelpers.interopRequireDefault(require("./tab"));
 
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var tabsBarClass = 'mui-tabs__bar',
     tabsBarJustifiedClass = 'mui-tabs__bar--justified',
     tabsPaneClass = 'mui-tabs__pane',
@@ -3397,10 +3472,10 @@ var tabsBarClass = 'mui-tabs__bar',
  * @class
  */
 
-var Tabs =
-/*#__PURE__*/
-function (_React$Component) {
+var Tabs = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Tabs, _React$Component);
+
+  var _super = _createSuper(Tabs);
 
   function Tabs(props) {
     var _this;
@@ -3427,7 +3502,7 @@ function (_React$Component) {
      */
 
 
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Tabs).call(this, props));
+    _this = _super.call(this, props);
     _this.state = {
       currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex
     };
@@ -3477,16 +3552,16 @@ function (_React$Component) {
         if (item.type !== _tab.default) util.raiseError('Expecting MUITab React Element');
         isActive = i === currentSelectedIndex ? true : false; // tab element
 
-        tabEls.push(_react.default.createElement("li", {
+        tabEls.push( /*#__PURE__*/_react.default.createElement("li", {
           key: i,
           className: isActive ? isActiveClass : ''
-        }, _react.default.createElement("a", {
+        }, /*#__PURE__*/_react.default.createElement("a", {
           onClick: this.onClick.bind(this, i, item)
         }, item.props.label))); // pane element
 
         cls = tabsPaneClass + ' ';
         if (isActive) cls += isActiveClass;
-        paneEls.push(_react.default.createElement("div", {
+        paneEls.push( /*#__PURE__*/_react.default.createElement("div", {
           key: i,
           className: cls
         }, item.props.children));
@@ -3494,7 +3569,7 @@ function (_React$Component) {
 
       cls = tabsBarClass;
       if (justified) cls += ' ' + tabsBarJustifiedClass;
-      return _react.default.createElement("div", reactProps, _react.default.createElement("ul", {
+      return /*#__PURE__*/_react.default.createElement("div", reactProps, /*#__PURE__*/_react.default.createElement("ul", {
         className: cls
       }, tabEls), paneEls);
     }
@@ -3546,7 +3621,7 @@ var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]); // default number of rows
 
   if (!'rows' in rest) rest.rows = 2;
-  return _react.default.createElement("textarea", babelHelpers.extends({
+  return /*#__PURE__*/_react.default.createElement("textarea", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });

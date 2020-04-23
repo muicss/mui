@@ -23,7 +23,7 @@ var Textarea = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]); // default number of rows
 
   if (!'rows' in rest) rest.rows = 2;
-  return _react.default.createElement("textarea", babelHelpers.extends({
+  return /*#__PURE__*/_react.default.createElement("textarea", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });

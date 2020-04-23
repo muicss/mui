@@ -21,6 +21,11 @@ var _caret = babelHelpers.interopRequireDefault(require("./caret"));
 
 var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
     openClass = 'mui--is-open';
@@ -29,16 +34,16 @@ var dropdownClass = 'mui-dropdown',
  * @class
  */
 
-var Dropdown =
-/*#__PURE__*/
-function (_React$Component) {
+var Dropdown = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Dropdown, _React$Component);
+
+  var _super = _createSuper(Dropdown);
 
   function Dropdown(props) {
     var _this;
 
     babelHelpers.classCallCheck(this, Dropdown);
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Dropdown).call(this, props));
+    _this = _super.call(this, props);
     _this.state = {
       opened: false,
       menuPos: {}
@@ -192,11 +197,11 @@ function (_React$Component) {
 
       if (jqLite.type(label) === 'string') {
         if (placement === 'left') {
-          labelEl = _react.default.createElement("span", null, _react.default.createElement(_caret.default, {
+          labelEl = /*#__PURE__*/_react.default.createElement("span", null, /*#__PURE__*/_react.default.createElement(_caret.default, {
             direction: placement
           }), " ", label);
         } else {
-          labelEl = _react.default.createElement("span", null, label, " ", _react.default.createElement(_caret.default, {
+          labelEl = /*#__PURE__*/_react.default.createElement("span", null, label, " ", /*#__PURE__*/_react.default.createElement(_caret.default, {
             direction: placement
           }));
         }
@@ -207,7 +212,7 @@ function (_React$Component) {
 
       if (placement) wrapperCls += ' ' + dropdownClass + '--' + placement; // button
 
-      buttonEl = _react.default.createElement(_button.default, {
+      buttonEl = /*#__PURE__*/_react.default.createElement(_button.default, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -229,7 +234,7 @@ function (_React$Component) {
           cs += ' ' + menuClass + '--' + (alignment || alignMenu);
         }
 
-        menuEl = _react.default.createElement("ul", {
+        menuEl = /*#__PURE__*/_react.default.createElement("ul", {
           ref: function ref(el) {
             _this2.menuElRef = el;
           },
@@ -238,10 +243,10 @@ function (_React$Component) {
           onClick: this.selectCB
         }, children);
       } else {
-        menuEl = _react.default.createElement("div", null);
+        menuEl = /*#__PURE__*/_react.default.createElement("div", null);
       }
 
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },

@@ -18,20 +18,24 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 var _helpers = require("./_helpers");
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Select constructor
  * @class
  */
-var Select =
-/*#__PURE__*/
-function (_React$Component) {
+var Select = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Select, _React$Component);
+
+  var _super = _createSuper(Select);
 
   function Select(props) {
     var _this;
 
     babelHelpers.classCallCheck(this, Select);
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Select).call(this, props)); // warn if value defined but onChange is not
+    _this = _super.call(this, props); // warn if value defined but onChange is not
 
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "state", {
       showMenu: false
@@ -172,7 +176,7 @@ function (_React$Component) {
           selectCls;
 
       if (this.state.showMenu) {
-        menuElem = _react.default.createElement(Menu, {
+        menuElem = /*#__PURE__*/_react.default.createElement(Menu, {
           optionEls: this.controlEl.children,
           wrapperEl: this.wrapperElRef,
           onChange: this.onMenuChangeCB,
@@ -207,7 +211,7 @@ function (_React$Component) {
       if (defaultValue !== undefined) valueArgs.defaultValue = defaultValue; // handle placeholder
 
       if (placeholder) {
-        placeholderElem = _react.default.createElement("option", {
+        placeholderElem = /*#__PURE__*/_react.default.createElement("option", {
           className: "mui--text-placeholder",
           value: ""
         }, placeholder); // apply class if value is empty
@@ -217,7 +221,7 @@ function (_React$Component) {
         }
       }
 
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.wrapperElRef = el;
         },
@@ -226,7 +230,7 @@ function (_React$Component) {
         className: 'mui-select ' + className,
         onClick: this.onOuterClickCB,
         onKeyDown: this.onOuterKeyDownCB
-      }), _react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
+      }), /*#__PURE__*/_react.default.createElement("select", babelHelpers.extends({}, valueArgs, {
         ref: function ref(el) {
           _this2.controlEl = el;
         },
@@ -238,7 +242,7 @@ function (_React$Component) {
         onChange: this.onInnerChangeCB,
         onMouseDown: this.onInnerMouseDownCB,
         required: this.props.required
-      }), placeholderElem, children), _react.default.createElement("label", {
+      }), placeholderElem, children), /*#__PURE__*/_react.default.createElement("label", {
         tabIndex: "-1"
       }, label), menuElem);
     }
@@ -262,16 +266,16 @@ babelHelpers.defineProperty(Select, "defaultProps", {
   onKeyDown: null
 });
 
-var Menu =
-/*#__PURE__*/
-function (_React$Component2) {
+var Menu = /*#__PURE__*/function (_React$Component2) {
   babelHelpers.inherits(Menu, _React$Component2);
+
+  var _super2 = _createSuper(Menu);
 
   function Menu(props) {
     var _this3;
 
     babelHelpers.classCallCheck(this, Menu);
-    _this3 = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Menu).call(this, props));
+    _this3 = _super2.call(this, props);
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this3), "state", {
       origIndex: null,
       currentIndex: 0
@@ -464,14 +468,14 @@ function (_React$Component2) {
 
 
         cls += optionEl.className;
-        menuItems.push(_react.default.createElement("div", {
+        menuItems.push( /*#__PURE__*/_react.default.createElement("div", {
           key: i,
           className: cls,
           onClick: this.onClick.bind(this, val)
         }, optionEl.textContent));
       }
 
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         ref: function ref(el) {
           _this4.wrapperElRef = el;
         },

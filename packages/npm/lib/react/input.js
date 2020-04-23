@@ -21,7 +21,7 @@ var _textfieldHelpers = require("./_textfieldHelpers");
 var Input = (0, _textfieldHelpers.textfieldWrapper)(function (props) {
   var inputRef = props.inputRef,
       rest = babelHelpers.objectWithoutProperties(props, ["inputRef"]);
-  return _react.default.createElement("input", babelHelpers.extends({
+  return /*#__PURE__*/_react.default.createElement("input", babelHelpers.extends({
     ref: inputRef
   }, rest));
 });

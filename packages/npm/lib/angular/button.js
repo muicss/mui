@@ -16,7 +16,7 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
  * @module angular/button
  */
 var moduleName = 'mui.button',
-    supportsTouch = 'ontouchstart' in document.documentElement,
+    supportsTouch = ('ontouchstart' in document.documentElement),
     mouseDownEvents = supportsTouch ? 'touchstart' : 'mousedown',
     mouseUpEvents = supportsTouch ? 'touchend' : 'mouseup mouseleave';
 

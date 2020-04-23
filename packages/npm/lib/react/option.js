@@ -18,18 +18,22 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 var _helpers = require("./_helpers");
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Option constructor
  * @class
  */
-var Option =
-/*#__PURE__*/
-function (_React$Component) {
+var Option = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Option, _React$Component);
+
+  var _super = _createSuper(Option);
 
   function Option() {
     babelHelpers.classCallCheck(this, Option);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Option).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Option, [{
@@ -39,7 +43,7 @@ function (_React$Component) {
           children = _this$props.children,
           label = _this$props.label,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "label"]);
-      return _react.default.createElement("option", reactProps, label);
+      return /*#__PURE__*/_react.default.createElement("option", reactProps, label);
     }
   }]);
   return Option;
