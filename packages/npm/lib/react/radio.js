@@ -12,18 +12,22 @@ exports.default = void 0;
 
 var _react = babelHelpers.interopRequireDefault(require("react"));
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Radio constructor
  * @class
  */
-var Radio =
-/*#__PURE__*/
-function (_React$Component) {
+var Radio = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Radio, _React$Component);
+
+  var _super = _createSuper(Radio);
 
   function Radio() {
     babelHelpers.classCallCheck(this, Radio);
-    return babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Radio).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   babelHelpers.createClass(Radio, [{
@@ -46,9 +50,9 @@ function (_React$Component) {
           value = _this$props.value,
           onChange = _this$props.onChange,
           reactProps = babelHelpers.objectWithoutProperties(_this$props, ["children", "className", "label", "autoFocus", "checked", "defaultChecked", "defaultValue", "disabled", "form", "name", "required", "value", "onChange"]);
-      return _react.default.createElement("div", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("div", babelHelpers.extends({}, reactProps, {
         className: 'mui-radio ' + className
-      }), _react.default.createElement("label", null, _react.default.createElement("input", {
+      }), /*#__PURE__*/_react.default.createElement("label", null, /*#__PURE__*/_react.default.createElement("input", {
         ref: function ref(el) {
           _this.controlEl = el;
         },

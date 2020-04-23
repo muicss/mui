@@ -19,6 +19,10 @@ var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
 
 var _helpers = require("./_helpers");
 
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Textfield Wrapper
  * @function
@@ -26,16 +30,16 @@ var _helpers = require("./_helpers");
 var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
   var _class, _temp;
 
-  return _temp = _class =
-  /*#__PURE__*/
-  function (_React$Component) {
+  return _temp = _class = /*#__PURE__*/function (_React$Component) {
     babelHelpers.inherits(_class, _React$Component);
+
+    var _super = _createSuper(_class);
 
     function _class(props) {
       var _this;
 
       babelHelpers.classCallCheck(this, _class);
-      _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(_class).call(this, props)); // set initial state
+      _this = _super.call(this, props); // set initial state
 
       _this.state = {
         isEmpty: isEmpty('value' in props ? props.value : props.defaultValue),
@@ -129,7 +133,7 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         var labelType = jqLite.type(label);
 
         if (labelType == 'string' && label.length || labelType == 'object') {
-          labelEl = _react.default.createElement(Label, {
+          labelEl = /*#__PURE__*/_react.default.createElement(Label, {
             text: label,
             onClick: this.onClickCB,
             htmlFor: this.props.id
@@ -147,10 +151,10 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
         inputCls['mui--is-not-empty'] = !this.state.isEmpty;
         inputCls['mui--is-invalid'] = invalid;
         inputCls = util.classNames(inputCls);
-        return _react.default.createElement("div", {
+        return /*#__PURE__*/_react.default.createElement("div", {
           className: wrapperCls + ' ' + className,
           style: style
-        }, _react.default.createElement(TextfieldComponent, babelHelpers.extends({
+        }, /*#__PURE__*/_react.default.createElement(TextfieldComponent, babelHelpers.extends({
           className: inputCls,
           inputRef: function inputRef(el) {
             _this2.controlEl = el;
@@ -179,14 +183,12 @@ var textfieldWrapper = function textfieldWrapper(TextfieldComponent) {
 
 exports.textfieldWrapper = textfieldWrapper;
 
-var Label =
-/*#__PURE__*/
-function (_React$Component2) {
+var Label = /*#__PURE__*/function (_React$Component2) {
   babelHelpers.inherits(Label, _React$Component2);
 
-  function Label() {
-    var _babelHelpers$getProt;
+  var _super2 = _createSuper(Label);
 
+  function Label() {
     var _this3;
 
     babelHelpers.classCallCheck(this, Label);
@@ -195,7 +197,7 @@ function (_React$Component2) {
       args[_key] = arguments[_key];
     }
 
-    _this3 = babelHelpers.possibleConstructorReturn(this, (_babelHelpers$getProt = babelHelpers.getPrototypeOf(Label)).call.apply(_babelHelpers$getProt, [this].concat(args)));
+    _this3 = _super2.call.apply(_super2, [this].concat(args));
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this3), "state", {
       style: {}
     });
@@ -232,7 +234,7 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("label", {
+      return /*#__PURE__*/_react.default.createElement("label", {
         style: this.state.style,
         onClick: this.props.onClick,
         htmlFor: this.props.htmlFor,

@@ -14,6 +14,11 @@ var _react = babelHelpers.interopRequireDefault(require("react"));
 
 var jqLite = babelHelpers.interopRequireWildcard(require("../js/lib/jqLite"));
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var btnClass = 'mui-btn',
     btnAttrs = {
   color: 1,
@@ -25,16 +30,16 @@ var btnClass = 'mui-btn',
  * @class
  */
 
-var Button =
-/*#__PURE__*/
-function (_React$Component) {
+var Button = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Button, _React$Component);
+
+  var _super = _createSuper(Button);
 
   function Button(props) {
     var _this;
 
     babelHelpers.classCallCheck(this, Button);
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Button).call(this, props));
+    _this = _super.call(this, props);
     babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "state", {
       rippleStyle: {},
       rippleIsVisible: false
@@ -169,7 +174,7 @@ function (_React$Component) {
         if (v !== 'default') cls += ' ' + btnClass + '--' + v;
       }
 
-      return _react.default.createElement("button", babelHelpers.extends({}, reactProps, {
+      return /*#__PURE__*/_react.default.createElement("button", babelHelpers.extends({}, reactProps, {
         ref: function ref(el) {
           _this2.buttonElRef = el;
         },
@@ -179,9 +184,9 @@ function (_React$Component) {
         onMouseLeave: this.onMouseLeaveCB,
         onTouchStart: this.onTouchStartCB,
         onTouchEnd: this.onTouchEndCB
-      }), this.props.children, _react.default.createElement("span", {
+      }), this.props.children, /*#__PURE__*/_react.default.createElement("span", {
         className: "mui-btn__ripple-container"
-      }, _react.default.createElement("span", {
+      }, /*#__PURE__*/_react.default.createElement("span", {
         ref: function ref(el) {
           _this2.rippleElRef = el;
         },

@@ -18,6 +18,11 @@ var _react = babelHelpers.interopRequireDefault(require("react"));
 var _tab = babelHelpers.interopRequireDefault(require("./tab"));
 
 var util = babelHelpers.interopRequireWildcard(require("../js/lib/util"));
+
+function _createSuper(Derived) { return function () { var Super = babelHelpers.getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = babelHelpers.getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return babelHelpers.possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 var tabsBarClass = 'mui-tabs__bar',
     tabsBarJustifiedClass = 'mui-tabs__bar--justified',
     tabsPaneClass = 'mui-tabs__pane',
@@ -27,10 +32,10 @@ var tabsBarClass = 'mui-tabs__bar',
  * @class
  */
 
-var Tabs =
-/*#__PURE__*/
-function (_React$Component) {
+var Tabs = /*#__PURE__*/function (_React$Component) {
   babelHelpers.inherits(Tabs, _React$Component);
+
+  var _super = _createSuper(Tabs);
 
   function Tabs(props) {
     var _this;
@@ -57,7 +62,7 @@ function (_React$Component) {
      */
 
 
-    _this = babelHelpers.possibleConstructorReturn(this, babelHelpers.getPrototypeOf(Tabs).call(this, props));
+    _this = _super.call(this, props);
     _this.state = {
       currentSelectedIndex: typeof props.selectedIndex === 'number' ? props.selectedIndex : defaultSelectedIndex
     };
@@ -107,16 +112,16 @@ function (_React$Component) {
         if (item.type !== _tab.default) util.raiseError('Expecting MUITab React Element');
         isActive = i === currentSelectedIndex ? true : false; // tab element
 
-        tabEls.push(_react.default.createElement("li", {
+        tabEls.push( /*#__PURE__*/_react.default.createElement("li", {
           key: i,
           className: isActive ? isActiveClass : ''
-        }, _react.default.createElement("a", {
+        }, /*#__PURE__*/_react.default.createElement("a", {
           onClick: this.onClick.bind(this, i, item)
         }, item.props.label))); // pane element
 
         cls = tabsPaneClass + ' ';
         if (isActive) cls += isActiveClass;
-        paneEls.push(_react.default.createElement("div", {
+        paneEls.push( /*#__PURE__*/_react.default.createElement("div", {
           key: i,
           className: cls
         }, item.props.children));
@@ -124,7 +129,7 @@ function (_React$Component) {
 
       cls = tabsBarClass;
       if (justified) cls += ' ' + tabsBarJustifiedClass;
-      return _react.default.createElement("div", reactProps, _react.default.createElement("ul", {
+      return /*#__PURE__*/_react.default.createElement("div", reactProps, /*#__PURE__*/_react.default.createElement("ul", {
         className: cls
       }, tabEls), paneEls);
     }
