@@ -1,3 +1,0 @@
---require ./test/before-compilers.js
---require @babel/register
---recursive

@@ -89,5 +89,12 @@
     "directories": {
       "lib": "dist"
     }
+  },
+  "mocha": {
+    "recursive": true,
+    "require": [
+      "./test/before-compilers.js",
+      "@babel/register"
+    ]
   }
 }
