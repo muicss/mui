@@ -30,6 +30,11 @@ var angularBabelHelpers = [
 var requireReactRegex = /require\(('react'|"react")\)/g,
     requireAngularRegex = /require\(('angular'|"angular")\)/g;
 
+var tildeImporter = require('node-sass-tilde-importer');
+
+var sass = require('gulp-sass');
+sass.compiler = require('sass');
+
 
 // ============================================================================
 // PUBLIC TASKS
@@ -125,7 +130,7 @@ function browserifyStream(pathname, opts) {
     paths: ['./'].concat(opts.paths || []),
     extensions: [].concat(opts.extensions || [])
   });
-  
+
   // apply methods
   ['external', 'transform'].forEach(function(method) {
     if (!opts[method]) return;
@@ -243,7 +248,10 @@ function buildCdnEmailInline(dirname) {
   return makeTask('build-cdn-email-inline: ' + dirname, function() {
     // handles ltr and rtl directions
     return gulp.src('./src/email/mui-email-inline.scss')
-      .pipe(plugins.sass({outputStyle: 'expanded'}))
+      .pipe(plugins.sass({
+        importer: tildeImporter,
+        outputStyle: 'expanded'
+      }))
       .pipe(plugins.rename('mui-email-inline.css'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.rtlcss())
@@ -263,7 +271,10 @@ function buildCdnEmailStyletag(dirname) {
   return makeTask('build-cdn-email-styletag: ' + dirname, function() {
     // ltr and rtl
     return gulp.src('./src/email/mui-email-styletag.scss')
-      .pipe(plugins.sass({outputStyle: 'expanded'}))
+      .pipe(plugins.sass({
+        importer: tildeImporter,
+        outputStyle: 'expanded'
+      }))
       .pipe(plugins.rename('mui-email-styletag.css'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.rtlcss())
@@ -293,7 +304,10 @@ function buildCdnWebcomponents(dirname, cssdir) {
 function buildCdnColors(dirname) {
   return makeTask('build-cdn-colors: ' + dirname, function() {
     return gulp.src('./src/sass/mui-colors.scss')
-      .pipe(plugins.sass({outputStyle: 'expanded'}))
+      .pipe(plugins.sass({
+        importer: tildeImporter,
+        outputStyle: 'expanded'
+      }))
       .pipe(plugins.rename('mui-colors.css'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.cssmin())
@@ -559,25 +573,28 @@ function buildNpmBabelHelpersAngular() {
 function cssStream(filename, dirname) {
   var basename = filename.split('.')[0],
       rtlGlobalStr = 'html,body{direction:rtl;}';
-  
+
   if (filename.indexOf('noglobals') >= 0) rtlGlobalStr = '';
 
   // base stream
   var baseStream = gulp.src('./src/sass/' + filename)
-    .pipe(plugins.sass({outputStyle: 'expanded'}))
+    .pipe(plugins.sass({
+      importer: tildeImporter,
+      outputStyle: 'expanded'
+    }))
     .pipe(plugins.autoprefixer({
       cascade: false
     }))
     .on('error', function(err) {console.log(err.message);})
     .pipe(plugins.rename(basename + '.css'))
     .pipe(gulp.dest(dirname));
-  
+
   // left-to-right
   var stream1 = baseStream
     .pipe(plugins.cssmin({advanced: false}))
     .pipe(plugins.rename(basename + '.min.css'))
     .pipe(gulp.dest(dirname));
-  
+
   // right-to-left
   var stream2 = baseStream
     .pipe(plugins.rtlcss())
@@ -592,6 +609,6 @@ function cssStream(filename, dirname) {
     .pipe(plugins.cssmin({advanced: false}))
     .pipe(plugins.rename(basename + '-rtl.min.css'))
     .pipe(gulp.dest(dirname));
-  
+
   return mergeStream(stream1, stream2);
 }
