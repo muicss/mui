@@ -68,6 +68,7 @@ function loadCss() {
       'mui-btn-inserted,mui-dropdown-inserted'
     ],
     ['[data-mui-toggle="tab"]', 'mui-tab-inserted'],
+    ['.mui-tabs__bar', 'mui-tabs-bar-inserted'],
     ['.mui-textfield > input', 'mui-textfield-inserted'],
     ['.mui-textfield > textarea', 'mui-textfield-inserted'],
     ['.mui-select > select', 'mui-select-inserted'],

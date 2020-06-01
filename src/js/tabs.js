@@ -19,6 +19,37 @@ var jqLite = require('./lib/jqLite'),
     hideendKey = 'mui.tabs.hideend';
 
 
+function initializeTabsBar(barEl) {
+  // check flag
+  if (barEl._muiTabs === true) return;
+  else barEl._muiTabs = true;
+
+  // activate first tab by default
+  
+  // add event listener
+  jqLite.on(barEl, 'click', tabBarClickHandler);
+}
+
+
+function tabBarClickHandler(ev) {
+  // only left clicks
+  if (ev.button !== 0) return;
+  
+  var clickEl = ev.target,
+      attrVal;
+  
+  // detect clicks on toggle element
+  while (clickEl !== this) {
+    attrVal = clickEl.getAttribute('data-mui-toggle');
+    if (attrVal === 'tab') {
+      if (clickEl.getAttribute('disabled') === null) activateTab(clickEl);
+      break;
+    }
+    clickEl = clickEl.parentElement;
+  }
+}
+
+
 /**
  * Initialize the toggle element
  * @param {Element} toggleEl - The toggle element.
@@ -141,6 +172,15 @@ module.exports = {
     
     animationHelpers.onAnimationStart('mui-tab-inserted', function(ev) {
       initialize(ev.target);
+    });
+
+    // initialize tabs bar
+    elList = document.querySelectorAll('.mui-tabs__bar');
+    i = elList.length;
+    while (i--) initializeTabsBar(elList[i]);
+    
+    animationHelpers.onAnimationStart('mui-tabs-bar-inserted', function(ev) {
+      initializeTabsBar(ev.target);
     });
   },
   
