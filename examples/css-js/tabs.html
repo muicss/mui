@@ -10,30 +10,19 @@
     <script>
       // print all tab events to the console
       window.addEventListener('load', function() {
-        var events = ['showstart', 'showend', 'hidestart', 'hideend'],
-            parentEls = document.getElementsByClassName('mui-tabs'),
-            tabEls,
-            tabEl,
-            i,
-            j,
-            k;
-
-        for (i=0; i < parentEls.length; i++) {
-          tabEls = parentEls[i].children;
-
-          for (j=0; j < tabEls.length; j++) {
-            tabEl = tabEls[j];
-
-            for (k=0; k < events.length; k++) {
-              tabEl.addEventListener('mui.tabs.' + events[k], function(ev) {
-                console.log(ev.type);
-                console.log(ev.target);
-                console.log(ev.paneId);
-                console.log(ev.relatedPaneId);
+        document.querySelectorAll('[data-mui-toggle="tab"]').forEach(function(el) {
+          // add event listeners
+          ['showstart', 'showend', 'hidestart', 'hideend'].forEach(function(eventName) {
+            el.addEventListener('mui.tabs.' + eventName, function(ev) {
+              console.log({
+                'type': ev.type,
+                'target': ev.target,
+                'paneId': ev.paneId,
+                'relatedPaneId': ev.relatedPaneId
               });
-            }
-          }
-        }
+            });
+          });
+        });
       });
     </script>
   </head>
@@ -42,6 +31,7 @@
       <h1>Tabs</h1>
 
       <div class="mui-panel">
+        <h2>Default</h2>
         <ul class="mui-tabs__bar">
           <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="home">Home</a></li>
           <li><a data-mui-toggle="tab" data-mui-controls="profile">Profile</a></li>
@@ -54,7 +44,9 @@
           <div class="mui-tabs__pane" id="messages">Messages</div>
           <div class="mui-tabs__pane" id="settings">Settings</div>
         </div>
+      </div>
 
+      <div class="mui-panel">
         <h2>mui-tabs-justified</h2>
         <ul class="mui-tabs__bar mui-tabs__bar--justified">
           <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="home2">Home</a></li>
@@ -68,7 +60,22 @@
           <div class="mui-tabs__pane" id="messages2">Messages</div>
           <div class="mui-tabs__pane" id="settings2">Settings</div>
         </div>
-        
+      </div>
+
+      <div class="mui-panel">
+        <h2>Uninitialized</h2>
+        <ul class="mui-tabs__bar">
+          <li><a data-mui-toggle="tab" data-mui-controls="home3">Home</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="profile3">Profile</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="messages3">Messages</a></li>
+          <li><a data-mui-toggle="tab" data-mui-controls="settings3">Settings</a></li>
+        </ul>
+        <div>
+          <div class="mui-tabs__pane" id="home3">Home</div>
+          <div class="mui-tabs__pane" id="profile3">Profile</div>
+          <div class="mui-tabs__pane" id="messages3">Messages</div>
+          <div class="mui-tabs__pane" id="settings3">Settings</div>
+        </div>
       </div>
     </div>
   </body>
