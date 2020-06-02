@@ -1981,13 +1981,16 @@ function activateTab(currToggleEl) {
 
   // get previous pane
   prevPaneEl = getActiveSibling(currPaneEl);
-  prevPaneId = prevPaneEl.id;
 
-  // get previous toggle and tab elements
-  cssSelector = '[' + controlsAttrKey + '="' + prevPaneId + '"]';
-  prevToggleEl = document.querySelectorAll(cssSelector)[0];
-  prevTabEl = prevToggleEl.parentNode;
+  if (prevPaneEl) {
+    prevPaneId = prevPaneEl.id;
 
+    // get previous toggle and tab elements
+    cssSelector = '[' + controlsAttrKey + '="' + prevPaneId + '"]';
+    prevToggleEl = document.querySelectorAll(cssSelector)[0];
+    prevTabEl = prevToggleEl.parentNode;
+  }
+  
   // define event data
   currData = {paneId: currPaneId, relatedPaneId: prevPaneId};
   prevData = {paneId: prevPaneId, relatedPaneId: currPaneId};

@@ -147,14 +147,12 @@ a.mui-btn {
   padding: 10px 25px;
   background-color: transparent;
 }
-
 a.mui-btn.mui-btn--raised {
   border-top: 1px solid #f2f2f2;
   border-left: 1px solid #e6e6e6;
   border-right: 1px solid #e6e6e6;
   border-bottom: 2px solid #bababa;
 }
-
 a.mui-btn.mui-btn--flat {
   background-color: transparent;
   color: #212121;
@@ -163,7 +161,6 @@ a.mui-btn.mui-btn--flat {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 a.mui-btn.mui-btn--primary {
   border-top: 1px solid #2196F3;
   border-left: 1px solid #2196F3;
@@ -172,14 +169,12 @@ a.mui-btn.mui-btn--primary {
   color: #FFF;
   background-color: #2196F3;
 }
-
 a.mui-btn.mui-btn--primary.mui-btn--raised {
   border-top: 1px solid #51adf6;
   border-left: 1px solid #2196F3;
   border-right: 1px solid #2196F3;
   border-bottom: 2px solid #0a6ebd;
 }
-
 a.mui-btn.mui-btn--primary.mui-btn--flat {
   background-color: transparent;
   color: #2196F3;
@@ -188,7 +183,6 @@ a.mui-btn.mui-btn--primary.mui-btn--flat {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 a.mui-btn.mui-btn--danger {
   border-top: 1px solid #F44336;
   border-left: 1px solid #F44336;
@@ -197,14 +191,12 @@ a.mui-btn.mui-btn--danger {
   color: #FFF;
   background-color: #F44336;
 }
-
 a.mui-btn.mui-btn--danger.mui-btn--raised {
   border-top: 1px solid #f77066;
   border-left: 1px solid #F44336;
   border-right: 1px solid #F44336;
   border-bottom: 2px solid #d2190b;
 }
-
 a.mui-btn.mui-btn--danger.mui-btn--flat {
   background-color: transparent;
   color: #F44336;
@@ -213,7 +205,6 @@ a.mui-btn.mui-btn--danger.mui-btn--flat {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 a.mui-btn.mui-btn--dark {
   border-top: 1px solid #424242;
   border-left: 1px solid #424242;
@@ -222,14 +213,12 @@ a.mui-btn.mui-btn--dark {
   color: #FFF;
   background-color: #424242;
 }
-
 a.mui-btn.mui-btn--dark.mui-btn--raised {
   border-top: 1px solid #5c5c5c;
   border-left: 1px solid #424242;
   border-right: 1px solid #424242;
   border-bottom: 2px solid #1c1c1c;
 }
-
 a.mui-btn.mui-btn--dark.mui-btn--flat {
   background-color: transparent;
   color: #424242;
@@ -238,7 +227,6 @@ a.mui-btn.mui-btn--dark.mui-btn--flat {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 a.mui-btn.mui-btn--accent {
   border-top: 1px solid #FF4081;
   border-left: 1px solid #FF4081;
@@ -247,14 +235,12 @@ a.mui-btn.mui-btn--accent {
   color: #FFF;
   background-color: #FF4081;
 }
-
 a.mui-btn.mui-btn--accent.mui-btn--raised {
   border-top: 1px solid #ff73a3;
   border-left: 1px solid #FF4081;
   border-right: 1px solid #FF4081;
   border-bottom: 2px solid #f30053;
 }
-
 a.mui-btn.mui-btn--accent.mui-btn--flat {
   background-color: transparent;
   color: #FF4081;
@@ -268,7 +254,6 @@ table.mui-btn > tr > td,
 table.mui-btn > tbody > tr > td {
   background-color: #FFF;
 }
-
 table.mui-btn > tr > td > a,
 table.mui-btn > tbody > tr > td > a {
   color: #212121;
@@ -277,7 +262,6 @@ table.mui-btn > tbody > tr > td > a {
   border-right: 1px solid #FFF;
   border-bottom: 1px solid #FFF;
 }
-
 table.mui-btn.mui-btn--raised > tr > td > a,
 table.mui-btn.mui-btn--raised > tbody > tr > td > a {
   border-top: 1px solid #f2f2f2;
@@ -285,12 +269,10 @@ table.mui-btn.mui-btn--raised > tbody > tr > td > a {
   border-right: 1px solid #e6e6e6;
   border-bottom: 2px solid #bababa;
 }
-
 table.mui-btn.mui-btn--flat > tr > td,
 table.mui-btn.mui-btn--flat > tbody > tr > td {
   background-color: transparent;
 }
-
 table.mui-btn.mui-btn--flat > tr > td > a,
 table.mui-btn.mui-btn--flat > tbody > tr > td > a {
   color: #212121;
@@ -299,12 +281,10 @@ table.mui-btn.mui-btn--flat > tbody > tr > td > a {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 table.mui-btn > tr > td,
 table.mui-btn > tbody > tr > td {
   border-radius: 3px;
 }
-
 table.mui-btn > tr > td > a,
 table.mui-btn > tbody > tr > td > a {
   font-weight: 500;
@@ -324,12 +304,10 @@ table.mui-btn > tbody > tr > td > a {
   padding: 10px 25px;
   background-color: transparent;
 }
-
 table.mui-btn.mui-btn--primary > tr > td,
 table.mui-btn.mui-btn--primary > tbody > tr > td {
   background-color: #2196F3;
 }
-
 table.mui-btn.mui-btn--primary > tr > td > a,
 table.mui-btn.mui-btn--primary > tbody > tr > td > a {
   color: #FFF;
@@ -338,7 +316,6 @@ table.mui-btn.mui-btn--primary > tbody > tr > td > a {
   border-right: 1px solid #2196F3;
   border-bottom: 1px solid #2196F3;
 }
-
 table.mui-btn.mui-btn--primary.mui-btn--raised > tr > td > a,
 table.mui-btn.mui-btn--primary.mui-btn--raised > tbody > tr > td > a {
   border-top: 1px solid #51adf6;
@@ -346,12 +323,10 @@ table.mui-btn.mui-btn--primary.mui-btn--raised > tbody > tr > td > a {
   border-right: 1px solid #2196F3;
   border-bottom: 2px solid #0a6ebd;
 }
-
 table.mui-btn.mui-btn--primary.mui-btn--flat > tr > td,
 table.mui-btn.mui-btn--primary.mui-btn--flat > tbody > tr > td {
   background-color: transparent;
 }
-
 table.mui-btn.mui-btn--primary.mui-btn--flat > tr > td > a,
 table.mui-btn.mui-btn--primary.mui-btn--flat > tbody > tr > td > a {
   color: #2196F3;
@@ -360,12 +335,10 @@ table.mui-btn.mui-btn--primary.mui-btn--flat > tbody > tr > td > a {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 table.mui-btn.mui-btn--danger > tr > td,
 table.mui-btn.mui-btn--danger > tbody > tr > td {
   background-color: #F44336;
 }
-
 table.mui-btn.mui-btn--danger > tr > td > a,
 table.mui-btn.mui-btn--danger > tbody > tr > td > a {
   color: #FFF;
@@ -374,7 +347,6 @@ table.mui-btn.mui-btn--danger > tbody > tr > td > a {
   border-right: 1px solid #F44336;
   border-bottom: 1px solid #F44336;
 }
-
 table.mui-btn.mui-btn--danger.mui-btn--raised > tr > td > a,
 table.mui-btn.mui-btn--danger.mui-btn--raised > tbody > tr > td > a {
   border-top: 1px solid #f77066;
@@ -382,12 +354,10 @@ table.mui-btn.mui-btn--danger.mui-btn--raised > tbody > tr > td > a {
   border-right: 1px solid #F44336;
   border-bottom: 2px solid #d2190b;
 }
-
 table.mui-btn.mui-btn--danger.mui-btn--flat > tr > td,
 table.mui-btn.mui-btn--danger.mui-btn--flat > tbody > tr > td {
   background-color: transparent;
 }
-
 table.mui-btn.mui-btn--danger.mui-btn--flat > tr > td > a,
 table.mui-btn.mui-btn--danger.mui-btn--flat > tbody > tr > td > a {
   color: #F44336;
@@ -396,12 +366,10 @@ table.mui-btn.mui-btn--danger.mui-btn--flat > tbody > tr > td > a {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 table.mui-btn.mui-btn--dark > tr > td,
 table.mui-btn.mui-btn--dark > tbody > tr > td {
   background-color: #424242;
 }
-
 table.mui-btn.mui-btn--dark > tr > td > a,
 table.mui-btn.mui-btn--dark > tbody > tr > td > a {
   color: #FFF;
@@ -410,7 +378,6 @@ table.mui-btn.mui-btn--dark > tbody > tr > td > a {
   border-right: 1px solid #424242;
   border-bottom: 1px solid #424242;
 }
-
 table.mui-btn.mui-btn--dark.mui-btn--raised > tr > td > a,
 table.mui-btn.mui-btn--dark.mui-btn--raised > tbody > tr > td > a {
   border-top: 1px solid #5c5c5c;
@@ -418,12 +385,10 @@ table.mui-btn.mui-btn--dark.mui-btn--raised > tbody > tr > td > a {
   border-right: 1px solid #424242;
   border-bottom: 2px solid #1c1c1c;
 }
-
 table.mui-btn.mui-btn--dark.mui-btn--flat > tr > td,
 table.mui-btn.mui-btn--dark.mui-btn--flat > tbody > tr > td {
   background-color: transparent;
 }
-
 table.mui-btn.mui-btn--dark.mui-btn--flat > tr > td > a,
 table.mui-btn.mui-btn--dark.mui-btn--flat > tbody > tr > td > a {
   color: #424242;
@@ -432,12 +397,10 @@ table.mui-btn.mui-btn--dark.mui-btn--flat > tbody > tr > td > a {
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-
 table.mui-btn.mui-btn--accent > tr > td,
 table.mui-btn.mui-btn--accent > tbody > tr > td {
   background-color: #FF4081;
 }
-
 table.mui-btn.mui-btn--accent > tr > td > a,
 table.mui-btn.mui-btn--accent > tbody > tr > td > a {
   color: #FFF;
@@ -446,7 +409,6 @@ table.mui-btn.mui-btn--accent > tbody > tr > td > a {
   border-right: 1px solid #FF4081;
   border-bottom: 1px solid #FF4081;
 }
-
 table.mui-btn.mui-btn--accent.mui-btn--raised > tr > td > a,
 table.mui-btn.mui-btn--accent.mui-btn--raised > tbody > tr > td > a {
   border-top: 1px solid #ff73a3;
@@ -454,12 +416,10 @@ table.mui-btn.mui-btn--accent.mui-btn--raised > tbody > tr > td > a {
   border-right: 1px solid #FF4081;
   border-bottom: 2px solid #f30053;
 }
-
 table.mui-btn.mui-btn--accent.mui-btn--flat > tr > td,
 table.mui-btn.mui-btn--accent.mui-btn--flat > tbody > tr > td {
   background-color: transparent;
 }
-
 table.mui-btn.mui-btn--accent.mui-btn--flat > tr > td > a,
 table.mui-btn.mui-btn--accent.mui-btn--flat > tbody > tr > td > a {
   color: #FF4081;

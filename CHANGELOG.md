@@ -1,5 +1,10 @@
 # MUI Changelog
 
+## 0.10.3 - June 2, 2020
+
+* Fixed bug in CSS/JS Tabs triggered by activating a tab when there are no active tabs (https://github.com/muicss/mui/issues/321)
+* Updated devDependencies
+
 ## 0.10.2 - April 23, 2020
 
 * Updated devDependencies and rebuilt packages
