@@ -32,9 +32,6 @@ var requireReactRegex = /require\(('react'|"react")\)/g,
 
 var tildeImporter = require('node-sass-tilde-importer');
 
-var sass = require('gulp-sass');
-sass.compiler = require('sass');
-
 
 // ============================================================================
 // PUBLIC TASKS
@@ -248,7 +245,7 @@ function buildCdnEmailInline(dirname) {
   return makeTask('build-cdn-email-inline: ' + dirname, function() {
     // handles ltr and rtl directions
     return gulp.src('./src/email/mui-email-inline.scss')
-      .pipe(plugins.dartSass({outputStyle: 'expanded'}))
+      .pipe(plugins.dartSass({
         importer: tildeImporter,
         outputStyle: 'expanded'
       }))
@@ -271,7 +268,7 @@ function buildCdnEmailStyletag(dirname) {
   return makeTask('build-cdn-email-styletag: ' + dirname, function() {
     // ltr and rtl
     return gulp.src('./src/email/mui-email-styletag.scss')
-      .pipe(plugins.dartSass({outputStyle: 'expanded'}))
+      .pipe(plugins.dartSass({
         importer: tildeImporter,
         outputStyle: 'expanded'
       }))
@@ -304,7 +301,7 @@ function buildCdnWebcomponents(dirname, cssdir) {
 function buildCdnColors(dirname) {
   return makeTask('build-cdn-colors: ' + dirname, function() {
     return gulp.src('./src/sass/mui-colors.scss')
-      .pipe(plugins.dartSass({outputStyle: 'expanded'}))
+      .pipe(plugins.dartSass({
         importer: tildeImporter,
         outputStyle: 'expanded'
       }))
@@ -578,7 +575,7 @@ function cssStream(filename, dirname) {
 
   // base stream
   var baseStream = gulp.src('./src/sass/' + filename)
-    .pipe(plugins.dartSass({outputStyle: 'expanded'}))
+    .pipe(plugins.dartSass({
       importer: tildeImporter,
       outputStyle: 'expanded'
     }))
