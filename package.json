@@ -34,7 +34,7 @@
     "@babel/preset-react": "^7.10.1",
     "@babel/register": "^7.10.1",
     "@babel/standalone": "^7.10.2",
-    "@sass-collective/sass-rem": "^1.4.1",
+    "@sass-collective/sass-rem": "^1.5.0",
     "angular": "^1.7.9",
     "angular-mocks": "^1.7.9",
     "array-equal": "^1.0.0",
