@@ -860,7 +860,7 @@ _angular.default.module(moduleName, []).directive('muiOption', function () {
         disabled: scope.ngDisabled,
         hidden: attrs.hidden
       });
-       // destroy hook
+        // destroy hook
       scope.$on('$destroy', function() {
         controller.removeMenuItem(attrs.value);
       });

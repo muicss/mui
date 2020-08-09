@@ -2,6 +2,9 @@
 // Global Settings
 // ============================================================================
 
+@use 'sass:math';
+@use '~@sass-collective/sass-rem';
+
 $mui-include-globals: true !default;
 $mui-use-rem:         false !default;
 
@@ -9,12 +12,12 @@ $mui-use-rem:         false !default;
   $x: $px;
 
   @if $mui-use-rem == true {
-    $x: ($px / 16px) * 1rem;
-    $x: round(1000 * $x) / 1000;
+    $x: sass-rem.rem($px);
+    $x: math.round(1000 * $x) / 1000;
   }
-  
+
   @return $x;
-}  
+}
 
 
 
