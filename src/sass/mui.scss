@@ -1,5 +1,2 @@
-@use "mui/theme" as theme with (
-  $primary-color: red
-);
-
+@use "mui/globals";
 @use "mui/appbar";

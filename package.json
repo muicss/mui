@@ -68,6 +68,7 @@
     "jshint": "^2.11.1",
     "merge-stream": "^2.0.0",
     "mocha": "^7.2.0",
+    "normalize.css": "8.0.1",
     "react": "^16.13.1",
     "react-addons-shallow-compare": "^15.6.2",
     "react-dom": "^16.13.1",
