@@ -2,6 +2,8 @@
  * MUI Appbar
  */
 
+@use "variables" as vars;
+
 $x-mobile-breakpoint: 480px;
 
 // ============================================================================
@@ -9,25 +11,25 @@ $x-mobile-breakpoint: 480px;
 // ============================================================================
 
 // mobile portrait
-.mui--appbar-height      { height: $mui-appbar-height-xs-portrait; }
-.mui--appbar-min-height  { min-height: $mui-appbar-height-xs-portrait; }
-.mui--appbar-line-height { line-height: $mui-appbar-height-xs-portrait; }
-.mui--appbar-top         { top: $mui-appbar-height-xs-portrait; }
+.mui--appbar-height      { height: vars.$mui-appbar-height-xs-portrait; }
+.mui--appbar-min-height  { min-height: vars.$mui-appbar-height-xs-portrait; }
+.mui--appbar-line-height { line-height: vars.$mui-appbar-height-xs-portrait; }
+.mui--appbar-top         { top: vars.$mui-appbar-height-xs-portrait; }
 
 // mobile landscape
 @media (orientation: landscape) and (max-height: $x-mobile-breakpoint) {
-  .mui--appbar-height      { height: $mui-appbar-height-xs-landscape; }
-  .mui--appbar-min-height  { min-height: $mui-appbar-height-xs-landscape; }
-  .mui--appbar-line-height { line-height: $mui-appbar-height-xs-landscape; }
-  .mui--appbar-top         { top: $mui-appbar-height-xs-landscape; }
+  .mui--appbar-height      { height: vars.$mui-appbar-height-xs-landscape; }
+  .mui--appbar-min-height  { min-height: vars.$mui-appbar-height-xs-landscape; }
+  .mui--appbar-line-height { line-height: vars.$mui-appbar-height-xs-landscape; }
+  .mui--appbar-top         { top: vars.$mui-appbar-height-xs-landscape; }
 }
 
 // all other screen sizes
 @media (min-width: $x-mobile-breakpoint) {
-  .mui--appbar-height      { height: $mui-appbar-height; }
-  .mui--appbar-min-height  { min-height: $mui-appbar-height; }
-  .mui--appbar-line-height { line-height: $mui-appbar-height; }
-  .mui--appbar-top         { top: $mui-appbar-height; }  
+  .mui--appbar-height      { height: vars.$mui-appbar-height; }
+  .mui--appbar-min-height  { min-height: vars.$mui-appbar-height; }
+  .mui--appbar-line-height { line-height: vars.$mui-appbar-height; }
+  .mui--appbar-top         { top: vars.$mui-appbar-height; }  
 }
 
 
@@ -39,6 +41,6 @@ $x-mobile-breakpoint: 480px;
 .mui-appbar {
   @extend .mui--appbar-min-height;
 
-  background-color: $mui-appbar-bg-color;
-  color: $mui-appbar-font-color;
+  background-color: vars.$mui-appbar-bg-color;
+  color: vars.$mui-appbar-font-color;
 }

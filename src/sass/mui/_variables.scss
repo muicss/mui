@@ -2,6 +2,8 @@
 // Global Settings
 // ============================================================================
 
+@use "colors";
+
 $mui-include-globals: true !default;
 $mui-use-rem:         false !default;
 
@@ -22,15 +24,15 @@ $mui-use-rem:         false !default;
 // COLORS
 // ============================================================================
 
-$mui-primary-color:            mui-color('blue', '500') !default;
-$mui-primary-color-dark:       mui-color('blue', '700') !default;
-$mui-primary-color-light:      mui-color('blue', '100') !default;
+$mui-primary-color:            colors.mui-color('blue', '500') !default;
+$mui-primary-color-dark:       colors.mui-color('blue', '700') !default;
+$mui-primary-color-light:      colors.mui-color('blue', '100') !default;
 
-$mui-accent-color:             mui-color('pink', 'A200') !default;
-$mui-accent-color-dark:        mui-color('pink', 'A400') !default;
-$mui-accent-color-light:       mui-color('pink', 'A100') !default;
+$mui-accent-color:             colors.mui-color('pink', 'A200') !default;
+$mui-accent-color-dark:        colors.mui-color('pink', 'A400') !default;
+$mui-accent-color-light:       colors.mui-color('pink', 'A100') !default;
 
-$mui-danger-color:             mui-color('red', '500') !default;
+$mui-danger-color:             colors.mui-color('red', '500') !default;
 
 
 
@@ -39,10 +41,10 @@ $mui-danger-color:             mui-color('red', '500') !default;
 // GLOBAL VARIABLES
 // ============================================================================
 
-$mui-body-bg-color:              mui-color('white') !default;
+$mui-body-bg-color:              colors.mui-color('white') !default;
 
 $mui-base-font-family:           Arial, Verdana, Tahoma !default;
-$mui-base-font-color:            mui-color('black-alpha-87') !default;
+$mui-base-font-color:            colors.mui-color('black-alpha-87') !default;
 $mui-base-font-size:             mui-rem(14px) !default;
 $mui-base-font-weight:           400 !default;
 $mui-base-line-height:           1.429 !default;
@@ -56,7 +58,7 @@ $mui-link-text-decoration-hover: underline !default;
 $mui-cursor-disabled:            not-allowed !default;
 $mui-border-radius-default:      2px !default;
 
-$mui-hr-color:                   mui-color('black-alpha-12') !default;
+$mui-hr-color:                   colors.mui-color('black-alpha-12') !default;
 $mui-abbr-border-color:          $mui-primary-color !default;
 
 
@@ -101,13 +103,13 @@ $mui-container-xl:               1170px !default;
 // TEXT COLORS
 // ============================================================================
 
-$mui-text-dark:             mui-color('black-alpha-87') !default;
-$mui-text-dark-secondary:   mui-color('black-alpha-54') !default;
-$mui-text-dark-hint:        mui-color('black-alpha-38') !default;
+$mui-text-dark:             colors.mui-color('black-alpha-87') !default;
+$mui-text-dark-secondary:   colors.mui-color('black-alpha-54') !default;
+$mui-text-dark-hint:        colors.mui-color('black-alpha-38') !default;
 
-$mui-text-light:            mui-color('white') !default;
-$mui-text-light-secondary:  mui-color('white-alpha-70') !default;
-$mui-text-light-hint:       mui-color('white-alpha-30') !default;
+$mui-text-light:            colors.mui-color('white') !default;
+$mui-text-light-secondary:  colors.mui-color('white-alpha-70') !default;
+$mui-text-light-hint:       colors.mui-color('white-alpha-30') !default;
 
 $mui-text-accent:           rgba($mui-accent-color, .87) !default;
 $mui-text-accent-secondary: rgba($mui-accent-color, .54) !default;
@@ -149,29 +151,29 @@ $mui-btn-spacing-horizontal:          mui-rem(8px) !default;
 // COLORS
 // ----------------------------------------------------------------------------
 
-$mui-btn-default-bg-color:            mui-color('white') !default;
+$mui-btn-default-bg-color:            colors.mui-color('white') !default;
 $mui-btn-default-font-color:          $mui-base-font-color !default;
-$mui-btn-default-ripple-color:        darken(mui-color('white'), 35%) !default;
+$mui-btn-default-ripple-color:        darken(colors.mui-color('white'), 35%) !default;
 
 $mui-btn-primary-bg-color:            $mui-primary-color !default;
-$mui-btn-primary-font-color:          mui-color('white') !default;
-$mui-btn-primary-ripple-color:        mui-color('white') !default;
+$mui-btn-primary-font-color:          colors.mui-color('white') !default;
+$mui-btn-primary-ripple-color:        colors.mui-color('white') !default;
 
 $mui-btn-danger-bg-color:             $mui-danger-color !default;
-$mui-btn-danger-font-color:           mui-color('white') !default;
-$mui-btn-danger-ripple-color:         mui-color('white') !default;
+$mui-btn-danger-font-color:           colors.mui-color('white') !default;
+$mui-btn-danger-ripple-color:         colors.mui-color('white') !default;
 
-$mui-btn-dark-bg-color:               mui-color('grey', '800') !default;
-$mui-btn-dark-font-color:             mui-color('white') !default;
-$mui-btn-dark-ripple-color:           mui-color('white') !default;
+$mui-btn-dark-bg-color:               colors.mui-color('grey', '800') !default;
+$mui-btn-dark-font-color:             colors.mui-color('white') !default;
+$mui-btn-dark-ripple-color:           colors.mui-color('white') !default;
 
 $mui-btn-accent-bg-color:             $mui-accent-color !default;
-$mui-btn-accent-font-color:           mui-color('white') !default;
-$mui-btn-accent-ripple-color:         mui-color('white') !default;
+$mui-btn-accent-font-color:           colors.mui-color('white') !default;
+$mui-btn-accent-ripple-color:         colors.mui-color('white') !default;
 
 $mui-btn-flat-bg-color:               transparent !default;
-$mui-btn-flat-bg-color-hover:         darken(mui-color('white'), 5%) !default;
-$mui-btn-flat-ripple-color:           darken(mui-color('white'), 35%) !default;
+$mui-btn-flat-bg-color-hover:         darken(colors.mui-color('white'), 5%) !default;
+$mui-btn-flat-ripple-color:           darken(colors.mui-color('white'), 35%) !default;
 
 
 
@@ -186,7 +188,7 @@ $mui-input-font-color:            $mui-base-font-color !default;
 $mui-input-font-size:             mui-rem(16px) !default;
 $mui-input-height:                mui-rem(32px) !default;
 
-$mui-input-placeholder-color:     rgba(mui-color('black'), 0.26) !default;
+$mui-input-placeholder-color:     rgba(colors.mui-color('black'), 0.26) !default;
 
 $mui-input-border-color:          $mui-input-placeholder-color !default;
 $mui-input-border-color-focus:    $mui-primary-color !default;
@@ -194,7 +196,7 @@ $mui-input-border-color-focus:    $mui-primary-color !default;
 $mui-textarea-height:             mui-rem(64px) !default;
 
 $mui-label-font-size:             mui-rem(12px) !default;
-$mui-label-font-color:            mui-color('black-alpha-54') !default;
+$mui-label-font-color:            colors.mui-color('black-alpha-54') !default;
 $mui-label-margin-bottom:         mui-rem(3px) !default;
 
 $mui-form-legend-font-size:       $mui-base-font-size * 1.5 !default;
@@ -210,10 +212,10 @@ $mui-form-group-margin-bottom:    mui-rem(20px) !default;
 // ============================================================================
 
 $mui-select-menu-font-size:       $mui-input-font-size !default;
-$mui-select-menu-bg-color:        mui-color('white') !default;
+$mui-select-menu-bg-color:        colors.mui-color('white') !default;
 $mui-select-menu-item-height:     $mui-select-menu-font-size * 2.625 !default;
-$mui-select-menu-item-bg-color-selected: mui-color('grey', '200') !default;
-$mui-select-menu-item-bg-color-hover:    mui-color('grey', '300') !default;
+$mui-select-menu-item-bg-color-selected: colors.mui-color('grey', '200') !default;
+$mui-select-menu-item-bg-color-hover:    colors.mui-color('grey', '300') !default;
 
 
 
@@ -222,7 +224,7 @@ $mui-select-menu-item-bg-color-hover:    mui-color('grey', '300') !default;
 // PANELS
 // ============================================================================
 
-$mui-panel-bg-color:             mui-color('white') !default;
+$mui-panel-bg-color:             colors.mui-color('white') !default;
 $mui-panel-padding:              15px !default;
 $mui-panel-border-radius:        0 !default;
 
@@ -233,7 +235,7 @@ $mui-panel-border-radius:        0 !default;
 // DIVIDERS
 // ============================================================================
 
-$mui-divider-color:              mui-color('black-alpha-12') !default;
+$mui-divider-color:              colors.mui-color('black-alpha-12') !default;
 
 
 
@@ -242,17 +244,17 @@ $mui-divider-color:              mui-color('black-alpha-12') !default;
 // DROPDOWNS
 // ============================================================================
 
-$mui-dropdown-bg-color:                 mui-color('white') !default;
+$mui-dropdown-bg-color:                 colors.mui-color('white') !default;
 $mui-dropdown-border-color:             $mui-divider-color !default;
 $mui-dropdown-border-radius:            $mui-border-radius-default !default;
 
 $mui-dropdown-link-font-color:          $mui-base-font-color !default;
 $mui-dropdown-link-font-color-hover:    darken($mui-dropdown-link-font-color, 5%) !default;
 $mui-dropdown-link-font-color-active:   $mui-accent-color !default;
-$mui-dropdown-link-font-color-disabled: mui-color('grey', '200') !default;
+$mui-dropdown-link-font-color-disabled: colors.mui-color('grey', '200') !default;
 
-$mui-dropdown-link-bg-color-hover:      mui-color('grey', '200') !default;
-$mui-dropdown-link-bg-color-active:     mui-color('white') !default;
+$mui-dropdown-link-bg-color-hover:      colors.mui-color('grey', '200') !default;
+$mui-dropdown-link-bg-color-active:     colors.mui-color('white') !default;
 
 
 
@@ -266,7 +268,7 @@ $mui-appbar-height-xs-portrait:  mui-rem(56px) !default;
 $mui-appbar-height-xs-landscape: mui-rem(48px) !default;
 
 $mui-appbar-bg-color:            $mui-primary-color !default;
-$mui-appbar-font-color:          mui-color('white') !default;
+$mui-appbar-font-color:          colors.mui-color('white') !default;
 
 
 
@@ -305,7 +307,7 @@ $mui-caret-width:                mui-rem(4px) !default;
 // OVERLAY
 // ============================================================================
 
-$mui-overlay-bg-color:           rgba(mui-color('black'), 0.20) !default;
+$mui-overlay-bg-color:           rgba(colors.mui-color('black'), 0.20) !default;
 
 
 
