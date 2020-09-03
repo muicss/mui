@@ -1,8 +1,40 @@
-//
-// MUI Colors module
-//
+/**
+ * MUI Colors module
+ */
 
-$color-map: (
+// ============================================================================
+// COLOR FUNCTION
+// ============================================================================
+@function mui-color($mui-key1, $mui-key2: '500') {
+  // check key1
+  @if map-has-key($mui-colors, $mui-key1) == false {
+    @warn "Color `#{$mui-key1}` not found.";
+    @return null;
+  }
+  
+  $mui-mapVal: map-get($mui-colors, $mui-key1);
+
+  // use second key
+  @if type-of($mui-mapVal) == 'map' {
+    // check key2
+    @if map-has-key($mui-mapVal, $mui-key2) == false {
+      @warn "Color `#{$mui-key1}` `#{$mui-key2}` not found.";
+      @return null;
+    }
+
+    $mui-mapVal: map-get($mui-mapVal, $mui-key2);
+  }
+
+  @return $mui-mapVal;
+}
+
+
+
+
+// ============================================================================
+// COLOR MAP
+// ============================================================================
+$mui-colors: (
   "red": (
     "50": #FFEBEE,
     "100": #FFCDD2,

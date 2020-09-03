@@ -157,12 +157,12 @@ function buildCdn(dirname) {
     buildCdnJs(dirname + '/js'),
     buildCdnReact(dirname + '/react'),
     buildCdnAngular(dirname + '/angular'),
-    buildCdnEmailInline(dirname + '/email'),
-    buildCdnEmailStyletag(dirname + '/email'),
-    buildCdnColors(dirname + '/extra'),
-    buildCdnNoGlobals(dirname + '/extra'),
-    buildCdnPx(dirname + '/extra'),
-    buildCdnRem(dirname + '/extra')
+    //buildCdnEmailInline(dirname + '/email'),
+    //buildCdnEmailStyletag(dirname + '/email'),
+    //buildCdnColors(dirname + '/extra'),
+    //buildCdnNoGlobals(dirname + '/extra'),
+    //buildCdnPx(dirname + '/extra'),
+    //buildCdnRem(dirname + '/extra')
   );
 
   var t2 = gulp.parallel(
@@ -421,7 +421,7 @@ function buildE2eTests() {
 function buildExamples() {
   return gulp.series(
     buildCdn('./examples/assets/mui'),
-    buildExamplesEmail
+    //buildExamplesEmail
   );
 }
 

@@ -1,0 +1,34 @@
+/**
+ * MUI Panel module
+ */
+
+@use "colors";
+@use "mixins";
+@use "globals";
+
+.mui-panel {
+  @include mixins.mui-clearfix();
+
+  padding: $mui-panel-padding;
+  margin-bottom: $mui-base-line-height-computed;
+  border-radius: $mui-panel-border-radius;
+  background-color: $mui-panel-bg-color;
+  box-shadow: 0 2px 2px 0 rgba(colors.mui-color('black'), 0.16),
+              0 0px 2px 0 rgba(colors.mui-color('black'), 0.12);
+
+  // IE10+ bugfix
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    box-shadow: 0 -1px 2px 0 rgba(colors.mui-color('black'), 0.12),
+                -1px 0px 2px 0 rgba(colors.mui-color('black'), 0.12),
+                0 2px 2px 0 rgba(colors.mui-color('black'), 0.16),
+                0 0px 2px 0 rgba(colors.mui-color('black'), 0.12);
+  }
+
+  // Edge
+  @supports (-ms-ime-align:auto) {
+    box-shadow: 0 -1px 2px 0 rgba(colors.mui-color('black'), 0.12),
+                -1px 0px 2px 0 rgba(colors.mui-color('black'), 0.12),
+                0 2px 2px 0 rgba(colors.mui-color('black'), 0.16),
+                0 0px 2px 0 rgba(colors.mui-color('black'), 0.12);
+  }
+}
