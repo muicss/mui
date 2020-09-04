@@ -2,14 +2,15 @@
 // MUI Globals
 //
 
-//@use "sass:meta";
+@use "sass:meta";
 
+@use "options";
 @use "theme";
 @use "util";
 
 
-@if theme.$include-globals == true {
-  @import "~normalize.css/normalize.css";
+@if options.$include-globals == true {
+  @include util.normalizecss();
 
   // Body reset
   html {

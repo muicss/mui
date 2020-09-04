@@ -6,25 +6,6 @@
 
 
 // ============================================================================
-// Global Settings
-// ============================================================================
-
-$include-globals: true !default;
-$use-rem:         false !default;
-
-@function mui-rem($px) {
-  $x: $px;
-
-  @if $use-rem == true {
-    $x: ($px / 16px) * 1rem;
-    $x: round(1000 * $x) / 1000;
-  }
-
-  @return $x;
-}
-
-
-// ============================================================================
 // COLORS
 // ============================================================================
 
@@ -47,7 +28,7 @@ $body-bg-color:              util.mui-color('white') !default;
 
 $base-font-family:           Arial, Verdana, Tahoma !default;
 $base-font-color:            util.mui-color('black-alpha-87') !default;
-$base-font-size:             mui-rem(14px) !default;
+$base-font-size:             util.mui-rem(14px) !default;
 $base-font-weight:           400 !default;
 $base-line-height:           1.429 !default;
 $base-font-smoothing:        false !default;
@@ -126,26 +107,26 @@ $text-danger:           $danger-color !default;
 // BUTTONS
 // ============================================================================
 
-$btn-height:                      mui-rem(36px) !default;
+$btn-height:                      util.mui-rem(36px) !default;
 $btn-height-sm:                   $btn-height * 0.85 !default;
 $btn-height-lg:                   $btn-height * 1.5 !default;
 
 $btn-border-radius:               $border-radius-default !default;
 
-$btn-padding-horizontal:          mui-rem(26px) !default;
-$btn-padding-horizontal-sm:       mui-rem(16px) !default;
+$btn-padding-horizontal:          util.mui-rem(26px) !default;
+$btn-padding-horizontal-sm:       util.mui-rem(16px) !default;
 $btn-padding-horizontal-lg:       $btn-padding-horizontal !default;
 
-$btn-font-size:                   mui-rem(14px) !default;
-$btn-font-size-sm:                mui-rem(13px) !default;
+$btn-font-size:                   util.mui-rem(14px) !default;
+$btn-font-size-sm:                util.mui-rem(13px) !default;
 $btn-font-size-lg:                $btn-font-size !default;
 
-$btn-fab-diameter:                mui-rem(55px) !default;
-$btn-fab-diameter-sm:             mui-rem(44px) !default;
-$btn-fab-diameter-lg:             mui-rem(75px) !default;
+$btn-fab-diameter:                util.mui-rem(55px) !default;
+$btn-fab-diameter-sm:             util.mui-rem(44px) !default;
+$btn-fab-diameter-lg:             util.mui-rem(75px) !default;
 
-$btn-margin-vertical:             mui-rem(6px) !default;
-$btn-spacing-horizontal:          mui-rem(8px) !default;
+$btn-margin-vertical:             util.mui-rem(6px) !default;
+$btn-spacing-horizontal:          util.mui-rem(8px) !default;
 
 
 
@@ -187,24 +168,24 @@ $btn-flat-ripple-color:           darken(util.mui-color('white'), 35%) !default;
 $input-bg-color:              transparent !default;
 $input-bg-color-disabled:     transparent !default;
 $input-font-color:            $base-font-color !default;
-$input-font-size:             mui-rem(16px) !default;
-$input-height:                mui-rem(32px) !default;
+$input-font-size:             util.mui-rem(16px) !default;
+$input-height:                util.mui-rem(32px) !default;
 
 $input-placeholder-color:     rgba(util.mui-color('black'), 0.26) !default;
 
 $input-border-color:          $input-placeholder-color !default;
 $input-border-color-focus:    $primary-color !default;
 
-$textarea-height:             mui-rem(64px) !default;
+$textarea-height:             util.mui-rem(64px) !default;
 
-$label-font-size:             mui-rem(12px) !default;
+$label-font-size:             util.mui-rem(12px) !default;
 $label-font-color:            util.mui-color('black-alpha-54') !default;
-$label-margin-bottom:         mui-rem(3px) !default;
+$label-margin-bottom:         util.mui-rem(3px) !default;
 
 $form-legend-font-size:       $base-font-size * 1.5 !default;
 $form-legend-margin-bottom:   $form-legend-font-size / 2 !default;
 $form-legend-font-color:      $base-font-color !default;
-$form-group-margin-bottom:    mui-rem(20px) !default;
+$form-group-margin-bottom:    util.mui-rem(20px) !default;
 
 
 
@@ -265,9 +246,9 @@ $dropdown-link-bg-color-active:     util.mui-color('white') !default;
 // APPBAR
 // ============================================================================
 
-$appbar-height:              mui-rem(64px) !default;
-$appbar-height-xs-portrait:  mui-rem(56px) !default;
-$appbar-height-xs-landscape: mui-rem(48px) !default;
+$appbar-height:              util.mui-rem(64px) !default;
+$appbar-height-xs-portrait:  util.mui-rem(56px) !default;
+$appbar-height-xs-landscape: util.mui-rem(48px) !default;
 
 $appbar-bg-color:            $primary-color !default;
 $appbar-font-color:          util.mui-color('white') !default;
@@ -300,7 +281,7 @@ $tab-border-color-active:    $primary-color !default;
 // CARET
 // ============================================================================
 
-$caret-width:                mui-rem(4px) !default;
+$caret-width:                util.mui-rem(4px) !default;
 
 
 

@@ -159,10 +159,10 @@ function buildCdn(dirname) {
     buildCdnAngular(dirname + '/angular'),
     //buildCdnEmailInline(dirname + '/email'),
     //buildCdnEmailStyletag(dirname + '/email'),
-    //buildCdnColors(dirname + '/extra'),
-    //buildCdnNoGlobals(dirname + '/extra'),
-    //buildCdnPx(dirname + '/extra'),
-    //buildCdnRem(dirname + '/extra')
+    buildCdnColors(dirname + '/extra'),
+    buildCdnNoGlobals(dirname + '/extra'),
+    buildCdnPx(dirname + '/extra'),
+    buildCdnRem(dirname + '/extra')
   );
 
   var t2 = gulp.parallel(

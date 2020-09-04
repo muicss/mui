@@ -1,2 +1,8 @@
+// Global css declarations ("html {}", "body {}", etc.)
 @use "mui/globals";
+
+// Components
 @use "mui/appbar";
+
+// Miscellaneous
+@use "mui/typography";
