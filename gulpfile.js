@@ -292,8 +292,11 @@ function buildCdnWebcomponents(dirname, cssdir) {
 
 function buildCdnColors(dirname) {
   return makeTask('build-cdn-colors: ' + dirname, function() {
-    return gulp.src('./src/sass/mui-colors.scss')
-      .pipe(plugins.dartSass({outputStyle: 'expanded'}))
+    return gulp.src('./build-targets/sass/mui-colors.scss')
+      .pipe(plugins.dartSass({
+        outputStyle: 'expanded',
+        includePaths: ['./src/sass']
+      }))
       .pipe(plugins.rename('mui-colors.css'))
       .pipe(gulp.dest(dirname))
       .pipe(plugins.cssmin())
@@ -563,14 +566,17 @@ function cssStream(filename, dirname) {
   if (filename.indexOf('noglobals') >= 0) rtlGlobalStr = '';
 
   // base stream
-  var baseStream = gulp.src('./src/sass/' + filename)
-    .pipe(plugins.dartSass({outputStyle: 'expanded'}))
-    .pipe(plugins.autoprefixer({
-      cascade: false
-    }))
-    .on('error', function(err) {console.log(err.message);})
-    .pipe(plugins.rename(basename + '.css'))
-    .pipe(gulp.dest(dirname));
+  var baseStream = gulp.src('./build-targets/sass/' + filename)
+      .pipe(plugins.dartSass({
+        outputStyle: 'expanded',
+        includePaths: ["./src/sass"]
+      }))
+      .pipe(plugins.autoprefixer({
+        cascade: false
+      }))
+      .on('error', function(err) {console.log(err.message);})
+      .pipe(plugins.rename(basename + '.css'))
+      .pipe(gulp.dest(dirname));
   
   // left-to-right
   var stream1 = baseStream

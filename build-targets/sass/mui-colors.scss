@@ -1,4 +1,4 @@
-@use "mui/colors";
+@use "colors";
 
 @each $key1, $mapVal1 in colors.$color-map {
   @if type-of($mapVal1) == 'map' {
