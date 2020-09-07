@@ -292,10 +292,10 @@ function buildCdnWebcomponents(dirname, cssdir) {
 
 function buildCdnColors(dirname) {
   return makeTask('build-cdn-colors: ' + dirname, function() {
-    return gulp.src('./build-targets/sass/mui-colors.scss')
+    return gulp.src('./build-targets/scss/mui-colors.scss')
       .pipe(plugins.dartSass({
         outputStyle: 'expanded',
-        includePaths: ['./src/sass']
+        includePaths: ['./src/scss']
       }))
       .pipe(plugins.rename('mui-colors.css'))
       .pipe(gulp.dest(dirname))
@@ -478,8 +478,8 @@ function buildNpm() {
 
 function buildNpmSass() {
   return makeTask('build-npm-sass', function() {
-    return gulp.src('./src/sass/**/*')
-      .pipe(plugins.copy('./packages/npm/lib/sass', {prefix: 2}));
+    return gulp.src('./src/scss/**/*')
+      .pipe(plugins.copy('./packages/npm/scss', {prefix: 2}));
   });
 }
 
@@ -566,10 +566,10 @@ function cssStream(filename, dirname) {
   if (filename.indexOf('noglobals') >= 0) rtlGlobalStr = '';
 
   // base stream
-  var baseStream = gulp.src('./build-targets/sass/' + filename)
+  var baseStream = gulp.src('./build-targets/scss/' + filename)
       .pipe(plugins.dartSass({
         outputStyle: 'expanded',
-        includePaths: ["./src/sass"]
+        includePaths: ["./src/scss"]
       }))
       .pipe(plugins.autoprefixer({
         cascade: false

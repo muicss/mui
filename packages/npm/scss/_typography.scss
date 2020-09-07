@@ -1,0 +1,82 @@
+//
+// MUI Typography module
+//
+
+@use "sass:map";
+
+
+@mixin mui-text($key) {
+  $styles: map.get($style-map, $key);
+
+  font-weight: map.get($styles, "font-weight");
+  font-size: map.get($styles, "font-size");
+  line-height: map.get($styles, "line-height");
+
+  @if $key == "button" {
+    text-transform: uppercase;
+  }
+}
+
+
+$style-map: (
+  "display4": (
+    "font-weight": 300,
+    "font-size": mui-rem(112px),
+    "line-height": mui-rem(112px)
+  ),
+  "display3": (
+    "font-weight": 400,
+    "font-size": mui-rem(56px),
+    "line-height": mui-rem(56px)
+  ),
+  "display2": (
+    "font-weight": 400,
+    "font-size": mui-rem(45px),
+    "line-height": mui-rem(48px)
+  ),
+  "display1": (
+    "font-weight": 400,
+    "font-size": mui-rem(34px),
+    "line-height": mui-rem(40px)
+  ),
+  "headline": (
+    "font-weight": 400,
+    "font-size": mui-rem(24px),
+    "line-height": mui-rem(32px)
+  ),
+  "title": (
+    "font-weight": 400,
+    "font-size": mui-rem(20px),
+    "line-height": mui-rem(28px)
+  ),
+  "subhead": (
+    "font-weight": 400,
+    "font-size": mui-rem(16px),
+    "line-height": mui-rem(24px)
+  ),
+  "body2": (
+    "font-weight": 500,
+    "font-size": mui-rem(14px),
+    "line-height": mui-rem(24px)
+  ),
+  "body1": (
+    "font-weight": 400,
+    "font-size": mui-rem(14px),
+    "line-height": mui-rem(20px)
+  ),
+  "caption": (
+    "font-weight": 400,
+    "font-size": mui-rem(12px),
+    "line-height": mui-rem(16px)
+  ),
+  "menu": (
+    "font-weight": 500,
+    "font-size": mui-rem(13px),
+    "line-height": mui-rem(17px)
+  ),
+  "button": (
+    "font-weight": 500,
+    "font-size": mui-rem(14px),
+    "line-height": mui-rem(18px)
+  )
+);

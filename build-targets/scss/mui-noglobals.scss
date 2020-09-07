@@ -1,0 +1,6 @@
+@use "options" with (
+  $include-normalizecss: false,
+  $include-globals: false
+);
+
+@use "mui";
