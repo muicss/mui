@@ -1,6 +1,7 @@
-@use "colors";
+@use "lib/color";
 
-@each $key1, $mapVal1 in colors.$color-map {
+
+@each $key1, $mapVal1 in color.$color-map {
   @if type-of($mapVal1) == 'map' {
     @each $key2, $mapVal2 in $mapVal1 {
       .mui--color-#{$key1}-#{$key2} {

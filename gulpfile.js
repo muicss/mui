@@ -62,6 +62,7 @@ gulp.task('meteor:build', gulp.series(
 
 gulp.task('npm:build', gulp.series(
   clean('./packages/npm/lib'),
+  clean('./packages/npm/scss'),
   buildNpm()
 ));
 

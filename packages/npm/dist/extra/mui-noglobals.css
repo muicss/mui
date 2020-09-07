@@ -8,21 +8,6 @@
   overflow: visible;
 }
 
-button.mui-btn::-moz-focus-inner,
-.mui-btn[type=button]::-moz-focus-inner,
-.mui-btn[type=reset]::-moz-focus-inner,
-.mui-btn[type=submit]::-moz-focus-inner {
-  border-style: none;
-  padding: 0;
-}
-
-button.mui-btn:-moz-focusring,
-.mui-btn[type=button]:-moz-focusring,
-.mui-btn[type=reset]:-moz-focusring,
-.mui-btn[type=submit]:-moz-focusring {
-  outline: 1px dotted ButtonText;
-}
-
 .mui-textfield > textarea {
   overflow: auto;
 }
@@ -189,6 +174,21 @@ button.mui-btn:-moz-focusring,
 
 .mui-btn + .mui-btn {
   margin-left: 8px;
+}
+
+button.mui-btn::-moz-focus-inner,
+.mui-btn[type=button]::-moz-focus-inner,
+.mui-btn[type=reset]::-moz-focus-inner,
+.mui-btn[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button.mui-btn:-moz-focusring,
+.mui-btn[type=button]:-moz-focusring,
+.mui-btn[type=reset]:-moz-focusring,
+.mui-btn[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
 }
 
 .mui-btn--flat {

@@ -2,9 +2,9 @@
 // MUI Appbar
 //
 
-@use "global-declarations";
+@use "lib/util";
+
 @use "theme";
-@use "util";
 
 
 $height:              64px !default;
