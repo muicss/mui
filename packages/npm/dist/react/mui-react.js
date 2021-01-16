@@ -252,73 +252,7 @@
   react.Textarea = require('src/react/textarea');
 })(window);
 
-},{"src/react/appbar":11,"src/react/button":12,"src/react/caret":13,"src/react/checkbox":14,"src/react/col":15,"src/react/container":16,"src/react/divider":17,"src/react/dropdown":19,"src/react/dropdown-item":18,"src/react/form":20,"src/react/input":21,"src/react/option":22,"src/react/panel":23,"src/react/radio":24,"src/react/row":25,"src/react/select":26,"src/react/tab":27,"src/react/tabs":28,"src/react/textarea":29}],2:[function(require,module,exports){
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- * 
- */
-
-/*eslint-disable no-self-compare */
-
-'use strict';
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-/**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */
-function is(x, y) {
-  // SameValue algorithm
-  if (x === y) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    // Added the nonzero y check to make Flow happy, but it is redundant
-    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-  } else {
-    // Step 6.a: NaN == NaN
-    return x !== x && y !== y;
-  }
-}
-
-/**
- * Performs equality by iterating through keys on an object and returning false
- * when any key has values which are not strictly equal between the arguments.
- * Returns true when the values of all keys are strictly equal.
- */
-function shallowEqual(objA, objB) {
-  if (is(objA, objB)) {
-    return true;
-  }
-
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-    return false;
-  }
-
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  // Test for A's keys different from B.
-  for (var i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-module.exports = shallowEqual;
-},{}],3:[function(require,module,exports){
+},{"src/react/appbar":10,"src/react/button":11,"src/react/caret":12,"src/react/checkbox":13,"src/react/col":14,"src/react/container":15,"src/react/divider":16,"src/react/dropdown":18,"src/react/dropdown-item":17,"src/react/form":19,"src/react/input":20,"src/react/option":21,"src/react/panel":22,"src/react/radio":23,"src/react/row":24,"src/react/select":25,"src/react/tab":26,"src/react/tabs":27,"src/react/textarea":28}],2:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -504,7 +438,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -516,7 +450,55 @@ process.umask = function() { return 0; };
 
 'use strict';
 
-var shallowEqual = require('fbjs/lib/shallowEqual');
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+
+/**
+ * Performs equality by iterating through keys on an object and returning false
+ * when any key has values which are not strictly equal between the arguments.
+ * Returns true when the values of all keys are strictly equal.
+ */
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) {
+    return true;
+  }
+
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  // Test for A's keys different from B.
+  for (var i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
+}
 
 /**
  * Does a shallow comparison for props and state.
@@ -532,7 +514,7 @@ function shallowCompare(instance, nextProps, nextState) {
 
 module.exports = shallowCompare;
 
-},{"fbjs/lib/shallowEqual":2}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 /**
@@ -546,7 +528,7 @@ module.exports = {
   debug: true
 };
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * MUI CSS/JS form helpers module
  * @module lib/forms.py
@@ -599,7 +581,7 @@ module.exports = {
   getMenuPositionalCSS: getMenuPositionalCSSFn
 };
 
-},{"./jqLite":7}],7:[function(require,module,exports){
+},{"./jqLite":6}],6:[function(require,module,exports){
 /**
  * MUI CSS/JS jqLite module
  * @module lib/jqLite
@@ -984,7 +966,7 @@ module.exports = {
   scrollTop: jqLiteScrollTop
 };
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * MUI CSS/JS utilities module
  * @module lib/util
@@ -1259,7 +1241,7 @@ module.exports = {
   supportsPointerEvents: supportsPointerEventsFn
 };
 
-},{"../config":5,"./jqLite":7}],9:[function(require,module,exports){
+},{"../config":4,"./jqLite":6}],8:[function(require,module,exports){
 /**
  * MUI React helpers
  * @module react/_helpers
@@ -1273,7 +1255,7 @@ module.exports = {
   controlledMessage: controlledMessage
 };
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * MUI React Textfield Helpers
  * @module react/_textfieldHelpers
@@ -1536,7 +1518,7 @@ function isEmpty(value) {
 }
 /** Define module API */
 
-},{"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react","react-addons-shallow-compare":4}],11:[function(require,module,exports){
+},{"../js/lib/jqLite":6,"../js/lib/util":7,"./_helpers":8,"react":"react","react-addons-shallow-compare":3}],10:[function(require,module,exports){
 /**
  * MUI React Appbar Module
  * @module react/appbar
@@ -1591,7 +1573,7 @@ var _default = Appbar;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],12:[function(require,module,exports){
+},{"react":"react"}],11:[function(require,module,exports){
 /**
  * MUI React button module
  * @module react/button
@@ -1803,7 +1785,7 @@ var _default = Button;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/jqLite":7,"../js/lib/util":8,"react":"react"}],13:[function(require,module,exports){
+},{"../js/lib/jqLite":6,"../js/lib/util":7,"react":"react"}],12:[function(require,module,exports){
 /**
  * MUI React Caret Module
  * @module react/caret
@@ -1864,7 +1846,7 @@ var _default = Caret;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],14:[function(require,module,exports){
+},{"react":"react"}],13:[function(require,module,exports){
 /**
  * MUI React checkbox module
  * @module react/checkbox
@@ -1953,7 +1935,7 @@ var _default = Checkbox;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/util":8,"./_helpers":9,"react":"react"}],15:[function(require,module,exports){
+},{"../js/lib/util":7,"./_helpers":8,"react":"react"}],14:[function(require,module,exports){
 /**
  * MUI React Col Component
  * @module react/col
@@ -2044,7 +2026,7 @@ var _default = Col;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/util":8,"react":"react"}],16:[function(require,module,exports){
+},{"../js/lib/util":7,"react":"react"}],15:[function(require,module,exports){
 /**
  * MUI React container module
  * @module react/container
@@ -2105,7 +2087,7 @@ var _default = Container;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],17:[function(require,module,exports){
+},{"react":"react"}],16:[function(require,module,exports){
 /**
  * MUI React divider module
  * @module react/divider
@@ -2161,7 +2143,7 @@ var _default = Divider;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],18:[function(require,module,exports){
+},{"react":"react"}],17:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -2225,7 +2207,7 @@ var _default = DropdownItem;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/util":8,"react":"react"}],19:[function(require,module,exports){
+},{"../js/lib/util":7,"react":"react"}],18:[function(require,module,exports){
 /**
  * MUI React dropdowns module
  * @module react/dropdowns
@@ -2504,7 +2486,7 @@ var _default = Dropdown;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/jqLite":7,"../js/lib/util":8,"./button":12,"./caret":13,"react":"react"}],20:[function(require,module,exports){
+},{"../js/lib/jqLite":6,"../js/lib/util":7,"./button":11,"./caret":12,"react":"react"}],19:[function(require,module,exports){
 /**
  * MUI React form module
  * @module react/form
@@ -2565,7 +2547,7 @@ var _default = Form;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],21:[function(require,module,exports){
+},{"react":"react"}],20:[function(require,module,exports){
 /**                                                                            
  * MUI React Input Component
  * @module react/input
@@ -2598,7 +2580,7 @@ var _default = Input;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"./_textfieldHelpers":10,"react":"react"}],22:[function(require,module,exports){
+},{"./_textfieldHelpers":9,"react":"react"}],21:[function(require,module,exports){
 /**
  * MUI React options module
  * @module react/option
@@ -2659,7 +2641,7 @@ var _default = Option;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/forms":6,"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react"}],23:[function(require,module,exports){
+},{"../js/lib/forms":5,"../js/lib/jqLite":6,"../js/lib/util":7,"./_helpers":8,"react":"react"}],22:[function(require,module,exports){
 /**
  * MUI React layout module
  * @module react/layout
@@ -2715,7 +2697,7 @@ var _default = Panel;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],24:[function(require,module,exports){
+},{"react":"react"}],23:[function(require,module,exports){
 /**
  * MUI React radio module
  * @module react/radio
@@ -2800,7 +2782,7 @@ var _default = Radio;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],25:[function(require,module,exports){
+},{"react":"react"}],24:[function(require,module,exports){
 /**
  * MUI React Row Component
  * @module react/row
@@ -2860,7 +2842,7 @@ var _default = Row;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/util":8,"react":"react"}],26:[function(require,module,exports){
+},{"../js/lib/util":7,"react":"react"}],25:[function(require,module,exports){
 /**
  * MUI React select module
  * @module react/select
@@ -3360,7 +3342,7 @@ var _default = Select;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"../js/lib/forms":6,"../js/lib/jqLite":7,"../js/lib/util":8,"./_helpers":9,"react":"react"}],27:[function(require,module,exports){
+},{"../js/lib/forms":5,"../js/lib/jqLite":6,"../js/lib/util":7,"./_helpers":8,"react":"react"}],26:[function(require,module,exports){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -3415,8 +3397,8 @@ var _default = Tab;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"react":"react"}],28:[function(require,module,exports){
-(function (process){
+},{"react":"react"}],27:[function(require,module,exports){
+(function (process){(function (){
 /**
  * MUI React tabs module
  * @module react/tabs
@@ -3573,8 +3555,8 @@ var _default = Tabs;
 exports.default = _default;
 module.exports = exports.default;
 
-}).call(this,require('_process'))
-},{"../js/lib/util":8,"./tab":27,"_process":3,"react":"react"}],29:[function(require,module,exports){
+}).call(this)}).call(this,require('_process'))
+},{"../js/lib/util":7,"./tab":26,"_process":2,"react":"react"}],28:[function(require,module,exports){
 /**
  * MUI React Textarea Component
  * @module react/textarea
@@ -3607,4 +3589,4 @@ var _default = Textarea;
 exports.default = _default;
 module.exports = exports.default;
 
-},{"./_textfieldHelpers":10,"react":"react"}]},{},[1]);
+},{"./_textfieldHelpers":9,"react":"react"}]},{},[1]);
