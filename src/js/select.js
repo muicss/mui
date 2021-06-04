@@ -291,9 +291,12 @@ Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
 
       inGroup = true;
       optionEls = loopEl.children;
-    } else {
+    } else if (loopEl.tagName === 'OPTION') {
       inGroup = false;
       optionEls = [loopEl];
+    } else {
+      inGroup = false;
+      optionEls = [];
     }
 
     // loop through option elements
